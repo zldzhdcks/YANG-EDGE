@@ -1,30 +1,25 @@
 import { NextResponse } from "next/server";
-import { GAMES } from "@/constants/games";
+import { getSportsProvider } from "@/lib/sports";
 import type { GameData } from "@/types/game";
 
 /**
  * GET /api/games
- * 테스트용 내부 API — constants/games 더미를 JSON으로 반환한다.
  *
- * 주의: 외부 스포츠 API 키는 이 라우트 서버 측에서만 사용하고
+ * Provider를 통해 경기 목록을 반환한다.
+ * 외부 스포츠 API 키는 Provider 서버 측에서만 사용하고
  * NEXT_PUBLIC_* 환경변수에 넣지 않는다.
  */
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const date = searchParams.get("date");
-    const sport = searchParams.get("sport");
+    const date = searchParams.get("date") ?? undefined;
+    const sportParam = searchParams.get("sport");
+    const sport =
+      sportParam && sportParam !== "all"
+        ? (sportParam as GameData["sport"])
+        : "all";
 
-    let games: GameData[] = [...GAMES];
-
-    if (date) {
-      games = games.filter((game) => game.date === date);
-    }
-
-    if (sport && sport !== "all") {
-      games = games.filter((game) => game.sport === sport);
-    }
-
+    const games = await getSportsProvider().getGames({ date, sport });
     return NextResponse.json(games, { status: 200 });
   } catch {
     return NextResponse.json(

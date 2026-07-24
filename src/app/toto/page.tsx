@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import TotoPageContent from "@/components/toto/TotoPageContent";
-import { fetchToto } from "@/lib/api/toto";
+import { getSportsProvider } from "@/lib/sports";
 
 export const metadata: Metadata = {
   title: "EDGE Combo | YANG EDGE",
@@ -10,16 +10,13 @@ export const metadata: Metadata = {
 };
 
 export default async function TotoPage() {
-  const { data } = await fetchToto();
+  const { round, budgetOptions } = await getSportsProvider().getToto();
 
   return (
     <>
       <Header />
       <main>
-        <TotoPageContent
-          round={data.round}
-          budgetOptions={data.budgetOptions}
-        />
+        <TotoPageContent round={round} budgetOptions={budgetOptions} />
       </main>
       <Footer />
     </>

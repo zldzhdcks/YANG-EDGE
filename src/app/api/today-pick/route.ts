@@ -1,16 +1,14 @@
 import { NextResponse } from "next/server";
-import { TODAY_PICK } from "@/constants/todayPick";
+import { getSportsProvider } from "@/lib/sports";
 
 /**
  * GET /api/today-pick
- * 홈 EDGE Pick — constants/todayPick 더미를 JSON으로 반환한다.
- *
- * 주의: 외부 스포츠 API 키는 서버 라우트에서만 사용하고
- * NEXT_PUBLIC_* 환경변수에 넣지 않는다.
+ * Provider를 통해 홈 EDGE Pick을 반환한다.
  */
 export async function GET() {
   try {
-    return NextResponse.json(TODAY_PICK, { status: 200 });
+    const data = await getSportsProvider().getTodayPick();
+    return NextResponse.json(data, { status: 200 });
   } catch {
     return NextResponse.json(
       {

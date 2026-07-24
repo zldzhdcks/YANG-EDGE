@@ -4,17 +4,14 @@ import HeroSection from "@/components/home/HeroSection";
 import TodayPick from "@/components/home/TodayPick";
 import TodayGames from "@/components/home/TodayGames";
 import WhyYangEdge from "@/components/home/WhyYangEdge";
-import {
-  fetchFeatured,
-  fetchTodayGames,
-  fetchTodayPick,
-} from "@/lib/api";
+import { getSportsProvider } from "@/lib/sports";
 
 export default async function Home() {
-  const [pickResult, gamesResult, featuredResult] = await Promise.all([
-    fetchTodayPick(),
-    fetchTodayGames(),
-    fetchFeatured(),
+  const sports = getSportsProvider();
+  const [pick, todayGames, featured] = await Promise.all([
+    sports.getTodayPick(),
+    sports.getTodayGames(),
+    sports.getFeatured(),
   ]);
 
   return (
@@ -22,9 +19,9 @@ export default async function Home() {
       <Header />
       <main>
         <HeroSection />
-        <TodayPick pick={pickResult.data} />
-        <TodayGames sports={gamesResult.data} />
-        <WhyYangEdge features={featuredResult.data} />
+        <TodayPick pick={pick} />
+        <TodayGames sports={todayGames} />
+        <WhyYangEdge features={featured} />
       </main>
       <Footer />
     </>

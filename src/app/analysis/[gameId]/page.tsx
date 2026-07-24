@@ -3,8 +3,7 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import AnalysisContent from "@/components/analysis/AnalysisContent";
-import { fetchAnalysis } from "@/lib/api/analysis";
-import { fetchGames } from "@/lib/api/games";
+import { getSportsProvider } from "@/lib/sports";
 
 type AnalysisPageProps = {
   params: Promise<{ gameId: string }>;
@@ -14,7 +13,7 @@ export async function generateMetadata({
   params,
 }: AnalysisPageProps): Promise<Metadata> {
   const { gameId } = await params;
-  const { data: analysis } = await fetchAnalysis(gameId);
+  const analysis = await getSportsProvider().getAnalysis(gameId);
 
   if (!analysis) {
     return { title: "EDGE Detail | YANG EDGE" };
@@ -28,13 +27,13 @@ export async function generateMetadata({
 
 export default async function AnalysisPage({ params }: AnalysisPageProps) {
   const { gameId } = await params;
-  const [analysisResult, gamesResult] = await Promise.all([
-    fetchAnalysis(gameId),
-    fetchGames(),
+  const sports = getSportsProvider();
+  const [analysis, games] = await Promise.all([
+    sports.getAnalysis(gameId),
+    sports.getGames(),
   ]);
 
-  const analysis = analysisResult.data;
-  const gameExists = gamesResult.data.some((game) => game.id === gameId);
+  const gameExists = games.some((game) => game.id === gameId);
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAnalysisByGameId } from "@/constants/analysis";
+import { getSportsProvider } from "@/lib/sports";
 
 type RouteContext = {
   params: Promise<{ gameId: string }>;
@@ -7,15 +7,12 @@ type RouteContext = {
 
 /**
  * GET /api/analysis/:gameId
- * 테스트용 내부 API — constants/analysis 더미를 JSON으로 반환한다.
- *
- * 주의: 외부 스포츠 API 키는 서버 라우트에서만 사용하고
- * NEXT_PUBLIC_* 환경변수에 넣지 않는다.
+ * Provider를 통해 EDGE Detail을 반환한다.
  */
 export async function GET(_request: Request, context: RouteContext) {
   try {
     const { gameId } = await context.params;
-    const analysis = getAnalysisByGameId(gameId);
+    const analysis = await getSportsProvider().getAnalysis(gameId);
 
     if (!analysis) {
       return NextResponse.json(
