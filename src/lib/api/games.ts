@@ -11,14 +11,17 @@ import {
   type ApiFetchResult,
 } from "./types";
 
-export type FetchTodayGamesParams = {
+export type FetchGamesParams = {
   date?: string;
   sport?: GameData["sport"] | "all";
 };
 
-export type TodayGamesResult = ApiFetchResult<GameData[]>;
+/** @deprecated FetchGamesParams 사용 */
+export type FetchTodayGamesParams = FetchGamesParams;
 
-function getDummyGames(params: FetchTodayGamesParams): GameData[] {
+export type GamesResult = ApiFetchResult<GameData[]>;
+
+function getDummyGames(params: FetchGamesParams): GameData[] {
   let games = [...GAMES];
 
   if (params.date) {
@@ -32,7 +35,7 @@ function getDummyGames(params: FetchTodayGamesParams): GameData[] {
   return games;
 }
 
-function buildQuery(params: FetchTodayGamesParams): string {
+function buildQuery(params: FetchGamesParams): string {
   const query = new URLSearchParams();
   if (params.date) query.set("date", params.date);
   if (params.sport && params.sport !== "all") {
@@ -43,15 +46,17 @@ function buildQuery(params: FetchTodayGamesParams): string {
 }
 
 /**
- * 오늘 경기 목록
+ * 개별 경기 목록 (GameData[])
  *
  * 1. external-api  NEXT_PUBLIC_API_BASE_URL/games
  * 2. internal-api  /api/games
  * 3. dummy         constants/games
+ *
+ * 홈 종목 요약(SportData[])은 fetchTodayGames() → /api/today-games
  */
-export async function fetchTodayGames(
-  params: FetchTodayGamesParams = {},
-): Promise<TodayGamesResult> {
+export async function fetchGames(
+  params: FetchGamesParams = {},
+): Promise<GamesResult> {
   const dummy = getDummyGames(params);
   const query = buildQuery(params);
   const externalPath = `/games${query}`;

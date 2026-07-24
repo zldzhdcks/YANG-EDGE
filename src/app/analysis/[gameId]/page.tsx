@@ -4,7 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import AnalysisContent from "@/components/analysis/AnalysisContent";
 import { fetchAnalysis } from "@/lib/api/analysis";
-import { fetchTodayGames } from "@/lib/api/games";
+import { fetchGames } from "@/lib/api/games";
 
 type AnalysisPageProps = {
   params: Promise<{ gameId: string }>;
@@ -30,7 +30,7 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
   const { gameId } = await params;
   const [analysisResult, gamesResult] = await Promise.all([
     fetchAnalysis(gameId),
-    fetchTodayGames(),
+    fetchGames(),
   ]);
 
   const analysis = analysisResult.data;

@@ -16,8 +16,18 @@ export type {
   ApiFetchStatus,
   AsyncUiStatus,
 } from "./types";
-export { fetchTodayGames } from "./games";
-export type { FetchTodayGamesParams, TodayGamesResult } from "./games";
+export { fetchGames } from "./games";
+export type {
+  FetchGamesParams,
+  FetchTodayGamesParams,
+  GamesResult,
+} from "./games";
+export { fetchTodayGames } from "./today-games";
+export type { TodayGamesResult } from "./today-games";
+export { fetchTodayPick } from "./today-pick";
+export type { TodayPickResult } from "./today-pick";
+export { fetchFeatured } from "./featured";
+export type { FeaturedResult } from "./featured";
 export { fetchAnalysis } from "./analysis";
 export type { AnalysisResult } from "./analysis";
 export { fetchToto } from "./toto";

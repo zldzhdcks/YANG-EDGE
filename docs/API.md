@@ -6,9 +6,20 @@
 화면 (Server Component)
   → lib/api/fetch*
       ① external-api   NEXT_PUBLIC_API_BASE_URL
-      ② internal-api   /api/games | /api/analysis/:id | /api/toto/current
+      ② internal-api   /api/*
       ③ dummy          constants/* (최후 폴백)
 ```
+
+## 엔드포인트
+
+| API | fetch | 용도 |
+|-----|-------|------|
+| `/api/games` | `fetchGames` | 개별 경기 목록 |
+| `/api/today-games` | `fetchTodayGames` | 홈 종목별 요약 |
+| `/api/today-pick` | `fetchTodayPick` | 홈 EDGE Pick |
+| `/api/featured` | `fetchFeatured` | 홈 Why YANG EDGE |
+| `/api/analysis/:id` | `fetchAnalysis` | EDGE Detail |
+| `/api/toto/current` | `fetchToto` | EDGE Combo |
 
 ## 보안 (중요)
 
@@ -30,15 +41,22 @@
 ## 브라우저 테스트
 
 - http://localhost:3000/api/games
+- http://localhost:3000/api/today-games
+- http://localhost:3000/api/today-pick
+- http://localhost:3000/api/featured
 - http://localhost:3000/api/analysis/npb-softbank-orix
 - http://localhost:3000/api/analysis/unknown-id  (404)
 - http://localhost:3000/api/toto/current
 
 ## 외부 스포츠 API 연결 시 교체 지점
 
-1. `src/app/api/games/route.ts` — constants 대신 외부 API fetch
-2. `src/app/api/analysis/[gameId]/route.ts` — 동일
-3. `src/app/api/toto/current/route.ts` — 동일
-4. 키는 `SPORTS_API_KEY` 등 서버 env로만 읽기
+1. `src/app/api/games/route.ts`
+2. `src/app/api/today-games/route.ts`
+3. `src/app/api/today-pick/route.ts`
+4. `src/app/api/featured/route.ts`
+5. `src/app/api/analysis/[gameId]/route.ts`
+6. `src/app/api/toto/current/route.ts`
+
+키는 `SPORTS_API_KEY` 등 서버 env로만 읽기.
 
 화면/`lib/api/fetch*` 는 그대로 두고, **Route Handler 내부만** 바꾸면 된다.

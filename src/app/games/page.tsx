@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import GamesPageContent from "@/components/games/GamesPageContent";
-import { fetchTodayGames } from "@/lib/api/games";
+import { fetchGames } from "@/lib/api/games";
 
 export const metadata: Metadata = {
   title: "오늘 경기 | YANG EDGE",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function GamesPage() {
-  const { data: games } = await fetchTodayGames();
+  const { data: games } = await fetchGames();
 
   return (
     <>
