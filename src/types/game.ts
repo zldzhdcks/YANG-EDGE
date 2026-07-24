@@ -9,6 +9,13 @@ export type GameData = {
   startTime: string;
   date: string;
   aiAnalysisAvailable: boolean;
+  /**
+   * 외부 제공자 이벤트 ID (예: TheSportsDB idEvent).
+   * 내부 id(buildGameId)와 분리해 매핑한다.
+   */
+  externalId?: string;
+  /** 외부 데이터 출처 힌트 */
+  externalProvider?: "thesportsdb" | "apisports" | "dummy";
 };
 
 export type SportFilter = "all" | SportCategory;

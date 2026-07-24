@@ -1,4 +1,5 @@
 export type TodayPickData = {
+  gameId: string;
   league: string;
   homeTeam: string;
   awayTeam: string;

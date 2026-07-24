@@ -8,6 +8,12 @@ import { getSportsProvider } from "@/lib/sports";
 export async function GET() {
   try {
     const data = await getSportsProvider().getTodayPick();
+    if (!data) {
+      return NextResponse.json(
+        { message: "EDGE Pick 데이터를 찾을 수 없습니다." },
+        { status: 404 },
+      );
+    }
     return NextResponse.json(data, { status: 200 });
   } catch {
     return NextResponse.json(

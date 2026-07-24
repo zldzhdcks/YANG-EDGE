@@ -1,10 +1,11 @@
 import { getAnalysisByGameId } from "@/constants/analysis";
-import { FEATURES } from "@/constants/features";
 import { GAMES } from "@/constants/games";
-import { TODAY_GAMES } from "@/constants/todayGames";
-import { TODAY_PICK } from "@/constants/todayPick";
 import { TOTO_BUDGET_OPTIONS, TOTO_ROUND } from "@/constants/toto";
+import type { FeatureData } from "@/types/feature";
 import type { GameData } from "@/types/game";
+import type { SportData } from "@/types/sport";
+import type { TodayPickData } from "@/types/todayPick";
+import { buildHomeFeed } from "@/lib/home/build-home-feed";
 import type {
   GetGamesParams,
   SportsProvider,
@@ -12,8 +13,8 @@ import type {
 } from "./types";
 
 /**
- * constants 기반 더미 데이터 Provider.
- * 외부 API 키가 없거나 SPORTS_PROVIDER=dummy 일 때 사용.
+ * constants 기반 더미 Provider.
+ * Home 피드는 buildHomeFeed(getGames()) → Engine 결과로 생성한다.
  */
 export class DummyProvider implements SportsProvider {
   readonly kind = "dummy" as const;
@@ -43,15 +44,22 @@ export class DummyProvider implements SportsProvider {
     };
   }
 
-  async getTodayPick() {
-    return TODAY_PICK;
+  async getTodayPick(): Promise<TodayPickData | null> {
+    const feed = await buildHomeFeed(await this.getGames());
+    return feed.pick;
   }
 
-  async getTodayGames() {
-    return [...TODAY_GAMES];
+  async getFeaturedGames(): Promise<FeatureData[]> {
+    const feed = await buildHomeFeed(await this.getGames());
+    return feed.featured;
   }
 
-  async getFeatured() {
-    return [...FEATURES];
+  async getTodayGames(): Promise<SportData[]> {
+    const feed = await buildHomeFeed(await this.getGames());
+    return feed.sports;
+  }
+
+  async getFeatured(): Promise<FeatureData[]> {
+    return this.getFeaturedGames();
   }
 }

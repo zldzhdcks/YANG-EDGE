@@ -3,11 +3,11 @@ import { getSportsProvider } from "@/lib/sports";
 
 /**
  * GET /api/featured
- * Provider를 통해 홈 FEATURED를 반환한다.
+ * Provider → Engine Featured (EDGE 상위 경기)
  */
 export async function GET() {
   try {
-    const data = await getSportsProvider().getFeatured();
+    const data = await getSportsProvider().getFeaturedGames();
     return NextResponse.json(data, { status: 200 });
   } catch {
     return NextResponse.json(

@@ -50,6 +50,14 @@ class FallbackProvider implements SportsProvider {
     }
   }
 
+  async getFeaturedGames() {
+    try {
+      return await this.primary.getFeaturedGames();
+    } catch {
+      return this.fallback.getFeaturedGames();
+    }
+  }
+
   async getTodayGames() {
     try {
       return await this.primary.getTodayGames();
@@ -59,11 +67,7 @@ class FallbackProvider implements SportsProvider {
   }
 
   async getFeatured() {
-    try {
-      return await this.primary.getFeatured();
-    } catch {
-      return this.fallback.getFeatured();
-    }
+    return this.getFeaturedGames();
   }
 }
 

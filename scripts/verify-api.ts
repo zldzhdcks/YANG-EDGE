@@ -64,7 +64,8 @@ async function main() {
   console.log("fetchTodayPick:", {
     status: pick.status,
     source: pick.source,
-    league: pick.data.league,
+    league: pick.data?.league ?? null,
+    gameId: pick.data?.gameId ?? null,
   });
   console.log("fetchFeatured:", {
     status: featured.status,

@@ -3,6 +3,8 @@ import type { FeatureData } from "@/types/feature";
 import type { GameData } from "@/types/game";
 import type { SportData } from "@/types/sport";
 import type { TodayPickData } from "@/types/todayPick";
+import { buildGameId } from "@/lib/game-id";
+import { buildHomeFeed } from "@/lib/home/build-home-feed";
 import type {
   GetGamesParams,
   SportsProvider,
@@ -36,9 +38,11 @@ type TheSportsDbEventsResponse = {
  *
  * 지원:
  * - getGames → eventsday.php (NPB/KBO 야구 일정) → GameData[]
+ * - getTodayPick / getFeaturedGames / getTodayGames → buildHomeFeed + EDGE Engine
+ *   (Engine AnalysisData 없는 경기는 스킵; 0건이면 throw → Dummy 폴백)
  *
  * 미지원 (의도적으로 throw → DummyProvider 폴백):
- * - getAnalysis / getToto / getTodayPick / getTodayGames / getFeatured
+ * - getAnalysis / getToto
  *
  * 무료 플랜 제한 (문서 기준):
  * - eventsday: 요청당 최대 3건
@@ -113,28 +117,45 @@ export class TheSportsDbProvider implements SportsProvider {
     );
   }
 
-  async getTodayPick(): Promise<TodayPickData> {
-    throw new SportsApiError(
-      "TheSportsDB has no EDGE Pick endpoint",
-      501,
-      "today-pick",
-    );
+  async getTodayPick(): Promise<TodayPickData | null> {
+    const feed = await buildHomeFeed(await this.getGames());
+    if (!feed.pick) {
+      throw new SportsApiError(
+        "No EDGE Engine pick for TheSportsDB games",
+        404,
+        "today-pick",
+      );
+    }
+    return feed.pick;
+  }
+
+  async getFeaturedGames(): Promise<FeatureData[]> {
+    const feed = await buildHomeFeed(await this.getGames());
+    if (feed.featured.length === 0) {
+      throw new SportsApiError(
+        "No EDGE Engine featured games for TheSportsDB",
+        404,
+        "featured",
+      );
+    }
+    return feed.featured;
   }
 
   async getTodayGames(): Promise<SportData[]> {
-    throw new SportsApiError(
-      "TheSportsDB has no home sport-summary endpoint",
-      501,
-      "today-games",
-    );
+    const feed = await buildHomeFeed(await this.getGames());
+    // 종목 카드는 경기 수만 있어도 표시 가능 — Engine 0건이면 Dummy로 폴백
+    if (feed.ranked.length === 0) {
+      throw new SportsApiError(
+        "No EDGE Engine rows for TheSportsDB games",
+        404,
+        "today-games",
+      );
+    }
+    return feed.sports;
   }
 
   async getFeatured(): Promise<FeatureData[]> {
-    throw new SportsApiError(
-      "TheSportsDB has no featured endpoint",
-      501,
-      "featured",
-    );
+    return this.getFeaturedGames();
   }
 
   private async fetchEventsDay(
@@ -217,14 +238,18 @@ function mapEventToGame(event: TheSportsDbEvent): GameData | null {
     return null;
   }
 
+  const league = mapLeagueLabel(event.idLeague, event.strLeague);
+
   return {
-    id: event.idEvent,
+    id: buildGameId(league, event.strHomeTeam, event.strAwayTeam),
     sport: "baseball",
-    league: mapLeagueLabel(event.idLeague, event.strLeague),
+    league,
     homeTeam: event.strHomeTeam,
     awayTeam: event.strAwayTeam,
     startTime: mapStartTime(event.strTime),
     date: event.dateEvent || todayUtcDate(),
     aiAnalysisAvailable: false,
+    externalId: event.idEvent,
+    externalProvider: "thesportsdb",
   };
 }

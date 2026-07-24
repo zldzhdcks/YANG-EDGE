@@ -2,7 +2,7 @@ import type { TodayPickData } from "@/types/todayPick";
 import { getSportsProvider } from "@/lib/sports";
 import { successResult, type ApiFetchResult } from "./types";
 
-export type TodayPickResult = ApiFetchResult<TodayPickData>;
+export type TodayPickResult = ApiFetchResult<TodayPickData | null>;
 
 function toSource(
   kind: "dummy" | "thesportsdb" | "apisports",

@@ -8,10 +8,10 @@ import { getSportsProvider } from "@/lib/sports";
 
 export default async function Home() {
   const sports = getSportsProvider();
-  const [pick, todayGames, featured] = await Promise.all([
+  const [pick, featured, todayGames] = await Promise.all([
     sports.getTodayPick(),
+    sports.getFeaturedGames(),
     sports.getTodayGames(),
-    sports.getFeatured(),
   ]);
 
   return (
@@ -19,7 +19,7 @@ export default async function Home() {
       <Header />
       <main>
         <HeroSection />
-        <TodayPick pick={pick} />
+        {pick ? <TodayPick pick={pick} /> : null}
         <TodayGames sports={todayGames} />
         <WhyYangEdge features={featured} />
       </main>

@@ -11,10 +11,10 @@ function toSource(
 }
 
 /**
- * 홈 FEATURED — SportsProvider 위임
+ * 홈 Featured (EDGE 상위 경기) — SportsProvider 위임
  */
 export async function fetchFeatured(): Promise<FeaturedResult> {
   const provider = getSportsProvider();
-  const data = await provider.getFeatured();
+  const data = await provider.getFeaturedGames();
   return successResult(data, toSource(provider.kind));
 }

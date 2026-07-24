@@ -30,7 +30,7 @@ export default function TodayPick({ pick }: TodayPickProps) {
         <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
           <TodayPickReasons reasons={pick.reasons} />
           <AnalysisNavLink
-            gameId="npb-softbank-orix"
+            gameId={pick.gameId}
             className="inline-flex w-fit shrink-0 self-end text-sm font-medium whitespace-nowrap text-blue-400 hover:text-blue-300"
           >
             상세 분석

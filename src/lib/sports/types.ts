@@ -19,7 +19,7 @@ export type TotoData = {
 
 /**
  * 스포츠 데이터 소스 추상화.
- * 화면/Route는 구현체를 모르고 이 인터페이스만 호출한다.
+ * Home 피드는 getTodayPick / getFeaturedGames / getTodayGames 로만 소비한다.
  */
 export interface SportsProvider {
   readonly kind: SportsProviderKind;
@@ -27,7 +27,14 @@ export interface SportsProvider {
   getGames(params?: GetGamesParams): Promise<GameData[]>;
   getAnalysis(gameId: string): Promise<AnalysisData | null>;
   getToto(): Promise<TotoData>;
-  getTodayPick(): Promise<TodayPickData>;
+
+  /** EDGE Score 최댓값 경기 */
+  getTodayPick(): Promise<TodayPickData | null>;
+  /** EDGE Score 상위 경기 (Featured) */
+  getFeaturedGames(): Promise<FeatureData[]>;
+  /** 종목별 오늘 경기 + Engine 분석 수 */
   getTodayGames(): Promise<SportData[]>;
+
+  /** @deprecated getFeaturedGames 사용 */
   getFeatured(): Promise<FeatureData[]>;
 }
