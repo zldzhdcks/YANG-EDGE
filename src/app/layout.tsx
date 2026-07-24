@@ -22,7 +22,7 @@ const notoSansKr = Noto_Sans_KR({
 export const metadata: Metadata = {
   title: "YANG EDGE | AI 스포츠 분석 플랫폼",
   description:
-    "AI가 오늘 가장 가치 있는 경기를 찾아드립니다. 승률, Confidence, EDGE Value와 분석 근거를 제공합니다.",
+    "EDGE가 오늘 가장 가치 있는 경기를 찾아드립니다. EDGE Score, Confidence, EDGE와 분석 근거를 제공합니다.",
 };
 
 export default function RootLayout({

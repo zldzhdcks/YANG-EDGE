@@ -25,3 +25,48 @@ body {
   color: var(--foreground);
   font-family: var(--font-noto-sans-kr), var(--font-geist-sans), sans-serif;
 }
+
+@keyframes edge-bar {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+    opacity: 0.35;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes edge-progress {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@keyframes edge-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.edge-loader-bar {
+  animation: edge-bar 1s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+.edge-loader-progress {
+  animation: edge-progress 0.85s ease-out forwards;
+}
+
+.edge-loader-overlay {
+  animation: edge-fade-in 0.15s ease-out forwards;
+}

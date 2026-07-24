@@ -1,4 +1,5 @@
 import type { SportData } from "@/types/sport";
+import Card from "@/components/ui/Card";
 
 type SportCardProps = {
   sport: SportData;
@@ -6,7 +7,7 @@ type SportCardProps = {
 
 export default function SportCard({ sport }: SportCardProps) {
   return (
-    <article className="rounded-xl border border-white/[0.08] bg-zinc-900 p-5 sm:p-6">
+    <Card as="article" padding="md" className="rounded-xl">
       <h3 className="text-base font-semibold text-white">{sport.name}</h3>
       <p className="mt-1 text-xs text-zinc-500">{sport.league}</p>
 
@@ -18,12 +19,12 @@ export default function SportCard({ sport }: SportCardProps) {
           </span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-sm text-zinc-400">AI 분석 완료</span>
+          <span className="text-sm text-zinc-400">EDGE 분석 완료</span>
           <span className="text-sm font-semibold text-blue-400">
             {sport.analyzedGames}
           </span>
         </div>
       </div>
-    </article>
+    </Card>
   );
 }

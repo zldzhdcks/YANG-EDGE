@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { NAV_ITEMS } from "@/constants/navigation";
+import Button from "@/components/ui/Button";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,19 +16,27 @@ export default function Header() {
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`text-sm transition-colors ${
-                item.label === "로그인"
-                  ? "rounded-md border border-white/10 px-3 py-1.5 text-white hover:border-white/20"
-                  : "text-zinc-400 hover:text-white"
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
+          {NAV_ITEMS.map((item) =>
+            item.label === "로그인" ? (
+              <Button
+                key={item.href}
+                href={item.href}
+                variant="outline"
+                size="sm"
+                className="rounded-md px-3 py-1.5 shadow-none"
+              >
+                {item.label}
+              </Button>
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm text-zinc-400 transition-colors hover:text-white"
+              >
+                {item.label}
+              </Link>
+            ),
+          )}
         </nav>
 
         <button

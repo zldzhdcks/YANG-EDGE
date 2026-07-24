@@ -1,4 +1,5 @@
 import type { FeatureData } from "@/types/feature";
+import Card from "@/components/ui/Card";
 
 type FeatureCardProps = {
   feature: FeatureData;
@@ -46,7 +47,11 @@ function FeatureIcon({ icon }: { icon: FeatureData["icon"] }) {
 
 export default function FeatureCard({ feature }: FeatureCardProps) {
   return (
-    <article className="rounded-xl border border-white/[0.06] bg-zinc-900/50 p-5">
+    <Card
+      as="article"
+      padding="sm"
+      className="rounded-xl border-white/[0.06] bg-zinc-900/50 p-5"
+    >
       <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10">
         <FeatureIcon icon={feature.icon} />
       </div>
@@ -54,6 +59,6 @@ export default function FeatureCard({ feature }: FeatureCardProps) {
       <p className="mt-1.5 text-sm leading-relaxed text-zinc-500">
         {feature.description}
       </p>
-    </article>
+    </Card>
   );
 }

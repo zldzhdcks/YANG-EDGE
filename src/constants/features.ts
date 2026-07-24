@@ -9,8 +9,8 @@ export const FEATURES: FeatureData[] = [
   },
   {
     id: "ai",
-    title: "AI 근거 제공",
-    description: "승률 뒤에 숨은 분석 근거를 함께 제공합니다.",
+    title: "EDGE 근거 제공",
+    description: "EDGE Score 뒤에 숨은 분석 근거를 함께 제공합니다.",
     icon: "ai",
   },
   {
@@ -21,7 +21,7 @@ export const FEATURES: FeatureData[] = [
   },
   {
     id: "engine",
-    title: "매일 학습하는 분석 엔진",
+    title: "매일 학습하는 EDGE Engine",
     description: "경기 결과를 학습해 분석 정확도를 높입니다.",
     icon: "engine",
   },
