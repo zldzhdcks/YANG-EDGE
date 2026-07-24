@@ -102,5 +102,25 @@ export default function ReasonIconView({
           <path d="M7 16a4 4 0 1 1 1.2-7.8A5 5 0 0 1 18 11a3.5 3.5 0 0 1 0 7H7z" />
         </svg>
       );
+    case "standings":
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden>
+          <path d="M6 20V10M12 20V4M18 20v-7" />
+        </svg>
+      );
+    case "injury":
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden>
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 8v5M12 16h.01" />
+        </svg>
+      );
+    case "streak":
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden>
+          <path d="M4 16c3-1 5-5 8-5s5 4 8 5" />
+          <path d="M12 4v7" />
+        </svg>
+      );
   }
 }

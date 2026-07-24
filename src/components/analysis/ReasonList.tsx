@@ -1,8 +1,8 @@
-import type { AnalysisReason } from "@/types/analysis";
+import type { AnalysisReasonView } from "@/lib/edge/to-analysis-view";
 import ReasonIconView from "./ReasonIconView";
 
 type ReasonListProps = {
-  reasons: AnalysisReason[];
+  reasons: AnalysisReasonView[];
 };
 
 export default function ReasonList({ reasons }: ReasonListProps) {

@@ -14,7 +14,10 @@ export type ReasonIcon =
   | "possession"
   | "setpiece"
   | "clutch"
-  | "weather";
+  | "weather"
+  | "standings"
+  | "injury"
+  | "streak";
 
 export type AnalysisReason = {
   id: string;
@@ -53,8 +56,10 @@ export function getConfidenceLabel(confidence: number): string {
 }
 
 export function getEdgeScoreLabel(edgeScore: number): string {
-  if (edgeScore >= 15) return "Strong Edge";
-  if (edgeScore >= 10) return "Solid Edge";
-  if (edgeScore >= 5) return "Slight Edge";
-  return "Marginal Edge";
+  const abs = Math.abs(edgeScore);
+  if (abs >= 20) return "Elite Edge";
+  if (abs >= 15) return "Premium Edge";
+  if (abs >= 10) return "Strong Edge";
+  if (abs >= 5) return "Moderate Edge";
+  return "Low Edge";
 }

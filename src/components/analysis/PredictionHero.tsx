@@ -1,14 +1,11 @@
-import type { AnalysisData } from "@/types/analysis";
-import {
-  getConfidenceLabel,
-  getEdgeScoreLabel,
-} from "@/types/analysis";
+import type { AnalysisViewModel } from "@/lib/edge/to-analysis-view";
+import { getConfidenceLabel } from "@/types/analysis";
 import Card from "@/components/ui/Card";
 import StatBox from "@/components/ui/StatBox";
 import Badge from "@/components/ui/Badge";
 
 type PredictionHeroProps = {
-  analysis: AnalysisData;
+  analysis: AnalysisViewModel;
 };
 
 function StarRating({ rating }: { rating: number }) {
@@ -69,7 +66,7 @@ export default function PredictionHero({ analysis }: PredictionHeroProps) {
         <StatBox
           label="EDGE Score"
           value={`+${analysis.edgeScore}`}
-          hint={getEdgeScoreLabel(analysis.edgeScore)}
+          hint={analysis.gradeLabel}
           accent
           size="md"
         />

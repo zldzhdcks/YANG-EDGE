@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { AnalysisData } from "@/types/analysis";
+import type { AnalysisViewModel } from "@/lib/edge/to-analysis-view";
 import Card from "@/components/ui/Card";
 import PrototypeDisclaimer from "@/components/ui/PrototypeDisclaimer";
 import PredictionHero from "./PredictionHero";
@@ -7,9 +7,10 @@ import ReasonList from "./ReasonList";
 import RiskList from "./RiskList";
 import ScoreCard from "./ScoreCard";
 import BottomButtons from "./BottomButtons";
+import EdgeDna from "./EdgeDna";
 
 type AnalysisContentProps = {
-  analysis: AnalysisData;
+  analysis: AnalysisViewModel;
 };
 
 export default function AnalysisContent({ analysis }: AnalysisContentProps) {
@@ -51,6 +52,8 @@ export default function AnalysisContent({ analysis }: AnalysisContentProps) {
           </p>
         </Card>
 
+        <EdgeDna factors={analysis.topFactors} />
+
         <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
           <Card padding="md">
             <ReasonList reasons={analysis.reasons} />
@@ -69,6 +72,17 @@ export default function AnalysisContent({ analysis }: AnalysisContentProps) {
 
         <BottomButtons />
       </div>
+
+      <p
+        className="mt-8 text-center text-[11px] text-zinc-600"
+        title="현재 결과를 구성한 데이터와 규칙의 설명 가능 정도입니다. 적중 확률이 아닙니다."
+      >
+        설명 가능성 {analysis.explainability}%
+        <span className="mt-1 block text-zinc-700">
+          현재 결과를 구성한 데이터와 규칙의 설명 가능 정도입니다. 적중 확률이
+          아닙니다.
+        </span>
+      </p>
 
       <PrototypeDisclaimer />
     </div>
