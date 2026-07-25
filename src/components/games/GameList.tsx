@@ -1,17 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import type { GameData } from "@/types/game";
+import type { GameWithOdds } from "@/types/game-with-odds";
 import Card from "@/components/ui/Card";
 import { groupGamesByLeague, type LeagueGroup } from "@/lib/games/group";
 import GameCard from "./GameCard";
 
 type GameListProps = {
-  games: GameData[];
+  items: GameWithOdds[];
 };
 
-export default function GameList({ games }: GameListProps) {
-  if (games.length === 0) {
+export default function GameList({ items }: GameListProps) {
+  if (items.length === 0) {
     return (
       <Card padding="none" className="rounded-xl px-6 py-16 text-center">
         <p className="text-sm font-medium text-zinc-400">
@@ -24,7 +24,7 @@ export default function GameList({ games }: GameListProps) {
     );
   }
 
-  const groups = groupGamesByLeague(games);
+  const groups = groupGamesByLeague(items);
 
   return (
     <div className="space-y-6">
@@ -49,8 +49,13 @@ function LeagueSection({ group }: { group: LeagueGroup }) {
       </div>
 
       <Card padding="none" className="rounded-xl px-4 sm:px-6">
-        {shown.map((game) => (
-          <GameCard key={game.id} game={game} hideLeague />
+        {shown.map((item) => (
+          <GameCard
+            key={item.game.id}
+            game={item.game}
+            odds={item.oddsMatch.matched ? item.odds : null}
+            hideLeague
+          />
         ))}
       </Card>
 

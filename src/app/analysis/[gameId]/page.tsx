@@ -6,6 +6,7 @@ import AnalysisContent from "@/components/analysis/AnalysisContent";
 import { getEngineAnalysisData } from "@/lib/engine/analysis-data-provider";
 import { buildAnalysisView } from "@/lib/edge/to-analysis-view";
 import { getSportsProvider } from "@/lib/sports";
+import { getMatchDisplayLabel } from "@/lib/teams";
 
 type AnalysisPageProps = {
   params: Promise<{ gameId: string }>;
@@ -23,7 +24,7 @@ export async function generateMetadata({
 
   const view = buildAnalysisView(engineInput);
   return {
-    title: `${view.homeTeam} vs ${view.awayTeam} | YANG EDGE`,
+    title: `${getMatchDisplayLabel(view.homeTeam, view.awayTeam)} | YANG EDGE`,
     description: view.summary,
   };
 }

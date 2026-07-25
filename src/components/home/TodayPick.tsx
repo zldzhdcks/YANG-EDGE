@@ -1,6 +1,7 @@
 import type { TodayPickData } from "@/types/todayPick";
 import Card from "@/components/ui/Card";
 import AnalysisNavLink from "@/components/analysis/AnalysisNavLink";
+import { getMatchDisplayLabel } from "@/lib/teams";
 import TodayPickStats from "./TodayPickStats";
 import TodayPickReasons from "./TodayPickReasons";
 
@@ -9,6 +10,8 @@ type TodayPickProps = {
 };
 
 export default function TodayPick({ pick }: TodayPickProps) {
+  const matchLabel = getMatchDisplayLabel(pick.homeTeam, pick.awayTeam);
+
   return (
     <section id="today-pick" className="mx-auto max-w-5xl px-4 pb-16 sm:px-6">
       <p className="mb-4 text-xs font-medium tracking-widest text-blue-500 uppercase">
@@ -18,7 +21,7 @@ export default function TodayPick({ pick }: TodayPickProps) {
       <Card padding="lg" className="rounded-xl">
         <p className="text-xs font-medium text-zinc-500">{pick.league}</p>
         <h2 className="mt-1 text-xl font-bold text-white sm:text-2xl">
-          {pick.homeTeam} vs {pick.awayTeam}
+          {matchLabel}
         </h2>
 
         <TodayPickStats

@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { GameData, SportFilter } from "@/types/game";
+import type { SportFilter } from "@/types/game";
+import type { GameWithOdds } from "@/types/game-with-odds";
 import { getKstToday } from "@/lib/datetime/kst";
 import { formatKoreanDate } from "@/lib/games/group";
 import {
-  getDisplayMatchLabel,
-  getDisplayTeamName,
-} from "@/lib/teams/aliases";
+  getMatchDisplayLabel,
+  getTeamDisplayName,
+} from "@/lib/teams";
 import Card from "@/components/ui/Card";
 import SearchBar from "./SearchBar";
 import DatePicker from "./DatePicker";
@@ -17,21 +18,21 @@ import GameList from "./GameList";
 type LoadState = "loading" | "success" | "empty" | "error";
 
 type GamesApiResponse = {
-  games: GameData[];
+  games: GameWithOdds[];
   meta?: {
     status?: "success" | "partial" | "error";
     sources?: Record<string, { ok: boolean; count: number; error?: string }>;
   };
 };
 
-function filterGames(
-  games: GameData[],
+function filterItems(
+  items: GameWithOdds[],
   search: string,
   sport: SportFilter,
-): GameData[] {
+): GameWithOdds[] {
   const query = search.trim().toLowerCase();
 
-  return games.filter((game) => {
+  return items.filter(({ game }) => {
     if (sport !== "all" && game.sport !== sport) return false;
     if (!query) return true;
 
@@ -39,9 +40,9 @@ function filterGames(
       game.league,
       game.homeTeam,
       game.awayTeam,
-      getDisplayTeamName(game.homeTeam),
-      getDisplayTeamName(game.awayTeam),
-      getDisplayMatchLabel(game.homeTeam, game.awayTeam),
+      getTeamDisplayName(game.homeTeam),
+      getTeamDisplayName(game.awayTeam),
+      getMatchDisplayLabel(game.homeTeam, game.awayTeam),
     ]
       .join(" ")
       .toLowerCase();
@@ -55,7 +56,7 @@ export default function GamesPageContent() {
   const [date, setDate] = useState(() => getKstToday());
   const [sport, setSport] = useState<SportFilter>("all");
 
-  const [games, setGames] = useState<GameData[]>([]);
+  const [items, setItems] = useState<GameWithOdds[]>([]);
   const [state, setState] = useState<LoadState>("loading");
 
   useEffect(() => {
@@ -65,18 +66,18 @@ export default function GamesPageContent() {
     fetch(`/api/games?date=${encodeURIComponent(date)}`, { cache: "no-store" })
       .then(async (res) => {
         const body = (await res.json()) as GamesApiResponse;
-        // 두 Provider 모두 실패한 경우만 오류 (한쪽 성공 = partial → 표시)
+        // 두 일정 Provider 모두 실패한 경우만 오류 (partial 은 표시)
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return Array.isArray(body.games) ? body.games : [];
       })
       .then((data) => {
         if (cancelled) return;
-        setGames(data);
+        setItems(data);
         setState(data.length === 0 ? "empty" : "success");
       })
       .catch(() => {
         if (cancelled) return;
-        setGames([]);
+        setItems([]);
         setState("error");
       });
 
@@ -85,15 +86,15 @@ export default function GamesPageContent() {
     };
   }, [date]);
 
-  const filteredGames = useMemo(
-    () => filterGames(games, search, sport),
-    [games, search, sport],
+  const filteredItems = useMemo(
+    () => filterItems(items, search, sport),
+    [items, search, sport],
   );
 
   const showCount = state === "success" || state === "empty";
   const headerCount =
     state === "success"
-      ? filteredGames.length
+      ? filteredItems.length
       : state === "empty"
         ? 0
         : null;
@@ -133,7 +134,7 @@ export default function GamesPageContent() {
           </div>
         )}
 
-        <GamesResult state={state} games={filteredGames} />
+        <GamesResult state={state} items={filteredItems} />
       </div>
     </div>
   );
@@ -141,10 +142,10 @@ export default function GamesPageContent() {
 
 function GamesResult({
   state,
-  games,
+  items,
 }: {
   state: LoadState;
-  games: GameData[];
+  items: GameWithOdds[];
 }) {
   if (state === "loading") {
     return (
@@ -169,7 +170,7 @@ function GamesResult({
     );
   }
 
-  if (state === "empty" || games.length === 0) {
+  if (state === "empty" || items.length === 0) {
     return (
       <Card padding="none" className="rounded-xl px-6 py-16 text-center">
         <p className="text-sm font-medium text-zinc-400">
@@ -182,5 +183,5 @@ function GamesResult({
     );
   }
 
-  return <GameList games={games} />;
+  return <GameList items={items} />;
 }

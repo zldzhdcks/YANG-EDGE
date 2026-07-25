@@ -91,7 +91,7 @@ async function main() {
     console.log(`games today: ${games.length}, odds matched: ${matches.length}`);
     for (const m of matches.slice(0, 5)) {
       console.log(
-        `  [${m.reason}] ${m.game.homeTeam} vs ${m.game.awayTeam} ↔ ${m.odds.homeTeam} vs ${m.odds.awayTeam} | H=${m.odds.bestHomeOdds}`,
+        `  [${m.method} ${m.confidence}] ${m.game.homeTeam} vs ${m.game.awayTeam} ↔ ${m.odds.homeTeam} vs ${m.odds.awayTeam} | H=${m.odds.bestHomeOdds}`,
       );
     }
     if (matches.length === 0) {

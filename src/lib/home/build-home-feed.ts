@@ -86,6 +86,8 @@ function toFeatured(row: HomeGameEngineRow, index: number): FeatureData {
     gameId: game.id,
     edgeScore: edge,
     pickTeamName: result.pickTeamName,
+    homeTeam: game.homeTeam,
+    awayTeam: game.awayTeam,
   };
 }
 

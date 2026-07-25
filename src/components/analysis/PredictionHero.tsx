@@ -3,6 +3,7 @@ import { getConfidenceLabel } from "@/types/analysis";
 import Card from "@/components/ui/Card";
 import StatBox from "@/components/ui/StatBox";
 import Badge from "@/components/ui/Badge";
+import { getTeamDisplayName } from "@/lib/teams";
 
 type PredictionHeroProps = {
   analysis: AnalysisViewModel;
@@ -44,7 +45,7 @@ export default function PredictionHero({ analysis }: PredictionHeroProps) {
       </div>
 
       <h2 className="mt-4 text-2xl font-bold tracking-tight text-white sm:text-3xl">
-        {analysis.pickTeam} 승
+        {getTeamDisplayName(analysis.pickTeam)} 승
       </h2>
 
       <div className="mt-3">

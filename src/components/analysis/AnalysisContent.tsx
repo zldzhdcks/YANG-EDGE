@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { AnalysisViewModel } from "@/lib/edge/to-analysis-view";
 import Card from "@/components/ui/Card";
 import PrototypeDisclaimer from "@/components/ui/PrototypeDisclaimer";
+import { getMatchDisplayLabel, getTeamDisplayName } from "@/lib/teams";
 import PredictionHero from "./PredictionHero";
 import ReasonList from "./ReasonList";
 import RiskList from "./RiskList";
@@ -14,6 +15,13 @@ type AnalysisContentProps = {
 };
 
 export default function AnalysisContent({ analysis }: AnalysisContentProps) {
+  const matchLabel = getMatchDisplayLabel(
+    analysis.homeTeam,
+    analysis.awayTeam,
+  );
+  const homeDisplay = getTeamDisplayName(analysis.homeTeam);
+  const awayDisplay = getTeamDisplayName(analysis.awayTeam);
+
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
       <Link
@@ -29,7 +37,7 @@ export default function AnalysisContent({ analysis }: AnalysisContentProps) {
           {analysis.league}
         </p>
         <h1 className="mt-1 text-xl font-bold tracking-tight text-white sm:text-2xl">
-          {analysis.homeTeam} vs {analysis.awayTeam}
+          {matchLabel}
         </h1>
         <p className="mt-2 text-sm tabular-nums text-zinc-400">
           {analysis.startTime}
@@ -64,8 +72,8 @@ export default function AnalysisContent({ analysis }: AnalysisContentProps) {
         </div>
 
         <ScoreCard
-          homeTeam={analysis.homeTeam}
-          awayTeam={analysis.awayTeam}
+          homeTeam={homeDisplay}
+          awayTeam={awayDisplay}
           homeScore={analysis.expectedHomeScore}
           awayScore={analysis.expectedAwayScore}
         />

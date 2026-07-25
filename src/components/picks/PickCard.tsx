@@ -2,6 +2,7 @@ import type { AiPickData } from "@/types/pick";
 import Badge from "@/components/ui/Badge";
 import StatBox from "@/components/ui/StatBox";
 import AnalysisNavLink from "@/components/analysis/AnalysisNavLink";
+import { getMatchDisplayLabel, getTeamDisplayName } from "@/lib/teams";
 import { cn } from "@/utils/cn";
 
 type PickCardProps = {
@@ -56,6 +57,8 @@ function RankBadge({ rank }: { rank: number }) {
 
 export default function PickCard({ pick }: PickCardProps) {
   const isTop = pick.rank === 1;
+  const matchLabel = getMatchDisplayLabel(pick.homeTeam, pick.awayTeam);
+  const pickTeamLabel = getTeamDisplayName(pick.pickTeam);
 
   return (
     <AnalysisNavLink
@@ -84,12 +87,10 @@ export default function PickCard({ pick }: PickCardProps) {
           </div>
 
           <h2 className="mt-1 text-lg font-bold text-white sm:text-xl">
-            {pick.pickTeam} 승
+            {pickTeamLabel} 승
           </h2>
 
-          <p className="mt-0.5 text-xs text-zinc-500">
-            {pick.homeTeam} vs {pick.awayTeam}
-          </p>
+          <p className="mt-0.5 text-xs text-zinc-500">{matchLabel}</p>
 
           <div className="mt-3">
             <StarRating rating={pick.starRating} />

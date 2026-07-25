@@ -1,4 +1,4 @@
-import type { GameData } from "@/types/game";
+import type { GameWithOdds } from "@/types/game-with-odds";
 import { getFootballLeaguePriorityByName } from "@/constants/football-leagues";
 
 /** 야구 리그 우선순위 (축구 관심 리그보다 앞) */
@@ -14,9 +14,9 @@ function timeKey(startTime: string): string {
 export type LeagueGroup = {
   league: string;
   /** 시간순 전체 경기 */
-  games: GameData[];
+  games: GameWithOdds[];
   /** 초기 노출분 (최대 LEAGUE_INITIAL_VISIBLE) */
-  visibleGames: GameData[];
+  visibleGames: GameWithOdds[];
   totalCount: number;
   hiddenCount: number;
   hasMore: boolean;
@@ -43,20 +43,20 @@ function leaguePriority(league: string): number {
  * 리그당 초기 노출은 LEAGUE_INITIAL_VISIBLE 로 제한하되
  * 전체 목록(games)도 함께 담아 "더 보기" 를 쉽게 붙일 수 있게 한다.
  */
-export function groupGamesByLeague(games: GameData[]): LeagueGroup[] {
-  const map = new Map<string, GameData[]>();
+export function groupGamesByLeague(items: GameWithOdds[]): LeagueGroup[] {
+  const map = new Map<string, GameWithOdds[]>();
 
-  for (const game of games) {
-    const key = game.league || "기타";
+  for (const item of items) {
+    const key = item.game.league || "기타";
     const list = map.get(key);
-    if (list) list.push(game);
-    else map.set(key, [game]);
+    if (list) list.push(item);
+    else map.set(key, [item]);
   }
 
   const groups: LeagueGroup[] = Array.from(map.entries()).map(
-    ([league, leagueGames]) => {
-      const sorted = [...leagueGames].sort((a, b) =>
-        timeKey(a.startTime).localeCompare(timeKey(b.startTime)),
+    ([league, leagueItems]) => {
+      const sorted = [...leagueItems].sort((a, b) =>
+        timeKey(a.game.startTime).localeCompare(timeKey(b.game.startTime)),
       );
       const visibleGames = sorted.slice(0, LEAGUE_INITIAL_VISIBLE);
 

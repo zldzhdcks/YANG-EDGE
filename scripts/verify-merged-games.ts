@@ -11,10 +11,10 @@ import {
   getEnabledFootballLeagues,
 } from "../src/constants/football-leagues";
 import { groupGamesByLeague } from "../src/lib/games/group";
-import type { GameData } from "../src/types/game";
+import type { GameWithOdds } from "../src/types/game-with-odds";
 
 type Body = {
-  games: GameData[];
+  games: GameWithOdds[];
   meta: {
     status: string;
     sources: Record<string, Record<string, unknown>>;
@@ -28,10 +28,10 @@ async function call(query: string): Promise<{ status: number; body: Body }> {
   return { status: res.status, body: (await res.json()) as Body };
 }
 
-function summarize(games: GameData[]) {
+function summarize(items: GameWithOdds[]) {
   const bySport = new Map<string, number>();
-  for (const g of games) {
-    bySport.set(g.sport, (bySport.get(g.sport) ?? 0) + 1);
+  for (const { game } of items) {
+    bySport.set(game.sport, (bySport.get(game.sport) ?? 0) + 1);
   }
   return Object.fromEntries(bySport);
 }

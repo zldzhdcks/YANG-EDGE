@@ -34,7 +34,15 @@ export {
   matchOddsToGame,
   matchOddsToGames,
   normalizeTeamNameForOdds,
+  NO_MATCH,
   type MatchOddsOptions,
   type OddsGameMatch,
+  type OddsMatchInfo,
+  type OddsMatchMethod,
 } from "./match-odds-to-game";
+export {
+  getActiveSportsListCached,
+  resolveSportKeysForLeagues,
+  type ResolvedSportKey,
+} from "./sport-key-resolver";
 export { ODDS_CACHE_TTL_MS } from "./cache";

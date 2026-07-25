@@ -3,6 +3,12 @@ import { getSportsProvider } from "@/lib/sports";
 import { getFootballGamesForDate } from "@/lib/games/football-games";
 import { mergeGames } from "@/lib/games/merge-games";
 import { sortGames } from "@/lib/games/sort";
+import {
+  attachOddsToGames,
+  toSafeError,
+  type OddsEnrichmentMeta,
+} from "@/lib/games/attach-odds";
+import { toBareGameWithOdds, type GameWithOdds } from "@/types/game-with-odds";
 import type { GameData } from "@/types/game";
 
 /**
@@ -110,16 +116,30 @@ export async function GET(request: Request) {
     const wanted = league.toLowerCase();
     games = games.filter((g) => g.league.toLowerCase() === wanted);
   }
+  games = sortGames(games);
+
+  // 배당 연결 — 일정 Provider 실패 처리와 완전 분리.
+  // Odds 실패 시에도 일정은 HTTP 200 으로 정상 반환한다.
+  let items: GameWithOdds[] = games.map(toBareGameWithOdds);
+  let oddsMeta: OddsEnrichmentMeta | { ok: false; error: string };
+  try {
+    const enriched = await attachOddsToGames(games);
+    items = enriched.items;
+    oddsMeta = enriched.meta;
+  } catch (error) {
+    oddsMeta = { ok: false, error: toSafeError(error) };
+  }
 
   const partial = !sportsMeta.ok || !footballMeta.ok;
 
   return NextResponse.json(
     {
-      games: sortGames(games),
+      games: items,
       meta: {
         status: partial ? "partial" : "success",
         date: date ?? null,
         sources: { sports: sportsMeta, football: footballMeta },
+        odds: oddsMeta,
       },
     },
     { status: 200 },

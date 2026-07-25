@@ -1,9 +1,29 @@
 import type { FeatureData } from "@/types/feature";
 import Card from "@/components/ui/Card";
+import { getMatchDisplayLabel, getTeamDisplayName } from "@/lib/teams";
 
 type FeatureCardProps = {
   feature: FeatureData;
 };
+
+/** title "A vs B" 또는 home/away 필드에서 표시용 라벨 생성 (원본 데이터는 유지) */
+function featureMatchLabel(feature: FeatureData): string {
+  if (feature.homeTeam && feature.awayTeam) {
+    return getMatchDisplayLabel(feature.homeTeam, feature.awayTeam);
+  }
+  const parts = feature.title.split(/\s+vs\s+/i);
+  if (parts.length === 2) {
+    return getMatchDisplayLabel(parts[0].trim(), parts[1].trim());
+  }
+  return feature.title;
+}
+
+function featureDescription(feature: FeatureData): string {
+  if (!feature.pickTeamName) return feature.description;
+  const displayPick = getTeamDisplayName(feature.pickTeamName);
+  if (displayPick === feature.pickTeamName) return feature.description;
+  return feature.description.split(feature.pickTeamName).join(displayPick);
+}
 
 function FeatureIcon({ icon }: { icon: FeatureData["icon"] }) {
   const className = "h-5 w-5 text-blue-400";
@@ -55,9 +75,11 @@ export default function FeatureCard({ feature }: FeatureCardProps) {
       <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10">
         <FeatureIcon icon={feature.icon} />
       </div>
-      <h3 className="text-sm font-semibold text-white">{feature.title}</h3>
+      <h3 className="text-sm font-semibold text-white">
+        {featureMatchLabel(feature)}
+      </h3>
       <p className="mt-1.5 text-sm leading-relaxed text-zinc-500">
-        {feature.description}
+        {featureDescription(feature)}
       </p>
     </Card>
   );

@@ -4,12 +4,30 @@ import type { OddsData } from "./types";
 export type MatchOddsOptions = {
   /** 시작 시간 허용 오차(ms). 기본 3시간 */
   commenceToleranceMs?: number;
+  /** 최소 신뢰도 (기본 0.7). 미만이면 매칭하지 않는다. */
+  minConfidence?: number;
+};
+
+export type OddsMatchMethod = "external-id" | "teams-time" | "none";
+
+export type OddsMatchInfo = {
+  matched: boolean;
+  /** 0~1. external-id=1.0, 정확 팀명=0.9, 부분 포함=0.7 */
+  confidence: number;
+  method: OddsMatchMethod;
 };
 
 export type OddsGameMatch = {
   game: GameData;
   odds: OddsData;
-  reason: "externalId" | "teams+time";
+  confidence: number;
+  method: Exclude<OddsMatchMethod, "none">;
+};
+
+export const NO_MATCH: OddsMatchInfo = {
+  matched: false,
+  confidence: 0,
+  method: "none",
 };
 
 /**
@@ -26,16 +44,19 @@ export function normalizeTeamNameForOdds(name: string): string {
     .trim();
 }
 
-function teamsMatch(a: string, b: string): boolean {
+/**
+ * 팀명 유사도: 1.0 정확 일치, 0.8 완전 포함(길이 4+), 0 불일치.
+ * (포함 예: "Jeonbuk Motors" ⊂ "Jeonbuk Hyundai Motors")
+ */
+function teamNameScore(a: string, b: string): number {
   const na = normalizeTeamNameForOdds(a);
   const nb = normalizeTeamNameForOdds(b);
-  if (!na || !nb) return false;
-  if (na === nb) return true;
-  // 한쪽이 다른 쪽을 완전히 포함할 때만 (짧은 별칭 오탐 방지: 길이 4 이상)
-  if (na.length >= 4 && nb.length >= 4) {
-    if (na.includes(nb) || nb.includes(na)) return true;
+  if (!na || !nb) return 0;
+  if (na === nb) return 1;
+  if (na.length >= 4 && nb.length >= 4 && (na.includes(nb) || nb.includes(na))) {
+    return 0.8;
   }
-  return false;
+  return 0;
 }
 
 function parseCommenceMs(iso: string): number | null {
@@ -45,9 +66,8 @@ function parseCommenceMs(iso: string): number | null {
 }
 
 /**
- * GameData.date + startTime(KST HH:mm) 을 대략적 UTC ms 로 환산.
- * 매칭 허용 오차가 크므로(기본 3h) 정밀 timezone 변환 없이도 실용적이다.
- * 정확한 KST→UTC 가 필요하면 이후 datetime 유틸로 교체.
+ * GameData.date + startTime(KST HH:mm) 을 UTC ms 로 환산.
+ * 허용 오차가 크므로(기본 3h) 실용적으로 충분하다.
  */
 function estimateGameCommenceMs(game: GameData): number | null {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(game.date)) return null;
@@ -55,7 +75,6 @@ function estimateGameCommenceMs(game: GameData): number | null {
     /^\d{2}:\d{2}/.test(game.startTime) && game.startTime !== "TBD"
       ? game.startTime.slice(0, 5)
       : "12:00";
-  // KST = UTC+9
   const utc = Date.parse(`${game.date}T${time}:00+09:00`);
   return Number.isFinite(utc) ? utc : null;
 }
@@ -64,10 +83,15 @@ function estimateGameCommenceMs(game: GameData): number | null {
  * 단일 GameData ↔ OddsData 매칭.
  *
  * 우선순위:
- * 1. externalId === externalEventId
- * 2. 홈·원정 팀명 정규화 일치 + 시작 시간 허용 오차
+ * 1. 동일 provider externalId === externalEventId → confidence 1.0
+ * 2. 홈↔홈, 원정↔원정 팀명 정규화 일치 + 시작 시간 허용 오차
  *
- * 팀명이 맞지 않으면 null (억지 매칭 금지).
+ * 규칙:
+ * - 홈/원정 방향이 반대인 경우 매칭하지 않는다 (억지 매칭 금지).
+ * - 두 팀 모두 매칭돼야 하며, confidence = min(홈, 원정) 유사도.
+ * - minConfidence(기본 0.7) 미만이면 버린다.
+ * - 시간 정보가 있으면 허용 오차를 벗어난 후보는 제외.
+ * - 리그/종목 확인은 호출자가 같은 리그·sportKey 묶음으로 제한해 보장한다.
  */
 export function matchOddsToGame(
   game: GameData,
@@ -75,26 +99,27 @@ export function matchOddsToGame(
   options: MatchOddsOptions = {},
 ): OddsGameMatch | null {
   const tolerance = options.commenceToleranceMs ?? 3 * 60 * 60 * 1000;
+  const minConfidence = options.minConfidence ?? 0.7;
 
   if (game.externalId) {
     const byId = oddsList.find((o) => o.externalEventId === game.externalId);
     if (byId) {
-      return { game, odds: byId, reason: "externalId" };
+      return { game, odds: byId, confidence: 1, method: "external-id" };
     }
   }
 
   const gameMs = estimateGameCommenceMs(game);
+  let best: OddsGameMatch | null = null;
 
   for (const odds of oddsList) {
-    const homeOk = teamsMatch(game.homeTeam, odds.homeTeam);
-    const awayOk = teamsMatch(game.awayTeam, odds.awayTeam);
-    // 홈/원정이 뒤집힌 표기 대비
-    const swapped =
-      teamsMatch(game.homeTeam, odds.awayTeam) &&
-      teamsMatch(game.awayTeam, odds.homeTeam);
+    // 홈↔홈 / 원정↔원정 방향만 인정. 반대 방향은 매칭하지 않는다.
+    const homeScore = teamNameScore(game.homeTeam, odds.homeTeam);
+    const awayScore = teamNameScore(game.awayTeam, odds.awayTeam);
+    if (homeScore === 0 || awayScore === 0) continue;
 
-    if (!homeOk && !awayOk && !swapped) continue;
-    if (!(homeOk && awayOk) && !swapped) continue;
+    // teams-time 상한 0.9 (정확 0.9 / 포함 0.72)
+    const confidence = Math.min(homeScore, awayScore) * 0.9;
+    if (confidence < minConfidence) continue;
 
     if (gameMs != null) {
       const oddsMs = parseCommenceMs(odds.commenceTime);
@@ -102,10 +127,12 @@ export function matchOddsToGame(
       if (Math.abs(gameMs - oddsMs) > tolerance) continue;
     }
 
-    return { game, odds, reason: "teams+time" };
+    if (!best || confidence > best.confidence) {
+      best = { game, odds, confidence, method: "teams-time" };
+    }
   }
 
-  return null;
+  return best;
 }
 
 /** 여러 경기에 대해 1:1 매칭 (이미 매칭된 odds 는 재사용하지 않음) */

@@ -7,4 +7,7 @@ export type FeatureData = {
   gameId?: string;
   edgeScore?: number;
   pickTeamName?: string;
+  /** UI 표시용 원본 팀명 (한글화는 FeatureCard에서 적용) */
+  homeTeam?: string;
+  awayTeam?: string;
 };
