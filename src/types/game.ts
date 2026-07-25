@@ -15,7 +15,7 @@ export type GameData = {
    */
   externalId?: string;
   /** 외부 데이터 출처 힌트 */
-  externalProvider?: "thesportsdb" | "apisports" | "dummy";
+  externalProvider?: "thesportsdb" | "apisports" | "api-football" | "dummy";
 };
 
 export type SportFilter = "all" | SportCategory;

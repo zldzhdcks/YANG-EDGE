@@ -5,6 +5,7 @@ import { successResult, type ApiFetchResult } from "./types";
 export type FetchGamesParams = {
   date?: string;
   sport?: GameData["sport"] | "all";
+  league?: string;
 };
 
 /** @deprecated FetchGamesParams 사용 */

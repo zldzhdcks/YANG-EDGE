@@ -10,6 +10,8 @@ export type SportsProviderKind = "dummy" | "thesportsdb" | "apisports";
 export type GetGamesParams = {
   date?: string;
   sport?: GameData["sport"] | "all";
+  /** 리그 필터 (예: NPB, KBO). 대소문자 무시. */
+  league?: string;
 };
 
 export type TotoData = {

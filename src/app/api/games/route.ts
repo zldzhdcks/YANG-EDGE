@@ -1,32 +1,141 @@
 import { NextResponse } from "next/server";
 import { getSportsProvider } from "@/lib/sports";
+import { getFootballGamesForDate } from "@/lib/games/football-games";
+import { mergeGames } from "@/lib/games/merge-games";
+import { sortGames } from "@/lib/games/sort";
 import type { GameData } from "@/types/game";
 
 /**
- * GET /api/games
+ * GET /api/games?date=YYYY-MM-DD&sport=&league=
  *
- * Provider를 통해 경기 목록을 반환한다.
- * 외부 스포츠 API 키는 Provider 서버 측에서만 사용하고
- * NEXT_PUBLIC_* 환경변수에 넣지 않는다.
+ * 두 Provider를 **병렬** 조회해 하나의 목록으로 병합한다.
+ * - 야구 등: SportsProvider (TheSportsDB → Dummy 폴백)
+ * - 축구:    FootballProvider (API-Football, 관심 리그만)
+ *
+ * 오류 격리: 한쪽 실패해도 다른 쪽 일정은 표시 (status=partial).
+ * 둘 다 실패하면 status=error + 502.
+ *
+ * 응답: { games, meta } — meta 에 provider별 source/usage 포함.
+ * API 키는 서버에서만 사용하며 로그·응답에 넣지 않는다.
  */
-export async function GET(request: Request) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const date = searchParams.get("date") ?? undefined;
-    const sportParam = searchParams.get("sport");
-    const sport =
-      sportParam && sportParam !== "all"
-        ? (sportParam as GameData["sport"])
-        : "all";
 
-    const games = await getSportsProvider().getGames({ date, sport });
-    return NextResponse.json(games, { status: 200 });
-  } catch {
+type ProviderMeta = {
+  ok: boolean;
+  count: number;
+  error?: string;
+};
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const date = searchParams.get("date") ?? undefined;
+  const sportParam = searchParams.get("sport");
+  const sport =
+    sportParam && sportParam !== "all"
+      ? (sportParam as GameData["sport"])
+      : "all";
+  const league = searchParams.get("league") ?? undefined;
+
+  // 축구는 날짜가 있어야 조회 가능 (API-Football date 필수)
+  const canQueryFootball =
+    !!date && /^\d{4}-\d{2}-\d{2}$/.test(date) && sport !== "baseball" && sport !== "basketball";
+
+  const [sportsSettled, footballSettled] = await Promise.allSettled([
+    getSportsProvider().getGames({ date, sport, league }),
+    canQueryFootball
+      ? getFootballGamesForDate(date)
+      : Promise.resolve(null),
+  ]);
+
+  const sportsMeta: ProviderMeta = { ok: false, count: 0 };
+  let sportsGames: GameData[] = [];
+
+  if (sportsSettled.status === "fulfilled") {
+    sportsGames = sportsSettled.value;
+    sportsMeta.ok = true;
+    sportsMeta.count = sportsGames.length;
+  } else {
+    sportsMeta.error = toSafeMessage(sportsSettled.reason);
+  }
+
+  const footballMeta: ProviderMeta & {
+    skipped?: boolean;
+    totalFixtures?: number;
+    keptFixtures?: number;
+    cached?: boolean;
+    usage?: unknown;
+  } = { ok: false, count: 0 };
+  let footballGames: GameData[] = [];
+
+  if (footballSettled.status === "fulfilled") {
+    if (footballSettled.value === null) {
+      footballMeta.ok = true;
+      footballMeta.skipped = true;
+    } else {
+      const value = footballSettled.value;
+      footballGames = value.games;
+      footballMeta.ok = true;
+      footballMeta.count = value.games.length;
+      footballMeta.totalFixtures = value.totalFixtures;
+      footballMeta.keptFixtures = value.keptFixtures;
+      footballMeta.cached = value.cached;
+      footballMeta.usage = value.usage;
+    }
+  } else {
+    footballMeta.error = toSafeMessage(footballSettled.reason);
+  }
+
+  // 둘 다 실패 → error
+  if (!sportsMeta.ok && !footballMeta.ok) {
     return NextResponse.json(
       {
-        message: "경기 목록을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
+        games: [],
+        meta: {
+          status: "error",
+          date: date ?? null,
+          sources: { sports: sportsMeta, football: footballMeta },
+        },
+        message: "경기 일정을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
       },
-      { status: 500 },
+      { status: 502 },
     );
   }
+
+  let games = mergeGames(sportsGames, footballGames);
+
+  // 병합 후에도 요청 필터를 일관 적용 (축구는 Provider 단계 필터가 없음)
+  if (sport !== "all") {
+    games = games.filter((g) => g.sport === sport);
+  }
+  if (league) {
+    const wanted = league.toLowerCase();
+    games = games.filter((g) => g.league.toLowerCase() === wanted);
+  }
+
+  const partial = !sportsMeta.ok || !footballMeta.ok;
+
+  return NextResponse.json(
+    {
+      games: sortGames(games),
+      meta: {
+        status: partial ? "partial" : "success",
+        date: date ?? null,
+        sources: { sports: sportsMeta, football: footballMeta },
+      },
+    },
+    { status: 200 },
+  );
+}
+
+/** 오류 메시지에서 키 흔적 제거 */
+function toSafeMessage(reason: unknown): string {
+  const raw =
+    reason instanceof Error
+      ? reason.message
+      : typeof reason === "string"
+        ? reason
+        : "Unknown error";
+
+  return raw
+    .replace(/apiKey=[^&\s]+/gi, "apiKey=***")
+    .replace(/x-apisports-key["\s:=]+[^\s"',}]+/gi, "x-apisports-key=***");
 }

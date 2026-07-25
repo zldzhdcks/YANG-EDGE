@@ -30,6 +30,11 @@ export class DummyProvider implements SportsProvider {
       games = games.filter((game) => game.sport === params.sport);
     }
 
+    if (params.league) {
+      const league = params.league.toLowerCase();
+      games = games.filter((game) => game.league.toLowerCase() === league);
+    }
+
     return games;
   }
 

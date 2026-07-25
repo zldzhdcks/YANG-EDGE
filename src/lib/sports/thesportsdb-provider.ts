@@ -5,6 +5,8 @@ import type { SportData } from "@/types/sport";
 import type { TodayPickData } from "@/types/todayPick";
 import { buildGameId } from "@/lib/game-id";
 import { buildHomeFeed } from "@/lib/home/build-home-feed";
+import { getKstToday, utcToKst } from "@/lib/datetime/kst";
+import { listDummyEngineGameIds } from "@/constants/dummyAnalysisData";
 import type {
   GetGamesParams,
   SportsProvider,
@@ -14,6 +16,12 @@ import type {
 /** TheSportsDB league IDs */
 const LEAGUE_NPB = "4591";
 const LEAGUE_KBO = "4830";
+
+/** 지원 리그 → TheSportsDB league id */
+const SUPPORTED_LEAGUES: { label: "NPB" | "KBO"; id: string }[] = [
+  { label: "NPB", id: LEAGUE_NPB },
+  { label: "KBO", id: LEAGUE_KBO },
+];
 
 type TheSportsDbEvent = {
   idEvent?: string;
@@ -70,33 +78,33 @@ export class TheSportsDbProvider implements SportsProvider {
       );
     }
 
+    // 무료 와이어링은 야구(NPB/KBO)만 지원. 축구/농구 요청은 빈 목록으로 응답
+    // (throw 하면 FallbackProvider가 Dummy 전체를 반환해 날짜 필터가 무너진다).
     if (params.sport && params.sport !== "all" && params.sport !== "baseball") {
-      throw new SportsApiError(
-        `TheSportsDB free wiring supports baseball (NPB/KBO) only (sport=${params.sport})`,
-        501,
-        "eventsday.php",
-      );
+      return [];
     }
 
-    const date = params.date ?? todayUtcDate();
-    const [npbEvents, kboEvents] = await Promise.all([
-      this.fetchEventsDay(date, LEAGUE_NPB),
-      this.fetchEventsDay(date, LEAGUE_KBO),
-    ]);
+    // 리그 필터: NPB/KBO 지정 시 해당 리그만, 미지정 시 둘 다 조회.
+    const requestedLeague = params.league?.trim().toUpperCase();
+    const leagues = requestedLeague
+      ? SUPPORTED_LEAGUES.filter((l) => l.label === requestedLeague)
+      : SUPPORTED_LEAGUES;
 
-    const games = [
-      ...npbEvents.map(mapEventToGame),
-      ...kboEvents.map(mapEventToGame),
-    ].filter((game): game is GameData => game !== null);
+    // 지원하지 않는 리그(예: EPL)를 명시하면 빈 목록.
+    if (leagues.length === 0) return [];
 
-    if (games.length === 0) {
-      throw new SportsApiError(
-        `No TheSportsDB events for ${date} (NPB/KBO)`,
-        404,
-        "eventsday.php",
-      );
-    }
+    const date = params.date ?? getKstToday();
+    const eventGroups = await Promise.all(
+      leagues.map((l) => this.fetchEventsDay(date, l.id)),
+    );
 
+    const games = eventGroups
+      .flat()
+      .map(mapEventToGame)
+      .filter((game): game is GameData => game !== null);
+
+    // 이벤트가 없으면 빈 배열 반환 → 화면은 "등록된 경기가 없습니다" (fallback 아님).
+    // 실제 네트워크/HTTP 오류만 throw → FallbackProvider가 Dummy로 폴백.
     return games;
   }
 
@@ -218,20 +226,14 @@ export class SportsApiError extends Error {
   }
 }
 
-function todayUtcDate(): string {
-  return new Date().toISOString().slice(0, 10);
-}
-
 function mapLeagueLabel(idLeague?: string, strLeague?: string): string {
   if (idLeague === LEAGUE_NPB) return "NPB";
   if (idLeague === LEAGUE_KBO) return "KBO";
   return strLeague?.trim() || "Unknown";
 }
 
-function mapStartTime(strTime?: string): string {
-  if (!strTime || strTime === "00:00:00" || strTime === "null") return "TBD";
-  return strTime.slice(0, 5);
-}
+/** 엔진 분석 데이터가 있는 gameId만 상세(분석) 이동 허용 */
+const ENGINE_READY_GAME_IDS = new Set(listDummyEngineGameIds());
 
 function mapEventToGame(event: TheSportsDbEvent): GameData | null {
   if (!event.idEvent || !event.strHomeTeam || !event.strAwayTeam) {
@@ -239,16 +241,20 @@ function mapEventToGame(event: TheSportsDbEvent): GameData | null {
   }
 
   const league = mapLeagueLabel(event.idLeague, event.strLeague);
+  const id = buildGameId(league, event.strHomeTeam, event.strAwayTeam);
+
+  // TheSportsDB 시간은 UTC → 화면 표기는 KST 로 변환
+  const kst = utcToKst(event.dateEvent ?? "", event.strTime);
 
   return {
-    id: buildGameId(league, event.strHomeTeam, event.strAwayTeam),
+    id,
     sport: "baseball",
     league,
     homeTeam: event.strHomeTeam,
     awayTeam: event.strAwayTeam,
-    startTime: mapStartTime(event.strTime),
-    date: event.dateEvent || todayUtcDate(),
-    aiAnalysisAvailable: false,
+    startTime: kst?.time ?? "TBD",
+    date: kst?.date ?? event.dateEvent ?? getKstToday(),
+    aiAnalysisAvailable: ENGINE_READY_GAME_IDS.has(id),
     externalId: event.idEvent,
     externalProvider: "thesportsdb",
   };
