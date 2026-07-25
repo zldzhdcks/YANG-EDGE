@@ -139,13 +139,7 @@ export class TheSportsDbProvider implements SportsProvider {
 
   async getFeaturedGames(): Promise<FeatureData[]> {
     const feed = await buildHomeFeed(await this.getGames());
-    if (feed.featured.length === 0) {
-      throw new SportsApiError(
-        "No EDGE Engine featured games for TheSportsDB",
-        404,
-        "featured",
-      );
-    }
+    // PASS 제외 후 0건이어도 정상 — Home 이 안내 문구를 표시한다 (Dummy 폴백 금지)
     return feed.featured;
   }
 

@@ -54,6 +54,7 @@ function LeagueSection({ group }: { group: LeagueGroup }) {
             key={item.game.id}
             game={item.game}
             odds={item.oddsMatch.matched ? item.odds : null}
+            recommendation={item.recommendation ?? null}
             hideLeague
           />
         ))}

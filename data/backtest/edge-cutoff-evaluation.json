@@ -1,0 +1,140 @@
+{
+  "generatedAt": "2026-07-25T07:21:27.061Z",
+  "source": "backtest-result.csv",
+  "evaluableGames": 1707,
+  "drawsOrSkipped": 58,
+  "gateCriteria": {
+    "minSample": 100,
+    "minAccuracy": 55,
+    "minRecommendRate": 10
+  },
+  "note": "컷오프는 평가만 수행. Engine에 자동 반영하지 않음.",
+  "cutoffs": [
+    {
+      "cutoff": 0,
+      "recommendedGames": 1707,
+      "recommendRate": 100,
+      "hits": 910,
+      "misses": 797,
+      "accuracy": 53.31,
+      "kboAccuracy": 52.59,
+      "npbAccuracy": 53.9,
+      "kboSample": 772,
+      "npbSample": 935,
+      "avgConfidence": 45.05,
+      "avgAbsEdgeScore": 4.89,
+      "gates": {
+        "sampleAtLeast100": true,
+        "accuracyAtLeast55": false,
+        "recommendRateAtLeast10": true,
+        "allPassed": false
+      }
+    },
+    {
+      "cutoff": 5,
+      "recommendedGames": 685,
+      "recommendRate": 40.13,
+      "hits": 393,
+      "misses": 292,
+      "accuracy": 57.37,
+      "kboAccuracy": 56.91,
+      "npbAccuracy": 57.75,
+      "kboSample": 311,
+      "npbSample": 374,
+      "avgConfidence": 50.91,
+      "avgAbsEdgeScore": 8.64,
+      "gates": {
+        "sampleAtLeast100": true,
+        "accuracyAtLeast55": true,
+        "recommendRateAtLeast10": true,
+        "allPassed": true
+      }
+    },
+    {
+      "cutoff": 7.5,
+      "recommendedGames": 358,
+      "recommendRate": 20.97,
+      "hits": 204,
+      "misses": 154,
+      "accuracy": 56.98,
+      "kboAccuracy": 57.31,
+      "npbAccuracy": 56.68,
+      "kboSample": 171,
+      "npbSample": 187,
+      "avgConfidence": 53.75,
+      "avgAbsEdgeScore": 10.93,
+      "gates": {
+        "sampleAtLeast100": true,
+        "accuracyAtLeast55": true,
+        "recommendRateAtLeast10": true,
+        "allPassed": true
+      }
+    },
+    {
+      "cutoff": 10,
+      "recommendedGames": 190,
+      "recommendRate": 11.13,
+      "hits": 115,
+      "misses": 75,
+      "accuracy": 60.53,
+      "kboAccuracy": 61.8,
+      "npbAccuracy": 59.41,
+      "kboSample": 89,
+      "npbSample": 101,
+      "avgConfidence": 55.5,
+      "avgAbsEdgeScore": 12.99,
+      "gates": {
+        "sampleAtLeast100": true,
+        "accuracyAtLeast55": true,
+        "recommendRateAtLeast10": true,
+        "allPassed": true
+      }
+    },
+    {
+      "cutoff": 12.5,
+      "recommendedGames": 90,
+      "recommendRate": 5.27,
+      "hits": 53,
+      "misses": 37,
+      "accuracy": 58.89,
+      "kboAccuracy": 57.78,
+      "npbAccuracy": 60,
+      "kboSample": 45,
+      "npbSample": 45,
+      "avgConfidence": 56.85,
+      "avgAbsEdgeScore": 15.08,
+      "gates": {
+        "sampleAtLeast100": false,
+        "accuracyAtLeast55": true,
+        "recommendRateAtLeast10": false,
+        "allPassed": false
+      }
+    },
+    {
+      "cutoff": 15,
+      "recommendedGames": 39,
+      "recommendRate": 2.28,
+      "hits": 25,
+      "misses": 14,
+      "accuracy": 64.1,
+      "kboAccuracy": 62.96,
+      "npbAccuracy": 66.67,
+      "kboSample": 27,
+      "npbSample": 12,
+      "avgConfidence": 58.66,
+      "avgAbsEdgeScore": 17.19,
+      "gates": {
+        "sampleAtLeast100": false,
+        "accuracyAtLeast55": true,
+        "recommendRateAtLeast10": false,
+        "allPassed": false
+      }
+    }
+  ],
+  "cutoffsPassingAllGates": [
+    5,
+    7.5,
+    10
+  ],
+  "realisticCandidateCutoff": 10
+}

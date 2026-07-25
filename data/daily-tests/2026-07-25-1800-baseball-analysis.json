@@ -1,0 +1,1349 @@
+{
+  "meta": {
+    "generatedAt": "2026-07-25T08:07:47.414Z",
+    "dateKst": "2026-07-25",
+    "kickoffKst": "2026-07-25T18:00+09:00",
+    "kickoffUtc": "2026-07-25T09:00:00.000Z",
+    "endpointsUsed": [
+      "eventsday.php",
+      "eventslast.php",
+      "eventspastleague.php"
+    ],
+    "historyDays": 12,
+    "minRecentGames": 3,
+    "totalTargetGames": 4,
+    "analyzedGames": 4,
+    "recommendedGames": 3,
+    "passGames": 1,
+    "analysisNotReadyGames": 0,
+    "completedEventsBeforeKickoff": 57,
+    "apiUsage": {
+      "thesportsdbCalls": 0,
+      "uniqueCachedPaths": 0,
+      "eventsFromDiskCache": true,
+      "oddsSource": "2026-07-25-1800-baseball.json (no new Odds API call)"
+    }
+  },
+  "games": [
+    {
+      "gameId": "kbo-doosan-bears-samsung-lions",
+      "league": "KBO",
+      "matchDisplay": "두산 vs 삼성",
+      "homeTeam": "Doosan Bears",
+      "awayTeam": "Samsung Lions",
+      "homeTeamDisplay": "두산",
+      "awayTeamDisplay": "삼성",
+      "recentGameCounts": {
+        "home": 6,
+        "away": 4,
+        "minRequired": 3
+      },
+      "runnable": true,
+      "pickTeam": "Samsung Lions",
+      "winProbability": 61,
+      "edgeScore": -10.9,
+      "confidence": 52,
+      "recommendationGrade": "EDGE PICK",
+      "marketProbability": 56,
+      "valueEdge": 5.4,
+      "dataAvailability": 0.8,
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": true,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "usedEvidence": [
+        "home.recentGames:5",
+        "home.scoringAverages(from recent)",
+        "home.homeRecord(n=1)",
+        "home.awayRecord(n=5)",
+        "home.streak:loss1",
+        "home.restDays:1",
+        "away.recentGames:4",
+        "away.scoringAverages(from recent)",
+        "away.homeRecord(n=1)",
+        "away.awayRecord(n=3)",
+        "away.streak:win3",
+        "away.restDays:1",
+        "headToHead:played=1"
+      ],
+      "missingData": [
+        "home.startingPitcher",
+        "home.injuries(source)",
+        "home.leagueStanding",
+        "home.seasonWinRate",
+        "away.startingPitcher",
+        "away.injuries(source)",
+        "away.leagueStanding",
+        "away.seasonWinRate"
+      ],
+      "finalStatus": "RECOMMENDED",
+      "analysisDeterministic": true,
+      "odds": {
+        "matched": true,
+        "bestHomeOdds": 2.2,
+        "bestAwayOdds": 1.76
+      },
+      "analysisInput": {
+        "gameId": "kbo-doosan-bears-samsung-lions",
+        "sport": "baseball",
+        "league": "KBO",
+        "homeTeam": "Doosan Bears",
+        "awayTeam": "Samsung Lions",
+        "date": "2026-07-25",
+        "startTime": "18:00",
+        "home": {
+          "teamName": "Doosan Bears",
+          "recentGames": [
+            {
+              "date": "2026-07-24",
+              "opponent": "Samsung Lions",
+              "result": "L",
+              "scoreFor": 4,
+              "scoreAgainst": 15,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "KT Wiz",
+              "result": "D",
+              "scoreFor": 2,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-19",
+              "opponent": "NC Dinos",
+              "result": "W",
+              "scoreFor": 10,
+              "scoreAgainst": 3,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-18",
+              "opponent": "NC Dinos",
+              "result": "W",
+              "scoreFor": 12,
+              "scoreAgainst": 9,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-17",
+              "opponent": "NC Dinos",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 2,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 1,
+            "wins": 0,
+            "draws": 0,
+            "losses": 1,
+            "winRate": 0
+          },
+          "awayRecord": {
+            "played": 5,
+            "wins": 3,
+            "draws": 1,
+            "losses": 1,
+            "winRate": 60
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 6.4,
+            "concededAvg": 6.2
+          },
+          "recentForm": {
+            "sequence": "LDWWW",
+            "last5": [
+              {
+                "date": "2026-07-24",
+                "opponent": "Samsung Lions",
+                "result": "L",
+                "scoreFor": 4,
+                "scoreAgainst": 15,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "KT Wiz",
+                "result": "D",
+                "scoreFor": 2,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-19",
+                "opponent": "NC Dinos",
+                "result": "W",
+                "scoreFor": 10,
+                "scoreAgainst": 3,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-18",
+                "opponent": "NC Dinos",
+                "result": "W",
+                "scoreFor": 12,
+                "scoreAgainst": 9,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-17",
+                "opponent": "NC Dinos",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 2,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": null,
+          "streak": {
+            "type": "loss",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Samsung Lions",
+          "recentGames": [
+            {
+              "date": "2026-07-24",
+              "opponent": "Doosan Bears",
+              "result": "W",
+              "scoreFor": 15,
+              "scoreAgainst": 4,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Kiwoom Heroes",
+              "result": "W",
+              "scoreFor": 3,
+              "scoreAgainst": 1,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Kiwoom Heroes",
+              "result": "W",
+              "scoreFor": 8,
+              "scoreAgainst": 6,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-19",
+              "opponent": "Lotte Giants",
+              "result": "L",
+              "scoreFor": 8,
+              "scoreAgainst": 11,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 1,
+            "wins": 0,
+            "draws": 0,
+            "losses": 1,
+            "winRate": 0
+          },
+          "awayRecord": {
+            "played": 3,
+            "wins": 3,
+            "draws": 0,
+            "losses": 0,
+            "winRate": 100
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 8.5,
+            "concededAvg": 5.5
+          },
+          "recentForm": {
+            "sequence": "WWWL",
+            "last5": [
+              {
+                "date": "2026-07-24",
+                "opponent": "Doosan Bears",
+                "result": "W",
+                "scoreFor": 15,
+                "scoreAgainst": 4,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Kiwoom Heroes",
+                "result": "W",
+                "scoreFor": 3,
+                "scoreAgainst": 1,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Kiwoom Heroes",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 6,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-19",
+                "opponent": "Lotte Giants",
+                "result": "L",
+                "scoreFor": 8,
+                "scoreAgainst": 11,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": null,
+          "streak": {
+            "type": "win",
+            "count": 3
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 1,
+          "homeTeamWins": 0,
+          "awayTeamWins": 1,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-24",
+              "opponent": "Samsung Lions",
+              "result": "L",
+              "scoreFor": 4,
+              "scoreAgainst": 15,
+              "isHome": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "kbo-hanwha-eagles-lg-twins",
+      "league": "KBO",
+      "matchDisplay": "한화 vs LG",
+      "homeTeam": "Hanwha Eagles",
+      "awayTeam": "LG Twins",
+      "homeTeamDisplay": "한화",
+      "awayTeamDisplay": "LG",
+      "recentGameCounts": {
+        "home": 5,
+        "away": 4,
+        "minRequired": 3
+      },
+      "runnable": true,
+      "pickTeam": "Hanwha Eagles",
+      "winProbability": 62,
+      "edgeScore": 11.7,
+      "confidence": 53,
+      "recommendationGrade": "EDGE PICK",
+      "marketProbability": 54,
+      "valueEdge": 7.4,
+      "dataAvailability": 0.8,
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": true,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "usedEvidence": [
+        "home.recentGames:5",
+        "home.scoringAverages(from recent)",
+        "home.homeRecord(n=3)",
+        "home.awayRecord(n=2)",
+        "home.streak:win2",
+        "home.restDays:1",
+        "away.recentGames:4",
+        "away.scoringAverages(from recent)",
+        "away.homeRecord(n=3)",
+        "away.awayRecord(n=1)",
+        "away.streak:loss4",
+        "away.restDays:1",
+        "headToHead:played=1"
+      ],
+      "missingData": [
+        "home.startingPitcher",
+        "home.injuries(source)",
+        "home.leagueStanding",
+        "home.seasonWinRate",
+        "away.startingPitcher",
+        "away.injuries(source)",
+        "away.leagueStanding",
+        "away.seasonWinRate"
+      ],
+      "finalStatus": "RECOMMENDED",
+      "analysisDeterministic": true,
+      "odds": {
+        "matched": true,
+        "bestHomeOdds": 1.81,
+        "bestAwayOdds": 2.15
+      },
+      "analysisInput": {
+        "gameId": "kbo-hanwha-eagles-lg-twins",
+        "sport": "baseball",
+        "league": "KBO",
+        "homeTeam": "Hanwha Eagles",
+        "awayTeam": "LG Twins",
+        "date": "2026-07-25",
+        "startTime": "18:00",
+        "home": {
+          "teamName": "Hanwha Eagles",
+          "recentGames": [
+            {
+              "date": "2026-07-24",
+              "opponent": "LG Twins",
+              "result": "W",
+              "scoreFor": 8,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Kia Tigers",
+              "result": "W",
+              "scoreFor": 9,
+              "scoreAgainst": 3,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Kia Tigers",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 7,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-18",
+              "opponent": "Kiwoom Heroes",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-16",
+              "opponent": "Kiwoom Heroes",
+              "result": "L",
+              "scoreFor": 5,
+              "scoreAgainst": 14,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 3,
+            "wins": 1,
+            "draws": 0,
+            "losses": 2,
+            "winRate": 33.33333333333333
+          },
+          "awayRecord": {
+            "played": 2,
+            "wins": 1,
+            "draws": 0,
+            "losses": 1,
+            "winRate": 50
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 5.4,
+            "concededAvg": 6.4
+          },
+          "recentForm": {
+            "sequence": "WWLLL",
+            "last5": [
+              {
+                "date": "2026-07-24",
+                "opponent": "LG Twins",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Kia Tigers",
+                "result": "W",
+                "scoreFor": 9,
+                "scoreAgainst": 3,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Kia Tigers",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 7,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-18",
+                "opponent": "Kiwoom Heroes",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-16",
+                "opponent": "Kiwoom Heroes",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 14,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": null,
+          "streak": {
+            "type": "win",
+            "count": 2
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "LG Twins",
+          "recentGames": [
+            {
+              "date": "2026-07-24",
+              "opponent": "Hanwha Eagles",
+              "result": "L",
+              "scoreFor": 4,
+              "scoreAgainst": 8,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "NC Dinos",
+              "result": "L",
+              "scoreFor": 5,
+              "scoreAgainst": 7,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-18",
+              "opponent": "KT Wiz",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 8,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-16",
+              "opponent": "KT Wiz",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 4,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 3,
+            "wins": 0,
+            "draws": 0,
+            "losses": 3,
+            "winRate": 0
+          },
+          "awayRecord": {
+            "played": 1,
+            "wins": 0,
+            "draws": 0,
+            "losses": 1,
+            "winRate": 0
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 3.5,
+            "concededAvg": 6.75
+          },
+          "recentForm": {
+            "sequence": "LLLL",
+            "last5": [
+              {
+                "date": "2026-07-24",
+                "opponent": "Hanwha Eagles",
+                "result": "L",
+                "scoreFor": 4,
+                "scoreAgainst": 8,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "NC Dinos",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 7,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-18",
+                "opponent": "KT Wiz",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 8,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-16",
+                "opponent": "KT Wiz",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 4,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": null,
+          "streak": {
+            "type": "loss",
+            "count": 4
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 1,
+          "homeTeamWins": 1,
+          "awayTeamWins": 0,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-24",
+              "opponent": "LG Twins",
+              "result": "W",
+              "scoreFor": 8,
+              "scoreAgainst": 4,
+              "isHome": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "kbo-kia-tigers-kiwoom-heroes",
+      "league": "KBO",
+      "matchDisplay": "KIA vs 키움",
+      "homeTeam": "Kia Tigers",
+      "awayTeam": "Kiwoom Heroes",
+      "homeTeamDisplay": "KIA",
+      "awayTeamDisplay": "키움",
+      "recentGameCounts": {
+        "home": 5,
+        "away": 5,
+        "minRequired": 3
+      },
+      "runnable": true,
+      "pickTeam": "Kiwoom Heroes",
+      "winProbability": 59,
+      "edgeScore": -8.5,
+      "confidence": 51,
+      "recommendationGrade": "WATCH",
+      "marketProbability": 35,
+      "valueEdge": 23.5,
+      "dataAvailability": 0.8,
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": true,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "usedEvidence": [
+        "home.recentGames:5",
+        "home.scoringAverages(from recent)",
+        "home.homeRecord(n=3)",
+        "home.awayRecord(n=2)",
+        "home.streak:loss2",
+        "home.restDays:1",
+        "away.recentGames:5",
+        "away.scoringAverages(from recent)",
+        "away.homeRecord(n=2)",
+        "away.awayRecord(n=3)",
+        "away.streak:win1",
+        "away.restDays:1",
+        "headToHead:played=1"
+      ],
+      "missingData": [
+        "home.startingPitcher",
+        "home.injuries(source)",
+        "home.leagueStanding",
+        "home.seasonWinRate",
+        "away.startingPitcher",
+        "away.injuries(source)",
+        "away.leagueStanding",
+        "away.seasonWinRate"
+      ],
+      "finalStatus": "PASS",
+      "analysisDeterministic": true,
+      "odds": {
+        "matched": true,
+        "bestHomeOdds": 1.51,
+        "bestAwayOdds": 2.8
+      },
+      "analysisInput": {
+        "gameId": "kbo-kia-tigers-kiwoom-heroes",
+        "sport": "baseball",
+        "league": "KBO",
+        "homeTeam": "Kia Tigers",
+        "awayTeam": "Kiwoom Heroes",
+        "date": "2026-07-25",
+        "startTime": "18:00",
+        "home": {
+          "teamName": "Kia Tigers",
+          "recentGames": [
+            {
+              "date": "2026-07-24",
+              "opponent": "Kiwoom Heroes",
+              "result": "L",
+              "scoreFor": 5,
+              "scoreAgainst": 8,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Hanwha Eagles",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 9,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Hanwha Eagles",
+              "result": "W",
+              "scoreFor": 7,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-19",
+              "opponent": "SSG Landers",
+              "result": "W",
+              "scoreFor": 9,
+              "scoreAgainst": 5,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-17",
+              "opponent": "SSG Landers",
+              "result": "W",
+              "scoreFor": 6,
+              "scoreAgainst": 3,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 3,
+            "wins": 1,
+            "draws": 0,
+            "losses": 2,
+            "winRate": 33.33333333333333
+          },
+          "awayRecord": {
+            "played": 2,
+            "wins": 2,
+            "draws": 0,
+            "losses": 0,
+            "winRate": 100
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 6,
+            "concededAvg": 5.6
+          },
+          "recentForm": {
+            "sequence": "LLWWW",
+            "last5": [
+              {
+                "date": "2026-07-24",
+                "opponent": "Kiwoom Heroes",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 8,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Hanwha Eagles",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 9,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Hanwha Eagles",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-19",
+                "opponent": "SSG Landers",
+                "result": "W",
+                "scoreFor": 9,
+                "scoreAgainst": 5,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-17",
+                "opponent": "SSG Landers",
+                "result": "W",
+                "scoreFor": 6,
+                "scoreAgainst": 3,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": null,
+          "streak": {
+            "type": "loss",
+            "count": 2
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Kiwoom Heroes",
+          "recentGames": [
+            {
+              "date": "2026-07-24",
+              "opponent": "Kia Tigers",
+              "result": "W",
+              "scoreFor": 8,
+              "scoreAgainst": 5,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Samsung Lions",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Samsung Lions",
+              "result": "L",
+              "scoreFor": 6,
+              "scoreAgainst": 8,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-18",
+              "opponent": "Hanwha Eagles",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-16",
+              "opponent": "Hanwha Eagles",
+              "result": "W",
+              "scoreFor": 14,
+              "scoreAgainst": 5,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 2,
+            "wins": 0,
+            "draws": 0,
+            "losses": 2,
+            "winRate": 0
+          },
+          "awayRecord": {
+            "played": 3,
+            "wins": 3,
+            "draws": 0,
+            "losses": 0,
+            "winRate": 100
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 6.6,
+            "concededAvg": 4.6
+          },
+          "recentForm": {
+            "sequence": "WLLWW",
+            "last5": [
+              {
+                "date": "2026-07-24",
+                "opponent": "Kia Tigers",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 5,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Samsung Lions",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Samsung Lions",
+                "result": "L",
+                "scoreFor": 6,
+                "scoreAgainst": 8,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-18",
+                "opponent": "Hanwha Eagles",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-16",
+                "opponent": "Hanwha Eagles",
+                "result": "W",
+                "scoreFor": 14,
+                "scoreAgainst": 5,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": null,
+          "streak": {
+            "type": "win",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 1,
+          "homeTeamWins": 0,
+          "awayTeamWins": 1,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-24",
+              "opponent": "Kiwoom Heroes",
+              "result": "L",
+              "scoreFor": 5,
+              "scoreAgainst": 8,
+              "isHome": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "npb-hanshin-tigers-yomiuri-giants",
+      "league": "NPB",
+      "matchDisplay": "한신 vs 요미우리",
+      "homeTeam": "Hanshin Tigers",
+      "awayTeam": "Yomiuri Giants",
+      "homeTeamDisplay": "한신",
+      "awayTeamDisplay": "요미우리",
+      "recentGameCounts": {
+        "home": 7,
+        "away": 7,
+        "minRequired": 3
+      },
+      "runnable": true,
+      "pickTeam": "Yomiuri Giants",
+      "winProbability": 61,
+      "edgeScore": -11,
+      "confidence": 52,
+      "recommendationGrade": "EDGE PICK",
+      "marketProbability": 43,
+      "valueEdge": 18,
+      "dataAvailability": 0.8,
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": true,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "usedEvidence": [
+        "home.recentGames:5",
+        "home.scoringAverages(from recent)",
+        "home.homeRecord(n=4)",
+        "home.awayRecord(n=3)",
+        "home.streak:loss1",
+        "home.restDays:1",
+        "away.recentGames:5",
+        "away.scoringAverages(from recent)",
+        "away.homeRecord(n=4)",
+        "away.awayRecord(n=3)",
+        "away.streak:win1",
+        "away.restDays:1",
+        "headToHead:played=1"
+      ],
+      "missingData": [
+        "home.startingPitcher",
+        "home.injuries(source)",
+        "home.leagueStanding",
+        "home.seasonWinRate",
+        "away.startingPitcher",
+        "away.injuries(source)",
+        "away.leagueStanding",
+        "away.seasonWinRate"
+      ],
+      "finalStatus": "RECOMMENDED",
+      "analysisDeterministic": true,
+      "odds": {
+        "matched": true,
+        "bestHomeOdds": 1.71,
+        "bestAwayOdds": 2.27
+      },
+      "analysisInput": {
+        "gameId": "npb-hanshin-tigers-yomiuri-giants",
+        "sport": "baseball",
+        "league": "NPB",
+        "homeTeam": "Hanshin Tigers",
+        "awayTeam": "Yomiuri Giants",
+        "date": "2026-07-25",
+        "startTime": "18:00",
+        "home": {
+          "teamName": "Hanshin Tigers",
+          "recentGames": [
+            {
+              "date": "2026-07-24",
+              "opponent": "Yomiuri Giants",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Yokohama DeNA BayStars",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Yokohama DeNA BayStars",
+              "result": "W",
+              "scoreFor": 2,
+              "scoreAgainst": 1,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-20",
+              "opponent": "Yokohama DeNA BayStars",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 7,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-18",
+              "opponent": "Hiroshima Toyo Carp",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 2,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 4,
+            "wins": 2,
+            "draws": 0,
+            "losses": 2,
+            "winRate": 50
+          },
+          "awayRecord": {
+            "played": 3,
+            "wins": 1,
+            "draws": 0,
+            "losses": 2,
+            "winRate": 33.33333333333333
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 2,
+            "concededAvg": 3.6
+          },
+          "recentForm": {
+            "sequence": "LWWLL",
+            "last5": [
+              {
+                "date": "2026-07-24",
+                "opponent": "Yomiuri Giants",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Yokohama DeNA BayStars",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Yokohama DeNA BayStars",
+                "result": "W",
+                "scoreFor": 2,
+                "scoreAgainst": 1,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-20",
+                "opponent": "Yokohama DeNA BayStars",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 7,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-18",
+                "opponent": "Hiroshima Toyo Carp",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 2,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": null,
+          "streak": {
+            "type": "loss",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Yomiuri Giants",
+          "recentGames": [
+            {
+              "date": "2026-07-24",
+              "opponent": "Hanshin Tigers",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Hiroshima Toyo Carp",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 6,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Hiroshima Toyo Carp",
+              "result": "W",
+              "scoreFor": 11,
+              "scoreAgainst": 5,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-19",
+              "opponent": "Chunichi Dragons",
+              "result": "W",
+              "scoreFor": 6,
+              "scoreAgainst": 1,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-17",
+              "opponent": "Chunichi Dragons",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 1,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 4,
+            "wins": 3,
+            "draws": 0,
+            "losses": 1,
+            "winRate": 75
+          },
+          "awayRecord": {
+            "played": 3,
+            "wins": 2,
+            "draws": 0,
+            "losses": 1,
+            "winRate": 66.66666666666666
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 5.2,
+            "concededAvg": 3
+          },
+          "recentForm": {
+            "sequence": "WLWWW",
+            "last5": [
+              {
+                "date": "2026-07-24",
+                "opponent": "Hanshin Tigers",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Hiroshima Toyo Carp",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 6,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Hiroshima Toyo Carp",
+                "result": "W",
+                "scoreFor": 11,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-19",
+                "opponent": "Chunichi Dragons",
+                "result": "W",
+                "scoreFor": 6,
+                "scoreAgainst": 1,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-17",
+                "opponent": "Chunichi Dragons",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 1,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": null,
+          "streak": {
+            "type": "win",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 1,
+          "homeTeamWins": 0,
+          "awayTeamWins": 1,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-24",
+              "opponent": "Yomiuri Giants",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 4,
+              "isHome": true
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

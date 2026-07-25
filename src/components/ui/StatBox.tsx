@@ -14,6 +14,8 @@ type StatBoxProps = {
   value: string | number;
   hint?: string;
   accent?: boolean;
+  /** 값 색상 클래스 (기존 팔레트만 — zinc/blue/emerald/amber) */
+  valueClassName?: string;
   size?: StatBoxSize;
   className?: string;
 } & Omit<HTMLAttributes<HTMLDivElement>, "className" | "children">;
@@ -23,6 +25,7 @@ export default function StatBox({
   value,
   hint,
   accent = false,
+  valueClassName,
   size = "md",
   className,
   ...props
@@ -33,7 +36,7 @@ export default function StatBox({
         className={cn(
           "font-bold tabular-nums",
           valueSizeClasses[size],
-          accent ? "text-blue-400" : "text-white",
+          valueClassName ?? (accent ? "text-blue-400" : "text-white"),
         )}
       >
         {value}
@@ -43,7 +46,7 @@ export default function StatBox({
         <p
           className={cn(
             "mt-0.5 text-[11px]",
-            accent ? "text-blue-400/80" : "text-zinc-600",
+            accent && !valueClassName ? "text-blue-400/80" : "text-zinc-600",
           )}
         >
           {hint}

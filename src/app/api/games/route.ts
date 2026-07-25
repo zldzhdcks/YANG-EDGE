@@ -4,12 +4,17 @@ import { getFootballGamesForDate } from "@/lib/games/football-games";
 import { mergeGames } from "@/lib/games/merge-games";
 import { sortGames } from "@/lib/games/sort";
 import {
+  complementBaseballScheduleWithOdds,
+} from "@/lib/games/complement-baseball-schedule";
+import {
   attachOddsToGames,
   toSafeError,
   type OddsEnrichmentMeta,
 } from "@/lib/games/attach-odds";
+import { attachRecommendationGrades } from "@/lib/games/attach-recommendation-grades";
 import { toBareGameWithOdds, type GameWithOdds } from "@/types/game-with-odds";
 import type { GameData } from "@/types/game";
+import { getKstToday } from "@/lib/datetime/kst";
 
 /**
  * GET /api/games?date=YYYY-MM-DD&sport=&league=
@@ -106,6 +111,31 @@ export async function GET(request: Request) {
     );
   }
 
+  // 야구 일정 보완: TheSportsDB 리그당 3경기 제한 → Odds KBO/NPB 이벤트로 누락분 채움
+  // (동일 getOdds 호출은 Provider 캐시로 attachOddsToGames 와 공유)
+  let baseballComplementMeta: Awaited<
+    ReturnType<typeof complementBaseballScheduleWithOdds>
+  >["meta"] | null = null;
+
+  const wantBaseball = sport === "all" || sport === "baseball";
+  if (wantBaseball && sportsMeta.ok) {
+    const dateKst =
+      date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : getKstToday();
+    const baseballPrimary = sportsGames.filter((g) => g.sport === "baseball");
+    const nonBaseballSports = sportsGames.filter((g) => g.sport !== "baseball");
+    try {
+      const complemented = await complementBaseballScheduleWithOdds(
+        baseballPrimary,
+        dateKst,
+      );
+      baseballComplementMeta = complemented.meta;
+      sportsGames = [...nonBaseballSports, ...complemented.games];
+    } catch {
+      // 보완 실패 시 TheSportsDB 일정만 유지
+      baseballComplementMeta = null;
+    }
+  }
+
   let games = mergeGames(sportsGames, footballGames);
 
   // 병합 후에도 요청 필터를 일관 적용 (축구는 Provider 단계 필터가 없음)
@@ -130,6 +160,13 @@ export async function GET(request: Request) {
     oddsMeta = { ok: false, error: toSafeError(error) };
   }
 
+  // 추천 등급 — Odds와 분리. 실패해도 일정·배당 표시는 유지.
+  try {
+    items = await attachRecommendationGrades(items);
+  } catch {
+    // 등급 enrichment 실패 시 recommendation=null 유지
+  }
+
   const partial = !sportsMeta.ok || !footballMeta.ok;
 
   return NextResponse.json(
@@ -139,6 +176,7 @@ export async function GET(request: Request) {
         status: partial ? "partial" : "success",
         date: date ?? null,
         sources: { sports: sportsMeta, football: footballMeta },
+        baseballScheduleComplement: baseballComplementMeta,
         odds: oddsMeta,
       },
     },

@@ -4,15 +4,20 @@ import { useEffect, useMemo, useState } from "react";
 import type { SportFilter } from "@/types/game";
 import type { GameWithOdds } from "@/types/game-with-odds";
 import { getKstToday } from "@/lib/datetime/kst";
-import { formatKoreanDate } from "@/lib/games/group";
+import { buildGamesFilterSummary } from "@/lib/games/filter-summary";
 import {
-  getMatchDisplayLabel,
-  getTeamDisplayName,
-} from "@/lib/teams";
+  DEFAULT_RECOMMENDATION_FILTER,
+  countRecommendationFilters,
+  filterGamesClientSide,
+  readStoredRecommendationFilter,
+  writeStoredRecommendationFilter,
+  type RecommendationFilterId,
+} from "@/lib/games/recommendation-filter";
 import Card from "@/components/ui/Card";
 import SearchBar from "./SearchBar";
 import DatePicker from "./DatePicker";
 import LeagueFilter from "./LeagueFilter";
+import RecommendationFilter from "./RecommendationFilter";
 import GameList from "./GameList";
 
 type LoadState = "loading" | "success" | "empty" | "error";
@@ -25,39 +30,20 @@ type GamesApiResponse = {
   };
 };
 
-function filterItems(
-  items: GameWithOdds[],
-  search: string,
-  sport: SportFilter,
-): GameWithOdds[] {
-  const query = search.trim().toLowerCase();
-
-  return items.filter(({ game }) => {
-    if (sport !== "all" && game.sport !== sport) return false;
-    if (!query) return true;
-
-    const searchable = [
-      game.league,
-      game.homeTeam,
-      game.awayTeam,
-      getTeamDisplayName(game.homeTeam),
-      getTeamDisplayName(game.awayTeam),
-      getMatchDisplayLabel(game.homeTeam, game.awayTeam),
-    ]
-      .join(" ")
-      .toLowerCase();
-
-    return searchable.includes(query);
-  });
-}
-
 export default function GamesPageContent() {
   const [search, setSearch] = useState("");
   const [date, setDate] = useState(() => getKstToday());
   const [sport, setSport] = useState<SportFilter>("all");
+  // SSR·최초 렌더는 DEFAULT → mount 후 localStorage 복원 (hydration mismatch 방지)
+  const [recommendation, setRecommendation] =
+    useState<RecommendationFilterId>(DEFAULT_RECOMMENDATION_FILTER);
 
   const [items, setItems] = useState<GameWithOdds[]>([]);
   const [state, setState] = useState<LoadState>("loading");
+
+  useEffect(() => {
+    setRecommendation(readStoredRecommendationFilter());
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -86,18 +72,41 @@ export default function GamesPageContent() {
     };
   }, [date]);
 
+  function handleRecommendationChange(value: RecommendationFilterId) {
+    setRecommendation(value);
+    writeStoredRecommendationFilter(value);
+  }
+
   const filteredItems = useMemo(
-    () => filterItems(items, search, sport),
+    () =>
+      filterGamesClientSide(items, {
+        search,
+        sport,
+        recommendation,
+      }),
+    [items, search, sport, recommendation],
+  );
+
+  const recommendationCounts = useMemo(
+    () => countRecommendationFilters(items, { search, sport }),
     [items, search, sport],
   );
 
-  const showCount = state === "success" || state === "empty";
-  const headerCount =
-    state === "success"
-      ? filteredItems.length
-      : state === "empty"
-        ? 0
-        : null;
+  const showSummary = state === "success" || state === "empty";
+  const resultCount =
+    state === "success" || state === "empty" ? filteredItems.length : 0;
+
+  const filterSummary = useMemo(
+    () =>
+      buildGamesFilterSummary({
+        date,
+        sport,
+        recommendation,
+        search,
+        resultCount,
+      }),
+    [date, sport, recommendation, search, resultCount],
+  );
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
@@ -117,19 +126,18 @@ export default function GamesPageContent() {
         </div>
 
         <LeagueFilter value={sport} onChange={setSport} />
+        <RecommendationFilter
+          value={recommendation}
+          onChange={handleRecommendationChange}
+          counts={recommendationCounts}
+        />
       </div>
 
       <div className="mt-8">
-        {showCount && headerCount !== null && (
+        {showSummary && (
           <div className="mb-4">
-            <p className="text-sm text-zinc-400">
-              <span className="font-medium text-zinc-200">
-                {formatKoreanDate(date)}
-              </span>
-              <span className="mx-1.5 text-zinc-600">·</span>
-              <span className="tabular-nums text-zinc-300">
-                {headerCount}경기
-              </span>
+            <p className="text-sm leading-relaxed text-zinc-400">
+              {filterSummary}
             </p>
           </div>
         )}
@@ -170,7 +178,8 @@ function GamesResult({
     );
   }
 
-  if (state === "empty" || items.length === 0) {
+  // 날짜에 경기가 아예 없을 때만 날짜 빈 상태
+  if (state === "empty") {
     return (
       <Card padding="none" className="rounded-xl px-6 py-16 text-center">
         <p className="text-sm font-medium text-zinc-400">
@@ -183,5 +192,6 @@ function GamesResult({
     );
   }
 
+  // 필터 결과 0건 → GameList 빈 안내 ("조건에 맞는 경기가 없습니다.")
   return <GameList items={items} />;
 }

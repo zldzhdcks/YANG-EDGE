@@ -1,6 +1,12 @@
 import type { AnalysisData as EngineAnalysisData } from "@/types/engine-analysis";
 import type { ReasonIcon, RecommendationGrade } from "@/types/analysis";
+import { buildMarketComparison } from "@/lib/market";
+import type { DecimalOddsInput } from "@/lib/market";
 import { runEdgeEngine } from "./run-edge-engine";
+import {
+  getRecommendationGrade,
+  type RecommendationGradeLabel,
+} from "./recommendation-grade";
 import type {
   EdgeEngineResult,
   EdgeFactorInsight,
@@ -49,6 +55,11 @@ export type AnalysisViewModel = {
   edgeScore: number;
   grade: RecommendationGrade;
   gradeLabel: string;
+  /** |EDGE| 기반 추천 등급 (PASS / WATCH / EDGE PICK / TOP EDGE) */
+  recommendationGrade: RecommendationGradeLabel;
+  recommendationDescription: string;
+  /** recommendation-grade.ts 색 토큰 */
+  recommendationColor: "zinc" | "blue" | "emerald" | "amber";
   summary: string;
   reasons: AnalysisReasonView[];
   risks: AnalysisRiskView[];
@@ -56,7 +67,74 @@ export type AnalysisViewModel = {
   expectedAwayScore: number;
   topFactors: EdgeDnaFactorView[];
   explainability: number;
+  /**
+   * 추천 팀 기준 정규화 시장 확률 (0~100, 표시용).
+   * comparisonAvailable=false 이면 null.
+   */
+  marketProbability: number | null;
+  /**
+   * Value Edge (percentage points).
+   * comparisonAvailable=false 이면 null.
+   */
+  valueEdge: number | null;
+  /** 야구 2-way + 완전 배당 + 모델 비교 가능 시에만 true */
+  comparisonAvailable: boolean;
 };
+
+const NO_MARKET_DISPLAY = {
+  marketProbability: null,
+  valueEdge: null,
+  comparisonAvailable: false,
+} as const;
+
+/**
+ * 표시용 시장 필드.
+ * - 야구(2-way)만 비교
+ * - 축구·배당 없음·불완전 → comparisonAvailable=false (문구 없이 숨김)
+ * Market 계산식·Engine은 변경하지 않고 buildMarketComparison 결과만 매핑한다.
+ */
+function toMarketDisplayFields(
+  engineInput: EngineAnalysisData,
+  result: EdgeEngineResult,
+  odds: DecimalOddsInput | null | undefined,
+): Pick<
+  AnalysisViewModel,
+  "marketProbability" | "valueEdge" | "comparisonAvailable"
+> {
+  if (engineInput.sport !== "baseball") {
+    return { ...NO_MARKET_DISPLAY };
+  }
+  if (odds == null) {
+    return { ...NO_MARKET_DISPLAY };
+  }
+
+  const comparison = buildMarketComparison({
+    marketType: "two-way",
+    odds: {
+      homeOdds: odds.homeOdds,
+      awayOdds: odds.awayOdds,
+    },
+    model: {
+      pickTeamId: result.pickTeamId,
+      winProbability: result.winProbability,
+      marketSupport: "two-way",
+    },
+  });
+
+  if (
+    !comparison.comparable ||
+    comparison.marketProbability == null ||
+    comparison.valueEdgePercentagePoints == null
+  ) {
+    return { ...NO_MARKET_DISPLAY };
+  }
+
+  return {
+    marketProbability: Math.round(comparison.marketProbability * 100),
+    valueEdge: Math.round(comparison.valueEdgePercentagePoints * 10) / 10,
+    comparisonAvailable: true,
+  };
+}
 
 function mapIcon(icon: EdgeReasonIcon): ReasonIcon {
   switch (icon) {
@@ -117,12 +195,18 @@ function buildSummary(
 
 /**
  * Engine AnalysisData → runEdgeEngine → 화면 뷰모델
- * 동일 입력 → 동일 출력 (결정적).
+ * 동일 입력(+동일 odds) → 동일 출력 (결정적).
+ *
+ * @param marketOdds 야구 2-way 최고 배당. 없거나 축구면 Value Edge 미표시.
  */
 export function buildAnalysisView(
   engineInput: EngineAnalysisData,
+  marketOdds?: DecimalOddsInput | null,
 ): AnalysisViewModel {
   const result = runEdgeEngine(engineInput);
+  const market = toMarketDisplayFields(engineInput, result, marketOdds);
+  // 추천 등급: Engine 원본 edgeScore(부호 포함) → |EDGE| 구간 매핑
+  const recommendation = getRecommendationGrade(result.edgeScore);
 
   const reasons: AnalysisReasonView[] = result.reasons.map((reason, index) => ({
     id: `reason-${reason.factor ?? index}`,
@@ -158,6 +242,9 @@ export function buildAnalysisView(
     edgeScore: Math.round(Math.abs(result.edgeScore) * 10) / 10,
     grade: result.grade,
     gradeLabel: result.label,
+    recommendationGrade: recommendation.grade,
+    recommendationDescription: recommendation.description,
+    recommendationColor: recommendation.color,
     summary: buildSummary(engineInput, result),
     reasons,
     risks,
@@ -165,5 +252,6 @@ export function buildAnalysisView(
     expectedAwayScore: Math.round(engineInput.away.scoringAverages.scoredAvg),
     topFactors,
     explainability: Math.round(result.explainability),
+    ...market,
   };
 }

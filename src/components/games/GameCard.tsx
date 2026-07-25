@@ -1,5 +1,6 @@
 import type { GameData } from "@/types/game";
 import type { OddsData } from "@/lib/odds";
+import type { GameRecommendationGrade } from "@/types/game-with-odds";
 import Badge from "@/components/ui/Badge";
 import { buttonClasses } from "@/components/ui/Button";
 import AnalysisNavLink from "@/components/analysis/AnalysisNavLink";
@@ -9,6 +10,8 @@ type GameCardProps = {
   game: GameData;
   /** 매칭 확정된 배당만 전달된다. 없으면 표시하지 않음 (빈 값·0 금지). */
   odds?: OddsData | null;
+  /** Engine 결과가 있을 때만. 없으면 배지 미표시. */
+  recommendation?: GameRecommendationGrade | null;
   /** 리그 그룹 헤더가 있을 때 카드 내 리그 라벨 숨김 */
   hideLeague?: boolean;
 };
@@ -45,37 +48,67 @@ function OddsRow({ odds }: { odds: OddsData }) {
   );
 }
 
-function GameCardBody({ game, odds, hideLeague = false }: GameCardProps) {
+/** recommendation-grade 색 토큰 → 기존 Badge variant (새 색 추가 없음) */
+function gradeBadgeVariant(
+  color: GameRecommendationGrade["color"],
+): "default" | "accent" | "success" | "warning" {
+  switch (color) {
+    case "blue":
+      return "accent";
+    case "emerald":
+      return "success";
+    case "amber":
+      return "warning";
+    case "zinc":
+    default:
+      return "default";
+  }
+}
+
+function GameCardBody({
+  game,
+  odds,
+  recommendation = null,
+  hideLeague = false,
+}: GameCardProps) {
   const matchLabel = getMatchDisplayLabel(game.homeTeam, game.awayTeam);
   const analysisReady = game.aiAnalysisAvailable;
+  const showGrade = recommendation != null;
 
   return (
     <div className="flex items-start justify-between gap-4 rounded-xl px-1 py-1 transition-colors group-hover:bg-white/[0.02] sm:px-3 sm:py-2">
       <div className="min-w-0 flex-1">
-        {!hideLeague && (
-          <p className="text-xs font-medium text-zinc-500">{game.league}</p>
-        )}
-        <h3
-          className={`text-base font-semibold text-white sm:text-lg ${hideLeague ? "" : "mt-1"}`}
-        >
-          {matchLabel}
-        </h3>
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            {!hideLeague && (
+              <p className="text-xs font-medium text-zinc-500">{game.league}</p>
+            )}
+            <h3
+              className={`text-base font-semibold text-white sm:text-lg ${hideLeague ? "" : "mt-1"}`}
+            >
+              {matchLabel}
+            </h3>
+          </div>
+          {showGrade && (
+            <Badge
+              variant={gradeBadgeVariant(recommendation.color)}
+              className="shrink-0 tracking-wide"
+            >
+              {recommendation.grade}
+            </Badge>
+          )}
+        </div>
         <p className="mt-2 text-sm tabular-nums text-zinc-400">
           {game.startTime}
         </p>
         {odds && <OddsRow odds={odds} />}
-        {analysisReady && (
-          <Badge variant="muted" className="mt-2 border-0 px-0 py-0">
-            EDGE 분석 가능
-          </Badge>
-        )}
       </div>
 
       {analysisReady ? (
         <span
           className={buttonClasses({
             size: "sm",
-            className: "h-9 px-4 text-sm group-hover:bg-blue-500",
+            className: "h-9 shrink-0 px-4 text-sm group-hover:bg-blue-500",
           })}
         >
           분석
@@ -95,6 +128,7 @@ function GameCardBody({ game, odds, hideLeague = false }: GameCardProps) {
 export default function GameCard({
   game,
   odds = null,
+  recommendation = null,
   hideLeague = false,
 }: GameCardProps) {
   const wrapperClass =
@@ -103,14 +137,24 @@ export default function GameCard({
   if (game.aiAnalysisAvailable) {
     return (
       <AnalysisNavLink gameId={game.id} className={wrapperClass}>
-        <GameCardBody game={game} odds={odds} hideLeague={hideLeague} />
+        <GameCardBody
+          game={game}
+          odds={odds}
+          recommendation={recommendation}
+          hideLeague={hideLeague}
+        />
       </AnalysisNavLink>
     );
   }
 
   return (
     <div className={wrapperClass}>
-      <GameCardBody game={game} odds={odds} hideLeague={hideLeague} />
+      <GameCardBody
+        game={game}
+        odds={odds}
+        recommendation={recommendation}
+        hideLeague={hideLeague}
+      />
     </div>
   );
 }

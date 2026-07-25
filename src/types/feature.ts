@@ -10,4 +10,7 @@ export type FeatureData = {
   /** UI 표시용 원본 팀명 (한글화는 FeatureCard에서 적용) */
   homeTeam?: string;
   awayTeam?: string;
+  /** PASS 제외 후 Featured에만 실림 (WATCH / EDGE PICK / TOP EDGE) */
+  recommendationGrade?: "WATCH" | "EDGE PICK" | "TOP EDGE" | "PASS";
+  recommendationColor?: "zinc" | "blue" | "emerald" | "amber";
 };

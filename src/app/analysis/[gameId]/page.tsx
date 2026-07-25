@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import AnalysisContent from "@/components/analysis/AnalysisContent";
 import { getEngineAnalysisData } from "@/lib/engine/analysis-data-provider";
 import { buildAnalysisView } from "@/lib/edge/to-analysis-view";
+import { resolveAnalysisMarketOdds } from "@/lib/edge/resolve-analysis-market-odds";
 import { getSportsProvider } from "@/lib/sports";
 import { getMatchDisplayLabel } from "@/lib/teams";
 
@@ -64,7 +65,8 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
     );
   }
 
-  const analysis = buildAnalysisView(engineInput);
+  const marketOdds = await resolveAnalysisMarketOdds(engineInput);
+  const analysis = buildAnalysisView(engineInput, marketOdds);
 
   return (
     <>

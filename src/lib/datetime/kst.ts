@@ -31,6 +31,19 @@ export function getKstToday(): string {
   return getKstDateString(new Date());
 }
 
+/** ISO/Date → KST 날짜·시각 (HH:mm). 파싱 실패 시 null */
+export function instantToKst(
+  input: string | Date,
+): { date: string; time: string } | null {
+  const date =
+    input instanceof Date ? input : new Date(input);
+  if (Number.isNaN(date.getTime())) return null;
+  return {
+    date: getKstDateString(date),
+    time: KST_TIME_FORMATTER.format(date),
+  };
+}
+
 /**
  * UTC 기준 날짜/시간을 KST 날짜·시간으로 변환한다.
  *

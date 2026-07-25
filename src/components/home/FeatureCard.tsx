@@ -1,5 +1,6 @@
 import type { FeatureData } from "@/types/feature";
 import Card from "@/components/ui/Card";
+import Badge from "@/components/ui/Badge";
 import { getMatchDisplayLabel, getTeamDisplayName } from "@/lib/teams";
 
 type FeatureCardProps = {
@@ -23,6 +24,22 @@ function featureDescription(feature: FeatureData): string {
   const displayPick = getTeamDisplayName(feature.pickTeamName);
   if (displayPick === feature.pickTeamName) return feature.description;
   return feature.description.split(feature.pickTeamName).join(displayPick);
+}
+
+/** recommendation-grade 색 토큰 → 기존 Badge variant (새 색 추가 없음) */
+function gradeBadgeVariant(
+  color: FeatureData["recommendationColor"],
+): "default" | "accent" | "success" | "warning" {
+  switch (color) {
+    case "blue":
+      return "accent";
+    case "emerald":
+      return "success";
+    case "amber":
+      return "warning";
+    default:
+      return "default";
+  }
 }
 
 function FeatureIcon({ icon }: { icon: FeatureData["icon"] }) {
@@ -66,14 +83,28 @@ function FeatureIcon({ icon }: { icon: FeatureData["icon"] }) {
 }
 
 export default function FeatureCard({ feature }: FeatureCardProps) {
+  const grade = feature.recommendationGrade;
+  // PASS 는 Featured 목록에 들어오지 않지만 방어적으로 숨김
+  const showGrade = grade != null && grade !== "PASS";
+
   return (
     <Card
       as="article"
       padding="sm"
       className="rounded-xl border-white/[0.06] bg-zinc-900/50 p-5"
     >
-      <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10">
-        <FeatureIcon icon={feature.icon} />
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10">
+          <FeatureIcon icon={feature.icon} />
+        </div>
+        {showGrade && (
+          <Badge
+            variant={gradeBadgeVariant(feature.recommendationColor)}
+            className="shrink-0 tracking-wide"
+          >
+            {grade}
+          </Badge>
+        )}
       </div>
       <h3 className="text-sm font-semibold text-white">
         {featureMatchLabel(feature)}

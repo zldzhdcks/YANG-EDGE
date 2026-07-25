@@ -9,6 +9,17 @@ type PredictionHeroProps = {
   analysis: AnalysisViewModel;
 };
 
+/** recommendation-grade.ts 색 토큰 → 기존 팔레트 클래스 */
+const GRADE_VALUE_CLASS: Record<
+  AnalysisViewModel["recommendationColor"],
+  string
+> = {
+  zinc: "text-zinc-400",
+  blue: "text-blue-400",
+  emerald: "text-emerald-400",
+  amber: "text-amber-400",
+};
+
 function StarRating({ rating }: { rating: number }) {
   return (
     <div className="flex items-center gap-0.5" aria-label={`${rating}점`}>
@@ -29,6 +40,14 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export default function PredictionHero({ analysis }: PredictionHeroProps) {
+  const showMarket = analysis.comparisonAvailable;
+  const valueEdge = analysis.valueEdge;
+  const valueEdgeLabel =
+    valueEdge == null
+      ? ""
+      : `${valueEdge > 0 ? "+" : ""}${valueEdge.toFixed(1)}%`;
+  const valueEdgePositive = valueEdge != null && valueEdge > 0;
+
   return (
     <Card as="section" padding="lg">
       <div className="flex items-center gap-2">
@@ -71,8 +90,32 @@ export default function PredictionHero({ analysis }: PredictionHeroProps) {
           accent
           size="md"
         />
-        <StatBox label="EDGE Grade" value={analysis.grade} size="md" />
+        <StatBox
+          label="추천 등급"
+          value={analysis.recommendationGrade}
+          hint={analysis.recommendationDescription}
+          valueClassName={GRADE_VALUE_CLASS[analysis.recommendationColor]}
+          size="md"
+        />
       </div>
+
+      {showMarket &&
+        analysis.marketProbability != null &&
+        valueEdge != null && (
+          <div className="mt-5 grid grid-cols-2 gap-5 border-t border-white/[0.06] pt-5 sm:grid-cols-4 sm:gap-4">
+            <StatBox
+              label="시장 확률"
+              value={`${analysis.marketProbability}%`}
+              size="md"
+            />
+            <StatBox
+              label="Value Edge"
+              value={valueEdgeLabel}
+              accent={valueEdgePositive}
+              size="md"
+            />
+          </div>
+        )}
     </Card>
   );
 }

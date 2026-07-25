@@ -19,7 +19,7 @@ export default async function Home() {
       <Header />
       <main>
         <HeroSection />
-        {pick ? <TodayPick pick={pick} /> : null}
+        <TodayPick pick={pick} />
         <TodayGames sports={todayGames} />
         <WhyYangEdge features={featured} />
       </main>
