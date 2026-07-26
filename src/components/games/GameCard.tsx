@@ -1,6 +1,10 @@
 import type { GameData } from "@/types/game";
 import type { OddsData } from "@/lib/odds";
-import type { GameRecommendationGrade } from "@/types/game-with-odds";
+import {
+  getOddsAvailabilityLabel,
+  type GameRecommendationGrade,
+  type OddsAvailability,
+} from "@/types/game-with-odds";
 import Badge from "@/components/ui/Badge";
 import { buttonClasses } from "@/components/ui/Button";
 import AnalysisNavLink from "@/components/analysis/AnalysisNavLink";
@@ -10,6 +14,8 @@ type GameCardProps = {
   game: GameData;
   /** 매칭 확정된 배당만 전달된다. 없으면 표시하지 않음 (빈 값·0 금지). */
   odds?: OddsData | null;
+  oddsAvailability?: OddsAvailability;
+  oddsUnavailableReason?: string | null;
   /** Engine 결과가 있을 때만. 없으면 배지 미표시. */
   recommendation?: GameRecommendationGrade | null;
   /** 리그 그룹 헤더가 있을 때 카드 내 리그 라벨 숨김 */
@@ -68,12 +74,18 @@ function gradeBadgeVariant(
 function GameCardBody({
   game,
   odds,
+  oddsAvailability = "not-found",
+  oddsUnavailableReason = null,
   recommendation = null,
   hideLeague = false,
 }: GameCardProps) {
-  const matchLabel = getMatchDisplayLabel(game.homeTeam, game.awayTeam);
+  const matchLabel = getMatchDisplayLabel(game.homeTeam, game.awayTeam, {
+    sport: game.sport,
+    league: game.league,
+  });
   const analysisReady = game.aiAnalysisAvailable;
   const showGrade = recommendation != null;
+  const unavailableLabel = getOddsAvailabilityLabel(oddsAvailability);
 
   return (
     <div className="flex items-start justify-between gap-4 rounded-xl px-1 py-1 transition-colors group-hover:bg-white/[0.02] sm:px-3 sm:py-2">
@@ -101,7 +113,18 @@ function GameCardBody({
         <p className="mt-2 text-sm tabular-nums text-zinc-400">
           {game.startTime}
         </p>
-        {odds && <OddsRow odds={odds} />}
+        {oddsAvailability === "available" && odds ? (
+          <OddsRow odds={odds} />
+        ) : (
+          unavailableLabel && (
+            <p
+              className="mt-2 text-xs text-zinc-600"
+              title={oddsUnavailableReason ?? undefined}
+            >
+              {unavailableLabel}
+            </p>
+          )
+        )}
       </div>
 
       {analysisReady ? (
@@ -128,6 +151,8 @@ function GameCardBody({
 export default function GameCard({
   game,
   odds = null,
+  oddsAvailability = "not-found",
+  oddsUnavailableReason = null,
   recommendation = null,
   hideLeague = false,
 }: GameCardProps) {
@@ -140,6 +165,8 @@ export default function GameCard({
         <GameCardBody
           game={game}
           odds={odds}
+          oddsAvailability={oddsAvailability}
+          oddsUnavailableReason={oddsUnavailableReason}
           recommendation={recommendation}
           hideLeague={hideLeague}
         />
@@ -152,6 +179,8 @@ export default function GameCard({
       <GameCardBody
         game={game}
         odds={odds}
+        oddsAvailability={oddsAvailability}
+        oddsUnavailableReason={oddsUnavailableReason}
         recommendation={recommendation}
         hideLeague={hideLeague}
       />

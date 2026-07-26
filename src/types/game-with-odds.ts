@@ -12,6 +12,33 @@ export type GameOddsMatchInfo = {
   method: "external-id" | "teams-time" | "none";
 };
 
+export type OddsAvailability =
+  | "available"
+  | "not-found"
+  | "not-yet-posted"
+  | "market-closed"
+  | "historical-not-loaded"
+  | "provider-error";
+
+export function getOddsAvailabilityLabel(
+  availability: OddsAvailability,
+): string | null {
+  switch (availability) {
+    case "available":
+      return null;
+    case "market-closed":
+      return "배당 마감";
+    case "historical-not-loaded":
+      return "과거 배당 미수집";
+    case "not-yet-posted":
+      return "배당 준비중";
+    case "not-found":
+      return "배당 정보 없음";
+    case "provider-error":
+      return "배당 조회 실패";
+  }
+}
+
 /** GameCard 표시용 — 등급명·색만 (설명 문구 제외) */
 export type GameRecommendationGrade = {
   grade: RecommendationGradeLabel;
@@ -28,6 +55,8 @@ export type GameWithOdds = {
   game: GameData;
   odds: OddsData | null;
   oddsMatch: GameOddsMatchInfo;
+  oddsAvailability: OddsAvailability;
+  oddsUnavailableReason: string | null;
   recommendation?: GameRecommendationGrade | null;
 };
 
@@ -36,6 +65,8 @@ export function toBareGameWithOdds(game: GameData): GameWithOdds {
     game,
     odds: null,
     oddsMatch: { matched: false, confidence: 0, method: "none" },
+    oddsAvailability: "not-found",
+    oddsUnavailableReason: null,
     recommendation: null,
   };
 }

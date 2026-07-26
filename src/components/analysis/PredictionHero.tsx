@@ -64,7 +64,11 @@ export default function PredictionHero({ analysis }: PredictionHeroProps) {
       </div>
 
       <h2 className="mt-4 text-2xl font-bold tracking-tight text-white sm:text-3xl">
-        {getTeamDisplayName(analysis.pickTeam)} 승
+        {getTeamDisplayName({
+          originalName: analysis.pickTeam,
+          league: analysis.league,
+        })}{" "}
+        승
       </h2>
 
       <div className="mt-3">

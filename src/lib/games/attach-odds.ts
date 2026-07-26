@@ -6,9 +6,11 @@ import {
   type OddsUsageMeta,
 } from "@/lib/odds";
 import { resolveSportKeysForLeagues } from "@/lib/odds/sport-key-resolver";
+import { getKstDateString, instantToKst } from "@/lib/datetime/kst";
 import {
   toBareGameWithOdds,
   type GameWithOdds,
+  type OddsAvailability,
 } from "@/types/game-with-odds";
 
 export type SportKeyMeta = {
@@ -37,9 +39,15 @@ export type OddsEnrichmentMeta = {
   usage: OddsUsageMeta;
   /** 모든 키가 캐시에서 응답됐는지 */
   allCached: boolean;
+  available: number;
+  marketClosed: number;
+  historicalNotLoaded: number;
+  notYetPosted: number;
+  notFound: number;
+  providerError: number;
 };
 
-const BASEBALL_ODDS_LEAGUES = new Set(["NPB", "KBO"]);
+const BASEBALL_ODDS_LEAGUES = new Set(["KBO", "NPB", "MLB"]);
 
 function emptyMeta(): OddsEnrichmentMeta {
   return {
@@ -52,7 +60,147 @@ function emptyMeta(): OddsEnrichmentMeta {
     byMethod: { "external-id": 0, "teams-time": 0 },
     usage: { requestsRemaining: null, requestsUsed: null, requestsLast: null },
     allCached: true,
+    available: 0,
+    marketClosed: 0,
+    historicalNotLoaded: 0,
+    notYetPosted: 0,
+    notFound: 0,
+    providerError: 0,
   };
+}
+
+export type OddsAvailabilityContext = {
+  now?: Date;
+  leagueResolved: boolean;
+  providerFailed: boolean;
+  oddsEvents: OddsData[];
+};
+
+export type OddsAvailabilityResult = {
+  availability: Exclude<OddsAvailability, "available">;
+  reason: string;
+};
+
+function gameStartMs(game: GameData): number | null {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(game.date)) return null;
+  if (!/^\d{2}:\d{2}/.test(game.startTime) || game.startTime === "TBD") {
+    return null;
+  }
+  const value = Date.parse(
+    `${game.date}T${game.startTime.slice(0, 5)}:00+09:00`,
+  );
+  return Number.isFinite(value) ? value : null;
+}
+
+/**
+ * 미매칭 경기의 배당 상태를 결정한다.
+ * historical API는 호출하지 않으며 현재 Odds 응답만 근거로 삼는다.
+ */
+export function classifyUnavailableOdds(
+  game: GameData,
+  context: OddsAvailabilityContext,
+): OddsAvailabilityResult {
+  if (context.providerFailed) {
+    return {
+      availability: "provider-error",
+      reason: "배당 제공자 조회에 실패했습니다.",
+    };
+  }
+
+  const now = context.now ?? new Date();
+  const todayKst = getKstDateString(now);
+  if (game.date < todayKst) {
+    return {
+      availability: "historical-not-loaded",
+      reason: "과거 배당 데이터를 조회하지 않았습니다.",
+    };
+  }
+
+  const startMs = gameStartMs(game);
+  if (startMs != null && startMs < now.getTime()) {
+    return {
+      availability: "market-closed",
+      reason: "경기 시작 후 현재 시장 배당이 마감되었습니다.",
+    };
+  }
+
+  if (!context.leagueResolved) {
+    return {
+      availability: "not-found",
+      reason: "활성 배당 시장을 찾지 못했습니다.",
+    };
+  }
+
+  const hasSameDateEvents = context.oddsEvents.some(
+    (event) => instantToKst(event.commenceTime)?.date === game.date,
+  );
+  if (!hasSameDateEvents) {
+    return {
+      availability: "not-yet-posted",
+      reason: "해당 경기 날짜의 배당이 아직 게시되지 않았습니다.",
+    };
+  }
+
+  return {
+    availability: "not-found",
+    reason: "같은 날짜의 다른 배당은 있지만 해당 경기 배당은 없습니다.",
+  };
+}
+
+function updateAvailabilityCounts(
+  items: GameWithOdds[],
+  meta: OddsEnrichmentMeta,
+): void {
+  meta.available = 0;
+  meta.marketClosed = 0;
+  meta.historicalNotLoaded = 0;
+  meta.notYetPosted = 0;
+  meta.notFound = 0;
+  meta.providerError = 0;
+
+  for (const item of items) {
+    switch (item.oddsAvailability) {
+      case "available":
+        meta.available += 1;
+        break;
+      case "market-closed":
+        meta.marketClosed += 1;
+        break;
+      case "historical-not-loaded":
+        meta.historicalNotLoaded += 1;
+        break;
+      case "not-yet-posted":
+        meta.notYetPosted += 1;
+        break;
+      case "not-found":
+        meta.notFound += 1;
+        break;
+      case "provider-error":
+        meta.providerError += 1;
+        break;
+    }
+  }
+}
+
+function markAllProviderError(
+  items: GameWithOdds[],
+  meta: OddsEnrichmentMeta,
+): { items: GameWithOdds[]; meta: OddsEnrichmentMeta } {
+  meta.ok = false;
+  meta.error = "배당 조회 실패";
+  meta.allCached = false;
+  for (const item of items) {
+    item.oddsAvailability = "provider-error";
+    item.oddsUnavailableReason = "배당 제공자 조회에 실패했습니다.";
+  }
+  updateAvailabilityCounts(items, meta);
+  return { items, meta };
+}
+
+export function buildProviderErrorOddsResult(
+  games: GameData[],
+): { items: GameWithOdds[]; meta: OddsEnrichmentMeta } {
+  return markAllProviderError(games.map(toBareGameWithOdds), emptyMeta());
 }
 
 /**
@@ -84,14 +232,33 @@ export async function attachOddsToGames(
     }
   }
 
-  const provider = getOddsProvider();
-  const resolved = await resolveSportKeysForLeagues(provider, {
-    baseball: [...baseballLeagues],
-    football: [...footballLeagues],
-  });
+  let provider: ReturnType<typeof getOddsProvider>;
+  let resolved: Awaited<ReturnType<typeof resolveSportKeysForLeagues>>;
+  try {
+    provider = getOddsProvider();
+    resolved = await resolveSportKeysForLeagues(provider, {
+      baseball: [...baseballLeagues],
+      football: [...footballLeagues],
+    });
+  } catch {
+    return markAllProviderError(items, meta);
+  }
 
   meta.requestedSportKeyCount = resolved.length;
-  if (resolved.length === 0) return { items, meta };
+  const resolvedLeagues = new Set(resolved.map((entry) => entry.league));
+  if (resolved.length === 0) {
+    for (const item of items) {
+      const status = classifyUnavailableOdds(item.game, {
+        leagueResolved: false,
+        providerFailed: false,
+        oddsEvents: [],
+      });
+      item.oddsAvailability = status.availability;
+      item.oddsUnavailableReason = status.reason;
+    }
+    updateAvailabilityCounts(items, meta);
+    return { items, meta };
+  }
 
   const settled = await Promise.allSettled(
     resolved.map((r) =>
@@ -100,6 +267,7 @@ export async function attachOddsToGames(
   );
 
   const oddsByLeague = new Map<string, OddsData[]>();
+  const failedLeagues = new Set<string>();
   let minRemaining: number | null = null;
 
   settled.forEach((result, index) => {
@@ -128,14 +296,17 @@ export async function attachOddsToGames(
         meta.usage = value.usage;
       }
     } else {
+      meta.ok = false;
+      meta.error = "일부 배당 조회 실패";
       meta.allCached = false;
+      failedLeagues.add(target.league);
       meta.sportKeys.push({
         league: target.league,
         sportKey: target.sportKey,
         ok: false,
         eventCount: 0,
         cached: false,
-        error: toSafeError(result.reason),
+        error: "배당 조회 실패",
       });
     }
   });
@@ -152,6 +323,8 @@ export async function attachOddsToGames(
       const item = itemByGameId.get(match.game.id);
       if (!item) continue;
       item.odds = match.odds;
+      item.oddsAvailability = "available";
+      item.oddsUnavailableReason = null;
       item.oddsMatch = {
         matched: true,
         confidence: Math.round(match.confidence * 100) / 100,
@@ -162,16 +335,20 @@ export async function attachOddsToGames(
     }
   }
 
+  for (const item of items) {
+    if (item.oddsAvailability === "available") continue;
+    const league = item.game.league;
+    const status = classifyUnavailableOdds(item.game, {
+      leagueResolved: resolvedLeagues.has(league),
+      providerFailed: failedLeagues.has(league),
+      oddsEvents: oddsByLeague.get(league) ?? [],
+    });
+    item.oddsAvailability = status.availability;
+    item.oddsUnavailableReason = status.reason;
+  }
+
   meta.unmatchedGameCount = games.length - meta.matchedCount;
+  updateAvailabilityCounts(items, meta);
   return { items, meta };
 }
 
-export function toSafeError(reason: unknown): string {
-  const raw =
-    reason instanceof Error
-      ? reason.message
-      : typeof reason === "string"
-        ? reason
-        : "Unknown odds error";
-  return raw.replace(/apiKey=[^&\s]+/gi, "apiKey=***");
-}

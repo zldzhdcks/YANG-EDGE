@@ -57,8 +57,13 @@ function RankBadge({ rank }: { rank: number }) {
 
 export default function PickCard({ pick }: PickCardProps) {
   const isTop = pick.rank === 1;
-  const matchLabel = getMatchDisplayLabel(pick.homeTeam, pick.awayTeam);
-  const pickTeamLabel = getTeamDisplayName(pick.pickTeam);
+  const matchLabel = getMatchDisplayLabel(pick.homeTeam, pick.awayTeam, {
+    league: pick.league,
+  });
+  const pickTeamLabel = getTeamDisplayName({
+    originalName: pick.pickTeam,
+    league: pick.league,
+  });
 
   return (
     <AnalysisNavLink

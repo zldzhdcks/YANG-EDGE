@@ -7,7 +7,7 @@ function idKey(provider: string, id: string | number): string {
 }
 
 const BY_EXTERNAL_ID = new Map<string, TeamAliasEntry>();
-const BY_ORIGINAL_NAME = new Map<string, TeamAliasEntry>();
+const BY_ORIGINAL_NAME = new Map<string, TeamAliasEntry[]>();
 
 for (const entry of TEAM_ALIASES) {
   for (const ext of entry.externalIds ?? []) {
@@ -16,11 +16,48 @@ for (const entry of TEAM_ALIASES) {
   for (const name of entry.originalNames) {
     const key = normalizeTeamName(name);
     if (!key) continue;
-    // 첫 등록 우선 (KBO/NPB/K리그1이 배열 앞쪽)
-    if (!BY_ORIGINAL_NAME.has(key)) {
-      BY_ORIGINAL_NAME.set(key, entry);
+    const list = BY_ORIGINAL_NAME.get(key);
+    if (list) {
+      if (!list.includes(entry)) list.push(entry);
+    } else {
+      BY_ORIGINAL_NAME.set(key, [entry]);
     }
   }
+}
+
+function matchesContext(
+  entry: TeamAliasEntry,
+  input: GetTeamDisplayNameInput,
+): boolean {
+  if (input.sport && entry.sport && entry.sport !== input.sport) return false;
+  if (
+    input.league &&
+    entry.league &&
+    entry.league.toLowerCase() !== String(input.league).toLowerCase()
+  ) {
+    return false;
+  }
+  return true;
+}
+
+function pickByName(
+  candidates: TeamAliasEntry[],
+  input: GetTeamDisplayNameInput,
+): TeamAliasEntry | null {
+  if (candidates.length === 0) return null;
+  if (candidates.length === 1) return candidates[0];
+
+  const contextual = candidates.filter((entry) => matchesContext(entry, input));
+  if (contextual.length === 1) return contextual[0];
+  if (contextual.length > 1) {
+    // 리그까지 지정됐으면 그 순서 유지, 아니면 종목만 맞는 첫 항목
+    return contextual[0];
+  }
+
+  // 문맥이 없거나 후보를 좁히지 못하면 잘못된 교차 매핑을 피하기 위해
+  // 종목/리그가 지정된 경우에는 fallback 하지 않는다.
+  if (input.sport || input.league) return null;
+  return candidates[0];
 }
 
 /**
@@ -28,12 +65,14 @@ for (const entry of TEAM_ALIASES) {
  *
  * 우선순위:
  * 1. provider + externalTeamId
- * 2. originalName 별칭 (정규화 일치)
+ * 2. originalName 별칭 (정규화 일치, sport/league 문맥으로 충돌 해소)
  * 3. 매핑 없으면 원문 그대로
  *
  * Provider·Odds·gameId 경로에서는 호출하지 않는다.
  */
-export function getTeamDisplayName(input: GetTeamDisplayNameInput | string): string {
+export function getTeamDisplayName(
+  input: GetTeamDisplayNameInput | string,
+): string {
   if (typeof input === "string") {
     return resolveDisplayName({ originalName: input });
   }
@@ -55,7 +94,10 @@ function resolveDisplayName(input: GetTeamDisplayNameInput): string {
     if (byId) return byId.displayName;
   }
 
-  const byName = BY_ORIGINAL_NAME.get(normalizeTeamName(original));
+  const byName = pickByName(
+    BY_ORIGINAL_NAME.get(normalizeTeamName(original)) ?? [],
+    input,
+  );
   if (byName) return byName.displayName;
 
   return original;
@@ -70,17 +112,23 @@ export function getMatchDisplayLabel(
     awayProvider?: GetTeamDisplayNameInput["provider"];
     homeExternalTeamId?: string | number | null;
     awayExternalTeamId?: string | number | null;
+    sport?: GetTeamDisplayNameInput["sport"];
+    league?: GetTeamDisplayNameInput["league"];
   },
 ): string {
   const home = getTeamDisplayName({
     originalName: homeTeam,
     provider: options?.homeProvider,
     externalTeamId: options?.homeExternalTeamId,
+    sport: options?.sport,
+    league: options?.league,
   });
   const away = getTeamDisplayName({
     originalName: awayTeam,
     provider: options?.awayProvider,
     externalTeamId: options?.awayExternalTeamId,
+    sport: options?.sport,
+    league: options?.league,
   });
   return `${home} vs ${away}`;
 }

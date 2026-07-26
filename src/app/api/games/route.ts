@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSportsProvider } from "@/lib/sports";
 import { getFootballGamesForDate } from "@/lib/games/football-games";
+import { getMlbGamesForDate } from "@/lib/games/mlb-games";
 import { mergeGames } from "@/lib/games/merge-games";
 import { sortGames } from "@/lib/games/sort";
 import {
@@ -8,7 +9,7 @@ import {
 } from "@/lib/games/complement-baseball-schedule";
 import {
   attachOddsToGames,
-  toSafeError,
+  buildProviderErrorOddsResult,
   type OddsEnrichmentMeta,
 } from "@/lib/games/attach-odds";
 import { attachRecommendationGrades } from "@/lib/games/attach-recommendation-grades";
@@ -45,17 +46,29 @@ export async function GET(request: Request) {
       ? (sportParam as GameData["sport"])
       : "all";
   const league = searchParams.get("league") ?? undefined;
+  const validDate = !date || /^\d{4}-\d{2}-\d{2}$/.test(date);
+  const dateKst = date && validDate ? date : getKstToday();
+  const wantBaseball = sport === "all" || sport === "baseball";
+  const canQueryMlb =
+    validDate &&
+    wantBaseball &&
+    (!league || league.trim().toUpperCase() === "MLB");
 
   // 축구는 날짜가 있어야 조회 가능 (API-Football date 필수)
   const canQueryFootball =
-    !!date && /^\d{4}-\d{2}-\d{2}$/.test(date) && sport !== "baseball" && sport !== "basketball";
+    !!date &&
+    /^\d{4}-\d{2}-\d{2}$/.test(date) &&
+    sport !== "baseball" &&
+    sport !== "basketball";
 
-  const [sportsSettled, footballSettled] = await Promise.allSettled([
-    getSportsProvider().getGames({ date, sport, league }),
-    canQueryFootball
-      ? getFootballGamesForDate(date)
-      : Promise.resolve(null),
-  ]);
+  const [sportsSettled, mlbSettled, footballSettled] =
+    await Promise.allSettled([
+      getSportsProvider().getGames({ date, sport, league }),
+      canQueryMlb ? getMlbGamesForDate(dateKst) : Promise.resolve(null),
+      canQueryFootball
+        ? getFootballGamesForDate(date)
+        : Promise.resolve(null),
+    ]);
 
   const sportsMeta: ProviderMeta = { ok: false, count: 0 };
   let sportsGames: GameData[] = [];
@@ -66,6 +79,35 @@ export async function GET(request: Request) {
     sportsMeta.count = sportsGames.length;
   } else {
     sportsMeta.error = toSafeMessage(sportsSettled.reason);
+  }
+
+  const mlbMeta: ProviderMeta & {
+    skipped?: boolean;
+    cached?: boolean;
+    requestsRemaining?: number | null;
+    requestsLimit?: number | null;
+    leagueId?: number;
+    season?: number;
+  } = { ok: false, count: 0 };
+  let mlbGames: GameData[] = [];
+
+  if (mlbSettled.status === "fulfilled") {
+    if (mlbSettled.value === null) {
+      mlbMeta.ok = true;
+      mlbMeta.skipped = true;
+    } else {
+      const value = mlbSettled.value;
+      mlbGames = value.games;
+      mlbMeta.ok = true;
+      mlbMeta.count = value.games.length;
+      mlbMeta.cached = value.cached;
+      mlbMeta.requestsRemaining = value.usage.requestsRemaining;
+      mlbMeta.requestsLimit = value.usage.requestsLimit;
+      mlbMeta.leagueId = value.leagueId;
+      mlbMeta.season = value.season;
+    }
+  } else {
+    mlbMeta.error = toSafeMessage(mlbSettled.reason);
   }
 
   const footballMeta: ProviderMeta & {
@@ -95,15 +137,24 @@ export async function GET(request: Request) {
     footballMeta.error = toSafeMessage(footballSettled.reason);
   }
 
-  // 둘 다 실패 → error
-  if (!sportsMeta.ok && !footballMeta.ok) {
+  const anySourceSucceeded =
+    sportsMeta.ok ||
+    (!mlbMeta.skipped && mlbMeta.ok) ||
+    (!footballMeta.skipped && footballMeta.ok);
+
+  // 실제로 시도한 모든 일정 source가 실패한 경우만 error.
+  if (!anySourceSucceeded) {
     return NextResponse.json(
       {
         games: [],
         meta: {
           status: "error",
           date: date ?? null,
-          sources: { sports: sportsMeta, football: footballMeta },
+          sources: {
+            sports: sportsMeta,
+            apiBaseballMlb: mlbMeta,
+            football: footballMeta,
+          },
         },
         message: "경기 일정을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
       },
@@ -111,32 +162,46 @@ export async function GET(request: Request) {
     );
   }
 
-  // 야구 일정 보완: TheSportsDB 리그당 3경기 제한 → Odds KBO/NPB 이벤트로 누락분 채움
+  // 야구 일정 보완: Provider 기준 일정에 없는 KBO/NPB/MLB Odds 이벤트만 추가
   // (동일 getOdds 호출은 Provider 캐시로 attachOddsToGames 와 공유)
   let baseballComplementMeta: Awaited<
     ReturnType<typeof complementBaseballScheduleWithOdds>
   >["meta"] | null = null;
 
-  const wantBaseball = sport === "all" || sport === "baseball";
-  if (wantBaseball && sportsMeta.ok) {
-    const dateKst =
-      date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : getKstToday();
-    const baseballPrimary = sportsGames.filter((g) => g.sport === "baseball");
-    const nonBaseballSports = sportsGames.filter((g) => g.sport !== "baseball");
+  let combinedSportsGames = [...sportsGames, ...mlbGames];
+  if (wantBaseball && (sportsMeta.ok || mlbMeta.ok)) {
+    const baseballPrimary = combinedSportsGames.filter(
+      (g) => g.sport === "baseball",
+    );
+    const nonBaseballSports = combinedSportsGames.filter(
+      (g) => g.sport !== "baseball",
+    );
+    const wantedLeague = league?.trim().toUpperCase();
+    const complementLeagues: Array<"KBO" | "NPB" | "MLB"> = [];
+    if (sportsMeta.ok && (!wantedLeague || wantedLeague === "KBO")) {
+      complementLeagues.push("KBO");
+    }
+    if (sportsMeta.ok && (!wantedLeague || wantedLeague === "NPB")) {
+      complementLeagues.push("NPB");
+    }
+    if (mlbMeta.ok && (!wantedLeague || wantedLeague === "MLB")) {
+      complementLeagues.push("MLB");
+    }
     try {
       const complemented = await complementBaseballScheduleWithOdds(
         baseballPrimary,
         dateKst,
+        complementLeagues,
       );
       baseballComplementMeta = complemented.meta;
-      sportsGames = [...nonBaseballSports, ...complemented.games];
+      combinedSportsGames = [...nonBaseballSports, ...complemented.games];
     } catch {
-      // 보완 실패 시 TheSportsDB 일정만 유지
+      // 보완 실패 시 Provider 기준 일정만 유지
       baseballComplementMeta = null;
     }
   }
 
-  let games = mergeGames(sportsGames, footballGames);
+  let games = mergeGames(combinedSportsGames, footballGames);
 
   // 병합 후에도 요청 필터를 일관 적용 (축구는 Provider 단계 필터가 없음)
   if (sport !== "all") {
@@ -151,13 +216,15 @@ export async function GET(request: Request) {
   // 배당 연결 — 일정 Provider 실패 처리와 완전 분리.
   // Odds 실패 시에도 일정은 HTTP 200 으로 정상 반환한다.
   let items: GameWithOdds[] = games.map(toBareGameWithOdds);
-  let oddsMeta: OddsEnrichmentMeta | { ok: false; error: string };
+  let oddsMeta: OddsEnrichmentMeta;
   try {
     const enriched = await attachOddsToGames(games);
     items = enriched.items;
     oddsMeta = enriched.meta;
-  } catch (error) {
-    oddsMeta = { ok: false, error: toSafeError(error) };
+  } catch {
+    const fallback = buildProviderErrorOddsResult(games);
+    items = fallback.items;
+    oddsMeta = fallback.meta;
   }
 
   // 추천 등급 — Odds와 분리. 실패해도 일정·배당 표시는 유지.
@@ -167,7 +234,10 @@ export async function GET(request: Request) {
     // 등급 enrichment 실패 시 recommendation=null 유지
   }
 
-  const partial = !sportsMeta.ok || !footballMeta.ok;
+  const partial =
+    !sportsMeta.ok ||
+    (!mlbMeta.skipped && !mlbMeta.ok) ||
+    (!footballMeta.skipped && !footballMeta.ok);
 
   return NextResponse.json(
     {
@@ -175,7 +245,11 @@ export async function GET(request: Request) {
       meta: {
         status: partial ? "partial" : "success",
         date: date ?? null,
-        sources: { sports: sportsMeta, football: footballMeta },
+        sources: {
+          sports: sportsMeta,
+          apiBaseballMlb: mlbMeta,
+          football: footballMeta,
+        },
         baseballScheduleComplement: baseballComplementMeta,
         odds: oddsMeta,
       },

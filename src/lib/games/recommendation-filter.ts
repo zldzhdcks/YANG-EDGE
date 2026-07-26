@@ -158,9 +158,20 @@ function matchesSportAndSearch(
     item.game.league,
     item.game.homeTeam,
     item.game.awayTeam,
-    getTeamDisplayName(item.game.homeTeam),
-    getTeamDisplayName(item.game.awayTeam),
-    getMatchDisplayLabel(item.game.homeTeam, item.game.awayTeam),
+    getTeamDisplayName({
+      originalName: item.game.homeTeam,
+      sport: item.game.sport,
+      league: item.game.league,
+    }),
+    getTeamDisplayName({
+      originalName: item.game.awayTeam,
+      sport: item.game.sport,
+      league: item.game.league,
+    }),
+    getMatchDisplayLabel(item.game.homeTeam, item.game.awayTeam, {
+      sport: item.game.sport,
+      league: item.game.league,
+    }),
   ]
     .join(" ")
     .toLowerCase();

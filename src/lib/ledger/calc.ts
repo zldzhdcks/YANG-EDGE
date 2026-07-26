@@ -1,9 +1,61 @@
-import type { LedgerBet, LedgerBetStatus } from "@/types/ledger";
+import type {
+  LedgerBet,
+  LedgerBetStatus,
+  LedgerPick,
+  LedgerPickStatus,
+  LedgerTicketStatus,
+} from "@/types/ledger";
 
 /** 원 단위 반올림 */
 export function roundWon(value: number): number {
   if (!Number.isFinite(value)) return 0;
   return Math.round(value);
+}
+
+/** 유효 배당: 유한수이며 1 이상 */
+export function isValidPickOdds(odds: number): boolean {
+  return typeof odds === "number" && Number.isFinite(odds) && odds >= 1;
+}
+
+/**
+ * 티켓 조합배당 — 종목과 무관하게 유효한 pick.odds 를 모두 곱한다.
+ * 유효 픽이 없으면 1.
+ */
+export function combinePickOdds(
+  picks: ReadonlyArray<Pick<LedgerPick, "odds">>,
+): number {
+  let product = 1;
+  for (const pick of picks) {
+    if (isValidPickOdds(pick.odds)) {
+      product *= pick.odds;
+    }
+  }
+  return product;
+}
+
+export function expectedTicketReturn(stake: number, combinedOdds: number): number {
+  return roundWon(stake * combinedOdds);
+}
+
+/**
+ * 픽 상태 → 티켓 상태 (종목 무관, 동일 규칙).
+ *
+ * - 하나라도 loss → loss
+ * - 전부 win → win
+ * - 하나라도 pending 이고 loss 없음 → pending
+ * - void 규칙: TODO (무효 픽 배당 1.0 여부 등 미확정)
+ *   현재 임시: 전부 void → void, win+void 혼재 → pending
+ */
+export function deriveTicketStatus(
+  picks: ReadonlyArray<{ resultStatus: LedgerPickStatus }>,
+): LedgerTicketStatus {
+  if (picks.length === 0) return "pending";
+  if (picks.some((p) => p.resultStatus === "loss")) return "loss";
+  if (picks.some((p) => p.resultStatus === "pending")) return "pending";
+  if (picks.every((p) => p.resultStatus === "win")) return "win";
+  // TODO: void 처리 규칙 미확정
+  if (picks.every((p) => p.resultStatus === "void")) return "void";
+  return "pending";
 }
 
 export type LedgerSettlement = {

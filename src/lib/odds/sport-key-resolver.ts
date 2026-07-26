@@ -25,10 +25,11 @@ export async function getActiveSportsListCached(
   return active;
 }
 
-/** 야구 리그명(NPB/KBO) → 힌트 */
+/** 야구 리그명 → 활성 /sports title/description 힌트 */
 const BASEBALL_LEAGUE_HINTS: Record<string, string[]> = {
   KBO: ["kbo", "korea baseball"],
   NPB: ["npb", "nippon professional baseball", "japan baseball"],
+  MLB: ["mlb", "major league baseball"],
 };
 
 /**

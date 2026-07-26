@@ -32,6 +32,8 @@ function game(
     },
     odds: null,
     oddsMatch: { matched: false, confidence: 0, method: "none" },
+    oddsAvailability: "not-found",
+    oddsUnavailableReason: "테스트",
     recommendation,
   };
 }

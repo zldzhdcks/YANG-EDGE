@@ -11,6 +11,7 @@ import { sortGames } from "./sort";
  */
 export function mergeGames(...sources: GameData[][]): GameData[] {
   const seen = new Set<string>();
+  const seenFixtures = new Set<string>();
   const merged: GameData[] = [];
 
   for (const list of sources) {
@@ -19,12 +20,40 @@ export function mergeGames(...sources: GameData[][]): GameData[] {
         game.externalProvider && game.externalId
           ? `${game.externalProvider}:${game.externalId}`
           : `id:${game.id}`;
+      const fixtureKey = buildFixtureKey(game);
 
-      if (seen.has(key)) continue;
+      if (seen.has(key) || (fixtureKey != null && seenFixtures.has(fixtureKey))) {
+        continue;
+      }
       seen.add(key);
+      if (fixtureKey != null) seenFixtures.add(fixtureKey);
       merged.push(game);
     }
   }
 
   return sortGames(merged);
+}
+
+function normalizeFixtureToken(value: string): string {
+  return value.toLowerCase().normalize("NFKC").replace(/[^a-z0-9가-힣]/g, "");
+}
+
+/**
+ * Provider가 달라도 동일한 리그·팀·정확한 시작 시각이면 보조 중복으로 본다.
+ * 리그를 키에 포함해 MLB와 KBO/NPB 교차 제거를 막는다.
+ * TBD는 더블헤더를 잘못 합칠 수 있어 보조 중복 판정에서 제외한다.
+ */
+function buildFixtureKey(game: GameData): string | null {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(game.date)) return null;
+  if (!/^\d{2}:\d{2}/.test(game.startTime) || game.startTime === "TBD") {
+    return null;
+  }
+
+  return [
+    normalizeFixtureToken(game.league),
+    normalizeFixtureToken(game.homeTeam),
+    normalizeFixtureToken(game.awayTeam),
+    game.date,
+    game.startTime.slice(0, 5),
+  ].join("|");
 }

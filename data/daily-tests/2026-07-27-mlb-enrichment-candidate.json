@@ -1,0 +1,1400 @@
+{
+  "meta": {
+    "version": "mlb-enrichment-candidate-v1",
+    "generatedAt": "2026-07-26T13:03:38.794Z",
+    "targetDateKst": "2026-07-27",
+    "baselineInput": "data\\daily-tests\\2026-07-27-mlb-baseline-analysis.json",
+    "provider": "sportsdataio",
+    "engineConnected": false,
+    "standingsImplemented": false,
+    "note": "SportsDataIO 보강 후보 안전 계층. Engine에 전달하지 않음."
+  },
+  "scrambledDetection": {
+    "scrambled": true,
+    "evidence": [
+      "literal_Scrambled_value",
+      "payload[0].ForecastDescription=Scrambled",
+      "payload[0].AwayTeamStartingPitcher=Scrambled",
+      "payload[0].HomeTeamStartingPitcher=Scrambled",
+      "payload[0].CurrentPitcher=Scrambled",
+      "payload[0].CurrentHitter=Scrambled",
+      "payload[0].WinningPitcher=Scrambled",
+      "payload[0].LosingPitcher=Scrambled",
+      "payload[0].SavingPitcher=Scrambled",
+      "payload[0].LastPlay=Scrambled",
+      "payload[1].ForecastDescription=Scrambled",
+      "payload[1].AwayTeamStartingPitcher=Scrambled",
+      "payload[1].HomeTeamStartingPitcher=Scrambled"
+    ],
+    "warnings": [
+      "SCRAMBLED_DATA_CONFIRMED"
+    ]
+  },
+  "summary": {
+    "total": 15,
+    "matched": 15,
+    "ambiguous": 0,
+    "unmatched": 0,
+    "scrambledTrue": 15,
+    "scrambledFalse": 0,
+    "scrambledUnknown": 0,
+    "startingPitcher": 0,
+    "projected": 0,
+    "confirmed": 0,
+    "injuries": 15,
+    "usable": 0,
+    "commonWarnings": [
+      "CONFIRMED_LINEUP_MISSING",
+      "PROJECTED_LINEUP_MISSING",
+      "SCRAMBLED_DATA_CONFIRMED",
+      "STANDINGS_NOT_IMPLEMENTED",
+      "STARTING_PITCHER_MISSING"
+    ],
+    "warningCounts": {
+      "CONFIRMED_LINEUP_MISSING": 15,
+      "PROJECTED_LINEUP_MISSING": 15,
+      "SCRAMBLED_DATA_CONFIRMED": 15,
+      "STANDINGS_NOT_IMPLEMENTED": 15,
+      "STARTING_PITCHER_MISSING": 15
+    },
+    "deterministic": true,
+    "sportsDataGameCount": 27
+  },
+  "games": [
+    {
+      "gameId": "mlb-179592",
+      "sportsDataGameId": "78864",
+      "homeTeam": "Tampa Bay Rays",
+      "awayTeam": "Cleveland Guardians",
+      "startTime": "01:15",
+      "matchStatus": "MATCHED",
+      "matchConfidence": 0.9,
+      "scrambled": true,
+      "startingPitcherAvailable": false,
+      "projectedLineupAvailable": false,
+      "confirmedLineupAvailable": false,
+      "injuriesCount": 12,
+      "standings": null,
+      "usableForEngine": false,
+      "dataAvailability": 0.333,
+      "warnings": [
+        "STANDINGS_NOT_IMPLEMENTED",
+        "SCRAMBLED_DATA_CONFIRMED",
+        "STARTING_PITCHER_MISSING",
+        "PROJECTED_LINEUP_MISSING",
+        "CONFIRMED_LINEUP_MISSING"
+      ],
+      "candidate": {
+        "gameId": "mlb-179592",
+        "sportsDataGameId": "78864",
+        "homeTeam": "Tampa Bay Rays",
+        "awayTeam": "Cleveland Guardians",
+        "startTime": "01:15",
+        "startingPitchers": {
+          "home": {
+            "playerId": 10008425,
+            "name": "Scrambled",
+            "available": false
+          },
+          "away": {
+            "playerId": 10014072,
+            "name": "Scrambled",
+            "available": false
+          },
+          "available": false
+        },
+        "projectedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "confirmedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "injuries": {
+          "available": true,
+          "count": 12,
+          "homeCount": 9,
+          "awayCount": 3
+        },
+        "standings": null,
+        "source": "sportsdataio",
+        "scrambled": true,
+        "usableForEngine": false,
+        "warnings": [
+          "STANDINGS_NOT_IMPLEMENTED",
+          "SCRAMBLED_DATA_CONFIRMED",
+          "STARTING_PITCHER_MISSING",
+          "PROJECTED_LINEUP_MISSING",
+          "CONFIRMED_LINEUP_MISSING"
+        ],
+        "dataAvailability": 0.333,
+        "matchStatus": "MATCHED",
+        "matchConfidence": 0.9,
+        "scrambledEvidence": [
+          "literal_Scrambled_value",
+          "payload[0].ForecastDescription=Scrambled",
+          "payload[0].AwayTeamStartingPitcher=Scrambled",
+          "payload[0].HomeTeamStartingPitcher=Scrambled",
+          "payload[0].CurrentPitcher=Scrambled",
+          "payload[0].CurrentHitter=Scrambled",
+          "payload[0].WinningPitcher=Scrambled",
+          "payload[0].LosingPitcher=Scrambled",
+          "payload[0].SavingPitcher=Scrambled",
+          "payload[0].LastPlay=Scrambled",
+          "payload[1].ForecastDescription=Scrambled",
+          "payload[1].AwayTeamStartingPitcher=Scrambled",
+          "payload[1].HomeTeamStartingPitcher=Scrambled"
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179590",
+      "sportsDataGameId": "78862",
+      "homeTeam": "Washington Nationals",
+      "awayTeam": "Arizona Diamondbacks",
+      "startTime": "02:35",
+      "matchStatus": "MATCHED",
+      "matchConfidence": 0.9,
+      "scrambled": true,
+      "startingPitcherAvailable": false,
+      "projectedLineupAvailable": false,
+      "confirmedLineupAvailable": false,
+      "injuriesCount": 24,
+      "standings": null,
+      "usableForEngine": false,
+      "dataAvailability": 0.333,
+      "warnings": [
+        "STANDINGS_NOT_IMPLEMENTED",
+        "SCRAMBLED_DATA_CONFIRMED",
+        "STARTING_PITCHER_MISSING",
+        "PROJECTED_LINEUP_MISSING",
+        "CONFIRMED_LINEUP_MISSING"
+      ],
+      "candidate": {
+        "gameId": "mlb-179590",
+        "sportsDataGameId": "78862",
+        "homeTeam": "Washington Nationals",
+        "awayTeam": "Arizona Diamondbacks",
+        "startTime": "02:35",
+        "startingPitchers": {
+          "home": {
+            "playerId": 10001250,
+            "name": "Scrambled",
+            "available": false
+          },
+          "away": {
+            "playerId": 10014259,
+            "name": "Scrambled",
+            "available": false
+          },
+          "available": false
+        },
+        "projectedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "confirmedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "injuries": {
+          "available": true,
+          "count": 24,
+          "homeCount": 11,
+          "awayCount": 13
+        },
+        "standings": null,
+        "source": "sportsdataio",
+        "scrambled": true,
+        "usableForEngine": false,
+        "warnings": [
+          "STANDINGS_NOT_IMPLEMENTED",
+          "SCRAMBLED_DATA_CONFIRMED",
+          "STARTING_PITCHER_MISSING",
+          "PROJECTED_LINEUP_MISSING",
+          "CONFIRMED_LINEUP_MISSING"
+        ],
+        "dataAvailability": 0.333,
+        "matchStatus": "MATCHED",
+        "matchConfidence": 0.9,
+        "scrambledEvidence": [
+          "literal_Scrambled_value",
+          "payload[0].ForecastDescription=Scrambled",
+          "payload[0].AwayTeamStartingPitcher=Scrambled",
+          "payload[0].HomeTeamStartingPitcher=Scrambled",
+          "payload[0].CurrentPitcher=Scrambled",
+          "payload[0].CurrentHitter=Scrambled",
+          "payload[0].WinningPitcher=Scrambled",
+          "payload[0].LosingPitcher=Scrambled",
+          "payload[0].SavingPitcher=Scrambled",
+          "payload[0].LastPlay=Scrambled",
+          "payload[1].ForecastDescription=Scrambled",
+          "payload[1].AwayTeamStartingPitcher=Scrambled",
+          "payload[1].HomeTeamStartingPitcher=Scrambled"
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179595",
+      "sportsDataGameId": "78863",
+      "homeTeam": "Pittsburgh Pirates",
+      "awayTeam": "Chicago Cubs",
+      "startTime": "02:35",
+      "matchStatus": "MATCHED",
+      "matchConfidence": 0.9,
+      "scrambled": true,
+      "startingPitcherAvailable": false,
+      "projectedLineupAvailable": false,
+      "confirmedLineupAvailable": false,
+      "injuriesCount": 22,
+      "standings": null,
+      "usableForEngine": false,
+      "dataAvailability": 0.333,
+      "warnings": [
+        "STANDINGS_NOT_IMPLEMENTED",
+        "SCRAMBLED_DATA_CONFIRMED",
+        "STARTING_PITCHER_MISSING",
+        "PROJECTED_LINEUP_MISSING",
+        "CONFIRMED_LINEUP_MISSING"
+      ],
+      "candidate": {
+        "gameId": "mlb-179595",
+        "sportsDataGameId": "78863",
+        "homeTeam": "Pittsburgh Pirates",
+        "awayTeam": "Chicago Cubs",
+        "startTime": "02:35",
+        "startingPitchers": {
+          "home": {
+            "playerId": 10009265,
+            "name": "Scrambled",
+            "available": false
+          },
+          "away": {
+            "playerId": 10000986,
+            "name": "Scrambled",
+            "available": false
+          },
+          "available": false
+        },
+        "projectedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "confirmedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "injuries": {
+          "available": true,
+          "count": 22,
+          "homeCount": 7,
+          "awayCount": 15
+        },
+        "standings": null,
+        "source": "sportsdataio",
+        "scrambled": true,
+        "usableForEngine": false,
+        "warnings": [
+          "STANDINGS_NOT_IMPLEMENTED",
+          "SCRAMBLED_DATA_CONFIRMED",
+          "STARTING_PITCHER_MISSING",
+          "PROJECTED_LINEUP_MISSING",
+          "CONFIRMED_LINEUP_MISSING"
+        ],
+        "dataAvailability": 0.333,
+        "matchStatus": "MATCHED",
+        "matchConfidence": 0.9,
+        "scrambledEvidence": [
+          "literal_Scrambled_value",
+          "payload[0].ForecastDescription=Scrambled",
+          "payload[0].AwayTeamStartingPitcher=Scrambled",
+          "payload[0].HomeTeamStartingPitcher=Scrambled",
+          "payload[0].CurrentPitcher=Scrambled",
+          "payload[0].CurrentHitter=Scrambled",
+          "payload[0].WinningPitcher=Scrambled",
+          "payload[0].LosingPitcher=Scrambled",
+          "payload[0].SavingPitcher=Scrambled",
+          "payload[0].LastPlay=Scrambled",
+          "payload[1].ForecastDescription=Scrambled",
+          "payload[1].AwayTeamStartingPitcher=Scrambled",
+          "payload[1].HomeTeamStartingPitcher=Scrambled"
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179602",
+      "sportsDataGameId": "78866",
+      "homeTeam": "Boston Red Sox",
+      "awayTeam": "Toronto Blue Jays",
+      "startTime": "02:35",
+      "matchStatus": "MATCHED",
+      "matchConfidence": 0.9,
+      "scrambled": true,
+      "startingPitcherAvailable": false,
+      "projectedLineupAvailable": false,
+      "confirmedLineupAvailable": false,
+      "injuriesCount": 23,
+      "standings": null,
+      "usableForEngine": false,
+      "dataAvailability": 0.333,
+      "warnings": [
+        "STANDINGS_NOT_IMPLEMENTED",
+        "SCRAMBLED_DATA_CONFIRMED",
+        "STARTING_PITCHER_MISSING",
+        "PROJECTED_LINEUP_MISSING",
+        "CONFIRMED_LINEUP_MISSING"
+      ],
+      "candidate": {
+        "gameId": "mlb-179602",
+        "sportsDataGameId": "78866",
+        "homeTeam": "Boston Red Sox",
+        "awayTeam": "Toronto Blue Jays",
+        "startTime": "02:35",
+        "startingPitchers": {
+          "home": {
+            "playerId": 10008281,
+            "name": "Scrambled",
+            "available": false
+          },
+          "away": {
+            "playerId": 10000101,
+            "name": "Scrambled",
+            "available": false
+          },
+          "available": false
+        },
+        "projectedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "confirmedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "injuries": {
+          "available": true,
+          "count": 23,
+          "homeCount": 11,
+          "awayCount": 12
+        },
+        "standings": null,
+        "source": "sportsdataio",
+        "scrambled": true,
+        "usableForEngine": false,
+        "warnings": [
+          "STANDINGS_NOT_IMPLEMENTED",
+          "SCRAMBLED_DATA_CONFIRMED",
+          "STARTING_PITCHER_MISSING",
+          "PROJECTED_LINEUP_MISSING",
+          "CONFIRMED_LINEUP_MISSING"
+        ],
+        "dataAvailability": 0.333,
+        "matchStatus": "MATCHED",
+        "matchConfidence": 0.9,
+        "scrambledEvidence": [
+          "literal_Scrambled_value",
+          "payload[0].ForecastDescription=Scrambled",
+          "payload[0].AwayTeamStartingPitcher=Scrambled",
+          "payload[0].HomeTeamStartingPitcher=Scrambled",
+          "payload[0].CurrentPitcher=Scrambled",
+          "payload[0].CurrentHitter=Scrambled",
+          "payload[0].WinningPitcher=Scrambled",
+          "payload[0].LosingPitcher=Scrambled",
+          "payload[0].SavingPitcher=Scrambled",
+          "payload[0].LastPlay=Scrambled",
+          "payload[1].ForecastDescription=Scrambled",
+          "payload[1].AwayTeamStartingPitcher=Scrambled",
+          "payload[1].HomeTeamStartingPitcher=Scrambled"
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179603",
+      "sportsDataGameId": "78869",
+      "homeTeam": "Baltimore Orioles",
+      "awayTeam": "Atlanta Braves",
+      "startTime": "02:35",
+      "matchStatus": "MATCHED",
+      "matchConfidence": 0.9,
+      "scrambled": true,
+      "startingPitcherAvailable": false,
+      "projectedLineupAvailable": false,
+      "confirmedLineupAvailable": false,
+      "injuriesCount": 24,
+      "standings": null,
+      "usableForEngine": false,
+      "dataAvailability": 0.333,
+      "warnings": [
+        "STANDINGS_NOT_IMPLEMENTED",
+        "SCRAMBLED_DATA_CONFIRMED",
+        "STARTING_PITCHER_MISSING",
+        "PROJECTED_LINEUP_MISSING",
+        "CONFIRMED_LINEUP_MISSING"
+      ],
+      "candidate": {
+        "gameId": "mlb-179603",
+        "sportsDataGameId": "78869",
+        "homeTeam": "Baltimore Orioles",
+        "awayTeam": "Atlanta Braves",
+        "startTime": "02:35",
+        "startingPitchers": {
+          "home": {
+            "playerId": 10008332,
+            "name": "Scrambled",
+            "available": false
+          },
+          "away": {
+            "playerId": 10006183,
+            "name": "Scrambled",
+            "available": false
+          },
+          "available": false
+        },
+        "projectedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "confirmedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "injuries": {
+          "available": true,
+          "count": 24,
+          "homeCount": 14,
+          "awayCount": 10
+        },
+        "standings": null,
+        "source": "sportsdataio",
+        "scrambled": true,
+        "usableForEngine": false,
+        "warnings": [
+          "STANDINGS_NOT_IMPLEMENTED",
+          "SCRAMBLED_DATA_CONFIRMED",
+          "STARTING_PITCHER_MISSING",
+          "PROJECTED_LINEUP_MISSING",
+          "CONFIRMED_LINEUP_MISSING"
+        ],
+        "dataAvailability": 0.333,
+        "matchStatus": "MATCHED",
+        "matchConfidence": 0.9,
+        "scrambledEvidence": [
+          "literal_Scrambled_value",
+          "payload[0].ForecastDescription=Scrambled",
+          "payload[0].AwayTeamStartingPitcher=Scrambled",
+          "payload[0].HomeTeamStartingPitcher=Scrambled",
+          "payload[0].CurrentPitcher=Scrambled",
+          "payload[0].CurrentHitter=Scrambled",
+          "payload[0].WinningPitcher=Scrambled",
+          "payload[0].LosingPitcher=Scrambled",
+          "payload[0].SavingPitcher=Scrambled",
+          "payload[0].LastPlay=Scrambled",
+          "payload[1].ForecastDescription=Scrambled",
+          "payload[1].AwayTeamStartingPitcher=Scrambled",
+          "payload[1].HomeTeamStartingPitcher=Scrambled"
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179597",
+      "sportsDataGameId": "78865",
+      "homeTeam": "New York Mets",
+      "awayTeam": "Los Angeles Dodgers",
+      "startTime": "02:40",
+      "matchStatus": "MATCHED",
+      "matchConfidence": 0.9,
+      "scrambled": true,
+      "startingPitcherAvailable": false,
+      "projectedLineupAvailable": false,
+      "confirmedLineupAvailable": false,
+      "injuriesCount": 20,
+      "standings": null,
+      "usableForEngine": false,
+      "dataAvailability": 0.333,
+      "warnings": [
+        "STANDINGS_NOT_IMPLEMENTED",
+        "SCRAMBLED_DATA_CONFIRMED",
+        "STARTING_PITCHER_MISSING",
+        "PROJECTED_LINEUP_MISSING",
+        "CONFIRMED_LINEUP_MISSING"
+      ],
+      "candidate": {
+        "gameId": "mlb-179597",
+        "sportsDataGameId": "78865",
+        "homeTeam": "New York Mets",
+        "awayTeam": "Los Angeles Dodgers",
+        "startTime": "02:40",
+        "startingPitchers": {
+          "home": {
+            "playerId": 10006935,
+            "name": "Scrambled",
+            "available": false
+          },
+          "away": {
+            "playerId": 10014283,
+            "name": "Scrambled",
+            "available": false
+          },
+          "available": false
+        },
+        "projectedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "confirmedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "injuries": {
+          "available": true,
+          "count": 20,
+          "homeCount": 9,
+          "awayCount": 11
+        },
+        "standings": null,
+        "source": "sportsdataio",
+        "scrambled": true,
+        "usableForEngine": false,
+        "warnings": [
+          "STANDINGS_NOT_IMPLEMENTED",
+          "SCRAMBLED_DATA_CONFIRMED",
+          "STARTING_PITCHER_MISSING",
+          "PROJECTED_LINEUP_MISSING",
+          "CONFIRMED_LINEUP_MISSING"
+        ],
+        "dataAvailability": 0.333,
+        "matchStatus": "MATCHED",
+        "matchConfidence": 0.9,
+        "scrambledEvidence": [
+          "literal_Scrambled_value",
+          "payload[0].ForecastDescription=Scrambled",
+          "payload[0].AwayTeamStartingPitcher=Scrambled",
+          "payload[0].HomeTeamStartingPitcher=Scrambled",
+          "payload[0].CurrentPitcher=Scrambled",
+          "payload[0].CurrentHitter=Scrambled",
+          "payload[0].WinningPitcher=Scrambled",
+          "payload[0].LosingPitcher=Scrambled",
+          "payload[0].SavingPitcher=Scrambled",
+          "payload[0].LastPlay=Scrambled",
+          "payload[1].ForecastDescription=Scrambled",
+          "payload[1].AwayTeamStartingPitcher=Scrambled",
+          "payload[1].HomeTeamStartingPitcher=Scrambled"
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179599",
+      "sportsDataGameId": "78872",
+      "homeTeam": "Miami Marlins",
+      "awayTeam": "San Diego Padres",
+      "startTime": "02:40",
+      "matchStatus": "MATCHED",
+      "matchConfidence": 0.9,
+      "scrambled": true,
+      "startingPitcherAvailable": false,
+      "projectedLineupAvailable": false,
+      "confirmedLineupAvailable": false,
+      "injuriesCount": 21,
+      "standings": null,
+      "usableForEngine": false,
+      "dataAvailability": 0.333,
+      "warnings": [
+        "STANDINGS_NOT_IMPLEMENTED",
+        "SCRAMBLED_DATA_CONFIRMED",
+        "STARTING_PITCHER_MISSING",
+        "PROJECTED_LINEUP_MISSING",
+        "CONFIRMED_LINEUP_MISSING"
+      ],
+      "candidate": {
+        "gameId": "mlb-179599",
+        "sportsDataGameId": "78872",
+        "homeTeam": "Miami Marlins",
+        "awayTeam": "San Diego Padres",
+        "startTime": "02:40",
+        "startingPitchers": {
+          "home": {
+            "playerId": 10012463,
+            "name": "Scrambled",
+            "available": false
+          },
+          "away": {
+            "playerId": 10005607,
+            "name": "Scrambled",
+            "available": false
+          },
+          "available": false
+        },
+        "projectedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "confirmedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "injuries": {
+          "available": true,
+          "count": 21,
+          "homeCount": 9,
+          "awayCount": 12
+        },
+        "standings": null,
+        "source": "sportsdataio",
+        "scrambled": true,
+        "usableForEngine": false,
+        "warnings": [
+          "STANDINGS_NOT_IMPLEMENTED",
+          "SCRAMBLED_DATA_CONFIRMED",
+          "STARTING_PITCHER_MISSING",
+          "PROJECTED_LINEUP_MISSING",
+          "CONFIRMED_LINEUP_MISSING"
+        ],
+        "dataAvailability": 0.333,
+        "matchStatus": "MATCHED",
+        "matchConfidence": 0.9,
+        "scrambledEvidence": [
+          "literal_Scrambled_value",
+          "payload[0].ForecastDescription=Scrambled",
+          "payload[0].AwayTeamStartingPitcher=Scrambled",
+          "payload[0].HomeTeamStartingPitcher=Scrambled",
+          "payload[0].CurrentPitcher=Scrambled",
+          "payload[0].CurrentHitter=Scrambled",
+          "payload[0].WinningPitcher=Scrambled",
+          "payload[0].LosingPitcher=Scrambled",
+          "payload[0].SavingPitcher=Scrambled",
+          "payload[0].LastPlay=Scrambled",
+          "payload[1].ForecastDescription=Scrambled",
+          "payload[1].AwayTeamStartingPitcher=Scrambled",
+          "payload[1].HomeTeamStartingPitcher=Scrambled"
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179600",
+      "sportsDataGameId": "78871",
+      "homeTeam": "Detroit Tigers",
+      "awayTeam": "Kansas City Royals",
+      "startTime": "02:40",
+      "matchStatus": "MATCHED",
+      "matchConfidence": 0.9,
+      "scrambled": true,
+      "startingPitcherAvailable": false,
+      "projectedLineupAvailable": false,
+      "confirmedLineupAvailable": false,
+      "injuriesCount": 24,
+      "standings": null,
+      "usableForEngine": false,
+      "dataAvailability": 0.333,
+      "warnings": [
+        "STANDINGS_NOT_IMPLEMENTED",
+        "SCRAMBLED_DATA_CONFIRMED",
+        "STARTING_PITCHER_MISSING",
+        "PROJECTED_LINEUP_MISSING",
+        "CONFIRMED_LINEUP_MISSING"
+      ],
+      "candidate": {
+        "gameId": "mlb-179600",
+        "sportsDataGameId": "78871",
+        "homeTeam": "Detroit Tigers",
+        "awayTeam": "Kansas City Royals",
+        "startTime": "02:40",
+        "startingPitchers": {
+          "home": {
+            "playerId": 10007637,
+            "name": "Scrambled",
+            "available": false
+          },
+          "away": {
+            "playerId": 10016805,
+            "name": "Scrambled",
+            "available": false
+          },
+          "available": false
+        },
+        "projectedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "confirmedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "injuries": {
+          "available": true,
+          "count": 24,
+          "homeCount": 12,
+          "awayCount": 12
+        },
+        "standings": null,
+        "source": "sportsdataio",
+        "scrambled": true,
+        "usableForEngine": false,
+        "warnings": [
+          "STANDINGS_NOT_IMPLEMENTED",
+          "SCRAMBLED_DATA_CONFIRMED",
+          "STARTING_PITCHER_MISSING",
+          "PROJECTED_LINEUP_MISSING",
+          "CONFIRMED_LINEUP_MISSING"
+        ],
+        "dataAvailability": 0.333,
+        "matchStatus": "MATCHED",
+        "matchConfidence": 0.9,
+        "scrambledEvidence": [
+          "literal_Scrambled_value",
+          "payload[0].ForecastDescription=Scrambled",
+          "payload[0].AwayTeamStartingPitcher=Scrambled",
+          "payload[0].HomeTeamStartingPitcher=Scrambled",
+          "payload[0].CurrentPitcher=Scrambled",
+          "payload[0].CurrentHitter=Scrambled",
+          "payload[0].WinningPitcher=Scrambled",
+          "payload[0].LosingPitcher=Scrambled",
+          "payload[0].SavingPitcher=Scrambled",
+          "payload[0].LastPlay=Scrambled",
+          "payload[1].ForecastDescription=Scrambled",
+          "payload[1].AwayTeamStartingPitcher=Scrambled",
+          "payload[1].HomeTeamStartingPitcher=Scrambled"
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179596",
+      "sportsDataGameId": "78867",
+      "homeTeam": "Minnesota Twins",
+      "awayTeam": "Athletics",
+      "startTime": "03:10",
+      "matchStatus": "MATCHED",
+      "matchConfidence": 0.9,
+      "scrambled": true,
+      "startingPitcherAvailable": false,
+      "projectedLineupAvailable": false,
+      "confirmedLineupAvailable": false,
+      "injuriesCount": 20,
+      "standings": null,
+      "usableForEngine": false,
+      "dataAvailability": 0.333,
+      "warnings": [
+        "STANDINGS_NOT_IMPLEMENTED",
+        "SCRAMBLED_DATA_CONFIRMED",
+        "STARTING_PITCHER_MISSING",
+        "PROJECTED_LINEUP_MISSING",
+        "CONFIRMED_LINEUP_MISSING"
+      ],
+      "candidate": {
+        "gameId": "mlb-179596",
+        "sportsDataGameId": "78867",
+        "homeTeam": "Minnesota Twins",
+        "awayTeam": "Athletics",
+        "startTime": "03:10",
+        "startingPitchers": {
+          "home": {
+            "playerId": 10014138,
+            "name": "Scrambled",
+            "available": false
+          },
+          "away": {
+            "playerId": 10008737,
+            "name": "Scrambled",
+            "available": false
+          },
+          "available": false
+        },
+        "projectedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "confirmedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "injuries": {
+          "available": true,
+          "count": 20,
+          "homeCount": 9,
+          "awayCount": 11
+        },
+        "standings": null,
+        "source": "sportsdataio",
+        "scrambled": true,
+        "usableForEngine": false,
+        "warnings": [
+          "STANDINGS_NOT_IMPLEMENTED",
+          "SCRAMBLED_DATA_CONFIRMED",
+          "STARTING_PITCHER_MISSING",
+          "PROJECTED_LINEUP_MISSING",
+          "CONFIRMED_LINEUP_MISSING"
+        ],
+        "dataAvailability": 0.333,
+        "matchStatus": "MATCHED",
+        "matchConfidence": 0.9,
+        "scrambledEvidence": [
+          "literal_Scrambled_value",
+          "payload[0].ForecastDescription=Scrambled",
+          "payload[0].AwayTeamStartingPitcher=Scrambled",
+          "payload[0].HomeTeamStartingPitcher=Scrambled",
+          "payload[0].CurrentPitcher=Scrambled",
+          "payload[0].CurrentHitter=Scrambled",
+          "payload[0].WinningPitcher=Scrambled",
+          "payload[0].LosingPitcher=Scrambled",
+          "payload[0].SavingPitcher=Scrambled",
+          "payload[0].LastPlay=Scrambled",
+          "payload[1].ForecastDescription=Scrambled",
+          "payload[1].AwayTeamStartingPitcher=Scrambled",
+          "payload[1].HomeTeamStartingPitcher=Scrambled"
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179598",
+      "sportsDataGameId": "78873",
+      "homeTeam": "Milwaukee Brewers",
+      "awayTeam": "Colorado Rockies",
+      "startTime": "03:10",
+      "matchStatus": "MATCHED",
+      "matchConfidence": 0.9,
+      "scrambled": true,
+      "startingPitcherAvailable": false,
+      "projectedLineupAvailable": false,
+      "confirmedLineupAvailable": false,
+      "injuriesCount": 22,
+      "standings": null,
+      "usableForEngine": false,
+      "dataAvailability": 0.333,
+      "warnings": [
+        "STANDINGS_NOT_IMPLEMENTED",
+        "SCRAMBLED_DATA_CONFIRMED",
+        "STARTING_PITCHER_MISSING",
+        "PROJECTED_LINEUP_MISSING",
+        "CONFIRMED_LINEUP_MISSING"
+      ],
+      "candidate": {
+        "gameId": "mlb-179598",
+        "sportsDataGameId": "78873",
+        "homeTeam": "Milwaukee Brewers",
+        "awayTeam": "Colorado Rockies",
+        "startTime": "03:10",
+        "startingPitchers": {
+          "home": {
+            "playerId": 10014119,
+            "name": "Scrambled",
+            "available": false
+          },
+          "away": {
+            "playerId": 10005835,
+            "name": "Scrambled",
+            "available": false
+          },
+          "available": false
+        },
+        "projectedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "confirmedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "injuries": {
+          "available": true,
+          "count": 22,
+          "homeCount": 11,
+          "awayCount": 11
+        },
+        "standings": null,
+        "source": "sportsdataio",
+        "scrambled": true,
+        "usableForEngine": false,
+        "warnings": [
+          "STANDINGS_NOT_IMPLEMENTED",
+          "SCRAMBLED_DATA_CONFIRMED",
+          "STARTING_PITCHER_MISSING",
+          "PROJECTED_LINEUP_MISSING",
+          "CONFIRMED_LINEUP_MISSING"
+        ],
+        "dataAvailability": 0.333,
+        "matchStatus": "MATCHED",
+        "matchConfidence": 0.9,
+        "scrambledEvidence": [
+          "literal_Scrambled_value",
+          "payload[0].ForecastDescription=Scrambled",
+          "payload[0].AwayTeamStartingPitcher=Scrambled",
+          "payload[0].HomeTeamStartingPitcher=Scrambled",
+          "payload[0].CurrentPitcher=Scrambled",
+          "payload[0].CurrentHitter=Scrambled",
+          "payload[0].WinningPitcher=Scrambled",
+          "payload[0].LosingPitcher=Scrambled",
+          "payload[0].SavingPitcher=Scrambled",
+          "payload[0].LastPlay=Scrambled",
+          "payload[1].ForecastDescription=Scrambled",
+          "payload[1].AwayTeamStartingPitcher=Scrambled",
+          "payload[1].HomeTeamStartingPitcher=Scrambled"
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179601",
+      "sportsDataGameId": "78868",
+      "homeTeam": "Chicago White Sox",
+      "awayTeam": "Houston Astros",
+      "startTime": "03:10",
+      "matchStatus": "MATCHED",
+      "matchConfidence": 0.9,
+      "scrambled": true,
+      "startingPitcherAvailable": false,
+      "projectedLineupAvailable": false,
+      "confirmedLineupAvailable": false,
+      "injuriesCount": 20,
+      "standings": null,
+      "usableForEngine": false,
+      "dataAvailability": 0.333,
+      "warnings": [
+        "STANDINGS_NOT_IMPLEMENTED",
+        "SCRAMBLED_DATA_CONFIRMED",
+        "STARTING_PITCHER_MISSING",
+        "PROJECTED_LINEUP_MISSING",
+        "CONFIRMED_LINEUP_MISSING"
+      ],
+      "candidate": {
+        "gameId": "mlb-179601",
+        "sportsDataGameId": "78868",
+        "homeTeam": "Chicago White Sox",
+        "awayTeam": "Houston Astros",
+        "startTime": "03:10",
+        "startingPitchers": {
+          "home": {
+            "playerId": 10005808,
+            "name": "Scrambled",
+            "available": false
+          },
+          "away": {
+            "playerId": 10009998,
+            "name": "Scrambled",
+            "available": false
+          },
+          "available": false
+        },
+        "projectedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "confirmedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "injuries": {
+          "available": true,
+          "count": 20,
+          "homeCount": 12,
+          "awayCount": 8
+        },
+        "standings": null,
+        "source": "sportsdataio",
+        "scrambled": true,
+        "usableForEngine": false,
+        "warnings": [
+          "STANDINGS_NOT_IMPLEMENTED",
+          "SCRAMBLED_DATA_CONFIRMED",
+          "STARTING_PITCHER_MISSING",
+          "PROJECTED_LINEUP_MISSING",
+          "CONFIRMED_LINEUP_MISSING"
+        ],
+        "dataAvailability": 0.333,
+        "matchStatus": "MATCHED",
+        "matchConfidence": 0.9,
+        "scrambledEvidence": [
+          "literal_Scrambled_value",
+          "payload[0].ForecastDescription=Scrambled",
+          "payload[0].AwayTeamStartingPitcher=Scrambled",
+          "payload[0].HomeTeamStartingPitcher=Scrambled",
+          "payload[0].CurrentPitcher=Scrambled",
+          "payload[0].CurrentHitter=Scrambled",
+          "payload[0].WinningPitcher=Scrambled",
+          "payload[0].LosingPitcher=Scrambled",
+          "payload[0].SavingPitcher=Scrambled",
+          "payload[0].LastPlay=Scrambled",
+          "payload[1].ForecastDescription=Scrambled",
+          "payload[1].AwayTeamStartingPitcher=Scrambled",
+          "payload[1].HomeTeamStartingPitcher=Scrambled"
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179593",
+      "sportsDataGameId": "78874",
+      "homeTeam": "St.Louis Cardinals",
+      "awayTeam": "Cincinnati Reds",
+      "startTime": "03:15",
+      "matchStatus": "MATCHED",
+      "matchConfidence": 0.9,
+      "scrambled": true,
+      "startingPitcherAvailable": false,
+      "projectedLineupAvailable": false,
+      "confirmedLineupAvailable": false,
+      "injuriesCount": 11,
+      "standings": null,
+      "usableForEngine": false,
+      "dataAvailability": 0.333,
+      "warnings": [
+        "STANDINGS_NOT_IMPLEMENTED",
+        "SCRAMBLED_DATA_CONFIRMED",
+        "STARTING_PITCHER_MISSING",
+        "PROJECTED_LINEUP_MISSING",
+        "CONFIRMED_LINEUP_MISSING"
+      ],
+      "candidate": {
+        "gameId": "mlb-179593",
+        "sportsDataGameId": "78874",
+        "homeTeam": "St.Louis Cardinals",
+        "awayTeam": "Cincinnati Reds",
+        "startTime": "03:15",
+        "startingPitchers": {
+          "home": {
+            "playerId": 10014962,
+            "name": "Scrambled",
+            "available": false
+          },
+          "away": {
+            "playerId": 10012507,
+            "name": "Scrambled",
+            "available": false
+          },
+          "available": false
+        },
+        "projectedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "confirmedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "injuries": {
+          "available": true,
+          "count": 11,
+          "homeCount": 4,
+          "awayCount": 7
+        },
+        "standings": null,
+        "source": "sportsdataio",
+        "scrambled": true,
+        "usableForEngine": false,
+        "warnings": [
+          "STANDINGS_NOT_IMPLEMENTED",
+          "SCRAMBLED_DATA_CONFIRMED",
+          "STARTING_PITCHER_MISSING",
+          "PROJECTED_LINEUP_MISSING",
+          "CONFIRMED_LINEUP_MISSING"
+        ],
+        "dataAvailability": 0.333,
+        "matchStatus": "MATCHED",
+        "matchConfidence": 0.9,
+        "scrambledEvidence": [
+          "literal_Scrambled_value",
+          "payload[0].ForecastDescription=Scrambled",
+          "payload[0].AwayTeamStartingPitcher=Scrambled",
+          "payload[0].HomeTeamStartingPitcher=Scrambled",
+          "payload[0].CurrentPitcher=Scrambled",
+          "payload[0].CurrentHitter=Scrambled",
+          "payload[0].WinningPitcher=Scrambled",
+          "payload[0].LosingPitcher=Scrambled",
+          "payload[0].SavingPitcher=Scrambled",
+          "payload[0].LastPlay=Scrambled",
+          "payload[1].ForecastDescription=Scrambled",
+          "payload[1].AwayTeamStartingPitcher=Scrambled",
+          "payload[1].HomeTeamStartingPitcher=Scrambled"
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179591",
+      "sportsDataGameId": "78875",
+      "homeTeam": "Texas Rangers",
+      "awayTeam": "Seattle Mariners",
+      "startTime": "03:35",
+      "matchStatus": "MATCHED",
+      "matchConfidence": 0.9,
+      "scrambled": true,
+      "startingPitcherAvailable": false,
+      "projectedLineupAvailable": false,
+      "confirmedLineupAvailable": false,
+      "injuriesCount": 22,
+      "standings": null,
+      "usableForEngine": false,
+      "dataAvailability": 0.333,
+      "warnings": [
+        "STANDINGS_NOT_IMPLEMENTED",
+        "SCRAMBLED_DATA_CONFIRMED",
+        "STARTING_PITCHER_MISSING",
+        "PROJECTED_LINEUP_MISSING",
+        "CONFIRMED_LINEUP_MISSING"
+      ],
+      "candidate": {
+        "gameId": "mlb-179591",
+        "sportsDataGameId": "78875",
+        "homeTeam": "Texas Rangers",
+        "awayTeam": "Seattle Mariners",
+        "startTime": "03:35",
+        "startingPitchers": {
+          "home": {
+            "playerId": 10000787,
+            "name": "Scrambled",
+            "available": false
+          },
+          "away": {
+            "playerId": 10009285,
+            "name": "Scrambled",
+            "available": false
+          },
+          "available": false
+        },
+        "projectedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "confirmedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "injuries": {
+          "available": true,
+          "count": 22,
+          "homeCount": 15,
+          "awayCount": 7
+        },
+        "standings": null,
+        "source": "sportsdataio",
+        "scrambled": true,
+        "usableForEngine": false,
+        "warnings": [
+          "STANDINGS_NOT_IMPLEMENTED",
+          "SCRAMBLED_DATA_CONFIRMED",
+          "STARTING_PITCHER_MISSING",
+          "PROJECTED_LINEUP_MISSING",
+          "CONFIRMED_LINEUP_MISSING"
+        ],
+        "dataAvailability": 0.333,
+        "matchStatus": "MATCHED",
+        "matchConfidence": 0.9,
+        "scrambledEvidence": [
+          "literal_Scrambled_value",
+          "payload[0].ForecastDescription=Scrambled",
+          "payload[0].AwayTeamStartingPitcher=Scrambled",
+          "payload[0].HomeTeamStartingPitcher=Scrambled",
+          "payload[0].CurrentPitcher=Scrambled",
+          "payload[0].CurrentHitter=Scrambled",
+          "payload[0].WinningPitcher=Scrambled",
+          "payload[0].LosingPitcher=Scrambled",
+          "payload[0].SavingPitcher=Scrambled",
+          "payload[0].LastPlay=Scrambled",
+          "payload[1].ForecastDescription=Scrambled",
+          "payload[1].AwayTeamStartingPitcher=Scrambled",
+          "payload[1].HomeTeamStartingPitcher=Scrambled"
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179594",
+      "sportsDataGameId": "78876",
+      "homeTeam": "San Francisco Giants",
+      "awayTeam": "Los Angeles Angels",
+      "startTime": "05:05",
+      "matchStatus": "MATCHED",
+      "matchConfidence": 0.9,
+      "scrambled": true,
+      "startingPitcherAvailable": false,
+      "projectedLineupAvailable": false,
+      "confirmedLineupAvailable": false,
+      "injuriesCount": 21,
+      "standings": null,
+      "usableForEngine": false,
+      "dataAvailability": 0.333,
+      "warnings": [
+        "STANDINGS_NOT_IMPLEMENTED",
+        "SCRAMBLED_DATA_CONFIRMED",
+        "STARTING_PITCHER_MISSING",
+        "PROJECTED_LINEUP_MISSING",
+        "CONFIRMED_LINEUP_MISSING"
+      ],
+      "candidate": {
+        "gameId": "mlb-179594",
+        "sportsDataGameId": "78876",
+        "homeTeam": "San Francisco Giants",
+        "awayTeam": "Los Angeles Angels",
+        "startTime": "05:05",
+        "startingPitchers": {
+          "home": {
+            "playerId": 10014354,
+            "name": "Scrambled",
+            "available": false
+          },
+          "away": {
+            "playerId": 10008545,
+            "name": "Scrambled",
+            "available": false
+          },
+          "available": false
+        },
+        "projectedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "confirmedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "injuries": {
+          "available": true,
+          "count": 21,
+          "homeCount": 12,
+          "awayCount": 9
+        },
+        "standings": null,
+        "source": "sportsdataio",
+        "scrambled": true,
+        "usableForEngine": false,
+        "warnings": [
+          "STANDINGS_NOT_IMPLEMENTED",
+          "SCRAMBLED_DATA_CONFIRMED",
+          "STARTING_PITCHER_MISSING",
+          "PROJECTED_LINEUP_MISSING",
+          "CONFIRMED_LINEUP_MISSING"
+        ],
+        "dataAvailability": 0.333,
+        "matchStatus": "MATCHED",
+        "matchConfidence": 0.9,
+        "scrambledEvidence": [
+          "literal_Scrambled_value",
+          "payload[0].ForecastDescription=Scrambled",
+          "payload[0].AwayTeamStartingPitcher=Scrambled",
+          "payload[0].HomeTeamStartingPitcher=Scrambled",
+          "payload[0].CurrentPitcher=Scrambled",
+          "payload[0].CurrentHitter=Scrambled",
+          "payload[0].WinningPitcher=Scrambled",
+          "payload[0].LosingPitcher=Scrambled",
+          "payload[0].SavingPitcher=Scrambled",
+          "payload[0].LastPlay=Scrambled",
+          "payload[1].ForecastDescription=Scrambled",
+          "payload[1].AwayTeamStartingPitcher=Scrambled",
+          "payload[1].HomeTeamStartingPitcher=Scrambled"
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179589",
+      "sportsDataGameId": "78870",
+      "homeTeam": "Philadelphia Phillies",
+      "awayTeam": "New York Yankees",
+      "startTime": "08:20",
+      "matchStatus": "MATCHED",
+      "matchConfidence": 0.9,
+      "scrambled": true,
+      "startingPitcherAvailable": false,
+      "projectedLineupAvailable": false,
+      "confirmedLineupAvailable": false,
+      "injuriesCount": 14,
+      "standings": null,
+      "usableForEngine": false,
+      "dataAvailability": 0.333,
+      "warnings": [
+        "STANDINGS_NOT_IMPLEMENTED",
+        "SCRAMBLED_DATA_CONFIRMED",
+        "STARTING_PITCHER_MISSING",
+        "PROJECTED_LINEUP_MISSING",
+        "CONFIRMED_LINEUP_MISSING"
+      ],
+      "candidate": {
+        "gameId": "mlb-179589",
+        "sportsDataGameId": "78870",
+        "homeTeam": "Philadelphia Phillies",
+        "awayTeam": "New York Yankees",
+        "startTime": "08:20",
+        "startingPitchers": {
+          "home": {
+            "playerId": 10010796,
+            "name": "Scrambled",
+            "available": false
+          },
+          "away": {
+            "playerId": 10013936,
+            "name": "Scrambled",
+            "available": false
+          },
+          "available": false
+        },
+        "projectedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "confirmedLineup": {
+          "available": false,
+          "teamCount": 1,
+          "playerCount": 0
+        },
+        "injuries": {
+          "available": true,
+          "count": 14,
+          "homeCount": 7,
+          "awayCount": 7
+        },
+        "standings": null,
+        "source": "sportsdataio",
+        "scrambled": true,
+        "usableForEngine": false,
+        "warnings": [
+          "STANDINGS_NOT_IMPLEMENTED",
+          "SCRAMBLED_DATA_CONFIRMED",
+          "STARTING_PITCHER_MISSING",
+          "PROJECTED_LINEUP_MISSING",
+          "CONFIRMED_LINEUP_MISSING"
+        ],
+        "dataAvailability": 0.333,
+        "matchStatus": "MATCHED",
+        "matchConfidence": 0.9,
+        "scrambledEvidence": [
+          "literal_Scrambled_value",
+          "payload[0].ForecastDescription=Scrambled",
+          "payload[0].AwayTeamStartingPitcher=Scrambled",
+          "payload[0].HomeTeamStartingPitcher=Scrambled",
+          "payload[0].CurrentPitcher=Scrambled",
+          "payload[0].CurrentHitter=Scrambled",
+          "payload[0].WinningPitcher=Scrambled",
+          "payload[0].LosingPitcher=Scrambled",
+          "payload[0].SavingPitcher=Scrambled",
+          "payload[0].LastPlay=Scrambled",
+          "payload[1].ForecastDescription=Scrambled",
+          "payload[1].AwayTeamStartingPitcher=Scrambled",
+          "payload[1].HomeTeamStartingPitcher=Scrambled"
+        ]
+      }
+    }
+  ]
+}

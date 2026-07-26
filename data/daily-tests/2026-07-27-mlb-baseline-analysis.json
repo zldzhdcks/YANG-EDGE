@@ -1,0 +1,5287 @@
+{
+  "meta": {
+    "version": "mlb-baseline-analysis-v1",
+    "generatedAt": "2026-07-26T11:02:44.266Z",
+    "targetDateKst": "2026-07-27",
+    "input": "data\\daily-tests\\2026-07-27-mlb-analysis-coverage.json",
+    "sportsDataIoUsed": false,
+    "predictionSnapshotSaved": false,
+    "analysisKind": "BASELINE",
+    "note": "선발투수·부상·순위 누락 Baseline. 확정 추천으로 사용하지 않음."
+  },
+  "summary": {
+    "totalGames": 15,
+    "baselineCandidate": 6,
+    "pass": 9,
+    "insufficientData": 0,
+    "deterministic": true,
+    "commonMissingFactors": [
+      "선발투수"
+    ],
+    "commonWarnings": [
+      "선발투수 미확보",
+      "부상 미확보",
+      "순위 미확보"
+    ],
+    "usableAsRecommendation": false,
+    "notUsableReason": "선발투수·부상·라인업이 반영되지 않은 BASELINE 결과이다. 순위 데이터가 확보되지 않았다. 분석 상태는 BASELINE_CANDIDATE이며 확정 추천(RECOMMENDED)이 아니다. 예측 스냅샷에 저장하지 않았다.",
+    "strongestCandidates": [
+      {
+        "gameId": "mlb-179597",
+        "match": "New York Mets vs Los Angeles Dodgers",
+        "startTimeKst": "02:40",
+        "pickTeam": "Los Angeles Dodgers",
+        "edgeScore": -14.1,
+        "confidence": 53,
+        "valueEdge": 5.2
+      },
+      {
+        "gameId": "mlb-179592",
+        "match": "Tampa Bay Rays vs Cleveland Guardians",
+        "startTimeKst": "01:15",
+        "pickTeam": "Tampa Bay Rays",
+        "edgeScore": 12.6,
+        "confidence": 57,
+        "valueEdge": 6.7
+      },
+      {
+        "gameId": "mlb-179601",
+        "match": "Chicago White Sox vs Houston Astros",
+        "startTimeKst": "03:10",
+        "pickTeam": "Houston Astros",
+        "edgeScore": -12.5,
+        "confidence": 49,
+        "valueEdge": 13.2
+      }
+    ]
+  },
+  "candidates": [
+    {
+      "gameId": "mlb-179597",
+      "startTimeKst": "02:40",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T17:40:00.000Z",
+      "homeTeam": "New York Mets",
+      "awayTeam": "Los Angeles Dodgers",
+      "pickTeam": "Los Angeles Dodgers",
+      "pickTeamId": "away",
+      "modelWinProbability": 64,
+      "edgeScore": -14.1,
+      "confidence": 53,
+      "recommendationGrade": "EDGE PICK",
+      "dataAvailability": 0.9,
+      "marketProbability": 59,
+      "valueEdge": 5.2,
+      "overround": 0.0049,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "BASELINE_CANDIDATE",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true
+    },
+    {
+      "gameId": "mlb-179592",
+      "startTimeKst": "01:15",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T16:15:00.000Z",
+      "homeTeam": "Tampa Bay Rays",
+      "awayTeam": "Cleveland Guardians",
+      "pickTeam": "Tampa Bay Rays",
+      "pickTeamId": "home",
+      "modelWinProbability": 63,
+      "edgeScore": 12.6,
+      "confidence": 57,
+      "recommendationGrade": "EDGE PICK",
+      "dataAvailability": 0.9,
+      "marketProbability": 56,
+      "valueEdge": 6.7,
+      "overround": 0.0043,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "BASELINE_CANDIDATE",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true
+    },
+    {
+      "gameId": "mlb-179601",
+      "startTimeKst": "03:10",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T18:10:00.000Z",
+      "homeTeam": "Chicago White Sox",
+      "awayTeam": "Houston Astros",
+      "pickTeam": "Houston Astros",
+      "pickTeamId": "away",
+      "modelWinProbability": 63,
+      "edgeScore": -12.5,
+      "confidence": 49,
+      "recommendationGrade": "EDGE PICK",
+      "dataAvailability": 0.9,
+      "marketProbability": 49,
+      "valueEdge": 13.2,
+      "overround": 0.0128,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "BASELINE_CANDIDATE",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true
+    },
+    {
+      "gameId": "mlb-179599",
+      "startTimeKst": "02:40",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T17:40:00.000Z",
+      "homeTeam": "Miami Marlins",
+      "awayTeam": "San Diego Padres",
+      "pickTeam": "San Diego Padres",
+      "pickTeamId": "away",
+      "modelWinProbability": 62,
+      "edgeScore": -12.4,
+      "confidence": 52,
+      "recommendationGrade": "EDGE PICK",
+      "dataAvailability": 0.9,
+      "marketProbability": 46,
+      "valueEdge": 16.6,
+      "overround": 0.0094,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "BASELINE_CANDIDATE",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true
+    },
+    {
+      "gameId": "mlb-179589",
+      "startTimeKst": "08:20",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T23:20:00.000Z",
+      "homeTeam": "Philadelphia Phillies",
+      "awayTeam": "New York Yankees",
+      "pickTeam": "New York Yankees",
+      "pickTeamId": "away",
+      "modelWinProbability": 61,
+      "edgeScore": -11.4,
+      "confidence": 51,
+      "recommendationGrade": "EDGE PICK",
+      "dataAvailability": 0.9,
+      "marketProbability": 39,
+      "valueEdge": 22.5,
+      "overround": -0.0026,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "BASELINE_CANDIDATE",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true
+    },
+    {
+      "gameId": "mlb-179598",
+      "startTimeKst": "03:10",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T18:10:00.000Z",
+      "homeTeam": "Milwaukee Brewers",
+      "awayTeam": "Colorado Rockies",
+      "pickTeam": "Milwaukee Brewers",
+      "pickTeamId": "home",
+      "modelWinProbability": 61,
+      "edgeScore": 11.4,
+      "confidence": 56,
+      "recommendationGrade": "EDGE PICK",
+      "dataAvailability": 0.9,
+      "marketProbability": 75,
+      "valueEdge": -13.7,
+      "overround": 0.0019,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "BASELINE_CANDIDATE",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true
+    }
+  ],
+  "games": [
+    {
+      "gameId": "mlb-179592",
+      "startTimeKst": "01:15",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T16:15:00.000Z",
+      "homeTeam": "Tampa Bay Rays",
+      "awayTeam": "Cleveland Guardians",
+      "pickTeam": "Tampa Bay Rays",
+      "pickTeamId": "home",
+      "modelWinProbability": 63,
+      "edgeScore": 12.6,
+      "confidence": 57,
+      "recommendationGrade": "EDGE PICK",
+      "dataAvailability": 0.9,
+      "marketProbability": 56,
+      "valueEdge": 6.7,
+      "overround": 0.0043,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "BASELINE_CANDIDATE",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true,
+      "analysisInput": {
+        "gameId": "mlb-179592",
+        "sport": "baseball",
+        "league": "MLB",
+        "homeTeam": "Tampa Bay Rays",
+        "awayTeam": "Cleveland Guardians",
+        "date": "2026-07-27",
+        "startTime": "01:15",
+        "home": {
+          "teamName": "Tampa Bay Rays",
+          "recentGames": [
+            {
+              "date": "2026-07-25",
+              "opponent": "Cleveland Guardians",
+              "result": "W",
+              "scoreFor": 11,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-24",
+              "opponent": "Toronto Blue Jays",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 3,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Toronto Blue Jays",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Toronto Blue Jays",
+              "result": "W",
+              "scoreFor": 12,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Toronto Blue Jays",
+              "result": "W",
+              "scoreFor": 7,
+              "scoreAgainst": 1,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 51,
+            "wins": 36,
+            "draws": 0,
+            "losses": 15,
+            "winRate": 70.59
+          },
+          "awayRecord": {
+            "played": 52,
+            "wins": 24,
+            "draws": 0,
+            "losses": 28,
+            "winRate": 46.15
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 7,
+            "concededAvg": 2.2
+          },
+          "recentForm": {
+            "sequence": "WLWWW",
+            "last5": [
+              {
+                "date": "2026-07-25",
+                "opponent": "Cleveland Guardians",
+                "result": "W",
+                "scoreFor": 11,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-24",
+                "opponent": "Toronto Blue Jays",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 3,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Toronto Blue Jays",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Toronto Blue Jays",
+                "result": "W",
+                "scoreFor": 12,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Toronto Blue Jays",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 1,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": 58.25,
+          "streak": {
+            "type": "win",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Cleveland Guardians",
+          "recentGames": [
+            {
+              "date": "2026-07-25",
+              "opponent": "Tampa Bay Rays",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 11,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-24",
+              "opponent": "Minnesota Twins",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Minnesota Twins",
+              "result": "L",
+              "scoreFor": 6,
+              "scoreAgainst": 10,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Minnesota Twins",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 2,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Minnesota Twins",
+              "result": "W",
+              "scoreFor": 13,
+              "scoreAgainst": 4,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 53,
+            "wins": 27,
+            "draws": 0,
+            "losses": 26,
+            "winRate": 50.94
+          },
+          "awayRecord": {
+            "played": 52,
+            "wins": 27,
+            "draws": 0,
+            "losses": 25,
+            "winRate": 51.92
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 5.6,
+            "concededAvg": 6
+          },
+          "recentForm": {
+            "sequence": "LLLWW",
+            "last5": [
+              {
+                "date": "2026-07-25",
+                "opponent": "Tampa Bay Rays",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 11,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-24",
+                "opponent": "Minnesota Twins",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Minnesota Twins",
+                "result": "L",
+                "scoreFor": 6,
+                "scoreAgainst": 10,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Minnesota Twins",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 2,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Minnesota Twins",
+                "result": "W",
+                "scoreFor": 13,
+                "scoreAgainst": 4,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": 51.43,
+          "streak": {
+            "type": "loss",
+            "count": 3
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 4,
+          "homeTeamWins": 3,
+          "awayTeamWins": 1,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-25",
+              "opponent": "Cleveland Guardians",
+              "result": "W",
+              "scoreFor": 11,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-04-30",
+              "opponent": "Cleveland Guardians",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 3,
+              "isHome": false
+            },
+            {
+              "date": "2026-04-29",
+              "opponent": "Cleveland Guardians",
+              "result": "W",
+              "scoreFor": 1,
+              "scoreAgainst": 0,
+              "isHome": false
+            },
+            {
+              "date": "2026-04-28",
+              "opponent": "Cleveland Guardians",
+              "result": "W",
+              "scoreFor": 3,
+              "scoreAgainst": 2,
+              "isHome": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "mlb-179590",
+      "startTimeKst": "02:35",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T17:35:00.000Z",
+      "homeTeam": "Washington Nationals",
+      "awayTeam": "Arizona Diamondbacks",
+      "pickTeam": "Arizona Diamondbacks",
+      "pickTeamId": "away",
+      "modelWinProbability": 51,
+      "edgeScore": -1.3,
+      "confidence": 39,
+      "recommendationGrade": "PASS",
+      "dataAvailability": 0.9,
+      "marketProbability": 52,
+      "valueEdge": -1,
+      "overround": 0.0071,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "PASS",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true,
+      "analysisInput": {
+        "gameId": "mlb-179590",
+        "sport": "baseball",
+        "league": "MLB",
+        "homeTeam": "Washington Nationals",
+        "awayTeam": "Arizona Diamondbacks",
+        "date": "2026-07-27",
+        "startTime": "02:35",
+        "home": {
+          "teamName": "Washington Nationals",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Arizona Diamondbacks",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Arizona Diamondbacks",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Colorado Rockies",
+              "result": "W",
+              "scoreFor": 8,
+              "scoreAgainst": 0,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Colorado Rockies",
+              "result": "L",
+              "scoreFor": 7,
+              "scoreAgainst": 8,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Colorado Rockies",
+              "result": "W",
+              "scoreFor": 7,
+              "scoreAgainst": 3,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 53,
+            "wins": 21,
+            "draws": 0,
+            "losses": 32,
+            "winRate": 39.62
+          },
+          "awayRecord": {
+            "played": 52,
+            "wins": 32,
+            "draws": 0,
+            "losses": 20,
+            "winRate": 61.54
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 5.8,
+            "concededAvg": 3.4
+          },
+          "recentForm": {
+            "sequence": "WLWLW",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Arizona Diamondbacks",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Arizona Diamondbacks",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Colorado Rockies",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 0,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Colorado Rockies",
+                "result": "L",
+                "scoreFor": 7,
+                "scoreAgainst": 8,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Colorado Rockies",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 3,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": 50.48,
+          "streak": {
+            "type": "win",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Arizona Diamondbacks",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Washington Nationals",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 5,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Washington Nationals",
+              "result": "W",
+              "scoreFor": 3,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-24",
+              "opponent": "St.Louis Cardinals",
+              "result": "W",
+              "scoreFor": 10,
+              "scoreAgainst": 6,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Athletics",
+              "result": "W",
+              "scoreFor": 15,
+              "scoreAgainst": 5,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Athletics",
+              "result": "W",
+              "scoreFor": 6,
+              "scoreAgainst": 5,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 53,
+            "wins": 31,
+            "draws": 0,
+            "losses": 22,
+            "winRate": 58.49
+          },
+          "awayRecord": {
+            "played": 52,
+            "wins": 24,
+            "draws": 0,
+            "losses": 28,
+            "winRate": 46.15
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 7.4,
+            "concededAvg": 4.6
+          },
+          "recentForm": {
+            "sequence": "LWWWW",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Washington Nationals",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 5,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Washington Nationals",
+                "result": "W",
+                "scoreFor": 3,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-24",
+                "opponent": "St.Louis Cardinals",
+                "result": "W",
+                "scoreFor": 10,
+                "scoreAgainst": 6,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Athletics",
+                "result": "W",
+                "scoreFor": 15,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Athletics",
+                "result": "W",
+                "scoreFor": 6,
+                "scoreAgainst": 5,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": 52.38,
+          "streak": {
+            "type": "loss",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 5,
+          "homeTeamWins": 3,
+          "awayTeamWins": 2,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Arizona Diamondbacks",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Arizona Diamondbacks",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-06-08",
+              "opponent": "Arizona Diamondbacks",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 5,
+              "isHome": false
+            },
+            {
+              "date": "2026-06-07",
+              "opponent": "Arizona Diamondbacks",
+              "result": "W",
+              "scoreFor": 6,
+              "scoreAgainst": 1,
+              "isHome": false
+            },
+            {
+              "date": "2026-06-06",
+              "opponent": "Arizona Diamondbacks",
+              "result": "W",
+              "scoreFor": 14,
+              "scoreAgainst": 1,
+              "isHome": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "mlb-179595",
+      "startTimeKst": "02:35",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T17:35:00.000Z",
+      "homeTeam": "Pittsburgh Pirates",
+      "awayTeam": "Chicago Cubs",
+      "pickTeam": "Chicago Cubs",
+      "pickTeamId": "away",
+      "modelWinProbability": 57,
+      "edgeScore": -6.7,
+      "confidence": 48,
+      "recommendationGrade": "WATCH",
+      "dataAvailability": 0.9,
+      "marketProbability": 46,
+      "valueEdge": 10.5,
+      "overround": 0.0035,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "PASS",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true,
+      "analysisInput": {
+        "gameId": "mlb-179595",
+        "sport": "baseball",
+        "league": "MLB",
+        "homeTeam": "Pittsburgh Pirates",
+        "awayTeam": "Chicago Cubs",
+        "date": "2026-07-27",
+        "startTime": "02:35",
+        "home": {
+          "teamName": "Pittsburgh Pirates",
+          "recentGames": [
+            {
+              "date": "2026-07-25",
+              "opponent": "Chicago Cubs",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "New York Yankees",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "New York Yankees",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 3,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "New York Yankees",
+              "result": "L",
+              "scoreFor": 5,
+              "scoreAgainst": 8,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-20",
+              "opponent": "Cleveland Guardians",
+              "result": "W",
+              "scoreFor": 7,
+              "scoreAgainst": 1,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 52,
+            "wins": 27,
+            "draws": 0,
+            "losses": 25,
+            "winRate": 51.92
+          },
+          "awayRecord": {
+            "played": 52,
+            "wins": 26,
+            "draws": 0,
+            "losses": 26,
+            "winRate": 50
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 3.8,
+            "concededAvg": 3.4
+          },
+          "recentForm": {
+            "sequence": "LLWLW",
+            "last5": [
+              {
+                "date": "2026-07-25",
+                "opponent": "Chicago Cubs",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "New York Yankees",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "New York Yankees",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 3,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "New York Yankees",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 8,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-20",
+                "opponent": "Cleveland Guardians",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 1,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": 50.96,
+          "streak": {
+            "type": "loss",
+            "count": 2
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Chicago Cubs",
+          "recentGames": [
+            {
+              "date": "2026-07-25",
+              "opponent": "Pittsburgh Pirates",
+              "result": "W",
+              "scoreFor": 3,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Detroit Tigers",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 5,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Detroit Tigers",
+              "result": "W",
+              "scoreFor": 11,
+              "scoreAgainst": 2,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Detroit Tigers",
+              "result": "L",
+              "scoreFor": 6,
+              "scoreAgainst": 8,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-20",
+              "opponent": "Minnesota Twins",
+              "result": "W",
+              "scoreFor": 10,
+              "scoreAgainst": 1,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 52,
+            "wins": 30,
+            "draws": 0,
+            "losses": 22,
+            "winRate": 57.69
+          },
+          "awayRecord": {
+            "played": 51,
+            "wins": 28,
+            "draws": 0,
+            "losses": 23,
+            "winRate": 54.9
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 6.2,
+            "concededAvg": 3.6
+          },
+          "recentForm": {
+            "sequence": "WLWLW",
+            "last5": [
+              {
+                "date": "2026-07-25",
+                "opponent": "Pittsburgh Pirates",
+                "result": "W",
+                "scoreFor": 3,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Detroit Tigers",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Detroit Tigers",
+                "result": "W",
+                "scoreFor": 11,
+                "scoreAgainst": 2,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Detroit Tigers",
+                "result": "L",
+                "scoreFor": 6,
+                "scoreAgainst": 8,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-20",
+                "opponent": "Minnesota Twins",
+                "result": "W",
+                "scoreFor": 10,
+                "scoreAgainst": 1,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": 56.31,
+          "streak": {
+            "type": "win",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 5,
+          "homeTeamWins": 2,
+          "awayTeamWins": 3,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-25",
+              "opponent": "Chicago Cubs",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-05-29",
+              "opponent": "Chicago Cubs",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 7,
+              "isHome": true
+            },
+            {
+              "date": "2026-05-28",
+              "opponent": "Chicago Cubs",
+              "result": "L",
+              "scoreFor": 4,
+              "scoreAgainst": 10,
+              "isHome": true
+            },
+            {
+              "date": "2026-05-27",
+              "opponent": "Chicago Cubs",
+              "result": "W",
+              "scoreFor": 12,
+              "scoreAgainst": 1,
+              "isHome": true
+            },
+            {
+              "date": "2026-05-26",
+              "opponent": "Chicago Cubs",
+              "result": "W",
+              "scoreFor": 2,
+              "scoreAgainst": 1,
+              "isHome": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "mlb-179602",
+      "startTimeKst": "02:35",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T17:35:00.000Z",
+      "homeTeam": "Boston Red Sox",
+      "awayTeam": "Toronto Blue Jays",
+      "pickTeam": "Boston Red Sox",
+      "pickTeamId": "home",
+      "modelWinProbability": 50,
+      "edgeScore": 0.3,
+      "confidence": 43,
+      "recommendationGrade": "PASS",
+      "dataAvailability": 0.9,
+      "marketProbability": 57,
+      "valueEdge": -6.4,
+      "overround": 0.0011,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "PASS",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true,
+      "analysisInput": {
+        "gameId": "mlb-179602",
+        "sport": "baseball",
+        "league": "MLB",
+        "homeTeam": "Boston Red Sox",
+        "awayTeam": "Toronto Blue Jays",
+        "date": "2026-07-27",
+        "startTime": "02:35",
+        "home": {
+          "teamName": "Boston Red Sox",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Toronto Blue Jays",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 6,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Toronto Blue Jays",
+              "result": "W",
+              "scoreFor": 6,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Baltimore Orioles",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 5,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Baltimore Orioles",
+              "result": "W",
+              "scoreFor": 6,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Baltimore Orioles",
+              "result": "W",
+              "scoreFor": 6,
+              "scoreAgainst": 5,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 53,
+            "wins": 24,
+            "draws": 0,
+            "losses": 29,
+            "winRate": 45.28
+          },
+          "awayRecord": {
+            "played": 50,
+            "wins": 29,
+            "draws": 0,
+            "losses": 21,
+            "winRate": 58
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 3.8,
+            "concededAvg": 4.6
+          },
+          "recentForm": {
+            "sequence": "LWLWW",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Toronto Blue Jays",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 6,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Toronto Blue Jays",
+                "result": "W",
+                "scoreFor": 6,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Baltimore Orioles",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Baltimore Orioles",
+                "result": "W",
+                "scoreFor": 6,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Baltimore Orioles",
+                "result": "W",
+                "scoreFor": 6,
+                "scoreAgainst": 5,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": 51.46,
+          "streak": {
+            "type": "loss",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Toronto Blue Jays",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Boston Red Sox",
+              "result": "W",
+              "scoreFor": 6,
+              "scoreAgainst": 0,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Boston Red Sox",
+              "result": "L",
+              "scoreFor": 4,
+              "scoreAgainst": 6,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-24",
+              "opponent": "Tampa Bay Rays",
+              "result": "W",
+              "scoreFor": 3,
+              "scoreAgainst": 1,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Tampa Bay Rays",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Tampa Bay Rays",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 12,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 56,
+            "wins": 26,
+            "draws": 0,
+            "losses": 30,
+            "winRate": 46.43
+          },
+          "awayRecord": {
+            "played": 49,
+            "wins": 22,
+            "draws": 0,
+            "losses": 27,
+            "winRate": 44.9
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 3.4,
+            "concededAvg": 4.6
+          },
+          "recentForm": {
+            "sequence": "WLWLL",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Boston Red Sox",
+                "result": "W",
+                "scoreFor": 6,
+                "scoreAgainst": 0,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Boston Red Sox",
+                "result": "L",
+                "scoreFor": 4,
+                "scoreAgainst": 6,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-24",
+                "opponent": "Tampa Bay Rays",
+                "result": "W",
+                "scoreFor": 3,
+                "scoreAgainst": 1,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Tampa Bay Rays",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Tampa Bay Rays",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 12,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": 45.71,
+          "streak": {
+            "type": "win",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 5,
+          "homeTeamWins": 1,
+          "awayTeamWins": 4,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Toronto Blue Jays",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 6,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Toronto Blue Jays",
+              "result": "W",
+              "scoreFor": 6,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-06-19",
+              "opponent": "Toronto Blue Jays",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-06-18",
+              "opponent": "Toronto Blue Jays",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-06-17",
+              "opponent": "Toronto Blue Jays",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 6,
+              "isHome": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "mlb-179603",
+      "startTimeKst": "02:35",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T17:35:00.000Z",
+      "homeTeam": "Baltimore Orioles",
+      "awayTeam": "Atlanta Braves",
+      "pickTeam": "Atlanta Braves",
+      "pickTeamId": "away",
+      "modelWinProbability": 51,
+      "edgeScore": -0.7,
+      "confidence": 42,
+      "recommendationGrade": "PASS",
+      "dataAvailability": 0.9,
+      "marketProbability": 50,
+      "valueEdge": 0.9,
+      "overround": -0.0025,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "PASS",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true,
+      "analysisInput": {
+        "gameId": "mlb-179603",
+        "sport": "baseball",
+        "league": "MLB",
+        "homeTeam": "Baltimore Orioles",
+        "awayTeam": "Atlanta Braves",
+        "date": "2026-07-27",
+        "startTime": "02:35",
+        "home": {
+          "teamName": "Baltimore Orioles",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Atlanta Braves",
+              "result": "W",
+              "scoreFor": 3,
+              "scoreAgainst": 2,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Atlanta Braves",
+              "result": "L",
+              "scoreFor": 6,
+              "scoreAgainst": 7,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Boston Red Sox",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 1,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Boston Red Sox",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 6,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Boston Red Sox",
+              "result": "L",
+              "scoreFor": 5,
+              "scoreAgainst": 6,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 55,
+            "wins": 29,
+            "draws": 0,
+            "losses": 26,
+            "winRate": 52.73
+          },
+          "awayRecord": {
+            "played": 50,
+            "wins": 22,
+            "draws": 0,
+            "losses": 28,
+            "winRate": 44
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 4.4,
+            "concededAvg": 4.4
+          },
+          "recentForm": {
+            "sequence": "WLWLL",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Atlanta Braves",
+                "result": "W",
+                "scoreFor": 3,
+                "scoreAgainst": 2,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Atlanta Braves",
+                "result": "L",
+                "scoreFor": 6,
+                "scoreAgainst": 7,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Boston Red Sox",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 1,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Boston Red Sox",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 6,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Boston Red Sox",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 6,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": 48.57,
+          "streak": {
+            "type": "win",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Atlanta Braves",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Baltimore Orioles",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 3,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Baltimore Orioles",
+              "result": "W",
+              "scoreFor": 7,
+              "scoreAgainst": 6,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-24",
+              "opponent": "San Diego Padres",
+              "result": "W",
+              "scoreFor": 6,
+              "scoreAgainst": 5,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "San Diego Padres",
+              "result": "W",
+              "scoreFor": 7,
+              "scoreAgainst": 6,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "San Diego Padres",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 8,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 51,
+            "wins": 31,
+            "draws": 0,
+            "losses": 20,
+            "winRate": 60.78
+          },
+          "awayRecord": {
+            "played": 52,
+            "wins": 29,
+            "draws": 0,
+            "losses": 23,
+            "winRate": 55.77
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 5,
+            "concededAvg": 5.6
+          },
+          "recentForm": {
+            "sequence": "LWWWL",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Baltimore Orioles",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 3,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Baltimore Orioles",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 6,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-24",
+                "opponent": "San Diego Padres",
+                "result": "W",
+                "scoreFor": 6,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "San Diego Padres",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 6,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "San Diego Padres",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 8,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": 58.25,
+          "streak": {
+            "type": "loss",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 2,
+          "homeTeamWins": 1,
+          "awayTeamWins": 1,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Atlanta Braves",
+              "result": "W",
+              "scoreFor": 3,
+              "scoreAgainst": 2,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Atlanta Braves",
+              "result": "L",
+              "scoreFor": 6,
+              "scoreAgainst": 7,
+              "isHome": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "mlb-179597",
+      "startTimeKst": "02:40",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T17:40:00.000Z",
+      "homeTeam": "New York Mets",
+      "awayTeam": "Los Angeles Dodgers",
+      "pickTeam": "Los Angeles Dodgers",
+      "pickTeamId": "away",
+      "modelWinProbability": 64,
+      "edgeScore": -14.1,
+      "confidence": 53,
+      "recommendationGrade": "EDGE PICK",
+      "dataAvailability": 0.9,
+      "marketProbability": 59,
+      "valueEdge": 5.2,
+      "overround": 0.0049,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "BASELINE_CANDIDATE",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true,
+      "analysisInput": {
+        "gameId": "mlb-179597",
+        "sport": "baseball",
+        "league": "MLB",
+        "homeTeam": "New York Mets",
+        "awayTeam": "Los Angeles Dodgers",
+        "date": "2026-07-27",
+        "startTime": "02:40",
+        "home": {
+          "teamName": "New York Mets",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Los Angeles Dodgers",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Los Angeles Dodgers",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Milwaukee Brewers",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 4,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Milwaukee Brewers",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 0,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Milwaukee Brewers",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 8,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 51,
+            "wins": 21,
+            "draws": 0,
+            "losses": 30,
+            "winRate": 41.18
+          },
+          "awayRecord": {
+            "played": 54,
+            "wins": 22,
+            "draws": 0,
+            "losses": 32,
+            "winRate": 40.74
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 3,
+            "concededAvg": 4
+          },
+          "recentForm": {
+            "sequence": "LLLWL",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Los Angeles Dodgers",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Los Angeles Dodgers",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Milwaukee Brewers",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 4,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Milwaukee Brewers",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 0,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Milwaukee Brewers",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 8,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": 40.95,
+          "streak": {
+            "type": "loss",
+            "count": 3
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Los Angeles Dodgers",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "New York Mets",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 3,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "New York Mets",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Philadelphia Phillies",
+              "result": "W",
+              "scoreFor": 9,
+              "scoreAgainst": 5,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Philadelphia Phillies",
+              "result": "W",
+              "scoreFor": 2,
+              "scoreAgainst": 1,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Philadelphia Phillies",
+              "result": "L",
+              "scoreFor": 7,
+              "scoreAgainst": 10,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 50,
+            "wins": 31,
+            "draws": 0,
+            "losses": 19,
+            "winRate": 62
+          },
+          "awayRecord": {
+            "played": 55,
+            "wins": 36,
+            "draws": 0,
+            "losses": 19,
+            "winRate": 65.45
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 5.2,
+            "concededAvg": 4.2
+          },
+          "recentForm": {
+            "sequence": "WWWWL",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "New York Mets",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 3,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "New York Mets",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Philadelphia Phillies",
+                "result": "W",
+                "scoreFor": 9,
+                "scoreAgainst": 5,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Philadelphia Phillies",
+                "result": "W",
+                "scoreFor": 2,
+                "scoreAgainst": 1,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Philadelphia Phillies",
+                "result": "L",
+                "scoreFor": 7,
+                "scoreAgainst": 10,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": 63.81,
+          "streak": {
+            "type": "win",
+            "count": 4
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 5,
+          "homeTeamWins": 0,
+          "awayTeamWins": 5,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Los Angeles Dodgers",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Los Angeles Dodgers",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-04-16",
+              "opponent": "Los Angeles Dodgers",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 8,
+              "isHome": false
+            },
+            {
+              "date": "2026-04-15",
+              "opponent": "Los Angeles Dodgers",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-04-14",
+              "opponent": "Los Angeles Dodgers",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 4,
+              "isHome": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "mlb-179599",
+      "startTimeKst": "02:40",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T17:40:00.000Z",
+      "homeTeam": "Miami Marlins",
+      "awayTeam": "San Diego Padres",
+      "pickTeam": "San Diego Padres",
+      "pickTeamId": "away",
+      "modelWinProbability": 62,
+      "edgeScore": -12.4,
+      "confidence": 52,
+      "recommendationGrade": "EDGE PICK",
+      "dataAvailability": 0.9,
+      "marketProbability": 46,
+      "valueEdge": 16.6,
+      "overround": 0.0094,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "BASELINE_CANDIDATE",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true,
+      "analysisInput": {
+        "gameId": "mlb-179599",
+        "sport": "baseball",
+        "league": "MLB",
+        "homeTeam": "Miami Marlins",
+        "awayTeam": "San Diego Padres",
+        "date": "2026-07-27",
+        "startTime": "02:40",
+        "home": {
+          "teamName": "Miami Marlins",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "San Diego Padres",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 7,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "San Diego Padres",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Houston Astros",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 5,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Houston Astros",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 5,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Houston Astros",
+              "result": "L",
+              "scoreFor": 5,
+              "scoreAgainst": 8,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 53,
+            "wins": 31,
+            "draws": 0,
+            "losses": 22,
+            "winRate": 58.49
+          },
+          "awayRecord": {
+            "played": 51,
+            "wins": 21,
+            "draws": 0,
+            "losses": 30,
+            "winRate": 41.18
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 2.8,
+            "concededAvg": 5.8
+          },
+          "recentForm": {
+            "sequence": "LLLLL",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "San Diego Padres",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 7,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "San Diego Padres",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Houston Astros",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 5,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Houston Astros",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 5,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Houston Astros",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 8,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": 50,
+          "streak": {
+            "type": "loss",
+            "count": 11
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "San Diego Padres",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Miami Marlins",
+              "result": "W",
+              "scoreFor": 7,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Miami Marlins",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-24",
+              "opponent": "Atlanta Braves",
+              "result": "L",
+              "scoreFor": 5,
+              "scoreAgainst": 6,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Atlanta Braves",
+              "result": "L",
+              "scoreFor": 6,
+              "scoreAgainst": 7,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Atlanta Braves",
+              "result": "W",
+              "scoreFor": 8,
+              "scoreAgainst": 3,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 51,
+            "wins": 27,
+            "draws": 0,
+            "losses": 24,
+            "winRate": 52.94
+          },
+          "awayRecord": {
+            "played": 54,
+            "wins": 25,
+            "draws": 0,
+            "losses": 29,
+            "winRate": 46.3
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 6,
+            "concededAvg": 4
+          },
+          "recentForm": {
+            "sequence": "WWLLW",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Miami Marlins",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Miami Marlins",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-24",
+                "opponent": "Atlanta Braves",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 6,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Atlanta Braves",
+                "result": "L",
+                "scoreFor": 6,
+                "scoreAgainst": 7,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Atlanta Braves",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 3,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": 49.52,
+          "streak": {
+            "type": "win",
+            "count": 2
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 2,
+          "homeTeamWins": 0,
+          "awayTeamWins": 2,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-26",
+              "opponent": "San Diego Padres",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 7,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "San Diego Padres",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 4,
+              "isHome": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "mlb-179600",
+      "startTimeKst": "02:40",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T17:40:00.000Z",
+      "homeTeam": "Detroit Tigers",
+      "awayTeam": "Kansas City Royals",
+      "pickTeam": "Detroit Tigers",
+      "pickTeamId": "home",
+      "modelWinProbability": 50,
+      "edgeScore": 0.4,
+      "confidence": 41,
+      "recommendationGrade": "PASS",
+      "dataAvailability": 0.9,
+      "marketProbability": 63,
+      "valueEdge": -12.5,
+      "overround": 0.0129,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "PASS",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true,
+      "analysisInput": {
+        "gameId": "mlb-179600",
+        "sport": "baseball",
+        "league": "MLB",
+        "homeTeam": "Detroit Tigers",
+        "awayTeam": "Kansas City Royals",
+        "date": "2026-07-27",
+        "startTime": "02:40",
+        "home": {
+          "teamName": "Detroit Tigers",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Kansas City Royals",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Kansas City Royals",
+              "result": "W",
+              "scoreFor": 2,
+              "scoreAgainst": 1,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-24",
+              "opponent": "Kansas City Royals",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Chicago Cubs",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 1,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Chicago Cubs",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 11,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 53,
+            "wins": 29,
+            "draws": 0,
+            "losses": 24,
+            "winRate": 54.72
+          },
+          "awayRecord": {
+            "played": 52,
+            "wins": 21,
+            "draws": 0,
+            "losses": 31,
+            "winRate": 40.38
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 3,
+            "concededAvg": 3.8
+          },
+          "recentForm": {
+            "sequence": "LWWWL",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Kansas City Royals",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Kansas City Royals",
+                "result": "W",
+                "scoreFor": 2,
+                "scoreAgainst": 1,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-24",
+                "opponent": "Kansas City Royals",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Chicago Cubs",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 1,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Chicago Cubs",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 11,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": 47.62,
+          "streak": {
+            "type": "loss",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Kansas City Royals",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Detroit Tigers",
+              "result": "W",
+              "scoreFor": 3,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Detroit Tigers",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-24",
+              "opponent": "Detroit Tigers",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 4,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "San Francisco Giants",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "San Francisco Giants",
+              "result": "W",
+              "scoreFor": 3,
+              "scoreAgainst": 2,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 53,
+            "wins": 26,
+            "draws": 0,
+            "losses": 27,
+            "winRate": 49.06
+          },
+          "awayRecord": {
+            "played": 53,
+            "wins": 18,
+            "draws": 0,
+            "losses": 35,
+            "winRate": 33.96
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 3,
+            "concededAvg": 2.8
+          },
+          "recentForm": {
+            "sequence": "WLLWW",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Detroit Tigers",
+                "result": "W",
+                "scoreFor": 3,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Detroit Tigers",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-24",
+                "opponent": "Detroit Tigers",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 4,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "San Francisco Giants",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "San Francisco Giants",
+                "result": "W",
+                "scoreFor": 3,
+                "scoreAgainst": 2,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": 41.51,
+          "streak": {
+            "type": "win",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 5,
+          "homeTeamWins": 3,
+          "awayTeamWins": 2,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Kansas City Royals",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Kansas City Royals",
+              "result": "W",
+              "scoreFor": 2,
+              "scoreAgainst": 1,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-24",
+              "opponent": "Kansas City Royals",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-05-11",
+              "opponent": "Kansas City Royals",
+              "result": "W",
+              "scoreFor": 6,
+              "scoreAgainst": 3,
+              "isHome": false
+            },
+            {
+              "date": "2026-05-10",
+              "opponent": "Kansas City Royals",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 5,
+              "isHome": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "mlb-179596",
+      "startTimeKst": "03:10",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T18:10:00.000Z",
+      "homeTeam": "Minnesota Twins",
+      "awayTeam": "Athletics",
+      "pickTeam": "Minnesota Twins",
+      "pickTeamId": "home",
+      "modelWinProbability": 56,
+      "edgeScore": 6.3,
+      "confidence": 53,
+      "recommendationGrade": "WATCH",
+      "dataAvailability": 0.9,
+      "marketProbability": 56,
+      "valueEdge": 0,
+      "overround": 0.0036,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "PASS",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true,
+      "analysisInput": {
+        "gameId": "mlb-179596",
+        "sport": "baseball",
+        "league": "MLB",
+        "homeTeam": "Minnesota Twins",
+        "awayTeam": "Athletics",
+        "date": "2026-07-27",
+        "startTime": "03:10",
+        "home": {
+          "teamName": "Minnesota Twins",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Athletics",
+              "result": "W",
+              "scoreFor": 2,
+              "scoreAgainst": 0,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Athletics",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 2,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-24",
+              "opponent": "Cleveland Guardians",
+              "result": "W",
+              "scoreFor": 3,
+              "scoreAgainst": 1,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Cleveland Guardians",
+              "result": "W",
+              "scoreFor": 10,
+              "scoreAgainst": 6,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Cleveland Guardians",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 5,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 53,
+            "wins": 27,
+            "draws": 0,
+            "losses": 26,
+            "winRate": 50.94
+          },
+          "awayRecord": {
+            "played": 53,
+            "wins": 25,
+            "draws": 0,
+            "losses": 28,
+            "winRate": 47.17
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 3.4,
+            "concededAvg": 2.8
+          },
+          "recentForm": {
+            "sequence": "WLWWL",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Athletics",
+                "result": "W",
+                "scoreFor": 2,
+                "scoreAgainst": 0,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Athletics",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 2,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-24",
+                "opponent": "Cleveland Guardians",
+                "result": "W",
+                "scoreFor": 3,
+                "scoreAgainst": 1,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Cleveland Guardians",
+                "result": "W",
+                "scoreFor": 10,
+                "scoreAgainst": 6,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Cleveland Guardians",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 5,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": 49.06,
+          "streak": {
+            "type": "win",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Athletics",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Minnesota Twins",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Minnesota Twins",
+              "result": "W",
+              "scoreFor": 2,
+              "scoreAgainst": 0,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Arizona Diamondbacks",
+              "result": "L",
+              "scoreFor": 5,
+              "scoreAgainst": 15,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Arizona Diamondbacks",
+              "result": "L",
+              "scoreFor": 5,
+              "scoreAgainst": 6,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Arizona Diamondbacks",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 2,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 50,
+            "wins": 20,
+            "draws": 0,
+            "losses": 30,
+            "winRate": 40
+          },
+          "awayRecord": {
+            "played": 54,
+            "wins": 24,
+            "draws": 0,
+            "losses": 30,
+            "winRate": 44.44
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 3.4,
+            "concededAvg": 5
+          },
+          "recentForm": {
+            "sequence": "LWLLW",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Minnesota Twins",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Minnesota Twins",
+                "result": "W",
+                "scoreFor": 2,
+                "scoreAgainst": 0,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Arizona Diamondbacks",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 15,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Arizona Diamondbacks",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 6,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Arizona Diamondbacks",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 2,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": 42.31,
+          "streak": {
+            "type": "loss",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 2,
+          "homeTeamWins": 1,
+          "awayTeamWins": 1,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Athletics",
+              "result": "W",
+              "scoreFor": 2,
+              "scoreAgainst": 0,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Athletics",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 2,
+              "isHome": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "mlb-179598",
+      "startTimeKst": "03:10",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T18:10:00.000Z",
+      "homeTeam": "Milwaukee Brewers",
+      "awayTeam": "Colorado Rockies",
+      "pickTeam": "Milwaukee Brewers",
+      "pickTeamId": "home",
+      "modelWinProbability": 61,
+      "edgeScore": 11.4,
+      "confidence": 56,
+      "recommendationGrade": "EDGE PICK",
+      "dataAvailability": 0.9,
+      "marketProbability": 75,
+      "valueEdge": -13.7,
+      "overround": 0.0019,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "BASELINE_CANDIDATE",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true,
+      "analysisInput": {
+        "gameId": "mlb-179598",
+        "sport": "baseball",
+        "league": "MLB",
+        "homeTeam": "Milwaukee Brewers",
+        "awayTeam": "Colorado Rockies",
+        "date": "2026-07-27",
+        "startTime": "03:10",
+        "home": {
+          "teamName": "Milwaukee Brewers",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Colorado Rockies",
+              "result": "W",
+              "scoreFor": 8,
+              "scoreAgainst": 5,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Colorado Rockies",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 5,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "New York Mets",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "New York Mets",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "New York Mets",
+              "result": "W",
+              "scoreFor": 8,
+              "scoreAgainst": 3,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 55,
+            "wins": 35,
+            "draws": 0,
+            "losses": 20,
+            "winRate": 63.64
+          },
+          "awayRecord": {
+            "played": 49,
+            "wins": 30,
+            "draws": 0,
+            "losses": 19,
+            "winRate": 61.22
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 4.4,
+            "concededAvg": 4
+          },
+          "recentForm": {
+            "sequence": "WLWLW",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Colorado Rockies",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Colorado Rockies",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "New York Mets",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "New York Mets",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "New York Mets",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 3,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": 62.5,
+          "streak": {
+            "type": "win",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Colorado Rockies",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Milwaukee Brewers",
+              "result": "L",
+              "scoreFor": 5,
+              "scoreAgainst": 8,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Milwaukee Brewers",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Washington Nationals",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 8,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Washington Nationals",
+              "result": "W",
+              "scoreFor": 8,
+              "scoreAgainst": 7,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Washington Nationals",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 7,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 53,
+            "wins": 24,
+            "draws": 0,
+            "losses": 29,
+            "winRate": 45.28
+          },
+          "awayRecord": {
+            "played": 53,
+            "wins": 18,
+            "draws": 0,
+            "losses": 35,
+            "winRate": 33.96
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 4.2,
+            "concededAvg": 6.4
+          },
+          "recentForm": {
+            "sequence": "LWLWL",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Milwaukee Brewers",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 8,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Milwaukee Brewers",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Washington Nationals",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 8,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Washington Nationals",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 7,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Washington Nationals",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 7,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": 39.62,
+          "streak": {
+            "type": "loss",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 5,
+          "homeTeamWins": 4,
+          "awayTeamWins": 1,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Colorado Rockies",
+              "result": "W",
+              "scoreFor": 8,
+              "scoreAgainst": 5,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Colorado Rockies",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 5,
+              "isHome": true
+            },
+            {
+              "date": "2026-06-08",
+              "opponent": "Colorado Rockies",
+              "result": "W",
+              "scoreFor": 12,
+              "scoreAgainst": 4,
+              "isHome": false
+            },
+            {
+              "date": "2026-06-07",
+              "opponent": "Colorado Rockies",
+              "result": "W",
+              "scoreFor": 7,
+              "scoreAgainst": 1,
+              "isHome": false
+            },
+            {
+              "date": "2026-06-06",
+              "opponent": "Colorado Rockies",
+              "result": "W",
+              "scoreFor": 9,
+              "scoreAgainst": 7,
+              "isHome": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "mlb-179601",
+      "startTimeKst": "03:10",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T18:10:00.000Z",
+      "homeTeam": "Chicago White Sox",
+      "awayTeam": "Houston Astros",
+      "pickTeam": "Houston Astros",
+      "pickTeamId": "away",
+      "modelWinProbability": 63,
+      "edgeScore": -12.5,
+      "confidence": 49,
+      "recommendationGrade": "EDGE PICK",
+      "dataAvailability": 0.9,
+      "marketProbability": 49,
+      "valueEdge": 13.2,
+      "overround": 0.0128,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "BASELINE_CANDIDATE",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true,
+      "analysisInput": {
+        "gameId": "mlb-179601",
+        "sport": "baseball",
+        "league": "MLB",
+        "homeTeam": "Chicago White Sox",
+        "awayTeam": "Houston Astros",
+        "date": "2026-07-27",
+        "startTime": "03:10",
+        "home": {
+          "teamName": "Chicago White Sox",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Houston Astros",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Houston Astros",
+              "result": "L",
+              "scoreFor": 5,
+              "scoreAgainst": 9,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Texas Rangers",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Texas Rangers",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 10,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Texas Rangers",
+              "result": "W",
+              "scoreFor": 10,
+              "scoreAgainst": 3,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 50,
+            "wins": 31,
+            "draws": 0,
+            "losses": 19,
+            "winRate": 62
+          },
+          "awayRecord": {
+            "played": 53,
+            "wins": 23,
+            "draws": 0,
+            "losses": 30,
+            "winRate": 43.4
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 4,
+            "concededAvg": 5.6
+          },
+          "recentForm": {
+            "sequence": "LLWLW",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Houston Astros",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Houston Astros",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 9,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Texas Rangers",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Texas Rangers",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 10,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Texas Rangers",
+                "result": "W",
+                "scoreFor": 10,
+                "scoreAgainst": 3,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": 52.43,
+          "streak": {
+            "type": "loss",
+            "count": 2
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Houston Astros",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Chicago White Sox",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 1,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Chicago White Sox",
+              "result": "W",
+              "scoreFor": 9,
+              "scoreAgainst": 5,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Miami Marlins",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 2,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Miami Marlins",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Miami Marlins",
+              "result": "W",
+              "scoreFor": 8,
+              "scoreAgainst": 5,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 53,
+            "wins": 26,
+            "draws": 0,
+            "losses": 27,
+            "winRate": 49.06
+          },
+          "awayRecord": {
+            "played": 53,
+            "wins": 26,
+            "draws": 0,
+            "losses": 27,
+            "winRate": 49.06
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 6.2,
+            "concededAvg": 3.2
+          },
+          "recentForm": {
+            "sequence": "WWWWW",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Chicago White Sox",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 1,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Chicago White Sox",
+                "result": "W",
+                "scoreFor": 9,
+                "scoreAgainst": 5,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Miami Marlins",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 2,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Miami Marlins",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Miami Marlins",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 5,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": 49.06,
+          "streak": {
+            "type": "win",
+            "count": 5
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 2,
+          "homeTeamWins": 0,
+          "awayTeamWins": 2,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Houston Astros",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Houston Astros",
+              "result": "L",
+              "scoreFor": 5,
+              "scoreAgainst": 9,
+              "isHome": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "mlb-179593",
+      "startTimeKst": "03:15",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T18:15:00.000Z",
+      "homeTeam": "St.Louis Cardinals",
+      "awayTeam": "Cincinnati Reds",
+      "pickTeam": "St.Louis Cardinals",
+      "pickTeamId": "home",
+      "modelWinProbability": 53,
+      "edgeScore": 3.2,
+      "confidence": 44,
+      "recommendationGrade": "PASS",
+      "dataAvailability": 0.9,
+      "marketProbability": 56,
+      "valueEdge": -2.4,
+      "overround": 0.0102,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "PASS",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true,
+      "analysisInput": {
+        "gameId": "mlb-179593",
+        "sport": "baseball",
+        "league": "MLB",
+        "homeTeam": "St.Louis Cardinals",
+        "awayTeam": "Cincinnati Reds",
+        "date": "2026-07-27",
+        "startTime": "03:15",
+        "home": {
+          "teamName": "St.Louis Cardinals",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Cincinnati Reds",
+              "result": "W",
+              "scoreFor": 7,
+              "scoreAgainst": 0,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Cincinnati Reds",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-24",
+              "opponent": "Arizona Diamondbacks",
+              "result": "L",
+              "scoreFor": 6,
+              "scoreAgainst": 10,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Los Angeles Angels",
+              "result": "W",
+              "scoreFor": 1,
+              "scoreAgainst": 0,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Los Angeles Angels",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 5,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 55,
+            "wins": 27,
+            "draws": 0,
+            "losses": 28,
+            "winRate": 49.09
+          },
+          "awayRecord": {
+            "played": 49,
+            "wins": 26,
+            "draws": 0,
+            "losses": 23,
+            "winRate": 53.06
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 3.4,
+            "concededAvg": 3.8
+          },
+          "recentForm": {
+            "sequence": "WLLWL",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Cincinnati Reds",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 0,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Cincinnati Reds",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-24",
+                "opponent": "Arizona Diamondbacks",
+                "result": "L",
+                "scoreFor": 6,
+                "scoreAgainst": 10,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Los Angeles Angels",
+                "result": "W",
+                "scoreFor": 1,
+                "scoreAgainst": 0,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Los Angeles Angels",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 5,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": 50.96,
+          "streak": {
+            "type": "win",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Cincinnati Reds",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "St.Louis Cardinals",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 7,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "St.Louis Cardinals",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Seattle Mariners",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 3,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Seattle Mariners",
+              "result": "W",
+              "scoreFor": 4,
+              "scoreAgainst": 2,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Seattle Mariners",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 8,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 50,
+            "wins": 22,
+            "draws": 0,
+            "losses": 28,
+            "winRate": 44
+          },
+          "awayRecord": {
+            "played": 53,
+            "wins": 26,
+            "draws": 0,
+            "losses": 27,
+            "winRate": 49.06
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 2.6,
+            "concededAvg": 4.4
+          },
+          "recentForm": {
+            "sequence": "LWWWL",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "St.Louis Cardinals",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 7,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "St.Louis Cardinals",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Seattle Mariners",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 3,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Seattle Mariners",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Seattle Mariners",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 8,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": 46.6,
+          "streak": {
+            "type": "loss",
+            "count": 1
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 5,
+          "homeTeamWins": 4,
+          "awayTeamWins": 1,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Cincinnati Reds",
+              "result": "W",
+              "scoreFor": 7,
+              "scoreAgainst": 0,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Cincinnati Reds",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-06-08",
+              "opponent": "Cincinnati Reds",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 3,
+              "isHome": true
+            },
+            {
+              "date": "2026-06-07",
+              "opponent": "Cincinnati Reds",
+              "result": "W",
+              "scoreFor": 6,
+              "scoreAgainst": 5,
+              "isHome": true
+            },
+            {
+              "date": "2026-06-06",
+              "opponent": "Cincinnati Reds",
+              "result": "W",
+              "scoreFor": 10,
+              "scoreAgainst": 3,
+              "isHome": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "mlb-179591",
+      "startTimeKst": "03:35",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T18:35:00.000Z",
+      "homeTeam": "Texas Rangers",
+      "awayTeam": "Seattle Mariners",
+      "pickTeam": "Texas Rangers",
+      "pickTeamId": "home",
+      "modelWinProbability": 59,
+      "edgeScore": 8.7,
+      "confidence": 54,
+      "recommendationGrade": "WATCH",
+      "dataAvailability": 0.9,
+      "marketProbability": 50,
+      "valueEdge": 8.4,
+      "overround": 0.0101,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "PASS",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true,
+      "analysisInput": {
+        "gameId": "mlb-179591",
+        "sport": "baseball",
+        "league": "MLB",
+        "homeTeam": "Texas Rangers",
+        "awayTeam": "Seattle Mariners",
+        "date": "2026-07-27",
+        "startTime": "03:35",
+        "home": {
+          "teamName": "Texas Rangers",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Seattle Mariners",
+              "result": "W",
+              "scoreFor": 7,
+              "scoreAgainst": 1,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Seattle Mariners",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Chicago White Sox",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Chicago White Sox",
+              "result": "W",
+              "scoreFor": 10,
+              "scoreAgainst": 0,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Chicago White Sox",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 10,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 51,
+            "wins": 27,
+            "draws": 0,
+            "losses": 24,
+            "winRate": 52.94
+          },
+          "awayRecord": {
+            "played": 53,
+            "wins": 26,
+            "draws": 0,
+            "losses": 27,
+            "winRate": 49.06
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 5.4,
+            "concededAvg": 3.8
+          },
+          "recentForm": {
+            "sequence": "WWLWL",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Seattle Mariners",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 1,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Seattle Mariners",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Chicago White Sox",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Chicago White Sox",
+                "result": "W",
+                "scoreFor": 10,
+                "scoreAgainst": 0,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Chicago White Sox",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 10,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": 50.96,
+          "streak": {
+            "type": "win",
+            "count": 2
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Seattle Mariners",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Texas Rangers",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 7,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Texas Rangers",
+              "result": "L",
+              "scoreFor": 4,
+              "scoreAgainst": 5,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Cincinnati Reds",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 5,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Cincinnati Reds",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Cincinnati Reds",
+              "result": "W",
+              "scoreFor": 8,
+              "scoreAgainst": 0,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 53,
+            "wins": 30,
+            "draws": 0,
+            "losses": 23,
+            "winRate": 56.6
+          },
+          "awayRecord": {
+            "played": 52,
+            "wins": 21,
+            "draws": 0,
+            "losses": 31,
+            "winRate": 40.38
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 3.6,
+            "concededAvg": 4.2
+          },
+          "recentForm": {
+            "sequence": "LLLLW",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Texas Rangers",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 7,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Texas Rangers",
+                "result": "L",
+                "scoreFor": 4,
+                "scoreAgainst": 5,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Cincinnati Reds",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Cincinnati Reds",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Cincinnati Reds",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 0,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": 48.57,
+          "streak": {
+            "type": "loss",
+            "count": 4
+          },
+          "injuries": [],
+          "restDays": 0,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 5,
+          "homeTeamWins": 3,
+          "awayTeamWins": 2,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Seattle Mariners",
+              "result": "W",
+              "scoreFor": 7,
+              "scoreAgainst": 1,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Seattle Mariners",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 4,
+              "isHome": true
+            },
+            {
+              "date": "2026-04-20",
+              "opponent": "Seattle Mariners",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 5,
+              "isHome": false
+            },
+            {
+              "date": "2026-04-19",
+              "opponent": "Seattle Mariners",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 7,
+              "isHome": false
+            },
+            {
+              "date": "2026-04-18",
+              "opponent": "Seattle Mariners",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 0,
+              "isHome": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "mlb-179594",
+      "startTimeKst": "05:05",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T20:05:00.000Z",
+      "homeTeam": "San Francisco Giants",
+      "awayTeam": "Los Angeles Angels",
+      "pickTeam": "San Francisco Giants",
+      "pickTeamId": "home",
+      "modelWinProbability": 58,
+      "edgeScore": 7.8,
+      "confidence": 54,
+      "recommendationGrade": "WATCH",
+      "dataAvailability": 0.9,
+      "marketProbability": 51,
+      "valueEdge": 6.6,
+      "overround": 0.003,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "PASS",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true,
+      "analysisInput": {
+        "gameId": "mlb-179594",
+        "sport": "baseball",
+        "league": "MLB",
+        "homeTeam": "San Francisco Giants",
+        "awayTeam": "Los Angeles Angels",
+        "date": "2026-07-27",
+        "startTime": "05:05",
+        "home": {
+          "teamName": "San Francisco Giants",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Los Angeles Angels",
+              "result": "W",
+              "scoreFor": 9,
+              "scoreAgainst": 2,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Los Angeles Angels",
+              "result": "W",
+              "scoreFor": 7,
+              "scoreAgainst": 6,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Kansas City Royals",
+              "result": "L",
+              "scoreFor": 4,
+              "scoreAgainst": 5,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Kansas City Royals",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 3,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Kansas City Royals",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 4,
+              "isHome": false
+            }
+          ],
+          "homeRecord": {
+            "played": 49,
+            "wins": 24,
+            "draws": 0,
+            "losses": 25,
+            "winRate": 48.98
+          },
+          "awayRecord": {
+            "played": 55,
+            "wins": 20,
+            "draws": 0,
+            "losses": 35,
+            "winRate": 36.36
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 5,
+            "concededAvg": 4
+          },
+          "recentForm": {
+            "sequence": "WWLLL",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "Los Angeles Angels",
+                "result": "W",
+                "scoreFor": 9,
+                "scoreAgainst": 2,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "Los Angeles Angels",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 6,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Kansas City Royals",
+                "result": "L",
+                "scoreFor": 4,
+                "scoreAgainst": 5,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Kansas City Royals",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 3,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Kansas City Royals",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 4,
+                "isHome": false
+              }
+            ]
+          },
+          "winRate": 42.31,
+          "streak": {
+            "type": "win",
+            "count": 2
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "Los Angeles Angels",
+          "recentGames": [
+            {
+              "date": "2026-07-26",
+              "opponent": "San Francisco Giants",
+              "result": "L",
+              "scoreFor": 2,
+              "scoreAgainst": 9,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "San Francisco Giants",
+              "result": "L",
+              "scoreFor": 6,
+              "scoreAgainst": 7,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "St.Louis Cardinals",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 1,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "St.Louis Cardinals",
+              "result": "W",
+              "scoreFor": 5,
+              "scoreAgainst": 1,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "St.Louis Cardinals",
+              "result": "W",
+              "scoreFor": 3,
+              "scoreAgainst": 2,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 52,
+            "wins": 24,
+            "draws": 0,
+            "losses": 28,
+            "winRate": 46.15
+          },
+          "awayRecord": {
+            "played": 53,
+            "wins": 17,
+            "draws": 0,
+            "losses": 36,
+            "winRate": 32.08
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 3.2,
+            "concededAvg": 4
+          },
+          "recentForm": {
+            "sequence": "LLLWW",
+            "last5": [
+              {
+                "date": "2026-07-26",
+                "opponent": "San Francisco Giants",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 9,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-25",
+                "opponent": "San Francisco Giants",
+                "result": "L",
+                "scoreFor": 6,
+                "scoreAgainst": 7,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "St.Louis Cardinals",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 1,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "St.Louis Cardinals",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 1,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "St.Louis Cardinals",
+                "result": "W",
+                "scoreFor": 3,
+                "scoreAgainst": 2,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": 39.05,
+          "streak": {
+            "type": "loss",
+            "count": 3
+          },
+          "injuries": [],
+          "restDays": 1,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 2,
+          "homeTeamWins": 2,
+          "awayTeamWins": 0,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-26",
+              "opponent": "Los Angeles Angels",
+              "result": "W",
+              "scoreFor": 9,
+              "scoreAgainst": 2,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-25",
+              "opponent": "Los Angeles Angels",
+              "result": "W",
+              "scoreFor": 7,
+              "scoreAgainst": 6,
+              "isHome": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "gameId": "mlb-179589",
+      "startTimeKst": "08:20",
+      "dateKst": "2026-07-27",
+      "commenceTimeUtc": "2026-07-26T23:20:00.000Z",
+      "homeTeam": "Philadelphia Phillies",
+      "awayTeam": "New York Yankees",
+      "pickTeam": "New York Yankees",
+      "pickTeamId": "away",
+      "modelWinProbability": 61,
+      "edgeScore": -11.4,
+      "confidence": 51,
+      "recommendationGrade": "EDGE PICK",
+      "dataAvailability": 0.9,
+      "marketProbability": 39,
+      "valueEdge": 22.5,
+      "overround": -0.0026,
+      "marketDataQuality": "complete",
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "analysisStatus": "BASELINE_CANDIDATE",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "deterministic": true,
+      "analysisInput": {
+        "gameId": "mlb-179589",
+        "sport": "baseball",
+        "league": "MLB",
+        "homeTeam": "Philadelphia Phillies",
+        "awayTeam": "New York Yankees",
+        "date": "2026-07-27",
+        "startTime": "08:20",
+        "home": {
+          "teamName": "Philadelphia Phillies",
+          "recentGames": [
+            {
+              "date": "2026-07-25",
+              "opponent": "New York Yankees",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 1,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Los Angeles Dodgers",
+              "result": "L",
+              "scoreFor": 5,
+              "scoreAgainst": 9,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-22",
+              "opponent": "Los Angeles Dodgers",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 2,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Los Angeles Dodgers",
+              "result": "W",
+              "scoreFor": 10,
+              "scoreAgainst": 7,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-20",
+              "opponent": "New York Mets",
+              "result": "L",
+              "scoreFor": 1,
+              "scoreAgainst": 6,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 53,
+            "wins": 27,
+            "draws": 0,
+            "losses": 26,
+            "winRate": 50.94
+          },
+          "awayRecord": {
+            "played": 51,
+            "wins": 29,
+            "draws": 0,
+            "losses": 22,
+            "winRate": 56.86
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 3.4,
+            "concededAvg": 5
+          },
+          "recentForm": {
+            "sequence": "LLLWL",
+            "last5": [
+              {
+                "date": "2026-07-25",
+                "opponent": "New York Yankees",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 1,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Los Angeles Dodgers",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 9,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-22",
+                "opponent": "Los Angeles Dodgers",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 2,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Los Angeles Dodgers",
+                "result": "W",
+                "scoreFor": 10,
+                "scoreAgainst": 7,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-20",
+                "opponent": "New York Mets",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 6,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": 53.85,
+          "streak": {
+            "type": "loss",
+            "count": 3
+          },
+          "injuries": [],
+          "restDays": 2,
+          "startingPitcher": null
+        },
+        "away": {
+          "teamName": "New York Yankees",
+          "recentGames": [
+            {
+              "date": "2026-07-25",
+              "opponent": "Philadelphia Phillies",
+              "result": "W",
+              "scoreFor": 1,
+              "scoreAgainst": 0,
+              "isHome": false
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Pittsburgh Pirates",
+              "result": "W",
+              "scoreFor": 2,
+              "scoreAgainst": 0,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-23",
+              "opponent": "Pittsburgh Pirates",
+              "result": "L",
+              "scoreFor": 3,
+              "scoreAgainst": 5,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-21",
+              "opponent": "Pittsburgh Pirates",
+              "result": "W",
+              "scoreFor": 8,
+              "scoreAgainst": 5,
+              "isHome": true
+            },
+            {
+              "date": "2026-07-20",
+              "opponent": "Los Angeles Dodgers",
+              "result": "W",
+              "scoreFor": 2,
+              "scoreAgainst": 1,
+              "isHome": true
+            }
+          ],
+          "homeRecord": {
+            "played": 49,
+            "wins": 26,
+            "draws": 0,
+            "losses": 23,
+            "winRate": 53.06
+          },
+          "awayRecord": {
+            "played": 54,
+            "wins": 32,
+            "draws": 0,
+            "losses": 22,
+            "winRate": 59.26
+          },
+          "leagueStanding": {
+            "rank": null,
+            "played": null,
+            "wins": null,
+            "draws": null,
+            "losses": null
+          },
+          "scoringAverages": {
+            "scoredAvg": 3.2,
+            "concededAvg": 2.2
+          },
+          "recentForm": {
+            "sequence": "WWLWW",
+            "last5": [
+              {
+                "date": "2026-07-25",
+                "opponent": "Philadelphia Phillies",
+                "result": "W",
+                "scoreFor": 1,
+                "scoreAgainst": 0,
+                "isHome": false
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Pittsburgh Pirates",
+                "result": "W",
+                "scoreFor": 2,
+                "scoreAgainst": 0,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-23",
+                "opponent": "Pittsburgh Pirates",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-21",
+                "opponent": "Pittsburgh Pirates",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "date": "2026-07-20",
+                "opponent": "Los Angeles Dodgers",
+                "result": "W",
+                "scoreFor": 2,
+                "scoreAgainst": 1,
+                "isHome": true
+              }
+            ]
+          },
+          "winRate": 56.31,
+          "streak": {
+            "type": "win",
+            "count": 2
+          },
+          "injuries": [],
+          "restDays": 2,
+          "startingPitcher": null
+        },
+        "headToHead": {
+          "played": 1,
+          "homeTeamWins": 0,
+          "awayTeamWins": 1,
+          "draws": 0,
+          "recentMeetings": [
+            {
+              "date": "2026-07-25",
+              "opponent": "New York Yankees",
+              "result": "L",
+              "scoreFor": 0,
+              "scoreAgainst": 1,
+              "isHome": true
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

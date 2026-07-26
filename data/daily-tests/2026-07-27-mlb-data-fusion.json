@@ -1,0 +1,1461 @@
+{
+  "meta": {
+    "version": "mlb-data-fusion-v1",
+    "generatedAt": "2026-07-26T10:22:27.097Z",
+    "targetDateKst": "2026-07-27",
+    "kstBoundary": {
+      "fromInclusiveUtc": "2026-07-26T15:00:00.000Z",
+      "toExclusiveUtc": "2026-07-27T15:00:00.000Z"
+    },
+    "readOnlyValidation": true,
+    "trialValuesVerifiedAsReal": false,
+    "scrambledMarkerObserved": true,
+    "trialValueNote": "SportsDataIO 게임 응답에서 literal 'Scrambled' 표시를 확인함. 해당 Trial 세부값을 실제값으로 간주하지 않음."
+  },
+  "providerSummary": {
+    "apiBaseball": {
+      "baseline": true,
+      "leagueId": 1,
+      "season": 2026,
+      "gameCount": 15,
+      "error": null,
+      "requests": {
+        "calls": 2,
+        "remaining": 7494,
+        "limit": 7500
+      },
+      "averageResponseMs": 637
+    },
+    "theOddsApi": {
+      "activeSport": {
+        "key": "baseball_mlb",
+        "group": "Baseball",
+        "title": "MLB",
+        "description": "Major League Baseball",
+        "active": true,
+        "hasOutrights": false
+      },
+      "eventCount": 15,
+      "error": null,
+      "requests": {
+        "calls": 2,
+        "remaining": 323,
+        "used": 177,
+        "last": 1
+      },
+      "averageResponseMs": 611
+    },
+    "sportsDataIo": {
+      "gameCount": 15,
+      "error": null,
+      "requests": {
+        "calls": 7,
+        "remaining": null,
+        "used": null
+      },
+      "endpointSupport": {
+        "/scores/json/Teams": "available",
+        "/scores/json/GamesByDate/2026-07-26": "available",
+        "/scores/json/GamesByDate/2026-07-27": "available",
+        "/projections/json/StartingLineupsByDate/2026-07-26": "available",
+        "/projections/json/StartingLineupsByDate/2026-07-27": "available",
+        "/scores/json/Injuries": "unsupported",
+        "/projections/json/InjuredPlayers": "available"
+      },
+      "observedLineupFields": [
+        "HomeBattingLineup",
+        "AwayBattingLineup",
+        "BattingOrder",
+        "Confirmed"
+      ],
+      "averageResponseMs": 330
+    }
+  },
+  "summary": {
+    "baselineGames": 15,
+    "fullMatch": 15,
+    "partialMatch": 0,
+    "failedMatch": 0,
+    "startingPitchersAvailable": 15,
+    "projectedLineupsAvailable": 15,
+    "confirmedLineupsAvailable": 0,
+    "injuriesAvailable": 15,
+    "oddsAvailable": 15,
+    "mostCommonDiscrepancy": null,
+    "engineReady": false,
+    "engineDecision": "15경기 모두 FULL_MATCH지만 SportsDataIO Trial 응답에 Scrambled 표시가 있어 Engine 투입 준비 완료로 표시하지 않음"
+  },
+  "games": [
+    {
+      "index": 1,
+      "baseline": {
+        "source": "api-baseball",
+        "externalId": "179592",
+        "commenceTimeUtc": "2026-07-26T16:15:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "01:15",
+        "homeTeam": "Tampa Bay Rays",
+        "awayTeam": "Cleveland Guardians",
+        "status": "Not Started",
+        "league": {
+          "id": 1,
+          "name": "MLB"
+        },
+        "season": 2026
+      },
+      "oddsMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 1,
+        "existingMatchOddsToGameAgreement": true,
+        "event": {
+          "eventId": "d651270eb53d061fc93a471f11c2f53d",
+          "commenceTime": "2026-07-26T16:16:00Z",
+          "homeTeam": "Tampa Bay Rays",
+          "awayTeam": "Cleveland Guardians",
+          "bestHomeOdds": 1.78,
+          "bestAwayOdds": 2.26,
+          "bookmakerCount": 22
+        }
+      },
+      "sportsDataMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 0,
+        "game": {
+          "gameId": "78864",
+          "dateTime": "2026-07-26T12:15:00",
+          "dateTimeUtc": "2026-07-26T16:15:00",
+          "commenceTimeUtc": "2026-07-26T16:15:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "01:15",
+          "homeTeam": "Tampa Bay Rays",
+          "awayTeam": "Cleveland Guardians",
+          "homeTeamCode": "TB",
+          "awayTeamCode": "CLE",
+          "homeTeamId": 11,
+          "awayTeamId": 10,
+          "status": "Scheduled",
+          "probablePitcherIds": {
+            "home": 10008425,
+            "away": 10014072
+          },
+          "startingPitcherIds": {
+            "home": null,
+            "away": null
+          },
+          "observedPitcherFields": [
+            "WinningPitcherID",
+            "LosingPitcherID",
+            "SavingPitcherID",
+            "AwayTeamProbablePitcherID",
+            "HomeTeamProbablePitcherID",
+            "CurrentPitcherID",
+            "AwayTeamStartingPitcherID",
+            "HomeTeamStartingPitcherID",
+            "AwayTeamStartingPitcher",
+            "HomeTeamStartingPitcher",
+            "CurrentPitcher",
+            "WinningPitcher",
+            "LosingPitcher",
+            "SavingPitcher"
+          ]
+        }
+      },
+      "quality": {
+        "startingPitcherAvailable": true,
+        "projectedLineupAvailable": true,
+        "confirmedLineupAvailable": false,
+        "projectedLineupPlayerCount": 20,
+        "confirmedLineupPlayerCount": 0,
+        "injuriesCount": 12,
+        "homeInjuriesCount": 9,
+        "awayInjuriesCount": 3,
+        "oddsAvailable": true
+      },
+      "fusionStatus": "FULL_MATCH"
+    },
+    {
+      "index": 2,
+      "baseline": {
+        "source": "api-baseball",
+        "externalId": "179590",
+        "commenceTimeUtc": "2026-07-26T17:35:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "02:35",
+        "homeTeam": "Washington Nationals",
+        "awayTeam": "Arizona Diamondbacks",
+        "status": "Not Started",
+        "league": {
+          "id": 1,
+          "name": "MLB"
+        },
+        "season": 2026
+      },
+      "oddsMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 1,
+        "existingMatchOddsToGameAgreement": true,
+        "event": {
+          "eventId": "714c1847e9003da34be408b74dca72e3",
+          "commenceTime": "2026-07-26T17:36:00Z",
+          "homeTeam": "Washington Nationals",
+          "awayTeam": "Arizona Diamondbacks",
+          "bestHomeOdds": 2.08,
+          "bestAwayOdds": 1.9,
+          "bookmakerCount": 23
+        }
+      },
+      "sportsDataMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 0,
+        "game": {
+          "gameId": "78862",
+          "dateTime": "2026-07-26T13:35:00",
+          "dateTimeUtc": "2026-07-26T17:35:00",
+          "commenceTimeUtc": "2026-07-26T17:35:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "02:35",
+          "homeTeam": "Washington Nationals",
+          "awayTeam": "Arizona Diamondbacks",
+          "homeTeamCode": "WSH",
+          "awayTeamCode": "ARI",
+          "homeTeamId": 35,
+          "awayTeamId": 14,
+          "status": "Scheduled",
+          "probablePitcherIds": {
+            "home": 10001250,
+            "away": 10014259
+          },
+          "startingPitcherIds": {
+            "home": null,
+            "away": null
+          },
+          "observedPitcherFields": [
+            "WinningPitcherID",
+            "LosingPitcherID",
+            "SavingPitcherID",
+            "AwayTeamProbablePitcherID",
+            "HomeTeamProbablePitcherID",
+            "CurrentPitcherID",
+            "AwayTeamStartingPitcherID",
+            "HomeTeamStartingPitcherID",
+            "AwayTeamStartingPitcher",
+            "HomeTeamStartingPitcher",
+            "CurrentPitcher",
+            "WinningPitcher",
+            "LosingPitcher",
+            "SavingPitcher"
+          ]
+        }
+      },
+      "quality": {
+        "startingPitcherAvailable": true,
+        "projectedLineupAvailable": true,
+        "confirmedLineupAvailable": false,
+        "projectedLineupPlayerCount": 20,
+        "confirmedLineupPlayerCount": 0,
+        "injuriesCount": 24,
+        "homeInjuriesCount": 11,
+        "awayInjuriesCount": 13,
+        "oddsAvailable": true
+      },
+      "fusionStatus": "FULL_MATCH"
+    },
+    {
+      "index": 3,
+      "baseline": {
+        "source": "api-baseball",
+        "externalId": "179595",
+        "commenceTimeUtc": "2026-07-26T17:35:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "02:35",
+        "homeTeam": "Pittsburgh Pirates",
+        "awayTeam": "Chicago Cubs",
+        "status": "Not Started",
+        "league": {
+          "id": 1,
+          "name": "MLB"
+        },
+        "season": 2026
+      },
+      "oddsMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 1,
+        "existingMatchOddsToGameAgreement": true,
+        "event": {
+          "eventId": "458f1aad594ae5477de447c6d836a79d",
+          "commenceTime": "2026-07-26T17:36:00Z",
+          "homeTeam": "Pittsburgh Pirates",
+          "awayTeam": "Chicago Cubs",
+          "bestHomeOdds": 1.85,
+          "bestAwayOdds": 2.16,
+          "bookmakerCount": 23
+        }
+      },
+      "sportsDataMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 0,
+        "game": {
+          "gameId": "78863",
+          "dateTime": "2026-07-26T13:35:00",
+          "dateTimeUtc": "2026-07-26T17:35:00",
+          "commenceTimeUtc": "2026-07-26T17:35:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "02:35",
+          "homeTeam": "Pittsburgh Pirates",
+          "awayTeam": "Chicago Cubs",
+          "homeTeamCode": "PIT",
+          "awayTeamCode": "CHC",
+          "homeTeamId": 4,
+          "awayTeamId": 9,
+          "status": "Scheduled",
+          "probablePitcherIds": {
+            "home": 10009265,
+            "away": 10000986
+          },
+          "startingPitcherIds": {
+            "home": null,
+            "away": null
+          },
+          "observedPitcherFields": [
+            "WinningPitcherID",
+            "LosingPitcherID",
+            "SavingPitcherID",
+            "AwayTeamProbablePitcherID",
+            "HomeTeamProbablePitcherID",
+            "CurrentPitcherID",
+            "AwayTeamStartingPitcherID",
+            "HomeTeamStartingPitcherID",
+            "AwayTeamStartingPitcher",
+            "HomeTeamStartingPitcher",
+            "CurrentPitcher",
+            "WinningPitcher",
+            "LosingPitcher",
+            "SavingPitcher"
+          ]
+        }
+      },
+      "quality": {
+        "startingPitcherAvailable": true,
+        "projectedLineupAvailable": true,
+        "confirmedLineupAvailable": false,
+        "projectedLineupPlayerCount": 20,
+        "confirmedLineupPlayerCount": 0,
+        "injuriesCount": 22,
+        "homeInjuriesCount": 7,
+        "awayInjuriesCount": 15,
+        "oddsAvailable": true
+      },
+      "fusionStatus": "FULL_MATCH"
+    },
+    {
+      "index": 4,
+      "baseline": {
+        "source": "api-baseball",
+        "externalId": "179602",
+        "commenceTimeUtc": "2026-07-26T17:35:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "02:35",
+        "homeTeam": "Boston Red Sox",
+        "awayTeam": "Toronto Blue Jays",
+        "status": "Not Started",
+        "league": {
+          "id": 1,
+          "name": "MLB"
+        },
+        "season": 2026
+      },
+      "oddsMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 1,
+        "existingMatchOddsToGameAgreement": true,
+        "event": {
+          "eventId": "48df7c31ab5c07dc2c7073170f193a8f",
+          "commenceTime": "2026-07-26T17:36:00Z",
+          "homeTeam": "Boston Red Sox",
+          "awayTeam": "Toronto Blue Jays",
+          "bestHomeOdds": 1.76,
+          "bestAwayOdds": 2.31,
+          "bookmakerCount": 23
+        }
+      },
+      "sportsDataMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 0,
+        "game": {
+          "gameId": "78866",
+          "dateTime": "2026-07-26T13:35:00",
+          "dateTimeUtc": "2026-07-26T17:35:00",
+          "commenceTimeUtc": "2026-07-26T17:35:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "02:35",
+          "homeTeam": "Boston Red Sox",
+          "awayTeam": "Toronto Blue Jays",
+          "homeTeamCode": "BOS",
+          "awayTeamCode": "TOR",
+          "homeTeamId": 25,
+          "awayTeamId": 3,
+          "status": "Scheduled",
+          "probablePitcherIds": {
+            "home": 10008281,
+            "away": 10000101
+          },
+          "startingPitcherIds": {
+            "home": null,
+            "away": null
+          },
+          "observedPitcherFields": [
+            "WinningPitcherID",
+            "LosingPitcherID",
+            "SavingPitcherID",
+            "AwayTeamProbablePitcherID",
+            "HomeTeamProbablePitcherID",
+            "CurrentPitcherID",
+            "AwayTeamStartingPitcherID",
+            "HomeTeamStartingPitcherID",
+            "AwayTeamStartingPitcher",
+            "HomeTeamStartingPitcher",
+            "CurrentPitcher",
+            "WinningPitcher",
+            "LosingPitcher",
+            "SavingPitcher"
+          ]
+        }
+      },
+      "quality": {
+        "startingPitcherAvailable": true,
+        "projectedLineupAvailable": true,
+        "confirmedLineupAvailable": false,
+        "projectedLineupPlayerCount": 20,
+        "confirmedLineupPlayerCount": 0,
+        "injuriesCount": 23,
+        "homeInjuriesCount": 11,
+        "awayInjuriesCount": 12,
+        "oddsAvailable": true
+      },
+      "fusionStatus": "FULL_MATCH"
+    },
+    {
+      "index": 5,
+      "baseline": {
+        "source": "api-baseball",
+        "externalId": "179603",
+        "commenceTimeUtc": "2026-07-26T17:35:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "02:35",
+        "homeTeam": "Baltimore Orioles",
+        "awayTeam": "Atlanta Braves",
+        "status": "Not Started",
+        "league": {
+          "id": 1,
+          "name": "MLB"
+        },
+        "season": 2026
+      },
+      "oddsMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 1,
+        "existingMatchOddsToGameAgreement": true,
+        "event": {
+          "eventId": "ce049001315d997fa2641116b7a1ede0",
+          "commenceTime": "2026-07-26T17:36:00Z",
+          "homeTeam": "Baltimore Orioles",
+          "awayTeam": "Atlanta Braves",
+          "bestHomeOdds": 2,
+          "bestAwayOdds": 2.01,
+          "bookmakerCount": 23
+        }
+      },
+      "sportsDataMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 0,
+        "game": {
+          "gameId": "78869",
+          "dateTime": "2026-07-26T13:35:00",
+          "dateTimeUtc": "2026-07-26T17:35:00",
+          "commenceTimeUtc": "2026-07-26T17:35:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "02:35",
+          "homeTeam": "Baltimore Orioles",
+          "awayTeam": "Atlanta Braves",
+          "homeTeamCode": "BAL",
+          "awayTeamCode": "ATL",
+          "homeTeamId": 19,
+          "awayTeamId": 26,
+          "status": "Scheduled",
+          "probablePitcherIds": {
+            "home": 10008332,
+            "away": 10006183
+          },
+          "startingPitcherIds": {
+            "home": null,
+            "away": null
+          },
+          "observedPitcherFields": [
+            "WinningPitcherID",
+            "LosingPitcherID",
+            "SavingPitcherID",
+            "AwayTeamProbablePitcherID",
+            "HomeTeamProbablePitcherID",
+            "CurrentPitcherID",
+            "AwayTeamStartingPitcherID",
+            "HomeTeamStartingPitcherID",
+            "AwayTeamStartingPitcher",
+            "HomeTeamStartingPitcher",
+            "CurrentPitcher",
+            "WinningPitcher",
+            "LosingPitcher",
+            "SavingPitcher"
+          ]
+        }
+      },
+      "quality": {
+        "startingPitcherAvailable": true,
+        "projectedLineupAvailable": true,
+        "confirmedLineupAvailable": false,
+        "projectedLineupPlayerCount": 20,
+        "confirmedLineupPlayerCount": 0,
+        "injuriesCount": 24,
+        "homeInjuriesCount": 14,
+        "awayInjuriesCount": 10,
+        "oddsAvailable": true
+      },
+      "fusionStatus": "FULL_MATCH"
+    },
+    {
+      "index": 6,
+      "baseline": {
+        "source": "api-baseball",
+        "externalId": "179597",
+        "commenceTimeUtc": "2026-07-26T17:40:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "02:40",
+        "homeTeam": "New York Mets",
+        "awayTeam": "Los Angeles Dodgers",
+        "status": "Not Started",
+        "league": {
+          "id": 1,
+          "name": "MLB"
+        },
+        "season": 2026
+      },
+      "oddsMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 1,
+        "existingMatchOddsToGameAgreement": true,
+        "event": {
+          "eventId": "17b69aed6b1c1715ffbd01b155af848d",
+          "commenceTime": "2026-07-26T17:41:00Z",
+          "homeTeam": "New York Mets",
+          "awayTeam": "Los Angeles Dodgers",
+          "bestHomeOdds": 2.42,
+          "bestAwayOdds": 1.69,
+          "bookmakerCount": 22
+        }
+      },
+      "sportsDataMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 0,
+        "game": {
+          "gameId": "78865",
+          "dateTime": "2026-07-26T13:40:00",
+          "dateTimeUtc": "2026-07-26T17:40:00",
+          "commenceTimeUtc": "2026-07-26T17:40:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "02:40",
+          "homeTeam": "New York Mets",
+          "awayTeam": "Los Angeles Dodgers",
+          "homeTeamCode": "NYM",
+          "awayTeamCode": "LAD",
+          "homeTeamId": 18,
+          "awayTeamId": 1,
+          "status": "Scheduled",
+          "probablePitcherIds": {
+            "home": 10006935,
+            "away": 10014283
+          },
+          "startingPitcherIds": {
+            "home": null,
+            "away": null
+          },
+          "observedPitcherFields": [
+            "WinningPitcherID",
+            "LosingPitcherID",
+            "SavingPitcherID",
+            "AwayTeamProbablePitcherID",
+            "HomeTeamProbablePitcherID",
+            "CurrentPitcherID",
+            "AwayTeamStartingPitcherID",
+            "HomeTeamStartingPitcherID",
+            "AwayTeamStartingPitcher",
+            "HomeTeamStartingPitcher",
+            "CurrentPitcher",
+            "WinningPitcher",
+            "LosingPitcher",
+            "SavingPitcher"
+          ]
+        }
+      },
+      "quality": {
+        "startingPitcherAvailable": true,
+        "projectedLineupAvailable": true,
+        "confirmedLineupAvailable": false,
+        "projectedLineupPlayerCount": 20,
+        "confirmedLineupPlayerCount": 0,
+        "injuriesCount": 20,
+        "homeInjuriesCount": 9,
+        "awayInjuriesCount": 11,
+        "oddsAvailable": true
+      },
+      "fusionStatus": "FULL_MATCH"
+    },
+    {
+      "index": 7,
+      "baseline": {
+        "source": "api-baseball",
+        "externalId": "179599",
+        "commenceTimeUtc": "2026-07-26T17:40:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "02:40",
+        "homeTeam": "Miami Marlins",
+        "awayTeam": "San Diego Padres",
+        "status": "Not Started",
+        "league": {
+          "id": 1,
+          "name": "MLB"
+        },
+        "season": 2026
+      },
+      "oddsMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 1,
+        "existingMatchOddsToGameAgreement": true,
+        "event": {
+          "eventId": "3f5e40b78b4be8ec30a552f1081e4dc0",
+          "commenceTime": "2026-07-26T17:41:00Z",
+          "homeTeam": "Miami Marlins",
+          "awayTeam": "San Diego Padres",
+          "bestHomeOdds": 1.83,
+          "bestAwayOdds": 2.16,
+          "bookmakerCount": 23
+        }
+      },
+      "sportsDataMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 0,
+        "game": {
+          "gameId": "78872",
+          "dateTime": "2026-07-26T13:40:00",
+          "dateTimeUtc": "2026-07-26T17:40:00",
+          "commenceTimeUtc": "2026-07-26T17:40:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "02:40",
+          "homeTeam": "Miami Marlins",
+          "awayTeam": "San Diego Padres",
+          "homeTeamCode": "MIA",
+          "awayTeamCode": "SD",
+          "homeTeamId": 22,
+          "awayTeamId": 33,
+          "status": "Scheduled",
+          "probablePitcherIds": {
+            "home": 10012463,
+            "away": 10005607
+          },
+          "startingPitcherIds": {
+            "home": null,
+            "away": null
+          },
+          "observedPitcherFields": [
+            "WinningPitcherID",
+            "LosingPitcherID",
+            "SavingPitcherID",
+            "AwayTeamProbablePitcherID",
+            "HomeTeamProbablePitcherID",
+            "CurrentPitcherID",
+            "AwayTeamStartingPitcherID",
+            "HomeTeamStartingPitcherID",
+            "AwayTeamStartingPitcher",
+            "HomeTeamStartingPitcher",
+            "CurrentPitcher",
+            "WinningPitcher",
+            "LosingPitcher",
+            "SavingPitcher"
+          ]
+        }
+      },
+      "quality": {
+        "startingPitcherAvailable": true,
+        "projectedLineupAvailable": true,
+        "confirmedLineupAvailable": false,
+        "projectedLineupPlayerCount": 20,
+        "confirmedLineupPlayerCount": 0,
+        "injuriesCount": 21,
+        "homeInjuriesCount": 9,
+        "awayInjuriesCount": 12,
+        "oddsAvailable": true
+      },
+      "fusionStatus": "FULL_MATCH"
+    },
+    {
+      "index": 8,
+      "baseline": {
+        "source": "api-baseball",
+        "externalId": "179600",
+        "commenceTimeUtc": "2026-07-26T17:40:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "02:40",
+        "homeTeam": "Detroit Tigers",
+        "awayTeam": "Kansas City Royals",
+        "status": "Not Started",
+        "league": {
+          "id": 1,
+          "name": "MLB"
+        },
+        "season": 2026
+      },
+      "oddsMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 1,
+        "existingMatchOddsToGameAgreement": true,
+        "event": {
+          "eventId": "695de475f6a8dd1f205bda6ba50db0ee",
+          "commenceTime": "2026-07-26T17:41:00Z",
+          "homeTeam": "Detroit Tigers",
+          "awayTeam": "Kansas City Royals",
+          "bestHomeOdds": 1.57,
+          "bestAwayOdds": 2.66,
+          "bookmakerCount": 23
+        }
+      },
+      "sportsDataMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 0,
+        "game": {
+          "gameId": "78871",
+          "dateTime": "2026-07-26T13:40:00",
+          "dateTimeUtc": "2026-07-26T17:40:00",
+          "commenceTimeUtc": "2026-07-26T17:40:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "02:40",
+          "homeTeam": "Detroit Tigers",
+          "awayTeam": "Kansas City Royals",
+          "homeTeamCode": "DET",
+          "awayTeamCode": "KC",
+          "homeTeamId": 17,
+          "awayTeamId": 5,
+          "status": "Scheduled",
+          "probablePitcherIds": {
+            "home": 10007637,
+            "away": 10016805
+          },
+          "startingPitcherIds": {
+            "home": null,
+            "away": null
+          },
+          "observedPitcherFields": [
+            "WinningPitcherID",
+            "LosingPitcherID",
+            "SavingPitcherID",
+            "AwayTeamProbablePitcherID",
+            "HomeTeamProbablePitcherID",
+            "CurrentPitcherID",
+            "AwayTeamStartingPitcherID",
+            "HomeTeamStartingPitcherID",
+            "AwayTeamStartingPitcher",
+            "HomeTeamStartingPitcher",
+            "CurrentPitcher",
+            "WinningPitcher",
+            "LosingPitcher",
+            "SavingPitcher"
+          ]
+        }
+      },
+      "quality": {
+        "startingPitcherAvailable": true,
+        "projectedLineupAvailable": true,
+        "confirmedLineupAvailable": false,
+        "projectedLineupPlayerCount": 20,
+        "confirmedLineupPlayerCount": 0,
+        "injuriesCount": 24,
+        "homeInjuriesCount": 12,
+        "awayInjuriesCount": 12,
+        "oddsAvailable": true
+      },
+      "fusionStatus": "FULL_MATCH"
+    },
+    {
+      "index": 9,
+      "baseline": {
+        "source": "api-baseball",
+        "externalId": "179596",
+        "commenceTimeUtc": "2026-07-26T18:10:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "03:10",
+        "homeTeam": "Minnesota Twins",
+        "awayTeam": "Athletics",
+        "status": "Not Started",
+        "league": {
+          "id": 1,
+          "name": "MLB"
+        },
+        "season": 2026
+      },
+      "oddsMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 1,
+        "existingMatchOddsToGameAgreement": true,
+        "event": {
+          "eventId": "a9c8aad6e31f322b330deb1a7fdd3eb3",
+          "commenceTime": "2026-07-26T18:11:00Z",
+          "homeTeam": "Minnesota Twins",
+          "awayTeam": "Athletics",
+          "bestHomeOdds": 1.77,
+          "bestAwayOdds": 2.28,
+          "bookmakerCount": 23
+        }
+      },
+      "sportsDataMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 0,
+        "game": {
+          "gameId": "78867",
+          "dateTime": "2026-07-26T14:10:00",
+          "dateTimeUtc": "2026-07-26T18:10:00",
+          "commenceTimeUtc": "2026-07-26T18:10:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "03:10",
+          "homeTeam": "Minnesota Twins",
+          "awayTeam": "Athletics",
+          "homeTeamCode": "MIN",
+          "awayTeamCode": "ATH",
+          "homeTeamId": 20,
+          "awayTeamId": 24,
+          "status": "Scheduled",
+          "probablePitcherIds": {
+            "home": 10014138,
+            "away": 10008737
+          },
+          "startingPitcherIds": {
+            "home": null,
+            "away": null
+          },
+          "observedPitcherFields": [
+            "WinningPitcherID",
+            "LosingPitcherID",
+            "SavingPitcherID",
+            "AwayTeamProbablePitcherID",
+            "HomeTeamProbablePitcherID",
+            "CurrentPitcherID",
+            "AwayTeamStartingPitcherID",
+            "HomeTeamStartingPitcherID",
+            "AwayTeamStartingPitcher",
+            "HomeTeamStartingPitcher",
+            "CurrentPitcher",
+            "WinningPitcher",
+            "LosingPitcher",
+            "SavingPitcher"
+          ]
+        }
+      },
+      "quality": {
+        "startingPitcherAvailable": true,
+        "projectedLineupAvailable": true,
+        "confirmedLineupAvailable": false,
+        "projectedLineupPlayerCount": 20,
+        "confirmedLineupPlayerCount": 0,
+        "injuriesCount": 20,
+        "homeInjuriesCount": 9,
+        "awayInjuriesCount": 11,
+        "oddsAvailable": true
+      },
+      "fusionStatus": "FULL_MATCH"
+    },
+    {
+      "index": 10,
+      "baseline": {
+        "source": "api-baseball",
+        "externalId": "179598",
+        "commenceTimeUtc": "2026-07-26T18:10:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "03:10",
+        "homeTeam": "Milwaukee Brewers",
+        "awayTeam": "Colorado Rockies",
+        "status": "Not Started",
+        "league": {
+          "id": 1,
+          "name": "MLB"
+        },
+        "season": 2026
+      },
+      "oddsMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 1,
+        "existingMatchOddsToGameAgreement": true,
+        "event": {
+          "eventId": "c66c0c97123e0bc5e1a3c1b170c9b269",
+          "commenceTime": "2026-07-26T18:11:00Z",
+          "homeTeam": "Milwaukee Brewers",
+          "awayTeam": "Colorado Rockies",
+          "bestHomeOdds": 1.33,
+          "bestAwayOdds": 4,
+          "bookmakerCount": 23
+        }
+      },
+      "sportsDataMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 0,
+        "game": {
+          "gameId": "78873",
+          "dateTime": "2026-07-26T14:10:00",
+          "dateTimeUtc": "2026-07-26T18:10:00",
+          "commenceTimeUtc": "2026-07-26T18:10:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "03:10",
+          "homeTeam": "Milwaukee Brewers",
+          "awayTeam": "Colorado Rockies",
+          "homeTeamCode": "MIL",
+          "awayTeamCode": "COL",
+          "homeTeamId": 32,
+          "awayTeamId": 23,
+          "status": "Scheduled",
+          "probablePitcherIds": {
+            "home": 10014119,
+            "away": 10005835
+          },
+          "startingPitcherIds": {
+            "home": null,
+            "away": null
+          },
+          "observedPitcherFields": [
+            "WinningPitcherID",
+            "LosingPitcherID",
+            "SavingPitcherID",
+            "AwayTeamProbablePitcherID",
+            "HomeTeamProbablePitcherID",
+            "CurrentPitcherID",
+            "AwayTeamStartingPitcherID",
+            "HomeTeamStartingPitcherID",
+            "AwayTeamStartingPitcher",
+            "HomeTeamStartingPitcher",
+            "CurrentPitcher",
+            "WinningPitcher",
+            "LosingPitcher",
+            "SavingPitcher"
+          ]
+        }
+      },
+      "quality": {
+        "startingPitcherAvailable": true,
+        "projectedLineupAvailable": true,
+        "confirmedLineupAvailable": false,
+        "projectedLineupPlayerCount": 20,
+        "confirmedLineupPlayerCount": 0,
+        "injuriesCount": 22,
+        "homeInjuriesCount": 11,
+        "awayInjuriesCount": 11,
+        "oddsAvailable": true
+      },
+      "fusionStatus": "FULL_MATCH"
+    },
+    {
+      "index": 11,
+      "baseline": {
+        "source": "api-baseball",
+        "externalId": "179601",
+        "commenceTimeUtc": "2026-07-26T18:10:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "03:10",
+        "homeTeam": "Chicago White Sox",
+        "awayTeam": "Houston Astros",
+        "status": "Not Started",
+        "league": {
+          "id": 1,
+          "name": "MLB"
+        },
+        "season": 2026
+      },
+      "oddsMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 1,
+        "existingMatchOddsToGameAgreement": true,
+        "event": {
+          "eventId": "b61e67dbd760d186d865cc2ff013a7c0",
+          "commenceTime": "2026-07-26T18:11:00Z",
+          "homeTeam": "Chicago White Sox",
+          "awayTeam": "Houston Astros",
+          "bestHomeOdds": 1.95,
+          "bestAwayOdds": 2,
+          "bookmakerCount": 23
+        }
+      },
+      "sportsDataMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 0,
+        "game": {
+          "gameId": "78868",
+          "dateTime": "2026-07-26T14:10:00",
+          "dateTimeUtc": "2026-07-26T18:10:00",
+          "commenceTimeUtc": "2026-07-26T18:10:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "03:10",
+          "homeTeam": "Chicago White Sox",
+          "awayTeam": "Houston Astros",
+          "homeTeamCode": "CHW",
+          "awayTeamCode": "HOU",
+          "homeTeamId": 16,
+          "awayTeamId": 30,
+          "status": "Scheduled",
+          "probablePitcherIds": {
+            "home": 10005808,
+            "away": 10009998
+          },
+          "startingPitcherIds": {
+            "home": null,
+            "away": null
+          },
+          "observedPitcherFields": [
+            "WinningPitcherID",
+            "LosingPitcherID",
+            "SavingPitcherID",
+            "AwayTeamProbablePitcherID",
+            "HomeTeamProbablePitcherID",
+            "CurrentPitcherID",
+            "AwayTeamStartingPitcherID",
+            "HomeTeamStartingPitcherID",
+            "AwayTeamStartingPitcher",
+            "HomeTeamStartingPitcher",
+            "CurrentPitcher",
+            "WinningPitcher",
+            "LosingPitcher",
+            "SavingPitcher"
+          ]
+        }
+      },
+      "quality": {
+        "startingPitcherAvailable": true,
+        "projectedLineupAvailable": true,
+        "confirmedLineupAvailable": false,
+        "projectedLineupPlayerCount": 20,
+        "confirmedLineupPlayerCount": 0,
+        "injuriesCount": 20,
+        "homeInjuriesCount": 12,
+        "awayInjuriesCount": 8,
+        "oddsAvailable": true
+      },
+      "fusionStatus": "FULL_MATCH"
+    },
+    {
+      "index": 12,
+      "baseline": {
+        "source": "api-baseball",
+        "externalId": "179593",
+        "commenceTimeUtc": "2026-07-26T18:15:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "03:15",
+        "homeTeam": "St.Louis Cardinals",
+        "awayTeam": "Cincinnati Reds",
+        "status": "Not Started",
+        "league": {
+          "id": 1,
+          "name": "MLB"
+        },
+        "season": 2026
+      },
+      "oddsMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 1,
+        "existingMatchOddsToGameAgreement": true,
+        "event": {
+          "eventId": "9064f61fe767dfa3c4a613a4f02250d3",
+          "commenceTime": "2026-07-26T18:16:00Z",
+          "homeTeam": "St. Louis Cardinals",
+          "awayTeam": "Cincinnati Reds",
+          "bestHomeOdds": 1.78,
+          "bestAwayOdds": 2.23,
+          "bookmakerCount": 23
+        }
+      },
+      "sportsDataMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 0,
+        "game": {
+          "gameId": "78874",
+          "dateTime": "2026-07-26T14:15:00",
+          "dateTimeUtc": "2026-07-26T18:15:00",
+          "commenceTimeUtc": "2026-07-26T18:15:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "03:15",
+          "homeTeam": "St. Louis Cardinals",
+          "awayTeam": "Cincinnati Reds",
+          "homeTeamCode": "STL",
+          "awayTeamCode": "CIN",
+          "homeTeamId": 31,
+          "awayTeamId": 2,
+          "status": "Scheduled",
+          "probablePitcherIds": {
+            "home": 10014962,
+            "away": 10012507
+          },
+          "startingPitcherIds": {
+            "home": null,
+            "away": null
+          },
+          "observedPitcherFields": [
+            "WinningPitcherID",
+            "LosingPitcherID",
+            "SavingPitcherID",
+            "AwayTeamProbablePitcherID",
+            "HomeTeamProbablePitcherID",
+            "CurrentPitcherID",
+            "AwayTeamStartingPitcherID",
+            "HomeTeamStartingPitcherID",
+            "AwayTeamStartingPitcher",
+            "HomeTeamStartingPitcher",
+            "CurrentPitcher",
+            "WinningPitcher",
+            "LosingPitcher",
+            "SavingPitcher"
+          ]
+        }
+      },
+      "quality": {
+        "startingPitcherAvailable": true,
+        "projectedLineupAvailable": true,
+        "confirmedLineupAvailable": false,
+        "projectedLineupPlayerCount": 20,
+        "confirmedLineupPlayerCount": 0,
+        "injuriesCount": 11,
+        "homeInjuriesCount": 4,
+        "awayInjuriesCount": 7,
+        "oddsAvailable": true
+      },
+      "fusionStatus": "FULL_MATCH"
+    },
+    {
+      "index": 13,
+      "baseline": {
+        "source": "api-baseball",
+        "externalId": "179591",
+        "commenceTimeUtc": "2026-07-26T18:35:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "03:35",
+        "homeTeam": "Texas Rangers",
+        "awayTeam": "Seattle Mariners",
+        "status": "Not Started",
+        "league": {
+          "id": 1,
+          "name": "MLB"
+        },
+        "season": 2026
+      },
+      "oddsMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 1,
+        "existingMatchOddsToGameAgreement": true,
+        "event": {
+          "eventId": "8eb22b9b7908e0cc06501501e79a4d17",
+          "commenceTime": "2026-07-26T18:36:00Z",
+          "homeTeam": "Texas Rangers",
+          "awayTeam": "Seattle Mariners",
+          "bestHomeOdds": 1.97,
+          "bestAwayOdds": 1.99,
+          "bookmakerCount": 23
+        }
+      },
+      "sportsDataMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 0,
+        "game": {
+          "gameId": "78875",
+          "dateTime": "2026-07-26T14:35:00",
+          "dateTimeUtc": "2026-07-26T18:35:00",
+          "commenceTimeUtc": "2026-07-26T18:35:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "03:35",
+          "homeTeam": "Texas Rangers",
+          "awayTeam": "Seattle Mariners",
+          "homeTeamCode": "TEX",
+          "awayTeamCode": "SEA",
+          "homeTeamId": 28,
+          "awayTeamId": 13,
+          "status": "Scheduled",
+          "probablePitcherIds": {
+            "home": 10000787,
+            "away": 10009285
+          },
+          "startingPitcherIds": {
+            "home": null,
+            "away": null
+          },
+          "observedPitcherFields": [
+            "WinningPitcherID",
+            "LosingPitcherID",
+            "SavingPitcherID",
+            "AwayTeamProbablePitcherID",
+            "HomeTeamProbablePitcherID",
+            "CurrentPitcherID",
+            "AwayTeamStartingPitcherID",
+            "HomeTeamStartingPitcherID",
+            "AwayTeamStartingPitcher",
+            "HomeTeamStartingPitcher",
+            "CurrentPitcher",
+            "WinningPitcher",
+            "LosingPitcher",
+            "SavingPitcher"
+          ]
+        }
+      },
+      "quality": {
+        "startingPitcherAvailable": true,
+        "projectedLineupAvailable": true,
+        "confirmedLineupAvailable": false,
+        "projectedLineupPlayerCount": 20,
+        "confirmedLineupPlayerCount": 0,
+        "injuriesCount": 22,
+        "homeInjuriesCount": 15,
+        "awayInjuriesCount": 7,
+        "oddsAvailable": true
+      },
+      "fusionStatus": "FULL_MATCH"
+    },
+    {
+      "index": 14,
+      "baseline": {
+        "source": "api-baseball",
+        "externalId": "179594",
+        "commenceTimeUtc": "2026-07-26T20:05:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "05:05",
+        "homeTeam": "San Francisco Giants",
+        "awayTeam": "Los Angeles Angels",
+        "status": "Not Started",
+        "league": {
+          "id": 1,
+          "name": "MLB"
+        },
+        "season": 2026
+      },
+      "oddsMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 1,
+        "existingMatchOddsToGameAgreement": true,
+        "event": {
+          "eventId": "863fffb8c7bb8eba061b9c449d582054",
+          "commenceTime": "2026-07-26T20:06:00Z",
+          "homeTeam": "San Francisco Giants",
+          "awayTeam": "Los Angeles Angels",
+          "bestHomeOdds": 1.95,
+          "bestAwayOdds": 2.04,
+          "bookmakerCount": 23
+        }
+      },
+      "sportsDataMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 0,
+        "game": {
+          "gameId": "78876",
+          "dateTime": "2026-07-26T16:05:00",
+          "dateTimeUtc": "2026-07-26T20:05:00",
+          "commenceTimeUtc": "2026-07-26T20:05:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "05:05",
+          "homeTeam": "San Francisco Giants",
+          "awayTeam": "Los Angeles Angels",
+          "homeTeamCode": "SF",
+          "awayTeamCode": "LAA",
+          "homeTeamId": 15,
+          "awayTeamId": 21,
+          "status": "Scheduled",
+          "probablePitcherIds": {
+            "home": 10014354,
+            "away": 10008545
+          },
+          "startingPitcherIds": {
+            "home": null,
+            "away": null
+          },
+          "observedPitcherFields": [
+            "WinningPitcherID",
+            "LosingPitcherID",
+            "SavingPitcherID",
+            "AwayTeamProbablePitcherID",
+            "HomeTeamProbablePitcherID",
+            "CurrentPitcherID",
+            "AwayTeamStartingPitcherID",
+            "HomeTeamStartingPitcherID",
+            "AwayTeamStartingPitcher",
+            "HomeTeamStartingPitcher",
+            "CurrentPitcher",
+            "WinningPitcher",
+            "LosingPitcher",
+            "SavingPitcher"
+          ]
+        }
+      },
+      "quality": {
+        "startingPitcherAvailable": true,
+        "projectedLineupAvailable": true,
+        "confirmedLineupAvailable": false,
+        "projectedLineupPlayerCount": 20,
+        "confirmedLineupPlayerCount": 0,
+        "injuriesCount": 21,
+        "homeInjuriesCount": 12,
+        "awayInjuriesCount": 9,
+        "oddsAvailable": true
+      },
+      "fusionStatus": "FULL_MATCH"
+    },
+    {
+      "index": 15,
+      "baseline": {
+        "source": "api-baseball",
+        "externalId": "179589",
+        "commenceTimeUtc": "2026-07-26T23:20:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "08:20",
+        "homeTeam": "Philadelphia Phillies",
+        "awayTeam": "New York Yankees",
+        "status": "Not Started",
+        "league": {
+          "id": 1,
+          "name": "MLB"
+        },
+        "season": 2026
+      },
+      "oddsMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 1,
+        "existingMatchOddsToGameAgreement": true,
+        "event": {
+          "eventId": "210e6566d3641ee245e8a099a1679244",
+          "commenceTime": "2026-07-26T23:21:00Z",
+          "homeTeam": "Philadelphia Phillies",
+          "awayTeam": "New York Yankees",
+          "bestHomeOdds": 1.64,
+          "bestAwayOdds": 2.58,
+          "bookmakerCount": 23
+        }
+      },
+      "sportsDataMatch": {
+        "method": "teams-time",
+        "confidence": 0.9,
+        "candidateCount": 1,
+        "timeDiffMinutes": 0,
+        "game": {
+          "gameId": "78870",
+          "dateTime": "2026-07-26T19:20:00",
+          "dateTimeUtc": "2026-07-26T23:20:00",
+          "commenceTimeUtc": "2026-07-26T23:20:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "08:20",
+          "homeTeam": "Philadelphia Phillies",
+          "awayTeam": "New York Yankees",
+          "homeTeamCode": "PHI",
+          "awayTeamCode": "NYY",
+          "homeTeamId": 12,
+          "awayTeamId": 29,
+          "status": "Scheduled",
+          "probablePitcherIds": {
+            "home": 10010796,
+            "away": 10013936
+          },
+          "startingPitcherIds": {
+            "home": null,
+            "away": null
+          },
+          "observedPitcherFields": [
+            "WinningPitcherID",
+            "LosingPitcherID",
+            "SavingPitcherID",
+            "AwayTeamProbablePitcherID",
+            "HomeTeamProbablePitcherID",
+            "CurrentPitcherID",
+            "AwayTeamStartingPitcherID",
+            "HomeTeamStartingPitcherID",
+            "AwayTeamStartingPitcher",
+            "HomeTeamStartingPitcher",
+            "CurrentPitcher",
+            "WinningPitcher",
+            "LosingPitcher",
+            "SavingPitcher"
+          ]
+        }
+      },
+      "quality": {
+        "startingPitcherAvailable": true,
+        "projectedLineupAvailable": true,
+        "confirmedLineupAvailable": false,
+        "projectedLineupPlayerCount": 20,
+        "confirmedLineupPlayerCount": 0,
+        "injuriesCount": 14,
+        "homeInjuriesCount": 7,
+        "awayInjuriesCount": 7,
+        "oddsAvailable": true
+      },
+      "fusionStatus": "FULL_MATCH"
+    }
+  ],
+  "mismatches": {
+    "discrepancies": [],
+    "sportsDataOnly": [],
+    "oddsOnly": [],
+    "apiBaseballOnly": []
+  }
+}

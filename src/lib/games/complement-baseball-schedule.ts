@@ -1,8 +1,8 @@
 /**
- * TheSportsDB 야구 일정(무료 플랜 리그당 3경기 제한)을
- * The Odds API KBO/NPB 이벤트로 보완한다.
+ * 기본 야구 일정(TheSportsDB KBO/NPB + API-BASEBALL MLB)을
+ * The Odds API 이벤트로 보완한다.
  *
- * - 중복이면 TheSportsDB GameData 우선
+ * - 중복이면 Provider GameData 우선
  * - Odds 전용 경기만 추가 (분석 없으면 aiAnalysisAvailable=false)
  * - getOdds 는 Provider 캐시 재사용 (attachOddsToGames 와 동일 호출 경로)
  * - 배당 계산·최고 배당 선정 로직은 변경하지 않는다
@@ -19,11 +19,13 @@ import { resolveSportKeysForLeagues } from "@/lib/odds/sport-key-resolver";
 import { sortGames } from "@/lib/games/sort";
 import type { GameData } from "@/types/game";
 
-const BASEBALL_ODDS_LEAGUES = ["KBO", "NPB"] as const;
+const BASEBALL_ODDS_LEAGUES = ["KBO", "NPB", "MLB"] as const;
 const COMMENCE_TOLERANCE_MS = 3 * 60 * 60 * 1000;
 
 export type BaseballScheduleComplementMeta = {
   theSportsDbCount: number;
+  apiBaseballCount: number;
+  primaryScheduleCount: number;
   oddsEventCount: number;
   /** 당일(KST)로 필터된 Odds → GameData 후보 수 */
   oddsScheduleCandidates: number;
@@ -128,18 +130,26 @@ function toSafeError(reason: unknown): string {
 }
 
 /**
- * TheSportsDB 야구 일정 + Odds KBO/NPB 이벤트를 병합한다.
+ * Provider 야구 일정 + Odds KBO/NPB/MLB 이벤트를 병합한다.
  *
- * @param theSportsDbGames TheSportsDB(또는 Dummy) 야구 일정
+ * @param scheduleGames Provider가 생성한 야구 일정
  * @param dateKst 대상 KST 날짜 YYYY-MM-DD
  */
 export async function complementBaseballScheduleWithOdds(
-  theSportsDbGames: GameData[],
+  scheduleGames: GameData[],
   dateKst: string,
+  enabledLeagues: readonly (typeof BASEBALL_ODDS_LEAGUES)[number][] =
+    BASEBALL_ODDS_LEAGUES,
 ): Promise<{ games: GameData[]; meta: BaseballScheduleComplementMeta }> {
-  const primary = theSportsDbGames.filter((g) => g.sport === "baseball");
+  const primary = scheduleGames.filter((g) => g.sport === "baseball");
   const meta: BaseballScheduleComplementMeta = {
-    theSportsDbCount: primary.length,
+    theSportsDbCount: primary.filter(
+      (game) => game.externalProvider === "thesportsdb",
+    ).length,
+    apiBaseballCount: primary.filter(
+      (game) => game.externalProvider === "api-baseball",
+    ).length,
+    primaryScheduleCount: primary.length,
     oddsEventCount: 0,
     oddsScheduleCandidates: 0,
     duplicateMergedCount: 0,
@@ -162,7 +172,7 @@ export async function complementBaseballScheduleWithOdds(
   }
 
   const resolved = await resolveSportKeysForLeagues(provider, {
-    baseball: [...BASEBALL_ODDS_LEAGUES],
+    baseball: [...enabledLeagues],
     football: [],
   });
 
@@ -247,8 +257,7 @@ export async function complementBaseballScheduleWithOdds(
     const dupIndex = merged.findIndex((g) => isSameBaseballFixture(g, oddsGame));
     if (dupIndex >= 0) {
       meta.duplicateMergedCount += 1;
-      // TheSportsDB 우선 유지. Odds externalId 는 sportsdb 에 없을 때만 보강하지 않음
-      // (사용자 규칙: Odds 는 누락 보완용)
+      // Provider 일정을 우선 유지한다. Odds는 누락 일정 보완용이다.
       continue;
     }
     merged.push(oddsGame);
@@ -266,6 +275,7 @@ export function formatBaseballComplementSummary(
 ): string {
   return [
     `TheSportsDB 경기 수   : ${meta.theSportsDbCount}`,
+    `API-BASEBALL 경기 수  : ${meta.apiBaseballCount}`,
     `Odds 이벤트 수        : ${meta.oddsEventCount}`,
     `Odds 당일 후보        : ${meta.oddsScheduleCandidates}`,
     `중복 병합 수          : ${meta.duplicateMergedCount}`,

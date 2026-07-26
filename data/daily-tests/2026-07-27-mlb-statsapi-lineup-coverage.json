@@ -1,0 +1,425 @@
+{
+  "meta": {
+    "version": "mlb-statsapi-lineup-coverage-v1",
+    "generatedAt": "2026-07-26T13:14:48.666Z",
+    "targetDateKst": "2026-07-27",
+    "scheduleDateUs": "2026-07-26",
+    "baseUrl": "https://statsapi.mlb.com",
+    "engineConnected": false,
+    "uiConnected": false,
+    "htmlCrawlingUsed": false,
+    "browserAutomationUsed": false,
+    "note": "공개 Stats API 조회·구조 검증만. 원본 전체 응답 미저장."
+  },
+  "legalNotes": [
+    "공식 라이선스 계약 확인 전 공개 서비스 사용 보류",
+    "페이지 HTML 크롤링 미사용",
+    "데이터 재배포 권한 미확인",
+    "상업적 사용 가능하다고 단정하지 않음"
+  ],
+  "endpoints": {
+    "used": [
+      "GET /api/v1/schedule (hydrate=probablePitcher,lineups)",
+      "GET /api/v1.1/game/{gamePk}/feed/live (sample probe)",
+      "GET /api/v1/game/{gamePk}/boxscore (sample probe)"
+    ],
+    "support": {
+      "schedule": "available",
+      "gameFeedLive": "available",
+      "boxscore": "available"
+    },
+    "hydrateConfirmedInResponse": [
+      "probablePitcher",
+      "lineups"
+    ],
+    "hydrateRejectedOrEmptyInResponse": [
+      "lineup"
+    ],
+    "confirmedStarterNote": "Preview 상태 schedule/boxscore에서 probable과 구분되는 confirmed starter 전용 필드는 확인되지 않음. Live/Final pitchers[0]만 confirmed 후보로 인정."
+  },
+  "requestProtection": {
+    "scheduleCalls": 1,
+    "perGameMassPolling": false,
+    "duplicateGamePkCallsForbidden": true,
+    "inMemoryCacheEntries": 3,
+    "requestCount": 3
+  },
+  "summary": {
+    "gamesQueriedSuccessfully": 15,
+    "probablePitcherBothSides": 15,
+    "confirmedStarterBothSides": 0,
+    "lineupsBothSides": 0,
+    "pitchersOnly": 13,
+    "ambiguous": 2,
+    "notPublished": 0,
+    "endpointsUsed": [
+      "GET /api/v1/schedule (hydrate=probablePitcher,lineups)",
+      "GET /api/v1.1/game/{gamePk}/feed/live (sample probe)",
+      "GET /api/v1/game/{gamePk}/boxscore (sample probe)"
+    ],
+    "requestCount": 3,
+    "commercialUseAllowed": "미확인 — 공식 라이선스 계약 전 공개 서비스 사용 보류"
+  },
+  "games": [
+    {
+      "gamePk": 822950,
+      "homeTeam": "Tampa Bay Rays",
+      "awayTeam": "Cleveland Guardians",
+      "startTimeKst": "01:15",
+      "commenceTimeUtc": "2026-07-26T16:15:00Z",
+      "probablePitcherHome": {
+        "id": 656876,
+        "fullName": "Drew Rasmussen"
+      },
+      "probablePitcherAway": {
+        "id": 800048,
+        "fullName": "Parker Messick"
+      },
+      "confirmedStarterHome": null,
+      "confirmedStarterAway": null,
+      "homeBattingOrderCount": 9,
+      "awayBattingOrderCount": 0,
+      "lineupStatus": "HOME_ONLY",
+      "coverageStatus": "AMBIGUOUS",
+      "responseFetchedAt": "2026-07-26T13:14:48.296Z",
+      "source": "GET /api/v1/schedule?sportId=1&date=2026-07-26&hydrate=probablePitcher,lineups",
+      "detailedState": "Pre-Game"
+    },
+    {
+      "gamePk": 822706,
+      "homeTeam": "Washington Nationals",
+      "awayTeam": "Arizona Diamondbacks",
+      "startTimeKst": "02:35",
+      "commenceTimeUtc": "2026-07-26T17:35:00Z",
+      "probablePitcherHome": {
+        "id": 571945,
+        "fullName": "Miles Mikolas"
+      },
+      "probablePitcherAway": {
+        "id": 684442,
+        "fullName": "Kohl Drake"
+      },
+      "confirmedStarterHome": null,
+      "confirmedStarterAway": null,
+      "homeBattingOrderCount": 0,
+      "awayBattingOrderCount": 9,
+      "lineupStatus": "AWAY_ONLY",
+      "coverageStatus": "AMBIGUOUS",
+      "responseFetchedAt": "2026-07-26T13:14:48.296Z",
+      "source": "GET /api/v1/schedule?sportId=1&date=2026-07-26&hydrate=probablePitcher,lineups",
+      "detailedState": "Pre-Game"
+    },
+    {
+      "gamePk": 823354,
+      "homeTeam": "Pittsburgh Pirates",
+      "awayTeam": "Chicago Cubs",
+      "startTimeKst": "02:35",
+      "commenceTimeUtc": "2026-07-26T17:35:00Z",
+      "probablePitcherHome": {
+        "id": 677952,
+        "fullName": "Braxton Ashcraft"
+      },
+      "probablePitcherAway": {
+        "id": 592791,
+        "fullName": "Jameson Taillon"
+      },
+      "confirmedStarterHome": null,
+      "confirmedStarterAway": null,
+      "homeBattingOrderCount": 0,
+      "awayBattingOrderCount": 0,
+      "lineupStatus": "NOT_PUBLISHED",
+      "coverageStatus": "PITCHERS_ONLY",
+      "responseFetchedAt": "2026-07-26T13:14:48.296Z",
+      "source": "GET /api/v1/schedule?sportId=1&date=2026-07-26&hydrate=probablePitcher,lineups",
+      "detailedState": "Scheduled"
+    },
+    {
+      "gamePk": 824730,
+      "homeTeam": "Boston Red Sox",
+      "awayTeam": "Toronto Blue Jays",
+      "startTimeKst": "02:35",
+      "commenceTimeUtc": "2026-07-26T17:35:00Z",
+      "probablePitcherHome": {
+        "id": 624133,
+        "fullName": "Ranger Suarez"
+      },
+      "probablePitcherAway": {
+        "id": 592332,
+        "fullName": "Kevin Gausman"
+      },
+      "confirmedStarterHome": null,
+      "confirmedStarterAway": null,
+      "homeBattingOrderCount": 0,
+      "awayBattingOrderCount": 0,
+      "lineupStatus": "NOT_PUBLISHED",
+      "coverageStatus": "PITCHERS_ONLY",
+      "responseFetchedAt": "2026-07-26T13:14:48.296Z",
+      "source": "GET /api/v1/schedule?sportId=1&date=2026-07-26&hydrate=probablePitcher,lineups",
+      "detailedState": "Scheduled"
+    },
+    {
+      "gamePk": 824810,
+      "homeTeam": "Baltimore Orioles",
+      "awayTeam": "Atlanta Braves",
+      "startTimeKst": "02:35",
+      "commenceTimeUtc": "2026-07-26T17:35:00Z",
+      "probablePitcherHome": {
+        "id": 669358,
+        "fullName": "Shane Baz"
+      },
+      "probablePitcherAway": {
+        "id": 625643,
+        "fullName": "Reynaldo López"
+      },
+      "confirmedStarterHome": null,
+      "confirmedStarterAway": null,
+      "homeBattingOrderCount": 0,
+      "awayBattingOrderCount": 0,
+      "lineupStatus": "NOT_PUBLISHED",
+      "coverageStatus": "PITCHERS_ONLY",
+      "responseFetchedAt": "2026-07-26T13:14:48.296Z",
+      "source": "GET /api/v1/schedule?sportId=1&date=2026-07-26&hydrate=probablePitcher,lineups",
+      "detailedState": "Scheduled"
+    },
+    {
+      "gamePk": 823599,
+      "homeTeam": "New York Mets",
+      "awayTeam": "Los Angeles Dodgers",
+      "startTimeKst": "02:40",
+      "commenceTimeUtc": "2026-07-26T17:40:00Z",
+      "probablePitcherHome": {
+        "id": 642547,
+        "fullName": "Freddy Peralta"
+      },
+      "probablePitcherAway": {
+        "id": 686218,
+        "fullName": "Emmet Sheehan"
+      },
+      "confirmedStarterHome": null,
+      "confirmedStarterAway": null,
+      "homeBattingOrderCount": 0,
+      "awayBattingOrderCount": 0,
+      "lineupStatus": "NOT_PUBLISHED",
+      "coverageStatus": "PITCHERS_ONLY",
+      "responseFetchedAt": "2026-07-26T13:14:48.296Z",
+      "source": "GET /api/v1/schedule?sportId=1&date=2026-07-26&hydrate=probablePitcher,lineups",
+      "detailedState": "Scheduled"
+    },
+    {
+      "gamePk": 823840,
+      "homeTeam": "Miami Marlins",
+      "awayTeam": "San Diego Padres",
+      "startTimeKst": "02:40",
+      "commenceTimeUtc": "2026-07-26T17:40:00Z",
+      "probablePitcherHome": {
+        "id": 676083,
+        "fullName": "Janson Junk"
+      },
+      "probablePitcherAway": {
+        "id": 621111,
+        "fullName": "Walker Buehler"
+      },
+      "confirmedStarterHome": null,
+      "confirmedStarterAway": null,
+      "homeBattingOrderCount": 0,
+      "awayBattingOrderCount": 0,
+      "lineupStatus": "NOT_PUBLISHED",
+      "coverageStatus": "PITCHERS_ONLY",
+      "responseFetchedAt": "2026-07-26T13:14:48.296Z",
+      "source": "GET /api/v1/schedule?sportId=1&date=2026-07-26&hydrate=probablePitcher,lineups",
+      "detailedState": "Scheduled"
+    },
+    {
+      "gamePk": 824246,
+      "homeTeam": "Detroit Tigers",
+      "awayTeam": "Kansas City Royals",
+      "startTimeKst": "02:40",
+      "commenceTimeUtc": "2026-07-26T17:40:00Z",
+      "probablePitcherHome": {
+        "id": 664285,
+        "fullName": "Framber Valdez"
+      },
+      "probablePitcherAway": {
+        "id": 679883,
+        "fullName": "Luinder Avila"
+      },
+      "confirmedStarterHome": null,
+      "confirmedStarterAway": null,
+      "homeBattingOrderCount": 0,
+      "awayBattingOrderCount": 0,
+      "lineupStatus": "NOT_PUBLISHED",
+      "coverageStatus": "PITCHERS_ONLY",
+      "responseFetchedAt": "2026-07-26T13:14:48.296Z",
+      "source": "GET /api/v1/schedule?sportId=1&date=2026-07-26&hydrate=probablePitcher,lineups",
+      "detailedState": "Scheduled"
+    },
+    {
+      "gamePk": 823678,
+      "homeTeam": "Minnesota Twins",
+      "awayTeam": "Athletics",
+      "startTimeKst": "03:10",
+      "commenceTimeUtc": "2026-07-26T18:10:00Z",
+      "probablePitcherHome": {
+        "id": 687570,
+        "fullName": "Connor Prielipp"
+      },
+      "probablePitcherAway": {
+        "id": 605488,
+        "fullName": "Jeffrey Springs"
+      },
+      "confirmedStarterHome": null,
+      "confirmedStarterAway": null,
+      "homeBattingOrderCount": 0,
+      "awayBattingOrderCount": 0,
+      "lineupStatus": "NOT_PUBLISHED",
+      "coverageStatus": "PITCHERS_ONLY",
+      "responseFetchedAt": "2026-07-26T13:14:48.296Z",
+      "source": "GET /api/v1/schedule?sportId=1&date=2026-07-26&hydrate=probablePitcher,lineups",
+      "detailedState": "Scheduled"
+    },
+    {
+      "gamePk": 823755,
+      "homeTeam": "Milwaukee Brewers",
+      "awayTeam": "Colorado Rockies",
+      "startTimeKst": "03:10",
+      "commenceTimeUtc": "2026-07-26T18:10:00Z",
+      "probablePitcherHome": {
+        "id": 694819,
+        "fullName": "Jacob Misiorowski"
+      },
+      "probablePitcherAway": {
+        "id": 607536,
+        "fullName": "Kyle Freeland"
+      },
+      "confirmedStarterHome": null,
+      "confirmedStarterAway": null,
+      "homeBattingOrderCount": 0,
+      "awayBattingOrderCount": 0,
+      "lineupStatus": "NOT_PUBLISHED",
+      "coverageStatus": "PITCHERS_ONLY",
+      "responseFetchedAt": "2026-07-26T13:14:48.296Z",
+      "source": "GET /api/v1/schedule?sportId=1&date=2026-07-26&hydrate=probablePitcher,lineups",
+      "detailedState": "Scheduled"
+    },
+    {
+      "gamePk": 824572,
+      "homeTeam": "Chicago White Sox",
+      "awayTeam": "Houston Astros",
+      "startTimeKst": "03:10",
+      "commenceTimeUtc": "2026-07-26T18:10:00Z",
+      "probablePitcherHome": {
+        "id": 607200,
+        "fullName": "Erick Fedde"
+      },
+      "probablePitcherAway": {
+        "id": 669854,
+        "fullName": "Ronel Blanco"
+      },
+      "confirmedStarterHome": null,
+      "confirmedStarterAway": null,
+      "homeBattingOrderCount": 0,
+      "awayBattingOrderCount": 0,
+      "lineupStatus": "NOT_PUBLISHED",
+      "coverageStatus": "PITCHERS_ONLY",
+      "responseFetchedAt": "2026-07-26T13:14:48.296Z",
+      "source": "GET /api/v1/schedule?sportId=1&date=2026-07-26&hydrate=probablePitcher,lineups",
+      "detailedState": "Scheduled"
+    },
+    {
+      "gamePk": 823028,
+      "homeTeam": "St. Louis Cardinals",
+      "awayTeam": "Cincinnati Reds",
+      "startTimeKst": "03:15",
+      "commenceTimeUtc": "2026-07-26T18:15:00Z",
+      "probablePitcherHome": {
+        "id": 681517,
+        "fullName": "Kyle Leahy"
+      },
+      "probablePitcherAway": {
+        "id": 671096,
+        "fullName": "Andrew Abbott"
+      },
+      "confirmedStarterHome": null,
+      "confirmedStarterAway": null,
+      "homeBattingOrderCount": 0,
+      "awayBattingOrderCount": 0,
+      "lineupStatus": "NOT_PUBLISHED",
+      "coverageStatus": "PITCHERS_ONLY",
+      "responseFetchedAt": "2026-07-26T13:14:48.296Z",
+      "source": "GET /api/v1/schedule?sportId=1&date=2026-07-26&hydrate=probablePitcher,lineups",
+      "detailedState": "Scheduled"
+    },
+    {
+      "gamePk": 822870,
+      "homeTeam": "Texas Rangers",
+      "awayTeam": "Seattle Mariners",
+      "startTimeKst": "03:35",
+      "commenceTimeUtc": "2026-07-26T18:35:00Z",
+      "probablePitcherHome": {
+        "id": 594798,
+        "fullName": "Jacob deGrom"
+      },
+      "probablePitcherAway": {
+        "id": 669302,
+        "fullName": "Logan Gilbert"
+      },
+      "confirmedStarterHome": null,
+      "confirmedStarterAway": null,
+      "homeBattingOrderCount": 0,
+      "awayBattingOrderCount": 0,
+      "lineupStatus": "NOT_PUBLISHED",
+      "coverageStatus": "PITCHERS_ONLY",
+      "responseFetchedAt": "2026-07-26T13:14:48.296Z",
+      "source": "GET /api/v1/schedule?sportId=1&date=2026-07-26&hydrate=probablePitcher,lineups",
+      "detailedState": "Scheduled"
+    },
+    {
+      "gamePk": 823194,
+      "homeTeam": "San Francisco Giants",
+      "awayTeam": "Los Angeles Angels",
+      "startTimeKst": "05:05",
+      "commenceTimeUtc": "2026-07-26T20:05:00Z",
+      "probablePitcherHome": {
+        "id": 687931,
+        "fullName": "Carson Whisenhunt"
+      },
+      "probablePitcherAway": {
+        "id": 667755,
+        "fullName": "José Soriano"
+      },
+      "confirmedStarterHome": null,
+      "confirmedStarterAway": null,
+      "homeBattingOrderCount": 0,
+      "awayBattingOrderCount": 0,
+      "lineupStatus": "NOT_PUBLISHED",
+      "coverageStatus": "PITCHERS_ONLY",
+      "responseFetchedAt": "2026-07-26T13:14:48.296Z",
+      "source": "GET /api/v1/schedule?sportId=1&date=2026-07-26&hydrate=probablePitcher,lineups",
+      "detailedState": "Scheduled"
+    },
+    {
+      "gamePk": 823433,
+      "homeTeam": "Philadelphia Phillies",
+      "awayTeam": "New York Yankees",
+      "startTimeKst": "08:20",
+      "commenceTimeUtc": "2026-07-26T23:20:00Z",
+      "probablePitcherHome": {
+        "id": 650911,
+        "fullName": "Cristopher Sánchez"
+      },
+      "probablePitcherAway": {
+        "id": 701542,
+        "fullName": "Will Warren"
+      },
+      "confirmedStarterHome": null,
+      "confirmedStarterAway": null,
+      "homeBattingOrderCount": 0,
+      "awayBattingOrderCount": 0,
+      "lineupStatus": "NOT_PUBLISHED",
+      "coverageStatus": "PITCHERS_ONLY",
+      "responseFetchedAt": "2026-07-26T13:14:48.296Z",
+      "source": "GET /api/v1/schedule?sportId=1&date=2026-07-26&hydrate=probablePitcher,lineups",
+      "detailedState": "Scheduled"
+    }
+  ]
+}

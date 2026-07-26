@@ -8,6 +8,8 @@ export type GameData = {
   awayTeam: string;
   startTime: string;
   date: string;
+  /** Provider 원본 경기 상태 (제공되는 경우에만 보존) */
+  status?: string;
   aiAnalysisAvailable: boolean;
   /**
    * 외부 제공자 이벤트 ID (예: TheSportsDB idEvent).
@@ -19,6 +21,7 @@ export type GameData = {
     | "thesportsdb"
     | "apisports"
     | "api-football"
+    | "api-baseball"
     | "the-odds-api"
     | "dummy";
 };

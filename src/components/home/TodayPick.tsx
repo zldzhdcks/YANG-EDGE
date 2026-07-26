@@ -92,7 +92,9 @@ export default function TodayPick({ result }: TodayPickProps) {
   }
 
   const pick = result.pick;
-  const matchLabel = getMatchDisplayLabel(pick.homeTeam, pick.awayTeam);
+  const matchLabel = getMatchDisplayLabel(pick.homeTeam, pick.awayTeam, {
+    league: pick.league,
+  });
   const showMarket = hasComparableMarket(pick);
   const marketProbability = pick.marketProbability;
   const valueEdge = pick.valueEdge;

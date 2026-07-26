@@ -18,9 +18,16 @@ export default function AnalysisContent({ analysis }: AnalysisContentProps) {
   const matchLabel = getMatchDisplayLabel(
     analysis.homeTeam,
     analysis.awayTeam,
+    { league: analysis.league },
   );
-  const homeDisplay = getTeamDisplayName(analysis.homeTeam);
-  const awayDisplay = getTeamDisplayName(analysis.awayTeam);
+  const homeDisplay = getTeamDisplayName({
+    originalName: analysis.homeTeam,
+    league: analysis.league,
+  });
+  const awayDisplay = getTeamDisplayName({
+    originalName: analysis.awayTeam,
+    league: analysis.league,
+  });
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">

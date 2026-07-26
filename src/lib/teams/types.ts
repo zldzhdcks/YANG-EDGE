@@ -9,6 +9,7 @@
 export type TeamDataProvider =
   | "thesportsdb"
   | "api-football"
+  | "api-baseball"
   | "apisports"
   | "the-odds-api"
   | "dummy";
@@ -17,6 +18,7 @@ export type TeamDataProvider =
 export type TeamLeagueTag =
   | "KBO"
   | "NPB"
+  | "MLB"
   | "K리그1"
   | "J1리그"
   | "MLS"
@@ -55,4 +57,8 @@ export type GetTeamDisplayNameInput = {
   /** 있으면 provider+id 매핑을 최우선 사용 */
   provider?: TeamDataProvider | string | null;
   externalTeamId?: string | number | null;
+  /** 이름 충돌 시 종목으로 후보를 좁힌다 */
+  sport?: "football" | "baseball" | "basketball" | null;
+  /** 이름 충돌 시 리그로 후보를 좁힌다 */
+  league?: TeamLeagueTag | string | null;
 };

@@ -2,7 +2,7 @@ import type { GameWithOdds } from "@/types/game-with-odds";
 import { getFootballLeaguePriorityByName } from "@/constants/football-leagues";
 
 /** 야구 리그 우선순위 (축구 관심 리그보다 앞) */
-const BASEBALL_LEAGUE_ORDER = ["NPB", "KBO"];
+const BASEBALL_LEAGUE_ORDER = ["NPB", "KBO", "MLB"];
 
 /** 리그당 초기 노출 경기 수 — "더 보기" 확장 대비 */
 export const LEAGUE_INITIAL_VISIBLE = 10;
@@ -24,7 +24,7 @@ export type LeagueGroup = {
 
 /**
  * 리그 그룹 정렬 우선순위.
- * 야구(NPB → KBO) → 축구 관심 리그(priority) → 기타(이름순)
+ * 야구(NPB → KBO → MLB) → 축구 관심 리그(priority) → 기타(이름순)
  */
 function leaguePriority(league: string): number {
   const baseballIndex = BASEBALL_LEAGUE_ORDER.indexOf(league);

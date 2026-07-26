@@ -1,0 +1,522 @@
+{
+  "meta": {
+    "version": "mlb-coverage-v1",
+    "generatedAt": "2026-07-26T09:53:49.426Z",
+    "targetDateKst": "2026-07-27",
+    "kstBoundary": {
+      "fromInclusiveUtc": "2026-07-26T15:00:00.000Z",
+      "toExclusiveUtc": "2026-07-27T15:00:00.000Z",
+      "note": "미국 현지 날짜와 KST 날짜가 다르므로 UTC/KST 시각으로 재필터링함"
+    },
+    "readOnlyValidation": true
+  },
+  "providerChecks": {
+    "theSportsDb": {
+      "configured": true,
+      "supported": true,
+      "leagueId": "4424",
+      "calls": 3,
+      "error": null
+    },
+    "apiBaseball": {
+      "configured": true,
+      "supported": true,
+      "leagueId": 1,
+      "calls": 2,
+      "error": "Free plans do not have access to this season, try from 2022 to 2024.",
+      "usage": {
+        "remaining": null,
+        "limit": null
+      }
+    },
+    "theOddsApi": {
+      "configured": true,
+      "supported": true,
+      "activeSport": {
+        "key": "baseball_mlb",
+        "group": "Baseball",
+        "title": "MLB",
+        "description": "Major League Baseball",
+        "active": true,
+        "hasOutrights": false
+      },
+      "calls": 2,
+      "cached": false,
+      "error": null
+    }
+  },
+  "counts": {
+    "scheduleBySource": {
+      "thesportsdb": 3,
+      "apiBaseball": 0
+    },
+    "scheduleCandidates": 3,
+    "oddsEvents": 15,
+    "duplicateMerged": 3,
+    "scheduleSourceDuplicates": 0,
+    "scheduleOddsDuplicates": 3,
+    "uniqueScheduleGames": 3,
+    "finalUniqueGames": 15,
+    "gamesWithOdds": 15,
+    "matchSuccess": 3,
+    "matchFailure": 0,
+    "scheduleOnly": 0,
+    "oddsOnly": 12,
+    "matchRatePercent": 100
+  },
+  "schedules": {
+    "thesportsdb": [
+      {
+        "source": "thesportsdb",
+        "externalId": "2388453",
+        "league": "MLB",
+        "homeTeam": "Philadelphia Phillies",
+        "awayTeam": "New York Yankees",
+        "commenceTime": "2026-07-26T23:20:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "08:20",
+        "status": "NS"
+      },
+      {
+        "source": "thesportsdb",
+        "externalId": "2388454",
+        "league": "MLB",
+        "homeTeam": "Washington Nationals",
+        "awayTeam": "Arizona Diamondbacks",
+        "commenceTime": "2026-07-26T17:35:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "02:35",
+        "status": "NS"
+      },
+      {
+        "source": "thesportsdb",
+        "externalId": "2388455",
+        "league": "MLB",
+        "homeTeam": "Texas Rangers",
+        "awayTeam": "Seattle Mariners",
+        "commenceTime": "2026-07-26T18:35:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "03:35",
+        "status": "NS"
+      }
+    ],
+    "apiBaseball": [],
+    "unique": [
+      {
+        "source": "thesportsdb",
+        "externalId": "2388453",
+        "league": "MLB",
+        "homeTeam": "Philadelphia Phillies",
+        "awayTeam": "New York Yankees",
+        "commenceTime": "2026-07-26T23:20:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "08:20",
+        "status": "NS"
+      },
+      {
+        "source": "thesportsdb",
+        "externalId": "2388454",
+        "league": "MLB",
+        "homeTeam": "Washington Nationals",
+        "awayTeam": "Arizona Diamondbacks",
+        "commenceTime": "2026-07-26T17:35:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "02:35",
+        "status": "NS"
+      },
+      {
+        "source": "thesportsdb",
+        "externalId": "2388455",
+        "league": "MLB",
+        "homeTeam": "Texas Rangers",
+        "awayTeam": "Seattle Mariners",
+        "commenceTime": "2026-07-26T18:35:00.000Z",
+        "dateKst": "2026-07-27",
+        "startTimeKst": "03:35",
+        "status": "NS"
+      }
+    ]
+  },
+  "odds": [
+    {
+      "externalId": "d651270eb53d061fc93a471f11c2f53d",
+      "homeTeam": "Tampa Bay Rays",
+      "awayTeam": "Cleveland Guardians",
+      "commenceTime": "2026-07-26T16:16:00Z",
+      "commenceTimeKst": "2026-07-27 01:16",
+      "bestHomeOdds": 1.8,
+      "bestAwayOdds": 2.25,
+      "bookmakerCount": 23
+    },
+    {
+      "externalId": "714c1847e9003da34be408b74dca72e3",
+      "homeTeam": "Washington Nationals",
+      "awayTeam": "Arizona Diamondbacks",
+      "commenceTime": "2026-07-26T17:36:00Z",
+      "commenceTimeKst": "2026-07-27 02:36",
+      "bestHomeOdds": 2.08,
+      "bestAwayOdds": 1.9,
+      "bookmakerCount": 23
+    },
+    {
+      "externalId": "ce049001315d997fa2641116b7a1ede0",
+      "homeTeam": "Baltimore Orioles",
+      "awayTeam": "Atlanta Braves",
+      "commenceTime": "2026-07-26T17:36:00Z",
+      "commenceTimeKst": "2026-07-27 02:36",
+      "bestHomeOdds": 1.98,
+      "bestAwayOdds": 2.01,
+      "bookmakerCount": 23
+    },
+    {
+      "externalId": "48df7c31ab5c07dc2c7073170f193a8f",
+      "homeTeam": "Boston Red Sox",
+      "awayTeam": "Toronto Blue Jays",
+      "commenceTime": "2026-07-26T17:36:00Z",
+      "commenceTimeKst": "2026-07-27 02:36",
+      "bestHomeOdds": 1.8,
+      "bestAwayOdds": 2.31,
+      "bookmakerCount": 23
+    },
+    {
+      "externalId": "458f1aad594ae5477de447c6d836a79d",
+      "homeTeam": "Pittsburgh Pirates",
+      "awayTeam": "Chicago Cubs",
+      "commenceTime": "2026-07-26T17:36:00Z",
+      "commenceTimeKst": "2026-07-27 02:36",
+      "bestHomeOdds": 1.85,
+      "bestAwayOdds": 2.16,
+      "bookmakerCount": 23
+    },
+    {
+      "externalId": "695de475f6a8dd1f205bda6ba50db0ee",
+      "homeTeam": "Detroit Tigers",
+      "awayTeam": "Kansas City Royals",
+      "commenceTime": "2026-07-26T17:41:00Z",
+      "commenceTimeKst": "2026-07-27 02:41",
+      "bestHomeOdds": 1.6,
+      "bestAwayOdds": 2.64,
+      "bookmakerCount": 23
+    },
+    {
+      "externalId": "17b69aed6b1c1715ffbd01b155af848d",
+      "homeTeam": "New York Mets",
+      "awayTeam": "Los Angeles Dodgers",
+      "commenceTime": "2026-07-26T17:41:00Z",
+      "commenceTimeKst": "2026-07-27 02:41",
+      "bestHomeOdds": 2.42,
+      "bestAwayOdds": 1.69,
+      "bookmakerCount": 22
+    },
+    {
+      "externalId": "3f5e40b78b4be8ec30a552f1081e4dc0",
+      "homeTeam": "Miami Marlins",
+      "awayTeam": "San Diego Padres",
+      "commenceTime": "2026-07-26T17:41:00Z",
+      "commenceTimeKst": "2026-07-27 02:41",
+      "bestHomeOdds": 1.83,
+      "bestAwayOdds": 2.16,
+      "bookmakerCount": 23
+    },
+    {
+      "externalId": "a9c8aad6e31f322b330deb1a7fdd3eb3",
+      "homeTeam": "Minnesota Twins",
+      "awayTeam": "Athletics",
+      "commenceTime": "2026-07-26T18:11:00Z",
+      "commenceTimeKst": "2026-07-27 03:11",
+      "bestHomeOdds": 1.77,
+      "bestAwayOdds": 2.28,
+      "bookmakerCount": 23
+    },
+    {
+      "externalId": "b61e67dbd760d186d865cc2ff013a7c0",
+      "homeTeam": "Chicago White Sox",
+      "awayTeam": "Houston Astros",
+      "commenceTime": "2026-07-26T18:11:00Z",
+      "commenceTimeKst": "2026-07-27 03:11",
+      "bestHomeOdds": 1.95,
+      "bestAwayOdds": 2,
+      "bookmakerCount": 23
+    },
+    {
+      "externalId": "c66c0c97123e0bc5e1a3c1b170c9b269",
+      "homeTeam": "Milwaukee Brewers",
+      "awayTeam": "Colorado Rockies",
+      "commenceTime": "2026-07-26T18:11:00Z",
+      "commenceTimeKst": "2026-07-27 03:11",
+      "bestHomeOdds": 1.33,
+      "bestAwayOdds": 3.95,
+      "bookmakerCount": 23
+    },
+    {
+      "externalId": "9064f61fe767dfa3c4a613a4f02250d3",
+      "homeTeam": "St. Louis Cardinals",
+      "awayTeam": "Cincinnati Reds",
+      "commenceTime": "2026-07-26T18:16:00Z",
+      "commenceTimeKst": "2026-07-27 03:16",
+      "bestHomeOdds": 1.78,
+      "bestAwayOdds": 2.23,
+      "bookmakerCount": 23
+    },
+    {
+      "externalId": "8eb22b9b7908e0cc06501501e79a4d17",
+      "homeTeam": "Texas Rangers",
+      "awayTeam": "Seattle Mariners",
+      "commenceTime": "2026-07-26T18:36:00Z",
+      "commenceTimeKst": "2026-07-27 03:36",
+      "bestHomeOdds": 1.97,
+      "bestAwayOdds": 1.99,
+      "bookmakerCount": 23
+    },
+    {
+      "externalId": "863fffb8c7bb8eba061b9c449d582054",
+      "homeTeam": "San Francisco Giants",
+      "awayTeam": "Los Angeles Angels",
+      "commenceTime": "2026-07-26T20:06:00Z",
+      "commenceTimeKst": "2026-07-27 05:06",
+      "bestHomeOdds": 1.95,
+      "bestAwayOdds": 2.02,
+      "bookmakerCount": 23
+    },
+    {
+      "externalId": "210e6566d3641ee245e8a099a1679244",
+      "homeTeam": "Philadelphia Phillies",
+      "awayTeam": "New York Yankees",
+      "commenceTime": "2026-07-26T23:21:00Z",
+      "commenceTimeKst": "2026-07-27 08:21",
+      "bestHomeOdds": 1.64,
+      "bestAwayOdds": 2.58,
+      "bookmakerCount": 23
+    }
+  ],
+  "matching": {
+    "matched": [
+      {
+        "schedule": {
+          "source": "thesportsdb",
+          "externalId": "2388453",
+          "league": "MLB",
+          "homeTeam": "Philadelphia Phillies",
+          "awayTeam": "New York Yankees",
+          "commenceTime": "2026-07-26T23:20:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "08:20",
+          "status": "NS"
+        },
+        "odds": {
+          "externalId": "210e6566d3641ee245e8a099a1679244",
+          "homeTeam": "Philadelphia Phillies",
+          "awayTeam": "New York Yankees",
+          "commenceTime": "2026-07-26T23:21:00Z",
+          "commenceTimeKst": "2026-07-27 08:21",
+          "bestHomeOdds": 1.64,
+          "bestAwayOdds": 2.58,
+          "bookmakerCount": 23
+        },
+        "method": "teams-time",
+        "confidence": 0.9
+      },
+      {
+        "schedule": {
+          "source": "thesportsdb",
+          "externalId": "2388454",
+          "league": "MLB",
+          "homeTeam": "Washington Nationals",
+          "awayTeam": "Arizona Diamondbacks",
+          "commenceTime": "2026-07-26T17:35:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "02:35",
+          "status": "NS"
+        },
+        "odds": {
+          "externalId": "714c1847e9003da34be408b74dca72e3",
+          "homeTeam": "Washington Nationals",
+          "awayTeam": "Arizona Diamondbacks",
+          "commenceTime": "2026-07-26T17:36:00Z",
+          "commenceTimeKst": "2026-07-27 02:36",
+          "bestHomeOdds": 2.08,
+          "bestAwayOdds": 1.9,
+          "bookmakerCount": 23
+        },
+        "method": "teams-time",
+        "confidence": 0.9
+      },
+      {
+        "schedule": {
+          "source": "thesportsdb",
+          "externalId": "2388455",
+          "league": "MLB",
+          "homeTeam": "Texas Rangers",
+          "awayTeam": "Seattle Mariners",
+          "commenceTime": "2026-07-26T18:35:00.000Z",
+          "dateKst": "2026-07-27",
+          "startTimeKst": "03:35",
+          "status": "NS"
+        },
+        "odds": {
+          "externalId": "8eb22b9b7908e0cc06501501e79a4d17",
+          "homeTeam": "Texas Rangers",
+          "awayTeam": "Seattle Mariners",
+          "commenceTime": "2026-07-26T18:36:00Z",
+          "commenceTimeKst": "2026-07-27 03:36",
+          "bestHomeOdds": 1.97,
+          "bestAwayOdds": 1.99,
+          "bookmakerCount": 23
+        },
+        "method": "teams-time",
+        "confidence": 0.9
+      }
+    ],
+    "failedSchedule": [],
+    "oddsOnly": [
+      {
+        "externalId": "d651270eb53d061fc93a471f11c2f53d",
+        "homeTeam": "Tampa Bay Rays",
+        "awayTeam": "Cleveland Guardians",
+        "commenceTime": "2026-07-26T16:16:00Z",
+        "commenceTimeKst": "2026-07-27 01:16",
+        "bestHomeOdds": 1.8,
+        "bestAwayOdds": 2.25,
+        "bookmakerCount": 23
+      },
+      {
+        "externalId": "ce049001315d997fa2641116b7a1ede0",
+        "homeTeam": "Baltimore Orioles",
+        "awayTeam": "Atlanta Braves",
+        "commenceTime": "2026-07-26T17:36:00Z",
+        "commenceTimeKst": "2026-07-27 02:36",
+        "bestHomeOdds": 1.98,
+        "bestAwayOdds": 2.01,
+        "bookmakerCount": 23
+      },
+      {
+        "externalId": "48df7c31ab5c07dc2c7073170f193a8f",
+        "homeTeam": "Boston Red Sox",
+        "awayTeam": "Toronto Blue Jays",
+        "commenceTime": "2026-07-26T17:36:00Z",
+        "commenceTimeKst": "2026-07-27 02:36",
+        "bestHomeOdds": 1.8,
+        "bestAwayOdds": 2.31,
+        "bookmakerCount": 23
+      },
+      {
+        "externalId": "458f1aad594ae5477de447c6d836a79d",
+        "homeTeam": "Pittsburgh Pirates",
+        "awayTeam": "Chicago Cubs",
+        "commenceTime": "2026-07-26T17:36:00Z",
+        "commenceTimeKst": "2026-07-27 02:36",
+        "bestHomeOdds": 1.85,
+        "bestAwayOdds": 2.16,
+        "bookmakerCount": 23
+      },
+      {
+        "externalId": "695de475f6a8dd1f205bda6ba50db0ee",
+        "homeTeam": "Detroit Tigers",
+        "awayTeam": "Kansas City Royals",
+        "commenceTime": "2026-07-26T17:41:00Z",
+        "commenceTimeKst": "2026-07-27 02:41",
+        "bestHomeOdds": 1.6,
+        "bestAwayOdds": 2.64,
+        "bookmakerCount": 23
+      },
+      {
+        "externalId": "17b69aed6b1c1715ffbd01b155af848d",
+        "homeTeam": "New York Mets",
+        "awayTeam": "Los Angeles Dodgers",
+        "commenceTime": "2026-07-26T17:41:00Z",
+        "commenceTimeKst": "2026-07-27 02:41",
+        "bestHomeOdds": 2.42,
+        "bestAwayOdds": 1.69,
+        "bookmakerCount": 22
+      },
+      {
+        "externalId": "3f5e40b78b4be8ec30a552f1081e4dc0",
+        "homeTeam": "Miami Marlins",
+        "awayTeam": "San Diego Padres",
+        "commenceTime": "2026-07-26T17:41:00Z",
+        "commenceTimeKst": "2026-07-27 02:41",
+        "bestHomeOdds": 1.83,
+        "bestAwayOdds": 2.16,
+        "bookmakerCount": 23
+      },
+      {
+        "externalId": "a9c8aad6e31f322b330deb1a7fdd3eb3",
+        "homeTeam": "Minnesota Twins",
+        "awayTeam": "Athletics",
+        "commenceTime": "2026-07-26T18:11:00Z",
+        "commenceTimeKst": "2026-07-27 03:11",
+        "bestHomeOdds": 1.77,
+        "bestAwayOdds": 2.28,
+        "bookmakerCount": 23
+      },
+      {
+        "externalId": "b61e67dbd760d186d865cc2ff013a7c0",
+        "homeTeam": "Chicago White Sox",
+        "awayTeam": "Houston Astros",
+        "commenceTime": "2026-07-26T18:11:00Z",
+        "commenceTimeKst": "2026-07-27 03:11",
+        "bestHomeOdds": 1.95,
+        "bestAwayOdds": 2,
+        "bookmakerCount": 23
+      },
+      {
+        "externalId": "c66c0c97123e0bc5e1a3c1b170c9b269",
+        "homeTeam": "Milwaukee Brewers",
+        "awayTeam": "Colorado Rockies",
+        "commenceTime": "2026-07-26T18:11:00Z",
+        "commenceTimeKst": "2026-07-27 03:11",
+        "bestHomeOdds": 1.33,
+        "bestAwayOdds": 3.95,
+        "bookmakerCount": 23
+      },
+      {
+        "externalId": "9064f61fe767dfa3c4a613a4f02250d3",
+        "homeTeam": "St. Louis Cardinals",
+        "awayTeam": "Cincinnati Reds",
+        "commenceTime": "2026-07-26T18:16:00Z",
+        "commenceTimeKst": "2026-07-27 03:16",
+        "bestHomeOdds": 1.78,
+        "bestAwayOdds": 2.23,
+        "bookmakerCount": 23
+      },
+      {
+        "externalId": "863fffb8c7bb8eba061b9c449d582054",
+        "homeTeam": "San Francisco Giants",
+        "awayTeam": "Los Angeles Angels",
+        "commenceTime": "2026-07-26T20:06:00Z",
+        "commenceTimeKst": "2026-07-27 05:06",
+        "bestHomeOdds": 1.95,
+        "bestAwayOdds": 2.02,
+        "bookmakerCount": 23
+      }
+    ]
+  },
+  "duplicates": [],
+  "usage": {
+    "theSportsDbCalls": 3,
+    "apiBaseballCalls": 2,
+    "oddsApiCalls": 2,
+    "oddsSportsList": {
+      "requestsRemaining": 334,
+      "requestsUsed": 166,
+      "requestsLast": 0
+    },
+    "oddsMlbEvents": {
+      "requestsRemaining": 333,
+      "requestsUsed": 167,
+      "requestsLast": 1
+    }
+  },
+  "gamesMergeAssessment": {
+    "schemaCompatible": true,
+    "currentlyWired": false,
+    "note": "GameData 필수 필드와 Odds 일정 보완 구조에는 맞지만, 현재 /games의 야구 보완 대상은 KBO/NPB뿐이므로 MLB는 아직 연결되어 있지 않음.",
+    "engineAnalysisPrerequisites": [
+      "최근 경기·홈/원정 성적",
+      "선발투수",
+      "라인업·부상",
+      "리그 순위·시즌 성적",
+      "상대 전적"
+    ]
+  }
+}

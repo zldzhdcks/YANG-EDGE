@@ -1,4 +1,5 @@
 import type { GameData } from "@/types/game";
+import { instantToKst } from "@/lib/datetime/kst";
 import type { OddsData } from "./types";
 
 export type MatchOddsOptions = {
@@ -65,6 +66,12 @@ function parseCommenceMs(iso: string): number | null {
   return Number.isFinite(t) ? t : null;
 }
 
+function isSameKstDate(game: GameData, odds: OddsData): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(game.date)) return false;
+  const oddsKst = instantToKst(odds.commenceTime);
+  return oddsKst?.date === game.date;
+}
+
 /**
  * GameData.date + startTime(KST HH:mm) 을 UTC ms 로 환산.
  * 허용 오차가 크므로(기본 3h) 실용적으로 충분하다.
@@ -90,7 +97,8 @@ function estimateGameCommenceMs(game: GameData): number | null {
  * - 홈/원정 방향이 반대인 경우 매칭하지 않는다 (억지 매칭 금지).
  * - 두 팀 모두 매칭돼야 하며, confidence = min(홈, 원정) 유사도.
  * - minConfidence(기본 0.7) 미만이면 버린다.
- * - 시간 정보가 있으면 허용 오차를 벗어난 후보는 제외.
+ * - KST 경기 날짜가 다르면 동일 매치업이어도 제외.
+ * - 시간 정보가 있으면 기존 ±3시간 허용 오차를 벗어난 후보는 제외.
  * - 리그/종목 확인은 호출자가 같은 리그·sportKey 묶음으로 제한해 보장한다.
  */
 export function matchOddsToGame(
@@ -102,7 +110,10 @@ export function matchOddsToGame(
   const minConfidence = options.minConfidence ?? 0.7;
 
   if (game.externalId) {
-    const byId = oddsList.find((o) => o.externalEventId === game.externalId);
+    const byId = oddsList.find(
+      (o) =>
+        o.externalEventId === game.externalId && isSameKstDate(game, o),
+    );
     if (byId) {
       return { game, odds: byId, confidence: 1, method: "external-id" };
     }
@@ -112,6 +123,8 @@ export function matchOddsToGame(
   let best: OddsGameMatch | null = null;
 
   for (const odds of oddsList) {
+    if (!isSameKstDate(game, odds)) continue;
+
     // 홈↔홈 / 원정↔원정 방향만 인정. 반대 방향은 매칭하지 않는다.
     const homeScore = teamNameScore(game.homeTeam, odds.homeTeam);
     const awayScore = teamNameScore(game.awayTeam, odds.awayTeam);

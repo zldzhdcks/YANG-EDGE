@@ -1,14 +1,15 @@
 "use client";
 
 import { useMemo, useState, useSyncExternalStore } from "react";
-import type { LedgerBet, LedgerBudgetSettings } from "@/types/ledger";
+import type { LedgerBet, LedgerBudgetSettings, LedgerTicket } from "@/types/ledger";
 import { getKstToday } from "@/lib/datetime/kst";
 import {
   subscribeLedgerStore,
   getServerLedgerStore,
   readLedgerStore,
-  addLedgerBet,
-  updateLedgerBet,
+  addLedgerTicket,
+  updateLedgerTicket,
+  getLedgerTicketById,
   deleteLedgerBet,
   saveLedgerBudget,
   clearLedgerStore,
@@ -16,10 +17,16 @@ import {
   summarizeBets,
   evaluateBudgetWarnings,
   kstYearMonth,
-  type LedgerBetInput,
+  validateTicketDraft,
+  ticketFromConfirmedDraft,
+  addLedgerTicketRecord,
+  type LedgerTicketInput,
 } from "@/lib/ledger";
+import type { LedgerTicketDraft } from "@/types/ledger-draft";
 import LedgerSummaryCards from "./LedgerSummaryCards";
-import LedgerBetForm from "./LedgerBetForm";
+import LedgerImageImport from "./LedgerImageImport";
+import LedgerDraftReview from "./LedgerDraftReview";
+import LedgerTicketForm from "./LedgerTicketForm";
 import LedgerBetList from "./LedgerBetList";
 import LedgerBudgetPanel from "./LedgerBudgetPanel";
 import LedgerDisclaimer from "./LedgerDisclaimer";
@@ -32,9 +39,13 @@ export default function LedgerPageContent() {
     getServerLedgerStore,
   );
 
-  const [editing, setEditing] = useState<LedgerBet | null>(null);
+  const [editing, setEditing] = useState<LedgerTicket | null>(null);
   const [draftStake, setDraftStake] = useState<number | null>(null);
   const [formKey, setFormKey] = useState(0);
+  const [draft, setDraft] = useState<LedgerTicketDraft | null>(null);
+  const [draftSaveError, setDraftSaveError] = useState<string | null>(null);
+  const [draftSavedMessage, setDraftSavedMessage] = useState<string | null>(null);
+  const [importKey, setImportKey] = useState(0);
 
   const today = getKstToday();
   const monthPrefix = kstYearMonth(today);
@@ -64,20 +75,56 @@ export default function LedgerPageContent() {
     [store.bets, store.budget, draftStake, today, monthPrefix],
   );
 
-  function handleSubmit(input: LedgerBetInput) {
+  function handleSubmit(input: LedgerTicketInput) {
     if (editing) {
-      updateLedgerBet(editing.id, input);
+      updateLedgerTicket(editing.id, input);
       setEditing(null);
     } else {
-      addLedgerBet(input);
+      addLedgerTicket(input);
     }
     setFormKey((k) => k + 1);
     setDraftStake(null);
   }
 
+  function handleDraftRecognized(next: LedgerTicketDraft) {
+    setDraft(next);
+    setDraftSaveError(null);
+    setDraftSavedMessage(null);
+  }
+
+  function handleDraftChange(next: LedgerTicketDraft) {
+    setDraft(validateTicketDraft(next));
+    setDraftSaveError(null);
+  }
+
+  function handleDraftSave() {
+    if (!draft) return;
+    const result = ticketFromConfirmedDraft(draft);
+    if (!result.ok) {
+      setDraft(validateTicketDraft(draft));
+      setDraftSaveError(result.error);
+      return;
+    }
+    addLedgerTicketRecord(result.ticket);
+    setDraft(null);
+    setDraftSaveError(null);
+    setDraftSavedMessage("인식 결과를 가계부에 저장했습니다.");
+    setImportKey((k) => k + 1);
+  }
+
+  function handleDraftCancel() {
+    setDraft(null);
+    setDraftSaveError(null);
+    setDraftSavedMessage(null);
+    setImportKey((k) => k + 1);
+  }
+
   function handleEdit(bet: LedgerBet) {
-    setEditing(bet);
-    setDraftStake(bet.stake);
+    const ticket = getLedgerTicketById(bet.id);
+    if (!ticket) return;
+    setEditing(ticket);
+    setDraftStake(ticket.stake);
+    setFormKey((k) => k + 1);
     if (typeof window !== "undefined") {
       document.getElementById("ledger-form")?.scrollIntoView({
         behavior: "smooth",
@@ -153,7 +200,32 @@ export default function LedgerPageContent() {
         onSave={handleBudgetSave}
       />
 
-      <LedgerBetForm
+      <div className="space-y-4">
+        <LedgerImageImport
+          onRecognized={handleDraftRecognized}
+          reviewing={draft != null}
+          clearSignal={importKey}
+        />
+
+        {draftSavedMessage ? (
+          <p role="status" className="text-xs text-emerald-400">
+            {draftSavedMessage}
+          </p>
+        ) : null}
+
+        {draft ? (
+          <LedgerDraftReview
+            key={draft.id}
+            draft={draft}
+            onChange={handleDraftChange}
+            onSave={handleDraftSave}
+            onCancel={handleDraftCancel}
+            saveError={draftSaveError}
+          />
+        ) : null}
+      </div>
+
+      <LedgerTicketForm
         key={formKey}
         initial={editing}
         warnings={warnings}

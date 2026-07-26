@@ -1,0 +1,296 @@
+{
+  "meta": {
+    "version": "mlb-betting-line-filter-v1",
+    "generatedAt": "2026-07-26T11:50:17.670Z",
+    "targetDateKst": "2026-07-27",
+    "inputBaseline": "data\\daily-tests\\2026-07-27-mlb-baseline-analysis.json",
+    "inputCoverage": "data\\daily-tests\\2026-07-27-mlb-analysis-coverage.json",
+    "singlesOnly": true,
+    "parlaysBuilt": false,
+    "predictionSnapshotSaved": false,
+    "uiConnected": false,
+    "confidenceAutoReject": false,
+    "note": "Confidence는 탈락 기준이 아니며 <50은 warning/경계 분류만 한다."
+  },
+  "summary": {
+    "totalBaselineCandidates": 6,
+    "counts": {
+      "REVIEW_PRIORITY": 4,
+      "REVIEW_SECONDARY": 1,
+      "MARKET_CONFLICT": 1,
+      "INSUFFICIENT": 0
+    },
+    "deterministic": true,
+    "reviewTargets": [
+      {
+        "gameId": "mlb-179589",
+        "match": "Philadelphia Phillies vs New York Yankees",
+        "pickTeam": "New York Yankees",
+        "classification": "REVIEW_PRIORITY",
+        "valueEdge": 22.5,
+        "edgeScore": -11.4,
+        "confidence": 51,
+        "bestOdds": 2.58
+      },
+      {
+        "gameId": "mlb-179599",
+        "match": "Miami Marlins vs San Diego Padres",
+        "pickTeam": "San Diego Padres",
+        "classification": "REVIEW_PRIORITY",
+        "valueEdge": 16.6,
+        "edgeScore": -12.4,
+        "confidence": 52,
+        "bestOdds": 2.16
+      },
+      {
+        "gameId": "mlb-179592",
+        "match": "Tampa Bay Rays vs Cleveland Guardians",
+        "pickTeam": "Tampa Bay Rays",
+        "classification": "REVIEW_PRIORITY",
+        "valueEdge": 6.7,
+        "edgeScore": 12.6,
+        "confidence": 57,
+        "bestOdds": 1.78
+      },
+      {
+        "gameId": "mlb-179597",
+        "match": "New York Mets vs Los Angeles Dodgers",
+        "pickTeam": "Los Angeles Dodgers",
+        "classification": "REVIEW_PRIORITY",
+        "valueEdge": 5.2,
+        "edgeScore": -14.1,
+        "confidence": 53,
+        "bestOdds": 1.69
+      },
+      {
+        "gameId": "mlb-179601",
+        "match": "Chicago White Sox vs Houston Astros",
+        "pickTeam": "Houston Astros",
+        "classification": "REVIEW_SECONDARY",
+        "valueEdge": 13.2,
+        "edgeScore": -12.5,
+        "confidence": 49,
+        "bestOdds": 2
+      }
+    ],
+    "marketConflicts": [
+      {
+        "gameId": "mlb-179598",
+        "match": "Milwaukee Brewers vs Colorado Rockies",
+        "pickTeam": "Milwaukee Brewers",
+        "valueEdge": -13.7,
+        "edgeScore": 11.4
+      }
+    ],
+    "topValueEdge": [
+      {
+        "gameId": "mlb-179589",
+        "match": "Philadelphia Phillies vs New York Yankees",
+        "pickTeam": "New York Yankees",
+        "valueEdge": 22.5,
+        "edgeScore": -11.4,
+        "confidence": 51,
+        "bestOdds": 2.58,
+        "classification": "REVIEW_PRIORITY"
+      },
+      {
+        "gameId": "mlb-179599",
+        "match": "Miami Marlins vs San Diego Padres",
+        "pickTeam": "San Diego Padres",
+        "valueEdge": 16.6,
+        "edgeScore": -12.4,
+        "confidence": 52,
+        "bestOdds": 2.16,
+        "classification": "REVIEW_PRIORITY"
+      },
+      {
+        "gameId": "mlb-179601",
+        "match": "Chicago White Sox vs Houston Astros",
+        "pickTeam": "Houston Astros",
+        "valueEdge": 13.2,
+        "edgeScore": -12.5,
+        "confidence": 49,
+        "bestOdds": 2,
+        "classification": "REVIEW_SECONDARY"
+      }
+    ],
+    "cannotConfirmBeforePitchers": "모든 후보에서 선발투수가 미확보이다. Baseline 결과이므로 선발·부상·라인업 반영 전 확정 추천으로 사용할 수 없다."
+  },
+  "lines": [
+    {
+      "gameId": "mlb-179589",
+      "match": "Philadelphia Phillies vs New York Yankees",
+      "homeTeam": "Philadelphia Phillies",
+      "awayTeam": "New York Yankees",
+      "pickTeam": "New York Yankees",
+      "pickTeamId": "away",
+      "startTimeKst": "08:20",
+      "dateKst": "2026-07-27",
+      "bestOdds": 2.58,
+      "modelWinProbability": 61,
+      "marketProbability": 39,
+      "valueEdge": 22.5,
+      "edgeScore": -11.4,
+      "confidence": 51,
+      "dataAvailability": 0.9,
+      "classification": "REVIEW_PRIORITY",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "|EDGE| >= 10, Value Edge > 0, 시장·표본·배당 비교 가능"
+      ]
+    },
+    {
+      "gameId": "mlb-179599",
+      "match": "Miami Marlins vs San Diego Padres",
+      "homeTeam": "Miami Marlins",
+      "awayTeam": "San Diego Padres",
+      "pickTeam": "San Diego Padres",
+      "pickTeamId": "away",
+      "startTimeKst": "02:40",
+      "dateKst": "2026-07-27",
+      "bestOdds": 2.16,
+      "modelWinProbability": 62,
+      "marketProbability": 46,
+      "valueEdge": 16.6,
+      "edgeScore": -12.4,
+      "confidence": 52,
+      "dataAvailability": 0.9,
+      "classification": "REVIEW_PRIORITY",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "|EDGE| >= 10, Value Edge > 0, 시장·표본·배당 비교 가능"
+      ]
+    },
+    {
+      "gameId": "mlb-179592",
+      "match": "Tampa Bay Rays vs Cleveland Guardians",
+      "homeTeam": "Tampa Bay Rays",
+      "awayTeam": "Cleveland Guardians",
+      "pickTeam": "Tampa Bay Rays",
+      "pickTeamId": "home",
+      "startTimeKst": "01:15",
+      "dateKst": "2026-07-27",
+      "bestOdds": 1.78,
+      "modelWinProbability": 63,
+      "marketProbability": 56,
+      "valueEdge": 6.7,
+      "edgeScore": 12.6,
+      "confidence": 57,
+      "dataAvailability": 0.9,
+      "classification": "REVIEW_PRIORITY",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "|EDGE| >= 10, Value Edge > 0, 시장·표본·배당 비교 가능"
+      ]
+    },
+    {
+      "gameId": "mlb-179597",
+      "match": "New York Mets vs Los Angeles Dodgers",
+      "homeTeam": "New York Mets",
+      "awayTeam": "Los Angeles Dodgers",
+      "pickTeam": "Los Angeles Dodgers",
+      "pickTeamId": "away",
+      "startTimeKst": "02:40",
+      "dateKst": "2026-07-27",
+      "bestOdds": 1.69,
+      "modelWinProbability": 64,
+      "marketProbability": 59,
+      "valueEdge": 5.2,
+      "edgeScore": -14.1,
+      "confidence": 53,
+      "dataAvailability": 0.9,
+      "classification": "REVIEW_PRIORITY",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "|EDGE| >= 10, Value Edge > 0, 시장·표본·배당 비교 가능"
+      ]
+    },
+    {
+      "gameId": "mlb-179601",
+      "match": "Chicago White Sox vs Houston Astros",
+      "homeTeam": "Chicago White Sox",
+      "awayTeam": "Houston Astros",
+      "pickTeam": "Houston Astros",
+      "pickTeamId": "away",
+      "startTimeKst": "03:10",
+      "dateKst": "2026-07-27",
+      "bestOdds": 2,
+      "modelWinProbability": 63,
+      "marketProbability": 49,
+      "valueEdge": 13.2,
+      "edgeScore": -12.5,
+      "confidence": 49,
+      "dataAvailability": 0.9,
+      "classification": "REVIEW_SECONDARY",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보",
+        "Confidence < 50"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "Value Edge 양수이나 Confidence < 50 경계"
+      ]
+    },
+    {
+      "gameId": "mlb-179598",
+      "match": "Milwaukee Brewers vs Colorado Rockies",
+      "homeTeam": "Milwaukee Brewers",
+      "awayTeam": "Colorado Rockies",
+      "pickTeam": "Milwaukee Brewers",
+      "pickTeamId": "home",
+      "startTimeKst": "03:10",
+      "dateKst": "2026-07-27",
+      "bestOdds": 1.33,
+      "modelWinProbability": 61,
+      "marketProbability": 75,
+      "valueEdge": -13.7,
+      "edgeScore": 11.4,
+      "confidence": 56,
+      "dataAvailability": 0.9,
+      "classification": "MARKET_CONFLICT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "|EDGE| >= 10 이지만 Value Edge <= 0"
+      ]
+    }
+  ]
+}
