@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   LEGAL_NOTICE_ITEMS,
   LEGAL_NOTICE_TITLE,
@@ -30,12 +29,18 @@ export default function Footer() {
           © {new Date().getFullYear()} YANG EDGE. All rights reserved.
         </p>
         <div className="flex gap-4">
-          <Link href="#terms" className="text-xs text-zinc-500 hover:text-zinc-300">
-            이용약관
-          </Link>
-          <Link href="#privacy" className="text-xs text-zinc-500 hover:text-zinc-300">
-            개인정보처리방침
-          </Link>
+          <span
+            className="cursor-default text-xs text-zinc-600"
+            title="페이지 준비 중"
+          >
+            이용약관 (준비 중)
+          </span>
+          <span
+            className="cursor-default text-xs text-zinc-600"
+            title="페이지 준비 중"
+          >
+            개인정보처리방침 (준비 중)
+          </span>
         </div>
       </div>
     </footer>
