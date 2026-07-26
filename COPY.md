@@ -29,8 +29,9 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 | Nav · Games | `오늘 경기` |
 | Nav · Ranking | `EDGE Ranking` |
 | Nav · Combo | `EDGE Combo` |
-| Nav · Records | `기록` |
-| Nav · Login | `로그인` |
+| Nav · Ledger | `내 가계부` |
+| Nav · Login | `로그인` |  ※ 현재 `/#login` placeholder. 기능 미구현 |
+
 
 ### Hero
 
