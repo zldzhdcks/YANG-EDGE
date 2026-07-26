@@ -5,16 +5,12 @@ import TodayPick from "@/components/home/TodayPick";
 import TodayGames from "@/components/home/TodayGames";
 import WhyYangEdge from "@/components/home/WhyYangEdge";
 import { loadTodayPick } from "@/lib/api/today-pick";
-import { getSportsProvider } from "@/lib/sports";
-import type { FeatureData } from "@/types/feature";
-import type { SportData } from "@/types/sport";
+import { loadHomeGames } from "@/lib/api/home-games";
 
 export default async function Home() {
-  const sports = getSportsProvider();
-  const [pickResult, featured, todayGames] = await Promise.all([
+  const [pickResult, homeGames] = await Promise.all([
     loadTodayPick(),
-    sports.getFeaturedGames().catch((): FeatureData[] => []),
-    sports.getTodayGames().catch((): SportData[] => []),
+    loadHomeGames(),
   ]);
 
   return (
@@ -23,8 +19,8 @@ export default async function Home() {
       <main>
         <HeroSection />
         <TodayPick result={pickResult} />
-        <TodayGames sports={todayGames} />
-        <WhyYangEdge features={featured} />
+        <TodayGames result={homeGames} />
+        <WhyYangEdge result={homeGames} />
       </main>
       <Footer />
     </>
