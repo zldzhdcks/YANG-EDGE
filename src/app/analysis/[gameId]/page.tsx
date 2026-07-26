@@ -8,6 +8,7 @@ import { buildAnalysisView } from "@/lib/edge/to-analysis-view";
 import { resolveAnalysisMarketOdds } from "@/lib/edge/resolve-analysis-market-odds";
 import { getSportsProvider } from "@/lib/sports";
 import { getMatchDisplayLabel } from "@/lib/teams";
+import type { GameData } from "@/types/game";
 
 type AnalysisPageProps = {
   params: Promise<{ gameId: string }>;
@@ -34,7 +35,9 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
   const { gameId } = await params;
   const [engineInput, games] = await Promise.all([
     getEngineAnalysisData(gameId),
-    getSportsProvider().getGames(),
+    getSportsProvider()
+      .getGames()
+      .catch((): GameData[] => []),
   ]);
 
   const gameExists =

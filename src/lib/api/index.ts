@@ -24,7 +24,7 @@ export type {
 } from "./games";
 export { fetchTodayGames } from "./today-games";
 export type { TodayGamesResult } from "./today-games";
-export { fetchTodayPick } from "./today-pick";
+export { fetchTodayPick, loadTodayPick } from "./today-pick";
 export type { TodayPickResult } from "./today-pick";
 export { fetchFeatured } from "./featured";
 export type { FeaturedResult } from "./featured";

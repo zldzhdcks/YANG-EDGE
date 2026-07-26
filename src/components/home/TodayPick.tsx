@@ -1,4 +1,4 @@
-import type { TodayPickData } from "@/types/todayPick";
+import type { TodayPickData, TodayPickLoadResult } from "@/types/todayPick";
 import Card from "@/components/ui/Card";
 import StatBox from "@/components/ui/StatBox";
 import AnalysisNavLink from "@/components/analysis/AnalysisNavLink";
@@ -8,7 +8,7 @@ import TodayPickStats from "./TodayPickStats";
 import TodayPickReasons from "./TodayPickReasons";
 
 type TodayPickProps = {
-  pick: TodayPickData | null;
+  result: TodayPickLoadResult;
 };
 
 function formatMarketPercent(value: number): string {
@@ -30,27 +30,68 @@ function hasComparableMarket(pick: TodayPickData): boolean {
   );
 }
 
-export default function TodayPick({ pick }: TodayPickProps) {
-  if (!pick) {
-    return (
-      <section id="today-pick" className="mx-auto max-w-5xl px-4 pb-16 sm:px-6">
-        <p className="mb-4 text-xs font-medium tracking-widest text-blue-500 uppercase">
-          오늘의 EDGE PICK
-        </p>
+function EmptyPickCard({
+  title,
+  description,
+  isDummy,
+}: {
+  title: string;
+  description?: string;
+  isDummy?: boolean;
+}) {
+  return (
+    <section id="today-pick" className="mx-auto max-w-5xl px-4 pb-16 sm:px-6">
+      <p className="mb-4 text-xs font-medium tracking-widest text-blue-500 uppercase">
+        오늘의 EDGE PICK
+      </p>
 
-        <Card padding="lg" className="rounded-xl">
-          <h2 className="text-xl font-bold text-white sm:text-2xl">
-            오늘은 추천 기준을 충족한 경기가 없습니다.
-          </h2>
-          <p className="mt-2 text-sm text-zinc-500">
-            YANG EDGE는 |EDGE Score| {TODAY_PICK_MIN_ABS_EDGE} 이상인 경기만
-            추천합니다.
+      <Card padding="lg" className="rounded-xl">
+        {isDummy ? (
+          <p className="mb-2 text-[11px] font-medium tracking-wide text-amber-500/90">
+            테스트 데이터 (SPORTS_PROVIDER=dummy)
           </p>
-        </Card>
-      </section>
+        ) : null}
+        <h2 className="text-xl font-bold text-white sm:text-2xl">{title}</h2>
+        {description ? (
+          <p className="mt-2 text-sm text-zinc-500">{description}</p>
+        ) : null}
+      </Card>
+    </section>
+  );
+}
+
+export default function TodayPick({ result }: TodayPickProps) {
+  const isDummy = result.providerKind === "dummy";
+
+  if (result.status === "error") {
+    return (
+      <EmptyPickCard
+        title="경기 데이터를 불러오지 못했습니다. 잠시 후 다시 확인해 주세요."
+        isDummy={isDummy}
+      />
     );
   }
 
+  if (result.status === "empty-games") {
+    return (
+      <EmptyPickCard
+        title="오늘 등록된 경기 일정이 없습니다."
+        isDummy={isDummy}
+      />
+    );
+  }
+
+  if (result.status === "empty-pick") {
+    return (
+      <EmptyPickCard
+        title="오늘은 추천 기준을 충족한 경기가 없습니다."
+        description={`YANG EDGE는 |EDGE Score| ${TODAY_PICK_MIN_ABS_EDGE} 이상인 경기만 추천합니다.`}
+        isDummy={isDummy}
+      />
+    );
+  }
+
+  const pick = result.pick;
   const matchLabel = getMatchDisplayLabel(pick.homeTeam, pick.awayTeam);
   const showMarket = hasComparableMarket(pick);
   const marketProbability = pick.marketProbability;
@@ -63,6 +104,11 @@ export default function TodayPick({ pick }: TodayPickProps) {
       </p>
 
       <Card padding="lg" className="rounded-xl">
+        {isDummy ? (
+          <p className="mb-2 text-[11px] font-medium tracking-wide text-amber-500/90">
+            테스트 데이터 (SPORTS_PROVIDER=dummy)
+          </p>
+        ) : null}
         <p className="text-xs font-medium text-zinc-500">{pick.league}</p>
         <h2 className="mt-1 text-xl font-bold text-white sm:text-2xl">
           {matchLabel}
@@ -74,9 +120,7 @@ export default function TodayPick({ pick }: TodayPickProps) {
           edgeValue={pick.edgeValue}
         />
 
-        {showMarket &&
-        marketProbability != null &&
-        valueEdge != null ? (
+        {showMarket && marketProbability != null && valueEdge != null ? (
           <div className="grid grid-cols-2 gap-4 border-b border-white/[0.06] pb-6 sm:gap-8 sm:pb-8">
             <StatBox
               label="시장 확률"

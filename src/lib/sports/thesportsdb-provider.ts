@@ -47,10 +47,10 @@ type TheSportsDbEventsResponse = {
  * 지원:
  * - getGames → eventsday.php (NPB/KBO 야구 일정) → GameData[]
  * - getTodayPick / getFeaturedGames / getTodayGames → buildHomeFeed + EDGE Engine
- *   (Engine AnalysisData 없는 경기는 스킵; Pick 없으면 null 반환 — Dummy 폴백 금지)
- *   (getTodayGames 는 Engine 0건이면 throw → Dummy 폴백)
+ *   (Engine AnalysisData 없는 경기는 스킵; Pick·Featured 0건은 null/[] — 정상 빈 상태)
+ *   (일정 0건·추천 0건은 throw 하지 않음. 네트워크/HTTP만 throw)
  *
- * 미지원 (의도적으로 throw → DummyProvider 폴백):
+ * 미지원 (의도적으로 throw — Dummy 자동 폴백 없음):
  * - getAnalysis / getToto
  *
  * 무료 플랜 제한 (문서 기준):
@@ -79,8 +79,7 @@ export class TheSportsDbProvider implements SportsProvider {
       );
     }
 
-    // 무료 와이어링은 야구(NPB/KBO)만 지원. 축구/농구 요청은 빈 목록으로 응답
-    // (throw 하면 FallbackProvider가 Dummy 전체를 반환해 날짜 필터가 무너진다).
+    // 무료 와이어링은 야구(NPB/KBO)만 지원. 축구/농구 요청은 빈 목록으로 응답.
     if (params.sport && params.sport !== "all" && params.sport !== "baseball") {
       return [];
     }
@@ -104,8 +103,8 @@ export class TheSportsDbProvider implements SportsProvider {
       .map(mapEventToGame)
       .filter((game): game is GameData => game !== null);
 
-    // 이벤트가 없으면 빈 배열 반환 → 화면은 "등록된 경기가 없습니다" (fallback 아님).
-    // 실제 네트워크/HTTP 오류만 throw → FallbackProvider가 Dummy로 폴백.
+    // 이벤트가 없으면 빈 배열 반환 → 정상 빈 일정 (오류 아님).
+    // 실제 네트워크/HTTP 오류만 throw.
     return games;
   }
 
@@ -127,29 +126,21 @@ export class TheSportsDbProvider implements SportsProvider {
   }
 
   async getTodayPick(): Promise<TodayPickData | null> {
-    // null = 오늘 추천 기준 미충족 (정상). throw 하면 Fallback이 Dummy(과거 고정일)로
-    // 억지 추천을 보여 주므로, 빈 Pick 은 절대 throw 하지 않는다.
-    // 네트워크/HTTP 오류는 getGames 가 throw → Fallback 유지.
+    // null = 오늘 추천 기준 미충족 (정상 빈 상태).
+    // 네트워크/HTTP 오류는 getGames 가 throw.
     const feed = await buildHomeFeed(await this.getGames());
     return feed.pick;
   }
 
   async getFeaturedGames(): Promise<FeatureData[]> {
     const feed = await buildHomeFeed(await this.getGames());
-    // PASS 제외 후 0건이어도 정상 — Home 이 안내 문구를 표시한다 (Dummy 폴백 금지)
+    // PASS 제외 후 0건이어도 정상 빈 목록
     return feed.featured;
   }
 
   async getTodayGames(): Promise<SportData[]> {
     const feed = await buildHomeFeed(await this.getGames());
-    // 종목 카드는 경기 수만 있어도 표시 가능 — Engine 0건이면 Dummy로 폴백
-    if (feed.ranked.length === 0) {
-      throw new SportsApiError(
-        "No EDGE Engine rows for TheSportsDB games",
-        404,
-        "today-games",
-      );
-    }
+    // 일정 0건·Engine 0건이어도 종목 요약(0)을 반환 — 오류로 취급하지 않음
     return feed.sports;
   }
 

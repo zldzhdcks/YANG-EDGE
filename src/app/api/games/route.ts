@@ -20,7 +20,7 @@ import { getKstToday } from "@/lib/datetime/kst";
  * GET /api/games?date=YYYY-MM-DD&sport=&league=
  *
  * 두 Provider를 **병렬** 조회해 하나의 목록으로 병합한다.
- * - 야구 등: SportsProvider (TheSportsDB → Dummy 폴백)
+ * - 야구 등: SportsProvider (TheSportsDB 등 — Dummy 자동 폴백 없음)
  * - 축구:    FootballProvider (API-Football, 관심 리그만)
  *
  * 오류 격리: 한쪽 실패해도 다른 쪽 일정은 표시 (status=partial).
