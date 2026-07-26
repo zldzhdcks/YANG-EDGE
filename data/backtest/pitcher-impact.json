@@ -1,0 +1,513 @@
+{
+  "meta": {
+    "version": "pitcher-impact-backtest-v1",
+    "generatedAt": "2026-07-26T14:24:41.353Z",
+    "targetDateKst": "2026-07-27",
+    "inputs": {
+      "baseline": "data\\daily-tests\\2026-07-27-mlb-baseline-analysis.json",
+      "pitcherCoverage": "data\\daily-tests\\2026-07-27-mlb-pitcher-stat-coverage.json",
+      "actualResults": "mlb-statsapi /api/v1/schedule?sportId=1&gamePk={gamePk} (Final 경기만 채점)"
+    },
+    "minSample": 20,
+    "gaps": {
+      "ERA_GAP": 0.15,
+      "WHIP_GAP": 0.03,
+      "RECENT_ERA_GAP": 0.5,
+      "IP_GAP": 8
+    },
+    "untouched": [
+      "EDGE Engine",
+      "weights",
+      "추천 결과",
+      "Confidence",
+      "Market 계산",
+      "MLB Runtime",
+      "Feedback",
+      "Learning"
+    ],
+    "deterministic": true,
+    "note": "선발투수 지표를 Engine 투입 전에 사전 검증하는 순수 백테스트. Weight 자동 변경 없음."
+  },
+  "sample": {
+    "baselineGamesTotal": 15,
+    "readyForBacktest": 14,
+    "skipped": [
+      {
+        "gameId": "mlb-179593",
+        "reason": "pitcher coverage 없음"
+      }
+    ],
+    "resultsFetched": 14,
+    "resultFetchErrors": 0,
+    "gradableGames": 0,
+    "sufficientForHitRate": false
+  },
+  "combos": [
+    {
+      "key": "BASELINE",
+      "label": "Baseline",
+      "factors": [],
+      "readyGames": 14,
+      "recommendedGames": 6,
+      "recommendationRatioPercent": 42.9,
+      "flipsFromBaseline": 0,
+      "gradedSample": 0,
+      "hits": null,
+      "hitRatePercent": null,
+      "improvementVsBaselinePoints": 0,
+      "status": "INSUFFICIENT_SAMPLE"
+    },
+    {
+      "key": "BASELINE_ERA",
+      "label": "Baseline + ERA",
+      "factors": [
+        "ERA"
+      ],
+      "readyGames": 14,
+      "recommendedGames": 6,
+      "recommendationRatioPercent": 42.9,
+      "flipsFromBaseline": 5,
+      "gradedSample": 0,
+      "hits": null,
+      "hitRatePercent": null,
+      "improvementVsBaselinePoints": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    },
+    {
+      "key": "BASELINE_ERA_WHIP",
+      "label": "Baseline + ERA + WHIP",
+      "factors": [
+        "ERA",
+        "WHIP"
+      ],
+      "readyGames": 14,
+      "recommendedGames": 6,
+      "recommendationRatioPercent": 42.9,
+      "flipsFromBaseline": 5,
+      "gradedSample": 0,
+      "hits": null,
+      "hitRatePercent": null,
+      "improvementVsBaselinePoints": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    },
+    {
+      "key": "BASELINE_ERA_WHIP_RECENT",
+      "label": "Baseline + ERA + WHIP + 최근등판",
+      "factors": [
+        "ERA",
+        "WHIP",
+        "RECENT"
+      ],
+      "readyGames": 14,
+      "recommendedGames": 6,
+      "recommendationRatioPercent": 42.9,
+      "flipsFromBaseline": 7,
+      "gradedSample": 0,
+      "hits": null,
+      "hitRatePercent": null,
+      "improvementVsBaselinePoints": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    },
+    {
+      "key": "BASELINE_ERA_WHIP_RECENT_INNINGS",
+      "label": "Baseline + ERA + WHIP + 최근등판 + 이닝",
+      "factors": [
+        "ERA",
+        "WHIP",
+        "RECENT",
+        "INNINGS"
+      ],
+      "readyGames": 14,
+      "recommendedGames": 6,
+      "recommendationRatioPercent": 42.9,
+      "flipsFromBaseline": 9,
+      "gradedSample": 0,
+      "hits": null,
+      "hitRatePercent": null,
+      "improvementVsBaselinePoints": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    }
+  ],
+  "conclusion": {
+    "status": "INSUFFICIENT_SAMPLE",
+    "bestCombo": null,
+    "message": "INSUFFICIENT_SAMPLE: 채점 가능한(Final) 경기 0개 < 최소 표본 20개. 대상 2026-07-27 경기는 아직 종료되지 않아 적중률/향상률을 신뢰 구간 내에서 산출할 수 없다. 조합별 pick·flip·추천 비율은 결정적으로 계산되었으나, 어떤 조합이 유의미한 개선인지 판단하려면 여러 날짜의 종료 경기를 누적해 표본을 확보해야 한다."
+  },
+  "weightProposal": {
+    "autoApply": false,
+    "note": "아래는 제안일 뿐 자동 적용하지 않는다. 충분한 종료-경기 표본으로 개선이 확인된 지표에 한해, EDGE Engine weight 조정을 사람이 검토 후 반영할 것.",
+    "suggestedOrderIfValidated": [
+      "ERA (선발 실점 억제 핵심 지표)",
+      "WHIP (주자 허용/제구)",
+      "최근등판 (직전 폼)",
+      "이닝 (durability, 보조 지표)"
+    ],
+    "status": "PROPOSAL_PENDING_SAMPLE"
+  },
+  "games": [
+    {
+      "gameId": "mlb-179589",
+      "gamePk": 823433,
+      "match": "New York Yankees @ Philadelphia Phillies",
+      "startTimeKst": "08:20",
+      "baselinePick": "away",
+      "baselineCandidate": true,
+      "picks": {
+        "BASELINE": "away",
+        "BASELINE_ERA": "home",
+        "BASELINE_ERA_WHIP": "home",
+        "BASELINE_ERA_WHIP_RECENT": "home",
+        "BASELINE_ERA_WHIP_RECENT_INNINGS": "home"
+      },
+      "leans": {
+        "ERA": "home",
+        "WHIP": "home",
+        "RECENT": null,
+        "INNINGS": "home"
+      },
+      "result": {
+        "final": false,
+        "detailedState": "Scheduled",
+        "winner": null
+      }
+    },
+    {
+      "gameId": "mlb-179590",
+      "gamePk": 822706,
+      "match": "Arizona Diamondbacks @ Washington Nationals",
+      "startTimeKst": "02:35",
+      "baselinePick": "away",
+      "baselineCandidate": false,
+      "picks": {
+        "BASELINE": "away",
+        "BASELINE_ERA": "away",
+        "BASELINE_ERA_WHIP": "away",
+        "BASELINE_ERA_WHIP_RECENT": "away",
+        "BASELINE_ERA_WHIP_RECENT_INNINGS": "away"
+      },
+      "leans": {
+        "ERA": "away",
+        "WHIP": "away",
+        "RECENT": "away",
+        "INNINGS": "home"
+      },
+      "result": {
+        "final": false,
+        "detailedState": "Pre-Game",
+        "winner": null
+      }
+    },
+    {
+      "gameId": "mlb-179591",
+      "gamePk": 822870,
+      "match": "Seattle Mariners @ Texas Rangers",
+      "startTimeKst": "03:35",
+      "baselinePick": "home",
+      "baselineCandidate": false,
+      "picks": {
+        "BASELINE": "home",
+        "BASELINE_ERA": "away",
+        "BASELINE_ERA_WHIP": "away",
+        "BASELINE_ERA_WHIP_RECENT": "away",
+        "BASELINE_ERA_WHIP_RECENT_INNINGS": "away"
+      },
+      "leans": {
+        "ERA": "away",
+        "WHIP": "away",
+        "RECENT": "away",
+        "INNINGS": "away"
+      },
+      "result": {
+        "final": false,
+        "detailedState": "Scheduled",
+        "winner": null
+      }
+    },
+    {
+      "gameId": "mlb-179592",
+      "gamePk": 822950,
+      "match": "Cleveland Guardians @ Tampa Bay Rays",
+      "startTimeKst": "01:15",
+      "baselinePick": "home",
+      "baselineCandidate": true,
+      "picks": {
+        "BASELINE": "home",
+        "BASELINE_ERA": "away",
+        "BASELINE_ERA_WHIP": "home",
+        "BASELINE_ERA_WHIP_RECENT": "away",
+        "BASELINE_ERA_WHIP_RECENT_INNINGS": "away"
+      },
+      "leans": {
+        "ERA": "away",
+        "WHIP": "home",
+        "RECENT": "away",
+        "INNINGS": "away"
+      },
+      "result": {
+        "final": false,
+        "detailedState": "Pre-Game",
+        "winner": null
+      }
+    },
+    {
+      "gameId": "mlb-179594",
+      "gamePk": 823194,
+      "match": "Los Angeles Angels @ San Francisco Giants",
+      "startTimeKst": "05:05",
+      "baselinePick": "home",
+      "baselineCandidate": false,
+      "picks": {
+        "BASELINE": "home",
+        "BASELINE_ERA": "home",
+        "BASELINE_ERA_WHIP": "away",
+        "BASELINE_ERA_WHIP_RECENT": "home",
+        "BASELINE_ERA_WHIP_RECENT_INNINGS": "away"
+      },
+      "leans": {
+        "ERA": null,
+        "WHIP": "away",
+        "RECENT": "home",
+        "INNINGS": "away"
+      },
+      "result": {
+        "final": false,
+        "detailedState": "Scheduled",
+        "winner": null
+      }
+    },
+    {
+      "gameId": "mlb-179595",
+      "gamePk": 823354,
+      "match": "Chicago Cubs @ Pittsburgh Pirates",
+      "startTimeKst": "02:35",
+      "baselinePick": "away",
+      "baselineCandidate": false,
+      "picks": {
+        "BASELINE": "away",
+        "BASELINE_ERA": "home",
+        "BASELINE_ERA_WHIP": "home",
+        "BASELINE_ERA_WHIP_RECENT": "home",
+        "BASELINE_ERA_WHIP_RECENT_INNINGS": "home"
+      },
+      "leans": {
+        "ERA": "home",
+        "WHIP": "home",
+        "RECENT": null,
+        "INNINGS": "home"
+      },
+      "result": {
+        "final": false,
+        "detailedState": "Scheduled",
+        "winner": null
+      }
+    },
+    {
+      "gameId": "mlb-179596",
+      "gamePk": 823678,
+      "match": "Athletics @ Minnesota Twins",
+      "startTimeKst": "03:10",
+      "baselinePick": "home",
+      "baselineCandidate": false,
+      "picks": {
+        "BASELINE": "home",
+        "BASELINE_ERA": "home",
+        "BASELINE_ERA_WHIP": "home",
+        "BASELINE_ERA_WHIP_RECENT": "home",
+        "BASELINE_ERA_WHIP_RECENT_INNINGS": "home"
+      },
+      "leans": {
+        "ERA": "home",
+        "WHIP": "home",
+        "RECENT": "home",
+        "INNINGS": "away"
+      },
+      "result": {
+        "final": false,
+        "detailedState": "Scheduled",
+        "winner": null
+      }
+    },
+    {
+      "gameId": "mlb-179597",
+      "gamePk": 823599,
+      "match": "Los Angeles Dodgers @ New York Mets",
+      "startTimeKst": "02:40",
+      "baselinePick": "away",
+      "baselineCandidate": true,
+      "picks": {
+        "BASELINE": "away",
+        "BASELINE_ERA": "away",
+        "BASELINE_ERA_WHIP": "away",
+        "BASELINE_ERA_WHIP_RECENT": "away",
+        "BASELINE_ERA_WHIP_RECENT_INNINGS": "home"
+      },
+      "leans": {
+        "ERA": null,
+        "WHIP": "away",
+        "RECENT": "home",
+        "INNINGS": "home"
+      },
+      "result": {
+        "final": false,
+        "detailedState": "Scheduled",
+        "winner": null
+      }
+    },
+    {
+      "gameId": "mlb-179598",
+      "gamePk": 823755,
+      "match": "Colorado Rockies @ Milwaukee Brewers",
+      "startTimeKst": "03:10",
+      "baselinePick": "home",
+      "baselineCandidate": true,
+      "picks": {
+        "BASELINE": "home",
+        "BASELINE_ERA": "home",
+        "BASELINE_ERA_WHIP": "home",
+        "BASELINE_ERA_WHIP_RECENT": "home",
+        "BASELINE_ERA_WHIP_RECENT_INNINGS": "home"
+      },
+      "leans": {
+        "ERA": "home",
+        "WHIP": "home",
+        "RECENT": "home",
+        "INNINGS": "home"
+      },
+      "result": {
+        "final": false,
+        "detailedState": "Scheduled",
+        "winner": null
+      }
+    },
+    {
+      "gameId": "mlb-179599",
+      "gamePk": 823840,
+      "match": "San Diego Padres @ Miami Marlins",
+      "startTimeKst": "02:40",
+      "baselinePick": "away",
+      "baselineCandidate": true,
+      "picks": {
+        "BASELINE": "away",
+        "BASELINE_ERA": "away",
+        "BASELINE_ERA_WHIP": "home",
+        "BASELINE_ERA_WHIP_RECENT": "home",
+        "BASELINE_ERA_WHIP_RECENT_INNINGS": "home"
+      },
+      "leans": {
+        "ERA": null,
+        "WHIP": "home",
+        "RECENT": "home",
+        "INNINGS": "away"
+      },
+      "result": {
+        "final": false,
+        "detailedState": "Scheduled",
+        "winner": null
+      }
+    },
+    {
+      "gameId": "mlb-179600",
+      "gamePk": 824246,
+      "match": "Kansas City Royals @ Detroit Tigers",
+      "startTimeKst": "02:40",
+      "baselinePick": "home",
+      "baselineCandidate": false,
+      "picks": {
+        "BASELINE": "home",
+        "BASELINE_ERA": "home",
+        "BASELINE_ERA_WHIP": "home",
+        "BASELINE_ERA_WHIP_RECENT": "home",
+        "BASELINE_ERA_WHIP_RECENT_INNINGS": "home"
+      },
+      "leans": {
+        "ERA": "home",
+        "WHIP": "home",
+        "RECENT": "away",
+        "INNINGS": "home"
+      },
+      "result": {
+        "final": false,
+        "detailedState": "Pre-Game",
+        "winner": null
+      }
+    },
+    {
+      "gameId": "mlb-179601",
+      "gamePk": 824572,
+      "match": "Houston Astros @ Chicago White Sox",
+      "startTimeKst": "03:10",
+      "baselinePick": "away",
+      "baselineCandidate": true,
+      "picks": {
+        "BASELINE": "away",
+        "BASELINE_ERA": "home",
+        "BASELINE_ERA_WHIP": "away",
+        "BASELINE_ERA_WHIP_RECENT": "home",
+        "BASELINE_ERA_WHIP_RECENT_INNINGS": "home"
+      },
+      "leans": {
+        "ERA": "home",
+        "WHIP": "away",
+        "RECENT": "home",
+        "INNINGS": "home"
+      },
+      "result": {
+        "final": false,
+        "detailedState": "Scheduled",
+        "winner": null
+      }
+    },
+    {
+      "gameId": "mlb-179602",
+      "gamePk": 824730,
+      "match": "Toronto Blue Jays @ Boston Red Sox",
+      "startTimeKst": "02:35",
+      "baselinePick": "home",
+      "baselineCandidate": false,
+      "picks": {
+        "BASELINE": "home",
+        "BASELINE_ERA": "home",
+        "BASELINE_ERA_WHIP": "home",
+        "BASELINE_ERA_WHIP_RECENT": "home",
+        "BASELINE_ERA_WHIP_RECENT_INNINGS": "home"
+      },
+      "leans": {
+        "ERA": "home",
+        "WHIP": "home",
+        "RECENT": "home",
+        "INNINGS": "away"
+      },
+      "result": {
+        "final": false,
+        "detailedState": "Pre-Game",
+        "winner": null
+      }
+    },
+    {
+      "gameId": "mlb-179603",
+      "gamePk": 824810,
+      "match": "Atlanta Braves @ Baltimore Orioles",
+      "startTimeKst": "02:35",
+      "baselinePick": "away",
+      "baselineCandidate": false,
+      "picks": {
+        "BASELINE": "away",
+        "BASELINE_ERA": "away",
+        "BASELINE_ERA_WHIP": "away",
+        "BASELINE_ERA_WHIP_RECENT": "home",
+        "BASELINE_ERA_WHIP_RECENT_INNINGS": "home"
+      },
+      "leans": {
+        "ERA": null,
+        "WHIP": null,
+        "RECENT": "home",
+        "INNINGS": "home"
+      },
+      "result": {
+        "final": false,
+        "detailedState": "Pre-Game",
+        "winner": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,618 @@
+{
+  "meta": {
+    "version": "mlb-line-recheck-v1",
+    "generatedAt": "2026-07-26T14:35:46.236Z",
+    "targetDateKst": "2026-07-27",
+    "kind": "mlb-line-recheck",
+    "finalBettingConfirmation": false,
+    "engineRerun": false,
+    "baselinePickChanged": false,
+    "modelProbabilityChanged": false,
+    "weightsChanged": false,
+    "confidenceChanged": false,
+    "sportsDataIoUsed": false,
+    "mlbComHtmlCrawled": false,
+    "inputs": {
+      "watchlist": "data/watchlists/2026-07-27-mlb.json",
+      "pitcherReview": "data/watchlists/2026-07-27-mlb-pitcher-review.json",
+      "bettingLineFilter": "data/daily-tests/2026-07-27-mlb-betting-line-filter.json"
+    },
+    "legalUse": {
+      "oddsSource": "The Odds API (정식 구독)",
+      "pitcherStatsScope": "내부 연구용 방향 경고만",
+      "mlbStatsApiCommercialUse": "미확인",
+      "runtimeConnected": false,
+      "guaranteeLanguageForbidden": true,
+      "note": "최신 배당은 The Odds API만 사용한다. 투수 비교는 내부 연구 경고이며 수익을 보장하지 않는다. 최종 베팅 확정이 아니다."
+    },
+    "rules": {
+      "commenceToleranceHours": 3,
+      "marketMoveThresholdPp": 2,
+      "currentValueEdgeFormula": "stored modelProbability - latest normalized marketProbability",
+      "classificationPriority": [
+        "DROP",
+        "HOLD",
+        "KEEP_REVIEW"
+      ]
+    },
+    "snapshotDeduped": false,
+    "deterministic": true,
+    "note": "모델·Baseline pick 미변경. 2차 후보 분류만 수행. API 키·원시 인증 헤더 미저장."
+  },
+  "apiUsage": {
+    "sportKey": "baseball_mlb",
+    "sportTitle": "MLB",
+    "sportsListCached": true,
+    "oddsCached": false,
+    "requestsRemaining": 270,
+    "requestsUsed": 230,
+    "requestsLast": 1
+  },
+  "summary": {
+    "watchlistGames": 5,
+    "oddsMatched": 5,
+    "ambiguous": 0,
+    "failed": 0,
+    "KEEP_REVIEW": 0,
+    "HOLD": 4,
+    "DROP": 1,
+    "keepGames": [],
+    "holdGames": [
+      {
+        "gameId": "mlb-179599",
+        "match": "San Diego Padres @ Miami Marlins",
+        "currentValueEdge": 16,
+        "reasons": [
+          "투수 방향 MIXED",
+          "핵심 데이터 여전히 누락"
+        ]
+      },
+      {
+        "gameId": "mlb-179592",
+        "match": "Cleveland Guardians @ Tampa Bay Rays",
+        "currentValueEdge": 10,
+        "reasons": [
+          "투수 방향 MIXED",
+          "ADVERSE_MOVE (시장 확률 2%p+ 하락)",
+          "핵심 데이터 여전히 누락"
+        ]
+      },
+      {
+        "gameId": "mlb-179597",
+        "match": "Los Angeles Dodgers @ New York Mets",
+        "currentValueEdge": 4,
+        "reasons": [
+          "투수 방향 MIXED",
+          "핵심 데이터 여전히 누락"
+        ]
+      },
+      {
+        "gameId": "mlb-179601",
+        "match": "Houston Astros @ Chicago White Sox",
+        "currentValueEdge": 13,
+        "reasons": [
+          "투수 방향 MIXED",
+          "Confidence < 50 (49)",
+          "핵심 데이터 여전히 누락"
+        ]
+      }
+    ],
+    "dropGames": [
+      {
+        "gameId": "mlb-179589",
+        "match": "New York Yankees @ Philadelphia Phillies",
+        "currentValueEdge": 24,
+        "reasons": [
+          "투수 방향 CONFLICTS_BASELINE (내부 연구 경고)"
+        ]
+      }
+    ],
+    "topCurrentValueEdge": [
+      {
+        "gameId": "mlb-179589",
+        "match": "New York Yankees @ Philadelphia Phillies",
+        "currentValueEdge": 24,
+        "baselinePick": "New York Yankees"
+      },
+      {
+        "gameId": "mlb-179599",
+        "match": "San Diego Padres @ Miami Marlins",
+        "currentValueEdge": 16,
+        "baselinePick": "San Diego Padres"
+      },
+      {
+        "gameId": "mlb-179601",
+        "match": "Houston Astros @ Chicago White Sox",
+        "currentValueEdge": 13,
+        "baselinePick": "Houston Astros"
+      }
+    ],
+    "mostAdverseMove": {
+      "gameId": "mlb-179592",
+      "match": "Cleveland Guardians @ Tampa Bay Rays",
+      "marketProbabilityChangePp": -3,
+      "oddsMove": "ADVERSE_MOVE",
+      "initialBestOdds": 1.78,
+      "currentBestOdds": 1.87
+    },
+    "nextRecheckTimes": [
+      {
+        "gameId": "mlb-179592",
+        "match": "Cleveland Guardians @ Tampa Bay Rays",
+        "at": "2026-07-26 23:35 KST",
+        "urgency": "immediate",
+        "message": "2시간 미만 — 즉시 재확인 필요"
+      },
+      {
+        "gameId": "mlb-179599",
+        "match": "San Diego Padres @ Miami Marlins",
+        "at": "2026-07-27 01:10 KST",
+        "urgency": "before-90m",
+        "message": "경기 90분 전 재확인"
+      },
+      {
+        "gameId": "mlb-179597",
+        "match": "Los Angeles Dodgers @ New York Mets",
+        "at": "2026-07-27 01:10 KST",
+        "urgency": "before-90m",
+        "message": "경기 90분 전 재확인"
+      },
+      {
+        "gameId": "mlb-179601",
+        "match": "Houston Astros @ Chicago White Sox",
+        "at": "2026-07-27 01:40 KST",
+        "urgency": "before-90m",
+        "message": "경기 90분 전 재확인"
+      },
+      {
+        "gameId": "mlb-179589",
+        "match": "New York Yankees @ Philadelphia Phillies",
+        "at": "2026-07-27 05:20 KST",
+        "urgency": "before-3h",
+        "message": "경기 3시간 전 재확인"
+      }
+    ],
+    "notFinalLineReason": "선발·라인업·부상·순위가 Engine에 미반영이고, 투수 방향은 연구 경고만이며, 모델 재실행·추천 확정이 없다. 배당 이동이 승패를 보장하지 않는다.",
+    "brewersExcluded": true
+  },
+  "games": [
+    {
+      "gameId": "mlb-179589",
+      "match": "New York Yankees @ Philadelphia Phillies",
+      "startTimeKst": "08:20",
+      "commenceTimeUtc": "2026-07-26T23:21:00Z",
+      "baselinePick": "New York Yankees",
+      "pickSide": "away",
+      "initialBestOdds": 2.58,
+      "currentBestOdds": 2.74,
+      "oddsChangeRate": 0.062,
+      "initialMarketProbability": 39,
+      "currentMarketProbability": 37,
+      "marketProbabilityChangePp": -2,
+      "initialValueEdge": 22.5,
+      "currentValueEdge": 24,
+      "modelProbabilityUnchanged": 61,
+      "oddsMove": "ADVERSE_MOVE",
+      "pitcherDirection": "CONFLICTS_BASELINE",
+      "confidence": 51,
+      "dataAvailability": 0.9,
+      "missingData": [
+        "선발투수"
+      ],
+      "matchStatus": "matched",
+      "matchConfidence": 0.9,
+      "candidateCount": 1,
+      "bookmakerCount": 23,
+      "dataQuality": "complete",
+      "fetchedAt": "2026-07-26T14:35:46.236Z",
+      "classification": "DROP",
+      "classificationReasons": [
+        "투수 방향 CONFLICTS_BASELINE (내부 연구 경고)"
+      ],
+      "recheck": {
+        "hoursUntilStart": 8.7,
+        "recommendedRecheckAtKst": "2026-07-27 05:20 KST",
+        "urgency": "before-3h",
+        "message": "경기 3시간 전 재확인"
+      },
+      "note": "최종 베팅 확정이 아니다. 모델 확률·Baseline pick·Confidence는 변경하지 않았다. 투수 방향은 내부 연구 경고로만 사용한다."
+    },
+    {
+      "gameId": "mlb-179599",
+      "match": "San Diego Padres @ Miami Marlins",
+      "startTimeKst": "02:40",
+      "commenceTimeUtc": "2026-07-26T17:41:00Z",
+      "baselinePick": "San Diego Padres",
+      "pickSide": "away",
+      "initialBestOdds": 2.16,
+      "currentBestOdds": 2.16,
+      "oddsChangeRate": 0,
+      "initialMarketProbability": 46,
+      "currentMarketProbability": 46,
+      "marketProbabilityChangePp": 0,
+      "initialValueEdge": 16.6,
+      "currentValueEdge": 16,
+      "modelProbabilityUnchanged": 62,
+      "oddsMove": "NEUTRAL_MOVE",
+      "pitcherDirection": "MIXED",
+      "confidence": 52,
+      "dataAvailability": 0.9,
+      "missingData": [
+        "선발투수"
+      ],
+      "matchStatus": "matched",
+      "matchConfidence": 0.9,
+      "candidateCount": 1,
+      "bookmakerCount": 23,
+      "dataQuality": "complete",
+      "fetchedAt": "2026-07-26T14:35:46.236Z",
+      "classification": "HOLD",
+      "classificationReasons": [
+        "투수 방향 MIXED",
+        "핵심 데이터 여전히 누락"
+      ],
+      "recheck": {
+        "hoursUntilStart": 3.1,
+        "recommendedRecheckAtKst": "2026-07-27 01:10 KST",
+        "urgency": "before-90m",
+        "message": "경기 90분 전 재확인"
+      },
+      "note": "최종 베팅 확정이 아니다. 모델 확률·Baseline pick·Confidence는 변경하지 않았다. 투수 방향은 내부 연구 경고로만 사용한다."
+    },
+    {
+      "gameId": "mlb-179592",
+      "match": "Cleveland Guardians @ Tampa Bay Rays",
+      "startTimeKst": "01:15",
+      "commenceTimeUtc": "2026-07-26T16:16:00Z",
+      "baselinePick": "Tampa Bay Rays",
+      "pickSide": "home",
+      "initialBestOdds": 1.78,
+      "currentBestOdds": 1.87,
+      "oddsChangeRate": 0.0506,
+      "initialMarketProbability": 56,
+      "currentMarketProbability": 53,
+      "marketProbabilityChangePp": -3,
+      "initialValueEdge": 6.7,
+      "currentValueEdge": 10,
+      "modelProbabilityUnchanged": 63,
+      "oddsMove": "ADVERSE_MOVE",
+      "pitcherDirection": "MIXED",
+      "confidence": 57,
+      "dataAvailability": 0.9,
+      "missingData": [
+        "선발투수"
+      ],
+      "matchStatus": "matched",
+      "matchConfidence": 0.9,
+      "candidateCount": 1,
+      "bookmakerCount": 23,
+      "dataQuality": "complete",
+      "fetchedAt": "2026-07-26T14:35:46.236Z",
+      "classification": "HOLD",
+      "classificationReasons": [
+        "투수 방향 MIXED",
+        "ADVERSE_MOVE (시장 확률 2%p+ 하락)",
+        "핵심 데이터 여전히 누락"
+      ],
+      "recheck": {
+        "hoursUntilStart": 1.7,
+        "recommendedRecheckAtKst": "2026-07-26 23:35 KST",
+        "urgency": "immediate",
+        "message": "2시간 미만 — 즉시 재확인 필요"
+      },
+      "note": "최종 베팅 확정이 아니다. 모델 확률·Baseline pick·Confidence는 변경하지 않았다. 투수 방향은 내부 연구 경고로만 사용한다."
+    },
+    {
+      "gameId": "mlb-179597",
+      "match": "Los Angeles Dodgers @ New York Mets",
+      "startTimeKst": "02:40",
+      "commenceTimeUtc": "2026-07-26T17:41:00Z",
+      "baselinePick": "Los Angeles Dodgers",
+      "pickSide": "away",
+      "initialBestOdds": 1.69,
+      "currentBestOdds": 1.67,
+      "oddsChangeRate": -0.0118,
+      "initialMarketProbability": 59,
+      "currentMarketProbability": 60,
+      "marketProbabilityChangePp": 1,
+      "initialValueEdge": 5.2,
+      "currentValueEdge": 4,
+      "modelProbabilityUnchanged": 64,
+      "oddsMove": "NEUTRAL_MOVE",
+      "pitcherDirection": "MIXED",
+      "confidence": 53,
+      "dataAvailability": 0.9,
+      "missingData": [
+        "선발투수"
+      ],
+      "matchStatus": "matched",
+      "matchConfidence": 0.9,
+      "candidateCount": 1,
+      "bookmakerCount": 22,
+      "dataQuality": "complete",
+      "fetchedAt": "2026-07-26T14:35:46.236Z",
+      "classification": "HOLD",
+      "classificationReasons": [
+        "투수 방향 MIXED",
+        "핵심 데이터 여전히 누락"
+      ],
+      "recheck": {
+        "hoursUntilStart": 3.1,
+        "recommendedRecheckAtKst": "2026-07-27 01:10 KST",
+        "urgency": "before-90m",
+        "message": "경기 90분 전 재확인"
+      },
+      "note": "최종 베팅 확정이 아니다. 모델 확률·Baseline pick·Confidence는 변경하지 않았다. 투수 방향은 내부 연구 경고로만 사용한다."
+    },
+    {
+      "gameId": "mlb-179601",
+      "match": "Houston Astros @ Chicago White Sox",
+      "startTimeKst": "03:10",
+      "commenceTimeUtc": "2026-07-26T18:11:00Z",
+      "baselinePick": "Houston Astros",
+      "pickSide": "away",
+      "initialBestOdds": 2,
+      "currentBestOdds": 2,
+      "oddsChangeRate": 0,
+      "initialMarketProbability": 49,
+      "currentMarketProbability": 50,
+      "marketProbabilityChangePp": 1,
+      "initialValueEdge": 13.2,
+      "currentValueEdge": 13,
+      "modelProbabilityUnchanged": 63,
+      "oddsMove": "NEUTRAL_MOVE",
+      "pitcherDirection": "MIXED",
+      "confidence": 49,
+      "dataAvailability": 0.9,
+      "missingData": [
+        "선발투수"
+      ],
+      "matchStatus": "matched",
+      "matchConfidence": 0.9,
+      "candidateCount": 1,
+      "bookmakerCount": 23,
+      "dataQuality": "complete",
+      "fetchedAt": "2026-07-26T14:35:46.236Z",
+      "classification": "HOLD",
+      "classificationReasons": [
+        "투수 방향 MIXED",
+        "Confidence < 50 (49)",
+        "핵심 데이터 여전히 누락"
+      ],
+      "recheck": {
+        "hoursUntilStart": 3.6,
+        "recommendedRecheckAtKst": "2026-07-27 01:40 KST",
+        "urgency": "before-90m",
+        "message": "경기 90분 전 재확인"
+      },
+      "note": "최종 베팅 확정이 아니다. 모델 확률·Baseline pick·Confidence는 변경하지 않았다. 투수 방향은 내부 연구 경고로만 사용한다."
+    }
+  ],
+  "history": [
+    {
+      "fetchedAt": "2026-07-26T14:35:46.236Z",
+      "games": [
+        {
+          "gameId": "mlb-179589",
+          "match": "New York Yankees @ Philadelphia Phillies",
+          "startTimeKst": "08:20",
+          "commenceTimeUtc": "2026-07-26T23:21:00Z",
+          "baselinePick": "New York Yankees",
+          "pickSide": "away",
+          "initialBestOdds": 2.58,
+          "currentBestOdds": 2.74,
+          "oddsChangeRate": 0.062,
+          "initialMarketProbability": 39,
+          "currentMarketProbability": 37,
+          "marketProbabilityChangePp": -2,
+          "initialValueEdge": 22.5,
+          "currentValueEdge": 24,
+          "modelProbabilityUnchanged": 61,
+          "oddsMove": "ADVERSE_MOVE",
+          "pitcherDirection": "CONFLICTS_BASELINE",
+          "confidence": 51,
+          "dataAvailability": 0.9,
+          "missingData": [
+            "선발투수"
+          ],
+          "matchStatus": "matched",
+          "matchConfidence": 0.9,
+          "candidateCount": 1,
+          "bookmakerCount": 23,
+          "dataQuality": "complete",
+          "fetchedAt": "2026-07-26T14:35:46.236Z",
+          "classification": "DROP",
+          "classificationReasons": [
+            "투수 방향 CONFLICTS_BASELINE (내부 연구 경고)"
+          ],
+          "recheck": {
+            "hoursUntilStart": 8.7,
+            "recommendedRecheckAtKst": "2026-07-27 05:20 KST",
+            "urgency": "before-3h",
+            "message": "경기 3시간 전 재확인"
+          },
+          "note": "최종 베팅 확정이 아니다. 모델 확률·Baseline pick·Confidence는 변경하지 않았다. 투수 방향은 내부 연구 경고로만 사용한다."
+        },
+        {
+          "gameId": "mlb-179599",
+          "match": "San Diego Padres @ Miami Marlins",
+          "startTimeKst": "02:40",
+          "commenceTimeUtc": "2026-07-26T17:41:00Z",
+          "baselinePick": "San Diego Padres",
+          "pickSide": "away",
+          "initialBestOdds": 2.16,
+          "currentBestOdds": 2.16,
+          "oddsChangeRate": 0,
+          "initialMarketProbability": 46,
+          "currentMarketProbability": 46,
+          "marketProbabilityChangePp": 0,
+          "initialValueEdge": 16.6,
+          "currentValueEdge": 16,
+          "modelProbabilityUnchanged": 62,
+          "oddsMove": "NEUTRAL_MOVE",
+          "pitcherDirection": "MIXED",
+          "confidence": 52,
+          "dataAvailability": 0.9,
+          "missingData": [
+            "선발투수"
+          ],
+          "matchStatus": "matched",
+          "matchConfidence": 0.9,
+          "candidateCount": 1,
+          "bookmakerCount": 23,
+          "dataQuality": "complete",
+          "fetchedAt": "2026-07-26T14:35:46.236Z",
+          "classification": "HOLD",
+          "classificationReasons": [
+            "투수 방향 MIXED",
+            "핵심 데이터 여전히 누락"
+          ],
+          "recheck": {
+            "hoursUntilStart": 3.1,
+            "recommendedRecheckAtKst": "2026-07-27 01:10 KST",
+            "urgency": "before-90m",
+            "message": "경기 90분 전 재확인"
+          },
+          "note": "최종 베팅 확정이 아니다. 모델 확률·Baseline pick·Confidence는 변경하지 않았다. 투수 방향은 내부 연구 경고로만 사용한다."
+        },
+        {
+          "gameId": "mlb-179592",
+          "match": "Cleveland Guardians @ Tampa Bay Rays",
+          "startTimeKst": "01:15",
+          "commenceTimeUtc": "2026-07-26T16:16:00Z",
+          "baselinePick": "Tampa Bay Rays",
+          "pickSide": "home",
+          "initialBestOdds": 1.78,
+          "currentBestOdds": 1.87,
+          "oddsChangeRate": 0.0506,
+          "initialMarketProbability": 56,
+          "currentMarketProbability": 53,
+          "marketProbabilityChangePp": -3,
+          "initialValueEdge": 6.7,
+          "currentValueEdge": 10,
+          "modelProbabilityUnchanged": 63,
+          "oddsMove": "ADVERSE_MOVE",
+          "pitcherDirection": "MIXED",
+          "confidence": 57,
+          "dataAvailability": 0.9,
+          "missingData": [
+            "선발투수"
+          ],
+          "matchStatus": "matched",
+          "matchConfidence": 0.9,
+          "candidateCount": 1,
+          "bookmakerCount": 23,
+          "dataQuality": "complete",
+          "fetchedAt": "2026-07-26T14:35:46.236Z",
+          "classification": "HOLD",
+          "classificationReasons": [
+            "투수 방향 MIXED",
+            "ADVERSE_MOVE (시장 확률 2%p+ 하락)",
+            "핵심 데이터 여전히 누락"
+          ],
+          "recheck": {
+            "hoursUntilStart": 1.7,
+            "recommendedRecheckAtKst": "2026-07-26 23:35 KST",
+            "urgency": "immediate",
+            "message": "2시간 미만 — 즉시 재확인 필요"
+          },
+          "note": "최종 베팅 확정이 아니다. 모델 확률·Baseline pick·Confidence는 변경하지 않았다. 투수 방향은 내부 연구 경고로만 사용한다."
+        },
+        {
+          "gameId": "mlb-179597",
+          "match": "Los Angeles Dodgers @ New York Mets",
+          "startTimeKst": "02:40",
+          "commenceTimeUtc": "2026-07-26T17:41:00Z",
+          "baselinePick": "Los Angeles Dodgers",
+          "pickSide": "away",
+          "initialBestOdds": 1.69,
+          "currentBestOdds": 1.67,
+          "oddsChangeRate": -0.0118,
+          "initialMarketProbability": 59,
+          "currentMarketProbability": 60,
+          "marketProbabilityChangePp": 1,
+          "initialValueEdge": 5.2,
+          "currentValueEdge": 4,
+          "modelProbabilityUnchanged": 64,
+          "oddsMove": "NEUTRAL_MOVE",
+          "pitcherDirection": "MIXED",
+          "confidence": 53,
+          "dataAvailability": 0.9,
+          "missingData": [
+            "선발투수"
+          ],
+          "matchStatus": "matched",
+          "matchConfidence": 0.9,
+          "candidateCount": 1,
+          "bookmakerCount": 22,
+          "dataQuality": "complete",
+          "fetchedAt": "2026-07-26T14:35:46.236Z",
+          "classification": "HOLD",
+          "classificationReasons": [
+            "투수 방향 MIXED",
+            "핵심 데이터 여전히 누락"
+          ],
+          "recheck": {
+            "hoursUntilStart": 3.1,
+            "recommendedRecheckAtKst": "2026-07-27 01:10 KST",
+            "urgency": "before-90m",
+            "message": "경기 90분 전 재확인"
+          },
+          "note": "최종 베팅 확정이 아니다. 모델 확률·Baseline pick·Confidence는 변경하지 않았다. 투수 방향은 내부 연구 경고로만 사용한다."
+        },
+        {
+          "gameId": "mlb-179601",
+          "match": "Houston Astros @ Chicago White Sox",
+          "startTimeKst": "03:10",
+          "commenceTimeUtc": "2026-07-26T18:11:00Z",
+          "baselinePick": "Houston Astros",
+          "pickSide": "away",
+          "initialBestOdds": 2,
+          "currentBestOdds": 2,
+          "oddsChangeRate": 0,
+          "initialMarketProbability": 49,
+          "currentMarketProbability": 50,
+          "marketProbabilityChangePp": 1,
+          "initialValueEdge": 13.2,
+          "currentValueEdge": 13,
+          "modelProbabilityUnchanged": 63,
+          "oddsMove": "NEUTRAL_MOVE",
+          "pitcherDirection": "MIXED",
+          "confidence": 49,
+          "dataAvailability": 0.9,
+          "missingData": [
+            "선발투수"
+          ],
+          "matchStatus": "matched",
+          "matchConfidence": 0.9,
+          "candidateCount": 1,
+          "bookmakerCount": 23,
+          "dataQuality": "complete",
+          "fetchedAt": "2026-07-26T14:35:46.236Z",
+          "classification": "HOLD",
+          "classificationReasons": [
+            "투수 방향 MIXED",
+            "Confidence < 50 (49)",
+            "핵심 데이터 여전히 누락"
+          ],
+          "recheck": {
+            "hoursUntilStart": 3.6,
+            "recommendedRecheckAtKst": "2026-07-27 01:40 KST",
+            "urgency": "before-90m",
+            "message": "경기 90분 전 재확인"
+          },
+          "note": "최종 베팅 확정이 아니다. 모델 확률·Baseline pick·Confidence는 변경하지 않았다. 투수 방향은 내부 연구 경고로만 사용한다."
+        }
+      ],
+      "apiUsage": {
+        "sportKey": "baseball_mlb",
+        "sportTitle": "MLB",
+        "sportsListCached": true,
+        "oddsCached": false,
+        "requestsRemaining": 270,
+        "requestsUsed": 230,
+        "requestsLast": 1
+      }
+    }
+  ]
+}

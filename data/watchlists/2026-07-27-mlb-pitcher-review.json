@@ -1,0 +1,562 @@
+{
+  "meta": {
+    "version": "mlb-pitcher-review-v1",
+    "generatedAt": "2026-07-26T14:31:03.214Z",
+    "targetDateKst": "2026-07-27",
+    "kind": "pitcher-baseline-direction-review",
+    "recommendation": false,
+    "bettingConfirmation": false,
+    "engineRerun": false,
+    "baselinePickChanged": false,
+    "weightsChanged": false,
+    "valueEdgeRecalculated": false,
+    "sportsDataIoUsed": false,
+    "mlbComHtmlCrawled": false,
+    "inputs": {
+      "watchlist": "data/watchlists/2026-07-27-mlb.json",
+      "pitcherCoverage": "data/daily-tests/2026-07-27-mlb-pitcher-stat-coverage.json",
+      "bettingLineFilter": "data/daily-tests/2026-07-27-mlb-betting-line-filter.json"
+    },
+    "legalUse": {
+      "mlbStatsApiCommercialUse": "미확인",
+      "scope": "개인 시제품 내부 연구 리포트 전용",
+      "runtimeConnected": false,
+      "publicUiConnected": false,
+      "paidServiceConnected": false,
+      "rawResponseRedistribution": false,
+      "derivativeOnly": true,
+      "note": "MLB Stats API 데이터는 상업 이용 권한이 미확인이다. 사이트 런타임·공개 UI·유료 서비스에 연결하지 않는다. 원본 응답을 재배포하지 않으며 최소 파생값만 로컬 JSON에 저장한다."
+    },
+    "rules": {
+      "eraEvenGap": 0.3,
+      "whipEvenGap": 0.05,
+      "recentEraEvenGap": 0.5,
+      "directionDecidedBy": [
+        "ERA",
+        "WHIP"
+      ],
+      "recentFormRole": "auxiliary-only",
+      "noWeightedScore": true
+    },
+    "deterministic": true,
+    "note": "선발투수 성적을 Baseline 방향과만 비교한다. 투수 때문에 이긴다고 표현하지 않으며 확정 라인이 아니다."
+  },
+  "summary": {
+    "totalWatchlistGames": 5,
+    "pitcherMatched": 5,
+    "SUPPORTS_BASELINE": 0,
+    "CONFLICTS_BASELINE": 1,
+    "MIXED": 4,
+    "INSUFFICIENT": 0,
+    "sameDirectionGames": [],
+    "conflictGames": [
+      {
+        "gameId": "mlb-179589",
+        "match": "New York Yankees @ Philadelphia Phillies",
+        "baselinePick": "New York Yankees",
+        "eraLean": "HOME",
+        "whipLean": "HOME",
+        "eraDiff": 1.35,
+        "whipDiff": 0.18
+      }
+    ],
+    "mixedGames": [
+      {
+        "gameId": "mlb-179599",
+        "match": "San Diego Padres @ Miami Marlins",
+        "baselinePick": "San Diego Padres",
+        "eraLean": "EVEN",
+        "whipLean": "HOME"
+      },
+      {
+        "gameId": "mlb-179592",
+        "match": "Cleveland Guardians @ Tampa Bay Rays",
+        "baselinePick": "Tampa Bay Rays",
+        "eraLean": "AWAY",
+        "whipLean": "HOME"
+      },
+      {
+        "gameId": "mlb-179597",
+        "match": "Los Angeles Dodgers @ New York Mets",
+        "baselinePick": "Los Angeles Dodgers",
+        "eraLean": "EVEN",
+        "whipLean": "AWAY"
+      },
+      {
+        "gameId": "mlb-179601",
+        "match": "Houston Astros @ Chicago White Sox",
+        "baselinePick": "Houston Astros",
+        "eraLean": "HOME",
+        "whipLean": "AWAY"
+      }
+    ],
+    "insufficientGames": [],
+    "biggestConflict": {
+      "gameId": "mlb-179589",
+      "match": "New York Yankees @ Philadelphia Phillies",
+      "baselinePick": "New York Yankees",
+      "eraDiff": 1.35,
+      "whipDiff": 0.18,
+      "eraLean": "HOME",
+      "whipLean": "HOME"
+    },
+    "cannotConfirmAsLine": "선발·라인업·부상·순위가 Engine에 반영되지 않은 Baseline 관찰이며, 투수 비교는 방향 충돌 여부만 본다. 모델 수치를 변경하지 않았고 확정 베팅 라인으로 사용할 수 없다. MLB Stats API 상업 이용도 미확인이다."
+  },
+  "games": [
+    {
+      "gameId": "mlb-179589",
+      "match": "New York Yankees @ Philadelphia Phillies",
+      "startTimeKst": "08:20",
+      "baselinePick": "New York Yankees",
+      "baselineSide": "away",
+      "existingClassification": "REVIEW_PRIORITY",
+      "baselineOdds": 2.58,
+      "valueEdge": 22.5,
+      "edgeScore": -11.4,
+      "confidence": 51,
+      "pitcherMatched": true,
+      "homePitcher": {
+        "name": "Cristopher Sánchez",
+        "throws": "L",
+        "seasonEra": 2.65,
+        "seasonWhip": 1.19,
+        "seasonIp": 132.7,
+        "gamesStarted": 21,
+        "strikeOuts": 151,
+        "baseOnBalls": 25,
+        "homeRuns": 12,
+        "lastOutingDate": "2026-07-20",
+        "recent3Era": 7.47,
+        "recent3Whip": 1.98,
+        "recent3Sample": 3,
+        "cutoffTime": "2026-07-26T23:20:00Z",
+        "sampleSize": 21,
+        "inningsNote": "투구 능력 점수가 아니라 표본 안정성 참고"
+      },
+      "awayPitcher": {
+        "name": "Will Warren",
+        "throws": "R",
+        "seasonEra": 4,
+        "seasonWhip": 1.37,
+        "seasonIp": 99,
+        "gamesStarted": 19,
+        "strikeOuts": 97,
+        "baseOnBalls": 34,
+        "homeRuns": 14,
+        "lastOutingDate": "2026-07-22",
+        "recent3Era": 5.65,
+        "recent3Whip": 1.4,
+        "recent3Sample": 3,
+        "cutoffTime": "2026-07-26T23:20:00Z",
+        "sampleSize": 19,
+        "inningsNote": "투구 능력 점수가 아니라 표본 안정성 참고"
+      },
+      "comparisons": {
+        "era": {
+          "lean": "HOME",
+          "home": 2.65,
+          "away": 4,
+          "diff": 1.35,
+          "rule": "낮은 쪽 우세, 차이 0.3 미만 EVEN"
+        },
+        "whip": {
+          "lean": "HOME",
+          "home": 1.19,
+          "away": 1.37,
+          "diff": 0.18,
+          "rule": "낮은 쪽 우세, 차이 0.05 미만 EVEN"
+        },
+        "recentForm": {
+          "lean": "AWAY",
+          "homeEra": 7.47,
+          "awayEra": 5.65,
+          "homeWhip": 1.98,
+          "awayWhip": 1.4,
+          "recentWhipEvenGap": 0.1,
+          "note": "보조 설명만. SUPPORT/CONFLICT 단독 결정 금지."
+        },
+        "innings": {
+          "home": 132.7,
+          "away": 99,
+          "note": "표본 안정성 참고. 투구 능력 점수·우세 판정 금지."
+        }
+      },
+      "direction": "CONFLICTS_BASELINE",
+      "warnings": [
+        "MLB_STATSAPI_COMMERCIAL_USE_UNVERIFIED",
+        "INTERNAL_RESEARCH_ONLY",
+        "NOT_A_BETTING_CONFIRMATION",
+        "BASELINE_PICK_UNCHANGED",
+        "NO_ENGINE_RERUN",
+        "API_BASEBALL_PLAYERS_ENDPOINT_NOT_SUPPORTED",
+        "PITCHER_METRICS_CONFLICT_BASELINE_PICK_NOT_CHANGED"
+      ],
+      "recheckRequiredBeforePitch": true,
+      "note": "투수 비교는 관찰용이다. Baseline pick·모델 승률·EDGE Score·Confidence·Value Edge를 변경하지 않았다. 확정 베팅 라인이 아니다."
+    },
+    {
+      "gameId": "mlb-179599",
+      "match": "San Diego Padres @ Miami Marlins",
+      "startTimeKst": "02:40",
+      "baselinePick": "San Diego Padres",
+      "baselineSide": "away",
+      "existingClassification": "REVIEW_PRIORITY",
+      "baselineOdds": 2.16,
+      "valueEdge": 16.6,
+      "edgeScore": -12.4,
+      "confidence": 52,
+      "pitcherMatched": true,
+      "homePitcher": {
+        "name": "Janson Junk",
+        "throws": "R",
+        "seasonEra": 5.09,
+        "seasonWhip": 1.35,
+        "seasonIp": 69,
+        "gamesStarted": 13,
+        "strikeOuts": 51,
+        "baseOnBalls": 20,
+        "homeRuns": 11,
+        "lastOutingDate": "2026-07-20",
+        "recent3Era": 5.14,
+        "recent3Whip": 1.64,
+        "recent3Sample": 3,
+        "cutoffTime": "2026-07-26T17:40:00Z",
+        "sampleSize": 13,
+        "inningsNote": "투구 능력 점수가 아니라 표본 안정성 참고"
+      },
+      "awayPitcher": {
+        "name": "Walker Buehler",
+        "throws": "R",
+        "seasonEra": 5.23,
+        "seasonWhip": 1.43,
+        "seasonIp": 94.7,
+        "gamesStarted": 20,
+        "strikeOuts": 84,
+        "baseOnBalls": 40,
+        "homeRuns": 12,
+        "lastOutingDate": "2026-07-21",
+        "recent3Era": 9.24,
+        "recent3Whip": 1.74,
+        "recent3Sample": 3,
+        "cutoffTime": "2026-07-26T17:40:00Z",
+        "sampleSize": 20,
+        "inningsNote": "투구 능력 점수가 아니라 표본 안정성 참고"
+      },
+      "comparisons": {
+        "era": {
+          "lean": "EVEN",
+          "home": 5.09,
+          "away": 5.23,
+          "diff": 0.14,
+          "rule": "낮은 쪽 우세, 차이 0.3 미만 EVEN"
+        },
+        "whip": {
+          "lean": "HOME",
+          "home": 1.35,
+          "away": 1.43,
+          "diff": 0.08,
+          "rule": "낮은 쪽 우세, 차이 0.05 미만 EVEN"
+        },
+        "recentForm": {
+          "lean": "HOME",
+          "homeEra": 5.14,
+          "awayEra": 9.24,
+          "homeWhip": 1.64,
+          "awayWhip": 1.74,
+          "recentWhipEvenGap": 0.1,
+          "note": "보조 설명만. SUPPORT/CONFLICT 단독 결정 금지."
+        },
+        "innings": {
+          "home": 69,
+          "away": 94.7,
+          "note": "표본 안정성 참고. 투구 능력 점수·우세 판정 금지."
+        }
+      },
+      "direction": "MIXED",
+      "warnings": [
+        "MLB_STATSAPI_COMMERCIAL_USE_UNVERIFIED",
+        "INTERNAL_RESEARCH_ONLY",
+        "NOT_A_BETTING_CONFIRMATION",
+        "BASELINE_PICK_UNCHANGED",
+        "NO_ENGINE_RERUN",
+        "API_BASEBALL_PLAYERS_ENDPOINT_NOT_SUPPORTED",
+        "PITCHER_METRICS_MIXED"
+      ],
+      "recheckRequiredBeforePitch": true,
+      "note": "투수 비교는 관찰용이다. Baseline pick·모델 승률·EDGE Score·Confidence·Value Edge를 변경하지 않았다. 확정 베팅 라인이 아니다."
+    },
+    {
+      "gameId": "mlb-179592",
+      "match": "Cleveland Guardians @ Tampa Bay Rays",
+      "startTimeKst": "01:15",
+      "baselinePick": "Tampa Bay Rays",
+      "baselineSide": "home",
+      "existingClassification": "REVIEW_PRIORITY",
+      "baselineOdds": 1.78,
+      "valueEdge": 6.7,
+      "edgeScore": 12.6,
+      "confidence": 57,
+      "pitcherMatched": true,
+      "homePitcher": {
+        "name": "Drew Rasmussen",
+        "throws": "R",
+        "seasonEra": 3.28,
+        "seasonWhip": 0.98,
+        "seasonIp": 104.3,
+        "gamesStarted": 19,
+        "strikeOuts": 103,
+        "baseOnBalls": 18,
+        "homeRuns": 12,
+        "lastOutingDate": "2026-07-21",
+        "recent3Era": 9.49,
+        "recent3Whip": 1.78,
+        "recent3Sample": 3,
+        "cutoffTime": "2026-07-26T16:15:00Z",
+        "sampleSize": 19,
+        "inningsNote": "투구 능력 점수가 아니라 표본 안정성 참고"
+      },
+      "awayPitcher": {
+        "name": "Parker Messick",
+        "throws": "L",
+        "seasonEra": 2.68,
+        "seasonWhip": 1.05,
+        "seasonIp": 117.7,
+        "gamesStarted": 20,
+        "strikeOuts": 116,
+        "baseOnBalls": 36,
+        "homeRuns": 11,
+        "lastOutingDate": "2026-07-21",
+        "recent3Era": 1.62,
+        "recent3Whip": 1.02,
+        "recent3Sample": 3,
+        "cutoffTime": "2026-07-26T16:15:00Z",
+        "sampleSize": 20,
+        "inningsNote": "투구 능력 점수가 아니라 표본 안정성 참고"
+      },
+      "comparisons": {
+        "era": {
+          "lean": "AWAY",
+          "home": 3.28,
+          "away": 2.68,
+          "diff": 0.6,
+          "rule": "낮은 쪽 우세, 차이 0.3 미만 EVEN"
+        },
+        "whip": {
+          "lean": "HOME",
+          "home": 0.98,
+          "away": 1.05,
+          "diff": 0.07,
+          "rule": "낮은 쪽 우세, 차이 0.05 미만 EVEN"
+        },
+        "recentForm": {
+          "lean": "AWAY",
+          "homeEra": 9.49,
+          "awayEra": 1.62,
+          "homeWhip": 1.78,
+          "awayWhip": 1.02,
+          "recentWhipEvenGap": 0.1,
+          "note": "보조 설명만. SUPPORT/CONFLICT 단독 결정 금지."
+        },
+        "innings": {
+          "home": 104.3,
+          "away": 117.7,
+          "note": "표본 안정성 참고. 투구 능력 점수·우세 판정 금지."
+        }
+      },
+      "direction": "MIXED",
+      "warnings": [
+        "MLB_STATSAPI_COMMERCIAL_USE_UNVERIFIED",
+        "INTERNAL_RESEARCH_ONLY",
+        "NOT_A_BETTING_CONFIRMATION",
+        "BASELINE_PICK_UNCHANGED",
+        "NO_ENGINE_RERUN",
+        "API_BASEBALL_PLAYERS_ENDPOINT_NOT_SUPPORTED",
+        "PITCHER_METRICS_MIXED"
+      ],
+      "recheckRequiredBeforePitch": true,
+      "note": "투수 비교는 관찰용이다. Baseline pick·모델 승률·EDGE Score·Confidence·Value Edge를 변경하지 않았다. 확정 베팅 라인이 아니다."
+    },
+    {
+      "gameId": "mlb-179597",
+      "match": "Los Angeles Dodgers @ New York Mets",
+      "startTimeKst": "02:40",
+      "baselinePick": "Los Angeles Dodgers",
+      "baselineSide": "away",
+      "existingClassification": "REVIEW_PRIORITY",
+      "baselineOdds": 1.69,
+      "valueEdge": 5.2,
+      "edgeScore": -14.1,
+      "confidence": 53,
+      "pitcherMatched": true,
+      "homePitcher": {
+        "name": "Freddy Peralta",
+        "throws": "R",
+        "seasonEra": 5.01,
+        "seasonWhip": 1.46,
+        "seasonIp": 109.7,
+        "gamesStarted": 21,
+        "strikeOuts": 110,
+        "baseOnBalls": 46,
+        "homeRuns": 17,
+        "lastOutingDate": "2026-07-20",
+        "recent3Era": 6.28,
+        "recent3Whip": 1.74,
+        "recent3Sample": 3,
+        "cutoffTime": "2026-07-26T17:40:00Z",
+        "sampleSize": 21,
+        "inningsNote": "투구 능력 점수가 아니라 표본 안정성 참고"
+      },
+      "awayPitcher": {
+        "name": "Emmet Sheehan",
+        "throws": "R",
+        "seasonEra": 5.13,
+        "seasonWhip": 1.27,
+        "seasonIp": 87.7,
+        "gamesStarted": 18,
+        "strikeOuts": 99,
+        "baseOnBalls": 27,
+        "homeRuns": 17,
+        "lastOutingDate": "2026-07-20",
+        "recent3Era": 5.4,
+        "recent3Whip": 1.27,
+        "recent3Sample": 3,
+        "cutoffTime": "2026-07-26T17:40:00Z",
+        "sampleSize": 18,
+        "inningsNote": "투구 능력 점수가 아니라 표본 안정성 참고"
+      },
+      "comparisons": {
+        "era": {
+          "lean": "EVEN",
+          "home": 5.01,
+          "away": 5.13,
+          "diff": 0.12,
+          "rule": "낮은 쪽 우세, 차이 0.3 미만 EVEN"
+        },
+        "whip": {
+          "lean": "AWAY",
+          "home": 1.46,
+          "away": 1.27,
+          "diff": 0.19,
+          "rule": "낮은 쪽 우세, 차이 0.05 미만 EVEN"
+        },
+        "recentForm": {
+          "lean": "AWAY",
+          "homeEra": 6.28,
+          "awayEra": 5.4,
+          "homeWhip": 1.74,
+          "awayWhip": 1.27,
+          "recentWhipEvenGap": 0.1,
+          "note": "보조 설명만. SUPPORT/CONFLICT 단독 결정 금지."
+        },
+        "innings": {
+          "home": 109.7,
+          "away": 87.7,
+          "note": "표본 안정성 참고. 투구 능력 점수·우세 판정 금지."
+        }
+      },
+      "direction": "MIXED",
+      "warnings": [
+        "MLB_STATSAPI_COMMERCIAL_USE_UNVERIFIED",
+        "INTERNAL_RESEARCH_ONLY",
+        "NOT_A_BETTING_CONFIRMATION",
+        "BASELINE_PICK_UNCHANGED",
+        "NO_ENGINE_RERUN",
+        "API_BASEBALL_PLAYERS_ENDPOINT_NOT_SUPPORTED",
+        "PITCHER_METRICS_MIXED"
+      ],
+      "recheckRequiredBeforePitch": true,
+      "note": "투수 비교는 관찰용이다. Baseline pick·모델 승률·EDGE Score·Confidence·Value Edge를 변경하지 않았다. 확정 베팅 라인이 아니다."
+    },
+    {
+      "gameId": "mlb-179601",
+      "match": "Houston Astros @ Chicago White Sox",
+      "startTimeKst": "03:10",
+      "baselinePick": "Houston Astros",
+      "baselineSide": "away",
+      "existingClassification": "REVIEW_SECONDARY",
+      "baselineOdds": 2,
+      "valueEdge": 13.2,
+      "edgeScore": -12.5,
+      "confidence": 49,
+      "pitcherMatched": true,
+      "homePitcher": {
+        "name": "Erick Fedde",
+        "throws": "R",
+        "seasonEra": 4.16,
+        "seasonWhip": 1.4,
+        "seasonIp": 93,
+        "gamesStarted": 10,
+        "strikeOuts": 66,
+        "baseOnBalls": 35,
+        "homeRuns": 16,
+        "lastOutingDate": "2026-07-20",
+        "recent3Era": 3.21,
+        "recent3Whip": 1.07,
+        "recent3Sample": 3,
+        "cutoffTime": "2026-07-26T18:10:00Z",
+        "sampleSize": 10,
+        "inningsNote": "투구 능력 점수가 아니라 표본 안정성 참고"
+      },
+      "awayPitcher": {
+        "name": "Ronel Blanco",
+        "throws": "R",
+        "seasonEra": 7.71,
+        "seasonWhip": 1.07,
+        "seasonIp": 4.7,
+        "gamesStarted": 1,
+        "strikeOuts": 8,
+        "baseOnBalls": 3,
+        "homeRuns": 2,
+        "lastOutingDate": "2026-07-20",
+        "recent3Era": 7.71,
+        "recent3Whip": 1.07,
+        "recent3Sample": 1,
+        "cutoffTime": "2026-07-26T18:10:00Z",
+        "sampleSize": 1,
+        "inningsNote": "투구 능력 점수가 아니라 표본 안정성 참고"
+      },
+      "comparisons": {
+        "era": {
+          "lean": "HOME",
+          "home": 4.16,
+          "away": 7.71,
+          "diff": 3.55,
+          "rule": "낮은 쪽 우세, 차이 0.3 미만 EVEN"
+        },
+        "whip": {
+          "lean": "AWAY",
+          "home": 1.4,
+          "away": 1.07,
+          "diff": 0.33,
+          "rule": "낮은 쪽 우세, 차이 0.05 미만 EVEN"
+        },
+        "recentForm": {
+          "lean": "HOME",
+          "homeEra": 3.21,
+          "awayEra": 7.71,
+          "homeWhip": 1.07,
+          "awayWhip": 1.07,
+          "recentWhipEvenGap": 0.1,
+          "note": "보조 설명만. SUPPORT/CONFLICT 단독 결정 금지."
+        },
+        "innings": {
+          "home": 93,
+          "away": 4.7,
+          "note": "표본 안정성 참고. 투구 능력 점수·우세 판정 금지."
+        }
+      },
+      "direction": "MIXED",
+      "warnings": [
+        "MLB_STATSAPI_COMMERCIAL_USE_UNVERIFIED",
+        "INTERNAL_RESEARCH_ONLY",
+        "NOT_A_BETTING_CONFIRMATION",
+        "BASELINE_PICK_UNCHANGED",
+        "NO_ENGINE_RERUN",
+        "API_BASEBALL_PLAYERS_ENDPOINT_NOT_SUPPORTED",
+        "PITCHER_METRICS_MIXED"
+      ],
+      "recheckRequiredBeforePitch": true,
+      "note": "투수 비교는 관찰용이다. Baseline pick·모델 승률·EDGE Score·Confidence·Value Edge를 변경하지 않았다. 확정 베팅 라인이 아니다."
+    }
+  ]
+}

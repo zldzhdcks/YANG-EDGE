@@ -22,8 +22,17 @@ import {
   type OddsUsageMeta,
 } from "../src/lib/odds";
 
-const TARGET_DATE_KST = "2026-07-27";
-const NEXT_DATE = "2026-07-28";
+function nextKstDate(dateKst: string): string {
+  const ms = Date.parse(`${dateKst}T12:00:00+09:00`) + 24 * 60 * 60 * 1000;
+  const kst = instantToKst(new Date(ms));
+  if (!kst) throw new Error(`nextKstDate 실패: ${dateKst}`);
+  return kst.date;
+}
+
+const TARGET_DATE_KST = (
+  process.env.MLB_TARGET_DATE_KST ?? "2026-07-27"
+).trim();
+const NEXT_DATE = nextKstDate(TARGET_DATE_KST);
 const TARGET_DAY_START_MS = Date.parse(`${TARGET_DATE_KST}T00:00:00+09:00`);
 const TARGET_DAY_END_MS = Date.parse(`${NEXT_DATE}T00:00:00+09:00`);
 const OUTPUT_PATH = path.join(

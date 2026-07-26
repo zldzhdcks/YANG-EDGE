@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "version": "mlb-daily-baseline-v1",
+    "generatedAt": "2026-07-26T14:56:46.316Z",
+    "targetDateKst": "2026-07-28",
+    "engineWeightsChanged": false,
+    "sportsDataIoUsed": false,
+    "mlbStatsApiInEngine": false,
+    "predictionSnapshotSaved": false,
+    "deterministic": true
+  },
+  "counts": {
+    "totalGames": 12,
+    "BASELINE_CANDIDATE": 1,
+    "PASS": 11,
+    "INSUFFICIENT_DATA": 0,
+    "DAILY_HIGH": 0,
+    "DAILY_MEDIUM": 0,
+    "DAILY_WATCH": 0,
+    "DAILY_DROP": 12
+  },
+  "earliestFinalDecisionKst": null,
+  "previousDay2250Candidates": [],
+  "morningRecheckCandidates": [],
+  "commonMissingFactors": [
+    "선발투수"
+  ],
+  "notUsableAsBettingLineReason": "선발투수·라인업·부상·순위가 Engine에 미반영인 Baseline이다. 확정 추천·베팅 라인이 아니며 재확인이 필요하다.",
+  "apiUsage": {
+    "coverage": null,
+    "coverageMeta": {
+      "version": "mlb-analysis-coverage-v1",
+      "generatedAt": "2026-07-26T14:56:43.246Z",
+      "targetDateKst": "2026-07-28",
+      "rules": {
+        "apiBaseballOnlyForAnalysisValues": true,
+        "sportsDataIoValuesUsed": false,
+        "sportsDataIoReason": "Trial response marked Scrambled",
+        "oddsUsedForMarketOnly": true,
+        "missingValuesImputed": false
+      },
+      "dataAvailabilityDenominator": {
+        "factors": [
+          "recentForm",
+          "homeAway",
+          "scoring",
+          "defense",
+          "leagueStanding",
+          "headToHead",
+          "rest",
+          "injuries",
+          "streak",
+          "startingPitcher"
+        ],
+        "count": 10,
+        "note": "실제 가용한 EDGE factor 그룹만 계산. SportsDataIO Trial 값 제외."
+      }
+    },
+    "baselineDeterministic": true,
+    "filterDeterministic": true
+  },
+  "observeCandidates": []
+}

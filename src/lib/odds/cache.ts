@@ -30,4 +30,9 @@ export function setCachedOdds<T>(
   store.set(key, { value, expiresAt: Date.now() + ttlMs });
 }
 
+/** timeline 등 최신 조회가 필요한 스크립트용 — 키 단위 캐시 무효화 */
+export function deleteCachedOdds(key: string): void {
+  store.delete(key);
+}
+
 export const ODDS_CACHE_TTL_MS = DEFAULT_TTL_MS;

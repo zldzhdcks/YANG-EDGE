@@ -14,7 +14,9 @@ import {
   type BettingLineFilterResult,
 } from "../src/lib/mlb/betting-line-filter";
 
-const TARGET_DATE_KST = "2026-07-27";
+const TARGET_DATE_KST = (
+  process.env.MLB_TARGET_DATE_KST ?? "2026-07-27"
+).trim();
 const BASELINE_PATH = path.join(
   process.cwd(),
   "data",
@@ -214,7 +216,46 @@ async function main() {
     (row) => row.analysisStatus === "BASELINE_CANDIDATE",
   );
   if (candidates.length === 0) {
-    throw new Error("BASELINE_CANDIDATE 없음");
+    console.log("BASELINE_CANDIDATE 없음 — 빈 필터 결과 저장");
+    const emptyOutput = {
+      meta: {
+        version: "mlb-betting-line-filter-v1",
+        generatedAt: new Date().toISOString(),
+        targetDateKst: TARGET_DATE_KST,
+        inputBaseline: path.relative(process.cwd(), BASELINE_PATH),
+        inputCoverage: path.relative(process.cwd(), COVERAGE_PATH),
+        singlesOnly: true,
+        parlaysBuilt: false,
+        predictionSnapshotSaved: false,
+        uiConnected: false,
+        confidenceAutoReject: false,
+        note: "BASELINE_CANDIDATE 없음",
+      },
+      summary: {
+        totalBaselineCandidates: 0,
+        counts: {
+          REVIEW_PRIORITY: 0,
+          REVIEW_SECONDARY: 0,
+          MARKET_CONFLICT: 0,
+          INSUFFICIENT: 0,
+        },
+        deterministic: true,
+        reviewTargets: [],
+        marketConflicts: [],
+        topValueEdge: [],
+        cannotConfirmBeforePitchers:
+          "BASELINE_CANDIDATE가 없어 단폴 관찰 라인을 만들지 않았다.",
+      },
+      lines: [],
+    };
+    await mkdir(path.dirname(OUTPUT_PATH), { recursive: true });
+    await writeFile(
+      OUTPUT_PATH,
+      `${JSON.stringify(emptyOutput, null, 2)}\n`,
+      "utf8",
+    );
+    console.log(`저장: ${path.relative(process.cwd(), OUTPUT_PATH)}`);
+    return;
   }
 
   const gamesById = new Map(

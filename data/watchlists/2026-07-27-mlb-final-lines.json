@@ -1,0 +1,742 @@
+{
+  "meta": {
+    "version": "mlb-final-lines-v1",
+    "generatedAt": "2026-07-26T14:39:40.522Z",
+    "targetDateKst": "2026-07-27",
+    "kind": "mlb-final-observation-lines",
+    "finalBettingConfirmation": false,
+    "engineRerun": false,
+    "baselinePickChanged": false,
+    "modelProbabilityChanged": false,
+    "weightsChanged": false,
+    "confidenceChanged": false,
+    "parlaysBuilt": false,
+    "predictionSnapshotSaved": false,
+    "sportsDataIoUsed": false,
+    "mlbComHtmlCrawled": false,
+    "inputs": {
+      "lineRecheck": "data/watchlists/2026-07-27-mlb-line-recheck.json",
+      "pitcherReview": "data/watchlists/2026-07-27-mlb-pitcher-review.json",
+      "watchlist": "data/watchlists/2026-07-27-mlb.json"
+    },
+    "legalUse": {
+      "oddsSource": "The Odds API (정식 구독)",
+      "pitcherLineupSource": "MLB Stats API (내부 연구용만)",
+      "mlbStatsApiCommercialUse": "미확인",
+      "runtimeConnected": false,
+      "publicUiConnected": false,
+      "guaranteeLanguageForbidden": true,
+      "note": "FINAL_OBSERVE는 현재 데이터에서 최종 관찰 가능한 단폴 후보일 뿐이다. 확정 적중·무조건 추천·수익 보장·안전한 베팅이 아니다."
+    },
+    "rules": {
+      "observeMinValueEdge": 5,
+      "adverseDropPp": 5,
+      "classificationPriority": [
+        "FINAL_DROP",
+        "FINAL_HOLD",
+        "FINAL_OBSERVE"
+      ],
+      "singlesOnly": true
+    },
+    "snapshotDeduped": false,
+    "deterministic": true
+  },
+  "apiUsage": {
+    "odds": {
+      "sportKey": "baseball_mlb",
+      "sportTitle": "MLB",
+      "cached": false,
+      "requestsRemaining": 269,
+      "requestsUsed": 231,
+      "requestsLast": 1,
+      "eventsForDate": 15
+    },
+    "mlbStatsApi": {
+      "calls": 9,
+      "cacheEntries": 9,
+      "scheduleDateUs": "2026-07-26",
+      "commercialUse": "미확인 — 내부 연구 전용"
+    }
+  },
+  "summary": {
+    "holdTargets": 4,
+    "yankeesDropCarried": 1,
+    "FINAL_OBSERVE": 0,
+    "FINAL_HOLD": 4,
+    "FINAL_DROP": 1,
+    "observeGames": [],
+    "holdGames": [
+      {
+        "gameId": "mlb-179592",
+        "match": "Cleveland Guardians @ Tampa Bay Rays",
+        "reasons": [
+          "투수 방향 MIXED",
+          "최근 배당 불리 이동",
+          "핵심 정보 누락"
+        ]
+      },
+      {
+        "gameId": "mlb-179597",
+        "match": "Los Angeles Dodgers @ New York Mets",
+        "reasons": [
+          "투수 방향 MIXED",
+          "라인업 LINEUP_PARTIAL",
+          "핵심 정보 누락"
+        ]
+      },
+      {
+        "gameId": "mlb-179599",
+        "match": "San Diego Padres @ Miami Marlins",
+        "reasons": [
+          "투수 방향 MIXED",
+          "라인업 LINEUP_PARTIAL",
+          "핵심 정보 누락"
+        ]
+      },
+      {
+        "gameId": "mlb-179601",
+        "match": "Houston Astros @ Chicago White Sox",
+        "reasons": [
+          "투수 방향 MIXED",
+          "라인업 LINEUP_NOT_PUBLISHED",
+          "Confidence < 50 (49)",
+          "핵심 정보 누락"
+        ]
+      }
+    ],
+    "dropGames": [
+      {
+        "gameId": "mlb-179589",
+        "match": "New York Yankees @ Philadelphia Phillies",
+        "reasons": [
+          "이전 line-recheck DROP 유지 (투수 CONFLICTS_BASELINE)",
+          "HOLD 재조회 대상 아님"
+        ],
+        "carriedForward": true
+      }
+    ],
+    "emptyObserveMessage": "오늘은 조건을 충족한 MLB 라인이 없습니다.",
+    "parlaysBuilt": false,
+    "predictionSnapshotSaved": false
+  },
+  "games": [
+    {
+      "gameId": "mlb-179589",
+      "match": "New York Yankees @ Philadelphia Phillies",
+      "baselinePick": "New York Yankees",
+      "sourceClassification": "DROP",
+      "carriedForward": true,
+      "latestBestOdds": null,
+      "latestMarketProbability": null,
+      "currentValueEdge": null,
+      "modelProbabilityUnchanged": 61,
+      "initialBestOdds": 2.58,
+      "initialMarketProbability": 39,
+      "marketProbabilityChangePp": null,
+      "oddsMoveNote": null,
+      "pitcherDirection": "CONFLICTS_BASELINE",
+      "starterStatus": "STARTER_UNKNOWN",
+      "previousPitchers": {
+        "home": "Cristopher Sánchez",
+        "away": "Will Warren"
+      },
+      "latestPitchers": {
+        "home": null,
+        "away": null
+      },
+      "eraChanged": null,
+      "whipChanged": null,
+      "previousEraWhip": {
+        "homeEra": 2.65,
+        "awayEra": 4,
+        "homeWhip": 1.19,
+        "awayWhip": 1.37
+      },
+      "latestEraWhip": {
+        "homeEra": null,
+        "awayEra": null,
+        "homeWhip": null,
+        "awayWhip": null
+      },
+      "lineupStatus": "LINEUP_NOT_PUBLISHED",
+      "homeLineupCount": null,
+      "awayLineupCount": null,
+      "gameStatus": null,
+      "startTimeChanged": null,
+      "previousCommenceTimeUtc": "2026-07-26T23:21:00Z",
+      "latestCommenceTimeUtc": null,
+      "confidence": 51,
+      "missingData": [
+        "선발투수"
+      ],
+      "matchStatus": null,
+      "dataQuality": null,
+      "classification": "FINAL_DROP",
+      "classificationReasons": [
+        "이전 line-recheck DROP 유지 (투수 CONFLICTS_BASELINE)",
+        "HOLD 재조회 대상 아님"
+      ],
+      "parlaysBuilt": false,
+      "predictionSnapshotSaved": false,
+      "note": "Yankees DROP 상태 유지. 최종 관찰 라인 아님."
+    },
+    {
+      "gameId": "mlb-179592",
+      "match": "Cleveland Guardians @ Tampa Bay Rays",
+      "baselinePick": "Tampa Bay Rays",
+      "sourceClassification": "HOLD",
+      "carriedForward": false,
+      "latestBestOdds": 1.89,
+      "latestMarketProbability": 53,
+      "currentValueEdge": 10,
+      "modelProbabilityUnchanged": 63,
+      "initialBestOdds": 1.78,
+      "initialMarketProbability": 56,
+      "marketProbabilityChangePp": -3,
+      "oddsMoveNote": "ADVERSE_RECENT",
+      "pitcherDirection": "MIXED",
+      "starterStatus": "STARTER_STABLE",
+      "previousPitchers": {
+        "home": "Drew Rasmussen",
+        "away": "Parker Messick"
+      },
+      "latestPitchers": {
+        "home": "Drew Rasmussen",
+        "away": "Parker Messick"
+      },
+      "eraChanged": false,
+      "whipChanged": false,
+      "previousEraWhip": {
+        "homeEra": 3.28,
+        "awayEra": 2.68,
+        "homeWhip": 0.98,
+        "awayWhip": 1.05
+      },
+      "latestEraWhip": {
+        "homeEra": 3.28,
+        "awayEra": 2.68,
+        "homeWhip": 0.98,
+        "awayWhip": 1.05
+      },
+      "lineupStatus": "LINEUP_COMPLETE",
+      "homeLineupCount": 9,
+      "awayLineupCount": 9,
+      "gameStatus": "Pre-Game",
+      "startTimeChanged": false,
+      "previousCommenceTimeUtc": "2026-07-26T16:16:00Z",
+      "latestCommenceTimeUtc": "2026-07-26T16:15:00Z",
+      "confidence": 57,
+      "missingData": [
+        "선발투수"
+      ],
+      "matchStatus": "matched",
+      "dataQuality": "complete",
+      "classification": "FINAL_HOLD",
+      "classificationReasons": [
+        "투수 방향 MIXED",
+        "최근 배당 불리 이동",
+        "핵심 정보 누락"
+      ],
+      "parlaysBuilt": false,
+      "predictionSnapshotSaved": false,
+      "note": "단폴 최종 관찰 분류. 확정 적중·무조건 추천·수익 보장·안전한 베팅이 아니다. 모델 확률·Baseline pick 미변경."
+    },
+    {
+      "gameId": "mlb-179597",
+      "match": "Los Angeles Dodgers @ New York Mets",
+      "baselinePick": "Los Angeles Dodgers",
+      "sourceClassification": "HOLD",
+      "carriedForward": false,
+      "latestBestOdds": 1.67,
+      "latestMarketProbability": 60,
+      "currentValueEdge": 4,
+      "modelProbabilityUnchanged": 64,
+      "initialBestOdds": 1.69,
+      "initialMarketProbability": 59,
+      "marketProbabilityChangePp": 1,
+      "oddsMoveNote": "NEUTRAL",
+      "pitcherDirection": "MIXED",
+      "starterStatus": "STARTER_STABLE",
+      "previousPitchers": {
+        "home": "Freddy Peralta",
+        "away": "Emmet Sheehan"
+      },
+      "latestPitchers": {
+        "home": "Freddy Peralta",
+        "away": "Emmet Sheehan"
+      },
+      "eraChanged": false,
+      "whipChanged": false,
+      "previousEraWhip": {
+        "homeEra": 5.01,
+        "awayEra": 5.13,
+        "homeWhip": 1.46,
+        "awayWhip": 1.27
+      },
+      "latestEraWhip": {
+        "homeEra": 5.01,
+        "awayEra": 5.13,
+        "homeWhip": 1.46,
+        "awayWhip": 1.27
+      },
+      "lineupStatus": "LINEUP_PARTIAL",
+      "homeLineupCount": 0,
+      "awayLineupCount": 9,
+      "gameStatus": "Pre-Game",
+      "startTimeChanged": false,
+      "previousCommenceTimeUtc": "2026-07-26T17:41:00Z",
+      "latestCommenceTimeUtc": "2026-07-26T17:40:00Z",
+      "confidence": 53,
+      "missingData": [
+        "선발투수"
+      ],
+      "matchStatus": "matched",
+      "dataQuality": "complete",
+      "classification": "FINAL_HOLD",
+      "classificationReasons": [
+        "투수 방향 MIXED",
+        "라인업 LINEUP_PARTIAL",
+        "핵심 정보 누락"
+      ],
+      "parlaysBuilt": false,
+      "predictionSnapshotSaved": false,
+      "note": "단폴 최종 관찰 분류. 확정 적중·무조건 추천·수익 보장·안전한 베팅이 아니다. 모델 확률·Baseline pick 미변경."
+    },
+    {
+      "gameId": "mlb-179599",
+      "match": "San Diego Padres @ Miami Marlins",
+      "baselinePick": "San Diego Padres",
+      "sourceClassification": "HOLD",
+      "carriedForward": false,
+      "latestBestOdds": 2.16,
+      "latestMarketProbability": 46,
+      "currentValueEdge": 16,
+      "modelProbabilityUnchanged": 62,
+      "initialBestOdds": 2.16,
+      "initialMarketProbability": 46,
+      "marketProbabilityChangePp": 0,
+      "oddsMoveNote": "NEUTRAL",
+      "pitcherDirection": "MIXED",
+      "starterStatus": "STARTER_STABLE",
+      "previousPitchers": {
+        "home": "Janson Junk",
+        "away": "Walker Buehler"
+      },
+      "latestPitchers": {
+        "home": "Janson Junk",
+        "away": "Walker Buehler"
+      },
+      "eraChanged": false,
+      "whipChanged": false,
+      "previousEraWhip": {
+        "homeEra": 5.09,
+        "awayEra": 5.23,
+        "homeWhip": 1.35,
+        "awayWhip": 1.43
+      },
+      "latestEraWhip": {
+        "homeEra": 5.09,
+        "awayEra": 5.23,
+        "homeWhip": 1.35,
+        "awayWhip": 1.43
+      },
+      "lineupStatus": "LINEUP_PARTIAL",
+      "homeLineupCount": 0,
+      "awayLineupCount": 9,
+      "gameStatus": "Pre-Game",
+      "startTimeChanged": false,
+      "previousCommenceTimeUtc": "2026-07-26T17:41:00Z",
+      "latestCommenceTimeUtc": "2026-07-26T17:40:00Z",
+      "confidence": 52,
+      "missingData": [
+        "선발투수"
+      ],
+      "matchStatus": "matched",
+      "dataQuality": "complete",
+      "classification": "FINAL_HOLD",
+      "classificationReasons": [
+        "투수 방향 MIXED",
+        "라인업 LINEUP_PARTIAL",
+        "핵심 정보 누락"
+      ],
+      "parlaysBuilt": false,
+      "predictionSnapshotSaved": false,
+      "note": "단폴 최종 관찰 분류. 확정 적중·무조건 추천·수익 보장·안전한 베팅이 아니다. 모델 확률·Baseline pick 미변경."
+    },
+    {
+      "gameId": "mlb-179601",
+      "match": "Houston Astros @ Chicago White Sox",
+      "baselinePick": "Houston Astros",
+      "sourceClassification": "HOLD",
+      "carriedForward": false,
+      "latestBestOdds": 2,
+      "latestMarketProbability": 50,
+      "currentValueEdge": 13,
+      "modelProbabilityUnchanged": 63,
+      "initialBestOdds": 2,
+      "initialMarketProbability": 49,
+      "marketProbabilityChangePp": 1,
+      "oddsMoveNote": "NEUTRAL",
+      "pitcherDirection": "MIXED",
+      "starterStatus": "STARTER_STABLE",
+      "previousPitchers": {
+        "home": "Erick Fedde",
+        "away": "Ronel Blanco"
+      },
+      "latestPitchers": {
+        "home": "Erick Fedde",
+        "away": "Ronel Blanco"
+      },
+      "eraChanged": false,
+      "whipChanged": false,
+      "previousEraWhip": {
+        "homeEra": 4.16,
+        "awayEra": 7.71,
+        "homeWhip": 1.4,
+        "awayWhip": 1.07
+      },
+      "latestEraWhip": {
+        "homeEra": 4.16,
+        "awayEra": 7.71,
+        "homeWhip": 1.4,
+        "awayWhip": 1.07
+      },
+      "lineupStatus": "LINEUP_NOT_PUBLISHED",
+      "homeLineupCount": 0,
+      "awayLineupCount": 0,
+      "gameStatus": "Scheduled",
+      "startTimeChanged": false,
+      "previousCommenceTimeUtc": "2026-07-26T18:11:00Z",
+      "latestCommenceTimeUtc": "2026-07-26T18:10:00Z",
+      "confidence": 49,
+      "missingData": [
+        "선발투수"
+      ],
+      "matchStatus": "matched",
+      "dataQuality": "complete",
+      "classification": "FINAL_HOLD",
+      "classificationReasons": [
+        "투수 방향 MIXED",
+        "라인업 LINEUP_NOT_PUBLISHED",
+        "Confidence < 50 (49)",
+        "핵심 정보 누락"
+      ],
+      "parlaysBuilt": false,
+      "predictionSnapshotSaved": false,
+      "note": "단폴 최종 관찰 분류. 확정 적중·무조건 추천·수익 보장·안전한 베팅이 아니다. 모델 확률·Baseline pick 미변경."
+    }
+  ],
+  "history": [
+    {
+      "fetchedAt": "2026-07-26T14:39:40.522Z",
+      "fingerprint": "[{\"gameId\":\"mlb-179589\",\"classification\":\"FINAL_DROP\",\"latestBestOdds\":null,\"currentValueEdge\":null,\"starterStatus\":\"STARTER_UNKNOWN\",\"lineupStatus\":\"LINEUP_NOT_PUBLISHED\",\"latestPitchers\":{\"home\":null,\"away\":null},\"eraChanged\":null,\"whipChanged\":null,\"gameStatus\":null},{\"gameId\":\"mlb-179592\",\"classification\":\"FINAL_HOLD\",\"latestBestOdds\":1.89,\"currentValueEdge\":10,\"starterStatus\":\"STARTER_STABLE\",\"lineupStatus\":\"LINEUP_COMPLETE\",\"latestPitchers\":{\"home\":\"Drew Rasmussen\",\"away\":\"Parker Messick\"},\"eraChanged\":false,\"whipChanged\":false,\"gameStatus\":\"Pre-Game\"},{\"gameId\":\"mlb-179597\",\"classification\":\"FINAL_HOLD\",\"latestBestOdds\":1.67,\"currentValueEdge\":4,\"starterStatus\":\"STARTER_STABLE\",\"lineupStatus\":\"LINEUP_PARTIAL\",\"latestPitchers\":{\"home\":\"Freddy Peralta\",\"away\":\"Emmet Sheehan\"},\"eraChanged\":false,\"whipChanged\":false,\"gameStatus\":\"Pre-Game\"},{\"gameId\":\"mlb-179599\",\"classification\":\"FINAL_HOLD\",\"latestBestOdds\":2.16,\"currentValueEdge\":16,\"starterStatus\":\"STARTER_STABLE\",\"lineupStatus\":\"LINEUP_PARTIAL\",\"latestPitchers\":{\"home\":\"Janson Junk\",\"away\":\"Walker Buehler\"},\"eraChanged\":false,\"whipChanged\":false,\"gameStatus\":\"Pre-Game\"},{\"gameId\":\"mlb-179601\",\"classification\":\"FINAL_HOLD\",\"latestBestOdds\":2,\"currentValueEdge\":13,\"starterStatus\":\"STARTER_STABLE\",\"lineupStatus\":\"LINEUP_NOT_PUBLISHED\",\"latestPitchers\":{\"home\":\"Erick Fedde\",\"away\":\"Ronel Blanco\"},\"eraChanged\":false,\"whipChanged\":false,\"gameStatus\":\"Scheduled\"}]",
+      "games": [
+        {
+          "gameId": "mlb-179589",
+          "match": "New York Yankees @ Philadelphia Phillies",
+          "baselinePick": "New York Yankees",
+          "sourceClassification": "DROP",
+          "carriedForward": true,
+          "latestBestOdds": null,
+          "latestMarketProbability": null,
+          "currentValueEdge": null,
+          "modelProbabilityUnchanged": 61,
+          "initialBestOdds": 2.58,
+          "initialMarketProbability": 39,
+          "marketProbabilityChangePp": null,
+          "oddsMoveNote": null,
+          "pitcherDirection": "CONFLICTS_BASELINE",
+          "starterStatus": "STARTER_UNKNOWN",
+          "previousPitchers": {
+            "home": "Cristopher Sánchez",
+            "away": "Will Warren"
+          },
+          "latestPitchers": {
+            "home": null,
+            "away": null
+          },
+          "eraChanged": null,
+          "whipChanged": null,
+          "previousEraWhip": {
+            "homeEra": 2.65,
+            "awayEra": 4,
+            "homeWhip": 1.19,
+            "awayWhip": 1.37
+          },
+          "latestEraWhip": {
+            "homeEra": null,
+            "awayEra": null,
+            "homeWhip": null,
+            "awayWhip": null
+          },
+          "lineupStatus": "LINEUP_NOT_PUBLISHED",
+          "homeLineupCount": null,
+          "awayLineupCount": null,
+          "gameStatus": null,
+          "startTimeChanged": null,
+          "previousCommenceTimeUtc": "2026-07-26T23:21:00Z",
+          "latestCommenceTimeUtc": null,
+          "confidence": 51,
+          "missingData": [
+            "선발투수"
+          ],
+          "matchStatus": null,
+          "dataQuality": null,
+          "classification": "FINAL_DROP",
+          "classificationReasons": [
+            "이전 line-recheck DROP 유지 (투수 CONFLICTS_BASELINE)",
+            "HOLD 재조회 대상 아님"
+          ],
+          "parlaysBuilt": false,
+          "predictionSnapshotSaved": false,
+          "note": "Yankees DROP 상태 유지. 최종 관찰 라인 아님."
+        },
+        {
+          "gameId": "mlb-179592",
+          "match": "Cleveland Guardians @ Tampa Bay Rays",
+          "baselinePick": "Tampa Bay Rays",
+          "sourceClassification": "HOLD",
+          "carriedForward": false,
+          "latestBestOdds": 1.89,
+          "latestMarketProbability": 53,
+          "currentValueEdge": 10,
+          "modelProbabilityUnchanged": 63,
+          "initialBestOdds": 1.78,
+          "initialMarketProbability": 56,
+          "marketProbabilityChangePp": -3,
+          "oddsMoveNote": "ADVERSE_RECENT",
+          "pitcherDirection": "MIXED",
+          "starterStatus": "STARTER_STABLE",
+          "previousPitchers": {
+            "home": "Drew Rasmussen",
+            "away": "Parker Messick"
+          },
+          "latestPitchers": {
+            "home": "Drew Rasmussen",
+            "away": "Parker Messick"
+          },
+          "eraChanged": false,
+          "whipChanged": false,
+          "previousEraWhip": {
+            "homeEra": 3.28,
+            "awayEra": 2.68,
+            "homeWhip": 0.98,
+            "awayWhip": 1.05
+          },
+          "latestEraWhip": {
+            "homeEra": 3.28,
+            "awayEra": 2.68,
+            "homeWhip": 0.98,
+            "awayWhip": 1.05
+          },
+          "lineupStatus": "LINEUP_COMPLETE",
+          "homeLineupCount": 9,
+          "awayLineupCount": 9,
+          "gameStatus": "Pre-Game",
+          "startTimeChanged": false,
+          "previousCommenceTimeUtc": "2026-07-26T16:16:00Z",
+          "latestCommenceTimeUtc": "2026-07-26T16:15:00Z",
+          "confidence": 57,
+          "missingData": [
+            "선발투수"
+          ],
+          "matchStatus": "matched",
+          "dataQuality": "complete",
+          "classification": "FINAL_HOLD",
+          "classificationReasons": [
+            "투수 방향 MIXED",
+            "최근 배당 불리 이동",
+            "핵심 정보 누락"
+          ],
+          "parlaysBuilt": false,
+          "predictionSnapshotSaved": false,
+          "note": "단폴 최종 관찰 분류. 확정 적중·무조건 추천·수익 보장·안전한 베팅이 아니다. 모델 확률·Baseline pick 미변경."
+        },
+        {
+          "gameId": "mlb-179597",
+          "match": "Los Angeles Dodgers @ New York Mets",
+          "baselinePick": "Los Angeles Dodgers",
+          "sourceClassification": "HOLD",
+          "carriedForward": false,
+          "latestBestOdds": 1.67,
+          "latestMarketProbability": 60,
+          "currentValueEdge": 4,
+          "modelProbabilityUnchanged": 64,
+          "initialBestOdds": 1.69,
+          "initialMarketProbability": 59,
+          "marketProbabilityChangePp": 1,
+          "oddsMoveNote": "NEUTRAL",
+          "pitcherDirection": "MIXED",
+          "starterStatus": "STARTER_STABLE",
+          "previousPitchers": {
+            "home": "Freddy Peralta",
+            "away": "Emmet Sheehan"
+          },
+          "latestPitchers": {
+            "home": "Freddy Peralta",
+            "away": "Emmet Sheehan"
+          },
+          "eraChanged": false,
+          "whipChanged": false,
+          "previousEraWhip": {
+            "homeEra": 5.01,
+            "awayEra": 5.13,
+            "homeWhip": 1.46,
+            "awayWhip": 1.27
+          },
+          "latestEraWhip": {
+            "homeEra": 5.01,
+            "awayEra": 5.13,
+            "homeWhip": 1.46,
+            "awayWhip": 1.27
+          },
+          "lineupStatus": "LINEUP_PARTIAL",
+          "homeLineupCount": 0,
+          "awayLineupCount": 9,
+          "gameStatus": "Pre-Game",
+          "startTimeChanged": false,
+          "previousCommenceTimeUtc": "2026-07-26T17:41:00Z",
+          "latestCommenceTimeUtc": "2026-07-26T17:40:00Z",
+          "confidence": 53,
+          "missingData": [
+            "선발투수"
+          ],
+          "matchStatus": "matched",
+          "dataQuality": "complete",
+          "classification": "FINAL_HOLD",
+          "classificationReasons": [
+            "투수 방향 MIXED",
+            "라인업 LINEUP_PARTIAL",
+            "핵심 정보 누락"
+          ],
+          "parlaysBuilt": false,
+          "predictionSnapshotSaved": false,
+          "note": "단폴 최종 관찰 분류. 확정 적중·무조건 추천·수익 보장·안전한 베팅이 아니다. 모델 확률·Baseline pick 미변경."
+        },
+        {
+          "gameId": "mlb-179599",
+          "match": "San Diego Padres @ Miami Marlins",
+          "baselinePick": "San Diego Padres",
+          "sourceClassification": "HOLD",
+          "carriedForward": false,
+          "latestBestOdds": 2.16,
+          "latestMarketProbability": 46,
+          "currentValueEdge": 16,
+          "modelProbabilityUnchanged": 62,
+          "initialBestOdds": 2.16,
+          "initialMarketProbability": 46,
+          "marketProbabilityChangePp": 0,
+          "oddsMoveNote": "NEUTRAL",
+          "pitcherDirection": "MIXED",
+          "starterStatus": "STARTER_STABLE",
+          "previousPitchers": {
+            "home": "Janson Junk",
+            "away": "Walker Buehler"
+          },
+          "latestPitchers": {
+            "home": "Janson Junk",
+            "away": "Walker Buehler"
+          },
+          "eraChanged": false,
+          "whipChanged": false,
+          "previousEraWhip": {
+            "homeEra": 5.09,
+            "awayEra": 5.23,
+            "homeWhip": 1.35,
+            "awayWhip": 1.43
+          },
+          "latestEraWhip": {
+            "homeEra": 5.09,
+            "awayEra": 5.23,
+            "homeWhip": 1.35,
+            "awayWhip": 1.43
+          },
+          "lineupStatus": "LINEUP_PARTIAL",
+          "homeLineupCount": 0,
+          "awayLineupCount": 9,
+          "gameStatus": "Pre-Game",
+          "startTimeChanged": false,
+          "previousCommenceTimeUtc": "2026-07-26T17:41:00Z",
+          "latestCommenceTimeUtc": "2026-07-26T17:40:00Z",
+          "confidence": 52,
+          "missingData": [
+            "선발투수"
+          ],
+          "matchStatus": "matched",
+          "dataQuality": "complete",
+          "classification": "FINAL_HOLD",
+          "classificationReasons": [
+            "투수 방향 MIXED",
+            "라인업 LINEUP_PARTIAL",
+            "핵심 정보 누락"
+          ],
+          "parlaysBuilt": false,
+          "predictionSnapshotSaved": false,
+          "note": "단폴 최종 관찰 분류. 확정 적중·무조건 추천·수익 보장·안전한 베팅이 아니다. 모델 확률·Baseline pick 미변경."
+        },
+        {
+          "gameId": "mlb-179601",
+          "match": "Houston Astros @ Chicago White Sox",
+          "baselinePick": "Houston Astros",
+          "sourceClassification": "HOLD",
+          "carriedForward": false,
+          "latestBestOdds": 2,
+          "latestMarketProbability": 50,
+          "currentValueEdge": 13,
+          "modelProbabilityUnchanged": 63,
+          "initialBestOdds": 2,
+          "initialMarketProbability": 49,
+          "marketProbabilityChangePp": 1,
+          "oddsMoveNote": "NEUTRAL",
+          "pitcherDirection": "MIXED",
+          "starterStatus": "STARTER_STABLE",
+          "previousPitchers": {
+            "home": "Erick Fedde",
+            "away": "Ronel Blanco"
+          },
+          "latestPitchers": {
+            "home": "Erick Fedde",
+            "away": "Ronel Blanco"
+          },
+          "eraChanged": false,
+          "whipChanged": false,
+          "previousEraWhip": {
+            "homeEra": 4.16,
+            "awayEra": 7.71,
+            "homeWhip": 1.4,
+            "awayWhip": 1.07
+          },
+          "latestEraWhip": {
+            "homeEra": 4.16,
+            "awayEra": 7.71,
+            "homeWhip": 1.4,
+            "awayWhip": 1.07
+          },
+          "lineupStatus": "LINEUP_NOT_PUBLISHED",
+          "homeLineupCount": 0,
+          "awayLineupCount": 0,
+          "gameStatus": "Scheduled",
+          "startTimeChanged": false,
+          "previousCommenceTimeUtc": "2026-07-26T18:11:00Z",
+          "latestCommenceTimeUtc": "2026-07-26T18:10:00Z",
+          "confidence": 49,
+          "missingData": [
+            "선발투수"
+          ],
+          "matchStatus": "matched",
+          "dataQuality": "complete",
+          "classification": "FINAL_HOLD",
+          "classificationReasons": [
+            "투수 방향 MIXED",
+            "라인업 LINEUP_NOT_PUBLISHED",
+            "Confidence < 50 (49)",
+            "핵심 정보 누락"
+          ],
+          "parlaysBuilt": false,
+          "predictionSnapshotSaved": false,
+          "note": "단폴 최종 관찰 분류. 확정 적중·무조건 추천·수익 보장·안전한 베팅이 아니다. 모델 확률·Baseline pick 미변경."
+        }
+      ]
+    }
+  ]
+}

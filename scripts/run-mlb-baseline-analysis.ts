@@ -27,7 +27,9 @@ import type {
   VenueRecord,
 } from "../src/types/engine-analysis";
 
-const TARGET_DATE_KST = "2026-07-27";
+const TARGET_DATE_KST = (
+  process.env.MLB_TARGET_DATE_KST ?? "2026-07-27"
+).trim();
 const INPUT_PATH = path.join(
   process.cwd(),
   "data",

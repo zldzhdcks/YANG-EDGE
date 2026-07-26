@@ -1,0 +1,5313 @@
+{
+  "meta": {
+    "version": "mlb-analysis-coverage-v1",
+    "generatedAt": "2026-07-26T14:56:43.246Z",
+    "targetDateKst": "2026-07-28",
+    "rules": {
+      "apiBaseballOnlyForAnalysisValues": true,
+      "sportsDataIoValuesUsed": false,
+      "sportsDataIoReason": "Trial response marked Scrambled",
+      "oddsUsedForMarketOnly": true,
+      "missingValuesImputed": false
+    },
+    "dataAvailabilityDenominator": {
+      "factors": [
+        "recentForm",
+        "homeAway",
+        "scoring",
+        "defense",
+        "leagueStanding",
+        "headToHead",
+        "rest",
+        "injuries",
+        "streak",
+        "startingPitcher"
+      ],
+      "count": 10,
+      "note": "실제 가용한 EDGE factor 그룹만 계산. SportsDataIO Trial 값 제외."
+    }
+  },
+  "api": {
+    "apiBaseball": {
+      "leagueId": 1,
+      "season": 2026,
+      "seasonGameCount": 2230,
+      "calls": 3,
+      "remaining": 7467,
+      "limit": 7500,
+      "averageResponseMs": 534,
+      "errors": [],
+      "endpoints": [
+        "/leagues?search=MLB",
+        "/games?league={actualId}&season={currentSeason}",
+        "/standings?league={actualId}&season={currentSeason}"
+      ],
+      "repeatedPerGameCalls": 0,
+      "observedFields": {
+        "game": [
+          "id",
+          "date",
+          "time",
+          "timestamp",
+          "timezone",
+          "week",
+          "status",
+          "country",
+          "league",
+          "teams",
+          "scores"
+        ],
+        "status": [
+          "long",
+          "short"
+        ],
+        "scoreHome": [
+          "hits",
+          "errors",
+          "innings",
+          "total"
+        ],
+        "scoreAway": [
+          "hits",
+          "errors",
+          "innings",
+          "total"
+        ],
+        "pitcher": [],
+        "standing": [
+          "position",
+          "stage",
+          "group",
+          "team",
+          "league",
+          "country",
+          "games",
+          "points",
+          "form",
+          "description"
+        ]
+      }
+    },
+    "odds": {
+      "sportKey": "baseball_mlb",
+      "events": 0,
+      "cacheReused": false,
+      "cacheSource": null,
+      "calls": 2,
+      "remaining": 269,
+      "used": 231,
+      "error": null
+    },
+    "sportsDataIo": {
+      "calls": 0,
+      "valuesUsed": false,
+      "note": "Provider 구조는 유지하되 Scrambled Trial 값을 조회/사용하지 않음"
+    }
+  },
+  "summary": {
+    "totalGames": 12,
+    "baselineReady": 0,
+    "insufficient": 12,
+    "averageDataAvailability": 0.7,
+    "startingPitcherAvailable": 0,
+    "itemAvailability": {
+      "recentGames5": {
+        "games": 12,
+        "ratePercent": 100
+      },
+      "recentForm": {
+        "games": 12,
+        "ratePercent": 100
+      },
+      "scoringAverages": {
+        "games": 12,
+        "ratePercent": 100
+      },
+      "homeAwayRecords": {
+        "games": 12,
+        "ratePercent": 100
+      },
+      "seasonWinRate": {
+        "games": 12,
+        "ratePercent": 100
+      },
+      "streak": {
+        "games": 12,
+        "ratePercent": 100
+      },
+      "restDays": {
+        "games": 12,
+        "ratePercent": 100
+      },
+      "headToHead": {
+        "games": 12,
+        "ratePercent": 100
+      },
+      "teamStatistics": {
+        "games": 12,
+        "ratePercent": 100
+      },
+      "leagueStanding": {
+        "games": 0,
+        "ratePercent": 0
+      },
+      "startingPitcher": {
+        "games": 0,
+        "ratePercent": 0
+      },
+      "injuries": {
+        "games": 0,
+        "ratePercent": 0
+      },
+      "marketOdds": {
+        "games": 0,
+        "ratePercent": 0
+      }
+    },
+    "mostMissingFields": [
+      {
+        "field": "away.leagueStanding",
+        "count": 12
+      },
+      {
+        "field": "home.leagueStanding",
+        "count": 12
+      },
+      {
+        "field": "injuries",
+        "count": 12
+      },
+      {
+        "field": "marketOdds",
+        "count": 12
+      },
+      {
+        "field": "startingPitcher",
+        "count": 12
+      }
+    ],
+    "temporaryMlbAnalysisPossible": false,
+    "decision": "BASELINE_READY 미충족 경기가 있어 임시 MLB 분석 불가",
+    "sportsDataIoPaidNeededFor": [
+      "실제 선발투수 및 투수 세부 통계",
+      "실제 projected/confirmed lineup",
+      "실제 부상·결장 정보"
+    ]
+  },
+  "games": [
+    {
+      "game": {
+        "externalId": "179605",
+        "commenceTimeUtc": "2026-07-27T18:35:00.000Z",
+        "dateKst": "2026-07-28",
+        "startTimeKst": "03:35",
+        "homeTeam": "Texas Rangers",
+        "awayTeam": "Seattle Mariners",
+        "status": "Not Started",
+        "league": "MLB",
+        "season": 2026
+      },
+      "analysisCandidate": {
+        "home": {
+          "teamId": 35,
+          "teamName": "Texas Rangers",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179575",
+                "commenceTimeUtc": "2026-07-25T23:15:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 32,
+                "opponent": "Seattle Mariners",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 1,
+                "isHome": true
+              },
+              {
+                "externalId": "179561",
+                "commenceTimeUtc": "2026-07-25T00:05:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 32,
+                "opponent": "Seattle Mariners",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "externalId": "179541",
+                "commenceTimeUtc": "2026-07-23T00:05:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 7,
+                "opponent": "Chicago White Sox",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "externalId": "179527",
+                "commenceTimeUtc": "2026-07-22T00:05:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 7,
+                "opponent": "Chicago White Sox",
+                "result": "W",
+                "scoreFor": 10,
+                "scoreAgainst": 0,
+                "isHome": true
+              },
+              {
+                "externalId": "179511",
+                "commenceTimeUtc": "2026-07-21T00:05:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 7,
+                "opponent": "Chicago White Sox",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 10,
+                "isHome": true
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "recentForm": {
+            "value": "WWLWL",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 5.4,
+              "concededAvg": 3.8
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 51,
+              "wins": 27,
+              "draws": 0,
+              "losses": 24,
+              "winRate": 52.94
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 51,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 53,
+              "wins": 26,
+              "draws": 0,
+              "losses": 27,
+              "winRate": 49.06
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 53,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 50.96,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "win",
+              "count": 2
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "restDays": {
+            "value": 1,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 104,
+              "wins": 53,
+              "draws": 0,
+              "losses": 51,
+              "runsFor": 439,
+              "runsAgainst": 462
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          }
+        },
+        "away": {
+          "teamId": 32,
+          "teamName": "Seattle Mariners",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179575",
+                "commenceTimeUtc": "2026-07-25T23:15:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 35,
+                "opponent": "Texas Rangers",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 7,
+                "isHome": false
+              },
+              {
+                "externalId": "179561",
+                "commenceTimeUtc": "2026-07-25T00:05:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 35,
+                "opponent": "Texas Rangers",
+                "result": "L",
+                "scoreFor": 4,
+                "scoreAgainst": 5,
+                "isHome": false
+              },
+              {
+                "externalId": "179542",
+                "commenceTimeUtc": "2026-07-22T19:40:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 8,
+                "opponent": "Cincinnati Reds",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "externalId": "179528",
+                "commenceTimeUtc": "2026-07-22T01:40:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 8,
+                "opponent": "Cincinnati Reds",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "externalId": "179512",
+                "commenceTimeUtc": "2026-07-21T01:40:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 8,
+                "opponent": "Cincinnati Reds",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 0,
+                "isHome": true
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "recentForm": {
+            "value": "LLLLW",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 3.6,
+              "concededAvg": 4.2
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 53,
+              "wins": 30,
+              "draws": 0,
+              "losses": 23,
+              "winRate": 56.6
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 53,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 52,
+              "wins": 21,
+              "draws": 0,
+              "losses": 31,
+              "winRate": 40.38
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 52,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 48.57,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "loss",
+              "count": 4
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "restDays": {
+            "value": 1,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 105,
+              "wins": 51,
+              "draws": 0,
+              "losses": 54,
+              "runsFor": 420,
+              "runsAgainst": 410
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T18:35:00.000Z"
+          }
+        },
+        "headToHead": {
+          "value": {
+            "played": 5,
+            "homeTeamWins": 3,
+            "awayTeamWins": 2,
+            "draws": 0,
+            "recentMeetings": [
+              {
+                "externalId": "179575",
+                "dateKst": "2026-07-26",
+                "homeTeam": "Texas Rangers",
+                "awayTeam": "Seattle Mariners",
+                "homeScore": 7,
+                "awayScore": 1
+              },
+              {
+                "externalId": "179561",
+                "dateKst": "2026-07-25",
+                "homeTeam": "Texas Rangers",
+                "awayTeam": "Seattle Mariners",
+                "homeScore": 5,
+                "awayScore": 4
+              },
+              {
+                "externalId": "178326",
+                "dateKst": "2026-04-20",
+                "homeTeam": "Seattle Mariners",
+                "awayTeam": "Texas Rangers",
+                "homeScore": 5,
+                "awayScore": 2
+              },
+              {
+                "externalId": "178310",
+                "dateKst": "2026-04-19",
+                "homeTeam": "Seattle Mariners",
+                "awayTeam": "Texas Rangers",
+                "homeScore": 7,
+                "awayScore": 3
+              },
+              {
+                "externalId": "178296",
+                "dateKst": "2026-04-18",
+                "homeTeam": "Seattle Mariners",
+                "awayTeam": "Texas Rangers",
+                "homeScore": 0,
+                "awayScore": 5
+              }
+            ]
+          },
+          "available": true,
+          "source": "api-baseball:/games season aggregate (동일 팀 ID)",
+          "sampleSize": 5,
+          "cutoffTime": "2026-07-27T18:35:00.000Z"
+        },
+        "startingPitcher": {
+          "value": null,
+          "available": false,
+          "source": "api-baseball:/games target response",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T18:35:00.000Z"
+        },
+        "marketOdds": {
+          "value": null,
+          "available": false,
+          "source": "the-odds-api",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T18:35:00.000Z"
+        }
+      },
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": false,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "dataAvailability": 0.7,
+      "missingFields": [
+        "home.leagueStanding",
+        "away.leagueStanding",
+        "startingPitcher",
+        "injuries",
+        "marketOdds"
+      ],
+      "qualityStatus": "INSUFFICIENT",
+      "leakageGuard": {
+        "cutoffTime": "2026-07-27T18:35:00.000Z",
+        "finishedStatusesAccepted": [
+          "FT",
+          "AOT",
+          "AP"
+        ],
+        "targetKstDateGamesExcluded": true,
+        "futureGamesExcluded": true,
+        "inProgressGamesExcluded": true
+      }
+    },
+    {
+      "game": {
+        "externalId": "179608",
+        "commenceTimeUtc": "2026-07-27T22:40:00.000Z",
+        "dateKst": "2026-07-28",
+        "startTimeKst": "07:40",
+        "homeTeam": "Pittsburgh Pirates",
+        "awayTeam": "Arizona Diamondbacks",
+        "status": "Not Started",
+        "league": "MLB",
+        "season": 2026
+      },
+      "analysisCandidate": {
+        "home": {
+          "teamId": 28,
+          "teamName": "Pittsburgh Pirates",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179565",
+                "commenceTimeUtc": "2026-07-24T22:40:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 6,
+                "opponent": "Chicago Cubs",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "externalId": "179530",
+                "commenceTimeUtc": "2026-07-22T23:05:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 25,
+                "opponent": "New York Yankees",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "externalId": "179544",
+                "commenceTimeUtc": "2026-07-22T17:05:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 25,
+                "opponent": "New York Yankees",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 3,
+                "isHome": false
+              },
+              {
+                "externalId": "179514",
+                "commenceTimeUtc": "2026-07-20T23:05:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 25,
+                "opponent": "New York Yankees",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 8,
+                "isHome": false
+              },
+              {
+                "externalId": "179504",
+                "commenceTimeUtc": "2026-07-19T17:40:00.000Z",
+                "dateKst": "2026-07-20",
+                "opponentId": 9,
+                "opponent": "Cleveland Guardians",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 1,
+                "isHome": false
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "recentForm": {
+            "value": "LLWLW",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 3.8,
+              "concededAvg": 3.4
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 52,
+              "wins": 27,
+              "draws": 0,
+              "losses": 25,
+              "winRate": 51.92
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 52,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 52,
+              "wins": 26,
+              "draws": 0,
+              "losses": 26,
+              "winRate": 50
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 52,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 50.96,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "loss",
+              "count": 2
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "restDays": {
+            "value": 3,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 104,
+              "wins": 53,
+              "draws": 0,
+              "losses": 51,
+              "runsFor": 545,
+              "runsAgainst": 495
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          }
+        },
+        "away": {
+          "teamId": 2,
+          "teamName": "Arizona Diamondbacks",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179580",
+                "commenceTimeUtc": "2026-07-25T20:05:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 37,
+                "opponent": "Washington Nationals",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 5,
+                "isHome": false
+              },
+              {
+                "externalId": "179560",
+                "commenceTimeUtc": "2026-07-24T22:45:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 37,
+                "opponent": "Washington Nationals",
+                "result": "W",
+                "scoreFor": 3,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "externalId": "179220",
+                "commenceTimeUtc": "2026-07-23T21:15:00.000Z",
+                "dateKst": "2026-07-24",
+                "opponentId": 33,
+                "opponent": "St.Louis Cardinals",
+                "result": "W",
+                "scoreFor": 10,
+                "scoreAgainst": 6,
+                "isHome": false
+              },
+              {
+                "externalId": "179553",
+                "commenceTimeUtc": "2026-07-22T19:40:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 963,
+                "opponent": "Athletics",
+                "result": "W",
+                "scoreFor": 15,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "externalId": "179539",
+                "commenceTimeUtc": "2026-07-22T01:40:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 963,
+                "opponent": "Athletics",
+                "result": "W",
+                "scoreFor": 6,
+                "scoreAgainst": 5,
+                "isHome": true
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "recentForm": {
+            "value": "LWWWW",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 7.4,
+              "concededAvg": 4.6
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 53,
+              "wins": 31,
+              "draws": 0,
+              "losses": 22,
+              "winRate": 58.49
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 53,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 52,
+              "wins": 24,
+              "draws": 0,
+              "losses": 28,
+              "winRate": 46.15
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 52,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 52.38,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "loss",
+              "count": 1
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "restDays": {
+            "value": 2,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 105,
+              "wins": 55,
+              "draws": 0,
+              "losses": 50,
+              "runsFor": 472,
+              "runsAgainst": 472
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          }
+        },
+        "headToHead": {
+          "value": {
+            "played": 3,
+            "homeTeamWins": 2,
+            "awayTeamWins": 1,
+            "draws": 0,
+            "recentMeetings": [
+              {
+                "externalId": "178571",
+                "dateKst": "2026-05-08",
+                "homeTeam": "Arizona Diamondbacks",
+                "awayTeam": "Pittsburgh Pirates",
+                "homeScore": 2,
+                "awayScore": 4
+              },
+              {
+                "externalId": "178565",
+                "dateKst": "2026-05-07",
+                "homeTeam": "Arizona Diamondbacks",
+                "awayTeam": "Pittsburgh Pirates",
+                "homeScore": 0,
+                "awayScore": 1
+              },
+              {
+                "externalId": "178549",
+                "dateKst": "2026-05-06",
+                "homeTeam": "Arizona Diamondbacks",
+                "awayTeam": "Pittsburgh Pirates",
+                "homeScore": 9,
+                "awayScore": 0
+              }
+            ]
+          },
+          "available": true,
+          "source": "api-baseball:/games season aggregate (동일 팀 ID)",
+          "sampleSize": 3,
+          "cutoffTime": "2026-07-27T22:40:00.000Z"
+        },
+        "startingPitcher": {
+          "value": null,
+          "available": false,
+          "source": "api-baseball:/games target response",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T22:40:00.000Z"
+        },
+        "marketOdds": {
+          "value": null,
+          "available": false,
+          "source": "the-odds-api",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T22:40:00.000Z"
+        }
+      },
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": false,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "dataAvailability": 0.7,
+      "missingFields": [
+        "home.leagueStanding",
+        "away.leagueStanding",
+        "startingPitcher",
+        "injuries",
+        "marketOdds"
+      ],
+      "qualityStatus": "INSUFFICIENT",
+      "leakageGuard": {
+        "cutoffTime": "2026-07-27T22:40:00.000Z",
+        "finishedStatusesAccepted": [
+          "FT",
+          "AOT",
+          "AP"
+        ],
+        "targetKstDateGamesExcluded": true,
+        "futureGamesExcluded": true,
+        "inProgressGamesExcluded": true
+      }
+    },
+    {
+      "game": {
+        "externalId": "179610",
+        "commenceTimeUtc": "2026-07-27T22:40:00.000Z",
+        "dateKst": "2026-07-28",
+        "startTimeKst": "07:40",
+        "homeTeam": "Miami Marlins",
+        "awayTeam": "Philadelphia Phillies",
+        "status": "Not Started",
+        "league": "MLB",
+        "season": 2026
+      },
+      "analysisCandidate": {
+        "home": {
+          "teamId": 19,
+          "teamName": "Miami Marlins",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179583",
+                "commenceTimeUtc": "2026-07-25T20:10:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 30,
+                "opponent": "San Diego Padres",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 7,
+                "isHome": true
+              },
+              {
+                "externalId": "179566",
+                "commenceTimeUtc": "2026-07-24T23:10:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 30,
+                "opponent": "San Diego Padres",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "externalId": "179554",
+                "commenceTimeUtc": "2026-07-23T00:10:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 15,
+                "opponent": "Houston Astros",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 5,
+                "isHome": false
+              },
+              {
+                "externalId": "179532",
+                "commenceTimeUtc": "2026-07-22T00:10:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 15,
+                "opponent": "Houston Astros",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 5,
+                "isHome": false
+              },
+              {
+                "externalId": "179524",
+                "commenceTimeUtc": "2026-07-21T00:10:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 15,
+                "opponent": "Houston Astros",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 8,
+                "isHome": false
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "recentForm": {
+            "value": "LLLLL",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 2.8,
+              "concededAvg": 5.8
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 53,
+              "wins": 31,
+              "draws": 0,
+              "losses": 22,
+              "winRate": 58.49
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 53,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 51,
+              "wins": 21,
+              "draws": 0,
+              "losses": 30,
+              "winRate": 41.18
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 51,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 50,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "loss",
+              "count": 11
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "restDays": {
+            "value": 2,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 104,
+              "wins": 52,
+              "draws": 0,
+              "losses": 52,
+              "runsFor": 456,
+              "runsAgainst": 451
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          }
+        },
+        "away": {
+          "teamId": 27,
+          "teamName": "Philadelphia Phillies",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179559",
+                "commenceTimeUtc": "2026-07-24T22:45:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 25,
+                "opponent": "New York Yankees",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 1,
+                "isHome": true
+              },
+              {
+                "externalId": "179543",
+                "commenceTimeUtc": "2026-07-22T22:40:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 18,
+                "opponent": "Los Angeles Dodgers",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 9,
+                "isHome": true
+              },
+              {
+                "externalId": "179529",
+                "commenceTimeUtc": "2026-07-21T22:40:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 18,
+                "opponent": "Los Angeles Dodgers",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 2,
+                "isHome": true
+              },
+              {
+                "externalId": "179513",
+                "commenceTimeUtc": "2026-07-20T23:10:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 18,
+                "opponent": "Los Angeles Dodgers",
+                "result": "W",
+                "scoreFor": 10,
+                "scoreAgainst": 7,
+                "isHome": true
+              },
+              {
+                "externalId": "179497",
+                "commenceTimeUtc": "2026-07-19T17:35:00.000Z",
+                "dateKst": "2026-07-20",
+                "opponentId": 24,
+                "opponent": "New York Mets",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 6,
+                "isHome": true
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "recentForm": {
+            "value": "LLLWL",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 3.4,
+              "concededAvg": 5
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 53,
+              "wins": 27,
+              "draws": 0,
+              "losses": 26,
+              "winRate": 50.94
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 53,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 51,
+              "wins": 29,
+              "draws": 0,
+              "losses": 22,
+              "winRate": 56.86
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 51,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 53.85,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "loss",
+              "count": 3
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "restDays": {
+            "value": 2,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 104,
+              "wins": 56,
+              "draws": 0,
+              "losses": 48,
+              "runsFor": 448,
+              "runsAgainst": 464
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          }
+        },
+        "headToHead": {
+          "value": {
+            "played": 5,
+            "homeTeamWins": 1,
+            "awayTeamWins": 4,
+            "draws": 0,
+            "recentMeetings": [
+              {
+                "externalId": "179115",
+                "dateKst": "2026-06-18",
+                "homeTeam": "Philadelphia Phillies",
+                "awayTeam": "Miami Marlins",
+                "homeScore": 4,
+                "awayScore": 12
+              },
+              {
+                "externalId": "179101",
+                "dateKst": "2026-06-17",
+                "homeTeam": "Philadelphia Phillies",
+                "awayTeam": "Miami Marlins",
+                "homeScore": 8,
+                "awayScore": 2
+              },
+              {
+                "externalId": "179089",
+                "dateKst": "2026-06-16",
+                "homeTeam": "Philadelphia Phillies",
+                "awayTeam": "Miami Marlins",
+                "homeScore": 7,
+                "awayScore": 0
+              },
+              {
+                "externalId": "178524",
+                "dateKst": "2026-05-05",
+                "homeTeam": "Miami Marlins",
+                "awayTeam": "Philadelphia Phillies",
+                "homeScore": 0,
+                "awayScore": 1
+              },
+              {
+                "externalId": "178520",
+                "dateKst": "2026-05-04",
+                "homeTeam": "Miami Marlins",
+                "awayTeam": "Philadelphia Phillies",
+                "homeScore": 2,
+                "awayScore": 7
+              }
+            ]
+          },
+          "available": true,
+          "source": "api-baseball:/games season aggregate (동일 팀 ID)",
+          "sampleSize": 5,
+          "cutoffTime": "2026-07-27T22:40:00.000Z"
+        },
+        "startingPitcher": {
+          "value": null,
+          "available": false,
+          "source": "api-baseball:/games target response",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T22:40:00.000Z"
+        },
+        "marketOdds": {
+          "value": null,
+          "available": false,
+          "source": "the-odds-api",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T22:40:00.000Z"
+        }
+      },
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": false,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "dataAvailability": 0.7,
+      "missingFields": [
+        "home.leagueStanding",
+        "away.leagueStanding",
+        "startingPitcher",
+        "injuries",
+        "marketOdds"
+      ],
+      "qualityStatus": "INSUFFICIENT",
+      "leakageGuard": {
+        "cutoffTime": "2026-07-27T22:40:00.000Z",
+        "finishedStatusesAccepted": [
+          "FT",
+          "AOT",
+          "AP"
+        ],
+        "targetKstDateGamesExcluded": true,
+        "futureGamesExcluded": true,
+        "inProgressGamesExcluded": true
+      }
+    },
+    {
+      "game": {
+        "externalId": "179611",
+        "commenceTimeUtc": "2026-07-27T22:40:00.000Z",
+        "dateKst": "2026-07-28",
+        "startTimeKst": "07:40",
+        "homeTeam": "Detroit Tigers",
+        "awayTeam": "Baltimore Orioles",
+        "status": "Not Started",
+        "league": "MLB",
+        "season": 2026
+      },
+      "analysisCandidate": {
+        "home": {
+          "teamId": 12,
+          "teamName": "Detroit Tigers",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179584",
+                "commenceTimeUtc": "2026-07-25T17:10:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 16,
+                "opponent": "Kansas City Royals",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "externalId": "179570",
+                "commenceTimeUtc": "2026-07-24T22:40:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 16,
+                "opponent": "Kansas City Royals",
+                "result": "W",
+                "scoreFor": 2,
+                "scoreAgainst": 1,
+                "isHome": true
+              },
+              {
+                "externalId": "179558",
+                "commenceTimeUtc": "2026-07-23T22:40:00.000Z",
+                "dateKst": "2026-07-24",
+                "opponentId": 16,
+                "opponent": "Kansas City Royals",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "externalId": "179550",
+                "commenceTimeUtc": "2026-07-23T00:10:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 6,
+                "opponent": "Chicago Cubs",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 1,
+                "isHome": false
+              },
+              {
+                "externalId": "179536",
+                "commenceTimeUtc": "2026-07-22T00:05:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 6,
+                "opponent": "Chicago Cubs",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 11,
+                "isHome": false
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "recentForm": {
+            "value": "LWWWL",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 3,
+              "concededAvg": 3.8
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 53,
+              "wins": 29,
+              "draws": 0,
+              "losses": 24,
+              "winRate": 54.72
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 53,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 52,
+              "wins": 21,
+              "draws": 0,
+              "losses": 31,
+              "winRate": 40.38
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 52,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 47.62,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "loss",
+              "count": 1
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "restDays": {
+            "value": 2,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 105,
+              "wins": 50,
+              "draws": 0,
+              "losses": 55,
+              "runsFor": 441,
+              "runsAgainst": 412
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          }
+        },
+        "away": {
+          "teamId": 4,
+          "teamName": "Baltimore Orioles",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179587",
+                "commenceTimeUtc": "2026-07-25T23:05:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 3,
+                "opponent": "Atlanta Braves",
+                "result": "W",
+                "scoreFor": 3,
+                "scoreAgainst": 2,
+                "isHome": true
+              },
+              {
+                "externalId": "179573",
+                "commenceTimeUtc": "2026-07-24T23:05:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 3,
+                "opponent": "Atlanta Braves",
+                "result": "L",
+                "scoreFor": 6,
+                "scoreAgainst": 7,
+                "isHome": true
+              },
+              {
+                "externalId": "179551",
+                "commenceTimeUtc": "2026-07-22T23:10:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 5,
+                "opponent": "Boston Red Sox",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 1,
+                "isHome": false
+              },
+              {
+                "externalId": "179537",
+                "commenceTimeUtc": "2026-07-22T17:35:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 5,
+                "opponent": "Boston Red Sox",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 6,
+                "isHome": false
+              },
+              {
+                "externalId": "179521",
+                "commenceTimeUtc": "2026-07-20T23:10:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 5,
+                "opponent": "Boston Red Sox",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 6,
+                "isHome": false
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "recentForm": {
+            "value": "WLWLL",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 4.4,
+              "concededAvg": 4.4
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 55,
+              "wins": 29,
+              "draws": 0,
+              "losses": 26,
+              "winRate": 52.73
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 55,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 50,
+              "wins": 22,
+              "draws": 0,
+              "losses": 28,
+              "winRate": 44
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 50,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 48.57,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "win",
+              "count": 1
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "restDays": {
+            "value": 1,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 105,
+              "wins": 51,
+              "draws": 0,
+              "losses": 54,
+              "runsFor": 481,
+              "runsAgainst": 494
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:40:00.000Z"
+          }
+        },
+        "headToHead": {
+          "value": {
+            "played": 3,
+            "homeTeamWins": 1,
+            "awayTeamWins": 2,
+            "draws": 0,
+            "recentMeetings": [
+              {
+                "externalId": "178790",
+                "dateKst": "2026-05-25",
+                "homeTeam": "Baltimore Orioles",
+                "awayTeam": "Detroit Tigers",
+                "homeScore": 1,
+                "awayScore": 4
+              },
+              {
+                "externalId": "178805",
+                "dateKst": "2026-05-25",
+                "homeTeam": "Baltimore Orioles",
+                "awayTeam": "Detroit Tigers",
+                "homeScore": 5,
+                "awayScore": 3
+              },
+              {
+                "externalId": "178775",
+                "dateKst": "2026-05-23",
+                "homeTeam": "Baltimore Orioles",
+                "awayTeam": "Detroit Tigers",
+                "homeScore": 7,
+                "awayScore": 4
+              }
+            ]
+          },
+          "available": true,
+          "source": "api-baseball:/games season aggregate (동일 팀 ID)",
+          "sampleSize": 3,
+          "cutoffTime": "2026-07-27T22:40:00.000Z"
+        },
+        "startingPitcher": {
+          "value": null,
+          "available": false,
+          "source": "api-baseball:/games target response",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T22:40:00.000Z"
+        },
+        "marketOdds": {
+          "value": null,
+          "available": false,
+          "source": "the-odds-api",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T22:40:00.000Z"
+        }
+      },
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": false,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "dataAvailability": 0.7,
+      "missingFields": [
+        "home.leagueStanding",
+        "away.leagueStanding",
+        "startingPitcher",
+        "injuries",
+        "marketOdds"
+      ],
+      "qualityStatus": "INSUFFICIENT",
+      "leakageGuard": {
+        "cutoffTime": "2026-07-27T22:40:00.000Z",
+        "finishedStatusesAccepted": [
+          "FT",
+          "AOT",
+          "AP"
+        ],
+        "targetKstDateGamesExcluded": true,
+        "futureGamesExcluded": true,
+        "inProgressGamesExcluded": true
+      }
+    },
+    {
+      "game": {
+        "externalId": "179609",
+        "commenceTimeUtc": "2026-07-27T22:45:00.000Z",
+        "dateKst": "2026-07-28",
+        "startTimeKst": "07:45",
+        "homeTeam": "Washington Nationals",
+        "awayTeam": "Toronto Blue Jays",
+        "status": "Not Started",
+        "league": "MLB",
+        "season": 2026
+      },
+      "analysisCandidate": {
+        "home": {
+          "teamId": 37,
+          "teamName": "Washington Nationals",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179580",
+                "commenceTimeUtc": "2026-07-25T20:05:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 2,
+                "opponent": "Arizona Diamondbacks",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "externalId": "179560",
+                "commenceTimeUtc": "2026-07-24T22:45:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 2,
+                "opponent": "Arizona Diamondbacks",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "externalId": "179548",
+                "commenceTimeUtc": "2026-07-22T19:10:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 10,
+                "opponent": "Colorado Rockies",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 0,
+                "isHome": false
+              },
+              {
+                "externalId": "179534",
+                "commenceTimeUtc": "2026-07-22T00:40:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 10,
+                "opponent": "Colorado Rockies",
+                "result": "L",
+                "scoreFor": 7,
+                "scoreAgainst": 8,
+                "isHome": false
+              },
+              {
+                "externalId": "179518",
+                "commenceTimeUtc": "2026-07-21T00:40:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 10,
+                "opponent": "Colorado Rockies",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 3,
+                "isHome": false
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "recentForm": {
+            "value": "WLWLW",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 5.8,
+              "concededAvg": 3.4
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 53,
+              "wins": 21,
+              "draws": 0,
+              "losses": 32,
+              "winRate": 39.62
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 53,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 52,
+              "wins": 32,
+              "draws": 0,
+              "losses": 20,
+              "winRate": 61.54
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 52,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 50.48,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "win",
+              "count": 1
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "restDays": {
+            "value": 2,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 105,
+              "wins": 53,
+              "draws": 0,
+              "losses": 52,
+              "runsFor": 574,
+              "runsAgainst": 547
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          }
+        },
+        "away": {
+          "teamId": 36,
+          "teamName": "Toronto Blue Jays",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179586",
+                "commenceTimeUtc": "2026-07-25T20:10:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 5,
+                "opponent": "Boston Red Sox",
+                "result": "W",
+                "scoreFor": 6,
+                "scoreAgainst": 0,
+                "isHome": false
+              },
+              {
+                "externalId": "179572",
+                "commenceTimeUtc": "2026-07-24T23:15:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 5,
+                "opponent": "Boston Red Sox",
+                "result": "L",
+                "scoreFor": 4,
+                "scoreAgainst": 6,
+                "isHome": false
+              },
+              {
+                "externalId": "179555",
+                "commenceTimeUtc": "2026-07-23T19:07:00.000Z",
+                "dateKst": "2026-07-24",
+                "opponentId": 34,
+                "opponent": "Tampa Bay Rays",
+                "result": "W",
+                "scoreFor": 3,
+                "scoreAgainst": 1,
+                "isHome": true
+              },
+              {
+                "externalId": "179540",
+                "commenceTimeUtc": "2026-07-22T23:07:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 34,
+                "opponent": "Tampa Bay Rays",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "externalId": "179526",
+                "commenceTimeUtc": "2026-07-21T23:07:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 34,
+                "opponent": "Tampa Bay Rays",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 12,
+                "isHome": true
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "recentForm": {
+            "value": "WLWLL",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 3.4,
+              "concededAvg": 4.6
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 56,
+              "wins": 26,
+              "draws": 0,
+              "losses": 30,
+              "winRate": 46.43
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 56,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 49,
+              "wins": 22,
+              "draws": 0,
+              "losses": 27,
+              "winRate": 44.9
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 49,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 45.71,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "win",
+              "count": 1
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "restDays": {
+            "value": 2,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 105,
+              "wins": 48,
+              "draws": 0,
+              "losses": 57,
+              "runsFor": 415,
+              "runsAgainst": 472
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T22:45:00.000Z"
+          }
+        },
+        "headToHead": {
+          "value": {
+            "played": 0,
+            "homeTeamWins": 0,
+            "awayTeamWins": 0,
+            "draws": 0,
+            "recentMeetings": []
+          },
+          "available": true,
+          "source": "api-baseball:/games season aggregate (동일 팀 ID)",
+          "sampleSize": 0,
+          "cutoffTime": "2026-07-27T22:45:00.000Z"
+        },
+        "startingPitcher": {
+          "value": null,
+          "available": false,
+          "source": "api-baseball:/games target response",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T22:45:00.000Z"
+        },
+        "marketOdds": {
+          "value": null,
+          "available": false,
+          "source": "the-odds-api",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T22:45:00.000Z"
+        }
+      },
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": false,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "dataAvailability": 0.7,
+      "missingFields": [
+        "home.leagueStanding",
+        "away.leagueStanding",
+        "startingPitcher",
+        "injuries",
+        "marketOdds"
+      ],
+      "qualityStatus": "INSUFFICIENT",
+      "leakageGuard": {
+        "cutoffTime": "2026-07-27T22:45:00.000Z",
+        "finishedStatusesAccepted": [
+          "FT",
+          "AOT",
+          "AP"
+        ],
+        "targetKstDateGamesExcluded": true,
+        "futureGamesExcluded": true,
+        "inProgressGamesExcluded": true
+      }
+    },
+    {
+      "game": {
+        "externalId": "179604",
+        "commenceTimeUtc": "2026-07-27T23:10:00.000Z",
+        "dateKst": "2026-07-28",
+        "startTimeKst": "08:10",
+        "homeTeam": "New York Mets",
+        "awayTeam": "Atlanta Braves",
+        "status": "Not Started",
+        "league": "MLB",
+        "season": 2026
+      },
+      "analysisCandidate": {
+        "home": {
+          "teamId": 24,
+          "teamName": "New York Mets",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179581",
+                "commenceTimeUtc": "2026-07-25T23:15:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 18,
+                "opponent": "Los Angeles Dodgers",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "externalId": "179567",
+                "commenceTimeUtc": "2026-07-24T23:10:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 18,
+                "opponent": "Los Angeles Dodgers",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "externalId": "179545",
+                "commenceTimeUtc": "2026-07-22T18:10:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 20,
+                "opponent": "Milwaukee Brewers",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 4,
+                "isHome": false
+              },
+              {
+                "externalId": "179531",
+                "commenceTimeUtc": "2026-07-21T23:40:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 20,
+                "opponent": "Milwaukee Brewers",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 0,
+                "isHome": false
+              },
+              {
+                "externalId": "179516",
+                "commenceTimeUtc": "2026-07-20T23:40:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 20,
+                "opponent": "Milwaukee Brewers",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 8,
+                "isHome": false
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "recentForm": {
+            "value": "LLLWL",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 3,
+              "concededAvg": 4
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 51,
+              "wins": 21,
+              "draws": 0,
+              "losses": 30,
+              "winRate": 41.18
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 51,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 54,
+              "wins": 22,
+              "draws": 0,
+              "losses": 32,
+              "winRate": 40.74
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 54,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 40.95,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "loss",
+              "count": 3
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "restDays": {
+            "value": 1,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 105,
+              "wins": 43,
+              "draws": 0,
+              "losses": 62,
+              "runsFor": 424,
+              "runsAgainst": 491
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          }
+        },
+        "away": {
+          "teamId": 3,
+          "teamName": "Atlanta Braves",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179587",
+                "commenceTimeUtc": "2026-07-25T23:05:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 4,
+                "opponent": "Baltimore Orioles",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 3,
+                "isHome": false
+              },
+              {
+                "externalId": "179573",
+                "commenceTimeUtc": "2026-07-24T23:05:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 4,
+                "opponent": "Baltimore Orioles",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 6,
+                "isHome": false
+              },
+              {
+                "externalId": "179557",
+                "commenceTimeUtc": "2026-07-23T16:15:00.000Z",
+                "dateKst": "2026-07-24",
+                "opponentId": 30,
+                "opponent": "San Diego Padres",
+                "result": "W",
+                "scoreFor": 6,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "externalId": "179552",
+                "commenceTimeUtc": "2026-07-22T23:15:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 30,
+                "opponent": "San Diego Padres",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 6,
+                "isHome": true
+              },
+              {
+                "externalId": "179538",
+                "commenceTimeUtc": "2026-07-21T23:15:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 30,
+                "opponent": "San Diego Padres",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 8,
+                "isHome": true
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "recentForm": {
+            "value": "LWWWL",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 5,
+              "concededAvg": 5.6
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 51,
+              "wins": 31,
+              "draws": 0,
+              "losses": 20,
+              "winRate": 60.78
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 51,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 52,
+              "wins": 29,
+              "draws": 0,
+              "losses": 23,
+              "winRate": 55.77
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 52,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 58.25,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "loss",
+              "count": 1
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "restDays": {
+            "value": 2,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 103,
+              "wins": 60,
+              "draws": 0,
+              "losses": 43,
+              "runsFor": 511,
+              "runsAgainst": 406
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          }
+        },
+        "headToHead": {
+          "value": {
+            "played": 5,
+            "homeTeamWins": 3,
+            "awayTeamWins": 2,
+            "draws": 0,
+            "recentMeetings": [
+              {
+                "externalId": "179375",
+                "dateKst": "2026-07-07",
+                "homeTeam": "Atlanta Braves",
+                "awayTeam": "New York Mets",
+                "homeScore": 6,
+                "awayScore": 7
+              },
+              {
+                "externalId": "179365",
+                "dateKst": "2026-07-06",
+                "homeTeam": "Atlanta Braves",
+                "awayTeam": "New York Mets",
+                "homeScore": 9,
+                "awayScore": 10
+              },
+              {
+                "externalId": "179349",
+                "dateKst": "2026-07-05",
+                "homeTeam": "Atlanta Braves",
+                "awayTeam": "New York Mets",
+                "homeScore": 14,
+                "awayScore": 3
+              },
+              {
+                "externalId": "179335",
+                "dateKst": "2026-07-04",
+                "homeTeam": "Atlanta Braves",
+                "awayTeam": "New York Mets",
+                "homeScore": 5,
+                "awayScore": 3
+              },
+              {
+                "externalId": "179075",
+                "dateKst": "2026-06-15",
+                "homeTeam": "New York Mets",
+                "awayTeam": "Atlanta Braves",
+                "homeScore": 8,
+                "awayScore": 1
+              }
+            ]
+          },
+          "available": true,
+          "source": "api-baseball:/games season aggregate (동일 팀 ID)",
+          "sampleSize": 5,
+          "cutoffTime": "2026-07-27T23:10:00.000Z"
+        },
+        "startingPitcher": {
+          "value": null,
+          "available": false,
+          "source": "api-baseball:/games target response",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T23:10:00.000Z"
+        },
+        "marketOdds": {
+          "value": null,
+          "available": false,
+          "source": "the-odds-api",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T23:10:00.000Z"
+        }
+      },
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": false,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "dataAvailability": 0.7,
+      "missingFields": [
+        "home.leagueStanding",
+        "away.leagueStanding",
+        "startingPitcher",
+        "injuries",
+        "marketOdds"
+      ],
+      "qualityStatus": "INSUFFICIENT",
+      "leakageGuard": {
+        "cutoffTime": "2026-07-27T23:10:00.000Z",
+        "finishedStatusesAccepted": [
+          "FT",
+          "AOT",
+          "AP"
+        ],
+        "targetKstDateGamesExcluded": true,
+        "futureGamesExcluded": true,
+        "inProgressGamesExcluded": true
+      }
+    },
+    {
+      "game": {
+        "externalId": "179612",
+        "commenceTimeUtc": "2026-07-27T23:10:00.000Z",
+        "dateKst": "2026-07-28",
+        "startTimeKst": "08:10",
+        "homeTeam": "Cincinnati Reds",
+        "awayTeam": "Cleveland Guardians",
+        "status": "Not Started",
+        "league": "MLB",
+        "season": 2026
+      },
+      "analysisCandidate": {
+        "home": {
+          "teamId": 8,
+          "teamName": "Cincinnati Reds",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179577",
+                "commenceTimeUtc": "2026-07-25T23:15:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 33,
+                "opponent": "St.Louis Cardinals",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 7,
+                "isHome": false
+              },
+              {
+                "externalId": "179563",
+                "commenceTimeUtc": "2026-07-25T00:15:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 33,
+                "opponent": "St.Louis Cardinals",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "externalId": "179542",
+                "commenceTimeUtc": "2026-07-22T19:40:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 32,
+                "opponent": "Seattle Mariners",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 3,
+                "isHome": false
+              },
+              {
+                "externalId": "179528",
+                "commenceTimeUtc": "2026-07-22T01:40:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 32,
+                "opponent": "Seattle Mariners",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "externalId": "179512",
+                "commenceTimeUtc": "2026-07-21T01:40:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 32,
+                "opponent": "Seattle Mariners",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 8,
+                "isHome": false
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "recentForm": {
+            "value": "LWWWL",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 2.6,
+              "concededAvg": 4.4
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 50,
+              "wins": 22,
+              "draws": 0,
+              "losses": 28,
+              "winRate": 44
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 50,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 53,
+              "wins": 26,
+              "draws": 0,
+              "losses": 27,
+              "winRate": 49.06
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 53,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 46.6,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "loss",
+              "count": 1
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "restDays": {
+            "value": 1,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 103,
+              "wins": 48,
+              "draws": 0,
+              "losses": 55,
+              "runsFor": 427,
+              "runsAgainst": 495
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          }
+        },
+        "away": {
+          "teamId": 9,
+          "teamName": "Cleveland Guardians",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179562",
+                "commenceTimeUtc": "2026-07-24T23:10:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 34,
+                "opponent": "Tampa Bay Rays",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 11,
+                "isHome": false
+              },
+              {
+                "externalId": "179556",
+                "commenceTimeUtc": "2026-07-23T17:10:00.000Z",
+                "dateKst": "2026-07-24",
+                "opponentId": 22,
+                "opponent": "Minnesota Twins",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "externalId": "179549",
+                "commenceTimeUtc": "2026-07-22T22:40:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 22,
+                "opponent": "Minnesota Twins",
+                "result": "L",
+                "scoreFor": 6,
+                "scoreAgainst": 10,
+                "isHome": true
+              },
+              {
+                "externalId": "179535",
+                "commenceTimeUtc": "2026-07-21T22:40:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 22,
+                "opponent": "Minnesota Twins",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 2,
+                "isHome": true
+              },
+              {
+                "externalId": "179519",
+                "commenceTimeUtc": "2026-07-20T22:40:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 22,
+                "opponent": "Minnesota Twins",
+                "result": "W",
+                "scoreFor": 13,
+                "scoreAgainst": 4,
+                "isHome": true
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "recentForm": {
+            "value": "LLLWW",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 5.6,
+              "concededAvg": 6
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 53,
+              "wins": 27,
+              "draws": 0,
+              "losses": 26,
+              "winRate": 50.94
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 53,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 52,
+              "wins": 27,
+              "draws": 0,
+              "losses": 25,
+              "winRate": 51.92
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 52,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 51.43,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "loss",
+              "count": 3
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "restDays": {
+            "value": 3,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 105,
+              "wins": 54,
+              "draws": 0,
+              "losses": 51,
+              "runsFor": 420,
+              "runsAgainst": 434
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:10:00.000Z"
+          }
+        },
+        "headToHead": {
+          "value": {
+            "played": 3,
+            "homeTeamWins": 1,
+            "awayTeamWins": 2,
+            "draws": 0,
+            "recentMeetings": [
+              {
+                "externalId": "178708",
+                "dateKst": "2026-05-18",
+                "homeTeam": "Cleveland Guardians",
+                "awayTeam": "Cincinnati Reds",
+                "homeScore": 10,
+                "awayScore": 3
+              },
+              {
+                "externalId": "178693",
+                "dateKst": "2026-05-17",
+                "homeTeam": "Cleveland Guardians",
+                "awayTeam": "Cincinnati Reds",
+                "homeScore": 7,
+                "awayScore": 4
+              },
+              {
+                "externalId": "178674",
+                "dateKst": "2026-05-16",
+                "homeTeam": "Cleveland Guardians",
+                "awayTeam": "Cincinnati Reds",
+                "homeScore": 6,
+                "awayScore": 7
+              }
+            ]
+          },
+          "available": true,
+          "source": "api-baseball:/games season aggregate (동일 팀 ID)",
+          "sampleSize": 3,
+          "cutoffTime": "2026-07-27T23:10:00.000Z"
+        },
+        "startingPitcher": {
+          "value": null,
+          "available": false,
+          "source": "api-baseball:/games target response",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T23:10:00.000Z"
+        },
+        "marketOdds": {
+          "value": null,
+          "available": false,
+          "source": "the-odds-api",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T23:10:00.000Z"
+        }
+      },
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": false,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "dataAvailability": 0.7,
+      "missingFields": [
+        "home.leagueStanding",
+        "away.leagueStanding",
+        "startingPitcher",
+        "injuries",
+        "marketOdds"
+      ],
+      "qualityStatus": "INSUFFICIENT",
+      "leakageGuard": {
+        "cutoffTime": "2026-07-27T23:10:00.000Z",
+        "finishedStatusesAccepted": [
+          "FT",
+          "AOT",
+          "AP"
+        ],
+        "targetKstDateGamesExcluded": true,
+        "futureGamesExcluded": true,
+        "inProgressGamesExcluded": true
+      }
+    },
+    {
+      "game": {
+        "externalId": "179613",
+        "commenceTimeUtc": "2026-07-27T23:40:00.000Z",
+        "dateKst": "2026-07-28",
+        "startTimeKst": "08:40",
+        "homeTeam": "Chicago White Sox",
+        "awayTeam": "New York Yankees",
+        "status": "Not Started",
+        "league": "MLB",
+        "season": 2026
+      },
+      "analysisCandidate": {
+        "home": {
+          "teamId": 7,
+          "teamName": "Chicago White Sox",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179585",
+                "commenceTimeUtc": "2026-07-25T23:10:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 15,
+                "opponent": "Houston Astros",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "externalId": "179571",
+                "commenceTimeUtc": "2026-07-24T23:40:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 15,
+                "opponent": "Houston Astros",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 9,
+                "isHome": true
+              },
+              {
+                "externalId": "179541",
+                "commenceTimeUtc": "2026-07-23T00:05:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 35,
+                "opponent": "Texas Rangers",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "externalId": "179527",
+                "commenceTimeUtc": "2026-07-22T00:05:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 35,
+                "opponent": "Texas Rangers",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 10,
+                "isHome": false
+              },
+              {
+                "externalId": "179511",
+                "commenceTimeUtc": "2026-07-21T00:05:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 35,
+                "opponent": "Texas Rangers",
+                "result": "W",
+                "scoreFor": 10,
+                "scoreAgainst": 3,
+                "isHome": false
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "recentForm": {
+            "value": "LLWLW",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 4,
+              "concededAvg": 5.6
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 50,
+              "wins": 31,
+              "draws": 0,
+              "losses": 19,
+              "winRate": 62
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 50,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 53,
+              "wins": 23,
+              "draws": 0,
+              "losses": 30,
+              "winRate": 43.4
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 53,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 52.43,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "loss",
+              "count": 2
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "restDays": {
+            "value": 2,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 103,
+              "wins": 54,
+              "draws": 0,
+              "losses": 49,
+              "runsFor": 489,
+              "runsAgainst": 452
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          }
+        },
+        "away": {
+          "teamId": 25,
+          "teamName": "New York Yankees",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179559",
+                "commenceTimeUtc": "2026-07-24T22:45:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 27,
+                "opponent": "Philadelphia Phillies",
+                "result": "W",
+                "scoreFor": 1,
+                "scoreAgainst": 0,
+                "isHome": false
+              },
+              {
+                "externalId": "179530",
+                "commenceTimeUtc": "2026-07-22T23:05:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 28,
+                "opponent": "Pittsburgh Pirates",
+                "result": "W",
+                "scoreFor": 2,
+                "scoreAgainst": 0,
+                "isHome": true
+              },
+              {
+                "externalId": "179544",
+                "commenceTimeUtc": "2026-07-22T17:05:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 28,
+                "opponent": "Pittsburgh Pirates",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "externalId": "179514",
+                "commenceTimeUtc": "2026-07-20T23:05:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 28,
+                "opponent": "Pittsburgh Pirates",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "externalId": "179498",
+                "commenceTimeUtc": "2026-07-19T23:20:00.000Z",
+                "dateKst": "2026-07-20",
+                "opponentId": 18,
+                "opponent": "Los Angeles Dodgers",
+                "result": "W",
+                "scoreFor": 2,
+                "scoreAgainst": 1,
+                "isHome": true
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "recentForm": {
+            "value": "WWLWW",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 3.2,
+              "concededAvg": 2.2
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 49,
+              "wins": 26,
+              "draws": 0,
+              "losses": 23,
+              "winRate": 53.06
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 49,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 54,
+              "wins": 32,
+              "draws": 0,
+              "losses": 22,
+              "winRate": 59.26
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 54,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 56.31,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "win",
+              "count": 2
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "restDays": {
+            "value": 3,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 103,
+              "wins": 58,
+              "draws": 0,
+              "losses": 45,
+              "runsFor": 481,
+              "runsAgainst": 392
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:40:00.000Z"
+          }
+        },
+        "headToHead": {
+          "value": {
+            "played": 3,
+            "homeTeamWins": 1,
+            "awayTeamWins": 2,
+            "draws": 0,
+            "recentMeetings": [
+              {
+                "externalId": "179128",
+                "dateKst": "2026-06-19",
+                "homeTeam": "New York Yankees",
+                "awayTeam": "Chicago White Sox",
+                "homeScore": 1,
+                "awayScore": 5
+              },
+              {
+                "externalId": "179116",
+                "dateKst": "2026-06-18",
+                "homeTeam": "New York Yankees",
+                "awayTeam": "Chicago White Sox",
+                "homeScore": 10,
+                "awayScore": 5
+              },
+              {
+                "externalId": "179102",
+                "dateKst": "2026-06-17",
+                "homeTeam": "New York Yankees",
+                "awayTeam": "Chicago White Sox",
+                "homeScore": 12,
+                "awayScore": 2
+              }
+            ]
+          },
+          "available": true,
+          "source": "api-baseball:/games season aggregate (동일 팀 ID)",
+          "sampleSize": 3,
+          "cutoffTime": "2026-07-27T23:40:00.000Z"
+        },
+        "startingPitcher": {
+          "value": null,
+          "available": false,
+          "source": "api-baseball:/games target response",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T23:40:00.000Z"
+        },
+        "marketOdds": {
+          "value": null,
+          "available": false,
+          "source": "the-odds-api",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T23:40:00.000Z"
+        }
+      },
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": false,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "dataAvailability": 0.7,
+      "missingFields": [
+        "home.leagueStanding",
+        "away.leagueStanding",
+        "startingPitcher",
+        "injuries",
+        "marketOdds"
+      ],
+      "qualityStatus": "INSUFFICIENT",
+      "leakageGuard": {
+        "cutoffTime": "2026-07-27T23:40:00.000Z",
+        "finishedStatusesAccepted": [
+          "FT",
+          "AOT",
+          "AP"
+        ],
+        "targetKstDateGamesExcluded": true,
+        "futureGamesExcluded": true,
+        "inProgressGamesExcluded": true
+      }
+    },
+    {
+      "game": {
+        "externalId": "179606",
+        "commenceTimeUtc": "2026-07-27T23:45:00.000Z",
+        "dateKst": "2026-07-28",
+        "startTimeKst": "08:45",
+        "homeTeam": "St.Louis Cardinals",
+        "awayTeam": "Chicago Cubs",
+        "status": "Not Started",
+        "league": "MLB",
+        "season": 2026
+      },
+      "analysisCandidate": {
+        "home": {
+          "teamId": 33,
+          "teamName": "St.Louis Cardinals",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179577",
+                "commenceTimeUtc": "2026-07-25T23:15:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 8,
+                "opponent": "Cincinnati Reds",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 0,
+                "isHome": true
+              },
+              {
+                "externalId": "179563",
+                "commenceTimeUtc": "2026-07-25T00:15:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 8,
+                "opponent": "Cincinnati Reds",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "externalId": "179220",
+                "commenceTimeUtc": "2026-07-23T21:15:00.000Z",
+                "dateKst": "2026-07-24",
+                "opponentId": 2,
+                "opponent": "Arizona Diamondbacks",
+                "result": "L",
+                "scoreFor": 6,
+                "scoreAgainst": 10,
+                "isHome": true
+              },
+              {
+                "externalId": "179546",
+                "commenceTimeUtc": "2026-07-22T20:07:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 17,
+                "opponent": "Los Angeles Angels",
+                "result": "W",
+                "scoreFor": 1,
+                "scoreAgainst": 0,
+                "isHome": false
+              },
+              {
+                "externalId": "179525",
+                "commenceTimeUtc": "2026-07-22T01:38:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 17,
+                "opponent": "Los Angeles Angels",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 5,
+                "isHome": false
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "recentForm": {
+            "value": "WLLWL",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 3.4,
+              "concededAvg": 3.8
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 55,
+              "wins": 27,
+              "draws": 0,
+              "losses": 28,
+              "winRate": 49.09
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 55,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 49,
+              "wins": 26,
+              "draws": 0,
+              "losses": 23,
+              "winRate": 53.06
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 49,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 50.96,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "win",
+              "count": 1
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "restDays": {
+            "value": 2,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 104,
+              "wins": 53,
+              "draws": 0,
+              "losses": 51,
+              "runsFor": 463,
+              "runsAgainst": 462
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          }
+        },
+        "away": {
+          "teamId": 6,
+          "teamName": "Chicago Cubs",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179565",
+                "commenceTimeUtc": "2026-07-24T22:40:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 28,
+                "opponent": "Pittsburgh Pirates",
+                "result": "W",
+                "scoreFor": 3,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "externalId": "179550",
+                "commenceTimeUtc": "2026-07-23T00:10:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 12,
+                "opponent": "Detroit Tigers",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "externalId": "179536",
+                "commenceTimeUtc": "2026-07-22T00:05:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 12,
+                "opponent": "Detroit Tigers",
+                "result": "W",
+                "scoreFor": 11,
+                "scoreAgainst": 2,
+                "isHome": true
+              },
+              {
+                "externalId": "179520",
+                "commenceTimeUtc": "2026-07-21T00:05:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 12,
+                "opponent": "Detroit Tigers",
+                "result": "L",
+                "scoreFor": 6,
+                "scoreAgainst": 8,
+                "isHome": true
+              },
+              {
+                "externalId": "179505",
+                "commenceTimeUtc": "2026-07-19T18:20:00.000Z",
+                "dateKst": "2026-07-20",
+                "opponentId": 22,
+                "opponent": "Minnesota Twins",
+                "result": "W",
+                "scoreFor": 10,
+                "scoreAgainst": 1,
+                "isHome": true
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "recentForm": {
+            "value": "WLWLW",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 6.2,
+              "concededAvg": 3.6
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 52,
+              "wins": 30,
+              "draws": 0,
+              "losses": 22,
+              "winRate": 57.69
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 52,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 51,
+              "wins": 28,
+              "draws": 0,
+              "losses": 23,
+              "winRate": 54.9
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 51,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 56.31,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "win",
+              "count": 1
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "restDays": {
+            "value": 3,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 103,
+              "wins": 58,
+              "draws": 0,
+              "losses": 45,
+              "runsFor": 523,
+              "runsAgainst": 457
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-27T23:45:00.000Z"
+          }
+        },
+        "headToHead": {
+          "value": {
+            "played": 5,
+            "homeTeamWins": 3,
+            "awayTeamWins": 2,
+            "draws": 0,
+            "recentMeetings": [
+              {
+                "externalId": "179364",
+                "dateKst": "2026-07-06",
+                "homeTeam": "Chicago Cubs",
+                "awayTeam": "St.Louis Cardinals",
+                "homeScore": 6,
+                "awayScore": 4
+              },
+              {
+                "externalId": "179348",
+                "dateKst": "2026-07-05",
+                "homeTeam": "Chicago Cubs",
+                "awayTeam": "St.Louis Cardinals",
+                "homeScore": 0,
+                "awayScore": 3
+              },
+              {
+                "externalId": "179334",
+                "dateKst": "2026-07-04",
+                "homeTeam": "Chicago Cubs",
+                "awayTeam": "St.Louis Cardinals",
+                "homeScore": 1,
+                "awayScore": 17
+              },
+              {
+                "externalId": "178898",
+                "dateKst": "2026-06-01",
+                "homeTeam": "St.Louis Cardinals",
+                "awayTeam": "Chicago Cubs",
+                "homeScore": 5,
+                "awayScore": 1
+              },
+              {
+                "externalId": "178876",
+                "dateKst": "2026-05-31",
+                "homeTeam": "St.Louis Cardinals",
+                "awayTeam": "Chicago Cubs",
+                "homeScore": 1,
+                "awayScore": 6
+              }
+            ]
+          },
+          "available": true,
+          "source": "api-baseball:/games season aggregate (동일 팀 ID)",
+          "sampleSize": 5,
+          "cutoffTime": "2026-07-27T23:45:00.000Z"
+        },
+        "startingPitcher": {
+          "value": null,
+          "available": false,
+          "source": "api-baseball:/games target response",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T23:45:00.000Z"
+        },
+        "marketOdds": {
+          "value": null,
+          "available": false,
+          "source": "the-odds-api",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-27T23:45:00.000Z"
+        }
+      },
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": false,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "dataAvailability": 0.7,
+      "missingFields": [
+        "home.leagueStanding",
+        "away.leagueStanding",
+        "startingPitcher",
+        "injuries",
+        "marketOdds"
+      ],
+      "qualityStatus": "INSUFFICIENT",
+      "leakageGuard": {
+        "cutoffTime": "2026-07-27T23:45:00.000Z",
+        "finishedStatusesAccepted": [
+          "FT",
+          "AOT",
+          "AP"
+        ],
+        "targetKstDateGamesExcluded": true,
+        "futureGamesExcluded": true,
+        "inProgressGamesExcluded": true
+      }
+    },
+    {
+      "game": {
+        "externalId": "179615",
+        "commenceTimeUtc": "2026-07-28T01:38:00.000Z",
+        "dateKst": "2026-07-28",
+        "startTimeKst": "10:38",
+        "homeTeam": "Los Angeles Angels",
+        "awayTeam": "Houston Astros",
+        "status": "Not Started",
+        "league": "MLB",
+        "season": 2026
+      },
+      "analysisCandidate": {
+        "home": {
+          "teamId": 17,
+          "teamName": "Los Angeles Angels",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179578",
+                "commenceTimeUtc": "2026-07-25T20:05:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 31,
+                "opponent": "San Francisco Giants",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 9,
+                "isHome": false
+              },
+              {
+                "externalId": "179564",
+                "commenceTimeUtc": "2026-07-25T02:15:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 31,
+                "opponent": "San Francisco Giants",
+                "result": "L",
+                "scoreFor": 6,
+                "scoreAgainst": 7,
+                "isHome": false
+              },
+              {
+                "externalId": "179546",
+                "commenceTimeUtc": "2026-07-22T20:07:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 33,
+                "opponent": "St.Louis Cardinals",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 1,
+                "isHome": true
+              },
+              {
+                "externalId": "179525",
+                "commenceTimeUtc": "2026-07-22T01:38:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 33,
+                "opponent": "St.Louis Cardinals",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 1,
+                "isHome": true
+              },
+              {
+                "externalId": "179515",
+                "commenceTimeUtc": "2026-07-21T02:10:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 33,
+                "opponent": "St.Louis Cardinals",
+                "result": "W",
+                "scoreFor": 3,
+                "scoreAgainst": 2,
+                "isHome": true
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "recentForm": {
+            "value": "LLLWW",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 3.2,
+              "concededAvg": 4
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 52,
+              "wins": 24,
+              "draws": 0,
+              "losses": 28,
+              "winRate": 46.15
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 52,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 53,
+              "wins": 17,
+              "draws": 0,
+              "losses": 36,
+              "winRate": 32.08
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 53,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 39.05,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "loss",
+              "count": 3
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "restDays": {
+            "value": 2,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 105,
+              "wins": 41,
+              "draws": 0,
+              "losses": 64,
+              "runsFor": 450,
+              "runsAgainst": 516
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 105,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          }
+        },
+        "away": {
+          "teamId": 15,
+          "teamName": "Houston Astros",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179585",
+                "commenceTimeUtc": "2026-07-25T23:10:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 7,
+                "opponent": "Chicago White Sox",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 1,
+                "isHome": false
+              },
+              {
+                "externalId": "179571",
+                "commenceTimeUtc": "2026-07-24T23:40:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 7,
+                "opponent": "Chicago White Sox",
+                "result": "W",
+                "scoreFor": 9,
+                "scoreAgainst": 5,
+                "isHome": false
+              },
+              {
+                "externalId": "179554",
+                "commenceTimeUtc": "2026-07-23T00:10:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 19,
+                "opponent": "Miami Marlins",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 2,
+                "isHome": true
+              },
+              {
+                "externalId": "179532",
+                "commenceTimeUtc": "2026-07-22T00:10:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 19,
+                "opponent": "Miami Marlins",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "externalId": "179524",
+                "commenceTimeUtc": "2026-07-21T00:10:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 19,
+                "opponent": "Miami Marlins",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 5,
+                "isHome": true
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "recentForm": {
+            "value": "WWWWW",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 6.2,
+              "concededAvg": 3.2
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 53,
+              "wins": 26,
+              "draws": 0,
+              "losses": 27,
+              "winRate": 49.06
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 53,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 53,
+              "wins": 26,
+              "draws": 0,
+              "losses": 27,
+              "winRate": 49.06
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 53,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 49.06,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 106,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "win",
+              "count": 5
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 106,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "restDays": {
+            "value": 2,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 106,
+              "wins": 52,
+              "draws": 0,
+              "losses": 54,
+              "runsFor": 486,
+              "runsAgainst": 524
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 106,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-28T01:38:00.000Z"
+          }
+        },
+        "headToHead": {
+          "value": {
+            "played": 5,
+            "homeTeamWins": 2,
+            "awayTeamWins": 3,
+            "draws": 0,
+            "recentMeetings": [
+              {
+                "externalId": "179025",
+                "dateKst": "2026-06-11",
+                "homeTeam": "Los Angeles Angels",
+                "awayTeam": "Houston Astros",
+                "homeScore": 3,
+                "awayScore": 2
+              },
+              {
+                "externalId": "179010",
+                "dateKst": "2026-06-10",
+                "homeTeam": "Los Angeles Angels",
+                "awayTeam": "Houston Astros",
+                "homeScore": 10,
+                "awayScore": 1
+              },
+              {
+                "externalId": "178998",
+                "dateKst": "2026-06-09",
+                "homeTeam": "Los Angeles Angels",
+                "awayTeam": "Houston Astros",
+                "homeScore": 4,
+                "awayScore": 5
+              },
+              {
+                "externalId": "178053",
+                "dateKst": "2026-03-30",
+                "homeTeam": "Houston Astros",
+                "awayTeam": "Los Angeles Angels",
+                "homeScore": 9,
+                "awayScore": 7
+              },
+              {
+                "externalId": "178040",
+                "dateKst": "2026-03-29",
+                "homeTeam": "Houston Astros",
+                "awayTeam": "Los Angeles Angels",
+                "homeScore": 11,
+                "awayScore": 9
+              }
+            ]
+          },
+          "available": true,
+          "source": "api-baseball:/games season aggregate (동일 팀 ID)",
+          "sampleSize": 5,
+          "cutoffTime": "2026-07-28T01:38:00.000Z"
+        },
+        "startingPitcher": {
+          "value": null,
+          "available": false,
+          "source": "api-baseball:/games target response",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-28T01:38:00.000Z"
+        },
+        "marketOdds": {
+          "value": null,
+          "available": false,
+          "source": "the-odds-api",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-28T01:38:00.000Z"
+        }
+      },
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": false,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "dataAvailability": 0.7,
+      "missingFields": [
+        "home.leagueStanding",
+        "away.leagueStanding",
+        "startingPitcher",
+        "injuries",
+        "marketOdds"
+      ],
+      "qualityStatus": "INSUFFICIENT",
+      "leakageGuard": {
+        "cutoffTime": "2026-07-28T01:38:00.000Z",
+        "finishedStatusesAccepted": [
+          "FT",
+          "AOT",
+          "AP"
+        ],
+        "targetKstDateGamesExcluded": true,
+        "futureGamesExcluded": true,
+        "inProgressGamesExcluded": true
+      }
+    },
+    {
+      "game": {
+        "externalId": "179614",
+        "commenceTimeUtc": "2026-07-28T01:40:00.000Z",
+        "dateKst": "2026-07-28",
+        "startTimeKst": "10:40",
+        "homeTeam": "Athletics",
+        "awayTeam": "Boston Red Sox",
+        "status": "Not Started",
+        "league": "MLB",
+        "season": 2026
+      },
+      "analysisCandidate": {
+        "home": {
+          "teamId": 963,
+          "teamName": "Athletics",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179588",
+                "commenceTimeUtc": "2026-07-25T23:10:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 22,
+                "opponent": "Minnesota Twins",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 2,
+                "isHome": false
+              },
+              {
+                "externalId": "179568",
+                "commenceTimeUtc": "2026-07-25T00:10:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 22,
+                "opponent": "Minnesota Twins",
+                "result": "W",
+                "scoreFor": 2,
+                "scoreAgainst": 0,
+                "isHome": false
+              },
+              {
+                "externalId": "179553",
+                "commenceTimeUtc": "2026-07-22T19:40:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 2,
+                "opponent": "Arizona Diamondbacks",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 15,
+                "isHome": false
+              },
+              {
+                "externalId": "179539",
+                "commenceTimeUtc": "2026-07-22T01:40:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 2,
+                "opponent": "Arizona Diamondbacks",
+                "result": "L",
+                "scoreFor": 5,
+                "scoreAgainst": 6,
+                "isHome": false
+              },
+              {
+                "externalId": "179523",
+                "commenceTimeUtc": "2026-07-21T01:40:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 2,
+                "opponent": "Arizona Diamondbacks",
+                "result": "W",
+                "scoreFor": 5,
+                "scoreAgainst": 2,
+                "isHome": false
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "recentForm": {
+            "value": "LWLLW",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 3.4,
+              "concededAvg": 5
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 50,
+              "wins": 20,
+              "draws": 0,
+              "losses": 30,
+              "winRate": 40
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 50,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 54,
+              "wins": 24,
+              "draws": 0,
+              "losses": 30,
+              "winRate": 44.44
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 54,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 42.31,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "loss",
+              "count": 1
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "restDays": {
+            "value": 2,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 104,
+              "wins": 44,
+              "draws": 0,
+              "losses": 60,
+              "runsFor": 460,
+              "runsAgainst": 582
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          }
+        },
+        "away": {
+          "teamId": 5,
+          "teamName": "Boston Red Sox",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179586",
+                "commenceTimeUtc": "2026-07-25T20:10:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 36,
+                "opponent": "Toronto Blue Jays",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 6,
+                "isHome": true
+              },
+              {
+                "externalId": "179572",
+                "commenceTimeUtc": "2026-07-24T23:15:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 36,
+                "opponent": "Toronto Blue Jays",
+                "result": "W",
+                "scoreFor": 6,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "externalId": "179551",
+                "commenceTimeUtc": "2026-07-22T23:10:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 4,
+                "opponent": "Baltimore Orioles",
+                "result": "L",
+                "scoreFor": 1,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "externalId": "179537",
+                "commenceTimeUtc": "2026-07-22T17:35:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 4,
+                "opponent": "Baltimore Orioles",
+                "result": "W",
+                "scoreFor": 6,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "externalId": "179521",
+                "commenceTimeUtc": "2026-07-20T23:10:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 4,
+                "opponent": "Baltimore Orioles",
+                "result": "W",
+                "scoreFor": 6,
+                "scoreAgainst": 5,
+                "isHome": true
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "recentForm": {
+            "value": "LWLWW",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 3.8,
+              "concededAvg": 4.6
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 53,
+              "wins": 24,
+              "draws": 0,
+              "losses": 29,
+              "winRate": 45.28
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 53,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 50,
+              "wins": 29,
+              "draws": 0,
+              "losses": 21,
+              "winRate": 58
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 50,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 51.46,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "loss",
+              "count": 1
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "restDays": {
+            "value": 2,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 103,
+              "wins": 53,
+              "draws": 0,
+              "losses": 50,
+              "runsFor": 432,
+              "runsAgainst": 391
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 103,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-28T01:40:00.000Z"
+          }
+        },
+        "headToHead": {
+          "value": {
+            "played": 0,
+            "homeTeamWins": 0,
+            "awayTeamWins": 0,
+            "draws": 0,
+            "recentMeetings": []
+          },
+          "available": true,
+          "source": "api-baseball:/games season aggregate (동일 팀 ID)",
+          "sampleSize": 0,
+          "cutoffTime": "2026-07-28T01:40:00.000Z"
+        },
+        "startingPitcher": {
+          "value": null,
+          "available": false,
+          "source": "api-baseball:/games target response",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-28T01:40:00.000Z"
+        },
+        "marketOdds": {
+          "value": null,
+          "available": false,
+          "source": "the-odds-api",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-28T01:40:00.000Z"
+        }
+      },
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": false,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "dataAvailability": 0.7,
+      "missingFields": [
+        "home.leagueStanding",
+        "away.leagueStanding",
+        "startingPitcher",
+        "injuries",
+        "marketOdds"
+      ],
+      "qualityStatus": "INSUFFICIENT",
+      "leakageGuard": {
+        "cutoffTime": "2026-07-28T01:40:00.000Z",
+        "finishedStatusesAccepted": [
+          "FT",
+          "AOT",
+          "AP"
+        ],
+        "targetKstDateGamesExcluded": true,
+        "futureGamesExcluded": true,
+        "inProgressGamesExcluded": true
+      }
+    },
+    {
+      "game": {
+        "externalId": "179607",
+        "commenceTimeUtc": "2026-07-28T01:45:00.000Z",
+        "dateKst": "2026-07-28",
+        "startTimeKst": "10:45",
+        "homeTeam": "San Francisco Giants",
+        "awayTeam": "Milwaukee Brewers",
+        "status": "Not Started",
+        "league": "MLB",
+        "season": 2026
+      },
+      "analysisCandidate": {
+        "home": {
+          "teamId": 31,
+          "teamName": "San Francisco Giants",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179578",
+                "commenceTimeUtc": "2026-07-25T20:05:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 17,
+                "opponent": "Los Angeles Angels",
+                "result": "W",
+                "scoreFor": 9,
+                "scoreAgainst": 2,
+                "isHome": true
+              },
+              {
+                "externalId": "179564",
+                "commenceTimeUtc": "2026-07-25T02:15:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 17,
+                "opponent": "Los Angeles Angels",
+                "result": "W",
+                "scoreFor": 7,
+                "scoreAgainst": 6,
+                "isHome": true
+              },
+              {
+                "externalId": "179547",
+                "commenceTimeUtc": "2026-07-22T18:10:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 16,
+                "opponent": "Kansas City Royals",
+                "result": "L",
+                "scoreFor": 4,
+                "scoreAgainst": 5,
+                "isHome": false
+              },
+              {
+                "externalId": "179533",
+                "commenceTimeUtc": "2026-07-21T23:40:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 16,
+                "opponent": "Kansas City Royals",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 3,
+                "isHome": false
+              },
+              {
+                "externalId": "179517",
+                "commenceTimeUtc": "2026-07-20T23:40:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 16,
+                "opponent": "Kansas City Royals",
+                "result": "L",
+                "scoreFor": 3,
+                "scoreAgainst": 4,
+                "isHome": false
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "recentForm": {
+            "value": "WWLLL",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 5,
+              "concededAvg": 4
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 49,
+              "wins": 24,
+              "draws": 0,
+              "losses": 25,
+              "winRate": 48.98
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 49,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 55,
+              "wins": 20,
+              "draws": 0,
+              "losses": 35,
+              "winRate": 36.36
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 55,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 42.31,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "win",
+              "count": 2
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "restDays": {
+            "value": 2,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 104,
+              "wins": 44,
+              "draws": 0,
+              "losses": 60,
+              "runsFor": 433,
+              "runsAgainst": 489
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          }
+        },
+        "away": {
+          "teamId": 20,
+          "teamName": "Milwaukee Brewers",
+          "recentGames": {
+            "value": [
+              {
+                "externalId": "179582",
+                "commenceTimeUtc": "2026-07-25T23:10:00.000Z",
+                "dateKst": "2026-07-26",
+                "opponentId": 10,
+                "opponent": "Colorado Rockies",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "externalId": "179569",
+                "commenceTimeUtc": "2026-07-24T20:10:00.000Z",
+                "dateKst": "2026-07-25",
+                "opponentId": 10,
+                "opponent": "Colorado Rockies",
+                "result": "L",
+                "scoreFor": 2,
+                "scoreAgainst": 5,
+                "isHome": true
+              },
+              {
+                "externalId": "179545",
+                "commenceTimeUtc": "2026-07-22T18:10:00.000Z",
+                "dateKst": "2026-07-23",
+                "opponentId": 24,
+                "opponent": "New York Mets",
+                "result": "W",
+                "scoreFor": 4,
+                "scoreAgainst": 3,
+                "isHome": true
+              },
+              {
+                "externalId": "179531",
+                "commenceTimeUtc": "2026-07-21T23:40:00.000Z",
+                "dateKst": "2026-07-22",
+                "opponentId": 24,
+                "opponent": "New York Mets",
+                "result": "L",
+                "scoreFor": 0,
+                "scoreAgainst": 4,
+                "isHome": true
+              },
+              {
+                "externalId": "179516",
+                "commenceTimeUtc": "2026-07-20T23:40:00.000Z",
+                "dateKst": "2026-07-21",
+                "opponentId": 24,
+                "opponent": "New York Mets",
+                "result": "W",
+                "scoreFor": 8,
+                "scoreAgainst": 3,
+                "isHome": true
+              }
+            ],
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "recentForm": {
+            "value": "WLWLW",
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "scoringAverages": {
+            "value": {
+              "scoredAvg": 4.4,
+              "concededAvg": 4
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 5,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "homeRecord": {
+            "value": {
+              "played": 55,
+              "wins": 35,
+              "draws": 0,
+              "losses": 20,
+              "winRate": 63.64
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 55,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "awayRecord": {
+            "value": {
+              "played": 49,
+              "wins": 30,
+              "draws": 0,
+              "losses": 19,
+              "winRate": 61.22
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 49,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "seasonWinRate": {
+            "value": 62.5,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "streak": {
+            "value": {
+              "type": "win",
+              "count": 1
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "restDays": {
+            "value": 2,
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season}",
+            "sampleSize": 1,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "standing": {
+            "value": null,
+            "available": false,
+            "source": "api-baseball:/standings?league={id}&season={season}",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "teamStatistics": {
+            "value": {
+              "played": 104,
+              "wins": 65,
+              "draws": 0,
+              "losses": 39,
+              "runsFor": 524,
+              "runsAgainst": 391
+            },
+            "available": true,
+            "source": "api-baseball:/games?league={id}&season={season} (로컬 집계; 팀별 endpoint 반복 호출 없음)",
+            "sampleSize": 104,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          },
+          "injuries": {
+            "value": null,
+            "available": false,
+            "source": "API-BASEBALL 공식 MLB 응답에서 사용 가능한 injuries endpoint 확인 안 됨",
+            "sampleSize": null,
+            "cutoffTime": "2026-07-28T01:45:00.000Z"
+          }
+        },
+        "headToHead": {
+          "value": {
+            "played": 4,
+            "homeTeamWins": 2,
+            "awayTeamWins": 2,
+            "draws": 0,
+            "recentMeetings": [
+              {
+                "externalId": "178941",
+                "dateKst": "2026-06-05",
+                "homeTeam": "Milwaukee Brewers",
+                "awayTeam": "San Francisco Giants",
+                "homeScore": 9,
+                "awayScore": 12
+              },
+              {
+                "externalId": "178934",
+                "dateKst": "2026-06-04",
+                "homeTeam": "Milwaukee Brewers",
+                "awayTeam": "San Francisco Giants",
+                "homeScore": 0,
+                "awayScore": 1
+              },
+              {
+                "externalId": "178919",
+                "dateKst": "2026-06-03",
+                "homeTeam": "Milwaukee Brewers",
+                "awayTeam": "San Francisco Giants",
+                "homeScore": 8,
+                "awayScore": 3
+              },
+              {
+                "externalId": "178907",
+                "dateKst": "2026-06-02",
+                "homeTeam": "Milwaukee Brewers",
+                "awayTeam": "San Francisco Giants",
+                "homeScore": 16,
+                "awayScore": 2
+              }
+            ]
+          },
+          "available": true,
+          "source": "api-baseball:/games season aggregate (동일 팀 ID)",
+          "sampleSize": 4,
+          "cutoffTime": "2026-07-28T01:45:00.000Z"
+        },
+        "startingPitcher": {
+          "value": null,
+          "available": false,
+          "source": "api-baseball:/games target response",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-28T01:45:00.000Z"
+        },
+        "marketOdds": {
+          "value": null,
+          "available": false,
+          "source": "the-odds-api",
+          "sampleSize": null,
+          "cutoffTime": "2026-07-28T01:45:00.000Z"
+        }
+      },
+      "factorAvailability": {
+        "recentForm": true,
+        "homeAway": true,
+        "scoring": true,
+        "defense": true,
+        "leagueStanding": false,
+        "headToHead": true,
+        "rest": true,
+        "injuries": false,
+        "streak": true,
+        "startingPitcher": false
+      },
+      "dataAvailability": 0.7,
+      "missingFields": [
+        "home.leagueStanding",
+        "away.leagueStanding",
+        "startingPitcher",
+        "injuries",
+        "marketOdds"
+      ],
+      "qualityStatus": "INSUFFICIENT",
+      "leakageGuard": {
+        "cutoffTime": "2026-07-28T01:45:00.000Z",
+        "finishedStatusesAccepted": [
+          "FT",
+          "AOT",
+          "AP"
+        ],
+        "targetKstDateGamesExcluded": true,
+        "futureGamesExcluded": true,
+        "inProgressGamesExcluded": true
+      }
+    }
+  ]
+}

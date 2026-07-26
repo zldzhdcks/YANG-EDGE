@@ -1,0 +1,291 @@
+{
+  "meta": {
+    "version": "mlb-purchase-cutoff-review-v1",
+    "generatedAt": "2026-07-26T14:47:23.371Z",
+    "generatedAtKst": "2026-07-26 23:47 KST",
+    "targetDateKst": "2026-07-27",
+    "kind": "purchase-cutoff-review",
+    "timeZone": "Asia/Seoul",
+    "engineRerun": false,
+    "baselinePickChanged": false,
+    "modelProbabilityChanged": false,
+    "finalClassificationLogicChanged": false,
+    "inputs": {
+      "finalLines": "data/watchlists/2026-07-27-mlb-final-lines.json",
+      "lineRecheck": "data/watchlists/2026-07-27-mlb-line-recheck.json",
+      "watchlist": "data/watchlists/2026-07-27-mlb.json"
+    },
+    "purchasePolicy": {
+      "openKst": "08:00",
+      "closeKst": "23:00",
+      "recommendedFinalReviewKst": "22:30",
+      "decisionCompleteDeadlineKst": "22:50",
+      "officialSalesCloseKst": null,
+      "officialCloseVerified": false,
+      "officialCloseNote": "실제 Betman 회차 마감 데이터 미연결 — 회차별 공식 발매 마감을 확인하지 못함. 23:00까지 무조건 구매 가능하다고 단정하지 않는다.",
+      "dawnGameRule": "새벽 경기는 전날 23:00 이전에 최종 분류. 기존 01:10/01:40/05:20 재확인 시각은 구매용으로 사용 금지.",
+      "afterCutoffRule": "23:00 이후 데이터는 사후 연구용(researchOnly)이며 구매 결정에 사용하지 않는다."
+    },
+    "deterministic": true
+  },
+  "userFacing": {
+    "purchaseDecisionDeadline": "국내 구매 판단 마감: 22:50 KST",
+    "salesCloseBasis": "판매 종료 기준: 23:00 KST",
+    "officialCloseWarning": "공식 회차별 마감 미확인",
+    "afterCutoffNote": "마감 이후 변경 데이터는 참고용",
+    "emptyLineMessage": "구매 가능 시간 내 기준을 충족한 MLB 라인이 없습니다."
+  },
+  "summary": {
+    "totalGames": 5,
+    "PURCHASE_REVIEW": 0,
+    "PURCHASE_HOLD": 0,
+    "PURCHASE_DROP": 5,
+    "statusCounts": {
+      "DECISION_BEFORE_CUTOFF": 0,
+      "EARLY_DECISION_REQUIRED": 1,
+      "NO_PURCHASE_WINDOW": 4
+    },
+    "lineupUnavailableBeforeCutoff": [
+      {
+        "gameId": "mlb-179589",
+        "match": "New York Yankees @ Philadelphia Phillies",
+        "lineupStatus": "LINEUP_NOT_PUBLISHED"
+      },
+      {
+        "gameId": "mlb-179597",
+        "match": "Los Angeles Dodgers @ New York Mets",
+        "lineupStatus": "LINEUP_PARTIAL"
+      },
+      {
+        "gameId": "mlb-179599",
+        "match": "San Diego Padres @ Miami Marlins",
+        "lineupStatus": "LINEUP_PARTIAL"
+      },
+      {
+        "gameId": "mlb-179601",
+        "match": "Houston Astros @ Chicago White Sox",
+        "lineupStatus": "LINEUP_NOT_PUBLISHED"
+      }
+    ],
+    "officialCloseUnverifiedAllGames": true
+  },
+  "games": [
+    {
+      "gameId": "mlb-179589",
+      "match": "New York Yankees @ Philadelphia Phillies",
+      "baselinePick": "New York Yankees",
+      "finalClassification": "FINAL_DROP",
+      "purchaseClassification": "PURCHASE_DROP",
+      "purchaseReasons": [
+        "이전 line-recheck DROP 유지 (투수 CONFLICTS_BASELINE)",
+        "HOLD 재조회 대상 아님"
+      ],
+      "latestBestOdds": null,
+      "currentValueEdge": null,
+      "starterStatus": "STARTER_UNKNOWN",
+      "pitcherDirection": "CONFLICTS_BASELINE",
+      "lineupStatus": "LINEUP_NOT_PUBLISHED",
+      "schedule": {
+        "gameStartKst": "2026-07-27 08:20 KST",
+        "gameStartMs": 1785108000000,
+        "idealRecheckKst": "2026-07-27 05:20 KST",
+        "purchaseFinalReviewKst": "2026-07-27 05:20 KST",
+        "purchaseDecisionDeadlineKst": "2026-07-27 05:20 KST",
+        "purchaseCutoffKst": "2026-07-27 23:00 KST",
+        "purchaseCutoffMs": 1785160800000,
+        "officialSalesCloseKst": null,
+        "officialCloseVerified": false,
+        "finalActionDeadlineKst": "2026-07-27 05:20 KST",
+        "finalActionDeadlineMs": 1785097200000,
+        "minutesBeforeGameAtDeadline": 180,
+        "pulledBeforeCutoff": false,
+        "status": "EARLY_DECISION_REQUIRED",
+        "flags": [
+          "OFFICIAL_CLOSE_UNVERIFIED",
+          "DEADLINE_BEFORE_SALES_OPEN",
+          "LINEUP_UNAVAILABLE_BEFORE_PURCHASE_CUTOFF"
+        ],
+        "researchOnly": false,
+        "notes": [
+          "공식 회차별 발매 마감 미확인 — 23:00까지 무조건 구매 가능하다고 단정하지 않는다.",
+          "판단 마감이 판매 개시(08:00) 이전 — 실질 구매 가능 구간이 매우 짧거나 없음.",
+          "구매 마감 전 라인업 미공개 — 라인업을 기다리느라 23:00을 넘기지 않는다. 불완전한 상태에서 일찍 결정해야 한다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179592",
+      "match": "Cleveland Guardians @ Tampa Bay Rays",
+      "baselinePick": "Tampa Bay Rays",
+      "finalClassification": "FINAL_HOLD",
+      "purchaseClassification": "PURCHASE_DROP",
+      "purchaseReasons": [
+        "구매 판단 마감 경과 — 사후 연구용 (researchOnly)",
+        "기존 분류 FINAL_HOLD 참고: 투수 방향 MIXED; 최근 배당 불리 이동; 핵심 정보 누락"
+      ],
+      "latestBestOdds": 1.89,
+      "currentValueEdge": 10,
+      "starterStatus": "STARTER_STABLE",
+      "pitcherDirection": "MIXED",
+      "lineupStatus": "LINEUP_COMPLETE",
+      "schedule": {
+        "gameStartKst": "2026-07-27 01:15 KST",
+        "gameStartMs": 1785082500000,
+        "idealRecheckKst": "2026-07-26 23:35 KST",
+        "purchaseFinalReviewKst": "2026-07-26 22:30 KST",
+        "purchaseDecisionDeadlineKst": "2026-07-26 22:50 KST",
+        "purchaseCutoffKst": "2026-07-26 23:00 KST",
+        "purchaseCutoffMs": 1785074400000,
+        "officialSalesCloseKst": null,
+        "officialCloseVerified": false,
+        "finalActionDeadlineKst": "2026-07-26 22:50 KST",
+        "finalActionDeadlineMs": 1785073800000,
+        "minutesBeforeGameAtDeadline": 145,
+        "pulledBeforeCutoff": true,
+        "status": "NO_PURCHASE_WINDOW",
+        "flags": [
+          "OFFICIAL_CLOSE_UNVERIFIED",
+          "IDEAL_RECHECK_AFTER_CUTOFF_PULLED"
+        ],
+        "researchOnly": true,
+        "notes": [
+          "공식 회차별 발매 마감 미확인 — 23:00까지 무조건 구매 가능하다고 단정하지 않는다.",
+          "경기 기준 재확인 시각이 구매 마감(23:00) 이후라 22:30(조회)/22:50(판단 완료)로 당김.",
+          "23:00 이후 데이터는 사후 연구용이며 구매 결정에 사용하지 않는다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179597",
+      "match": "Los Angeles Dodgers @ New York Mets",
+      "baselinePick": "Los Angeles Dodgers",
+      "finalClassification": "FINAL_HOLD",
+      "purchaseClassification": "PURCHASE_DROP",
+      "purchaseReasons": [
+        "구매 판단 마감 경과 — 사후 연구용 (researchOnly)",
+        "기존 분류 FINAL_HOLD 참고: 투수 방향 MIXED; 라인업 LINEUP_PARTIAL; 핵심 정보 누락"
+      ],
+      "latestBestOdds": 1.67,
+      "currentValueEdge": 4,
+      "starterStatus": "STARTER_STABLE",
+      "pitcherDirection": "MIXED",
+      "lineupStatus": "LINEUP_PARTIAL",
+      "schedule": {
+        "gameStartKst": "2026-07-27 02:40 KST",
+        "gameStartMs": 1785087600000,
+        "idealRecheckKst": "2026-07-27 01:10 KST",
+        "purchaseFinalReviewKst": "2026-07-26 22:30 KST",
+        "purchaseDecisionDeadlineKst": "2026-07-26 22:50 KST",
+        "purchaseCutoffKst": "2026-07-26 23:00 KST",
+        "purchaseCutoffMs": 1785074400000,
+        "officialSalesCloseKst": null,
+        "officialCloseVerified": false,
+        "finalActionDeadlineKst": "2026-07-26 22:50 KST",
+        "finalActionDeadlineMs": 1785073800000,
+        "minutesBeforeGameAtDeadline": 230,
+        "pulledBeforeCutoff": true,
+        "status": "NO_PURCHASE_WINDOW",
+        "flags": [
+          "OFFICIAL_CLOSE_UNVERIFIED",
+          "IDEAL_RECHECK_AFTER_CUTOFF_PULLED",
+          "LINEUP_UNAVAILABLE_BEFORE_PURCHASE_CUTOFF"
+        ],
+        "researchOnly": true,
+        "notes": [
+          "공식 회차별 발매 마감 미확인 — 23:00까지 무조건 구매 가능하다고 단정하지 않는다.",
+          "경기 기준 재확인 시각이 구매 마감(23:00) 이후라 22:30(조회)/22:50(판단 완료)로 당김.",
+          "23:00 이후 데이터는 사후 연구용이며 구매 결정에 사용하지 않는다.",
+          "구매 마감 전 라인업 미공개 — 라인업을 기다리느라 23:00을 넘기지 않는다. 불완전한 상태에서 일찍 결정해야 한다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179599",
+      "match": "San Diego Padres @ Miami Marlins",
+      "baselinePick": "San Diego Padres",
+      "finalClassification": "FINAL_HOLD",
+      "purchaseClassification": "PURCHASE_DROP",
+      "purchaseReasons": [
+        "구매 판단 마감 경과 — 사후 연구용 (researchOnly)",
+        "기존 분류 FINAL_HOLD 참고: 투수 방향 MIXED; 라인업 LINEUP_PARTIAL; 핵심 정보 누락"
+      ],
+      "latestBestOdds": 2.16,
+      "currentValueEdge": 16,
+      "starterStatus": "STARTER_STABLE",
+      "pitcherDirection": "MIXED",
+      "lineupStatus": "LINEUP_PARTIAL",
+      "schedule": {
+        "gameStartKst": "2026-07-27 02:40 KST",
+        "gameStartMs": 1785087600000,
+        "idealRecheckKst": "2026-07-27 01:10 KST",
+        "purchaseFinalReviewKst": "2026-07-26 22:30 KST",
+        "purchaseDecisionDeadlineKst": "2026-07-26 22:50 KST",
+        "purchaseCutoffKst": "2026-07-26 23:00 KST",
+        "purchaseCutoffMs": 1785074400000,
+        "officialSalesCloseKst": null,
+        "officialCloseVerified": false,
+        "finalActionDeadlineKst": "2026-07-26 22:50 KST",
+        "finalActionDeadlineMs": 1785073800000,
+        "minutesBeforeGameAtDeadline": 230,
+        "pulledBeforeCutoff": true,
+        "status": "NO_PURCHASE_WINDOW",
+        "flags": [
+          "OFFICIAL_CLOSE_UNVERIFIED",
+          "IDEAL_RECHECK_AFTER_CUTOFF_PULLED",
+          "LINEUP_UNAVAILABLE_BEFORE_PURCHASE_CUTOFF"
+        ],
+        "researchOnly": true,
+        "notes": [
+          "공식 회차별 발매 마감 미확인 — 23:00까지 무조건 구매 가능하다고 단정하지 않는다.",
+          "경기 기준 재확인 시각이 구매 마감(23:00) 이후라 22:30(조회)/22:50(판단 완료)로 당김.",
+          "23:00 이후 데이터는 사후 연구용이며 구매 결정에 사용하지 않는다.",
+          "구매 마감 전 라인업 미공개 — 라인업을 기다리느라 23:00을 넘기지 않는다. 불완전한 상태에서 일찍 결정해야 한다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179601",
+      "match": "Houston Astros @ Chicago White Sox",
+      "baselinePick": "Houston Astros",
+      "finalClassification": "FINAL_HOLD",
+      "purchaseClassification": "PURCHASE_DROP",
+      "purchaseReasons": [
+        "구매 판단 마감 경과 — 사후 연구용 (researchOnly)",
+        "기존 분류 FINAL_HOLD 참고: 투수 방향 MIXED; 라인업 LINEUP_NOT_PUBLISHED; Confidence < 50 (49); 핵심 정보 누락"
+      ],
+      "latestBestOdds": 2,
+      "currentValueEdge": 13,
+      "starterStatus": "STARTER_STABLE",
+      "pitcherDirection": "MIXED",
+      "lineupStatus": "LINEUP_NOT_PUBLISHED",
+      "schedule": {
+        "gameStartKst": "2026-07-27 03:10 KST",
+        "gameStartMs": 1785089400000,
+        "idealRecheckKst": "2026-07-27 01:40 KST",
+        "purchaseFinalReviewKst": "2026-07-26 22:30 KST",
+        "purchaseDecisionDeadlineKst": "2026-07-26 22:50 KST",
+        "purchaseCutoffKst": "2026-07-26 23:00 KST",
+        "purchaseCutoffMs": 1785074400000,
+        "officialSalesCloseKst": null,
+        "officialCloseVerified": false,
+        "finalActionDeadlineKst": "2026-07-26 22:50 KST",
+        "finalActionDeadlineMs": 1785073800000,
+        "minutesBeforeGameAtDeadline": 260,
+        "pulledBeforeCutoff": true,
+        "status": "NO_PURCHASE_WINDOW",
+        "flags": [
+          "OFFICIAL_CLOSE_UNVERIFIED",
+          "IDEAL_RECHECK_AFTER_CUTOFF_PULLED",
+          "LINEUP_UNAVAILABLE_BEFORE_PURCHASE_CUTOFF"
+        ],
+        "researchOnly": true,
+        "notes": [
+          "공식 회차별 발매 마감 미확인 — 23:00까지 무조건 구매 가능하다고 단정하지 않는다.",
+          "경기 기준 재확인 시각이 구매 마감(23:00) 이후라 22:30(조회)/22:50(판단 완료)로 당김.",
+          "23:00 이후 데이터는 사후 연구용이며 구매 결정에 사용하지 않는다.",
+          "구매 마감 전 라인업 미공개 — 라인업을 기다리느라 23:00을 넘기지 않는다. 불완전한 상태에서 일찍 결정해야 한다."
+        ]
+      }
+    }
+  ]
+}
