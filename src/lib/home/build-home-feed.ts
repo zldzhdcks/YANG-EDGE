@@ -193,14 +193,24 @@ async function toPickMarketFields(
   if (
     !comparison.comparable ||
     comparison.marketProbability == null ||
-    comparison.valueEdgePercentagePoints == null
+    comparison.valueEdgePercentagePoints == null ||
+    !Number.isFinite(comparison.marketProbability) ||
+    !Number.isFinite(comparison.valueEdgePercentagePoints)
   ) {
     return { ...NO_MARKET };
   }
 
+  const marketProbability = Math.round(comparison.marketProbability * 100);
+  const valueEdge =
+    Math.round(comparison.valueEdgePercentagePoints * 10) / 10;
+
+  if (!Number.isFinite(marketProbability) || !Number.isFinite(valueEdge)) {
+    return { ...NO_MARKET };
+  }
+
   return {
-    marketProbability: Math.round(comparison.marketProbability * 100),
-    valueEdge: Math.round(comparison.valueEdgePercentagePoints * 10) / 10,
+    marketProbability,
+    valueEdge,
     comparisonAvailable: true,
   };
 }

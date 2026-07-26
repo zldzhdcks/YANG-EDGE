@@ -11,6 +11,25 @@ type TodayPickProps = {
   pick: TodayPickData | null;
 };
 
+function formatMarketPercent(value: number): string {
+  return Number.isFinite(value) ? `${value}%` : "—";
+}
+
+function formatValueEdge(value: number): string {
+  if (!Number.isFinite(value)) return "—";
+  return `${value > 0 ? "+" : ""}${value.toFixed(1)}%`;
+}
+
+function hasComparableMarket(pick: TodayPickData): boolean {
+  return (
+    pick.comparisonAvailable === true &&
+    pick.marketProbability != null &&
+    Number.isFinite(pick.marketProbability) &&
+    pick.valueEdge != null &&
+    Number.isFinite(pick.valueEdge)
+  );
+}
+
 export default function TodayPick({ pick }: TodayPickProps) {
   if (!pick) {
     return (
@@ -33,12 +52,9 @@ export default function TodayPick({ pick }: TodayPickProps) {
   }
 
   const matchLabel = getMatchDisplayLabel(pick.homeTeam, pick.awayTeam);
-  const showMarket =
-    pick.comparisonAvailable &&
-    pick.marketProbability != null &&
-    pick.valueEdge != null;
-  const valueEdge = pick.valueEdge ?? 0;
-  const valueEdgeLabel = `${valueEdge > 0 ? "+" : ""}${valueEdge.toFixed(1)}%`;
+  const showMarket = hasComparableMarket(pick);
+  const marketProbability = pick.marketProbability;
+  const valueEdge = pick.valueEdge;
 
   return (
     <section id="today-pick" className="mx-auto max-w-5xl px-4 pb-16 sm:px-6">
@@ -58,20 +74,26 @@ export default function TodayPick({ pick }: TodayPickProps) {
           edgeValue={pick.edgeValue}
         />
 
-        {showMarket && (
-          <div className="grid grid-cols-3 gap-4 border-b border-white/[0.06] pb-6 sm:gap-8 sm:pb-8">
+        {showMarket &&
+        marketProbability != null &&
+        valueEdge != null ? (
+          <div className="grid grid-cols-2 gap-4 border-b border-white/[0.06] pb-6 sm:gap-8 sm:pb-8">
             <StatBox
               label="시장 확률"
-              value={`${pick.marketProbability}%`}
+              value={formatMarketPercent(marketProbability)}
               size="lg"
             />
             <StatBox
               label="Value Edge"
-              value={valueEdgeLabel}
+              value={formatValueEdge(valueEdge)}
               accent={valueEdge > 0}
               size="lg"
             />
           </div>
+        ) : (
+          <p className="border-b border-white/[0.06] pb-6 text-sm leading-relaxed text-zinc-500 sm:pb-8">
+            배당이 없거나 경기와 매칭되지 않아 Value Edge를 계산할 수 없습니다.
+          </p>
         )}
 
         <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between sm:gap-8">

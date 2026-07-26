@@ -47,7 +47,8 @@ type TheSportsDbEventsResponse = {
  * 지원:
  * - getGames → eventsday.php (NPB/KBO 야구 일정) → GameData[]
  * - getTodayPick / getFeaturedGames / getTodayGames → buildHomeFeed + EDGE Engine
- *   (Engine AnalysisData 없는 경기는 스킵; 0건이면 throw → Dummy 폴백)
+ *   (Engine AnalysisData 없는 경기는 스킵; Pick 없으면 null 반환 — Dummy 폴백 금지)
+ *   (getTodayGames 는 Engine 0건이면 throw → Dummy 폴백)
  *
  * 미지원 (의도적으로 throw → DummyProvider 폴백):
  * - getAnalysis / getToto
@@ -126,14 +127,10 @@ export class TheSportsDbProvider implements SportsProvider {
   }
 
   async getTodayPick(): Promise<TodayPickData | null> {
+    // null = 오늘 추천 기준 미충족 (정상). throw 하면 Fallback이 Dummy(과거 고정일)로
+    // 억지 추천을 보여 주므로, 빈 Pick 은 절대 throw 하지 않는다.
+    // 네트워크/HTTP 오류는 getGames 가 throw → Fallback 유지.
     const feed = await buildHomeFeed(await this.getGames());
-    if (!feed.pick) {
-      throw new SportsApiError(
-        "No EDGE Engine pick for TheSportsDB games",
-        404,
-        "today-pick",
-      );
-    }
     return feed.pick;
   }
 
