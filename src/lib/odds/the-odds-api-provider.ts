@@ -1,6 +1,5 @@
 import {
   buildOddsData,
-  emptyUsage,
   oddsCacheKey,
   parseUsageHeaders,
   type OddsProvider,

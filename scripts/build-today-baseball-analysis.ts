@@ -387,17 +387,11 @@ function buildH2h(
     .sort((a, b) => (eventStartUtcMs(b) ?? 0) - (eventStartUtcMs(a) ?? 0));
 
   const recentMeetings: RecentGame[] = [];
-  let homeTeamWins = 0;
-  let awayTeamWins = 0;
-  let draws = 0;
 
   for (const e of meetings.slice(0, 5)) {
     const fromHomePerspective = toRecentGame(e, homeTeam);
     if (!fromHomePerspective) continue;
     recentMeetings.push(fromHomePerspective);
-    if (fromHomePerspective.result === "W") homeTeamWins += 1;
-    else if (fromHomePerspective.result === "L") awayTeamWins += 1;
-    else draws += 1;
   }
 
   // 전체 맞대결 집계 (수집된 범위)

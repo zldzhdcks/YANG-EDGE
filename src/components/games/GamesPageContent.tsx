@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import type { SportFilter } from "@/types/game";
 import type { GameWithOdds } from "@/types/game-with-odds";
 import { getKstToday } from "@/lib/datetime/kst";
@@ -30,24 +30,42 @@ type GamesApiResponse = {
   };
 };
 
+type LoadedGames = {
+  date: string;
+  items: GameWithOdds[];
+  ok: boolean;
+};
+
+const RECOMMENDATION_FILTER_EVENT = "yang-edge:recommendation-filter";
+
+function subscribeRecommendationFilter(onStoreChange: () => void) {
+  window.addEventListener("storage", onStoreChange);
+  window.addEventListener(RECOMMENDATION_FILTER_EVENT, onStoreChange);
+  return () => {
+    window.removeEventListener("storage", onStoreChange);
+    window.removeEventListener(RECOMMENDATION_FILTER_EVENT, onStoreChange);
+  };
+}
+
+function getServerRecommendationFilter(): RecommendationFilterId {
+  return DEFAULT_RECOMMENDATION_FILTER;
+}
+
 export default function GamesPageContent() {
   const [search, setSearch] = useState("");
   const [date, setDate] = useState(() => getKstToday());
   const [sport, setSport] = useState<SportFilter>("all");
-  // SSR·최초 렌더는 DEFAULT → mount 후 localStorage 복원 (hydration mismatch 방지)
-  const [recommendation, setRecommendation] =
-    useState<RecommendationFilterId>(DEFAULT_RECOMMENDATION_FILTER);
+  // SSR은 DEFAULT, 클라이언트는 localStorage (hydration 안전)
+  const recommendation = useSyncExternalStore(
+    subscribeRecommendationFilter,
+    readStoredRecommendationFilter,
+    getServerRecommendationFilter,
+  );
 
-  const [items, setItems] = useState<GameWithOdds[]>([]);
-  const [state, setState] = useState<LoadState>("loading");
-
-  useEffect(() => {
-    setRecommendation(readStoredRecommendationFilter());
-  }, []);
+  const [loaded, setLoaded] = useState<LoadedGames | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    setState("loading");
 
     fetch(`/api/games?date=${encodeURIComponent(date)}`, { cache: "no-store" })
       .then(async (res) => {
@@ -58,13 +76,11 @@ export default function GamesPageContent() {
       })
       .then((data) => {
         if (cancelled) return;
-        setItems(data);
-        setState(data.length === 0 ? "empty" : "success");
+        setLoaded({ date, items: data, ok: true });
       })
       .catch(() => {
         if (cancelled) return;
-        setItems([]);
-        setState("error");
+        setLoaded({ date, items: [], ok: false });
       });
 
     return () => {
@@ -73,9 +89,24 @@ export default function GamesPageContent() {
   }, [date]);
 
   function handleRecommendationChange(value: RecommendationFilterId) {
-    setRecommendation(value);
     writeStoredRecommendationFilter(value);
+    window.dispatchEvent(new Event(RECOMMENDATION_FILTER_EVENT));
   }
+
+  const state: LoadState =
+    loaded === null || loaded.date !== date
+      ? "loading"
+      : !loaded.ok
+        ? "error"
+        : loaded.items.length === 0
+          ? "empty"
+          : "success";
+
+  const items = useMemo(
+    () =>
+      loaded !== null && loaded.date === date && loaded.ok ? loaded.items : [],
+    [loaded, date],
+  );
 
   const filteredItems = useMemo(
     () =>
