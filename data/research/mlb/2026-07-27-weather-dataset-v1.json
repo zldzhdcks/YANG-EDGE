@@ -1,0 +1,546 @@
+{
+  "meta": {
+    "datasetId": "mlb-weather",
+    "schemaVersion": "mlb-weather-dataset-v1",
+    "builderVersion": "weather-dataset-builder-v1",
+    "status": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "engineUseAllowed": false,
+    "researchOnly": true,
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T12:17:09.956Z",
+    "predictionHashSha256": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+    "predictionUnchanged": true,
+    "inputHashSha256": "cb9e43b929eced26f102fe9f62842996d160e1a55d41c85a5aadb809ef25ac2c",
+    "resultHashSha256": "ed37621dc16ffd8b23b84b838e1bd7fe2d261bdb6b41a3f98b820ac4f4060f7b",
+    "provider": {
+      "selected": null,
+      "candidates": [
+        "noaa-nws-api",
+        "open-meteo",
+        "openweathermap-one-call"
+      ],
+      "status": "NOT_SELECTED"
+    },
+    "legal": {
+      "mlbStatsSource": "INTERNAL_RESEARCH_ONLY",
+      "publicRuntimeUseAllowed": false,
+      "commercialRuntimeUseAllowed": false,
+      "rawResponseInResearchCacheOnly": true,
+      "mlbHtmlCrawling": false,
+      "sportsDataIoScrambled": false,
+      "weatherProviderScraping": false
+    },
+    "notes": [
+      "PRE_GAME_FORECAST only — POST_GAME_OBSERVED not implemented",
+      "Forecast provider NOT_SELECTED — all forecast fields NOT_COLLECTED",
+      "roofStatus=UNKNOWN only — no open/closed inference",
+      "Environment dataset v1 — reproducible venue snapshot at cutoff",
+      "Engine admission PROHIBITED"
+    ]
+  },
+  "cacheUsage": {
+    "rawHit": 16,
+    "rawMiss": 15,
+    "derivedHit": 0,
+    "derivedMiss": 0,
+    "networkCalls": 15
+  },
+  "summary": {
+    "totalGames": 15,
+    "venuesResolved": 15,
+    "roofTypes": {
+      "OPEN": 11,
+      "DOME": 1,
+      "RETRACTABLE": 3,
+      "UNKNOWN": 0
+    },
+    "forecastCollected": 0,
+    "forecastMissing": 15,
+    "weatherCollected": 0,
+    "weatherMissing": 15
+  },
+  "rows": [
+    {
+      "schemaVersion": "mlb-weather-dataset-v1",
+      "builderVersion": "weather-dataset-builder-v1",
+      "generatedAt": "2026-07-27T12:17:09.956Z",
+      "gameDate": "2026-07-27",
+      "gameId": "mlb-179590",
+      "gamePk": 822706,
+      "collectionPhase": "PRE_GAME_FORECAST",
+      "venue": {
+        "id": 3309,
+        "name": "Nationals Park",
+        "roofType": "OPEN",
+        "roofStatus": "UNKNOWN"
+      },
+      "forecast": {
+        "temperature": "NOT_COLLECTED",
+        "humidity": "NOT_COLLECTED",
+        "windSpeed": "NOT_COLLECTED",
+        "windDirection": "NOT_COLLECTED",
+        "precipProbability": "NOT_COLLECTED",
+        "condition": "NOT_COLLECTED"
+      },
+      "forecastIssuedAt": null,
+      "cutoffTime": "2026-07-26T17:35:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "missing": [],
+      "warnings": [],
+      "inputHash": "982d29017e7ab414646c948ddd3a697d7839f13dd2cfe0fac8d3b80b783b0377",
+      "resultHash": "9146c5775a2f24f1087e0fe4fc65398aa244a97c955fb201d03cccc17fc3d096"
+    },
+    {
+      "schemaVersion": "mlb-weather-dataset-v1",
+      "builderVersion": "weather-dataset-builder-v1",
+      "generatedAt": "2026-07-27T12:17:09.956Z",
+      "gameDate": "2026-07-27",
+      "gameId": "mlb-179591",
+      "gamePk": 822870,
+      "collectionPhase": "PRE_GAME_FORECAST",
+      "venue": {
+        "id": 5325,
+        "name": "Globe Life Field",
+        "roofType": "RETRACTABLE",
+        "roofStatus": "UNKNOWN"
+      },
+      "forecast": {
+        "temperature": "NOT_COLLECTED",
+        "humidity": "NOT_COLLECTED",
+        "windSpeed": "NOT_COLLECTED",
+        "windDirection": "NOT_COLLECTED",
+        "precipProbability": "NOT_COLLECTED",
+        "condition": "NOT_COLLECTED"
+      },
+      "forecastIssuedAt": null,
+      "cutoffTime": "2026-07-26T18:35:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "missing": [],
+      "warnings": [],
+      "inputHash": "d516ed681192c46a03e9b1e89377fb4a2323cbf0004a951d61ee16e9f54051bf",
+      "resultHash": "5389dba28c43d43777fa3e2509bed4f00093df0334e23b64d977a53864a637a3"
+    },
+    {
+      "schemaVersion": "mlb-weather-dataset-v1",
+      "builderVersion": "weather-dataset-builder-v1",
+      "generatedAt": "2026-07-27T12:17:09.956Z",
+      "gameDate": "2026-07-27",
+      "gameId": "mlb-179592",
+      "gamePk": 822950,
+      "collectionPhase": "PRE_GAME_FORECAST",
+      "venue": {
+        "id": 12,
+        "name": "Tropicana Field",
+        "roofType": "DOME",
+        "roofStatus": "UNKNOWN"
+      },
+      "forecast": {
+        "temperature": "NOT_COLLECTED",
+        "humidity": "NOT_COLLECTED",
+        "windSpeed": "NOT_COLLECTED",
+        "windDirection": "NOT_COLLECTED",
+        "precipProbability": "NOT_COLLECTED",
+        "condition": "NOT_COLLECTED"
+      },
+      "forecastIssuedAt": null,
+      "cutoffTime": "2026-07-26T16:15:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "missing": [],
+      "warnings": [],
+      "inputHash": "78c13c6a625e4a9d6e425fb8b56d17161c8dbebf30ba27b3cf1c96271bbe8421",
+      "resultHash": "b4dd2d822114c29f4b5a51a3c3aa75f78b5d04cdab9717b7114143c7dc3d0aab"
+    },
+    {
+      "schemaVersion": "mlb-weather-dataset-v1",
+      "builderVersion": "weather-dataset-builder-v1",
+      "generatedAt": "2026-07-27T12:17:09.956Z",
+      "gameDate": "2026-07-27",
+      "gameId": "mlb-179593",
+      "gamePk": 823028,
+      "collectionPhase": "PRE_GAME_FORECAST",
+      "venue": {
+        "id": 2889,
+        "name": "Busch Stadium",
+        "roofType": "OPEN",
+        "roofStatus": "UNKNOWN"
+      },
+      "forecast": {
+        "temperature": "NOT_COLLECTED",
+        "humidity": "NOT_COLLECTED",
+        "windSpeed": "NOT_COLLECTED",
+        "windDirection": "NOT_COLLECTED",
+        "precipProbability": "NOT_COLLECTED",
+        "condition": "NOT_COLLECTED"
+      },
+      "forecastIssuedAt": null,
+      "cutoffTime": "2026-07-26T18:15:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "missing": [],
+      "warnings": [],
+      "inputHash": "b8abff582535a52b46131c347078e5d92ca7711c99c8323f878852dc62dc3ca0",
+      "resultHash": "b647bc9a69bd373b6781fc3d2ed3316f1a49a77a967819bef1de1511330810bb"
+    },
+    {
+      "schemaVersion": "mlb-weather-dataset-v1",
+      "builderVersion": "weather-dataset-builder-v1",
+      "generatedAt": "2026-07-27T12:17:09.956Z",
+      "gameDate": "2026-07-27",
+      "gameId": "mlb-179594",
+      "gamePk": 823194,
+      "collectionPhase": "PRE_GAME_FORECAST",
+      "venue": {
+        "id": 2395,
+        "name": "Oracle Park",
+        "roofType": "OPEN",
+        "roofStatus": "UNKNOWN"
+      },
+      "forecast": {
+        "temperature": "NOT_COLLECTED",
+        "humidity": "NOT_COLLECTED",
+        "windSpeed": "NOT_COLLECTED",
+        "windDirection": "NOT_COLLECTED",
+        "precipProbability": "NOT_COLLECTED",
+        "condition": "NOT_COLLECTED"
+      },
+      "forecastIssuedAt": null,
+      "cutoffTime": "2026-07-26T20:05:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "missing": [],
+      "warnings": [],
+      "inputHash": "e73d1a64b0a2c692a429515b5305ab157243133dfda9b85624515fa8f16854a6",
+      "resultHash": "458396b007fc177356993fb5a8a332a28e067a2a99a89ff62ec31dd368d719a7"
+    },
+    {
+      "schemaVersion": "mlb-weather-dataset-v1",
+      "builderVersion": "weather-dataset-builder-v1",
+      "generatedAt": "2026-07-27T12:17:09.956Z",
+      "gameDate": "2026-07-27",
+      "gameId": "mlb-179595",
+      "gamePk": 823354,
+      "collectionPhase": "PRE_GAME_FORECAST",
+      "venue": {
+        "id": 31,
+        "name": "PNC Park",
+        "roofType": "OPEN",
+        "roofStatus": "UNKNOWN"
+      },
+      "forecast": {
+        "temperature": "NOT_COLLECTED",
+        "humidity": "NOT_COLLECTED",
+        "windSpeed": "NOT_COLLECTED",
+        "windDirection": "NOT_COLLECTED",
+        "precipProbability": "NOT_COLLECTED",
+        "condition": "NOT_COLLECTED"
+      },
+      "forecastIssuedAt": null,
+      "cutoffTime": "2026-07-26T17:35:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "missing": [],
+      "warnings": [],
+      "inputHash": "de7e47d245153271d7bd8f95c8ff0a10106081f8ad8da8fd0fbc7e8bba50e65f",
+      "resultHash": "703384c180002492f1e1acc511f8ab55d198888480812f2d43b459d6bf565960"
+    },
+    {
+      "schemaVersion": "mlb-weather-dataset-v1",
+      "builderVersion": "weather-dataset-builder-v1",
+      "generatedAt": "2026-07-27T12:17:09.956Z",
+      "gameDate": "2026-07-27",
+      "gameId": "mlb-179589",
+      "gamePk": 823433,
+      "collectionPhase": "PRE_GAME_FORECAST",
+      "venue": {
+        "id": 2681,
+        "name": "Citizens Bank Park",
+        "roofType": "OPEN",
+        "roofStatus": "UNKNOWN"
+      },
+      "forecast": {
+        "temperature": "NOT_COLLECTED",
+        "humidity": "NOT_COLLECTED",
+        "windSpeed": "NOT_COLLECTED",
+        "windDirection": "NOT_COLLECTED",
+        "precipProbability": "NOT_COLLECTED",
+        "condition": "NOT_COLLECTED"
+      },
+      "forecastIssuedAt": null,
+      "cutoffTime": "2026-07-26T23:20:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "missing": [],
+      "warnings": [],
+      "inputHash": "fccf3d9621eb6ce1d30a77ae55884172c93dfdc29c2609573415ca3440bd980b",
+      "resultHash": "264012fdd9d7a3052021df73597c91e49acdf1c31ac5c2f47377e4ee4ba7c30a"
+    },
+    {
+      "schemaVersion": "mlb-weather-dataset-v1",
+      "builderVersion": "weather-dataset-builder-v1",
+      "generatedAt": "2026-07-27T12:17:09.956Z",
+      "gameDate": "2026-07-27",
+      "gameId": "mlb-179597",
+      "gamePk": 823599,
+      "collectionPhase": "PRE_GAME_FORECAST",
+      "venue": {
+        "id": 3289,
+        "name": "Citi Field",
+        "roofType": "OPEN",
+        "roofStatus": "UNKNOWN"
+      },
+      "forecast": {
+        "temperature": "NOT_COLLECTED",
+        "humidity": "NOT_COLLECTED",
+        "windSpeed": "NOT_COLLECTED",
+        "windDirection": "NOT_COLLECTED",
+        "precipProbability": "NOT_COLLECTED",
+        "condition": "NOT_COLLECTED"
+      },
+      "forecastIssuedAt": null,
+      "cutoffTime": "2026-07-26T17:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "missing": [],
+      "warnings": [],
+      "inputHash": "385345af04b7c6df0cf70389efa0c0b82b43186650f4ac16bdf2a79f1fa806e6",
+      "resultHash": "8c6ea7d5136dd50474a0dd685c0b52f771ff014825187776147d2b0a92371923"
+    },
+    {
+      "schemaVersion": "mlb-weather-dataset-v1",
+      "builderVersion": "weather-dataset-builder-v1",
+      "generatedAt": "2026-07-27T12:17:09.956Z",
+      "gameDate": "2026-07-27",
+      "gameId": "mlb-179596",
+      "gamePk": 823678,
+      "collectionPhase": "PRE_GAME_FORECAST",
+      "venue": {
+        "id": 3312,
+        "name": "Target Field",
+        "roofType": "OPEN",
+        "roofStatus": "UNKNOWN"
+      },
+      "forecast": {
+        "temperature": "NOT_COLLECTED",
+        "humidity": "NOT_COLLECTED",
+        "windSpeed": "NOT_COLLECTED",
+        "windDirection": "NOT_COLLECTED",
+        "precipProbability": "NOT_COLLECTED",
+        "condition": "NOT_COLLECTED"
+      },
+      "forecastIssuedAt": null,
+      "cutoffTime": "2026-07-26T18:10:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "missing": [],
+      "warnings": [],
+      "inputHash": "ae1449173c2306fbd92c0dc4bd0192e492690ed0be20b9c3029c0fa8c382ed8f",
+      "resultHash": "d54c71c52f2cfad3438ac8d30bbf01a90c95df072d39857f9dc4395b354cc862"
+    },
+    {
+      "schemaVersion": "mlb-weather-dataset-v1",
+      "builderVersion": "weather-dataset-builder-v1",
+      "generatedAt": "2026-07-27T12:17:09.956Z",
+      "gameDate": "2026-07-27",
+      "gameId": "mlb-179598",
+      "gamePk": 823755,
+      "collectionPhase": "PRE_GAME_FORECAST",
+      "venue": {
+        "id": 32,
+        "name": "American Family Field",
+        "roofType": "RETRACTABLE",
+        "roofStatus": "UNKNOWN"
+      },
+      "forecast": {
+        "temperature": "NOT_COLLECTED",
+        "humidity": "NOT_COLLECTED",
+        "windSpeed": "NOT_COLLECTED",
+        "windDirection": "NOT_COLLECTED",
+        "precipProbability": "NOT_COLLECTED",
+        "condition": "NOT_COLLECTED"
+      },
+      "forecastIssuedAt": null,
+      "cutoffTime": "2026-07-26T18:10:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "missing": [],
+      "warnings": [],
+      "inputHash": "6601eed56692c2bf37fbd5263964506f328c4896c3fbd3f48201a2e70d3c9b68",
+      "resultHash": "f28f049f736033a8f9428995928d9f696b43f5f0663f1e99dadc9392e8b64bb1"
+    },
+    {
+      "schemaVersion": "mlb-weather-dataset-v1",
+      "builderVersion": "weather-dataset-builder-v1",
+      "generatedAt": "2026-07-27T12:17:09.956Z",
+      "gameDate": "2026-07-27",
+      "gameId": "mlb-179599",
+      "gamePk": 823840,
+      "collectionPhase": "PRE_GAME_FORECAST",
+      "venue": {
+        "id": 4169,
+        "name": "loanDepot park",
+        "roofType": "RETRACTABLE",
+        "roofStatus": "UNKNOWN"
+      },
+      "forecast": {
+        "temperature": "NOT_COLLECTED",
+        "humidity": "NOT_COLLECTED",
+        "windSpeed": "NOT_COLLECTED",
+        "windDirection": "NOT_COLLECTED",
+        "precipProbability": "NOT_COLLECTED",
+        "condition": "NOT_COLLECTED"
+      },
+      "forecastIssuedAt": null,
+      "cutoffTime": "2026-07-26T17:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "missing": [],
+      "warnings": [],
+      "inputHash": "012560bd0256258232987bec391ff93033a04da58416654810bab583b070ff71",
+      "resultHash": "489f341387c4cb41fc9d2b4dad3ea0f9288ed2bc18ce446b55bf537c540eb17f"
+    },
+    {
+      "schemaVersion": "mlb-weather-dataset-v1",
+      "builderVersion": "weather-dataset-builder-v1",
+      "generatedAt": "2026-07-27T12:17:09.956Z",
+      "gameDate": "2026-07-27",
+      "gameId": "mlb-179600",
+      "gamePk": 824246,
+      "collectionPhase": "PRE_GAME_FORECAST",
+      "venue": {
+        "id": 2394,
+        "name": "Comerica Park",
+        "roofType": "OPEN",
+        "roofStatus": "UNKNOWN"
+      },
+      "forecast": {
+        "temperature": "NOT_COLLECTED",
+        "humidity": "NOT_COLLECTED",
+        "windSpeed": "NOT_COLLECTED",
+        "windDirection": "NOT_COLLECTED",
+        "precipProbability": "NOT_COLLECTED",
+        "condition": "NOT_COLLECTED"
+      },
+      "forecastIssuedAt": null,
+      "cutoffTime": "2026-07-26T17:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "missing": [],
+      "warnings": [],
+      "inputHash": "e8228b1c2287883ec1add60d87b96a819bf3e0b2a503bc05b9afaf0691bc7241",
+      "resultHash": "bea29180eee79a8dd0ff554ba93b4250b0c12f603a1f7a17b50981f4879b1d79"
+    },
+    {
+      "schemaVersion": "mlb-weather-dataset-v1",
+      "builderVersion": "weather-dataset-builder-v1",
+      "generatedAt": "2026-07-27T12:17:09.956Z",
+      "gameDate": "2026-07-27",
+      "gameId": "mlb-179601",
+      "gamePk": 824572,
+      "collectionPhase": "PRE_GAME_FORECAST",
+      "venue": {
+        "id": 4,
+        "name": "Rate Field",
+        "roofType": "OPEN",
+        "roofStatus": "UNKNOWN"
+      },
+      "forecast": {
+        "temperature": "NOT_COLLECTED",
+        "humidity": "NOT_COLLECTED",
+        "windSpeed": "NOT_COLLECTED",
+        "windDirection": "NOT_COLLECTED",
+        "precipProbability": "NOT_COLLECTED",
+        "condition": "NOT_COLLECTED"
+      },
+      "forecastIssuedAt": null,
+      "cutoffTime": "2026-07-26T18:10:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "missing": [],
+      "warnings": [],
+      "inputHash": "e7fbdd26aacbe0641c7e3251d50ad9956737e99dea0030a3d79a7d4610e5e128",
+      "resultHash": "8cf09738c8932d9112c2dde9cf9e4dfc10e99c113efe550739b9d0175340b890"
+    },
+    {
+      "schemaVersion": "mlb-weather-dataset-v1",
+      "builderVersion": "weather-dataset-builder-v1",
+      "generatedAt": "2026-07-27T12:17:09.956Z",
+      "gameDate": "2026-07-27",
+      "gameId": "mlb-179602",
+      "gamePk": 824730,
+      "collectionPhase": "PRE_GAME_FORECAST",
+      "venue": {
+        "id": 3,
+        "name": "Fenway Park",
+        "roofType": "OPEN",
+        "roofStatus": "UNKNOWN"
+      },
+      "forecast": {
+        "temperature": "NOT_COLLECTED",
+        "humidity": "NOT_COLLECTED",
+        "windSpeed": "NOT_COLLECTED",
+        "windDirection": "NOT_COLLECTED",
+        "precipProbability": "NOT_COLLECTED",
+        "condition": "NOT_COLLECTED"
+      },
+      "forecastIssuedAt": null,
+      "cutoffTime": "2026-07-26T17:35:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "missing": [],
+      "warnings": [],
+      "inputHash": "a5bd4551994452d29043c4cb2311fc76a56fe65ed068c99b9b7b9879f1f66a79",
+      "resultHash": "9946a431a5b58796389720ab2b9d943155c1372bdbf3cc77085872dc876e5cb7"
+    },
+    {
+      "schemaVersion": "mlb-weather-dataset-v1",
+      "builderVersion": "weather-dataset-builder-v1",
+      "generatedAt": "2026-07-27T12:17:09.956Z",
+      "gameDate": "2026-07-27",
+      "gameId": "mlb-179603",
+      "gamePk": 824810,
+      "collectionPhase": "PRE_GAME_FORECAST",
+      "venue": {
+        "id": 2,
+        "name": "Oriole Park at Camden Yards",
+        "roofType": "OPEN",
+        "roofStatus": "UNKNOWN"
+      },
+      "forecast": {
+        "temperature": "NOT_COLLECTED",
+        "humidity": "NOT_COLLECTED",
+        "windSpeed": "NOT_COLLECTED",
+        "windDirection": "NOT_COLLECTED",
+        "precipProbability": "NOT_COLLECTED",
+        "condition": "NOT_COLLECTED"
+      },
+      "forecastIssuedAt": null,
+      "cutoffTime": "2026-07-26T17:35:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "missing": [],
+      "warnings": [],
+      "inputHash": "14a37e1030ce1e076db453713e3356fae0641e1388e02a60606baedf56823a2a",
+      "resultHash": "2b5dc3cd5a73e46b2efa04cf18c0c65a40379a5738667767681608103a18643b"
+    }
+  ]
+}

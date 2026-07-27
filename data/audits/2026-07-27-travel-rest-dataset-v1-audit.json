@@ -1,0 +1,116 @@
+{
+  "meta": {
+    "version": "mlb-travel-rest-dataset-v1-audit",
+    "kind": "travel-rest-dataset-v1-build-audit",
+    "datasetId": "mlb-travel",
+    "schemaVersion": "mlb-travel-rest-dataset-v1",
+    "builderVersion": "travel-rest-dataset-builder-v1",
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T12:20:05.458Z",
+    "datasetStatus": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "researchOnly": true,
+    "predictionHashSha256": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+    "predictionUnchanged": true,
+    "inputHashSha256": "4437e980a481e1eaa3cd58a78c154c680472329387f5f32fd71663d944947114",
+    "resultHashSha256": "bcef1b9c0287249181c277f1f01bb5f59dd4528db39da41241e0ab9a1914911f",
+    "firstResultHash": "bcef1b9c0287249181c277f1f01bb5f59dd4528db39da41241e0ab9a1914911f",
+    "secondResultHash": "bcef1b9c0287249181c277f1f01bb5f59dd4528db39da41241e0ab9a1914911f",
+    "hashMatched": true
+  },
+  "games": 15,
+  "rows": 30,
+  "travelResolved": 30,
+  "restResolved": 30,
+  "venueChanges": 0,
+  "timezoneChanges": 0,
+  "joinQuality": {
+    "MATCHED": 30,
+    "MISSING_PREVIOUS": 0
+  },
+  "cacheUsage": {
+    "firstRun": {
+      "rawHit": 0,
+      "rawMiss": 16,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 16
+    },
+    "secondRunWarm": {
+      "rawHit": 16,
+      "rawMiss": 0,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 0
+    }
+  },
+  "networkCalls": {
+    "firstRun": 16,
+    "secondRunWarm": 0
+  },
+  "regressionHashes": {
+    "before": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "weather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19"
+    },
+    "after": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "weather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19"
+    },
+    "unchanged": true
+  },
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true,
+      "detail": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17"
+    },
+    {
+      "id": "result-hash-matched",
+      "passed": true,
+      "detail": "bcef1b9c0287249181c277f1f01bb5f59dd4528db39da41241e0ab9a1914911f == bcef1b9c0287249181c277f1f01bb5f59dd4528db39da41241e0ab9a1914911f"
+    },
+    {
+      "id": "warm-network-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "all-previous-games-matched",
+      "passed": true,
+      "detail": "{\"MATCHED\":30,\"MISSING_PREVIOUS\":0}"
+    },
+    {
+      "id": "regression-hashes-unchanged",
+      "passed": true,
+      "detail": "prediction/starter/bullpen/lineup/weather"
+    },
+    {
+      "id": "engine-prohibited",
+      "passed": true,
+      "detail": "PROHIBITED"
+    }
+  ],
+  "legal": {
+    "mlbStatsSource": "INTERNAL_RESEARCH_ONLY",
+    "publicRuntimeUseAllowed": false,
+    "commercialRuntimeUseAllowed": false,
+    "rawResponseInResearchCacheOnly": true,
+    "mlbHtmlCrawling": false,
+    "sportsDataIoScrambled": false,
+    "routeInference": false
+  },
+  "notes": [
+    "PRE_GAME_SCHEDULE_CONTEXT only — no actual travel or transport inference.",
+    "distanceKm is haversine on official venue coordinates (approximate).",
+    "hoursSincePreviousFinal and extra-inning effects excluded.",
+    "Engine admission PROHIBITED."
+  ]
+}

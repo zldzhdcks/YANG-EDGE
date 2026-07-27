@@ -40,6 +40,8 @@ export {
   bullpenV11FrameworkMetadata,
   starterV1FrameworkMetadata,
   lineupV1FrameworkMetadata,
+  weatherV1FrameworkMetadata,
+  travelRestV1FrameworkMetadata,
   getRegistryEntry,
   listDatasetsByStatus,
 } from "./registry";

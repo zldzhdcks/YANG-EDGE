@@ -1,0 +1,135 @@
+{
+  "meta": {
+    "version": "mlb-weather-dataset-v1-audit",
+    "kind": "weather-dataset-v1-build-audit",
+    "datasetId": "mlb-weather",
+    "schemaVersion": "mlb-weather-dataset-v1",
+    "builderVersion": "weather-dataset-builder-v1",
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T12:17:13.960Z",
+    "datasetStatus": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "researchOnly": true,
+    "predictionHashSha256": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+    "predictionUnchanged": true,
+    "inputHashSha256": "cb9e43b929eced26f102fe9f62842996d160e1a55d41c85a5aadb809ef25ac2c",
+    "resultHashSha256": "ed37621dc16ffd8b23b84b838e1bd7fe2d261bdb6b41a3f98b820ac4f4060f7b",
+    "firstResultHash": "ed37621dc16ffd8b23b84b838e1bd7fe2d261bdb6b41a3f98b820ac4f4060f7b",
+    "secondResultHash": "ed37621dc16ffd8b23b84b838e1bd7fe2d261bdb6b41a3f98b820ac4f4060f7b",
+    "hashMatched": true
+  },
+  "games": 15,
+  "venues": 15,
+  "roofTypes": {
+    "OPEN": 11,
+    "DOME": 1,
+    "RETRACTABLE": 3,
+    "UNKNOWN": 0
+  },
+  "forecastMissing": 15,
+  "providerStatus": {
+    "selected": null,
+    "candidates": [
+      "noaa-nws-api",
+      "open-meteo",
+      "openweathermap-one-call"
+    ],
+    "status": "NOT_SELECTED"
+  },
+  "weatherCollected": 0,
+  "weatherMissing": 15,
+  "cacheUsage": {
+    "firstRun": {
+      "rawHit": 16,
+      "rawMiss": 15,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 15
+    },
+    "secondRunWarm": {
+      "rawHit": 31,
+      "rawMiss": 0,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 0
+    }
+  },
+  "networkCalls": {
+    "firstRun": 15,
+    "secondRunWarm": 0
+  },
+  "regressionHashes": {
+    "before": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb"
+    },
+    "after": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb"
+    },
+    "unchanged": true
+  },
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true,
+      "detail": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17"
+    },
+    {
+      "id": "result-hash-matched",
+      "passed": true,
+      "detail": "ed37621dc16ffd8b23b84b838e1bd7fe2d261bdb6b41a3f98b820ac4f4060f7b == ed37621dc16ffd8b23b84b838e1bd7fe2d261bdb6b41a3f98b820ac4f4060f7b"
+    },
+    {
+      "id": "warm-network-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "provider-not-selected",
+      "passed": true,
+      "detail": "NOT_SELECTED"
+    },
+    {
+      "id": "forecast-not-collected",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "roof-status-unknown",
+      "passed": true,
+      "detail": "UNKNOWN"
+    },
+    {
+      "id": "regression-hashes-unchanged",
+      "passed": true,
+      "detail": "prediction/starter/bullpen/lineup"
+    },
+    {
+      "id": "engine-prohibited",
+      "passed": true,
+      "detail": "PROHIBITED"
+    }
+  ],
+  "legal": {
+    "mlbStatsSource": "INTERNAL_RESEARCH_ONLY",
+    "publicRuntimeUseAllowed": false,
+    "commercialRuntimeUseAllowed": false,
+    "rawResponseInResearchCacheOnly": true,
+    "mlbHtmlCrawling": false,
+    "sportsDataIoScrambled": false,
+    "weatherProviderScraping": false
+  },
+  "notes": [
+    "PRE_GAME_FORECAST only — POST_GAME_OBSERVED not implemented",
+    "Forecast provider NOT_SELECTED — all forecast fields NOT_COLLECTED",
+    "roofStatus=UNKNOWN only — no open/closed inference",
+    "Environment dataset v1 — reproducible venue snapshot at cutoff",
+    "Engine admission PROHIBITED"
+  ]
+}

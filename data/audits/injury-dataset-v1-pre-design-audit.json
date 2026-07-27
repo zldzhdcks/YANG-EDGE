@@ -1,0 +1,317 @@
+{
+  "meta": {
+    "version": "injury-dataset-v1-pre-design-audit",
+    "kind": "pre-design-audit",
+    "generatedAt": "2026-07-27T12:30:00.000Z",
+    "auditedDatesKst": ["2026-07-27", "2026-07-28"],
+    "auditedGames": 27,
+    "researchOnly": true,
+    "engineConnected": false,
+    "engineImpact": 0,
+    "frameworkChanged": false,
+    "registryChanged": false,
+    "registryStatus": "no mlb-injury entry — unchanged",
+    "hypothesisRegistered": false,
+    "codeChanged": false,
+    "artifactCreated": false,
+    "builderImplemented": false,
+    "predictionHashUnchanged": true,
+    "officialConclusion": "READY_FOR_MINIMAL_INJURY_DATASET_DESIGN",
+    "implementationDecision": "HOLD",
+    "note": "Read-only audit. No builder, no Injury Score, no team-site scraping, no SportsDataIO Scrambled use."
+  },
+  "auditedGames": {
+    "2026-07-27": {
+      "games": 15,
+      "teamSlots": 30
+    },
+    "2026-07-28": {
+      "games": 12,
+      "teamSlots": 24
+    },
+    "totalGames": 27,
+    "joinPath": "prediction.gameId → starter-dataset-v1 (gamePk, teamId, side, cutoffTime) → roster/transaction sources"
+  },
+  "candidateProviders": [
+    {
+      "id": "mlb-stats-api-40man",
+      "name": "MLB Stats API — 40Man roster",
+      "endpoint": "GET /api/v1/teams/{teamId}/roster?rosterType=40Man",
+      "httpStatusProbed": 200,
+      "preGame": true,
+      "postGame": true,
+      "priority": "PRIMARY",
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "notes": [
+        "Authoritative roster status codes (A, D10, D15, D60, D7, RM, NYR observed).",
+        "Optional free-text note on some IL rows (e.g. shoulder impingement).",
+        "Active roster (26) alone omits IL players — insufficient as sole source."
+      ]
+    },
+    {
+      "id": "mlb-stats-api-transactions",
+      "name": "MLB Stats API — transactions",
+      "endpoint": "GET /api/v1/transactions?sportId=1&startDate=&endDate=",
+      "httpStatusProbed": 200,
+      "preGame": true,
+      "postGame": true,
+      "priority": "SUPPLEMENT",
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "notes": [
+        "IL placement/activation via typeCode SC (Status Change).",
+        "Injury/body-part text in description field only — not structured.",
+        "date/effectiveDate/resolutionDate are calendar dates without time-of-day."
+      ]
+    },
+    {
+      "id": "mlb-stats-api-injuries",
+      "name": "MLB Stats API — injuries endpoint",
+      "endpoint": "GET /api/v1/injuries?sportId=1&teamId={id}",
+      "httpStatusProbed": 404,
+      "preGame": false,
+      "postGame": false,
+      "priority": "UNAVAILABLE",
+      "legalStatus": "N/A",
+      "notes": ["Live probe 404 — do not invent dedicated injuries feed"]
+    },
+    {
+      "id": "sportsdataio-injured-players",
+      "name": "SportsDataIO — InjuredPlayers",
+      "endpoint": "/projections/json/InjuredPlayers",
+      "httpStatusProbed": 200,
+      "preGame": "trial-only",
+      "postGame": "trial-only",
+      "priority": "SECONDARY_BLOCKED",
+      "legalStatus": "SUBSCRIPTION_REVIEW_REQUIRED",
+      "notes": [
+        "/scores/json/Injuries returned 404 on trial.",
+        "Trial InjuryStatus/InjuryBodyPart/InjuryNotes literal Scrambled — PERMANENTLY_PROHIBITED until non-scrambled paid tier verified.",
+        "Observed fields: PlayerID, InjuryStatus, InjuryBodyPart, InjuryStartDate, InjuryNotes, TeamID."
+      ]
+    },
+    {
+      "id": "api-baseball-mlb",
+      "name": "API-BASEBALL (MLB grading baseline)",
+      "endpoint": "none wired",
+      "preGame": false,
+      "postGame": false,
+      "priority": "NOT_IN_PIPELINE",
+      "legalStatus": "COMMERCIAL_SUBSCRIPTION",
+      "notes": ["Current MLB parse scope excludes injuries"]
+    }
+  ],
+  "fieldAvailability": {
+    "player": {
+      "available": true,
+      "preGame": true,
+      "postGame": true,
+      "sources": ["mlb-stats-api-40man.person", "mlb-stats-api-transactions.person", "sportsdataio-injured-players.PlayerID"]
+    },
+    "status": {
+      "available": true,
+      "preGame": true,
+      "postGame": true,
+      "sources": ["mlb-stats-api-40man.status.code", "mlb-stats-api-transactions.typeDesc+description", "sportsdataio-injured-players.InjuryStatus"]
+    },
+    "injuryType": {
+      "available": "partial",
+      "preGame": "partial",
+      "postGame": "partial",
+      "sources": ["mlb-stats-api-40man.note", "mlb-stats-api-transactions.description", "sportsdataio-injured-players.InjuryNotes"],
+      "caveat": "Free text only — no structured injury-type enum from official API"
+    },
+    "bodyPart": {
+      "available": "partial",
+      "preGame": "partial",
+      "postGame": "partial",
+      "sources": ["mlb-stats-api-40man.note", "mlb-stats-api-transactions.description", "sportsdataio-injured-players.InjuryBodyPart"],
+      "caveat": "Often embedded in description/note; not a dedicated Stats API field"
+    },
+    "expectedReturn": {
+      "available": false,
+      "preGame": false,
+      "postGame": false,
+      "sources": []
+    },
+    "announcementTime": {
+      "available": "partial",
+      "preGame": "partial",
+      "postGame": "partial",
+      "sources": ["mlb-stats-api-transactions.date", "mlb-stats-api-transactions.effectiveDate", "sportsdataio-injured-players.InjuryStartDate"],
+      "caveat": "Calendar date only — no authoritative announcement timestamp; collection asOf records probe time"
+    },
+    "lastUpdated": {
+      "available": false,
+      "preGame": false,
+      "postGame": false,
+      "sources": []
+    },
+    "source": {
+      "available": true,
+      "preGame": true,
+      "postGame": true,
+      "sources": ["research metadata: endpoint label + builderVersion"]
+    }
+  },
+  "availableFields": {
+    "preGame": [
+      "playerId",
+      "playerName",
+      "teamId",
+      "rosterStatusCode",
+      "rosterStatusDescription",
+      "injuryListed (derived label from status code — not a score)",
+      "injuryNote (optional 40Man note)",
+      "transactionId",
+      "transactionDate",
+      "transactionEffectiveDate",
+      "transactionDescription",
+      "transactionTypeCode",
+      "collectionPhase=PRE_GAME_ROSTER_INJURY",
+      "cutoffTime",
+      "sourceEndpoint"
+    ],
+    "postGameOnly": [
+      "playByPlay injury / injury-delay events",
+      "post-game IL activation after first pitch",
+      "lineup actual absence vs roster expectation (audit comparison — not injury proof alone)"
+    ]
+  },
+  "unavailableFields": [
+    "expectedReturn",
+    "lastUpdated",
+    "preciseAnnouncementTimestamp",
+    "dayToDayGameTimeDecision",
+    "injurySeverityGrade",
+    "mriOrMedicalClassification",
+    "dedicatedStatsApiInjuriesFeed",
+    "sportsdataioScrambledInjuryValues",
+    "teamSitePressInjuryReports",
+    "lineupAbsenceAsInjuryProxy"
+  ],
+  "liveProbes": {
+    "mlbStatsApi": {
+      "injuriesEndpoint": { "teamId": 139, "httpStatus": 404 },
+      "fortyManRoster": {
+        "teamId": 139,
+        "httpStatus": 200,
+        "statusCodeHistogram": { "RM": 13, "A": 26, "D60": 6, "D10": 1 },
+        "noteFieldExample": "Right shoulder impingement"
+      },
+      "transactionsWindow": {
+        "startDate": "2026-07-01",
+        "endDate": "2026-07-27",
+        "count": 1702,
+        "ilRelatedSamples": 10
+      },
+      "slateTeams2026_07_27": {
+        "teamsProbed": 24,
+        "nonActiveRows": 451,
+        "rowsWithNote": 200,
+        "aggregatedStatusHistogram": {
+          "A": 622,
+          "D60": 128,
+          "D15": 41,
+          "D10": 45,
+          "D7": 2,
+          "RM": 232,
+          "NYR": 3
+        }
+      }
+    },
+    "sportsDataIo": {
+      "scoresInjuries": { "httpStatus": 404 },
+      "projectionsInjuredPlayers": {
+        "httpStatus": 200,
+        "rowCount": 296,
+        "scrambledMarkerObserved": true,
+        "observedKeys": [
+          "PlayerID",
+          "InjuryStatus",
+          "InjuryBodyPart",
+          "InjuryStartDate",
+          "InjuryNotes",
+          "Status",
+          "TeamID"
+        ]
+      }
+    }
+  },
+  "legalStatus": {
+    "mlbStatsApi": {
+      "research": "ALLOWED_INTERNAL",
+      "publicRuntime": "NOT_CONFIRMED",
+      "commercialRuntime": "NOT_CONFIRMED",
+      "htmlCrawling": "PROHIBITED"
+    },
+    "sportsDataIo": {
+      "research": "TRIAL_SCRAMBLED_BLOCKED",
+      "publicRuntime": "REQUIRES_PAID_AND_REVIEW",
+      "scrambled": "PERMANENTLY_PROHIBITED"
+    },
+    "apiBaseball": {
+      "injuriesInMlbPipeline": false
+    },
+    "teamPressScraping": "PROHIBITED"
+  },
+  "leakageRisks": [
+    {
+      "id": "POSTGAME_ROSTER_BACKFILL",
+      "severity": "high",
+      "mitigation": "Separate POST_GAME phase; never rewrite PRE_GAME rows"
+    },
+    {
+      "id": "TRANSACTION_AFTER_CUTOFF",
+      "severity": "high",
+      "mitigation": "Filter effectiveDate <= cutoffDate; warn in row"
+    },
+    {
+      "id": "LINEUP_ABSENCE_PROXY",
+      "severity": "high",
+      "mitigation": "Forbidden — lineup is post-game actual"
+    },
+    {
+      "id": "SPORTSDATA_FEED_REFRESH",
+      "severity": "medium",
+      "mitigation": "Append-only snapshots + inputHash versioning"
+    },
+    {
+      "id": "PBP_INJURY_IN_PREGAME",
+      "severity": "medium",
+      "mitigation": "PBP injury events POST_GAME only"
+    },
+    {
+      "id": "RETROACTIVE_IL_TEXT",
+      "severity": "low",
+      "mitigation": "Store effectiveDate + raw description; flag retroactive wording"
+    }
+  ],
+  "implementationDecision": {
+    "decision": "HOLD",
+    "schemaDesign": "GO",
+    "builder": "BLOCKED",
+    "engine": "BLOCKED",
+    "registry": "BLOCKED",
+    "viewer": "BLOCKED",
+    "blockers": [
+      "Canonical Provider policy (Stats 40Man vs Stats+transactions vs paid SportsDataIO)",
+      "Player-game row granularity sign-off",
+      "Cutoff versioning for transaction window",
+      "Paternity/bereavement/suspension scope vs pure injury"
+    ]
+  },
+  "regression": {
+    "predictionHashUnchanged": true,
+    "frameworkChanged": false,
+    "registryChanged": false,
+    "engineConnected": false,
+    "codeChanged": false,
+    "weatherArtifactsModified": false,
+    "travelArtifactsModified": false
+  },
+  "relatedArtifacts": {
+    "designDoc": "INJURY_DATASET_V1_DESIGN.md",
+    "bullpenAvailabilitySurvey": "data/research/mlb/h-bp-role-006-availability-survey.json",
+    "dataFusionTrial": "data/daily-tests/2026-07-27-mlb-data-fusion.json"
+  }
+}

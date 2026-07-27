@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "source": "INTERNAL_RESEARCH_ONLY",
+    "pathQuery": "/api/v1/venues/3?hydrate=location,timezone",
+    "fetchedAt": "2026-07-27T12:20:05.184Z",
+    "publicRuntimeUseAllowed": false,
+    "commercialRuntimeUseAllowed": false
+  },
+  "body": {
+    "copyright": "Copyright 2026 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt",
+    "venues": [
+      {
+        "id": 3,
+        "name": "Fenway Park",
+        "link": "/api/v1/venues/3",
+        "location": {
+          "address1": "4 Yawkey Way",
+          "city": "Boston",
+          "state": "Massachusetts",
+          "stateAbbrev": "MA",
+          "postalCode": "02215",
+          "defaultCoordinates": {
+            "latitude": 42.346456,
+            "longitude": -71.097441
+          },
+          "azimuthAngle": 45,
+          "elevation": 21,
+          "country": "USA",
+          "phone": "(617) 267-9440"
+        },
+        "timeZone": {
+          "tz": "EDT",
+          "id": "America/New_York",
+          "offset": -4,
+          "offsetAtGameTime": -4
+        },
+        "active": true,
+        "season": "2026"
+      }
+    ]
+  }
+}

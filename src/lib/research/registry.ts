@@ -57,23 +57,29 @@ export const RESEARCH_DATASET_REGISTRY: ResearchDatasetRegistryEntry[] = [
   },
   {
     datasetId: "mlb-weather",
-    status: "NOT_STARTED",
-    schemaVersion: "mlb-weather-dataset-v0",
-    builderVersion: "not-implemented",
+    status: "COLLECTING",
+    schemaVersion: "mlb-weather-dataset-v1",
+    builderVersion: "weather-dataset-builder-v1",
     frameworkVersion: RESEARCH_FRAMEWORK_VERSION,
-    artifactDatasetPath: null,
+    artifactDatasetPath:
+      "data/research/mlb/2026-07-27-weather-dataset-v1.json",
     hypothesisIds: [],
     engineAdmission: "PROHIBITED",
+    notes:
+      "Weather Dataset v1 collecting PRE_GAME_FORECAST venue snapshots only. Forecast provider NOT_SELECTED. Framework adapter only; builder independent of Framework.",
   },
   {
     datasetId: "mlb-travel",
-    status: "NOT_STARTED",
-    schemaVersion: "mlb-travel-dataset-v0",
-    builderVersion: "not-implemented",
+    status: "COLLECTING",
+    schemaVersion: "mlb-travel-rest-dataset-v1",
+    builderVersion: "travel-rest-dataset-builder-v1",
     frameworkVersion: RESEARCH_FRAMEWORK_VERSION,
-    artifactDatasetPath: null,
+    artifactDatasetPath:
+      "data/research/mlb/2026-07-27-travel-rest-dataset-v1.json",
     hypothesisIds: [],
     engineAdmission: "PROHIBITED",
+    notes:
+      "Travel/Rest Dataset v1 collecting PRE_GAME_SCHEDULE_CONTEXT only. No route inference. Framework adapter only; builder independent of Framework.",
   },
 ];
 
@@ -228,6 +234,104 @@ export function lineupV1FrameworkMetadata(
       "Framework adapter only — domain builder does not import Framework.",
       "Engine admission remains PROHIBITED.",
       "Post-game actual only. Never backfill pre-game from boxscore.",
+    ],
+    ...overrides,
+  };
+}
+
+/** Travel/Rest Dataset v1 → Framework metadata 매핑 (도메인 builder 비의존) */
+export function travelRestV1FrameworkMetadata(
+  overrides?: Partial<ResearchDatasetMetadata>,
+): ResearchDatasetMetadata {
+  const entry = getRegistryEntry("mlb-travel")!;
+  return {
+    datasetId: entry.datasetId,
+    displayName: "MLB Travel / Rest Dataset",
+    domain: "travel",
+    league: "MLB",
+    status: entry.status,
+    versions: {
+      frameworkVersion: RESEARCH_FRAMEWORK_VERSION,
+      schemaVersion: entry.schemaVersion,
+      builderVersion: entry.builderVersion,
+      compatibility: "experimental",
+      notes:
+        "v1 PRE_GAME_SCHEDULE_CONTEXT; haversine distance only; no transport inference",
+    },
+    legal: {
+      source: "INTERNAL_RESEARCH_ONLY",
+      publicRuntimeUseAllowed: false,
+      commercialRuntimeUseAllowed: false,
+      engineConnected: false,
+      rawResponseInResearchCacheOnly: true,
+      mlbHtmlCrawling: false,
+      sportsDataIoScrambled: false,
+    },
+    hypothesisIds: entry.hypothesisIds,
+    artifactPaths: {
+      dataset: entry.artifactDatasetPath ?? undefined,
+      audit: "data/audits/2026-07-27-travel-rest-dataset-v1-audit.json",
+      derivedCache: "data/cache/research/mlb/raw/statsapi/",
+    },
+    sample: {
+      minimumSampleTarget: 100,
+    },
+    createdAt: "2026-07-27T00:00:00.000Z",
+    updatedAt: null,
+    lastAuditedAt: null,
+    notes: [
+      "Framework adapter only — domain builder does not import Framework.",
+      "Engine admission remains PROHIBITED.",
+      "No Travel/Fatigue/Rest Score. distanceKm is approximate haversine.",
+    ],
+    ...overrides,
+  };
+}
+
+/** Weather Dataset v1 → Framework metadata 매핑 (도메인 builder 비의존) */
+export function weatherV1FrameworkMetadata(
+  overrides?: Partial<ResearchDatasetMetadata>,
+): ResearchDatasetMetadata {
+  const entry = getRegistryEntry("mlb-weather")!;
+  return {
+    datasetId: entry.datasetId,
+    displayName: "MLB Weather Dataset",
+    domain: "weather",
+    league: "MLB",
+    status: entry.status,
+    versions: {
+      frameworkVersion: RESEARCH_FRAMEWORK_VERSION,
+      schemaVersion: entry.schemaVersion,
+      builderVersion: entry.builderVersion,
+      compatibility: "experimental",
+      notes:
+        "v1 PRE_GAME_FORECAST venue snapshot; forecast NOT_COLLECTED; provider NOT_SELECTED",
+    },
+    legal: {
+      source: "INTERNAL_RESEARCH_ONLY",
+      publicRuntimeUseAllowed: false,
+      commercialRuntimeUseAllowed: false,
+      engineConnected: false,
+      rawResponseInResearchCacheOnly: true,
+      mlbHtmlCrawling: false,
+      sportsDataIoScrambled: false,
+    },
+    hypothesisIds: entry.hypothesisIds,
+    artifactPaths: {
+      dataset: entry.artifactDatasetPath ?? undefined,
+      audit: "data/audits/2026-07-27-weather-dataset-v1-audit.json",
+      derivedCache: "data/cache/research/mlb/raw/statsapi/",
+    },
+    sample: {
+      minimumSampleTarget: 100,
+    },
+    createdAt: "2026-07-27T00:00:00.000Z",
+    updatedAt: null,
+    lastAuditedAt: null,
+    notes: [
+      "Framework adapter only — domain builder does not import Framework.",
+      "Engine admission remains PROHIBITED.",
+      "Forecast provider not selected; no Weather Score.",
     ],
     ...overrides,
   };
