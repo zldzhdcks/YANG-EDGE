@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "version": "mlb-injury-dataset-v1-audit",
+    "kind": "injury-dataset-v1-build-audit",
+    "datasetId": "mlb-injury",
+    "schemaVersion": "mlb-injury-dataset-v1",
+    "builderVersion": "injury-dataset-builder-v1",
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T12:48:31.884Z",
+    "datasetStatus": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "researchOnly": true,
+    "predictionHashSha256": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+    "predictionUnchanged": true,
+    "inputHashSha256": "e7d95af51b20e0ef0b4a84614537487fed197e628c004de0744a392101b2feee",
+    "resultHashSha256": "4c2b9ffd8240c14e758e1ad0d29ccf257c9f7c24412cee370174beb9d47f6c87",
+    "firstResultHash": "4c2b9ffd8240c14e758e1ad0d29ccf257c9f7c24412cee370174beb9d47f6c87",
+    "secondResultHash": "4c2b9ffd8240c14e758e1ad0d29ccf257c9f7c24412cee370174beb9d47f6c87",
+    "hashMatched": true
+  },
+  "games": 15,
+  "teamsOnSlate": 30,
+  "rosterCollected": 30,
+  "transactionsInWindow": 1867,
+  "injuryListedRows": 272,
+  "rowsWithTransaction": 96,
+  "provider": {
+    "id": "mlb-stats-api",
+    "displayName": "MLB Stats API"
+  },
+  "cacheUsage": {
+    "firstRun": {
+      "rawHit": 0,
+      "rawMiss": 31,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 31
+    },
+    "secondRunWarm": {
+      "rawHit": 31,
+      "rawMiss": 0,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 0
+    }
+  },
+  "networkCalls": {
+    "firstRun": 31,
+    "secondRunWarm": 0
+  },
+  "regressionHashes": {
+    "before": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "weather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19",
+      "travel": "30a7a2defe5822d898381696acd010bba41822f452aeb28ef2da18692b67c438",
+      "oddsHistory": "dc6f8890fee315038460c771fca91312383b36da72a68869ce3ae2ffad294778"
+    },
+    "after": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "weather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19",
+      "travel": "30a7a2defe5822d898381696acd010bba41822f452aeb28ef2da18692b67c438",
+      "oddsHistory": "dc6f8890fee315038460c771fca91312383b36da72a68869ce3ae2ffad294778"
+    },
+    "unchanged": true
+  },
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true,
+      "detail": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17"
+    },
+    {
+      "id": "result-hash-matched",
+      "passed": true,
+      "detail": "4c2b9ffd8240c14e758e1ad0d29ccf257c9f7c24412cee370174beb9d47f6c87 == 4c2b9ffd8240c14e758e1ad0d29ccf257c9f7c24412cee370174beb9d47f6c87"
+    },
+    {
+      "id": "warm-network-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "pre-game-roster-only",
+      "passed": true,
+      "detail": "PRE_GAME_ROSTER"
+    },
+    {
+      "id": "all-rows-injury-listed",
+      "passed": true,
+      "detail": "272"
+    },
+    {
+      "id": "regression-hashes-unchanged",
+      "passed": true,
+      "detail": "prediction/starter/bullpen/lineup/weather/travel/oddsHistory"
+    },
+    {
+      "id": "engine-prohibited",
+      "passed": true,
+      "detail": "PROHIBITED"
+    }
+  ],
+  "legal": {
+    "mlbStatsSource": "INTERNAL_RESEARCH_ONLY",
+    "publicRuntimeUseAllowed": false,
+    "commercialRuntimeUseAllowed": false,
+    "rawResponseInResearchCacheOnly": true,
+    "mlbHtmlCrawling": false,
+    "sportsDataIoScrambled": false,
+    "lineupAbsenceInference": false
+  },
+  "notes": [
+    "PRE_GAME_ROSTER only — 40Man roster + transactions; no /injuries endpoint.",
+    "injuryListed derived from roster status code only (D* codes).",
+    "No expectedReturn, severity, MRI, or lineup-absence inference.",
+    "Engine admission PROHIBITED."
+  ]
+}

@@ -1,0 +1,379 @@
+{
+  "meta": {
+    "version": "research-sample-growth-dashboard-v1",
+    "kind": "sample-growth-dashboard",
+    "asOfDateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T13:01:10.542Z",
+    "researchOnly": true,
+    "engineConnected": false,
+    "engineAdmission": "PROHIBITED",
+    "engineReviewPromotionProhibited": true,
+    "targetGames": 100,
+    "predictionHashSha256": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+    "datasetFilesUnchanged": true,
+    "officialConclusion": "RESEARCH_SAMPLE_GROWTH_DASHBOARD_V1_CREATED",
+    "note": "Chart-ready JSON only. Gate labels are computed — no Engine admission or hypothesis promotion."
+  },
+  "overall": {
+    "totalDatasets": 7,
+    "collectingDatasets": 7,
+    "completedDatasets": 0,
+    "totalGamesCollected": 27,
+    "targetGames": 100,
+    "overallProgress": 16.7
+  },
+  "gateSummary": {
+    "NOT_READY": 0,
+    "UNDER_COLLECTION": 7,
+    "READY_FOR_BACKTEST": 0,
+    "READY_FOR_ENGINE_REVIEW": 0,
+    "promotionProhibited": true,
+    "note": "READY_FOR_ENGINE_REVIEW is computed only — no dataset promoted."
+  },
+  "datasets": [
+    {
+      "datasetId": "mlb-starter",
+      "displayName": "Starter",
+      "status": "COLLECTING",
+      "sampleCount": 27,
+      "targetSample": 100,
+      "completionPercent": 27,
+      "firstGameDate": "2026-07-27",
+      "lastGameDate": "2026-07-28",
+      "lastUpdated": "2026-07-27T02:03:47.968Z",
+      "gate": "UNDER_COLLECTION",
+      "gatePromotionProhibited": false,
+      "artifactFiles": [
+        "data/research/mlb/2026-07-27-starter-dataset-v1.json",
+        "data/research/mlb/2026-07-28-starter-dataset-v1.json"
+      ],
+      "dailyGameCounts": [
+        {
+          "dateKst": "2026-07-27",
+          "gamesOnDate": 15
+        },
+        {
+          "dateKst": "2026-07-28",
+          "gamesOnDate": 12
+        }
+      ]
+    },
+    {
+      "datasetId": "mlb-bullpen-role",
+      "displayName": "Bullpen",
+      "status": "COLLECTING",
+      "sampleCount": 15,
+      "targetSample": 100,
+      "completionPercent": 15,
+      "firstGameDate": "2026-07-27",
+      "lastGameDate": "2026-07-27",
+      "lastUpdated": "2026-07-27T10:57:31.077Z",
+      "gate": "UNDER_COLLECTION",
+      "gatePromotionProhibited": false,
+      "artifactFiles": [
+        "data/research/mlb/2026-07-27-bullpen-role-dataset-v1_1.json"
+      ],
+      "dailyGameCounts": [
+        {
+          "dateKst": "2026-07-27",
+          "gamesOnDate": 15
+        }
+      ]
+    },
+    {
+      "datasetId": "mlb-lineup",
+      "displayName": "Lineup",
+      "status": "COLLECTING",
+      "sampleCount": 15,
+      "targetSample": 100,
+      "completionPercent": 15,
+      "firstGameDate": "2026-07-27",
+      "lastGameDate": "2026-07-27",
+      "lastUpdated": "2026-07-27T06:40:58.839Z",
+      "gate": "UNDER_COLLECTION",
+      "gatePromotionProhibited": false,
+      "artifactFiles": [
+        "data/research/mlb/2026-07-27-lineup-dataset-v1.json"
+      ],
+      "dailyGameCounts": [
+        {
+          "dateKst": "2026-07-27",
+          "gamesOnDate": 15
+        }
+      ]
+    },
+    {
+      "datasetId": "mlb-weather",
+      "displayName": "Weather",
+      "status": "COLLECTING",
+      "sampleCount": 15,
+      "targetSample": 100,
+      "completionPercent": 15,
+      "firstGameDate": "2026-07-27",
+      "lastGameDate": "2026-07-27",
+      "lastUpdated": "2026-07-27T12:17:09.956Z",
+      "gate": "UNDER_COLLECTION",
+      "gatePromotionProhibited": false,
+      "artifactFiles": [
+        "data/research/mlb/2026-07-27-weather-dataset-v1.json"
+      ],
+      "dailyGameCounts": [
+        {
+          "dateKst": "2026-07-27",
+          "gamesOnDate": 15
+        }
+      ]
+    },
+    {
+      "datasetId": "mlb-travel",
+      "displayName": "Travel",
+      "status": "COLLECTING",
+      "sampleCount": 15,
+      "targetSample": 100,
+      "completionPercent": 15,
+      "firstGameDate": "2026-07-27",
+      "lastGameDate": "2026-07-27",
+      "lastUpdated": "2026-07-27T12:20:02.071Z",
+      "gate": "UNDER_COLLECTION",
+      "gatePromotionProhibited": false,
+      "artifactFiles": [
+        "data/research/mlb/2026-07-27-travel-rest-dataset-v1.json"
+      ],
+      "dailyGameCounts": [
+        {
+          "dateKst": "2026-07-27",
+          "gamesOnDate": 15
+        }
+      ]
+    },
+    {
+      "datasetId": "mlb-odds-history",
+      "displayName": "Odds History",
+      "status": "COLLECTING",
+      "sampleCount": 15,
+      "targetSample": 100,
+      "completionPercent": 15,
+      "firstGameDate": "2026-07-27",
+      "lastGameDate": "2026-07-27",
+      "lastUpdated": "2026-07-27T12:43:58.366Z",
+      "gate": "UNDER_COLLECTION",
+      "gatePromotionProhibited": false,
+      "artifactFiles": [
+        "data/research/mlb/2026-07-27-odds-history-dataset-v1.json"
+      ],
+      "dailyGameCounts": [
+        {
+          "dateKst": "2026-07-27",
+          "gamesOnDate": 15
+        }
+      ]
+    },
+    {
+      "datasetId": "mlb-injury",
+      "displayName": "Injury",
+      "status": "COLLECTING",
+      "sampleCount": 15,
+      "targetSample": 100,
+      "completionPercent": 15,
+      "firstGameDate": "2026-07-27",
+      "lastGameDate": "2026-07-27",
+      "lastUpdated": "2026-07-27T12:48:31.789Z",
+      "gate": "UNDER_COLLECTION",
+      "gatePromotionProhibited": false,
+      "artifactFiles": [
+        "data/research/mlb/2026-07-27-injury-dataset-v1.json"
+      ],
+      "dailyGameCounts": [
+        {
+          "dateKst": "2026-07-27",
+          "gamesOnDate": 15
+        }
+      ]
+    }
+  ],
+  "chartData": {
+    "targetGames": 100,
+    "byDataset": {
+      "mlb-starter": [
+        {
+          "dateKst": "2026-07-27",
+          "cumulativeGames": 15,
+          "gamesOnDate": 15
+        },
+        {
+          "dateKst": "2026-07-28",
+          "cumulativeGames": 27,
+          "gamesOnDate": 12
+        }
+      ],
+      "mlb-bullpen-role": [
+        {
+          "dateKst": "2026-07-27",
+          "cumulativeGames": 15,
+          "gamesOnDate": 15
+        }
+      ],
+      "mlb-lineup": [
+        {
+          "dateKst": "2026-07-27",
+          "cumulativeGames": 15,
+          "gamesOnDate": 15
+        }
+      ],
+      "mlb-weather": [
+        {
+          "dateKst": "2026-07-27",
+          "cumulativeGames": 15,
+          "gamesOnDate": 15
+        }
+      ],
+      "mlb-travel": [
+        {
+          "dateKst": "2026-07-27",
+          "cumulativeGames": 15,
+          "gamesOnDate": 15
+        }
+      ],
+      "mlb-odds-history": [
+        {
+          "dateKst": "2026-07-27",
+          "cumulativeGames": 15,
+          "gamesOnDate": 15
+        }
+      ],
+      "mlb-injury": [
+        {
+          "dateKst": "2026-07-27",
+          "cumulativeGames": 15,
+          "gamesOnDate": 15
+        }
+      ]
+    },
+    "overallProgressSeries": [
+      {
+        "dateKst": "2026-07-27",
+        "averageCompletionPercent": 15
+      },
+      {
+        "dateKst": "2026-07-28",
+        "averageCompletionPercent": 3.9
+      }
+    ],
+    "barChart": [
+      {
+        "datasetId": "mlb-starter",
+        "displayName": "Starter",
+        "sampleCount": 27,
+        "targetSample": 100,
+        "completionPercent": 27,
+        "gate": "UNDER_COLLECTION"
+      },
+      {
+        "datasetId": "mlb-bullpen-role",
+        "displayName": "Bullpen",
+        "sampleCount": 15,
+        "targetSample": 100,
+        "completionPercent": 15,
+        "gate": "UNDER_COLLECTION"
+      },
+      {
+        "datasetId": "mlb-lineup",
+        "displayName": "Lineup",
+        "sampleCount": 15,
+        "targetSample": 100,
+        "completionPercent": 15,
+        "gate": "UNDER_COLLECTION"
+      },
+      {
+        "datasetId": "mlb-weather",
+        "displayName": "Weather",
+        "sampleCount": 15,
+        "targetSample": 100,
+        "completionPercent": 15,
+        "gate": "UNDER_COLLECTION"
+      },
+      {
+        "datasetId": "mlb-travel",
+        "displayName": "Travel",
+        "sampleCount": 15,
+        "targetSample": 100,
+        "completionPercent": 15,
+        "gate": "UNDER_COLLECTION"
+      },
+      {
+        "datasetId": "mlb-odds-history",
+        "displayName": "Odds History",
+        "sampleCount": 15,
+        "targetSample": 100,
+        "completionPercent": 15,
+        "gate": "UNDER_COLLECTION"
+      },
+      {
+        "datasetId": "mlb-injury",
+        "displayName": "Injury",
+        "sampleCount": 15,
+        "targetSample": 100,
+        "completionPercent": 15,
+        "gate": "UNDER_COLLECTION"
+      }
+    ]
+  },
+  "regressionHashes": {
+    "before": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "weather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19",
+      "travel": "30a7a2defe5822d898381696acd010bba41822f452aeb28ef2da18692b67c438",
+      "odds": "dc6f8890fee315038460c771fca91312383b36da72a68869ce3ae2ffad294778",
+      "injury": "8aceabf4d928bb419a5c9bdc851db15ccfb649d59c29c6de2e9c96d594b5ae01"
+    },
+    "after": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "weather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19",
+      "travel": "30a7a2defe5822d898381696acd010bba41822f452aeb28ef2da18692b67c438",
+      "odds": "dc6f8890fee315038460c771fca91312383b36da72a68869ce3ae2ffad294778",
+      "injury": "8aceabf4d928bb419a5c9bdc851db15ccfb649d59c29c6de2e9c96d594b5ae01"
+    },
+    "unchanged": true
+  },
+  "sources": [
+    "data/research/registry.json",
+    "data/research/mlb/*-starter-dataset-v1.json",
+    "data/research/mlb/*-bullpen-role-dataset-v1_1.json",
+    "data/research/mlb/*-lineup-dataset-v1.json",
+    "data/research/mlb/*-weather-dataset-v1.json",
+    "data/research/mlb/*-travel-rest-dataset-v1.json",
+    "data/research/mlb/*-odds-history-dataset-v1.json",
+    "data/research/mlb/*-injury-dataset-v1.json"
+  ],
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true
+    },
+    {
+      "id": "all-dataset-hashes-unchanged",
+      "passed": true
+    },
+    {
+      "id": "no-engine-promotion",
+      "passed": true,
+      "detail": "engineReviewPromotionProhibited"
+    },
+    {
+      "id": "chart-data-only",
+      "passed": true,
+      "detail": "no viewer wiring"
+    }
+  ],
+  "limitations": [
+    "Sample counts use unique gameIds across all artifact files per dataset.",
+    "15–27 games ≪ 100 target — all datasets remain UNDER_COLLECTION.",
+    "Dashboard is descriptive — not an Engine or backtest input."
+  ]
+}

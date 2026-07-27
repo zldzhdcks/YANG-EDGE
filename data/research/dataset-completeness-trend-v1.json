@@ -1,0 +1,567 @@
+{
+  "meta": {
+    "version": "dataset-completeness-trend-v1",
+    "kind": "completeness-trend-audit",
+    "asOfDateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T13:07:00.023Z",
+    "researchOnly": true,
+    "engineConnected": false,
+    "engineAdmission": "PROHIBITED",
+    "noQualityScores": true,
+    "noImportance": true,
+    "noWeights": true,
+    "trendEntryCount": 8,
+    "datasetCount": 7,
+    "predictionHashSha256": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+    "datasetFilesUnchanged": true,
+    "officialConclusion": "DATASET_COMPLETENESS_TREND_AUDIT_V1_CREATED",
+    "note": "Game-level completeness counts per slate date — not a quality or importance score."
+  },
+  "trends": [
+    {
+      "datasetId": "mlb-starter",
+      "displayName": "Starter",
+      "entries": [
+        {
+          "datasetId": "mlb-starter",
+          "date": "2026-07-27",
+          "sampleCount": 15,
+          "completeRows": 15,
+          "partialRows": 0,
+          "missingRows": 0,
+          "completionRate": 100,
+          "generatedAt": "2026-07-27T01:53:17.681Z",
+          "artifactPath": "data/research/mlb/2026-07-27-starter-dataset-v1.json"
+        },
+        {
+          "datasetId": "mlb-starter",
+          "date": "2026-07-28",
+          "sampleCount": 12,
+          "completeRows": 11,
+          "partialRows": 1,
+          "missingRows": 0,
+          "completionRate": 91.7,
+          "generatedAt": "2026-07-27T02:03:47.968Z",
+          "artifactPath": "data/research/mlb/2026-07-28-starter-dataset-v1.json"
+        }
+      ],
+      "completionRateTrend": [
+        {
+          "date": "2026-07-27",
+          "completionRate": 100,
+          "completionRateDelta": null,
+          "sampleCount": 15,
+          "sampleCountDelta": null
+        },
+        {
+          "date": "2026-07-28",
+          "completionRate": 91.7,
+          "completionRateDelta": -8.3,
+          "sampleCount": 12,
+          "sampleCountDelta": -3
+        }
+      ],
+      "sampleGrowthTrend": [
+        {
+          "date": "2026-07-27",
+          "completionRate": 100,
+          "completionRateDelta": null,
+          "sampleCount": 15,
+          "sampleCountDelta": null
+        },
+        {
+          "date": "2026-07-28",
+          "completionRate": 91.7,
+          "completionRateDelta": -8.3,
+          "sampleCount": 12,
+          "sampleCountDelta": -3
+        }
+      ],
+      "summary": {
+        "averageCompletion": 95.9,
+        "maxCompletion": 100,
+        "minCompletion": 91.7,
+        "currentCompletion": 91.7
+      }
+    },
+    {
+      "datasetId": "mlb-bullpen-role",
+      "displayName": "Bullpen",
+      "entries": [
+        {
+          "datasetId": "mlb-bullpen-role",
+          "date": "2026-07-27",
+          "sampleCount": 15,
+          "completeRows": 15,
+          "partialRows": 0,
+          "missingRows": 0,
+          "completionRate": 100,
+          "generatedAt": "2026-07-27T10:57:31.077Z",
+          "artifactPath": "data/research/mlb/2026-07-27-bullpen-role-dataset-v1_1.json"
+        }
+      ],
+      "completionRateTrend": [
+        {
+          "date": "2026-07-27",
+          "completionRate": 100,
+          "completionRateDelta": null,
+          "sampleCount": 15,
+          "sampleCountDelta": null
+        }
+      ],
+      "sampleGrowthTrend": [
+        {
+          "date": "2026-07-27",
+          "completionRate": 100,
+          "completionRateDelta": null,
+          "sampleCount": 15,
+          "sampleCountDelta": null
+        }
+      ],
+      "summary": {
+        "averageCompletion": 100,
+        "maxCompletion": 100,
+        "minCompletion": 100,
+        "currentCompletion": 100
+      }
+    },
+    {
+      "datasetId": "mlb-lineup",
+      "displayName": "Lineup",
+      "entries": [
+        {
+          "datasetId": "mlb-lineup",
+          "date": "2026-07-27",
+          "sampleCount": 15,
+          "completeRows": 0,
+          "partialRows": 15,
+          "missingRows": 0,
+          "completionRate": 0,
+          "generatedAt": "2026-07-27T06:40:58.839Z",
+          "artifactPath": "data/research/mlb/2026-07-27-lineup-dataset-v1.json"
+        }
+      ],
+      "completionRateTrend": [
+        {
+          "date": "2026-07-27",
+          "completionRate": 0,
+          "completionRateDelta": null,
+          "sampleCount": 15,
+          "sampleCountDelta": null
+        }
+      ],
+      "sampleGrowthTrend": [
+        {
+          "date": "2026-07-27",
+          "completionRate": 0,
+          "completionRateDelta": null,
+          "sampleCount": 15,
+          "sampleCountDelta": null
+        }
+      ],
+      "summary": {
+        "averageCompletion": 0,
+        "maxCompletion": 0,
+        "minCompletion": 0,
+        "currentCompletion": 0
+      }
+    },
+    {
+      "datasetId": "mlb-weather",
+      "displayName": "Weather",
+      "entries": [
+        {
+          "datasetId": "mlb-weather",
+          "date": "2026-07-27",
+          "sampleCount": 15,
+          "completeRows": 0,
+          "partialRows": 15,
+          "missingRows": 0,
+          "completionRate": 0,
+          "generatedAt": "2026-07-27T12:17:09.956Z",
+          "artifactPath": "data/research/mlb/2026-07-27-weather-dataset-v1.json"
+        }
+      ],
+      "completionRateTrend": [
+        {
+          "date": "2026-07-27",
+          "completionRate": 0,
+          "completionRateDelta": null,
+          "sampleCount": 15,
+          "sampleCountDelta": null
+        }
+      ],
+      "sampleGrowthTrend": [
+        {
+          "date": "2026-07-27",
+          "completionRate": 0,
+          "completionRateDelta": null,
+          "sampleCount": 15,
+          "sampleCountDelta": null
+        }
+      ],
+      "summary": {
+        "averageCompletion": 0,
+        "maxCompletion": 0,
+        "minCompletion": 0,
+        "currentCompletion": 0
+      }
+    },
+    {
+      "datasetId": "mlb-travel",
+      "displayName": "Travel",
+      "entries": [
+        {
+          "datasetId": "mlb-travel",
+          "date": "2026-07-27",
+          "sampleCount": 15,
+          "completeRows": 15,
+          "partialRows": 0,
+          "missingRows": 0,
+          "completionRate": 100,
+          "generatedAt": "2026-07-27T12:20:02.071Z",
+          "artifactPath": "data/research/mlb/2026-07-27-travel-rest-dataset-v1.json"
+        }
+      ],
+      "completionRateTrend": [
+        {
+          "date": "2026-07-27",
+          "completionRate": 100,
+          "completionRateDelta": null,
+          "sampleCount": 15,
+          "sampleCountDelta": null
+        }
+      ],
+      "sampleGrowthTrend": [
+        {
+          "date": "2026-07-27",
+          "completionRate": 100,
+          "completionRateDelta": null,
+          "sampleCount": 15,
+          "sampleCountDelta": null
+        }
+      ],
+      "summary": {
+        "averageCompletion": 100,
+        "maxCompletion": 100,
+        "minCompletion": 100,
+        "currentCompletion": 100
+      }
+    },
+    {
+      "datasetId": "mlb-odds-history",
+      "displayName": "Odds History",
+      "entries": [
+        {
+          "datasetId": "mlb-odds-history",
+          "date": "2026-07-27",
+          "sampleCount": 15,
+          "completeRows": 6,
+          "partialRows": 9,
+          "missingRows": 0,
+          "completionRate": 40,
+          "generatedAt": "2026-07-27T12:43:58.366Z",
+          "artifactPath": "data/research/mlb/2026-07-27-odds-history-dataset-v1.json"
+        }
+      ],
+      "completionRateTrend": [
+        {
+          "date": "2026-07-27",
+          "completionRate": 40,
+          "completionRateDelta": null,
+          "sampleCount": 15,
+          "sampleCountDelta": null
+        }
+      ],
+      "sampleGrowthTrend": [
+        {
+          "date": "2026-07-27",
+          "completionRate": 40,
+          "completionRateDelta": null,
+          "sampleCount": 15,
+          "sampleCountDelta": null
+        }
+      ],
+      "summary": {
+        "averageCompletion": 40,
+        "maxCompletion": 40,
+        "minCompletion": 40,
+        "currentCompletion": 40
+      }
+    },
+    {
+      "datasetId": "mlb-injury",
+      "displayName": "Injury",
+      "entries": [
+        {
+          "datasetId": "mlb-injury",
+          "date": "2026-07-27",
+          "sampleCount": 15,
+          "completeRows": 0,
+          "partialRows": 15,
+          "missingRows": 0,
+          "completionRate": 0,
+          "generatedAt": "2026-07-27T12:48:31.789Z",
+          "artifactPath": "data/research/mlb/2026-07-27-injury-dataset-v1.json"
+        }
+      ],
+      "completionRateTrend": [
+        {
+          "date": "2026-07-27",
+          "completionRate": 0,
+          "completionRateDelta": null,
+          "sampleCount": 15,
+          "sampleCountDelta": null
+        }
+      ],
+      "sampleGrowthTrend": [
+        {
+          "date": "2026-07-27",
+          "completionRate": 0,
+          "completionRateDelta": null,
+          "sampleCount": 15,
+          "sampleCountDelta": null
+        }
+      ],
+      "summary": {
+        "averageCompletion": 0,
+        "maxCompletion": 0,
+        "minCompletion": 0,
+        "currentCompletion": 0
+      }
+    }
+  ],
+  "completionSummary": {
+    "mlb-starter": {
+      "averageCompletion": 95.9,
+      "maxCompletion": 100,
+      "minCompletion": 91.7,
+      "currentCompletion": 91.7
+    },
+    "mlb-bullpen-role": {
+      "averageCompletion": 100,
+      "maxCompletion": 100,
+      "minCompletion": 100,
+      "currentCompletion": 100
+    },
+    "mlb-lineup": {
+      "averageCompletion": 0,
+      "maxCompletion": 0,
+      "minCompletion": 0,
+      "currentCompletion": 0
+    },
+    "mlb-weather": {
+      "averageCompletion": 0,
+      "maxCompletion": 0,
+      "minCompletion": 0,
+      "currentCompletion": 0
+    },
+    "mlb-travel": {
+      "averageCompletion": 100,
+      "maxCompletion": 100,
+      "minCompletion": 100,
+      "currentCompletion": 100
+    },
+    "mlb-odds-history": {
+      "averageCompletion": 40,
+      "maxCompletion": 40,
+      "minCompletion": 40,
+      "currentCompletion": 40
+    },
+    "mlb-injury": {
+      "averageCompletion": 0,
+      "maxCompletion": 0,
+      "minCompletion": 0,
+      "currentCompletion": 0
+    }
+  },
+  "chartData": {
+    "byDataset": {
+      "mlb-starter": {
+        "completionRateTrend": [
+          {
+            "date": "2026-07-27",
+            "completionRate": 100,
+            "completionRateDelta": null,
+            "sampleCount": 15,
+            "sampleCountDelta": null
+          },
+          {
+            "date": "2026-07-28",
+            "completionRate": 91.7,
+            "completionRateDelta": -8.3,
+            "sampleCount": 12,
+            "sampleCountDelta": -3
+          }
+        ],
+        "sampleGrowthTrend": [
+          {
+            "date": "2026-07-27",
+            "sampleCount": 15,
+            "sampleCountDelta": null
+          },
+          {
+            "date": "2026-07-28",
+            "sampleCount": 12,
+            "sampleCountDelta": -3
+          }
+        ]
+      },
+      "mlb-bullpen-role": {
+        "completionRateTrend": [
+          {
+            "date": "2026-07-27",
+            "completionRate": 100,
+            "completionRateDelta": null,
+            "sampleCount": 15,
+            "sampleCountDelta": null
+          }
+        ],
+        "sampleGrowthTrend": [
+          {
+            "date": "2026-07-27",
+            "sampleCount": 15,
+            "sampleCountDelta": null
+          }
+        ]
+      },
+      "mlb-lineup": {
+        "completionRateTrend": [
+          {
+            "date": "2026-07-27",
+            "completionRate": 0,
+            "completionRateDelta": null,
+            "sampleCount": 15,
+            "sampleCountDelta": null
+          }
+        ],
+        "sampleGrowthTrend": [
+          {
+            "date": "2026-07-27",
+            "sampleCount": 15,
+            "sampleCountDelta": null
+          }
+        ]
+      },
+      "mlb-weather": {
+        "completionRateTrend": [
+          {
+            "date": "2026-07-27",
+            "completionRate": 0,
+            "completionRateDelta": null,
+            "sampleCount": 15,
+            "sampleCountDelta": null
+          }
+        ],
+        "sampleGrowthTrend": [
+          {
+            "date": "2026-07-27",
+            "sampleCount": 15,
+            "sampleCountDelta": null
+          }
+        ]
+      },
+      "mlb-travel": {
+        "completionRateTrend": [
+          {
+            "date": "2026-07-27",
+            "completionRate": 100,
+            "completionRateDelta": null,
+            "sampleCount": 15,
+            "sampleCountDelta": null
+          }
+        ],
+        "sampleGrowthTrend": [
+          {
+            "date": "2026-07-27",
+            "sampleCount": 15,
+            "sampleCountDelta": null
+          }
+        ]
+      },
+      "mlb-odds-history": {
+        "completionRateTrend": [
+          {
+            "date": "2026-07-27",
+            "completionRate": 40,
+            "completionRateDelta": null,
+            "sampleCount": 15,
+            "sampleCountDelta": null
+          }
+        ],
+        "sampleGrowthTrend": [
+          {
+            "date": "2026-07-27",
+            "sampleCount": 15,
+            "sampleCountDelta": null
+          }
+        ]
+      },
+      "mlb-injury": {
+        "completionRateTrend": [
+          {
+            "date": "2026-07-27",
+            "completionRate": 0,
+            "completionRateDelta": null,
+            "sampleCount": 15,
+            "sampleCountDelta": null
+          }
+        ],
+        "sampleGrowthTrend": [
+          {
+            "date": "2026-07-27",
+            "sampleCount": 15,
+            "sampleCountDelta": null
+          }
+        ]
+      }
+    }
+  },
+  "regressionHashes": {
+    "before": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "weather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19",
+      "travel": "30a7a2defe5822d898381696acd010bba41822f452aeb28ef2da18692b67c438",
+      "odds": "dc6f8890fee315038460c771fca91312383b36da72a68869ce3ae2ffad294778",
+      "injury": "8aceabf4d928bb419a5c9bdc851db15ccfb649d59c29c6de2e9c96d594b5ae01"
+    },
+    "after": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "weather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19",
+      "travel": "30a7a2defe5822d898381696acd010bba41822f452aeb28ef2da18692b67c438",
+      "odds": "dc6f8890fee315038460c771fca91312383b36da72a68869ce3ae2ffad294778",
+      "injury": "8aceabf4d928bb419a5c9bdc851db15ccfb649d59c29c6de2e9c96d594b5ae01"
+    },
+    "unchanged": true
+  },
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true
+    },
+    {
+      "id": "all-dataset-hashes-unchanged",
+      "passed": true
+    },
+    {
+      "id": "no-quality-scores",
+      "passed": true,
+      "detail": "completion-rate counts only"
+    },
+    {
+      "id": "engine-prohibited",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Completeness is assessed at game level using the same rules as Correlation Audit v2.",
+    "Most datasets have a single slate entry — multi-date trend visible on Starter (2 slates).",
+    "Lineup / Weather / Injury remain PARTIAL-dominated until pre-game and provider gaps close."
+  ]
+}

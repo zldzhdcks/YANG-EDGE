@@ -1,0 +1,288 @@
+{
+  "meta": {
+    "version": "research-quality-dashboard-v1",
+    "kind": "research-quality-dashboard",
+    "asOfDateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T13:13:32.886Z",
+    "researchOnly": true,
+    "engineConnected": false,
+    "engineAdmission": "PROHIBITED",
+    "noQualityScores": true,
+    "noWeights": true,
+    "noRecommendations": true,
+    "predictionHashSha256": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+    "datasetFilesUnchanged": true,
+    "officialConclusion": "RESEARCH_QUALITY_DASHBOARD_V1_CREATED",
+    "note": "Top-level read-only health view — integrates existing audits without scoring."
+  },
+  "sources": [
+    {
+      "key": "coverage",
+      "path": "data/research/dataset-coverage-dashboard-v1.json"
+    },
+    {
+      "key": "sampleGrowth",
+      "path": "data/research/research-sample-growth-dashboard-v1.json"
+    },
+    {
+      "key": "completenessTrend",
+      "path": "data/research/dataset-completeness-trend-v1.json"
+    },
+    {
+      "key": "gateDashboard",
+      "path": "data/research/engine-admission-gate-dashboard-v1.json"
+    },
+    {
+      "key": "correlationAudit",
+      "path": "data/audits/2026-07-27-dataset-correlation-v2.json"
+    }
+  ],
+  "researchHealth": {
+    "overallStatus": "COLLECTING_WITH_GAPS",
+    "overallGate": "UNDER_COLLECTION",
+    "datasetsHealthy": 0,
+    "datasetsCollecting": 2,
+    "datasetsBlocked": 5,
+    "overallProgress": 16.7,
+    "targetSample": 100,
+    "totalDatasets": 7
+  },
+  "qualityFlags": {
+    "summary": {
+      "LOW_SAMPLE": 7,
+      "PARTIAL_COLLECTION": 5,
+      "PROVIDER_PENDING": 1,
+      "LEGAL_HOLD": 7,
+      "ENGINE_PROHIBITED": 7
+    },
+    "definitions": {
+      "LOW_SAMPLE": "sampleCount < 100",
+      "PARTIAL_COLLECTION": "completionRate < 100% or correlation PARTIAL/NOT_COLLECTED > 0",
+      "PROVIDER_PENDING": "weather forecast provider not selected",
+      "LEGAL_HOLD": "engine admission prohibited by research policy",
+      "ENGINE_PROHIBITED": "engineAdmission === PROHIBITED in registry"
+    }
+  },
+  "upstream": {
+    "coverageDashboard": {
+      "version": "dataset-coverage-dashboard-v1",
+      "collectingDatasets": 3,
+      "note": "Legacy coverage dashboard — partial dataset list; superseded by gate/growth for 7 datasets."
+    },
+    "sampleGrowthDashboard": {
+      "totalGamesCollected": 27,
+      "overallProgress": 16.7
+    },
+    "completenessTrendAudit": {
+      "path": "data/research/dataset-completeness-trend-v1.json"
+    },
+    "engineAdmissionGateDashboard": {
+      "overallGate": "UNDER_COLLECTION",
+      "datasetsBlocked": 7
+    },
+    "correlationAudit": {
+      "dateKst": "2026-07-27",
+      "auditedGames": 15,
+      "path": "data/audits/2026-07-27-dataset-correlation-v2.json"
+    }
+  },
+  "datasets": [
+    {
+      "datasetId": "mlb-starter",
+      "displayName": "Starter",
+      "sampleCount": 27,
+      "completionRate": 91.7,
+      "currentGate": "UNDER_COLLECTION",
+      "engineAdmission": "PROHIBITED",
+      "qualityStatus": "BLOCKED",
+      "qualityFlags": [
+        "LOW_SAMPLE",
+        "PARTIAL_COLLECTION",
+        "LEGAL_HOLD",
+        "ENGINE_PROHIBITED"
+      ],
+      "correlationOnDate": {
+        "complete": 15,
+        "partial": 0,
+        "notCollected": 0
+      },
+      "coverageArtifactPresent": true
+    },
+    {
+      "datasetId": "mlb-bullpen-role",
+      "displayName": "Bullpen",
+      "sampleCount": 15,
+      "completionRate": 100,
+      "currentGate": "UNDER_COLLECTION",
+      "engineAdmission": "PROHIBITED",
+      "qualityStatus": "COLLECTING",
+      "qualityFlags": [
+        "LOW_SAMPLE",
+        "LEGAL_HOLD",
+        "ENGINE_PROHIBITED"
+      ],
+      "correlationOnDate": {
+        "complete": 15,
+        "partial": 0,
+        "notCollected": 0
+      },
+      "coverageArtifactPresent": true
+    },
+    {
+      "datasetId": "mlb-lineup",
+      "displayName": "Lineup",
+      "sampleCount": 15,
+      "completionRate": 0,
+      "currentGate": "UNDER_COLLECTION",
+      "engineAdmission": "PROHIBITED",
+      "qualityStatus": "BLOCKED",
+      "qualityFlags": [
+        "LOW_SAMPLE",
+        "PARTIAL_COLLECTION",
+        "LEGAL_HOLD",
+        "ENGINE_PROHIBITED"
+      ],
+      "correlationOnDate": {
+        "complete": 0,
+        "partial": 15,
+        "notCollected": 0
+      },
+      "coverageArtifactPresent": true
+    },
+    {
+      "datasetId": "mlb-weather",
+      "displayName": "Weather",
+      "sampleCount": 15,
+      "completionRate": 0,
+      "currentGate": "UNDER_COLLECTION",
+      "engineAdmission": "PROHIBITED",
+      "qualityStatus": "BLOCKED",
+      "qualityFlags": [
+        "LOW_SAMPLE",
+        "PARTIAL_COLLECTION",
+        "PROVIDER_PENDING",
+        "LEGAL_HOLD",
+        "ENGINE_PROHIBITED"
+      ],
+      "correlationOnDate": {
+        "complete": 0,
+        "partial": 15,
+        "notCollected": 0
+      },
+      "coverageArtifactPresent": false
+    },
+    {
+      "datasetId": "mlb-travel",
+      "displayName": "Travel",
+      "sampleCount": 15,
+      "completionRate": 100,
+      "currentGate": "UNDER_COLLECTION",
+      "engineAdmission": "PROHIBITED",
+      "qualityStatus": "COLLECTING",
+      "qualityFlags": [
+        "LOW_SAMPLE",
+        "LEGAL_HOLD",
+        "ENGINE_PROHIBITED"
+      ],
+      "correlationOnDate": {
+        "complete": 15,
+        "partial": 0,
+        "notCollected": 0
+      },
+      "coverageArtifactPresent": false
+    },
+    {
+      "datasetId": "mlb-odds-history",
+      "displayName": "Odds History",
+      "sampleCount": 15,
+      "completionRate": 40,
+      "currentGate": "UNDER_COLLECTION",
+      "engineAdmission": "PROHIBITED",
+      "qualityStatus": "BLOCKED",
+      "qualityFlags": [
+        "LOW_SAMPLE",
+        "PARTIAL_COLLECTION",
+        "LEGAL_HOLD",
+        "ENGINE_PROHIBITED"
+      ],
+      "correlationOnDate": {
+        "complete": 6,
+        "partial": 9,
+        "notCollected": 0
+      },
+      "coverageArtifactPresent": null
+    },
+    {
+      "datasetId": "mlb-injury",
+      "displayName": "Injury",
+      "sampleCount": 15,
+      "completionRate": 0,
+      "currentGate": "UNDER_COLLECTION",
+      "engineAdmission": "PROHIBITED",
+      "qualityStatus": "BLOCKED",
+      "qualityFlags": [
+        "LOW_SAMPLE",
+        "PARTIAL_COLLECTION",
+        "LEGAL_HOLD",
+        "ENGINE_PROHIBITED"
+      ],
+      "correlationOnDate": {
+        "complete": 0,
+        "partial": 15,
+        "notCollected": 0
+      },
+      "coverageArtifactPresent": null
+    }
+  ],
+  "regressionHashes": {
+    "before": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "weather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19",
+      "travel": "30a7a2defe5822d898381696acd010bba41822f452aeb28ef2da18692b67c438",
+      "odds": "dc6f8890fee315038460c771fca91312383b36da72a68869ce3ae2ffad294778",
+      "injury": "8aceabf4d928bb419a5c9bdc851db15ccfb649d59c29c6de2e9c96d594b5ae01"
+    },
+    "after": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "weather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19",
+      "travel": "30a7a2defe5822d898381696acd010bba41822f452aeb28ef2da18692b67c438",
+      "odds": "dc6f8890fee315038460c771fca91312383b36da72a68869ce3ae2ffad294778",
+      "injury": "8aceabf4d928bb419a5c9bdc851db15ccfb649d59c29c6de2e9c96d594b5ae01"
+    },
+    "unchanged": true
+  },
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true
+    },
+    {
+      "id": "all-dataset-hashes-unchanged",
+      "passed": true
+    },
+    {
+      "id": "no-quality-scores",
+      "passed": true,
+      "detail": "flags and status labels only"
+    },
+    {
+      "id": "no-admission-changes",
+      "passed": true
+    },
+    {
+      "id": "all-upstream-sources-present",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Quality flags describe current state — not weighted scores or recommendations.",
+    "All datasets remain Engine PROHIBITED by policy.",
+    "Coverage dashboard predates 7-dataset expansion — gate/growth are authoritative for sample counts."
+  ]
+}

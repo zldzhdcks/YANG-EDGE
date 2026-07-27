@@ -81,6 +81,32 @@ export const RESEARCH_DATASET_REGISTRY: ResearchDatasetRegistryEntry[] = [
     notes:
       "Travel/Rest Dataset v1 collecting PRE_GAME_SCHEDULE_CONTEXT only. No route inference. Framework adapter only; builder independent of Framework.",
   },
+  {
+    datasetId: "mlb-odds-history",
+    status: "COLLECTING",
+    schemaVersion: "mlb-odds-history-dataset-v1",
+    builderVersion: "odds-history-dataset-builder-v1",
+    frameworkVersion: RESEARCH_FRAMEWORK_VERSION,
+    artifactDatasetPath:
+      "data/research/mlb/2026-07-27-odds-history-dataset-v1.json",
+    hypothesisIds: [],
+    engineAdmission: "PROHIBITED",
+    notes:
+      "Odds History Dataset v1 collecting PRE_GAME_MARKET frozen odds only. No closing/post-game odds. Framework adapter only; builder independent of Framework.",
+  },
+  {
+    datasetId: "mlb-injury",
+    status: "COLLECTING",
+    schemaVersion: "mlb-injury-dataset-v1",
+    builderVersion: "injury-dataset-builder-v1",
+    frameworkVersion: RESEARCH_FRAMEWORK_VERSION,
+    artifactDatasetPath:
+      "data/research/mlb/2026-07-27-injury-dataset-v1.json",
+    hypothesisIds: [],
+    engineAdmission: "PROHIBITED",
+    notes:
+      "Injury Dataset v1 collecting PRE_GAME_ROSTER from 40Man + transactions only. No severity/expectedReturn inference. Framework adapter only; builder independent of Framework.",
+  },
 ];
 
 export function getRegistryEntry(
@@ -283,6 +309,104 @@ export function travelRestV1FrameworkMetadata(
       "Framework adapter only — domain builder does not import Framework.",
       "Engine admission remains PROHIBITED.",
       "No Travel/Fatigue/Rest Score. distanceKm is approximate haversine.",
+    ],
+    ...overrides,
+  };
+}
+
+/** Injury Dataset v1 → Framework metadata 매핑 (도메인 builder 비의존) */
+export function injuryV1FrameworkMetadata(
+  overrides?: Partial<ResearchDatasetMetadata>,
+): ResearchDatasetMetadata {
+  const entry = getRegistryEntry("mlb-injury")!;
+  return {
+    datasetId: entry.datasetId,
+    displayName: "MLB Injury Dataset",
+    domain: "other",
+    league: "MLB",
+    status: entry.status,
+    versions: {
+      frameworkVersion: RESEARCH_FRAMEWORK_VERSION,
+      schemaVersion: entry.schemaVersion,
+      builderVersion: entry.builderVersion,
+      compatibility: "experimental",
+      notes:
+        "v1 PRE_GAME_ROSTER from 40Man + transactions; no /injuries endpoint",
+    },
+    legal: {
+      source: "INTERNAL_RESEARCH_ONLY",
+      publicRuntimeUseAllowed: false,
+      commercialRuntimeUseAllowed: false,
+      engineConnected: false,
+      rawResponseInResearchCacheOnly: true,
+      mlbHtmlCrawling: false,
+      sportsDataIoScrambled: false,
+    },
+    hypothesisIds: entry.hypothesisIds,
+    artifactPaths: {
+      dataset: entry.artifactDatasetPath ?? undefined,
+      audit: "data/audits/2026-07-27-injury-dataset-v1-audit.json",
+      derivedCache: "data/cache/research/mlb/raw/statsapi/",
+    },
+    sample: {
+      minimumSampleTarget: 100,
+    },
+    createdAt: "2026-07-27T00:00:00.000Z",
+    updatedAt: null,
+    lastAuditedAt: null,
+    notes: [
+      "Framework adapter only — domain builder does not import Framework.",
+      "Engine admission remains PROHIBITED.",
+      "No Injury Score. injuryListed from roster status code only.",
+    ],
+    ...overrides,
+  };
+}
+
+/** Odds History Dataset v1 → Framework metadata 매핑 (도메인 builder 비의존) */
+export function oddsHistoryV1FrameworkMetadata(
+  overrides?: Partial<ResearchDatasetMetadata>,
+): ResearchDatasetMetadata {
+  const entry = getRegistryEntry("mlb-odds-history")!;
+  return {
+    datasetId: entry.datasetId,
+    displayName: "MLB Odds History Dataset",
+    domain: "market",
+    league: "MLB",
+    status: entry.status,
+    versions: {
+      frameworkVersion: RESEARCH_FRAMEWORK_VERSION,
+      schemaVersion: entry.schemaVersion,
+      builderVersion: entry.builderVersion,
+      compatibility: "experimental",
+      notes:
+        "v1 PRE_GAME_MARKET frozen odds; provider-swappable schema; no closing odds",
+    },
+    legal: {
+      source: "THE_ODDS_API",
+      publicRuntimeUseAllowed: false,
+      commercialRuntimeUseAllowed: false,
+      engineConnected: false,
+      rawResponseInResearchCacheOnly: true,
+      mlbHtmlCrawling: false,
+      sportsDataIoScrambled: false,
+    },
+    hypothesisIds: entry.hypothesisIds,
+    artifactPaths: {
+      dataset: entry.artifactDatasetPath ?? undefined,
+      audit: "data/audits/2026-07-27-odds-history-dataset-v1-audit.json",
+      derivedCache: "data/cache/research/mlb/raw/the-odds-api/",
+    },
+    sample: {
+      minimumSampleTarget: 100,
+    },
+    createdAt: "2026-07-27T00:00:00.000Z",
+    updatedAt: null,
+    lastAuditedAt: null,
+    notes: [
+      "Framework adapter only — domain builder does not import Framework.",
+      "Engine admission remains PROHIBITED.",
+      "No Odds Score. movement is numeric UP/DOWN/UNCHANGED only.",
     ],
     ...overrides,
   };

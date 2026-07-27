@@ -1,0 +1,986 @@
+{
+  "meta": {
+    "version": "mlb-dataset-correlation-audit-v2",
+    "kind": "dataset-correlation-audit",
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T12:53:01.598Z",
+    "auditedGames": 15,
+    "datasets": [
+      "starter",
+      "bullpen",
+      "lineup",
+      "weather",
+      "travel",
+      "odds",
+      "injury"
+    ],
+    "predictionWorked": 6,
+    "predictionFailed": 9,
+    "predictionPending": 0,
+    "engineAdmission": "PROHIBITED",
+    "correlationPurpose": "co-presence-only",
+    "noScores": true,
+    "noWeights": true,
+    "predictionHashSha256": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+    "datasetFilesUnchanged": true,
+    "officialConclusion": "DATASET_CORRELATION_AUDIT_V2_CREATED"
+  },
+  "inputPaths": {
+    "prediction": "C:\\Users\\TCTCTC\\YANG-EDGE\\yang-edge\\data\\predictions\\mlb\\2026-07-27.json",
+    "starter": "C:\\Users\\TCTCTC\\YANG-EDGE\\yang-edge\\data\\research\\mlb\\2026-07-27-starter-dataset-v1.json",
+    "bullpen": "C:\\Users\\TCTCTC\\YANG-EDGE\\yang-edge\\data\\research\\mlb\\2026-07-27-bullpen-role-dataset-v1_1.json",
+    "lineup": "C:\\Users\\TCTCTC\\YANG-EDGE\\yang-edge\\data\\research\\mlb\\2026-07-27-lineup-dataset-v1.json",
+    "weather": "C:\\Users\\TCTCTC\\YANG-EDGE\\yang-edge\\data\\research\\mlb\\2026-07-27-weather-dataset-v1.json",
+    "travel": "C:\\Users\\TCTCTC\\YANG-EDGE\\yang-edge\\data\\research\\mlb\\2026-07-27-travel-rest-dataset-v1.json",
+    "odds": "C:\\Users\\TCTCTC\\YANG-EDGE\\yang-edge\\data\\research\\mlb\\2026-07-27-odds-history-dataset-v1.json",
+    "injury": "C:\\Users\\TCTCTC\\YANG-EDGE\\yang-edge\\data\\research\\mlb\\2026-07-27-injury-dataset-v1.json"
+  },
+  "regressionHashes": {
+    "before": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "weather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19",
+      "travel": "30a7a2defe5822d898381696acd010bba41822f452aeb28ef2da18692b67c438",
+      "odds": "dc6f8890fee315038460c771fca91312383b36da72a68869ce3ae2ffad294778",
+      "injury": "8aceabf4d928bb419a5c9bdc851db15ccfb649d59c29c6de2e9c96d594b5ae01"
+    },
+    "after": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "weather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19",
+      "travel": "30a7a2defe5822d898381696acd010bba41822f452aeb28ef2da18692b67c438",
+      "odds": "dc6f8890fee315038460c771fca91312383b36da72a68869ce3ae2ffad294778",
+      "injury": "8aceabf4d928bb419a5c9bdc851db15ccfb649d59c29c6de2e9c96d594b5ae01"
+    },
+    "unchanged": true
+  },
+  "missingSummary": {
+    "starter": {
+      "NOT_COLLECTED": 0,
+      "PARTIAL": 0,
+      "COMPLETE": 15
+    },
+    "bullpen": {
+      "NOT_COLLECTED": 0,
+      "PARTIAL": 0,
+      "COMPLETE": 15
+    },
+    "lineup": {
+      "NOT_COLLECTED": 0,
+      "PARTIAL": 15,
+      "COMPLETE": 0
+    },
+    "weather": {
+      "NOT_COLLECTED": 0,
+      "PARTIAL": 15,
+      "COMPLETE": 0
+    },
+    "travel": {
+      "NOT_COLLECTED": 0,
+      "PARTIAL": 0,
+      "COMPLETE": 15
+    },
+    "odds": {
+      "NOT_COLLECTED": 0,
+      "PARTIAL": 9,
+      "COMPLETE": 6
+    },
+    "injury": {
+      "NOT_COLLECTED": 0,
+      "PARTIAL": 15,
+      "COMPLETE": 0
+    }
+  },
+  "pairMatrix": [
+    {
+      "pair": "starter-bullpen",
+      "bothPresent": 15,
+      "bothComplete": 15,
+      "bothPartial": 0,
+      "onePartial": 0,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "starter-lineup",
+      "bothPresent": 15,
+      "bothComplete": 0,
+      "bothPartial": 0,
+      "onePartial": 15,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "starter-weather",
+      "bothPresent": 15,
+      "bothComplete": 0,
+      "bothPartial": 0,
+      "onePartial": 15,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "starter-travel",
+      "bothPresent": 15,
+      "bothComplete": 15,
+      "bothPartial": 0,
+      "onePartial": 0,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "starter-odds",
+      "bothPresent": 15,
+      "bothComplete": 6,
+      "bothPartial": 0,
+      "onePartial": 9,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "starter-injury",
+      "bothPresent": 15,
+      "bothComplete": 0,
+      "bothPartial": 0,
+      "onePartial": 15,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "bullpen-lineup",
+      "bothPresent": 15,
+      "bothComplete": 0,
+      "bothPartial": 0,
+      "onePartial": 15,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "bullpen-weather",
+      "bothPresent": 15,
+      "bothComplete": 0,
+      "bothPartial": 0,
+      "onePartial": 15,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "bullpen-travel",
+      "bothPresent": 15,
+      "bothComplete": 15,
+      "bothPartial": 0,
+      "onePartial": 0,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "bullpen-odds",
+      "bothPresent": 15,
+      "bothComplete": 6,
+      "bothPartial": 0,
+      "onePartial": 9,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "bullpen-injury",
+      "bothPresent": 15,
+      "bothComplete": 0,
+      "bothPartial": 0,
+      "onePartial": 15,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "lineup-weather",
+      "bothPresent": 15,
+      "bothComplete": 0,
+      "bothPartial": 15,
+      "onePartial": 0,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "lineup-travel",
+      "bothPresent": 15,
+      "bothComplete": 0,
+      "bothPartial": 0,
+      "onePartial": 15,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "lineup-odds",
+      "bothPresent": 15,
+      "bothComplete": 0,
+      "bothPartial": 9,
+      "onePartial": 6,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "lineup-injury",
+      "bothPresent": 15,
+      "bothComplete": 0,
+      "bothPartial": 15,
+      "onePartial": 0,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "weather-travel",
+      "bothPresent": 15,
+      "bothComplete": 0,
+      "bothPartial": 0,
+      "onePartial": 15,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "weather-odds",
+      "bothPresent": 15,
+      "bothComplete": 0,
+      "bothPartial": 9,
+      "onePartial": 6,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "weather-injury",
+      "bothPresent": 15,
+      "bothComplete": 0,
+      "bothPartial": 15,
+      "onePartial": 0,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "travel-odds",
+      "bothPresent": 15,
+      "bothComplete": 6,
+      "bothPartial": 0,
+      "onePartial": 9,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "travel-injury",
+      "bothPresent": 15,
+      "bothComplete": 0,
+      "bothPartial": 0,
+      "onePartial": 15,
+      "oneNotCollected": 0
+    },
+    {
+      "pair": "odds-injury",
+      "bothPresent": 15,
+      "bothComplete": 0,
+      "bothPartial": 9,
+      "onePartial": 6,
+      "oneNotCollected": 0
+    }
+  ],
+  "games": [
+    {
+      "gameId": "mlb-179589",
+      "match": "New York Yankees @ Philadelphia Phillies",
+      "starter": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "bullpen": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "lineup": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 2
+      },
+      "weather": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "travel": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "odds": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "injury": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 12
+      },
+      "predictionResult": {
+        "resultStatus": "graded",
+        "predictionHit": false,
+        "worked": false,
+        "failed": true,
+        "pending": false
+      }
+    },
+    {
+      "gameId": "mlb-179590",
+      "match": "Arizona Diamondbacks @ Washington Nationals",
+      "starter": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "bullpen": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "lineup": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 2
+      },
+      "weather": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "travel": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "odds": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "injury": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 23
+      },
+      "predictionResult": {
+        "resultStatus": "graded",
+        "predictionHit": false,
+        "worked": false,
+        "failed": true,
+        "pending": false
+      }
+    },
+    {
+      "gameId": "mlb-179591",
+      "match": "Seattle Mariners @ Texas Rangers",
+      "starter": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "bullpen": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "lineup": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 2
+      },
+      "weather": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "travel": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "odds": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "injury": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 21
+      },
+      "predictionResult": {
+        "resultStatus": "graded",
+        "predictionHit": false,
+        "worked": false,
+        "failed": true,
+        "pending": false
+      }
+    },
+    {
+      "gameId": "mlb-179592",
+      "match": "Cleveland Guardians @ Tampa Bay Rays",
+      "starter": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "bullpen": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "lineup": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 2
+      },
+      "weather": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "travel": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "odds": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "injury": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 8
+      },
+      "predictionResult": {
+        "resultStatus": "graded",
+        "predictionHit": true,
+        "worked": true,
+        "failed": false,
+        "pending": false
+      }
+    },
+    {
+      "gameId": "mlb-179593",
+      "match": "Cincinnati Reds @ St.Louis Cardinals",
+      "starter": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "bullpen": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "lineup": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 2
+      },
+      "weather": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "travel": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "odds": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "injury": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 9
+      },
+      "predictionResult": {
+        "resultStatus": "graded",
+        "predictionHit": false,
+        "worked": false,
+        "failed": true,
+        "pending": false
+      }
+    },
+    {
+      "gameId": "mlb-179594",
+      "match": "Los Angeles Angels @ San Francisco Giants",
+      "starter": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "bullpen": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "lineup": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 2
+      },
+      "weather": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "travel": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "odds": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "injury": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 20
+      },
+      "predictionResult": {
+        "resultStatus": "graded",
+        "predictionHit": false,
+        "worked": false,
+        "failed": true,
+        "pending": false
+      }
+    },
+    {
+      "gameId": "mlb-179595",
+      "match": "Chicago Cubs @ Pittsburgh Pirates",
+      "starter": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "bullpen": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "lineup": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 2
+      },
+      "weather": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "travel": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "odds": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "injury": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 21
+      },
+      "predictionResult": {
+        "resultStatus": "graded",
+        "predictionHit": false,
+        "worked": false,
+        "failed": true,
+        "pending": false
+      }
+    },
+    {
+      "gameId": "mlb-179596",
+      "match": "Athletics @ Minnesota Twins",
+      "starter": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "bullpen": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "lineup": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 2
+      },
+      "weather": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "travel": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "odds": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "injury": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 17
+      },
+      "predictionResult": {
+        "resultStatus": "graded",
+        "predictionHit": true,
+        "worked": true,
+        "failed": false,
+        "pending": false
+      }
+    },
+    {
+      "gameId": "mlb-179597",
+      "match": "Los Angeles Dodgers @ New York Mets",
+      "starter": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "bullpen": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "lineup": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 2
+      },
+      "weather": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "travel": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "odds": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "injury": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 19
+      },
+      "predictionResult": {
+        "resultStatus": "graded",
+        "predictionHit": false,
+        "worked": false,
+        "failed": true,
+        "pending": false
+      }
+    },
+    {
+      "gameId": "mlb-179598",
+      "match": "Colorado Rockies @ Milwaukee Brewers",
+      "starter": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "bullpen": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "lineup": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 2
+      },
+      "weather": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "travel": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "odds": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "injury": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 20
+      },
+      "predictionResult": {
+        "resultStatus": "graded",
+        "predictionHit": true,
+        "worked": true,
+        "failed": false,
+        "pending": false
+      }
+    },
+    {
+      "gameId": "mlb-179599",
+      "match": "San Diego Padres @ Miami Marlins",
+      "starter": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "bullpen": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "lineup": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 2
+      },
+      "weather": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "travel": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "odds": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "injury": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 19
+      },
+      "predictionResult": {
+        "resultStatus": "graded",
+        "predictionHit": true,
+        "worked": true,
+        "failed": false,
+        "pending": false
+      }
+    },
+    {
+      "gameId": "mlb-179600",
+      "match": "Kansas City Royals @ Detroit Tigers",
+      "starter": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "bullpen": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "lineup": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 2
+      },
+      "weather": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "travel": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "odds": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "injury": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 24
+      },
+      "predictionResult": {
+        "resultStatus": "graded",
+        "predictionHit": false,
+        "worked": false,
+        "failed": true,
+        "pending": false
+      }
+    },
+    {
+      "gameId": "mlb-179601",
+      "match": "Houston Astros @ Chicago White Sox",
+      "starter": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "bullpen": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "lineup": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 2
+      },
+      "weather": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "travel": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "odds": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "injury": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 17
+      },
+      "predictionResult": {
+        "resultStatus": "graded",
+        "predictionHit": false,
+        "worked": false,
+        "failed": true,
+        "pending": false
+      }
+    },
+    {
+      "gameId": "mlb-179602",
+      "match": "Toronto Blue Jays @ Boston Red Sox",
+      "starter": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "bullpen": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "lineup": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 2
+      },
+      "weather": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "travel": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "odds": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "injury": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 22
+      },
+      "predictionResult": {
+        "resultStatus": "graded",
+        "predictionHit": true,
+        "worked": true,
+        "failed": false,
+        "pending": false
+      }
+    },
+    {
+      "gameId": "mlb-179603",
+      "match": "Atlanta Braves @ Baltimore Orioles",
+      "starter": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "bullpen": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 1
+      },
+      "lineup": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 2
+      },
+      "weather": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "travel": {
+        "status": "COMPLETE",
+        "present": true,
+        "rowCount": 2
+      },
+      "odds": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 1
+      },
+      "injury": {
+        "status": "PARTIAL",
+        "present": true,
+        "rowCount": 20
+      },
+      "predictionResult": {
+        "resultStatus": "graded",
+        "predictionHit": true,
+        "worked": true,
+        "failed": false,
+        "pending": false
+      }
+    }
+  ],
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true
+    },
+    {
+      "id": "all-dataset-hashes-unchanged",
+      "passed": true
+    },
+    {
+      "id": "no-correlation-scores",
+      "passed": true,
+      "detail": "presence-only audit"
+    },
+    {
+      "id": "engine-prohibited",
+      "passed": true
+    }
+  ],
+  "notes": [
+    "Co-presence counts only — no importance, weight, or causal inference.",
+    "Weather v1 venue-only → PARTIAL until forecast provider selected.",
+    "Lineup pre-game NOT_COLLECTED → PARTIAL despite post-game COMPLETE.",
+    "Injury zero-row games are COMPLETE when starter join succeeded.",
+    "Odds PARTIAL when opening/latest odds absent in prediction snapshot."
+  ]
+}

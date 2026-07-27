@@ -42,6 +42,8 @@ export {
   lineupV1FrameworkMetadata,
   weatherV1FrameworkMetadata,
   travelRestV1FrameworkMetadata,
+  oddsHistoryV1FrameworkMetadata,
+  injuryV1FrameworkMetadata,
   getRegistryEntry,
   listDatasetsByStatus,
 } from "./registry";

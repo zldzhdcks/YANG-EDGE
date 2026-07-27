@@ -1,0 +1,230 @@
+{
+  "meta": {
+    "version": "dataset-completeness-trend-v1-audit",
+    "asOfDateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T13:07:00.023Z",
+    "conclusion": "DATASET_COMPLETENESS_TREND_AUDIT_V1_CREATED",
+    "predictionHashSha256": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+    "datasetFilesUnchanged": true,
+    "trendEntryCount": 8
+  },
+  "completionSummary": {
+    "mlb-starter": {
+      "averageCompletion": 95.9,
+      "maxCompletion": 100,
+      "minCompletion": 91.7,
+      "currentCompletion": 91.7
+    },
+    "mlb-bullpen-role": {
+      "averageCompletion": 100,
+      "maxCompletion": 100,
+      "minCompletion": 100,
+      "currentCompletion": 100
+    },
+    "mlb-lineup": {
+      "averageCompletion": 0,
+      "maxCompletion": 0,
+      "minCompletion": 0,
+      "currentCompletion": 0
+    },
+    "mlb-weather": {
+      "averageCompletion": 0,
+      "maxCompletion": 0,
+      "minCompletion": 0,
+      "currentCompletion": 0
+    },
+    "mlb-travel": {
+      "averageCompletion": 100,
+      "maxCompletion": 100,
+      "minCompletion": 100,
+      "currentCompletion": 100
+    },
+    "mlb-odds-history": {
+      "averageCompletion": 40,
+      "maxCompletion": 40,
+      "minCompletion": 40,
+      "currentCompletion": 40
+    },
+    "mlb-injury": {
+      "averageCompletion": 0,
+      "maxCompletion": 0,
+      "minCompletion": 0,
+      "currentCompletion": 0
+    }
+  },
+  "datasets": [
+    {
+      "datasetId": "mlb-starter",
+      "displayName": "Starter",
+      "entryCount": 2,
+      "summary": {
+        "averageCompletion": 95.9,
+        "maxCompletion": 100,
+        "minCompletion": 91.7,
+        "currentCompletion": 91.7
+      },
+      "latestEntry": {
+        "datasetId": "mlb-starter",
+        "date": "2026-07-28",
+        "sampleCount": 12,
+        "completeRows": 11,
+        "partialRows": 1,
+        "missingRows": 0,
+        "completionRate": 91.7,
+        "generatedAt": "2026-07-27T02:03:47.968Z",
+        "artifactPath": "data/research/mlb/2026-07-28-starter-dataset-v1.json"
+      }
+    },
+    {
+      "datasetId": "mlb-bullpen-role",
+      "displayName": "Bullpen",
+      "entryCount": 1,
+      "summary": {
+        "averageCompletion": 100,
+        "maxCompletion": 100,
+        "minCompletion": 100,
+        "currentCompletion": 100
+      },
+      "latestEntry": {
+        "datasetId": "mlb-bullpen-role",
+        "date": "2026-07-27",
+        "sampleCount": 15,
+        "completeRows": 15,
+        "partialRows": 0,
+        "missingRows": 0,
+        "completionRate": 100,
+        "generatedAt": "2026-07-27T10:57:31.077Z",
+        "artifactPath": "data/research/mlb/2026-07-27-bullpen-role-dataset-v1_1.json"
+      }
+    },
+    {
+      "datasetId": "mlb-lineup",
+      "displayName": "Lineup",
+      "entryCount": 1,
+      "summary": {
+        "averageCompletion": 0,
+        "maxCompletion": 0,
+        "minCompletion": 0,
+        "currentCompletion": 0
+      },
+      "latestEntry": {
+        "datasetId": "mlb-lineup",
+        "date": "2026-07-27",
+        "sampleCount": 15,
+        "completeRows": 0,
+        "partialRows": 15,
+        "missingRows": 0,
+        "completionRate": 0,
+        "generatedAt": "2026-07-27T06:40:58.839Z",
+        "artifactPath": "data/research/mlb/2026-07-27-lineup-dataset-v1.json"
+      }
+    },
+    {
+      "datasetId": "mlb-weather",
+      "displayName": "Weather",
+      "entryCount": 1,
+      "summary": {
+        "averageCompletion": 0,
+        "maxCompletion": 0,
+        "minCompletion": 0,
+        "currentCompletion": 0
+      },
+      "latestEntry": {
+        "datasetId": "mlb-weather",
+        "date": "2026-07-27",
+        "sampleCount": 15,
+        "completeRows": 0,
+        "partialRows": 15,
+        "missingRows": 0,
+        "completionRate": 0,
+        "generatedAt": "2026-07-27T12:17:09.956Z",
+        "artifactPath": "data/research/mlb/2026-07-27-weather-dataset-v1.json"
+      }
+    },
+    {
+      "datasetId": "mlb-travel",
+      "displayName": "Travel",
+      "entryCount": 1,
+      "summary": {
+        "averageCompletion": 100,
+        "maxCompletion": 100,
+        "minCompletion": 100,
+        "currentCompletion": 100
+      },
+      "latestEntry": {
+        "datasetId": "mlb-travel",
+        "date": "2026-07-27",
+        "sampleCount": 15,
+        "completeRows": 15,
+        "partialRows": 0,
+        "missingRows": 0,
+        "completionRate": 100,
+        "generatedAt": "2026-07-27T12:20:02.071Z",
+        "artifactPath": "data/research/mlb/2026-07-27-travel-rest-dataset-v1.json"
+      }
+    },
+    {
+      "datasetId": "mlb-odds-history",
+      "displayName": "Odds History",
+      "entryCount": 1,
+      "summary": {
+        "averageCompletion": 40,
+        "maxCompletion": 40,
+        "minCompletion": 40,
+        "currentCompletion": 40
+      },
+      "latestEntry": {
+        "datasetId": "mlb-odds-history",
+        "date": "2026-07-27",
+        "sampleCount": 15,
+        "completeRows": 6,
+        "partialRows": 9,
+        "missingRows": 0,
+        "completionRate": 40,
+        "generatedAt": "2026-07-27T12:43:58.366Z",
+        "artifactPath": "data/research/mlb/2026-07-27-odds-history-dataset-v1.json"
+      }
+    },
+    {
+      "datasetId": "mlb-injury",
+      "displayName": "Injury",
+      "entryCount": 1,
+      "summary": {
+        "averageCompletion": 0,
+        "maxCompletion": 0,
+        "minCompletion": 0,
+        "currentCompletion": 0
+      },
+      "latestEntry": {
+        "datasetId": "mlb-injury",
+        "date": "2026-07-27",
+        "sampleCount": 15,
+        "completeRows": 0,
+        "partialRows": 15,
+        "missingRows": 0,
+        "completionRate": 0,
+        "generatedAt": "2026-07-27T12:48:31.789Z",
+        "artifactPath": "data/research/mlb/2026-07-27-injury-dataset-v1.json"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true
+    },
+    {
+      "id": "all-dataset-hashes-unchanged",
+      "passed": true
+    },
+    {
+      "id": "no-quality-scores",
+      "passed": true,
+      "detail": "completion-rate counts only"
+    },
+    {
+      "id": "engine-prohibited",
+      "passed": true
+    }
+  ]
+}

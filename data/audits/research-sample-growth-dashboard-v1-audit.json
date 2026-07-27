@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "version": "research-sample-growth-dashboard-v1-audit",
+    "asOfDateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T13:01:10.542Z",
+    "conclusion": "RESEARCH_SAMPLE_GROWTH_DASHBOARD_V1_CREATED",
+    "predictionHashSha256": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+    "datasetFilesUnchanged": true
+  },
+  "overall": {
+    "totalDatasets": 7,
+    "collectingDatasets": 7,
+    "completedDatasets": 0,
+    "totalGamesCollected": 27,
+    "targetGames": 100,
+    "overallProgress": 16.7
+  },
+  "gateSummary": {
+    "NOT_READY": 0,
+    "UNDER_COLLECTION": 7,
+    "READY_FOR_BACKTEST": 0,
+    "READY_FOR_ENGINE_REVIEW": 0,
+    "promotionProhibited": true,
+    "note": "READY_FOR_ENGINE_REVIEW is computed only — no dataset promoted."
+  },
+  "datasets": [
+    {
+      "datasetId": "mlb-starter",
+      "displayName": "Starter",
+      "sampleCount": 27,
+      "completionPercent": 27,
+      "gate": "UNDER_COLLECTION",
+      "firstGameDate": "2026-07-27",
+      "lastGameDate": "2026-07-28"
+    },
+    {
+      "datasetId": "mlb-bullpen-role",
+      "displayName": "Bullpen",
+      "sampleCount": 15,
+      "completionPercent": 15,
+      "gate": "UNDER_COLLECTION",
+      "firstGameDate": "2026-07-27",
+      "lastGameDate": "2026-07-27"
+    },
+    {
+      "datasetId": "mlb-lineup",
+      "displayName": "Lineup",
+      "sampleCount": 15,
+      "completionPercent": 15,
+      "gate": "UNDER_COLLECTION",
+      "firstGameDate": "2026-07-27",
+      "lastGameDate": "2026-07-27"
+    },
+    {
+      "datasetId": "mlb-weather",
+      "displayName": "Weather",
+      "sampleCount": 15,
+      "completionPercent": 15,
+      "gate": "UNDER_COLLECTION",
+      "firstGameDate": "2026-07-27",
+      "lastGameDate": "2026-07-27"
+    },
+    {
+      "datasetId": "mlb-travel",
+      "displayName": "Travel",
+      "sampleCount": 15,
+      "completionPercent": 15,
+      "gate": "UNDER_COLLECTION",
+      "firstGameDate": "2026-07-27",
+      "lastGameDate": "2026-07-27"
+    },
+    {
+      "datasetId": "mlb-odds-history",
+      "displayName": "Odds History",
+      "sampleCount": 15,
+      "completionPercent": 15,
+      "gate": "UNDER_COLLECTION",
+      "firstGameDate": "2026-07-27",
+      "lastGameDate": "2026-07-27"
+    },
+    {
+      "datasetId": "mlb-injury",
+      "displayName": "Injury",
+      "sampleCount": 15,
+      "completionPercent": 15,
+      "gate": "UNDER_COLLECTION",
+      "firstGameDate": "2026-07-27",
+      "lastGameDate": "2026-07-27"
+    }
+  ],
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true
+    },
+    {
+      "id": "all-dataset-hashes-unchanged",
+      "passed": true
+    },
+    {
+      "id": "no-engine-promotion",
+      "passed": true,
+      "detail": "engineReviewPromotionProhibited"
+    },
+    {
+      "id": "chart-data-only",
+      "passed": true,
+      "detail": "no viewer wiring"
+    }
+  ]
+}

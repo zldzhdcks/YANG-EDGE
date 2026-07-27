@@ -1,0 +1,138 @@
+{
+  "meta": {
+    "version": "mlb-odds-history-dataset-v1-audit",
+    "kind": "odds-history-dataset-v1-build-audit",
+    "datasetId": "mlb-odds-history",
+    "schemaVersion": "mlb-odds-history-dataset-v1",
+    "builderVersion": "odds-history-dataset-builder-v1",
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T12:43:58.388Z",
+    "datasetStatus": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "researchOnly": true,
+    "predictionHashSha256": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+    "predictionUnchanged": true,
+    "inputHashSha256": "ebf5d48963c25d986d54d5bc55e66d8266b5dba9957765fb1e575a70f4cb9125",
+    "resultHashSha256": "c957d6e9299a72b8b95d9199f37e223f340c19ca34d149d38e1d3c7350ddc77c",
+    "firstResultHash": "c957d6e9299a72b8b95d9199f37e223f340c19ca34d149d38e1d3c7350ddc77c",
+    "secondResultHash": "c957d6e9299a72b8b95d9199f37e223f340c19ca34d149d38e1d3c7350ddc77c",
+    "hashMatched": true
+  },
+  "games": 15,
+  "openingCollected": 6,
+  "latestCollected": 6,
+  "marketProbabilityCollected": 15,
+  "movement": {
+    "UP": 2,
+    "DOWN": 1,
+    "UNCHANGED": 3,
+    "NOT_COLLECTED": 9
+  },
+  "joinQuality": {
+    "MATCHED": 6,
+    "MISSING_ODDS": 0,
+    "TIMELINE_ONLY": 9
+  },
+  "provider": {
+    "id": "the-odds-api",
+    "displayName": "The Odds API",
+    "sportKey": "baseball_mlb"
+  },
+  "cacheUsage": {
+    "firstRun": {
+      "rawHit": 0,
+      "rawMiss": 1,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 1
+    },
+    "secondRunWarm": {
+      "rawHit": 1,
+      "rawMiss": 0,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 0
+    }
+  },
+  "networkCalls": {
+    "firstRun": 1,
+    "secondRunWarm": 0
+  },
+  "regressionHashes": {
+    "before": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "weather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19",
+      "travel": "30a7a2defe5822d898381696acd010bba41822f452aeb28ef2da18692b67c438"
+    },
+    "after": {
+      "prediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "starter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "bullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "lineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "weather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19",
+      "travel": "30a7a2defe5822d898381696acd010bba41822f452aeb28ef2da18692b67c438"
+    },
+    "unchanged": true
+  },
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true,
+      "detail": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17"
+    },
+    {
+      "id": "result-hash-matched",
+      "passed": true,
+      "detail": "c957d6e9299a72b8b95d9199f37e223f340c19ca34d149d38e1d3c7350ddc77c == c957d6e9299a72b8b95d9199f37e223f340c19ca34d149d38e1d3c7350ddc77c"
+    },
+    {
+      "id": "warm-network-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "pre-game-market-only",
+      "passed": true,
+      "detail": "PRE_GAME_MARKET"
+    },
+    {
+      "id": "no-closing-odds",
+      "passed": true,
+      "detail": "false"
+    },
+    {
+      "id": "movement-values-valid",
+      "passed": true,
+      "detail": "UP/DOWN/UNCHANGED/NOT_COLLECTED"
+    },
+    {
+      "id": "regression-hashes-unchanged",
+      "passed": true,
+      "detail": "prediction/starter/bullpen/lineup/weather/travel"
+    },
+    {
+      "id": "engine-prohibited",
+      "passed": true,
+      "detail": "PROHIBITED"
+    }
+  ],
+  "legal": {
+    "oddsSource": "REFERENCE_ODDS_PROVIDER",
+    "publicRuntimeUseAllowed": false,
+    "commercialRuntimeUseAllowed": false,
+    "rawResponseInResearchCacheOnly": true,
+    "closingOddsCollected": false,
+    "postGameOddsCollected": false
+  },
+  "notes": [
+    "PRE_GAME_MARKET only — no closing or post-game odds.",
+    "openingOdds/latestOdds sourced from frozen prediction snapshot.",
+    "movement is numeric decimal-odds delta only (UP/DOWN/UNCHANGED).",
+    "Provider schema is swappable (future proto/other lawful sources).",
+    "Engine admission PROHIBITED."
+  ]
+}
