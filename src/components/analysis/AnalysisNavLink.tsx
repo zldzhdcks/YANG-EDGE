@@ -4,11 +4,12 @@ import { useRouter } from "next/navigation";
 import {
   useCallback,
   useEffect,
+  useRef,
   useState,
   type MouseEvent,
   type ReactNode,
 } from "react";
-import { getAnalysisPath } from "@/types/game";
+import { buildAnalysisPath } from "@/lib/datetime/games-date";
 import EdgeEngineLoader from "@/components/ui/EdgeEngineLoader";
 import { cn } from "@/utils/cn";
 
@@ -21,43 +22,49 @@ function getAnalysisDelayMs(): number {
 
 type AnalysisNavLinkProps = {
   gameId: string;
+  /** /games 목록 날짜 (YYYY-MM-DD) — 복귀 UX용 */
+  fromDate?: string;
   children: ReactNode;
   className?: string;
 };
 
 export default function AnalysisNavLink({
   gameId,
+  fromDate,
   children,
   className,
 }: AnalysisNavLinkProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const timerRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!isLoading) return;
-
-    const path = getAnalysisPath(gameId);
-    const delay = getAnalysisDelayMs();
-    let cancelled = false;
-
-    const timer = window.setTimeout(() => {
-      if (cancelled) return;
-      router.push(path);
-    }, delay);
-
     return () => {
-      cancelled = true;
-      window.clearTimeout(timer);
+      if (timerRef.current != null) {
+        window.clearTimeout(timerRef.current);
+      }
     };
-  }, [isLoading, gameId, router]);
+  }, []);
 
   const handleClick = useCallback(
     (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
       if (isLoading) return;
+
       setIsLoading(true);
+      const path = buildAnalysisPath(gameId, fromDate ?? undefined);
+      const delay = getAnalysisDelayMs();
+
+      if (timerRef.current != null) {
+        window.clearTimeout(timerRef.current);
+      }
+
+      timerRef.current = window.setTimeout(() => {
+        timerRef.current = null;
+        router.push(path);
+      }, delay);
     },
-    [isLoading],
+    [isLoading, gameId, fromDate, router],
   );
 
   return (

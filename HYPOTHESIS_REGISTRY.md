@@ -97,7 +97,7 @@ Notes (Starter):
 |----|------|---------|-----------|-------------------|-----------|-------------|-----------|
 | H-LU-001 | 실제 라인업 구성은 팀 시즌 평균과 다른 경기 설명력을 가질 수 있다 | mlb-lineup | DATA_COLLECTION | asOf 2026-07-27: **15** games / **30** team lineups · target ≥100 | Post-game actual starting nines only; pre-game NOT_COLLECTED; no Lineup Score | PROHIBITED | Accumulate finished slates; never backfill pre-game from boxscore |
 | H-LU-002 | 핵심 타자 결장 여부가 전체 라인업 구성보다 더 안정적인 신호일 수 있다 | mlb-lineup | DATA_COLLECTION | asOf 2026-07-27: **15** games / **30** team lineups · target ≥100 | Absence scoring not implemented; identity slots collected for future compare only | PROHIBITED | Keep collecting actuals; do not invent absence score |
-| H-LU-003 | pre-game lineup 확보 품질 자체가 prediction 품질 경고가 될 수 있다 | mlb-lineup | DATA_COLLECTION | asOf 2026-07-27: pre-game **NOT_COLLECTED** (0 frozen snapshots) | Historical slate has no pre-game artifact; cadence TBD | PROHIBITED | Define pre-game collection cadence before evaluating warning signal |
+| H-LU-003 | pre-game lineup 확보 품질 자체가 prediction 품질 경고가 될 수 있다 | mlb-lineup | DATA_COLLECTION | asOf 2026-07-27: pre-game **NOT_COLLECTED** (0 frozen snapshots) | Historical slate has no pre-game artifact; cadence TBD | PROHIBITED | Manual probe: `npm run research:lineup-probe -- YYYY-MM-DD` → `data/research/mlb/{date}-pregame-lineup-availability-probes-v1.json` (H-LU-003 observation only; no status promotion) |
 
 Notes (Lineup):
 
@@ -105,6 +105,7 @@ Notes (Lineup):
 - Never treat Final boxscore as pre-game snapshot.
 - `team.battingOrder` is not starting lineup; use `players[].battingOrder` `*00` only.
 - battingSide / OPS / wRC+ out of v1 scope.
+- **Pre-game availability probe v1:** `npm run research:lineup-probe -- YYYY-MM-DD` — append-only `data/research/mlb/{date}-pregame-lineup-availability-probes-v1.json`; linked to H-LU-003 observation; does not promote hypothesis status.
 
 ---
 

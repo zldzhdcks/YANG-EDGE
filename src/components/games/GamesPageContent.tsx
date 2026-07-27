@@ -1,9 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { SportFilter } from "@/types/game";
 import type { GameWithOdds } from "@/types/game-with-odds";
 import { getKstToday } from "@/lib/datetime/kst";
+import {
+  buildGamesPath,
+  parseGamesDateParam,
+} from "@/lib/datetime/games-date";
 import { buildGamesFilterSummary } from "@/lib/games/filter-summary";
 import {
   DEFAULT_RECOMMENDATION_FILTER,
@@ -52,8 +57,13 @@ function getServerRecommendationFilter(): RecommendationFilterId {
 }
 
 export default function GamesPageContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const today = getKstToday();
+  const dateFromUrl = parseGamesDateParam(searchParams.get("date"));
+
   const [search, setSearch] = useState("");
-  const [date, setDate] = useState(() => getKstToday());
+  const [date, setDate] = useState(dateFromUrl);
   const [sport, setSport] = useState<SportFilter>("all");
   // SSR은 DEFAULT, 클라이언트는 localStorage (hydration 안전)
   const recommendation = useSyncExternalStore(
@@ -63,6 +73,20 @@ export default function GamesPageContent() {
   );
 
   const [loaded, setLoaded] = useState<LoadedGames | null>(null);
+
+  useEffect(() => {
+    const next = parseGamesDateParam(searchParams.get("date"));
+    setDate((current) => (current === next ? current : next));
+  }, [searchParams]);
+
+  const setDateAndUrl = useCallback(
+    (nextRaw: string) => {
+      const next = parseGamesDateParam(nextRaw);
+      setDate(next);
+      router.push(buildGamesPath(next), { scroll: false });
+    },
+    [router],
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -153,7 +177,7 @@ export default function GamesPageContent() {
       <div className="space-y-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <SearchBar value={search} onChange={setSearch} />
-          <DatePicker value={date} onChange={setDate} />
+          <DatePicker value={date} today={today} onChange={setDateAndUrl} />
         </div>
 
         <LeagueFilter value={sport} onChange={setSport} />
@@ -173,7 +197,7 @@ export default function GamesPageContent() {
           </div>
         )}
 
-        <GamesResult state={state} items={filteredItems} />
+        <GamesResult state={state} items={filteredItems} listDate={date} />
       </div>
     </div>
   );
@@ -182,9 +206,11 @@ export default function GamesPageContent() {
 function GamesResult({
   state,
   items,
+  listDate,
 }: {
   state: LoadState;
   items: GameWithOdds[];
+  listDate: string;
 }) {
   if (state === "loading") {
     return (
@@ -224,5 +250,5 @@ function GamesResult({
   }
 
   // 필터 결과 0건 → GameList 빈 안내 ("조건에 맞는 경기가 없습니다.")
-  return <GameList items={items} />;
+  return <GameList items={items} listDate={listDate} />;
 }

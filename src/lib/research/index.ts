@@ -39,6 +39,7 @@ export {
   RESEARCH_DATASET_REGISTRY,
   bullpenV11FrameworkMetadata,
   starterV1FrameworkMetadata,
+  lineupV1FrameworkMetadata,
   getRegistryEntry,
   listDatasetsByStatus,
 } from "./registry";

@@ -1,0 +1,189 @@
+{
+  "auditVersion": "2026-07-28-second-slate-readiness-v1",
+  "auditedAt": "2026-07-27T11:10:00.000Z",
+  "targetDateKst": "2026-07-28",
+  "executionPerformed": false,
+  "reason": "slate.finished=0 — audit only; no canonical pipeline commands run",
+  "scope": {
+    "goal": "Verify canonical full-slate command order is safe for second MLB research slate accumulation",
+    "forbidden": [
+      "Grade non-Final games",
+      "Modify prediction immutable fields",
+      "Force flow reviews without graded games",
+      "Lineup post-game backfill",
+      "New orchestrator"
+    ]
+  },
+  "currentSlate": {
+    "predictionPath": "data/predictions/mlb/2026-07-28.json",
+    "predictionGames": 12,
+    "graded": 0,
+    "pending": 12,
+    "hits": 0,
+    "fails": 0,
+    "inconclusive": 0,
+    "allResultStatus": "pending",
+    "predictionFileHashSha256": "bac3ac8ace1e1ab7374d271d1bfbc57e2390d4448c345c2c1f16772244dc6370",
+    "predictionImmutableHashRef": "f0e9449973e63f8987495708aab3101e65e57f643aa1c44505a2e9d237fbcd16",
+    "metaResultsFetched": true,
+    "metaLastGradedAt": "2026-07-27T03:59:59.517Z",
+    "apiSlateStatusAtLastBullpenValidate": {
+      "finished": 0,
+      "notStarted": 12,
+      "counts": { "NS": 12 }
+    }
+  },
+  "existingArtifacts": {
+    "preGame": {
+      "predictionSnapshot": true,
+      "reviewJson": true,
+      "reviewGraded": 0,
+      "starterDataset": "data/research/mlb/2026-07-28-starter-dataset-v1.json",
+      "starterPostgameReview": "data/research/mlb/2026-07-28-starter-postgame-review-v1.json",
+      "starterPostgameSummary": { "starterMatched": 0, "starterChanged": 0, "awaitingResult": 24 },
+      "lineupPregameProbe": "data/research/mlb/2026-07-28-pregame-lineup-availability-probes-v1.json",
+      "bullpenValidationAwaiting": "data/audits/bullpen-v1_1-validation-2026-07-28.json (pipelineRan=false)"
+    },
+    "postGameNotYetPresent": {
+      "failureFlowReview": false,
+      "successFlowReview": false,
+      "lineupDataset": false,
+      "bullpenRoleDataset07-28": false,
+      "siteFeedbackMirror07-28": "unknown until postgame"
+    }
+  },
+  "canonicalOrder": [
+    {
+      "step": 1,
+      "command": "npm run research:postgame -- 2026-07-28",
+      "script": "scripts/run-mlb-postgame-pipeline.ts",
+      "prerequisites": [
+        "data/predictions/mlb/2026-07-28.json (frozen snapshot)"
+      ],
+      "exitWhen": "≥1 game Final in API-BASEBALL slate",
+      "partialSlate": "allowed — grades Final only; pending preserved",
+      "outputs": [
+        "data/predictions/mlb/2026-07-28.json (result fields only)",
+        "data/predictions/mlb/2026-07-28-review.json",
+        "data/predictions/mlb/2026-07-28-failure-flow-review.json (if fails>0)",
+        "data/predictions/mlb/2026-07-28-success-flow-review.json (if hits>0)",
+        "data/predictions/2026-07-28-mlb-review.json",
+        "data/learning/dashboard.json"
+      ],
+      "immutablePrediction": "preserved by grade script",
+      "rerunSafe": "yes — idempotent for unchanged API results; 5min results cache"
+    },
+    {
+      "step": 2,
+      "command": "npm run research:starter -- 2026-07-28",
+      "script": "scripts/run-mlb-starter-accumulation-with-summary-v1.ts",
+      "prerequisites": [
+        "prediction snapshot exists"
+      ],
+      "partialSlate": "allowed — pre-game dataset immutable if exists; postgame review rows AWAITING_RESULT until Final",
+      "preGameOverwrite": "no — existing 2026-07-28-starter-dataset-v1.json skipped (immutable)",
+      "outputs": [
+        "data/research/mlb/2026-07-28-starter-postgame-review-v1.json (updated)",
+        "data/audits/starter-dataset-v1-accumulation-summary.json"
+      ],
+      "rerunSafe": "yes — pre-game hash locked; prediction hash verified unchanged"
+    },
+    {
+      "step": 3,
+      "command": "npm run research:bullpen-validate -- 2026-07-28 --skip-postgame-steps",
+      "script": "scripts/validate-mlb-bullpen-v1_1-date.ts",
+      "prerequisites": [
+        "postgame review + prediction count alignment",
+        "success-flow if hits>0",
+        "failure-flow if fails>0",
+        "graded≥1 or AWAITING_FINISHED_GAMES (no bullpen pipeline)"
+      ],
+      "partialSlate": "allowed when graded≥1 and guard passes",
+      "skippedSteps": ["grade", "flow reviews", "feedback refresh", "fetchSlate for postgame"],
+      "outputs": [
+        "data/audits/2026-07-28-mlb-pregame-bullpen-risk.json",
+        "data/research/mlb/2026-07-28-bullpen-role-dataset-v1_1.json",
+        "data/audits/bullpen-v1_1-validation-2026-07-28.json",
+        "data/audits/bullpen-v1_1-daily-report-2026-07-28.*"
+      ],
+      "rerunSafe": "yes — warm re-run checks resultHash; postgame artifacts untouched in skip mode"
+    },
+    {
+      "step": 4,
+      "command": "npm run research:lineup -- 2026-07-28",
+      "script": "scripts/build-mlb-lineup-dataset-v1.ts",
+      "prerequisites": [
+        "all predictions graded (pending=0)"
+      ],
+      "partialSlate": "blocked — AWAITING_FULL_SLATE exit 2; no partial artifact",
+      "fullSlateOnly": true,
+      "outputs": [
+        "data/research/mlb/2026-07-28-lineup-dataset-v1.json"
+      ],
+      "rerunSafe": "yes — resultHash reproducibility on warm re-run"
+    },
+    {
+      "step": 5,
+      "command": "npm run research:ops -- 2026-07-28",
+      "script": "scripts/run-mlb-research-ops-pipeline-v1.ts",
+      "prerequisites": [
+        "lineup dataset for DATE (correlation audit readFile — hard requirement)",
+        "bullpen dataset for DATE",
+        "graded games for meaningful correlation rows",
+        "postgame flow artifacts for contradiction ledger"
+      ],
+      "partialSlate": "not recommended — correlation may run on partial graded set but lineup file missing until step 4",
+      "fullSlateOnly": true,
+      "misleadingConclusionRisk": "medium if run before lineup — step 1 fails ENOENT on missing lineup JSON",
+      "outputs": [
+        "data/audits/dataset-correlation-audit-v1-2026-07-28.json",
+        "data/research/contradiction-ledger-v1.json",
+        "data/research/contradiction-severity-audit-v1.json",
+        "data/research/dataset-coverage-dashboard-v1.json",
+        "data/audits/starter-dataset-v1-accumulation-summary.json"
+      ],
+      "rerunSafe": "read-only re-aggregation; overwrites ops artifacts not prediction"
+    }
+  ],
+  "partialVsFullSlate": {
+    "partialSafe": [
+      "research:postgame",
+      "research:starter",
+      "research:bullpen-validate --skip-postgame-steps (if graded≥1 + guard)"
+    ],
+    "fullSlateOnly": [
+      "research:lineup",
+      "research:ops"
+    ],
+    "doNotRunNow": "All canonical steps — Final=0"
+  },
+  "feedbackLearning": {
+    "trigger": "research:postgame step 4 only",
+    "behavior": "export reads {date}-review.json; exports graded worked/failed; pending excluded from hit rate; learning dashboard aggregates all mirrors",
+    "incremental": "re-export replaces mirror for date; dashboard rebuild includes newly graded games"
+  },
+  "hashExpectations": {
+    "predictionImmutable": "unchanged across postgame/starter/bullpen-skip",
+    "predictionFullFile": "may change only when result fields added (graded games)",
+    "starterPreGameResultHash": "locked when artifact exists",
+    "bullpenResultHash": "reproducible on warm re-run after build",
+    "lineupResultHash": "reproducible after full slate build"
+  },
+  "verification": {
+    "codeChanges": 0,
+    "artifactChangesThisAudit": 0,
+    "predictionHash07-28Unchanged": true,
+    "predictionHash07-28": "bac3ac8ace1e1ab7374d271d1bfbc57e2390d4448c345c2c1f16772244dc6370",
+    "predictionHash07-27Unchanged": true,
+    "engineImpact": 0,
+    "frameworkImpact": 0,
+    "build": "pass"
+  },
+  "remainingIssues": [
+    "Do not run canonical pipeline until ≥1 game Final (currently 0/12)",
+    "research:ops step 1 requires lineup JSON for DATE — must follow step 4 first",
+    "07-28 review.json exists from prior grade probe (graded=0) — postgame will refresh safely",
+    "Lineup pre-game probe exists (H-LU-003); does not substitute post-game lineup dataset"
+  ],
+  "conclusion": "SECOND_SLATE_EXECUTION_READY"
+}

@@ -3,10 +3,12 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ResearchAnalysisViewer from "@/components/analysis/ResearchAnalysisViewer";
 import SampleAnalysisNotice from "@/components/home/SampleAnalysisNotice";
+import { buildGamesBackPath } from "@/lib/datetime/games-date";
 import { loadResearchAnalysisView } from "@/lib/research/load-research-analysis-view";
 
 type AnalysisPageProps = {
   params: Promise<{ gameId: string }>;
+  searchParams: Promise<{ fromDate?: string }>;
 };
 
 export async function generateMetadata({
@@ -27,9 +29,17 @@ export async function generateMetadata({
   };
 }
 
-export default async function AnalysisPage({ params }: AnalysisPageProps) {
+export default async function AnalysisPage({
+  params,
+  searchParams,
+}: AnalysisPageProps) {
   const { gameId } = await params;
+  const { fromDate } = await searchParams;
   const view = await loadResearchAnalysisView(gameId);
+  const gamesBackHref = buildGamesBackPath(
+    fromDate,
+    view.gameInfo.dateKst,
+  );
 
   return (
     <>
@@ -38,7 +48,7 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
         <div className="mx-auto max-w-5xl px-4 pt-6 sm:px-6">
           <SampleAnalysisNotice />
         </div>
-        <ResearchAnalysisViewer view={view} />
+        <ResearchAnalysisViewer view={view} gamesBackHref={gamesBackHref} />
       </main>
       <Footer />
     </>

@@ -1,0 +1,314 @@
+{
+  "meta": {
+    "version": "contradiction-severity-audit-v1",
+    "kind": "contradiction-severity-audit",
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T10:44:13.855Z",
+    "auditedEvents": 10,
+    "severityCounts": {
+      "LOW": 0,
+      "MEDIUM": 2,
+      "HIGH": 8
+    },
+    "engineCandidate": false,
+    "engineAdmission": "PROHIBITED",
+    "hypothesisStatusPromotion": false,
+    "scoring": false,
+    "predictionHashSha256": "621f4dbc2ad7439804f88ba213452e5e2675396e889a26580f79b11ad9e58051",
+    "predictionUnchanged": true,
+    "datasetFilesUnchanged": true,
+    "contradictionLedgerSource": "data/research/contradiction-ledger-v1.json",
+    "correlationAuditSource": "data/audits/dataset-correlation-audit-v1-2026-07-27.json",
+    "hypothesisEvidenceLedgerLink": "data/research/hypothesis-evidence-ledger.json",
+    "conclusion": "CONTRADICTION_SEVERITY_COLLECTION_STARTED",
+    "note": "Severity labels are research-priority hints only — not Engine weights or hypothesis promotion."
+  },
+  "severityRules": [
+    {
+      "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE",
+      "failureOutcome": "HIGH",
+      "otherOutcome": "MEDIUM"
+    },
+    {
+      "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE_OVERCOME",
+      "default": "MEDIUM"
+    },
+    {
+      "type": "BULLPEN_ROLE_SUPPORTS_PREDICTION_FAILED",
+      "default": "HIGH"
+    },
+    {
+      "type": "BULLPEN_ROLE_CONFLICTS_PREDICTION_SUCCEEDED",
+      "default": "HIGH"
+    },
+    {
+      "type": "BULLPEN_ROLE_CONFLICTS_FLOW_PROTECTED",
+      "default": "MEDIUM"
+    }
+  ],
+  "events": [
+    {
+      "eventId": "C-20260727-001",
+      "gameId": "mlb-179589",
+      "match": "New York Yankees @ Philadelphia Phillies",
+      "dateKst": "2026-07-27",
+      "domain": "starter",
+      "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE",
+      "outcome": "FAILURE",
+      "severity": "HIGH",
+      "severityRationale": "Identity matched (no scratch) but flow reports starter disadvantage on a failed prediction — direct cross-artifact tension on outcome.",
+      "linkedHypothesisIds": [
+        "H-ST-001",
+        "H-ST-004"
+      ],
+      "ledgerResearchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-002",
+      "gameId": "mlb-179589",
+      "match": "New York Yankees @ Philadelphia Phillies",
+      "dateKst": "2026-07-27",
+      "domain": "bullpen",
+      "type": "BULLPEN_ROLE_SUPPORTS_PREDICTION_FAILED",
+      "outcome": "FAILURE",
+      "severity": "HIGH",
+      "severityRationale": "Bullpen role structure aligned with baseline pick yet prediction failed — strongest bullpen-structure vs outcome tension.",
+      "linkedHypothesisIds": [
+        "H-BP-ROLE-005"
+      ],
+      "ledgerResearchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-003",
+      "gameId": "mlb-179592",
+      "match": "Cleveland Guardians @ Tampa Bay Rays",
+      "dateKst": "2026-07-27",
+      "domain": "bullpen",
+      "type": "BULLPEN_ROLE_CONFLICTS_PREDICTION_SUCCEEDED",
+      "outcome": "SUCCESS",
+      "severity": "HIGH",
+      "severityRationale": "Bullpen role structure conflicted with baseline yet prediction succeeded — false-negative style tension for role compare.",
+      "linkedHypothesisIds": [
+        "H-BP-ROLE-005"
+      ],
+      "ledgerResearchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-004",
+      "gameId": "mlb-179592",
+      "match": "Cleveland Guardians @ Tampa Bay Rays",
+      "dateKst": "2026-07-27",
+      "domain": "bullpen",
+      "type": "BULLPEN_ROLE_CONFLICTS_FLOW_PROTECTED",
+      "outcome": "SUCCESS",
+      "severity": "MEDIUM",
+      "severityRationale": "Role conflict coexists with protected-lead flow verdict on a hit — secondary tension on same game; outcome not contradicted.",
+      "linkedHypothesisIds": [
+        "H-BP-ROLE-005"
+      ],
+      "ledgerResearchValue": "MEDIUM",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-005",
+      "gameId": "mlb-179594",
+      "match": "Los Angeles Angels @ San Francisco Giants",
+      "dateKst": "2026-07-27",
+      "domain": "starter",
+      "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE",
+      "outcome": "FAILURE",
+      "severity": "HIGH",
+      "severityRationale": "Identity matched (no scratch) but flow reports starter disadvantage on a failed prediction — direct cross-artifact tension on outcome.",
+      "linkedHypothesisIds": [
+        "H-ST-001",
+        "H-ST-004"
+      ],
+      "ledgerResearchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-006",
+      "gameId": "mlb-179594",
+      "match": "Los Angeles Angels @ San Francisco Giants",
+      "dateKst": "2026-07-27",
+      "domain": "bullpen",
+      "type": "BULLPEN_ROLE_SUPPORTS_PREDICTION_FAILED",
+      "outcome": "FAILURE",
+      "severity": "HIGH",
+      "severityRationale": "Bullpen role structure aligned with baseline pick yet prediction failed — strongest bullpen-structure vs outcome tension.",
+      "linkedHypothesisIds": [
+        "H-BP-ROLE-005"
+      ],
+      "ledgerResearchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-007",
+      "gameId": "mlb-179595",
+      "match": "Chicago Cubs @ Pittsburgh Pirates",
+      "dateKst": "2026-07-27",
+      "domain": "starter",
+      "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE",
+      "outcome": "FAILURE",
+      "severity": "HIGH",
+      "severityRationale": "Identity matched (no scratch) but flow reports starter disadvantage on a failed prediction — direct cross-artifact tension on outcome.",
+      "linkedHypothesisIds": [
+        "H-ST-001",
+        "H-ST-004"
+      ],
+      "ledgerResearchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-008",
+      "gameId": "mlb-179596",
+      "match": "Athletics @ Minnesota Twins",
+      "dateKst": "2026-07-27",
+      "domain": "bullpen",
+      "type": "BULLPEN_ROLE_CONFLICTS_PREDICTION_SUCCEEDED",
+      "outcome": "SUCCESS",
+      "severity": "HIGH",
+      "severityRationale": "Bullpen role structure conflicted with baseline yet prediction succeeded — false-negative style tension for role compare.",
+      "linkedHypothesisIds": [
+        "H-BP-ROLE-005"
+      ],
+      "ledgerResearchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-009",
+      "gameId": "mlb-179599",
+      "match": "San Diego Padres @ Miami Marlins",
+      "dateKst": "2026-07-27",
+      "domain": "starter",
+      "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE_OVERCOME",
+      "outcome": "SUCCESS",
+      "severity": "MEDIUM",
+      "severityRationale": "Disadvantage tag present but outcome succeeded (overcome) — contradiction is explanatory, not predictive failure.",
+      "linkedHypothesisIds": [
+        "H-ST-001"
+      ],
+      "ledgerResearchValue": "MEDIUM",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-010",
+      "gameId": "mlb-179601",
+      "match": "Houston Astros @ Chicago White Sox",
+      "dateKst": "2026-07-27",
+      "domain": "starter",
+      "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE",
+      "outcome": "FAILURE",
+      "severity": "HIGH",
+      "severityRationale": "Identity matched (no scratch) but flow reports starter disadvantage on a failed prediction — direct cross-artifact tension on outcome.",
+      "linkedHypothesisIds": [
+        "H-ST-001",
+        "H-ST-004"
+      ],
+      "ledgerResearchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    }
+  ],
+  "hypothesisSeveritySummary": [
+    {
+      "hypothesisId": "H-BP-ROLE-005",
+      "eventCount": 5,
+      "severity": {
+        "LOW": 0,
+        "MEDIUM": 1,
+        "HIGH": 4
+      },
+      "highestSeverity": "HIGH",
+      "eventIds": [
+        {
+          "eventId": "C-20260727-002",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-003",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-004",
+          "severity": "MEDIUM"
+        },
+        {
+          "eventId": "C-20260727-006",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-008",
+          "severity": "HIGH"
+        }
+      ]
+    },
+    {
+      "hypothesisId": "H-ST-001",
+      "eventCount": 5,
+      "severity": {
+        "LOW": 0,
+        "MEDIUM": 1,
+        "HIGH": 4
+      },
+      "highestSeverity": "HIGH",
+      "eventIds": [
+        {
+          "eventId": "C-20260727-001",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-005",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-007",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-009",
+          "severity": "MEDIUM"
+        },
+        {
+          "eventId": "C-20260727-010",
+          "severity": "HIGH"
+        }
+      ]
+    },
+    {
+      "hypothesisId": "H-ST-004",
+      "eventCount": 4,
+      "severity": {
+        "LOW": 0,
+        "MEDIUM": 0,
+        "HIGH": 4
+      },
+      "highestSeverity": "HIGH",
+      "eventIds": [
+        {
+          "eventId": "C-20260727-001",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-005",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-007",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-010",
+          "severity": "HIGH"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Single slate (10 events) — severity counts are descriptive only",
+    "No causal ranking or Engine admission implied",
+    "LOW bucket unused on 2026-07-27 slate"
+  ]
+}

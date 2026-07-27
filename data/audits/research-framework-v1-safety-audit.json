@@ -2,7 +2,7 @@
   "meta": {
     "version": "research-framework-v1-safety-audit-v1",
     "frameworkVersion": "research-framework-v1",
-    "generatedAt": "2026-07-27T01:10:34.906Z",
+    "generatedAt": "2026-07-27T10:36:03.443Z",
     "auditOnly": true,
     "frameworkExtended": false,
     "registryStructureChanged": false,
@@ -18,8 +18,8 @@
     "StatusGuard": "Demotes premature PROMISING only; does not auto-conclude research",
     "PlaceholderRisk": "Starter/Weather/Travel are NOT_STARTED stubs — no forced schemas/builders",
     "EngineIsolation": "PROHIBITED + no edge imports",
-    "conclusion": "SAFE_MINIMAL_SCAFFOLD",
-    "failCount": 0,
+    "conclusion": "OVERENGINEERING_RISK_FOUND",
+    "failCount": 1,
     "warnCount": 0
   },
   "checks": [
@@ -157,9 +157,9 @@
     },
     {
       "id": "PLACEHOLDER_mlb-starter",
-      "passed": true,
+      "passed": false,
       "detail": "mlb-starter: NOT_STARTED placeholder only — no schema force beyond registry row",
-      "severity": "info"
+      "severity": "fail"
     },
     {
       "id": "PLACEHOLDER_mlb-weather",

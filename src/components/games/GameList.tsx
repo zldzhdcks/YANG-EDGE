@@ -8,9 +8,11 @@ import GameCard from "./GameCard";
 
 type GameListProps = {
   items: GameWithOdds[];
+  /** /games 목록 날짜 — 연구 보기 fromDate 전달용 */
+  listDate?: string;
 };
 
-export default function GameList({ items }: GameListProps) {
+export default function GameList({ items, listDate }: GameListProps) {
   if (items.length === 0) {
     return (
       <Card padding="none" className="rounded-xl px-6 py-16 text-center">
@@ -29,13 +31,19 @@ export default function GameList({ items }: GameListProps) {
   return (
     <div className="space-y-6">
       {groups.map((group) => (
-        <LeagueSection key={group.league} group={group} />
+        <LeagueSection key={group.league} group={group} listDate={listDate} />
       ))}
     </div>
   );
 }
 
-function LeagueSection({ group }: { group: LeagueGroup }) {
+function LeagueSection({
+  group,
+  listDate,
+}: {
+  group: LeagueGroup;
+  listDate?: string;
+}) {
   const [expanded, setExpanded] = useState(false);
   const shown = expanded ? group.games : group.visibleGames;
 
@@ -59,6 +67,7 @@ function LeagueSection({ group }: { group: LeagueGroup }) {
             recommendation={item.recommendation ?? null}
             researchOutcome={item.researchOutcome ?? null}
             hideLeague
+            fromDate={listDate}
           />
         ))}
       </Card>

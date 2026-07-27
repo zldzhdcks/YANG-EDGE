@@ -1,0 +1,335 @@
+{
+  "meta": {
+    "version": "weather-dataset-v1-pre-design-audit",
+    "kind": "pre-design-audit",
+    "generatedAt": "2026-07-27T11:45:00.000Z",
+    "auditedDatesKst": ["2026-07-27", "2026-07-28"],
+    "researchOnly": true,
+    "engineConnected": false,
+    "engineImpact": 0,
+    "frameworkChanged": false,
+    "registryChanged": false,
+    "registryStatus": "mlb-weather NOT_STARTED preserved",
+    "hypothesisRegistered": false,
+    "codeChanged": false,
+    "artifactCreated": false,
+    "predictionHashUnchanged": true,
+    "officialConclusion": "READY_FOR_MINIMAL_WEATHER_DATASET_DESIGN",
+    "implementationDecision": "HOLD",
+    "note": "Read-only audit. No builder, no weather API wired, no Engine connection."
+  },
+  "gameVenueAvailability": {
+    "predictionSnapshotFields": {
+      "gameId": true,
+      "externalId": true,
+      "dateKst": true,
+      "startTimeKst": true,
+      "homeTeam": true,
+      "awayTeam": true,
+      "gamePk": false,
+      "venueId": false,
+      "venueName": false,
+      "timezoneExplicit": false,
+      "timezoneImplied": "Asia/Seoul via startTimeKst + dateKst convention"
+    },
+    "joinPath": "prediction.gameId → starter-dataset-v1 row.gamePk → Stats API schedule cache → venue {id,name}",
+    "auditedMapping": {
+      "2026-07-27": {
+        "predictionGames": 15,
+        "starterGamePkJoin": "15/15",
+        "venueIdNameViaScheduleCache": "15/15",
+        "uniqueVenues": 15
+      },
+      "2026-07-28": {
+        "predictionGames": 12,
+        "starterGamePkJoin": "12/12",
+        "venueIdNameViaScheduleCache": "12/12",
+        "uniqueVenues": 12,
+        "specialVenues": [
+          {
+            "venueId": 2529,
+            "venueName": "Sutter Health Park",
+            "note": "Temporary/neutral-style Athletics home; static registry review required"
+          }
+        ]
+      }
+    },
+    "apiBaseballCurrentUsage": {
+      "fieldsParsed": ["externalId", "homeTeam", "awayTeam", "scores", "status"],
+      "venueInPipeline": false,
+      "weatherInPipeline": false
+    },
+    "coordinatesInScheduleCache": false,
+    "coordinatesViaVenueEndpoint": {
+      "verified": true,
+      "endpoint": "GET /api/v1/venues/{venueId}?hydrate=location,fieldInfo",
+      "sampleGlobeLifeField": {
+        "latitude": 32.747299,
+        "longitude": -97.081818
+      },
+      "legalStatus": "INTERNAL_RESEARCH_ONLY"
+    },
+    "staticVenueRegistryNeeded": {
+      "recommended": true,
+      "reason": "Schedule cache stores venue ref only {id,name,link}; coordinates/roofType require separate venue fetch or immutable static registry snapshot per season"
+    }
+  },
+  "indoorDomeHandling": {
+    "roofTypeFieldAvailable": true,
+    "source": "MLB Stats API fieldInfo.roofType",
+    "observedValues": ["Open", "Dome", "Retractable"],
+    "roofStatusAtGameTimeAvailable": false,
+    "recommendedRoofStatusDefault": "ROOF_STATUS_UNKNOWN",
+    "retractablePreGamePolicy": "Do not infer open/closed from forecast alone; record ROOF_STATUS_UNKNOWN until authoritative pre-game source exists",
+    "fixedDomePolicy": "weatherAvailability=NOT_APPLICABLE; do not use outdoor forecast as in-play weather variable",
+    "outdoorPolicy": "weatherAvailability=AVAILABLE subject to provider + cutoff guards",
+    "errorToAvoid": "Applying outdoor wind/precip directly to fixed-dome games as if played outdoors"
+  },
+  "candidateProviders": [
+    {
+      "id": "noaa-nws-api",
+      "name": "NOAA National Weather Service API",
+      "officialApi": true,
+      "endpoint": "https://api.weather.gov",
+      "freeTier": true,
+      "historicalForecastArchive": false,
+      "currentForecastOnly": true,
+      "commercialUse": "Public domain; lawful use with attribution (Data source: NOAA)",
+      "storageRedistribution": "Allowed with attribution; no false endorsement",
+      "rateLimit": "Undisclosed generous limit; User-Agent required",
+      "attributionRequired": true,
+      "koreaPaymentUse": "N/A (US government API)",
+      "legalClassification": "INTERNAL_RESEARCH_ONLY",
+      "publicRuntimeCandidate": "PUBLIC_CANDIDATE after product legal review",
+      "coverageGap": "US only — Canadian MLB venues need separate provider",
+      "fieldsSupported": [
+        "temperature",
+        "precipitationProbability",
+        "precipitationAmount",
+        "windSpeed",
+        "windDirection",
+        "humidity",
+        "pressure",
+        "weatherCondition",
+        "forecastIssuedAt",
+        "forecastValidAt",
+        "sourceTimestamp"
+      ],
+      "feelsLike": "partial via wind chill/heat index when published"
+    },
+    {
+      "id": "open-meteo",
+      "name": "Open-Meteo",
+      "officialApi": true,
+      "endpoint": "https://api.open-meteo.com/v1/forecast",
+      "freeTier": true,
+      "freeTierCommercial": false,
+      "paidCommercialTier": true,
+      "historicalForecastArchive": "Historical Forecast API on Professional+ paid plan only",
+      "currentForecastOnly": "Free tier: forecast + limited past_days",
+      "commercialUse": "Free API non-commercial only; paid subscription for commercial",
+      "storageRedistribution": "Output data CC-BY-4.0 with attribution",
+      "rateLimit": "Free: 10k/day, 600/min",
+      "attributionRequired": true,
+      "koreaPaymentUse": "Paid plans via open-meteo.com (card); not verified for KR billing in this audit",
+      "legalClassification": "INTERNAL_RESEARCH_ONLY",
+      "publicRuntimeCandidate": "HOLD until commercial plan + product legal review if public UI",
+      "coverageGap": "Global including Canada — useful supplement for non-US venues",
+      "fieldsSupported": [
+        "temperature",
+        "feelsLike",
+        "precipitationProbability",
+        "precipitationAmount",
+        "windSpeed",
+        "windDirection",
+        "humidity",
+        "pressure",
+        "weatherCondition",
+        "forecastValidAt"
+      ],
+      "forecastIssuedAt": "Model run metadata available; must map to collection snapshot time"
+    },
+    {
+      "id": "openweathermap-one-call",
+      "name": "OpenWeatherMap One Call API",
+      "officialApi": true,
+      "freeTier": "Limited (1000 calls/day free on One Call 3.0 pay-as-you-call)",
+      "historicalForecastArchive": "Limited historical on paid tiers",
+      "commercialUse": "Allowed on paid plans; ODbL on self-service with attribution",
+      "storageRedistribution": "ODbL derivative rules on standard plans; Enterprise custom",
+      "attributionRequired": true,
+      "koreaPaymentUse": "Self-service subscription; not verified in this audit",
+      "legalClassification": "NEEDS_LEGAL_REVIEW",
+      "publicRuntimeCandidate": "HOLD — ODbL share-alike may conflict with proprietary product data",
+      "fieldsSupported": "Broad forecast + current; terms vary by plan"
+    },
+    {
+      "id": "mlb-stats-api-venue",
+      "name": "MLB Stats API (venue metadata only)",
+      "officialApi": true,
+      "weatherProvider": false,
+      "legalClassification": "INTERNAL_RESEARCH_ONLY",
+      "publicRuntimeCandidate": false,
+      "fieldsSupported": ["venueId", "venueName", "latitude", "longitude", "roofType", "turfType"]
+    },
+    {
+      "id": "html-scraping",
+      "name": "Web page / search scraping",
+      "officialApi": false,
+      "legalClassification": "BLOCKED",
+      "note": "Explicitly prohibited by PROJECT_MEMORY and audit scope"
+    }
+  ],
+  "recommendedProvider": {
+    "finalSelection": null,
+    "tieredResearchApproach": {
+      "venueMetadata": "MLB Stats API /venues hydrate=location,fieldInfo (INTERNAL_RESEARCH_ONLY)",
+      "usWeatherForecast": "NOAA NWS api.weather.gov (primary US candidate)",
+      "nonUsOrFallback": "Open-Meteo free tier for INTERNAL_RESEARCH_ONLY until Canada path reviewed",
+      "operatorActionRequired": "Select single canonical weather source per artifact before builder v1"
+    }
+  },
+  "temporalBoundary": {
+    "preGameForecastSnapshot": {
+      "engineCandidate": true,
+      "requiresCutoffGuard": true,
+      "rule": "forecastIssuedAt must be <= row cutoffTime (aligned to prediction freeze or explicit weather probe time)"
+    },
+    "postGameObservedWeather": {
+      "engineCandidate": false,
+      "purpose": "Retrospective accuracy / hypothesis validation only",
+      "backfillIntoPreGameRows": "FORBIDDEN"
+    },
+    "multiForecastVersioning": "append-only or versioned snapshots per game; never overwrite prior pre-game row",
+    "postponement": "Record scheduledStartTimeKst vs actualStartTimeKst when rescheduled; re-fetch forecast for actual window"
+  },
+  "leakageRisks": [
+    {
+      "id": "L-WX-001",
+      "risk": "Post-game observed weather backfilled into pre-game dataset row",
+      "severity": "CRITICAL",
+      "mitigation": "Separate collectionPhase PRE_GAME_FORECAST vs POST_GAME_OBSERVED; immutable pre-game write"
+    },
+    {
+      "id": "L-WX-002",
+      "risk": "forecastIssuedAt after prediction cutoffTime",
+      "severity": "HIGH",
+      "mitigation": "Reject row or mark joinQuality=CUTOFF_VIOLATION; do not use in Engine slice"
+    },
+    {
+      "id": "L-WX-003",
+      "risk": "Dome/retractable game treated as outdoor wind/precip exposure",
+      "severity": "HIGH",
+      "mitigation": "roofType gate + weatherAvailability NOT_APPLICABLE or CONDITIONAL"
+    },
+    {
+      "id": "L-WX-004",
+      "risk": "KST slate date vs UTC gameDate misalignment for forecastValidAt",
+      "severity": "MEDIUM",
+      "mitigation": "Use Stats API gameDate UTC + startTimeKst; document timezone conversion in row meta"
+    }
+  ],
+  "missingDataRisks": [
+    "Prediction snapshot has no gamePk/venue — join depends on starter dataset existing",
+    "Coordinates not in schedule cache — extra venue API or static registry required",
+    "Retractable roof open/closed unknown pre-game",
+    "No weather env vars or packages installed today",
+    "Canadian venue games require non-NWS provider",
+    "Historical forecast replay requires paid Open-Meteo or live snapshot at collection time"
+  ],
+  "apiCallEstimate100Games": {
+    "assumptions": "Single KST slate; ~30 unique venues; doubleheaders share venue",
+    "venueMetadataCold": "~30 MLB Stats API venue calls (cacheable per venueId per season)",
+    "weatherColdWorstCase": "100 calls (one per game)",
+    "weatherColdVenueHourBucket": "~35-45 calls (venue + start-hour bucket dedupe)",
+    "nwsTwoStepPerGrid": "~70-90 calls (points + forecast per unique grid; some venues share grid)",
+    "warmRerunNetworkCalls": "0 when raw cache hit (matches starter/bullpen pattern)"
+  },
+  "cacheStrategy": {
+    "raw": "data/cache/research/mlb/raw/{provider}/weather/{lat}_{lon}_{validHour}.json",
+    "rawVenue": "data/cache/research/mlb/raw/statsapi/api/v1/venues/{venueId}.json",
+    "derived": "data/research/mlb/{date}-weather-dataset-v1.json",
+    "dedupeKey": "venueId + forecastValidAt hour (or gridId + validTime for NWS)",
+    "batchMultiCoordinate": "Open-Meteo: single lat/lon per request; no multi-venue batch in v1 docs",
+    "pollingScheduler": "NOT_DESIGNED — manual builder only"
+  },
+  "candidateHypotheses": [
+    "H-WX-001: Strong wind may correlate with scoring distribution (candidate only — not registered)",
+    "H-WX-002: Precipitation/humidity may correlate with pitching/defense volatility (candidate only)",
+    "H-WX-003: Weather variables meaningful for outdoor games only (candidate only)",
+    "H-WX-004: Forecasts closer to game time may reduce observation error (candidate only)"
+  ],
+  "multiSportBoundary": {
+    "scope": "MLB Weather Dataset v1 only",
+    "frameworkChangeNeeded": false,
+    "candidateCommonFields": [
+      "gameId",
+      "gameDate",
+      "cutoffTime",
+      "forecastIssuedAt",
+      "forecastValidAt",
+      "temperature",
+      "precipitationProbability",
+      "windSpeed",
+      "collectionPhase",
+      "legalStatus"
+    ],
+    "doNotFinalizeCommonSchema": "Until second sport weather dataset exists"
+  },
+  "legalBoundary": {
+    "betmanIndependence": "Betman schedule scope is independent from weather Provider selection",
+    "approvedPaths": ["Official APIs with documented terms (NWS, Open-Meteo, OpenWeather paid review)"],
+    "blockedPaths": ["HTML crawl", "search scrape", "unclear-license aggregators"],
+    "internalVsPublic": "Research artifacts INTERNAL_RESEARCH_ONLY until product legal clearance for PUBLIC_CANDIDATE providers"
+  },
+  "minimalSchemaDraft": {
+    "metadata": [
+      "datasetId",
+      "schemaVersion",
+      "builderVersion",
+      "gameDate",
+      "gameId",
+      "gamePk",
+      "venueId",
+      "venueName",
+      "generatedAt",
+      "cutoffTime",
+      "collectionPhase",
+      "researchOnly",
+      "legalStatus",
+      "source",
+      "sourceTimestamp",
+      "inputHash",
+      "resultHash",
+      "warnings",
+      "missingFields",
+      "engineAdmission"
+    ],
+    "weatherFields": [
+      "venueType",
+      "roofType",
+      "roofStatus",
+      "latitude",
+      "longitude",
+      "forecastIssuedAt",
+      "forecastValidAt",
+      "temperature",
+      "precipitationProbability",
+      "precipitationAmount",
+      "windSpeed",
+      "windDirection",
+      "humidity",
+      "pressure",
+      "condition",
+      "weatherAvailability",
+      "joinQuality"
+    ]
+  },
+  "openQuestions": [
+    "Operator selection of canonical weather Provider for v1 builder",
+    "Canada/Toronto venue policy when on slate (Environment Canada vs Open-Meteo)",
+    "Pre-game weather probe cadence (single freeze vs T-24/T-6 manual probes)",
+    "Static venue registry versioning when temporary venues used",
+    "Whether retractable roof game-day status will ever have authoritative pre-game feed"
+  ]
+}

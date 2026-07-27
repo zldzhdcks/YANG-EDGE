@@ -9,29 +9,12 @@
  * 예측 불변 필드 / Engine / weights / 가계부 / 홈 /games /picks UI 미수정.
  *
  * 실행:
- *   npx tsx --env-file=.env.local scripts/run-mlb-postgame-pipeline.ts [YYYY-MM-DD]
+ *   tsx --env-file=.env.local scripts/run-mlb-postgame-pipeline.ts [YYYY-MM-DD]
+ *   npm run research:postgame -- YYYY-MM-DD
  */
-import { spawn } from "node:child_process";
-import path from "node:path";
+import { spawnLocalTsxScript } from "./lib/spawn-local-tsx";
 
 const dateKst = process.argv[2] ?? "2026-07-27";
-
-function run(scriptRel: string, args: string[] = []): Promise<number> {
-  return new Promise((resolve, reject) => {
-    const script = path.join(process.cwd(), scriptRel);
-    const child = spawn(
-      process.platform === "win32" ? "npx.cmd" : "npx",
-      ["tsx", "--env-file=.env.local", script, ...args],
-      {
-        cwd: process.cwd(),
-        stdio: "inherit",
-        shell: process.platform === "win32",
-      },
-    );
-    child.on("error", reject);
-    child.on("close", (code) => resolve(code ?? 1));
-  });
-}
 
 async function main() {
   console.log(`=== MLB Postgame Pipeline (${dateKst}) ===\n`);
@@ -61,7 +44,7 @@ async function main() {
 
   for (const step of steps) {
     console.log(`\n--- ${step.name} ---`);
-    const code = await run(step.script, step.args);
+    const code = await spawnLocalTsxScript(step.script, step.args);
     if (code !== 0) {
       console.error(
         `FAILED at step ${step.name} (exit ${code}). Later steps skipped.`,

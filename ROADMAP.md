@@ -3,6 +3,16 @@
 코드 기준 현황 문서입니다. 홍보 문구가 아니라 **현재 저장소에서 확인된 동작**을 적습니다.
 완료되지 않은 항목에 완료 표시를 하지 않습니다.
 
+## 제품 단계 (July 2026)
+
+| 단계 | 코드 | 설명 |
+|------|------|------|
+| **현재** | `PRIVATE_RESEARCH_PROTOTYPE` | 찬양님 단독 사용 · MLB 연구 파이프라인 · Viewer·복기 우선 · 공개 UI는 일정 + **라벨된 샘플** 분석 |
+| **미래** | `PUBLIC_AI_SPORTS_ANALYSIS_PLATFORM` | “AI가 왜 그렇게 판단했는가”를 설명하는 공개 제품 — **데이터·법적·표본·Backtest 게이트 통과 전 구현 금지** |
+
+제품 비전·설명 정책·법적 경계: [PROJECT_MEMORY.md §22](./PROJECT_MEMORY.md#22-product-vision-and-direction-july-2026)  
+종목·배트맨 편성 범위: [PROJECT_MEMORY.md §24](./PROJECT_MEMORY.md#24-supported-sports-and-betman-배트맨-scope) · [MULTI_SPORT_RESEARCH_BOUNDARY.md](./MULTI_SPORT_RESEARCH_BOUNDARY.md)
+
 ## 제품 원칙
 
 - 개인용 우선
@@ -10,6 +20,18 @@
 - 확인되지 않은 분석값 노출 금지
 - 법적·데이터 이용조건 준수
 - 입력 최소화와 사람 친화적 UX
+
+## 지원 종목 · 리그 범위 (문서 상태)
+
+| 종목 | 제품 지원 범위 | 연구·제품 구현 상태 |
+|------|----------------|---------------------|
+| 야구 (BASEBALL) | 지원 | **MLB Research Pipeline = 활성 참조 구현** |
+| 축구 (SOCCER) | 지원 | **NOT_STARTED / FUTURE_GATED** — Dataset·Engine 검증 전 |
+| 농구 (BASKETBALL) | 지원 | **NOT_STARTED / FUTURE_GATED** |
+| 배구 (VOLLEYBALL) | 지원 | **NOT_STARTED / FUTURE_GATED** |
+| 테니스 및 기타 | **제외** | 명시적 결정·별도 법적·데이터 검토 전까지 비대상 |
+
+**리그:** 유명 리그 고정 화이트리스트 없음. 배트맨에 **실제 편성**된 경기·리그(노르웨이 축구 등 비주류 포함)만 후보. 편성 확인 ≠ 배트맨 크롤링. 일정·결과·통계는 적법 Provider만.
 
 ## 현재 사용 가능
 
@@ -73,6 +95,58 @@
 5. Value Edge 구간별 검증
 6. 개인 가계부 로그인·DB 동기화
 7. 공개 전 법률·약관·개인정보·라이선스 검토
+
+## MLB 연구 파이프라인 npm alias (v1)
+
+날짜 인자: `npm run research:ops -- 2026-07-27`
+
+**Full-slate 순서:** postgame → starter → bullpen-validate (`--skip-postgame-steps`) → lineup → ops
+
+| Script | 역할 |
+|--------|------|
+| `research:postgame` | Postgame grade + flow reviews + site refresh |
+| `research:starter` | Starter accumulation + summary |
+| `research:bullpen-validate` | Bullpen validation (superset 또는 skip-postgame) |
+| `research:bullpen` | Bullpen dataset v1.1 builder only |
+| `research:lineup` | Lineup dataset (full slate graded only) |
+| `research:ops` | Research ops chain (5 steps) |
+| `research:dashboard` | Coverage dashboard only |
+| `research:starter-summary` | Starter summary only |
+
+`research:ops` 순서: correlation audit → contradiction ledger → severity → dashboard → starter summary.
+
+예측 스냅샷 freeze는 수동 유지. 상세: [RESEARCH_PIPELINE_AUTOMATION_AUDIT_V1.md](./RESEARCH_PIPELINE_AUTOMATION_AUDIT_V1.md).
+
+## Multi-Sport Extraction (미래 단계 · 게이트 통과 전 착수 금지)
+
+지원 종목은 야구·축구·농구·배구 네 가지로 제한한다. 두 번째 실제 종목 Dataset이 없으므로 **지금은 구현하지 않는다.** 경계: [MULTI_SPORT_RESEARCH_BOUNDARY.md](./MULTI_SPORT_RESEARCH_BOUNDARY.md) · [PROJECT_MEMORY.md §24](./PROJECT_MEMORY.md#24-supported-sports-and-betman-배트맨-scope)
+
+| 단계 | 내용 |
+|------|------|
+| 1 | 첫 번째 비-MLB Research Dataset 구현 (실제 artifact + audit; Betman 편성·적법 데이터 게이트 통과 후) |
+| 2 | MLB vs 신규 종목 common/different audit (`DATASET_COMMON_AUDIT` 방식) |
+| 3 | **양쪽에서 반복 확인된** 구조만 Framework/Registry에 반영 |
+| 4 | 종목별 Engine admission·Backtest는 각각 독립 통과 |
+
+**금지:** MLB payload 일반화, placeholder builder, Multi-Sport 타입 선행 추가, 테니스 등 비지원 종목 schema 초안, 배트맨 크롤링.
+
+## FUTURE_GATED (미구현 · 게이트 통과 전 착수 금지)
+
+아래는 **미래 제품 후보**입니다. 구현 완료·출시 예정으로 기록하지 않습니다.
+
+| 항목 | 설명 | DATA_VALIDATION | LEGAL_CLEARANCE | COMMERCIAL_READINESS |
+|------|------|:---:|:---:|:---:|
+| Membership (Free / Basic / Premium) | 유료는 검증된 설명 심화; 미검증 분석 판매 금지 | 필수 | 필수 (약관·개인정보·환불) | 필수 (사업자·세무) |
+| OCR Admin Assist | 운영자 전용 수동 입력 보조; 회원 미제공 | 필수 | 필수 | 필수 |
+| Korean Proto Value Edge | 프로토 배당 기반 Value Edge; source rights 미확인 | 필수 | 필수 (공식 사용·저장·재배포) | 필수 |
+| Advertising | 수익 모델 후보 | 해당 시 | 필수 | 필수 |
+| Public Accuracy Dashboard | 사전 저장 예측만; 표본·기간·시장 유형 공개 | 필수 (최소 표본·Backtest) | 필수 | 필수 |
+
+게이트 정의:
+
+- **DATA_VALIDATION** — 표본·Backtest·누수 감사·재현성·시장별 별도 검증
+- **LEGAL_CLEARANCE** — 이용권·표시권·크롤링/자동화 금지 준수·약관
+- **COMMERCIAL_READINESS** — 결제·환불·사업자·세무·고객 지원
 
 ## 제거·통합 검토 대상
 

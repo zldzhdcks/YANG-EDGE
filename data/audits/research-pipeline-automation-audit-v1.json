@@ -1,0 +1,331 @@
+{
+  "auditVersion": "research-pipeline-automation-audit-v1",
+  "auditedAt": "2026-07-27",
+  "scope": {
+    "goal": "Identify manual research pipeline steps and classify automation candidates without implementing automation",
+    "forbidden": [
+      "Engine changes",
+      "Dataset changes",
+      "Framework changes",
+      "Hypothesis changes",
+      "New auto-execution",
+      "Scheduler implementation"
+    ]
+  },
+  "packageJsonScripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "refresh:feedback-learning": "tsx --env-file=.env.local scripts/refresh-site-feedback-learning.ts"
+  },
+  "manualSteps": [
+    {
+      "phase": "pre-game",
+      "order": 1,
+      "id": "daily-baseline",
+      "command": "npx tsx --env-file=.env.local scripts/build-mlb-daily-baseline.ts",
+      "orchestrated": true,
+      "orchestrator": "build-mlb-daily-baseline.ts",
+      "subSteps": [
+        "test-mlb-analysis-coverage.ts",
+        "run-mlb-baseline-analysis.ts",
+        "filter-mlb-betting-lines.ts",
+        "build-mlb-watchlist.ts",
+        "build-mlb-pitcher-comparison.ts",
+        "build-mlb-purchase-cutoff-review.ts",
+        "build-mlb-purchase-decision-plan.ts"
+      ],
+      "npmScript": null,
+      "outputs": ["data/daily-tests/{date}-mlb-*", "data/watchlists/{date}-mlb-*", "data/plans/{date}-mlb-*"]
+    },
+    {
+      "phase": "pre-game",
+      "order": 2,
+      "id": "prediction-snapshot-freeze",
+      "command": "npx tsx scripts/save-mlb-research-prediction-snapshot.ts",
+      "orchestrated": false,
+      "npmScript": null,
+      "note": "Immutable prediction freeze; date often hardcoded; human gate before post-game grading"
+    },
+    {
+      "phase": "pre-game",
+      "order": 3,
+      "id": "starter-accumulation",
+      "command": "npx tsx --env-file=.env.local scripts/run-mlb-starter-accumulation-v1.ts [YYYY-MM-DD]",
+      "orchestrated": true,
+      "orchestrator": "run-mlb-starter-accumulation-v1.ts",
+      "subSteps": [
+        "build-mlb-starter-dataset-v1.ts (pre-game freeze)",
+        "build-mlb-starter-postgame-review-v1.ts (if Final games exist)"
+      ],
+      "npmScript": null,
+      "outputs": ["data/research/mlb/{date}-starter-dataset-v1.json", "data/research/mlb/{date}-starter-postgame-review-v1.json"]
+    },
+    {
+      "phase": "pre-game",
+      "order": 4,
+      "id": "bullpen-dataset-v1_1",
+      "command": "npx tsx --env-file=.env.local scripts/build-mlb-bullpen-role-dataset-v1_1.ts [YYYY-MM-DD]",
+      "orchestrated": false,
+      "npmScript": null,
+      "dependsOn": ["prediction-snapshot-freeze"],
+      "outputs": ["data/research/mlb/{date}-bullpen-role-dataset-v1_1.json"]
+    },
+    {
+      "phase": "post-game",
+      "order": 5,
+      "id": "postgame-pipeline",
+      "command": "npx tsx --env-file=.env.local scripts/run-mlb-postgame-pipeline.ts [YYYY-MM-DD]",
+      "orchestrated": true,
+      "orchestrator": "run-mlb-postgame-pipeline.ts",
+      "subSteps": [
+        "grade-mlb-research-predictions.ts",
+        "review-mlb-failed-game-flow.ts",
+        "review-mlb-success-game-flow.ts",
+        "refresh-site-feedback-learning.ts"
+      ],
+      "npmScript": "refresh:feedback-learning (partial — export+dashboard only)",
+      "outputs": [
+        "data/predictions/mlb/{date}.json",
+        "data/predictions/mlb/{date}-review.json",
+        "data/predictions/{date}-mlb-review.json",
+        "data/learning/dashboard.json"
+      ]
+    },
+    {
+      "phase": "post-game",
+      "order": 6,
+      "id": "bullpen-validate",
+      "command": "npx tsx --env-file=.env.local scripts/validate-mlb-bullpen-v1_1-date.ts [YYYY-MM-DD]",
+      "orchestrated": true,
+      "orchestrator": "validate-mlb-bullpen-v1_1-date.ts",
+      "subSteps": [
+        "grade-mlb-research-predictions.ts",
+        "review-mlb-failed-game-flow.ts",
+        "review-mlb-success-game-flow.ts",
+        "audit-mlb-pregame-bullpen-risk.ts",
+        "build-mlb-bullpen-role-dataset-v1_1.ts",
+        "warm re-run build-mlb-bullpen-role-dataset-v1_1.ts"
+      ],
+      "npmScript": null,
+      "note": "Overlaps postgame-pipeline steps 1-3; not wired into run-mlb-postgame-pipeline"
+    },
+    {
+      "phase": "post-game",
+      "order": 7,
+      "id": "lineup-dataset",
+      "command": "npx tsx --env-file=.env.local scripts/build-mlb-lineup-dataset-v1.ts [YYYY-MM-DD]",
+      "orchestrated": false,
+      "npmScript": null,
+      "dependsOn": ["postgame-pipeline (Final boxscores)"],
+      "outputs": ["data/research/mlb/{date}-lineup-dataset-v1.json"]
+    },
+    {
+      "phase": "research-ops",
+      "order": 8,
+      "id": "dataset-correlation-audit",
+      "command": "npx tsx --env-file=.env.local scripts/audit-dataset-correlation-v1.ts [YYYY-MM-DD]",
+      "orchestrated": false,
+      "npmScript": null
+    },
+    {
+      "phase": "research-ops",
+      "order": 9,
+      "id": "contradiction-ledger",
+      "command": "npx tsx --env-file=.env.local scripts/build-contradiction-ledger-v1.ts",
+      "orchestrated": false,
+      "npmScript": null
+    },
+    {
+      "phase": "research-ops",
+      "order": 10,
+      "id": "contradiction-severity",
+      "command": "npx tsx --env-file=.env.local scripts/build-contradiction-severity-audit-v1.ts",
+      "orchestrated": false,
+      "npmScript": null
+    },
+    {
+      "phase": "research-ops",
+      "order": 11,
+      "id": "coverage-dashboard",
+      "command": "npx tsx --env-file=.env.local scripts/build-dataset-coverage-dashboard-v1.ts",
+      "orchestrated": false,
+      "npmScript": null
+    },
+    {
+      "phase": "research-ops",
+      "order": 12,
+      "id": "starter-accumulation-summary",
+      "command": "npx tsx --env-file=.env.local scripts/summarize-mlb-starter-accumulation-v1.ts",
+      "orchestrated": false,
+      "npmScript": null
+    },
+    {
+      "phase": "research-ops",
+      "order": 13,
+      "id": "bullpen-accumulation-validate",
+      "command": "npx tsx --env-file=.env.local scripts/validate-mlb-bullpen-v1_1-accumulation.ts",
+      "orchestrated": false,
+      "npmScript": null
+    },
+    {
+      "phase": "documentation",
+      "order": 14,
+      "id": "research-log-entry",
+      "command": "Manual RESEARCH_LOG.md one-line entry per completed step",
+      "orchestrated": false,
+      "npmScript": null
+    },
+    {
+      "phase": "deploy",
+      "order": 15,
+      "id": "site-build",
+      "command": "npm run build",
+      "orchestrated": false,
+      "npmScript": "build",
+      "note": "Required for static Feedback/Learning pages to pick up new artifacts"
+    }
+  ],
+  "automationCandidates": [
+    {
+      "id": "AC-01",
+      "title": "npm script aliases for common research commands",
+      "steps": ["starter-accumulation", "postgame-pipeline", "bullpen-validate", "lineup-dataset", "coverage-dashboard"],
+      "risk": "low",
+      "rationale": "Reduces copy-paste errors; no execution logic change"
+    },
+    {
+      "id": "AC-02",
+      "title": "run-mlb-research-ops-pipeline.ts (read-only chain)",
+      "steps": ["dataset-correlation-audit", "contradiction-ledger", "contradiction-severity", "coverage-dashboard"],
+      "risk": "low",
+      "rationale": "All read existing artifacts; safe to chain after datasets exist",
+      "dependsOn": ["postgame-pipeline", "starter-accumulation", "bullpen-dataset-v1_1", "lineup-dataset"]
+    },
+    {
+      "id": "AC-03",
+      "title": "Extend run-mlb-postgame-pipeline with optional flags",
+      "steps": ["starter-accumulation postgame", "bullpen-validate", "lineup-dataset"],
+      "risk": "medium",
+      "rationale": "Eliminates duplicate grade/review runs between postgame and bullpen-validate",
+      "caveat": "Must preserve prediction hash checks; slate must be Final"
+    },
+    {
+      "id": "AC-04",
+      "title": "Pre-game orchestrator after snapshot",
+      "steps": ["starter-accumulation pre-game", "bullpen-dataset-v1_1"],
+      "risk": "medium",
+      "rationale": "Both depend on frozen prediction snapshot only",
+      "caveat": "Snapshot freeze must remain separate human gate"
+    },
+    {
+      "id": "AC-05",
+      "title": "summarize-mlb-starter-accumulation after each accumulation run",
+      "steps": ["starter-accumulation-summary"],
+      "risk": "low",
+      "rationale": "Pure aggregation; no Engine impact"
+    },
+    {
+      "id": "AC-06",
+      "title": "Wire refresh-site-feedback-learning into postgame (already partial)",
+      "steps": ["postgame-pipeline"],
+      "risk": "low",
+      "rationale": "Already in run-mlb-postgame-pipeline; document as canonical last postgame step"
+    }
+  ],
+  "intentionallyManual": [
+    {
+      "id": "IM-01",
+      "step": "prediction-snapshot-freeze",
+      "reason": "Immutable prediction contract; human gate before any grading or dataset mutation"
+    },
+    {
+      "id": "IM-02",
+      "step": "Hypothesis registry status promotion",
+      "reason": "Requires evidence threshold (e.g. 100 games) and explicit research decision"
+    },
+    {
+      "id": "IM-03",
+      "step": "Classifier / threshold / Engine / weights changes",
+      "reason": "Out of pipeline automation scope; affects immutable prediction fields"
+    },
+    {
+      "id": "IM-04",
+      "step": "Scheduler / cron / webhook",
+      "reason": "Explicitly forbidden in audit scope"
+    },
+    {
+      "id": "IM-05",
+      "step": "PROJECT_MEMORY.md edits",
+      "reason": "User rule: do not modify during this audit"
+    },
+    {
+      "id": "IM-06",
+      "step": "Purchase / betting decisions",
+      "reason": "Human judgment; research-only artifacts"
+    },
+    {
+      "id": "IM-07",
+      "step": "Framework registry changes (e.g. lineup dataset registration)",
+      "reason": "Framework structure change forbidden"
+    },
+    {
+      "id": "IM-08",
+      "step": "RESEARCH_LOG.md narrative entries",
+      "reason": "Human audit trail; one-line append only per completed milestone"
+    }
+  ],
+  "pipelineOrder": {
+    "canonicalPreGame": [
+      "build-mlb-daily-baseline.ts",
+      "save-mlb-research-prediction-snapshot.ts (human gate)",
+      "run-mlb-starter-accumulation-v1.ts (pre-game freeze)",
+      "build-mlb-bullpen-role-dataset-v1_1.ts"
+    ],
+    "canonicalPostGame": [
+      "run-mlb-postgame-pipeline.ts (grade → failure review → success review → refresh-site-feedback-learning)",
+      "run-mlb-starter-accumulation-v1.ts (post-game review if not already run)",
+      "validate-mlb-bullpen-v1_1-date.ts OR build-mlb-bullpen-role-dataset-v1_1.ts (if not in validate)",
+      "build-mlb-lineup-dataset-v1.ts"
+    ],
+    "canonicalResearchOps": [
+      "audit-dataset-correlation-v1.ts",
+      "build-contradiction-ledger-v1.ts",
+      "build-contradiction-severity-audit-v1.ts",
+      "build-dataset-coverage-dashboard-v1.ts",
+      "summarize-mlb-starter-accumulation-v1.ts (periodic)"
+    ],
+    "orderViolations": [
+      {
+        "issue": "bullpen-validate duplicates grade+review steps already in postgame-pipeline",
+        "severity": "medium",
+        "mitigation": "Run validate OR postgame first, not both blindly; future orchestrator should dedupe"
+      },
+      {
+        "issue": "lineup-dataset requires Final boxscores but has no postgame dependency check",
+        "severity": "low",
+        "mitigation": "Run only after postgame grading; builder fails gracefully on non-Final"
+      },
+      {
+        "issue": "research-ops scripts not chained; order left to operator",
+        "severity": "low",
+        "mitigation": "AC-02 proposed chain enforces correlation → ledger → severity → dashboard"
+      },
+      {
+        "issue": "Only refresh:feedback-learning in package.json; 14+ scripts are manual npx tsx",
+        "severity": "info",
+        "mitigation": "AC-01 npm aliases"
+      }
+    ],
+    "verified": true
+  },
+  "regression": {
+    "predictionHashBaselineDate": "2026-07-27",
+    "predictionHash": "621f4dbc2ad7439804f88ba213452e5e2675396e889a26580f79b11ad9e58051",
+    "datasetChanges": 0,
+    "engineImpact": 0,
+    "note": "Audit is documentation-only; no code/dataset mutations"
+  },
+  "officialConclusion": "PIPELINE_AUTOMATION_AUDIT_COMPLETED"
+}

@@ -265,3 +265,51 @@ PROHIBITED
 ### Follow-ups
 - Define pre-game lineup collection cadence
 - Accumulate toward ≥100 games before any PROMISING discussion
+
+---
+
+## 2026-07-27 — Dataset Correlation Audit v1
+
+Dataset Correlation Audit v1: 15 games · Starter MATCHED×15 · Bullpen NEUTRAL/CONFLICTS/SUPPORTS co-occurrence only · Lineup post-game COMPLETE only (pre-game NOT_COLLECTED) · Engine candidate no · `DATASET_CORRELATION_COLLECTION_STARTED`
+
+---
+
+## 2026-07-27 — Contradiction Ledger v1
+
+Contradiction Ledger v1: 7 high-value games · 10 contradiction events (starter 5 / bullpen 5 / lineup 0) · linked H-ST/H-BP only · Engine candidate no · `CONTRADICTION_EVIDENCE_COLLECTION_STARTED`
+
+---
+
+## 2026-07-27 — Contradiction Severity Audit v1
+
+Contradiction Severity Audit v1: 10 events · HIGH 8 / MEDIUM 2 / LOW 0 · H-BP-ROLE-005 highest (5 events, 4 HIGH) · Engine candidate no · `CONTRADICTION_SEVERITY_COLLECTION_STARTED`
+
+---
+
+## 2026-07-27 — Dataset Coverage Dashboard v1
+
+Dataset Coverage Dashboard v1: Starter/Bullpen COLLECTING (15g) · Lineup artifact COLLECTING (registry gap) · Evidence 11 hyp / Contradictions 10 · Engine candidate no · `DATASET_COVERAGE_DASHBOARD_CREATED`
+
+---
+
+## 2026-07-27 — Research Pipeline Automation Audit v1
+
+Research Pipeline Automation Audit v1: 15 manual steps · 6 automation candidates · 8 intentionally manual · pipeline order verified · Engine/Dataset/Framework unchanged · `PIPELINE_AUTOMATION_AUDIT_COMPLETED`
+
+---
+
+## 2026-07-27 — Lineup Registry and Evidence Ledger alignment
+
+Lineup Registry and Evidence Ledger alignment: mlb-lineup registered (registry.ts + registry.json) · H-LU-001…003 added to hypothesis-evidence-ledger (evidence=0) · Coverage Dashboard regenerated · `LINEUP_RESEARCH_REGISTRY_ALIGNED`
+
+---
+
+## 2026-07-27 — MLB Weather Dataset v1 Pre-design Audit
+
+MLB Weather Dataset v1 Pre-design Audit: 27 games venue-mapped 100% via starter+Stats API · coordinates/roof via venue hydrate · NWS+Open-Meteo candidates · no Provider finalized · builder HOLD · `READY_FOR_MINIMAL_WEATHER_DATASET_DESIGN`
+
+---
+
+## 2026-07-27 — MLB Travel / Rest Dataset v1 Pre-design Audit
+
+MLB Travel/Rest Dataset v1 Pre-design Audit: 27 team-slots previous-game 100% in cache window · scheduled rest/travel pre-game OK · actual-end/innings POST_GAME only · haversine distance from venue coords · builder HOLD · `READY_FOR_MINIMAL_TRAVEL_REST_DATASET_DESIGN`

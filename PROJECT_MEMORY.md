@@ -885,3 +885,249 @@ Every meaningful change must leave an auditable trail.
 ## 21. Official One-Line Mission
 
 > **YANG EDGE is a verifiable sports prediction research system that stores every prediction, audits every input, reviews every success and failure, and changes its Engine only after sufficient evidence.**
+
+---
+
+## 22. Product Vision and Direction (July 2026)
+
+This section defines the product direction for July 2026. It does not override research principles in Sections 1–20. It separates **current private research** from **future public product** and blocks unverified capabilities from being documented as shipped features.
+
+### 22.1 Product Vision
+
+YANG EDGE is **not** a simple win/loss prediction site.
+
+YANG EDGE aims to become an **AI sports analysis platform that explains why the AI reached its judgment** — using verified data to present reasoning, confidence, risk, market difference, and key variables in language the user can understand.
+
+The core product UX goal is:
+
+> **Make “why did the AI think that?” the easiest thing for the user to understand.**
+
+This vision is compatible with the research constitution: explanations must come from auditable artifacts, not from model improvisation.
+
+### 22.2 Product Stage Separation
+
+```text
+Current Stage:  PRIVATE_RESEARCH_PROTOTYPE
+Future Stage:   PUBLIC_AI_SPORTS_ANALYSIS_PLATFORM
+```
+
+**Current stage (now):**
+
+- Single-operator use (찬양님)
+- Research data accumulation
+- Research Analysis Viewer and post-game review are priorities
+- MLB research pipeline, audits, and hypothesis registry are active
+- Public UI may show schedules and **labeled sample** analysis only where documented
+
+**Future stage (gated):**
+
+- Public or paid features are **not implemented** until data, legal, sample-size, and backtest gates pass
+- No membership billing, OCR product features, proto odds automation, or public accuracy marketing before clearance
+
+### 22.3 Explanation Policy
+
+LLM and natural-language layers must follow:
+
+```text
+NO_FACT_CREATION
+NO_INFERENCE_BEYOND_ARTIFACTS
+STRUCTURED_VERIFIED_DATA_ONLY
+```
+
+Rules:
+
+- LLM must **not** invent new facts, statistics, or analysis reasons
+- LLM may explain only **structured, verified data** already present in artifacts
+- Missing data must be shown as **not collected**, **awaiting research**, or **not yet validated** — never guessed
+- Every explanation must remain traceable to **source**, **cutoff time**, and **missing-field status**
+
+This policy applies to future public explanation features and to any LLM-assisted copy generation for product surfaces.
+
+### 22.4 Future Public Card Direction
+
+Future public game cards (not current UI) may eventually include:
+
+- Match, league, kickoff/first-pitch time
+- **Validated** AI probability (only after Engine and backtest gates)
+- **Validated** Confidence (definition frozen and audited)
+- **Defined** Risk (from approved taxonomy)
+- TODAY EDGE PICK indicator (only when pick policy is validated and legally cleared)
+
+**Current sample/dummy stage:**
+
+- Must **not** be presented as real recommendations
+- Must retain sample/dummy labeling consistent with ROADMAP and COPY
+
+### 22.5 Future Detail Page Direction
+
+Future public detail pages (not current Research Viewer) may eventually include:
+
+- Match basics
+- AI prediction (validated)
+- Validated market types only
+- Confidence / Risk
+- Value Edge (where market and Engine validation allow)
+- Evidence-based AI analysis report (artifact-bound)
+- Visualizations (derived from verified fields only)
+- Post-game result and review
+
+Market-specific outputs require **separate validation** before offering:
+
+```text
+Moneyline / 1X2
+Handicap / Run line
+Over/Under
+Predicted score
+```
+
+Each market type needs its own sample, backtest, and legal review. Partial validation does not authorize presenting unvalidated markets as product features.
+
+### 22.6 Accuracy Transparency Policy
+
+When a public accuracy dashboard exists, YANG EDGE will **not hide** hit rates.
+
+Rules:
+
+- Include only **pre-stored predictions** (point-in-time snapshots), never retrofitted picks
+- Always show **sample size**, **period**, **sport**, **league**, **market type**, and **pending/void** criteria alongside any rate
+- **Never** use unverified example hit rates as product performance
+- **Never** use hit rate as marketing before minimum sample and backtest criteria pass
+
+Internal research snapshots (e.g. small MLB samples) are research signals, not public performance claims.
+
+### 22.7 Membership Direction
+
+Free / Basic / Premium are **future revenue model candidates only** — not implemented.
+
+- Premium’s intended value is **deeper explanation of why the AI judged as it did** — not access to unvalidated analysis
+- **Do not sell** unvalidated analysis as a paid feature
+- Before any payment implementation: terms of service, privacy policy, refund policy, and business/tax review are **mandatory**
+
+### 22.8 Korean Proto / Odds Policy
+
+- **The Odds API** is a reference odds provider; terms and display rights still require per-use review
+- **Korean proto (스포츠토토/프로토) odds–based Value Edge** is a **long-term candidate only**
+- Until official use, storage, and redistribution rights are confirmed: **no public or commercial feature** may depend on proto odds
+- Operator manual entry must record **source**, **inputTime**, **operator**, and **revision history**
+- **Permanently prohibited:**
+
+```text
+NO_BETMAN_HTML_CRAWLING
+NO_LOGIN_AUTOMATION
+NO_HTML_PARSING_OF_BETMAN
+NO_AUTOMATED_SCREEN_CAPTURE_AT_SCALE
+NO_BULK_REDISTRIBUTION_OF_UNLICENSED_ODDS
+NO_TREATING_BETMAN_AS_OFFICIAL_SPORTS_API
+```
+
+Betman schedule alignment for which games may enter research/public analysis is defined in §24 — it does **not** authorize crawling Betman.
+### 22.9 OCR Admin Policy
+
+OCR is a **future operator-only manual input assist candidate** — not a member feature.
+
+- Not offered to end users
+- Prefer **local processing** of images the operator lawfully possesses
+- OCR output is **never auto-finalized** — operator review required before persistence
+- Persist **team names**, **odds**, **round/issue number**, **input timestamp**, and **edit history**
+- **Auto Engine recalculation** after OCR odds is prohibited until both **usage rights** for that odds source and **Engine validation** for that market path are complete
+
+### 22.10 Public Safety Boundary
+
+YANG EDGE does **not**:
+
+- Purchase bets on behalf of users
+- Broker, arrange, or automate betting purchases
+- Provide automated betting execution
+
+YANG EDGE must **not**:
+
+- Use names, design, or copy that could be confused with official **Sports Toto** or **Betman** services
+- Imply guaranteed accuracy or profit
+
+All analysis is **reference information only**. Accuracy and profit are **not guaranteed**.
+
+---
+
+## 23. Multi-Sport Research Boundary (long-term)
+
+These principles apply within the **four supported sports** (§24). They do **not** authorize immediate Framework or code changes.
+
+```text
+Preserve:     common research lifecycle (hypothesis → snapshot → grade → review → audit → evidence → coverage → backtest → engine gate)
+Isolate:      per-sport dataset payload, classifiers, caches, and review taxonomies
+Forbid:       multi-sport Framework extension until a second real sport Dataset exists
+Extract:      shared metadata/patterns only after repetition across ≥2 implemented sports
+Independence: per-sport builders must run without Framework imports; Framework removal must not break collectors
+```
+
+Full boundary specification: [MULTI_SPORT_RESEARCH_BOUNDARY.md](./MULTI_SPORT_RESEARCH_BOUNDARY.md).
+
+---
+
+## 24. Supported Sports and Betman (배트맨) Scope
+
+### 24.1 Supported sports (closed set)
+
+YANG EDGE research and future public analysis target **only** these four sports:
+
+```text
+BASEBALL     / 야구
+SOCCER       / 축구
+BASKETBALL   / 농구
+VOLLEYBALL   / 배구
+```
+
+**Excluded** from current and long-term support unless the operator explicitly decides otherwise **and** separate legal/data review passes:
+
+```text
+TENNIS / 테니스
+and all other sports (e.g. ice hockey as product scope)
+```
+
+Adding a fifth sport requires an explicit operator decision and a dedicated legal/data review. Do not treat ledger UI labels or marketing copy as expansion of this set.
+
+### 24.2 League selection (Betman-scheduled, not fame-fixed)
+
+- Leagues are **not** limited to a fixed list of famous competitions (EPL, K League, MLB, NBA, etc.).
+- A **non-major league** (e.g. Norwegian football) may become a research candidate **if and only if** it is actually scheduled on **Betman (배트맨)** and activation gates in §24.3 pass.
+- Games **not** scheduled on Betman are **out of scope** for YANG EDGE public analysis and recommendation surfaces.
+- Official sports data Provider calendars and Betman schedules are **separate lists**; they may be matched, but Betman is never treated as an official sports data API.
+
+### 24.3 Activation gates (before research enablement)
+
+A Betman-scheduled league/game becomes an active research target only when **all** of the following hold:
+
+1. Betman schedule presence confirmed (operator manual check or other **lawful** path)
+2. Lawful schedule / result / stats data available from an approved Provider or cleared source
+3. Team and league identity mapping feasible
+4. Snapshot → grade → Success/Failure Review pipeline supportable for that market shape
+5. Legal use scope confirmed for that source
+
+Being a supported **sport** alone does **not** authorize Confidence, Value Edge, or Engine recommendations.
+
+### 24.4 Meaning of “Betman scope”
+
+`배트맨 기준` means **aligning which games YANG EDGE may analyze with Betman scheduling**.
+
+It does **not** mean:
+
+```text
+NO_BETMAN_HTML_CRAWLING
+NO_LOGIN_AUTOMATION
+NO_HTML_PARSING_OF_BETMAN
+NO_BULK_COPY_OF_BETMAN_PAGES
+NO_TREATING_BETMAN_AS_OFFICIAL_SPORTS_API
+```
+
+Schedule confirmation uses **operator manual verification** or other **lawful, permitted** data paths. Future admin tooling should record **source**, **confirmedAt**, **operator**, and **revision history** (same discipline as proto odds manual entry).
+
+### 24.5 Per-sport implementation status (documentation only)
+
+| Sport | Status | Note |
+|-------|--------|------|
+| Baseball (MLB research) | **Active research reference** | Real pipeline, datasets, Viewer paths exist |
+| Soccer | **NOT_STARTED / FUTURE_GATED** | In-scope sport; no completed Dataset/Engine validation |
+| Basketball | **NOT_STARTED / FUTURE_GATED** | In-scope sport; no completed Dataset/Engine validation |
+| Volleyball | **NOT_STARTED / FUTURE_GATED** | In-scope sport; no completed Dataset/Engine validation |
+
+Do not document soccer, basketball, or volleyball as shipped analysis capabilities.

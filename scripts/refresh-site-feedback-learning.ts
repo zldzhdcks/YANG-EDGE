@@ -7,38 +7,21 @@
  * Does not re-grade, recompute Success/Failure, or touch Engine/home/picks.
  * On failure: prints which step failed and exits non-zero (no "complete" claim).
  *
- *   npx tsx --env-file=.env.local scripts/refresh-site-feedback-learning.ts [YYYY-MM-DD]
+ *   tsx --env-file=.env.local scripts/refresh-site-feedback-learning.ts [YYYY-MM-DD]
  */
-import { spawn } from "node:child_process";
-import path from "node:path";
+import { spawnLocalTsxScript } from "./lib/spawn-local-tsx";
 
 const dateKst = process.argv[2]?.trim() || "2026-07-27";
-
-function run(scriptRel: string, args: string[] = []): Promise<number> {
-  return new Promise((resolve, reject) => {
-    const script = path.join(process.cwd(), scriptRel);
-    const child = spawn(
-      process.platform === "win32" ? "npx.cmd" : "npx",
-      ["tsx", "--env-file=.env.local", script, ...args],
-      {
-        cwd: process.cwd(),
-        stdio: "inherit",
-        shell: process.platform === "win32",
-      },
-    );
-    child.on("error", reject);
-    child.on("close", (code) => resolve(code ?? 1));
-  });
-}
 
 async function main() {
   console.log(`=== Site Feedback/Learning refresh (${dateKst}) ===`);
   console.log("Research numbers: read-only (no recompute)\n");
 
   console.log("--- Step 1/2: Feedback export ---");
-  const exportCode = await run("scripts/export-mlb-feedback-review.ts", [
-    dateKst,
-  ]);
+  const exportCode = await spawnLocalTsxScript(
+    "scripts/export-mlb-feedback-review.ts",
+    [dateKst],
+  );
   if (exportCode !== 0) {
     console.error(
       `FAILED at step Feedback export (exit ${exportCode}). Learning dashboard was NOT run. Existing dashboard.json is NOT claimed fresh.`,
@@ -48,7 +31,10 @@ async function main() {
   }
 
   console.log("\n--- Step 2/2: Learning dashboard ---");
-  const dashCode = await run("scripts/build-learning-dashboard.ts", []);
+  const dashCode = await spawnLocalTsxScript(
+    "scripts/build-learning-dashboard.ts",
+    [],
+  );
   if (dashCode !== 0) {
     console.error(
       `FAILED at step Learning dashboard (exit ${dashCode}). Feedback mirror may have been updated; Learning dashboard is NOT claimed fresh.`,

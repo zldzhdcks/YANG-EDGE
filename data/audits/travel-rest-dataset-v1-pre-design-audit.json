@@ -1,0 +1,308 @@
+{
+  "meta": {
+    "version": "travel-rest-dataset-v1-pre-design-audit",
+    "kind": "pre-design-audit",
+    "generatedAt": "2026-07-27T12:10:00.000Z",
+    "auditedDatesKst": ["2026-07-27", "2026-07-28"],
+    "researchOnly": true,
+    "engineConnected": false,
+    "engineImpact": 0,
+    "frameworkChanged": false,
+    "registryChanged": false,
+    "registryStatus": "mlb-travel NOT_STARTED preserved",
+    "hypothesisRegistered": false,
+    "codeChanged": false,
+    "artifactCreated": false,
+    "weatherFilesModified": false,
+    "predictionHashUnchanged": true,
+    "officialConclusion": "READY_FOR_MINIMAL_TRAVEL_REST_DATASET_DESIGN",
+    "implementationDecision": "HOLD",
+    "note": "Read-only audit. No builder, no Fatigue/Travel/Rest Score, no route inference, no crawling."
+  },
+  "previousGameMapping": {
+    "joinPath": "prediction.gameId → starter-dataset-v1 (gamePk, teamId, side, cutoffTime) → Stats API schedule cache team timeline",
+    "auditedResults": {
+      "2026-07-27": {
+        "games": 15,
+        "teamSlots": 30,
+        "previousGameFound": "30/30",
+        "missingPrevious": 0,
+        "doubleheadersOnDate": 0
+      },
+      "2026-07-28": {
+        "games": 12,
+        "teamSlots": 24,
+        "previousGameFound": "24/24",
+        "missingPrevious": 0,
+        "doubleheadersOnDate": 0
+      }
+    },
+    "cacheWindowCaveat": "100% mapping holds when schedule cache includes prior team games; season-first games or cache boundary → joinQuality=MISSING_PREVIOUS (no inference)",
+    "fieldsAvailableFromSchedule": {
+      "currentGamePk": true,
+      "currentGameDateUtc": true,
+      "currentOfficialDate": true,
+      "currentVenueId": true,
+      "currentVenueName": true,
+      "teamId": true,
+      "side": true,
+      "previousGamePk": true,
+      "previousOfficialDate": true,
+      "previousScheduledStartUtc": true,
+      "previousVenueId": true,
+      "doubleHeaderFlag": true,
+      "gameNumber": true,
+      "rescheduledFrom": true
+    }
+  },
+  "scheduledStartAvailability": {
+    "source": "MLB Stats API schedule.gameDate (UTC ISO)",
+    "displayKst": "prediction.startTimeKst + dateKst (Asia/Seoul implied)",
+    "preGameUsable": true,
+    "cutoffGuardRequired": true
+  },
+  "actualEndAvailability": {
+    "scheduleEndTime": false,
+    "linescoreInnings": "POST_GAME via GET /game/{gamePk}/linescore",
+    "playByPlayEndTime": "POST_GAME via playByPlay allPlays last endTime (heavy; optional accuracy audit)",
+    "preGameUsableForPreviousFinal": "Only if previous game Final AND ended before target cutoffTime",
+    "recommendedPreGameRestBasis": "scheduled-start deltas (hoursSincePreviousScheduledStart, daysSincePreviousGame)"
+  },
+  "restFields": {
+    "preGameAvailable": [
+      "daysSincePreviousGame",
+      "hoursSincePreviousScheduledStart",
+      "gamesInLast2Days",
+      "gamesInLast3Days",
+      "gamesInLast7Days",
+      "consecutiveGameDays",
+      "consecutiveHomeGames",
+      "consecutiveAwayGames",
+      "doubleheaderStatus"
+    ],
+    "postGameOnly": [
+      "hoursSincePreviousFinal",
+      "previousGameInnings",
+      "previousGameExtraInnings"
+    ],
+    "unavailableOrCutoffGated": [
+      "hoursSincePreviousFinal (when previous not Final before cutoff)",
+      "previousGameInnings (requires linescore + Final previous game)",
+      "previousGameExtraInnings (innings.length > scheduledInnings)"
+    ]
+  },
+  "travelFields": {
+    "venueMapping": {
+      "currentVenueIdName": "schedule cache via gamePk",
+      "previousVenueIdName": "previous schedule row",
+      "coordinates": "GET /venues/{id}?hydrate=location (not in schedule cache)",
+      "timezone": "GET /venues/{id}?hydrate=timezone → timeZone.id, offsetAtGameTime"
+    },
+    "preGameAvailable": [
+      "previousVenueId",
+      "currentVenueId",
+      "previousVenueName",
+      "currentVenueName",
+      "venueChanged",
+      "previousLatitude",
+      "previousLongitude",
+      "currentLatitude",
+      "currentLongitude",
+      "straightLineDistanceKm",
+      "previousTimezone",
+      "currentTimezone",
+      "timezoneOffsetChangeHours",
+      "transitionType",
+      "consecutiveRoadGames"
+    ],
+    "unavailable": [
+      "actualTravelDuration",
+      "transportMode",
+      "flightItinerary",
+      "hotelLocation",
+      "drivingRoute"
+    ],
+    "straightLineDistanceKm": {
+      "method": "Haversine on venue defaultCoordinates",
+      "nature": "Approximate observation only — not flight or drive distance",
+      "legalNote": "Computed derivative from MLB Stats API venue coordinates (INTERNAL_RESEARCH_ONLY)"
+    }
+  },
+  "specialGamePolicies": {
+    "doubleheader": {
+      "detection": "doubleHeader=Y, gameNumber 1|2",
+      "policy": "Previous game may be same-day gameNumber-1; doubleheaderStatus=GAME1|GAME2|SINGLE; rest hours use scheduled starts"
+    },
+    "postponed": {
+      "detection": "status.detailedState contains Postponed; may lack Final",
+      "policy": "Skip as previous game if not Final; joinQuality=MISSING_PREVIOUS or PREVIOUS_POSTPONED; warning"
+    },
+    "suspended": {
+      "detection": "Suspended / resumeGame fields",
+      "policy": "Do not use partial suspended game innings pre-cutoff; POST_GAME_ACTUAL_CONTEXT only after Final"
+    },
+    "rescheduled": {
+      "detection": "rescheduledFrom, rescheduledFromDate on schedule row",
+      "policy": "Record originalScheduledStart separately; use actual scheduled gameDate for rest/travel; versioned snapshot"
+    },
+    "neutralVenue": {
+      "detection": "Non-standard venueId (e.g. temporary park)",
+      "policy": "warnings NEUTRAL_OR_TEMPORARY_VENUE; travel distance still from coordinates"
+    },
+    "overseas": {
+      "detection": "venue.location.country != USA or special gameType",
+      "policy": "warnings INTERNATIONAL_VENUE; timezone offset especially important"
+    },
+    "sameDayPrevious": {
+      "policy": "hoursSincePreviousScheduledStart may be <24; gamesInLast2Days includes both"
+    },
+    "previousMissing": {
+      "policy": "No inference — joinQuality=MISSING_PREVIOUS; leave rest/travel counts null"
+    }
+  },
+  "temporalPhases": {
+    "PRE_GAME_SCHEDULE_CONTEXT": {
+      "engineCandidate": true,
+      "allowedInputs": "Schedule and venue facts known at or before cutoffTime; scheduled starts; venue ids; static coordinates/timezone from venue registry cache"
+    },
+    "POST_GAME_ACTUAL_CONTEXT": {
+      "engineCandidate": false,
+      "allowedInputs": "linescore innings, playByPlay endTime, actual end-based rest — accuracy audit only",
+      "backfillIntoPreGame": "FORBIDDEN"
+    },
+    "forbiddenFeatures": [
+      "predictionHit",
+      "resultStatus",
+      "recommendationGrade",
+      "edgeScore",
+      "actualWinner"
+    ]
+  },
+  "leakageRisks": [
+    {
+      "id": "L-TR-001",
+      "risk": "Post-game innings/end-time backfilled into PRE_GAME_SCHEDULE_CONTEXT row",
+      "severity": "CRITICAL",
+      "mitigation": "Separate collectionPhase; immutable pre-game write"
+    },
+    {
+      "id": "L-TR-002",
+      "risk": "Rescheduled schedule fetched after cutoff applied to past snapshot",
+      "severity": "HIGH",
+      "mitigation": "Versioned schedule snapshot at collection; inputHash lock"
+    },
+    {
+      "id": "L-TR-003",
+      "risk": "Using target game result fields as travel/rest features",
+      "severity": "CRITICAL",
+      "mitigation": "Explicit forbidden feature list in builder contract"
+    },
+    {
+      "id": "L-TR-004",
+      "risk": "Previous game not Final but innings/end time used",
+      "severity": "HIGH",
+      "mitigation": "previousGameInnings only when previous status Final before cutoff"
+    }
+  ],
+  "missingDataRisks": [
+    "Prediction lacks gamePk/venue — starter dependency (same as weather)",
+    "Schedule cache window may omit season-first previous game",
+    "No schedule-level game end timestamp — actual-end rest is POST_GAME or unavailable",
+    "Timezone not in schedule cache — requires venue hydrate=timezone",
+    "Coordinates not in schedule cache — requires venue hydrate=location",
+    "KST slate vs officialDate mismatch for gamesInLastNDays windows",
+    "Doubleheader/resumed games rare in audit sample — policies unvalidated at scale"
+  ],
+  "apiCallEstimate100Games": {
+    "scheduleWindowCold": "1–7 date-range schedule calls per slate day (reusable across teams on same dates)",
+    "venueMetadataCold": "~25–30 unique venueIds (coordinates + timezone), cacheable per season",
+    "linescorePostGameCold": "Up to 200 linescore calls worst case (2 teams × 100 games) — POST_GAME phase only",
+    "derivedPreviousGameIndex": "Built from cached schedule — 0 incremental when warm",
+    "warmRerunNetworkCalls": 0
+  },
+  "cacheStrategy": {
+    "rawSchedule": "data/cache/research/mlb/raw/statsapi/api/v1/schedule_sportId_1_startDate_{from}_endDate_{to}_*.json",
+    "rawVenue": "data/cache/research/mlb/raw/statsapi/api/v1/venues/{venueId}.json",
+    "rawLinescore": "data/cache/research/mlb/raw/statsapi/api/v1/game/{gamePk}/linescore.json",
+    "derivedTeamTimeline": "data/cache/research/mlb/derived/travel/{teamId}-timeline-{season}.json (candidate)",
+    "derivedPreviousGame": "data/cache/research/mlb/derived/travel/{gamePk}-{teamId}-previous.json (candidate)",
+    "artifact": "data/research/mlb/{date}-travel-rest-dataset-v1.json",
+    "dedupe": "team timeline rebuilt from immutable schedule cache slices; venue by venueId",
+    "pollingScheduler": "NOT_DESIGNED"
+  },
+  "legalStatus": {
+    "scheduleAndVenueSource": "MLB Stats API — INTERNAL_RESEARCH_ONLY",
+    "straightLineDistance": "Computed haversine from official venue coordinates — derivative; public display requires separate legal review",
+    "prohibited": [
+      "Airline site crawling",
+      "Map/directions web scraping",
+      "Team travel blog scraping",
+      "Route duration inference"
+    ],
+    "betmanIndependence": "Betman schedule scope independent from travel/rest data sources"
+  },
+  "candidateHypotheses": [
+    "H-TR-001: Short rest interval may relate to game volatility (not registered)",
+    "H-TR-002: Long travel before first game may relate to game flow (not registered)",
+    "H-TR-003: Consecutive road games may explain more than single distance (not registered)",
+    "H-TR-004: Timezone change may have effect independent of distance (not registered)",
+    "H-TR-005: Doubleheader or extra-inning prior game fatigue patterns (not registered)"
+  ],
+  "multiSportBoundary": {
+    "scope": "MLB Travel/Rest v1 only",
+    "frameworkChangeNeeded": false,
+    "candidateCommonFields": [
+      "gameId",
+      "gameDate",
+      "teamId",
+      "side",
+      "cutoffTime",
+      "daysSincePreviousGame",
+      "hoursSincePreviousScheduledStart",
+      "venueChanged",
+      "straightLineDistanceKm",
+      "collectionPhase",
+      "joinQuality"
+    ],
+    "mlbSpecificNotForced": [
+      "doubleheaderStatus",
+      "previousGameInnings",
+      "previousGameExtraInnings",
+      "consecutiveRoadGames (baseball schedule density)"
+    ]
+  },
+  "minimalSchemaDraft": {
+    "rowGranularity": "one row per team per game (30 rows for 15-game slate)",
+    "metadata": [
+      "datasetId",
+      "schemaVersion",
+      "builderVersion",
+      "gameDate",
+      "gameId",
+      "gamePk",
+      "teamId",
+      "teamName",
+      "side",
+      "generatedAt",
+      "cutoffTime",
+      "collectionPhase",
+      "researchOnly",
+      "legalStatus",
+      "source",
+      "sourceTimestamp",
+      "inputHash",
+      "resultHash",
+      "cacheUsage",
+      "warnings",
+      "missingFields",
+      "joinQuality",
+      "engineAdmission"
+    ]
+  },
+  "openQuestions": [
+    "Rolling schedule window size for previous-game lookup (7/14/30 days vs full season cache)",
+    "Whether POST_GAME_ACTUAL_CONTEXT rows ship in v1 builder or deferred to v1.1",
+    "Static venue registry versioning shared with Weather dataset",
+    "KST vs officialDate rule for gamesInLastNDays on cross-midnight slates"
+  ]
+}

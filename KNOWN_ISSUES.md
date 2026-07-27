@@ -47,3 +47,31 @@
 | MLB Stats API commercial use unconfirmed | `INTERNAL_RESEARCH_ONLY`; Engine PROHIBITED |
 | Sample &lt; 100 games | COLLECTING — do not claim PROMISING |
 | Lineup Score / absence score | Not implemented (forbidden in v1) |
+| Pre-game lineup availability probe | Manual `research:lineup-probe` only; no scheduler; append-only observations |
+| Official lineup announcement timestamp | Absent from Stats API — only `fetchedAt` / `probedAt` / research `cutoffTime` recordable |
+| Probe uses schedule `hydrate=lineups` only | Post-game boxscore never used as pre-game; started/Final games excluded from lineup probe |
+
+## Pre-game Lineup Availability Probe v1
+
+## Weather Dataset v1 (pre-design audit)
+
+| Issue | Status |
+|-------|--------|
+| Prediction snapshot lacks `gamePk` / `venueId` | Open — venue join requires starter dataset + Stats API schedule |
+| Schedule cache venue has no coordinates | Open — requires `/venues?hydrate=location,fieldInfo` or static registry |
+| Retractable roof open/closed pre-game | Unavailable — use `ROOF_STATUS_UNKNOWN`; do not infer from forecast |
+| No weather Provider wired (`WEATHER_*` env absent) | Open — operator must select NWS / Open-Meteo / paid tier before builder |
+| Canadian MLB venues | Open — NWS US-only; non-US path needed when Toronto on slate |
+| Dome outdoor forecast misuse risk | Documented — `weatherAvailability=NOT_APPLICABLE` for fixed dome |
+
+## Travel / Rest Dataset v1 (pre-design audit)
+
+| Issue | Status |
+|-------|--------|
+| Prediction snapshot lacks `gamePk` / venue | Open — same starter + schedule join as other MLB datasets |
+| No schedule `gameEndTime` | Open — pre-game rest uses scheduled-start deltas; actual-end is POST_GAME or unavailable |
+| `previousGameInnings` requires linescore | Open — POST_GAME_ACTUAL_CONTEXT only when previous game Final before cutoff |
+| Timezone not in schedule cache | Open — requires `/venues?hydrate=timezone` |
+| Coordinates not in schedule cache | Open — requires `/venues?hydrate=location` or static registry |
+| Season-first / cache boundary | Open — `joinQuality=MISSING_PREVIOUS`; no inference |
+| KST slate vs `officialDate` for rolling windows | Open — window policy needed for `gamesInLastNDays` |

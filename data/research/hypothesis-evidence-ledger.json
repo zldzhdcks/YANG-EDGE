@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": "hypothesis-evidence-ledger-v1",
-    "generatedAt": "2026-07-27T02:51:00.000Z",
+    "generatedAt": "2026-07-27T10:32:00.000Z",
     "kind": "hypothesis-evidence-ledger",
     "researchOnly": true,
     "engineConnected": false,
@@ -20,8 +20,15 @@
       "data/predictions/mlb/2026-07-27-success-flow-review.json",
       "data/predictions/mlb/2026-07-27-failure-flow-review.json",
       "data/research/mlb/h-bp-role-006-availability-survey.json",
-      "data/research/mlb/h-bp-role-007-unknown-decline-observation.json"
-    ]
+      "data/research/mlb/h-bp-role-007-unknown-decline-observation.json",
+      "data/research/contradiction-ledger-v1.json",
+      "data/research/contradiction-severity-audit-v1.json",
+      "data/research/mlb/2026-07-27-lineup-dataset-v1.json",
+      "data/research/mlb/2026-07-28-pregame-lineup-availability-probes-v1.json"
+    ],
+    "contradictionLedgerPath": "data/research/contradiction-ledger-v1.json",
+    "contradictionLedgerAuditPath": "data/audits/contradiction-ledger-v1-2026-07-27-audit.json",
+    "contradictionSeverityAuditPath": "data/research/contradiction-severity-audit-v1.json"
   },
   "hypotheses": [
     {
@@ -170,6 +177,55 @@
       "notes": [
         "Success review bullpenProtectedGames=5 (observation only; not Engine signal)",
         "No Engine candidate"
+      ],
+      "contradictionLedgerRefs": [
+        {
+          "ledgerEventId": "C-20260727-002",
+          "gameId": "mlb-179589",
+          "dateKst": "2026-07-27"
+        },
+        {
+          "ledgerEventId": "C-20260727-003",
+          "gameId": "mlb-179592",
+          "dateKst": "2026-07-27"
+        },
+        {
+          "ledgerEventId": "C-20260727-004",
+          "gameId": "mlb-179592",
+          "dateKst": "2026-07-27"
+        },
+        {
+          "ledgerEventId": "C-20260727-006",
+          "gameId": "mlb-179594",
+          "dateKst": "2026-07-27"
+        },
+        {
+          "ledgerEventId": "C-20260727-008",
+          "gameId": "mlb-179596",
+          "dateKst": "2026-07-27"
+        }
+      ],
+      "severityAuditRefs": [
+        {
+          "eventId": "C-20260727-002",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-003",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-004",
+          "severity": "MEDIUM"
+        },
+        {
+          "eventId": "C-20260727-006",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-008",
+          "severity": "HIGH"
+        }
       ]
     },
     {
@@ -252,6 +308,55 @@
       "notes": [
         "No PROMISING evaluation; ERA-gap vs SIGNAL_WORKED test not run",
         "No Engine candidate"
+      ],
+      "contradictionLedgerRefs": [
+        {
+          "ledgerEventId": "C-20260727-001",
+          "gameId": "mlb-179589",
+          "dateKst": "2026-07-27"
+        },
+        {
+          "ledgerEventId": "C-20260727-005",
+          "gameId": "mlb-179594",
+          "dateKst": "2026-07-27"
+        },
+        {
+          "ledgerEventId": "C-20260727-007",
+          "gameId": "mlb-179595",
+          "dateKst": "2026-07-27"
+        },
+        {
+          "ledgerEventId": "C-20260727-009",
+          "gameId": "mlb-179599",
+          "dateKst": "2026-07-27"
+        },
+        {
+          "ledgerEventId": "C-20260727-010",
+          "gameId": "mlb-179601",
+          "dateKst": "2026-07-27"
+        }
+      ],
+      "severityAuditRefs": [
+        {
+          "eventId": "C-20260727-001",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-005",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-007",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-009",
+          "severity": "MEDIUM"
+        },
+        {
+          "eventId": "C-20260727-010",
+          "severity": "HIGH"
+        }
       ]
     },
     {
@@ -328,19 +433,105 @@
         "Yankees@Phillies Final rows are STARTER_MATCHED (not CHANGED)",
         "Hypothesis remains DATA_COLLECTION; zero CHANGED cases ≠ rejection",
         "No Engine candidate"
+      ],
+      "contradictionLedgerRefs": [
+        {
+          "ledgerEventId": "C-20260727-001",
+          "gameId": "mlb-179589",
+          "dateKst": "2026-07-27"
+        },
+        {
+          "ledgerEventId": "C-20260727-005",
+          "gameId": "mlb-179594",
+          "dateKst": "2026-07-27"
+        },
+        {
+          "ledgerEventId": "C-20260727-007",
+          "gameId": "mlb-179595",
+          "dateKst": "2026-07-27"
+        },
+        {
+          "ledgerEventId": "C-20260727-010",
+          "gameId": "mlb-179601",
+          "dateKst": "2026-07-27"
+        }
+      ],
+      "severityAuditRefs": [
+        {
+          "eventId": "C-20260727-001",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-005",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-007",
+          "severity": "HIGH"
+        },
+        {
+          "eventId": "C-20260727-010",
+          "severity": "HIGH"
+        }
+      ]
+    },
+    {
+      "hypothesisId": "H-LU-001",
+      "dataset": "mlb-lineup",
+      "currentStatus": "DATA_COLLECTION",
+      "evidenceCount": 0,
+      "supportingEvents": [],
+      "contradictingEvents": [],
+      "lastUpdated": "2026-07-27T10:32:00.000Z",
+      "engineAdmission": "PROHIBITED",
+      "notes": [
+        "Artifact ref (observation only): data/research/mlb/2026-07-27-lineup-dataset-v1.json",
+        "Post-game actual lineups collected; not scored as supporting/contradicting evidence yet",
+        "No Engine candidate"
+      ]
+    },
+    {
+      "hypothesisId": "H-LU-002",
+      "dataset": "mlb-lineup",
+      "currentStatus": "DATA_COLLECTION",
+      "evidenceCount": 0,
+      "supportingEvents": [],
+      "contradictingEvents": [],
+      "lastUpdated": "2026-07-27T10:32:00.000Z",
+      "engineAdmission": "PROHIBITED",
+      "notes": [
+        "Artifact ref (observation only): data/research/mlb/2026-07-27-lineup-dataset-v1.json",
+        "Absence scoring not implemented; identity slots collected for future compare only",
+        "No Engine candidate"
+      ]
+    },
+    {
+      "hypothesisId": "H-LU-003",
+      "dataset": "mlb-lineup",
+      "currentStatus": "DATA_COLLECTION",
+      "evidenceCount": 0,
+      "supportingEvents": [],
+      "contradictingEvents": [],
+      "lastUpdated": "2026-07-27T10:32:00.000Z",
+      "engineAdmission": "PROHIBITED",
+      "notes": [
+        "Observation ref: data/research/mlb/2026-07-28-pregame-lineup-availability-probes-v1.json",
+        "Pre-game availability probe v1; does not promote status or count as evidence",
+        "No Engine candidate"
       ]
     }
   ],
   "totals": {
-    "hypothesisCount": 11,
+    "hypothesisCount": 14,
     "bullpenHypotheses": 7,
     "starterHypotheses": 4,
+    "lineupHypotheses": 3,
     "totalEvidenceCount": 23,
     "supportingEventCount": 16,
     "contradictingEventCount": 7,
     "engineCandidateCount": 0,
     "statusBreakdown": {
-      "DATA_COLLECTION": 10,
+      "DATA_COLLECTION": 13,
       "SURVEY_ONLY": 1,
       "REVIEW_PENDING": 0
     }

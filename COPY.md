@@ -157,7 +157,7 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 | Binding | Prediction snapshot + Starter/Bullpen datasets + Review artifacts (read-only) | 사용 중 |
 | Analysis URL | `mlb-{api-baseball externalId}` via `getResearchAnalysisGameId` | 사용 중 |
 | Sample banner | `연구용 샘플 분석 (실추천 아님)` | 사용 중 (SampleAnalysisNotice) |
-| Back to Games | `← 오늘 경기로 돌아가기` | 사용 중 |
+| Back to Games | `← 경기 목록으로` | 사용 중 (`/games?date=` 복귀) |
 | Games CTA | `연구 보기` | 사용 중 (`GameCard`) |
 | Finished card score | `{홈팀} {홈스코어}–{원정스코어} {원정팀}` | 사용 중 (graded만) |
 | Finished card result | `예측 적중`(초록 Badge) / `예측 실패`(빨강 Badge) | 사용 중 |
@@ -207,6 +207,7 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 | Detail Analysis | `샘플 분석 보기 →` | Home EDGE Pick |
 | Analyze | `연구 보기` | Games card |
 | Back | `← 뒤로가기` | EDGE Detail |
+| Back to Games list | `← 경기 목록으로` | Research Analysis Viewer |
 | View Odds | `배당 보기` | EDGE Detail |
 | Detail Data | `상세 데이터` | EDGE Detail |
 | Favorite | `즐겨찾기` | EDGE Detail |
@@ -251,6 +252,30 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 | CTA | `분석` | 사용 중 |
 | Empty | `조건에 맞는 경기가 없습니다.` | 사용 중 |
 | Empty Hint | `검색어나 종목, 날짜를 변경해 보세요.` | 사용 중 |
+| Date · Previous | `‹` (aria: 이전 날) | 사용 중 |
+| Date · Next | `›` (aria: 다음 날) | 사용 중 |
+| Date · Today | `오늘` (aria: 오늘) | 사용 중 |
+
+---
+
+## Ledger (`/ledger`)
+
+개인 베팅 가계부. 종목 필드는 **개인 기록 분류**이며 YANG EDGE 분석 지원 종목과 동일하지 않다.
+
+| Key | Copy | Status |
+|-----|------|--------|
+| Sport Label | `종목 (개인 기록 분류)` | 사용 중 |
+| Sport Group · EDGE | `EDGE 지원 종목` | 사용 중 |
+| Sport Group · Personal | `기타 개인 기록` | 사용 중 |
+| Sport Group · Legacy | `이전 기록 (신규 선택 불가)` | 사용 중 |
+| Sport · Baseball | `야구` | 사용 중 |
+| Sport · Football | `축구` | 사용 중 |
+| Sport · Basketball | `농구` | 사용 중 |
+| Sport · Volleyball | `배구` | 사용 중 |
+| Sport · Other | `기타` | 사용 중 |
+| Sport · Ice Hockey (legacy) | `아이스하키 (기록용·분석 미지원)` | 사용 중 |
+| Sport Hint | `가계부 종목은 개인 베팅 기록용입니다. 기타·이전 기록 종목은 YANG EDGE AI 분석 대상이 아닙니다.` | 사용 중 |
+| Disclaimer · Sport Scope | `종목 선택은 개인 베팅 기록 분류이며, YANG EDGE 분석 지원 범위(야구·축구·농구·배구)와 동일하지 않습니다. 「기타」및 이전 기록 종목은 AI 분석 대상이 아닙니다.` | 사용 중 |
 
 ---
 
@@ -275,3 +300,55 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 2. 새 화면을 만들면 해당 섹션에 Key / Copy / Status를 추가한다.
 3. `Status`는 `사용 중` · `예정` · `점진 전환` 중 하나를 쓴다.
 4. 브랜드 철학과 충돌하면 [BRAND.md](./BRAND.md)를 우선한다.
+
+---
+
+## 미래 제품 문구 후보 (FUTURE_GATED · 현재 UI 미적용)
+
+> **이 섹션은 미래 Public Product용 후보 문구입니다.**  
+> 위 HOME·EDGE Detail 등 **현재 공개 UI 문구는 변경하지 않습니다.**  
+> 게이트(DATA_VALIDATION · LEGAL_CLEARANCE · COMMERCIAL_READINESS) 통과 전 코드에 반영하지 않습니다.
+
+### Product positioning (후보)
+
+| Key | Copy (후보) | Status |
+|-----|-------------|--------|
+| Vision | `AI가 왜 그렇게 판단했는지 보여주는 스포츠 분석` | 후보 |
+| Sub | `검증된 데이터 기반 · 참고용 분석 (수익·적중 보장 없음)` | 후보 |
+| Explanation | `근거 · 신뢰도 · 위험 · 시장 차이를 한눈에` | 후보 |
+
+### Public card / detail (후보 — 검증 후에만)
+
+| Key | Copy (후보) | 전제 |
+|-----|-------------|------|
+| AI Probability | `AI 확률` | Engine·Backtest 게이트 |
+| Confidence | `신뢰도` | 정의·감사 완료 |
+| Risk | `위험` | Risk taxonomy 승인 |
+| Value Edge | `가치 차이` | 시장 유형별 검증 |
+| TODAY EDGE PICK | `오늘의 EDGE Pick` | Pick 정책·법적 검토 |
+| Post-game | `경기 후 복기` | 사전 저장 예측만 |
+
+### Accuracy dashboard (후보)
+
+| Key | Copy (후보) | Status |
+|-----|-------------|--------|
+| Title | `예측 기록` | 후보 |
+| Disclosure | `사전 저장된 예측만 포함 · 표본 {n} · 기간 {period} · {league} · {market}` | 후보 |
+| Pending | `미정산·무효 기준: …` | 후보 |
+
+---
+
+## 금지 문구 (제품·마케팅·미래 카피 공통)
+
+아래 표현은 **사용 금지**입니다. 검증되지 않은 적중률을 실제 성과처럼 쓰지 않습니다.
+
+| 금지 | 이유 |
+|------|------|
+| `수익 보장` · `수익률 보장` | 분석은 참고 정보 |
+| `필승` · `확정` · `100%` · `무조건` | 과장·오해 유발 |
+| `적중률 XX%` (미검증·소표본) | 공개 성과 홍보 금지 |
+| `베트맨`·`스포츠토토`와 혼동되는 공식 표현 | Public Safety Boundary |
+| `자동 구매` · `대신 베팅` | 중개·알선 미제공 |
+| 검증 전 시장(핸디·OU·스코어)을 제공하는 것처럼 표현 | 시장별 별도 검증 필요 |
+
+허용되는 정직한 표현 예: `참고용 분석`, `정확도·수익을 보장하지 않습니다`, `연구용 샘플 (실추천 아님)`, `미수집` / `연구 대기 중`.

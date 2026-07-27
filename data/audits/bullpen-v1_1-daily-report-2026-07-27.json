@@ -2,14 +2,14 @@
   "meta": {
     "version": "bullpen-v1.1-daily-validation-report-v1",
     "kind": "daily-validation-report",
-    "generatedAt": "2026-07-27T02:41:04.110Z",
+    "generatedAt": "2026-07-27T10:57:31.566Z",
     "dateKst": "2026-07-27",
     "classifierVersion": "bullpen-role-classifier-v1.1",
     "engineImpact": 0,
     "recomputed": false,
     "sourceValidationPath": "data/audits/bullpen-v1_1-validation-2026-07-27.json",
-    "metricsSource": "2026-07-27-final-slate",
-    "sourceGeneratedAt": "2026-07-27T02:41:02.702Z",
+    "metricsSource": "2026-07-27",
+    "sourceGeneratedAt": "2026-07-27T10:57:31.172Z",
     "sourceConclusion": "DATA_ACCUMULATION_CONTINUES"
   },
   "sections": [
@@ -22,8 +22,8 @@
     {
       "key": "cumulativeGames",
       "label": "누적 경기 수",
-      "value": 15,
-      "display": "15"
+      "value": 30,
+      "display": "30"
     },
     {
       "key": "successFailure",
@@ -48,8 +48,8 @@
     {
       "key": "falsePositive",
       "label": "False Positive",
-      "value": 2,
-      "display": "2"
+      "value": 0,
+      "display": "0"
     },
     {
       "key": "falseNegative",
@@ -98,12 +98,10 @@
       "key": "remainingIssues",
       "label": "Remaining Issues",
       "value": [
-        "API-BASEBALL lagged status IN9 after Stats Final — research results cache FT-corrected for grading only",
-        "OPENER/MOP_UP primary still 0 on frozen v1.1",
-        "availabilityUnknown remains true until H-BP-ROLE-006 collector exists",
-        "07-28 slate still unfinished for cross-day UNKNOWN delta"
+        "OPENER/MOP_UP primary still 0 on frozen v1.1 (07-27 baseline)",
+        "availabilityUnknown remains true until H-BP-ROLE-006 collector exists"
       ],
-      "display": "- API-BASEBALL lagged status IN9 after Stats Final — research results cache FT-corrected for grading only\n- OPENER/MOP_UP primary still 0 on frozen v1.1\n- availabilityUnknown remains true until H-BP-ROLE-006 collector exists\n- 07-28 slate still unfinished for cross-day UNKNOWN delta"
+      "display": "- OPENER/MOP_UP primary still 0 on frozen v1.1 (07-27 baseline)\n- availabilityUnknown remains true until H-BP-ROLE-006 collector exists"
     },
     {
       "key": "officialConclusion",
@@ -114,12 +112,12 @@
   ],
   "summary": {
     "finishedGames": 15,
-    "cumulativeGames": 15,
+    "cumulativeGames": 30,
     "successStable": 2,
     "successTotal": 5,
     "failPregameWarn": 7,
     "failTotal": 7,
-    "falsePositive": 2,
+    "falsePositive": 0,
     "falseNegative": 0,
     "unknownRatePct": 51.3,
     "unknownCount": 289,
@@ -131,10 +129,8 @@
     "bullpenResultHash": "0753ad64086c1773732c396a364567ecbbf2c8a250b250528e8aee6928258b8b",
     "bullpenHashMatched": true,
     "remainingIssues": [
-      "API-BASEBALL lagged status IN9 after Stats Final — research results cache FT-corrected for grading only",
-      "OPENER/MOP_UP primary still 0 on frozen v1.1",
-      "availabilityUnknown remains true until H-BP-ROLE-006 collector exists",
-      "07-28 slate still unfinished for cross-day UNKNOWN delta"
+      "OPENER/MOP_UP primary still 0 on frozen v1.1 (07-27 baseline)",
+      "availabilityUnknown remains true until H-BP-ROLE-006 collector exists"
     ],
     "officialConclusion": "DATA_ACCUMULATION_CONTINUES"
   }

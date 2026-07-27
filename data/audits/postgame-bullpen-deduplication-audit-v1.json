@@ -1,0 +1,388 @@
+{
+  "auditVersion": "postgame-bullpen-deduplication-audit-v1",
+  "auditedAt": "2026-07-27T10:47:00.000Z",
+  "scope": {
+    "goal": "Audit duplicate execution and responsibility boundaries between postgame pipeline and bullpen date validation before 2026-07-28 full-slate processing",
+    "forbidden": [
+      "Code changes",
+      "Engine changes",
+      "Prediction snapshot/hash changes",
+      "Dataset artifact changes",
+      "New orchestrator implementation",
+      "Optional flags implementation"
+    ],
+    "entrypoints": [
+      {
+        "id": "postgame",
+        "script": "scripts/run-mlb-postgame-pipeline.ts",
+        "npmAlias": "research:postgame",
+        "tsxRunner": "local pinned tsx via npm script"
+      },
+      {
+        "id": "bullpen-validate",
+        "script": "scripts/validate-mlb-bullpen-v1_1-date.ts",
+        "npmAlias": null,
+        "tsxRunner": "manual npx tsx (orchestrator spawns npx tsx children)"
+      }
+    ]
+  },
+  "postgameSteps": [
+    {
+      "order": 1,
+      "name": "Grade (research)",
+      "script": "scripts/grade-mlb-research-predictions.ts",
+      "outputs": [
+        "data/predictions/mlb/{date}.json",
+        "data/predictions/mlb/{date}-review.json",
+        "data/cache/mlb-game-results/{date}.json"
+      ],
+      "api": ["API-BASEBALL /games (date)", "5min disk cache TTL"]
+    },
+    {
+      "order": 2,
+      "name": "Failure flow review",
+      "script": "scripts/review-mlb-failed-game-flow.ts",
+      "inputs": ["{date}-review.json (SIGNAL_FAILED games)"],
+      "outputs": ["data/predictions/mlb/{date}-failure-flow-review.json"],
+      "api": ["API-BASEBALL /games", "MLB Stats API boxscore per failed game", "cache: no-store"]
+    },
+    {
+      "order": 3,
+      "name": "Success flow review",
+      "script": "scripts/review-mlb-success-game-flow.ts",
+      "inputs": ["{date}-review.json", "reads failure-flow-review (no write)"],
+      "outputs": ["data/predictions/mlb/{date}-success-flow-review.json"],
+      "api": ["API-BASEBALL /games", "MLB Stats API boxscore per success game", "cache: no-store"]
+    },
+    {
+      "order": 4,
+      "name": "Site Feedback/Learning refresh",
+      "script": "scripts/refresh-site-feedback-learning.ts",
+      "subSteps": [
+        "scripts/export-mlb-feedback-review.ts",
+        "scripts/build-learning-dashboard.ts"
+      ],
+      "outputs": [
+        "data/predictions/{date}-mlb-review.json",
+        "data/learning/dashboard.json"
+      ],
+      "api": "none (read-only from review artifacts)"
+    }
+  ],
+  "bullpenValidationSteps": [
+    {
+      "order": 0,
+      "name": "Slate status pre-check",
+      "inline": true,
+      "outputs": [],
+      "api": ["API-BASEBALL /games (date) — fetchSlate()"],
+      "gate": "pipelineRan = slate.finished > 0"
+    },
+    {
+      "order": 1,
+      "name": "Grade (research)",
+      "script": "scripts/grade-mlb-research-predictions.ts",
+      "conditional": "slate.finished > 0",
+      "duplicateOfPostgame": true
+    },
+    {
+      "order": 2,
+      "name": "Failure flow review",
+      "script": "scripts/review-mlb-failed-game-flow.ts",
+      "conditional": "slate.finished > 0",
+      "duplicateOfPostgame": true
+    },
+    {
+      "order": 3,
+      "name": "Success flow review",
+      "script": "scripts/review-mlb-success-game-flow.ts",
+      "conditional": "slate.finished > 0",
+      "duplicateOfPostgame": true
+    },
+    {
+      "order": 4,
+      "name": "Pregame bullpen risk audit",
+      "script": "scripts/audit-mlb-pregame-bullpen-risk.ts",
+      "conditional": "slate.finished > 0",
+      "outputs": ["data/audits/{date}-mlb-pregame-bullpen-risk.json"],
+      "api": ["API-BASEBALL date", "MLB Stats schedule + boxscores"],
+      "duplicateOfPostgame": false
+    },
+    {
+      "order": 5,
+      "name": "Bullpen role dataset v1.1 build",
+      "script": "scripts/build-mlb-bullpen-role-dataset-v1_1.ts",
+      "conditional": "slate.finished > 0",
+      "inputs": [
+        "{date}-success-flow-review.json",
+        "{date}-failure-flow-review.json",
+        "{date}.json"
+      ],
+      "outputs": [
+        "data/research/mlb/{date}-bullpen-role-dataset-v1_1.json",
+        "data/audits/{date}-bullpen-role-v1_1-audit.json"
+      ],
+      "duplicateOfPostgame": false
+    },
+    {
+      "order": 6,
+      "name": "Bullpen warm re-run (cache verification)",
+      "script": "scripts/build-mlb-bullpen-role-dataset-v1_1.ts",
+      "conditional": "slate.finished > 0",
+      "note": "Intentional second build; expects networkCalls=0 on warm pass",
+      "duplicateOfPostgame": false
+    },
+    {
+      "order": 7,
+      "name": "H-BP-ROLE-006 survey touch",
+      "inline": true,
+      "always": true,
+      "outputs": ["data/research/mlb/h-bp-role-006-availability-survey.json"]
+    },
+    {
+      "order": 8,
+      "name": "H-BP-ROLE-007 observation",
+      "inline": true,
+      "always": true,
+      "outputs": ["data/research/mlb/h-bp-role-007-unknown-decline-observation.json"]
+    },
+    {
+      "order": 9,
+      "name": "Validation report write",
+      "inline": true,
+      "always": true,
+      "outputs": ["data/audits/bullpen-v1_1-validation-{date}.json"]
+    },
+    {
+      "order": 10,
+      "name": "Bullpen daily report",
+      "script": "scripts/build-mlb-bullpen-v1_1-daily-report.ts",
+      "always": true,
+      "outputs": [
+        "data/audits/bullpen-v1_1-daily-report-{date}.json",
+        "data/audits/bullpen-v1_1-daily-report-{date}.md"
+      ],
+      "duplicateOfPostgame": false
+    },
+    {
+      "order": 11,
+      "name": "Site Feedback/Learning refresh",
+      "script": "scripts/refresh-site-feedback-learning.ts",
+      "conditional": "pipelineRan",
+      "duplicateOfPostgame": true
+    }
+  ],
+  "stepOverlapMatrix": {
+    "gameStatusFetch": {
+      "postgame": "indirect via grade-mlb-research-predictions",
+      "bullpenValidate": "explicit fetchSlate() + grade fetch",
+      "duplicatedIfBothRun": true,
+      "driftRisk": "low",
+      "wasteOnly": true
+    },
+    "grading": {
+      "postgame": true,
+      "bullpenValidate": "when slate.finished > 0",
+      "duplicatedIfBothRun": true,
+      "artifacts": ["data/predictions/mlb/{date}.json", "data/predictions/mlb/{date}-review.json"],
+      "driftRisk": "low",
+      "note": "Immutable prediction slice verified by validate script; result fields may refresh from API"
+    },
+    "successReview": {
+      "postgame": false,
+      "bullpenValidate": false,
+      "note": "No separate Success/Failure Review generator; grade emits {date}-review.json (grading review)"
+    },
+    "failureReview": {
+      "postgame": false,
+      "bullpenValidate": false,
+      "note": "Same as successReview — only flow review scripts exist"
+    },
+    "successFlowReview": {
+      "postgame": true,
+      "bullpenValidate": "when slate.finished > 0",
+      "duplicatedIfBothRun": true,
+      "artifacts": ["data/predictions/mlb/{date}-success-flow-review.json"]
+    },
+    "failureFlowReview": {
+      "postgame": true,
+      "bullpenValidate": "when slate.finished > 0",
+      "duplicatedIfBothRun": true,
+      "artifacts": ["data/predictions/mlb/{date}-failure-flow-review.json"]
+    },
+    "bullpenValidation": {
+      "postgame": false,
+      "bullpenValidate": true,
+      "artifacts": [
+        "data/audits/bullpen-v1_1-validation-{date}.json",
+        "data/audits/{date}-mlb-pregame-bullpen-risk.json",
+        "data/research/mlb/{date}-bullpen-role-dataset-v1_1.json"
+      ]
+    },
+    "starterPostgameReview": {
+      "postgame": false,
+      "bullpenValidate": false,
+      "canonicalScript": "run-mlb-starter-accumulation-v1.ts",
+      "npmAlias": "research:starter"
+    },
+    "dailyReport": {
+      "postgame": false,
+      "bullpenValidate": true
+    },
+    "accumulationSummaries": {
+      "postgame": false,
+      "bullpenValidate": false,
+      "canonicalScript": "summarize-mlb-starter-accumulation-v1.ts",
+      "npmAlias": "research:starter-summary / research:ops"
+    },
+    "feedbackLearningRefresh": {
+      "postgame": true,
+      "bullpenValidate": "when pipelineRan",
+      "duplicatedIfBothRun": true,
+      "artifacts": [
+        "data/predictions/{date}-mlb-review.json",
+        "data/learning/dashboard.json"
+      ]
+    },
+    "researchLogUpdate": {
+      "postgame": false,
+      "bullpenValidate": false,
+      "note": "Manual IM-08 per RESEARCH_PIPELINE_AUTOMATION_AUDIT_V1.md"
+    }
+  },
+  "duplicatedStepsWhenBothRun": [
+    "grade-mlb-research-predictions.ts",
+    "review-mlb-failed-game-flow.ts",
+    "review-mlb-success-game-flow.ts",
+    "refresh-site-feedback-learning.ts",
+    "API-BASEBALL slate/game status fetch (grade + fetchSlate)"
+  ],
+  "duplicatedArtifacts": [
+    {
+      "path": "data/predictions/mlb/{date}.json",
+      "behavior": "overwrite result fields only; immutable keys preserved",
+      "hashImpact": "full file hash may change; immutable slice unchanged"
+    },
+    {
+      "path": "data/predictions/mlb/{date}-review.json",
+      "behavior": "full overwrite"
+    },
+    {
+      "path": "data/predictions/mlb/{date}-failure-flow-review.json",
+      "behavior": "full overwrite"
+    },
+    {
+      "path": "data/predictions/mlb/{date}-success-flow-review.json",
+      "behavior": "full overwrite"
+    },
+    {
+      "path": "data/predictions/{date}-mlb-review.json",
+      "behavior": "mirror overwrite via export"
+    },
+    {
+      "path": "data/learning/dashboard.json",
+      "behavior": "aggregate overwrite"
+    },
+    {
+      "path": "data/cache/mlb-game-results/{date}.json",
+      "behavior": "may refresh if grade runs twice outside 5min TTL"
+    }
+  ],
+  "apiCacheDuplication": {
+    "gradeSecondRunWithinTtl": "Often 0 API-BASEBALL calls (disk cache hit)",
+    "gradeSecondRunAfterTtl": "Repeat /games date fetch",
+    "flowReviewSecondRun": "Always repeats API-BASEBALL + MLB Stats boxscore fetches (cache: no-store; no shared cache with grade)",
+    "bullpenBuildSecondRunInValidate": "Intentional warm pass; expects networkCalls=0 when research cache warm",
+    "estimateBothPipelines": "~2× grade slate fetch + ~2× per-game boxscore work for flow reviews + full bullpen build twice inside validate"
+  },
+  "driftRisk": {
+    "predictionImmutableHash": "low — both paths preserve IMMUTABLE_KEYS; validate asserts unchanged",
+    "reviewClassifications": "low-to-medium — deterministic given same API payloads; API corrections could change labels",
+    "bullpenClassifierOutput": "low when classifier frozen — warm re-run checks resultHash reproducibility",
+    "siteFeedbackMirror": "low — derived read-only from review.json",
+    "overall": "Most duplication is API/time waste; hash-safe for immutable prediction contract"
+  },
+  "responsibilitySplit": {
+    "postgameCanonical": "Full-game result lifecycle for site: grade → flow reviews → Feedback/Learning refresh",
+    "bullpenValidateCanonical": "Bullpen v1.1 research validation only: pregame risk audit → bullpen dataset → validation report → daily report → hypothesis observation touch (H-BP-006/007)",
+    "structureMatch": "Partially — validate currently embeds postgame grade/review/refresh as prerequisites, causing scope bleed",
+    "neitherOwns": [
+      "Starter post-game review (research:starter)",
+      "Lineup dataset (research:lineup)",
+      "Research ops chain (research:ops)",
+      "RESEARCH_LOG.md"
+    ]
+  },
+  "alternatives": [
+    {
+      "id": 1,
+      "title": "Postgame then bullpen validate with grade/review reuse",
+      "description": "Run research:postgame once; validate skips steps 1–3 and refresh when --skip-postgame-steps or artifact freshness gate passes",
+      "pros": ["Smallest validate-only change", "Preserves separate npm entrypoints", "Matches RESEARCH_PIPELINE_AUTOMATION canonical order"],
+      "cons": ["Requires new flag or freshness logic in validate"],
+      "recommended": true
+    },
+    {
+      "id": 2,
+      "title": "Postgame optional bullpen tail",
+      "description": "Extend run-mlb-postgame-pipeline.ts to call bullpen-only tail after step 4",
+      "pros": ["Single operator command"],
+      "cons": ["Expands postgame scope", "Mixes site lifecycle with bullpen research validation"],
+      "recommended": false
+    },
+    {
+      "id": 3,
+      "title": "Shared artifact freshness skip",
+      "description": "Before grade/review, check {date}-review.json + immutable hash + graded count vs slate.finished",
+      "pros": ["No operator flag required", "Works for accidental re-runs"],
+      "cons": ["Freshness rules must be defined (partial slate, stale review)"],
+      "recommended": "secondary — combine with alternative 1"
+    }
+  ],
+  "recommendedMinimalFix": {
+    "approach": "Alternative 1 + optional freshness guard (Alternative 3)",
+    "implementation": "Add --skip-postgame-steps to validate-mlb-bullpen-v1_1-date.ts; skip grade, both flow reviews, and refresh when postgame already ran (detect via CLI flag or review artifact + immutable hash match)",
+    "notImplemented": true
+  },
+  "executionGuidance": {
+    "fullSlate2026-07-28": {
+      "untilDedupe": "Do NOT run research:postgame and validate-mlb-bullpen-v1_1-date.ts sequentially — choose one superset path or postgame + manual bullpen-only steps",
+      "interimSinglePathBullpen": "validate-mlb-bullpen-v1_1-date.ts alone (includes postgame subset when finished > 0)",
+      "interimSinglePathSiteOnly": "npm run research:postgame -- 2026-07-28",
+      "targetCanonicalOrderAfterDedupe": [
+        "npm run research:postgame -- 2026-07-28",
+        "npm run research:starter -- 2026-07-28",
+        "tsx validate-mlb-bullpen-v1_1-date.ts 2026-07-28 --skip-postgame-steps",
+        "npm run research:lineup -- 2026-07-28",
+        "npm run research:ops -- 2026-07-28"
+      ]
+    },
+    "partialSlate": {
+      "postgame": "Always runs all 4 steps; grade leaves pending games ungraded",
+      "bullpenValidate": "If slate.finished === 0: skips grade/review/bullpen/refresh; still writes validation JSON, daily report, H-BP-006/007 touch with AWAITING status",
+      "bullpenValidatePartial": "If slate.finished > 0 but not all Final: runs full embedded postgame+bullpen on available graded targets; lineup builder still requires full slate (research:lineup guard)",
+      "operatorRule": "Wait for full Final before research:lineup; postgame may run incrementally but flow reviews only cover graded HIT/MISS games"
+    }
+  },
+  "refreshAliasTsxStatus": {
+    "alias": "refresh:feedback-learning",
+    "packageJsonCommand": "npx tsx --env-file=.env.local scripts/refresh-site-feedback-learning.ts",
+    "localPinnedTsx": false,
+    "note": "research:* aliases use local tsx; refresh alias still uses npx tsx (out of scope this audit)"
+  },
+  "verification": {
+    "codeChanges": 0,
+    "datasetArtifactChanges": 0,
+    "predictionHashSha256_2026-07-27": "621f4dbc2ad7439804f88ba213452e5e2675396e889a26580f79b11ad9e58051",
+    "engineImpact": 0,
+    "frameworkImpact": 0,
+    "build": "pass"
+  },
+  "conclusion": "POSTGAME_BULLPEN_DEDUPLICATION_READY",
+  "implementation": {
+    "skipPostgameStepsFlag": true,
+    "npmAlias": "research:bullpen-validate",
+    "localTsxSpawn": true,
+    "implementedAt": "2026-07-27T11:05:00.000Z"
+  }
+}

@@ -23,6 +23,38 @@ function sha256(text: string): string {
   return createHash("sha256").update(text, "utf8").digest("hex");
 }
 
+function asRecord(v: unknown): Record<string, unknown> | null {
+  return typeof v === "object" && v !== null && !Array.isArray(v)
+    ? (v as Record<string, unknown>)
+    : null;
+}
+
+function asString(v: unknown): string | null {
+  return typeof v === "string" && v.trim() !== "" ? v.trim() : null;
+}
+
+type SlateReadiness = {
+  totalPredictions: number;
+  gradedCount: number;
+  pendingCount: number;
+};
+
+function assessSlateReadiness(predRaw: string): SlateReadiness {
+  const pred = JSON.parse(predRaw) as { predictions?: unknown[] };
+  const predictions = Array.isArray(pred.predictions) ? pred.predictions : [];
+  let gradedCount = 0;
+  for (const raw of predictions) {
+    const p = asRecord(raw);
+    if (!p) continue;
+    if (asString(p.resultStatus) === "graded") gradedCount += 1;
+  }
+  return {
+    totalPredictions: predictions.length,
+    gradedCount,
+    pendingCount: predictions.length - gradedCount,
+  };
+}
+
 async function main() {
   console.log(`=== Build MLB Lineup Dataset v1 (${DATE}) ===`);
 
@@ -33,6 +65,30 @@ async function main() {
   );
   const predRawBefore = await readFile(predPath, "utf8");
   const predHashBefore = sha256(predRawBefore);
+
+  const slate = assessSlateReadiness(predRawBefore);
+  console.log(
+    `slate: total=${slate.totalPredictions} graded=${slate.gradedCount} pending=${slate.pendingCount}`,
+  );
+
+  if (slate.gradedCount === 0) {
+    console.log("AWAITING_FINISHED_GAMES");
+    console.log(
+      "No graded/final games on slate — lineup artifact not created.",
+    );
+    return;
+  }
+
+  if (slate.pendingCount > 0) {
+    console.error(
+      `AWAITING_FULL_SLATE: ${slate.pendingCount} game(s) still pending (${slate.gradedCount}/${slate.totalPredictions} graded).`,
+    );
+    console.error(
+      "Partial lineup artifacts are not created — wait for entire slate to finish.",
+    );
+    process.exitCode = 2;
+    return;
+  }
 
   const first = await buildLineupDatasetV1({
     dateKst: DATE,

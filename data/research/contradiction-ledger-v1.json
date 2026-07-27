@@ -1,0 +1,410 @@
+{
+  "meta": {
+    "version": "contradiction-ledger-v1",
+    "kind": "contradiction-ledger",
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T10:44:12.428Z",
+    "auditedGames": 15,
+    "gamesWithContradictions": 7,
+    "contradictionEventCount": 10,
+    "researchOnly": true,
+    "engineConnected": false,
+    "engineCandidate": false,
+    "engineAdmission": "PROHIBITED",
+    "hypothesisStatusPromotion": false,
+    "scoring": false,
+    "predictionHashSha256": "621f4dbc2ad7439804f88ba213452e5e2675396e889a26580f79b11ad9e58051",
+    "predictionUnchanged": true,
+    "datasetFilesUnchanged": true,
+    "correlationAuditSource": "data/audits/dataset-correlation-audit-v1-2026-07-27.json",
+    "hypothesisEvidenceLedgerLink": "data/research/hypothesis-evidence-ledger.json",
+    "conclusion": "CONTRADICTION_EVIDENCE_COLLECTION_STARTED",
+    "note": "Cross-dataset contradiction events for high-value review games only. Explanatory — not Engine input.",
+    "severityAuditPath": "data/research/contradiction-severity-audit-v1.json",
+    "severityAuditAuditPath": "data/audits/contradiction-severity-audit-v1-2026-07-27.json"
+  },
+  "totals": {
+    "contradictionEvents": 10,
+    "starterContradictions": 5,
+    "bullpenContradictions": 5,
+    "lineupContradictions": 0,
+    "uniqueGames": 7,
+    "typeCounts": [
+      {
+        "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE",
+        "count": 4
+      },
+      {
+        "type": "BULLPEN_ROLE_SUPPORTS_PREDICTION_FAILED",
+        "count": 2
+      },
+      {
+        "type": "BULLPEN_ROLE_CONFLICTS_PREDICTION_SUCCEEDED",
+        "count": 2
+      },
+      {
+        "type": "BULLPEN_ROLE_CONFLICTS_FLOW_PROTECTED",
+        "count": 1
+      },
+      {
+        "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE_OVERCOME",
+        "count": 1
+      }
+    ]
+  },
+  "games": [
+    {
+      "gameId": "mlb-179589",
+      "match": "New York Yankees @ Philadelphia Phillies",
+      "outcome": "FAILURE",
+      "predictionHit": false,
+      "eventIds": [
+        "C-20260727-001",
+        "C-20260727-002"
+      ],
+      "domains": [
+        "starter",
+        "bullpen"
+      ],
+      "linkedHypothesisIds": [
+        "H-ST-001",
+        "H-ST-004",
+        "H-BP-ROLE-005"
+      ]
+    },
+    {
+      "gameId": "mlb-179592",
+      "match": "Cleveland Guardians @ Tampa Bay Rays",
+      "outcome": "SUCCESS",
+      "predictionHit": true,
+      "eventIds": [
+        "C-20260727-003",
+        "C-20260727-004"
+      ],
+      "domains": [
+        "bullpen"
+      ],
+      "linkedHypothesisIds": [
+        "H-BP-ROLE-005"
+      ]
+    },
+    {
+      "gameId": "mlb-179594",
+      "match": "Los Angeles Angels @ San Francisco Giants",
+      "outcome": "FAILURE",
+      "predictionHit": false,
+      "eventIds": [
+        "C-20260727-005",
+        "C-20260727-006"
+      ],
+      "domains": [
+        "starter",
+        "bullpen"
+      ],
+      "linkedHypothesisIds": [
+        "H-ST-001",
+        "H-ST-004",
+        "H-BP-ROLE-005"
+      ]
+    },
+    {
+      "gameId": "mlb-179595",
+      "match": "Chicago Cubs @ Pittsburgh Pirates",
+      "outcome": "FAILURE",
+      "predictionHit": false,
+      "eventIds": [
+        "C-20260727-007"
+      ],
+      "domains": [
+        "starter"
+      ],
+      "linkedHypothesisIds": [
+        "H-ST-001",
+        "H-ST-004"
+      ]
+    },
+    {
+      "gameId": "mlb-179596",
+      "match": "Athletics @ Minnesota Twins",
+      "outcome": "SUCCESS",
+      "predictionHit": true,
+      "eventIds": [
+        "C-20260727-008"
+      ],
+      "domains": [
+        "bullpen"
+      ],
+      "linkedHypothesisIds": [
+        "H-BP-ROLE-005"
+      ]
+    },
+    {
+      "gameId": "mlb-179599",
+      "match": "San Diego Padres @ Miami Marlins",
+      "outcome": "SUCCESS",
+      "predictionHit": true,
+      "eventIds": [
+        "C-20260727-009"
+      ],
+      "domains": [
+        "starter"
+      ],
+      "linkedHypothesisIds": [
+        "H-ST-001"
+      ]
+    },
+    {
+      "gameId": "mlb-179601",
+      "match": "Houston Astros @ Chicago White Sox",
+      "outcome": "FAILURE",
+      "predictionHit": false,
+      "eventIds": [
+        "C-20260727-010"
+      ],
+      "domains": [
+        "starter"
+      ],
+      "linkedHypothesisIds": [
+        "H-ST-001",
+        "H-ST-004"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "eventId": "C-20260727-001",
+      "gameId": "mlb-179589",
+      "match": "New York Yankees @ Philadelphia Phillies",
+      "dateKst": "2026-07-27",
+      "outcome": "FAILURE",
+      "domain": "starter",
+      "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE",
+      "summary": "Probable→actual identity matched but flow tagged starter disadvantage realized",
+      "observed": {
+        "starterPostGame": "STARTER_MATCHED",
+        "flowStarterVerdict": "STARTER_DISADVANTAGE_REALIZED",
+        "flowPrimary": "MULTIPLE_FACTORS"
+      },
+      "linkedHypothesisIds": [
+        "H-ST-001",
+        "H-ST-004"
+      ],
+      "researchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-002",
+      "gameId": "mlb-179589",
+      "match": "New York Yankees @ Philadelphia Phillies",
+      "dateKst": "2026-07-27",
+      "outcome": "FAILURE",
+      "domain": "bullpen",
+      "type": "BULLPEN_ROLE_SUPPORTS_PREDICTION_FAILED",
+      "summary": "Bullpen role structure supported baseline pick but prediction failed",
+      "observed": {
+        "bullpenRoleComparison": "ROLE_STRUCTURE_SUPPORTS_BASELINE",
+        "bullpenVerdict": "BULLPEN_DISADVANTAGE",
+        "flowPrimary": "MULTIPLE_FACTORS"
+      },
+      "linkedHypothesisIds": [
+        "H-BP-ROLE-005"
+      ],
+      "researchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-003",
+      "gameId": "mlb-179592",
+      "match": "Cleveland Guardians @ Tampa Bay Rays",
+      "dateKst": "2026-07-27",
+      "outcome": "SUCCESS",
+      "domain": "bullpen",
+      "type": "BULLPEN_ROLE_CONFLICTS_PREDICTION_SUCCEEDED",
+      "summary": "Bullpen role structure conflicted with baseline pick but prediction succeeded",
+      "observed": {
+        "bullpenRoleComparison": "ROLE_STRUCTURE_CONFLICTS_BASELINE",
+        "bullpenVerdict": "BULLPEN_PROTECTED_LEAD",
+        "flowPrimary": "BASELINE_SIGNAL_CONFIRMED"
+      },
+      "linkedHypothesisIds": [
+        "H-BP-ROLE-005"
+      ],
+      "researchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-004",
+      "gameId": "mlb-179592",
+      "match": "Cleveland Guardians @ Tampa Bay Rays",
+      "dateKst": "2026-07-27",
+      "outcome": "SUCCESS",
+      "domain": "bullpen",
+      "type": "BULLPEN_ROLE_CONFLICTS_FLOW_PROTECTED",
+      "summary": "Bullpen role structure conflicted with baseline but flow verdict protected lead",
+      "observed": {
+        "bullpenRoleComparison": "ROLE_STRUCTURE_CONFLICTS_BASELINE",
+        "bullpenVerdict": "BULLPEN_PROTECTED_LEAD",
+        "flowPrimary": "BASELINE_SIGNAL_CONFIRMED"
+      },
+      "linkedHypothesisIds": [
+        "H-BP-ROLE-005"
+      ],
+      "researchValue": "MEDIUM",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-005",
+      "gameId": "mlb-179594",
+      "match": "Los Angeles Angels @ San Francisco Giants",
+      "dateKst": "2026-07-27",
+      "outcome": "FAILURE",
+      "domain": "starter",
+      "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE",
+      "summary": "Probable→actual identity matched but flow tagged starter disadvantage realized",
+      "observed": {
+        "starterPostGame": "STARTER_MATCHED",
+        "flowStarterVerdict": "STARTER_DISADVANTAGE_REALIZED",
+        "flowPrimary": "STARTER_FAILURE"
+      },
+      "linkedHypothesisIds": [
+        "H-ST-001",
+        "H-ST-004"
+      ],
+      "researchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-006",
+      "gameId": "mlb-179594",
+      "match": "Los Angeles Angels @ San Francisco Giants",
+      "dateKst": "2026-07-27",
+      "outcome": "FAILURE",
+      "domain": "bullpen",
+      "type": "BULLPEN_ROLE_SUPPORTS_PREDICTION_FAILED",
+      "summary": "Bullpen role structure supported baseline pick but prediction failed",
+      "observed": {
+        "bullpenRoleComparison": "ROLE_STRUCTURE_SUPPORTS_BASELINE",
+        "bullpenVerdict": "NOT_BULLPEN_DRIVEN",
+        "flowPrimary": "STARTER_FAILURE"
+      },
+      "linkedHypothesisIds": [
+        "H-BP-ROLE-005"
+      ],
+      "researchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-007",
+      "gameId": "mlb-179595",
+      "match": "Chicago Cubs @ Pittsburgh Pirates",
+      "dateKst": "2026-07-27",
+      "outcome": "FAILURE",
+      "domain": "starter",
+      "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE",
+      "summary": "Probable→actual identity matched but flow tagged starter disadvantage realized",
+      "observed": {
+        "starterPostGame": "STARTER_MATCHED",
+        "flowStarterVerdict": "STARTER_DISADVANTAGE_REALIZED",
+        "flowPrimary": "MULTIPLE_FACTORS"
+      },
+      "linkedHypothesisIds": [
+        "H-ST-001",
+        "H-ST-004"
+      ],
+      "researchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-008",
+      "gameId": "mlb-179596",
+      "match": "Athletics @ Minnesota Twins",
+      "dateKst": "2026-07-27",
+      "outcome": "SUCCESS",
+      "domain": "bullpen",
+      "type": "BULLPEN_ROLE_CONFLICTS_PREDICTION_SUCCEEDED",
+      "summary": "Bullpen role structure conflicted with baseline pick but prediction succeeded",
+      "observed": {
+        "bullpenRoleComparison": "ROLE_STRUCTURE_CONFLICTS_BASELINE",
+        "bullpenVerdict": "BULLPEN_WARNING_SURVIVED",
+        "flowPrimary": "BASELINE_SIGNAL_CONFIRMED"
+      },
+      "linkedHypothesisIds": [
+        "H-BP-ROLE-005"
+      ],
+      "researchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-009",
+      "gameId": "mlb-179599",
+      "match": "San Diego Padres @ Miami Marlins",
+      "dateKst": "2026-07-27",
+      "outcome": "SUCCESS",
+      "domain": "starter",
+      "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE_OVERCOME",
+      "summary": "Probable→actual identity matched but flow tagged starter disadvantage overcome",
+      "observed": {
+        "starterPostGame": "STARTER_MATCHED",
+        "flowStarterVerdict": "STARTER_DISADVANTAGE_OVERCOME",
+        "flowPrimary": "BASELINE_SIGNAL_CONFIRMED"
+      },
+      "linkedHypothesisIds": [
+        "H-ST-001"
+      ],
+      "researchValue": "MEDIUM",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    },
+    {
+      "eventId": "C-20260727-010",
+      "gameId": "mlb-179601",
+      "match": "Houston Astros @ Chicago White Sox",
+      "dateKst": "2026-07-27",
+      "outcome": "FAILURE",
+      "domain": "starter",
+      "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE",
+      "summary": "Probable→actual identity matched but flow tagged starter disadvantage realized",
+      "observed": {
+        "starterPostGame": "STARTER_MATCHED",
+        "flowStarterVerdict": "STARTER_DISADVANTAGE_REALIZED",
+        "flowPrimary": "MULTIPLE_FACTORS"
+      },
+      "linkedHypothesisIds": [
+        "H-ST-001",
+        "H-ST-004"
+      ],
+      "researchValue": "HIGH",
+      "source": "data/audits/dataset-correlation-audit-v1-2026-07-27.json"
+    }
+  ],
+  "hypothesisLinks": [
+    {
+      "hypothesisId": "H-BP-ROLE-005",
+      "eventIds": [
+        "C-20260727-002",
+        "C-20260727-003",
+        "C-20260727-004",
+        "C-20260727-006",
+        "C-20260727-008"
+      ]
+    },
+    {
+      "hypothesisId": "H-ST-001",
+      "eventIds": [
+        "C-20260727-001",
+        "C-20260727-005",
+        "C-20260727-007",
+        "C-20260727-009",
+        "C-20260727-010"
+      ]
+    },
+    {
+      "hypothesisId": "H-ST-004",
+      "eventIds": [
+        "C-20260727-001",
+        "C-20260727-005",
+        "C-20260727-007",
+        "C-20260727-010"
+      ]
+    }
+  ]
+}

@@ -10,6 +10,7 @@ import type {
 import {
   LEDGER_SOURCE_OPTIONS,
   LEDGER_SPORT_OPTIONS,
+  ledgerSportSelectOptionsForValue,
 } from "@/types/ledger";
 import { getKstToday } from "@/lib/datetime/kst";
 import {
@@ -459,7 +460,7 @@ export default function LedgerTicketForm({
                         htmlFor={fieldId("sport")}
                         className={labelClass}
                       >
-                        종목
+                        종목 (개인 기록 분류)
                       </label>
                       <select
                         id={fieldId("sport")}
@@ -472,12 +473,43 @@ export default function LedgerTicketForm({
                         }
                         className={inputClass}
                       >
-                        {LEDGER_SPORT_OPTIONS.map((o) => (
-                          <option key={o.id} value={o.id}>
-                            {o.label}
-                          </option>
-                        ))}
+                        {(() => {
+                          const groups = ledgerSportSelectOptionsForValue(
+                            pick.sport,
+                          );
+                          return (
+                            <>
+                              <optgroup label="EDGE 지원 종목">
+                                {groups.edge.map((o) => (
+                                  <option key={o.id} value={o.id}>
+                                    {o.label}
+                                  </option>
+                                ))}
+                              </optgroup>
+                              <optgroup label="기타 개인 기록">
+                                {groups.personal.map((o) => (
+                                  <option key={o.id} value={o.id}>
+                                    {o.label}
+                                  </option>
+                                ))}
+                              </optgroup>
+                              {groups.legacy.length > 0 ? (
+                                <optgroup label="이전 기록 (신규 선택 불가)">
+                                  {groups.legacy.map((o) => (
+                                    <option key={o.id} value={o.id}>
+                                      {o.label}
+                                    </option>
+                                  ))}
+                                </optgroup>
+                              ) : null}
+                            </>
+                          );
+                        })()}
                       </select>
+                      <p className="mt-1 text-[11px] leading-relaxed text-zinc-600">
+                        가계부 종목은 개인 베팅 기록용입니다. 기타·이전 기록
+                        종목은 YANG EDGE AI 분석 대상이 아닙니다.
+                      </p>
                     </div>
 
                     <div>

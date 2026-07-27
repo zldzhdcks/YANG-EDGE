@@ -158,11 +158,12 @@ function completenessKoFromMetrics(
 
 type Props = {
   view: ResearchAnalysisView;
+  gamesBackHref: string;
 };
 
 const PRE_GAME = "경기 전 스냅샷";
 
-export default function ResearchAnalysisViewer({ view }: Props) {
+export default function ResearchAnalysisViewer({ view, gamesBackHref }: Props) {
   const learning =
     view.learningSummary?.availability === "COLLECTED"
       ? view.learningSummary.value
@@ -796,10 +797,10 @@ export default function ResearchAnalysisViewer({ view }: Props) {
 
       <div className="mt-8">
         <Link
-          href="/games"
+          href={gamesBackHref}
           className="inline-flex text-sm text-blue-400 hover:text-blue-300"
         >
-          ← 오늘 경기로 돌아가기
+          ← 경기 목록으로
         </Link>
       </div>
     </div>

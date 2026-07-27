@@ -3,7 +3,9 @@
 /**
  * UI 분류용 종목.
  * 티켓이 아니라 각 LedgerPick 이 독립적으로 가진다 (혼합 종목 티켓 허용).
- * 새 종목 추가 시 이 union / OPTIONS 만 확장하면 되며 저장 구조는 변하지 않는다.
+ *
+ * 의미: **개인 베팅 기록 분류** — YANG EDGE 분석 지원 종목(야구·축구·농구·배구)과 동일하지 않다.
+ * `ice-hockey` 는 레거시 저장값 보존용으로만 유지하며, 신규 선택 UI에는 노출하지 않는다.
  */
 export const LEDGER_SPORTS = [
   "baseball",
@@ -172,14 +174,43 @@ export const EMPTY_LEDGER_STORE_V2: LedgerStoreV2 = {
   budget: { ...DEFAULT_LEDGER_BUDGET },
 };
 
-export const LEDGER_SPORT_OPTIONS: { id: LedgerSportKnown; label: string }[] = [
+/** EDGE 제품 지원 4종목 — 신규 선택 UI의 첫 그룹 (기록 분류 라벨) */
+export const LEDGER_EDGE_SPORT_OPTIONS: {
+  id: Exclude<LedgerSportKnown, "ice-hockey" | "other">;
+  label: string;
+}[] = [
   { id: "baseball", label: "야구" },
   { id: "football", label: "축구" },
   { id: "basketball", label: "농구" },
   { id: "volleyball", label: "배구" },
-  { id: "ice-hockey", label: "아이스하키" },
-  { id: "other", label: "기타" },
 ];
+
+/** 개인 기록용 — AI 분석 대상 아님 */
+export const LEDGER_PERSONAL_SPORT_OPTIONS: {
+  id: Extract<LedgerSportKnown, "other">;
+  label: string;
+}[] = [{ id: "other", label: "기타" }];
+
+/** 레거시 전용 — 신규 선택 불가, 기존 값 표시·편집만 */
+export const LEDGER_LEGACY_SPORT_OPTIONS: {
+  id: Extract<LedgerSportKnown, "ice-hockey">;
+  label: string;
+}[] = [
+  { id: "ice-hockey", label: "아이스하키 (기록용·분석 미지원)" },
+];
+
+/** 라벨 조회용 전체 (레거시 포함) */
+export const LEDGER_SPORT_OPTIONS: { id: LedgerSportKnown; label: string }[] = [
+  ...LEDGER_EDGE_SPORT_OPTIONS,
+  ...LEDGER_PERSONAL_SPORT_OPTIONS,
+  ...LEDGER_LEGACY_SPORT_OPTIONS,
+];
+
+/** 신규 선택에 노출하는 옵션 (ice-hockey 제외) */
+export const LEDGER_SPORT_SELECT_OPTIONS: {
+  id: Exclude<LedgerSportKnown, "ice-hockey">;
+  label: string;
+}[] = [...LEDGER_EDGE_SPORT_OPTIONS, ...LEDGER_PERSONAL_SPORT_OPTIONS];
 
 export const LEDGER_STATUS_OPTIONS: { id: LedgerBetStatus; label: string }[] = [
   { id: "pending", label: "결과 대기" },
@@ -197,8 +228,27 @@ export function isLedgerSportKnown(v: string): v is LedgerSportKnown {
   return (LEDGER_SPORTS as readonly string[]).includes(v);
 }
 
+export function isLedgerLegacySport(v: string): boolean {
+  return v === "ice-hockey";
+}
+
 export function ledgerSportLabel(sport: LedgerSport): string {
   return LEDGER_SPORT_OPTIONS.find((o) => o.id === sport)?.label ?? sport;
+}
+
+/**
+ * 종목 select 옵션 — 현재 값이 레거시면 해당 옵션만 추가해 crash/강제 변환 방지.
+ */
+export function ledgerSportSelectOptionsForValue(current: string): {
+  edge: typeof LEDGER_EDGE_SPORT_OPTIONS;
+  personal: typeof LEDGER_PERSONAL_SPORT_OPTIONS;
+  legacy: typeof LEDGER_LEGACY_SPORT_OPTIONS | [];
+} {
+  return {
+    edge: LEDGER_EDGE_SPORT_OPTIONS,
+    personal: LEDGER_PERSONAL_SPORT_OPTIONS,
+    legacy: isLedgerLegacySport(current) ? LEDGER_LEGACY_SPORT_OPTIONS : [],
+  };
 }
 
 export function ledgerStatusLabel(status: LedgerBetStatus): string {

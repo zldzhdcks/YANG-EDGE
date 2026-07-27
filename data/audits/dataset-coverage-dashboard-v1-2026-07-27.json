@@ -1,0 +1,317 @@
+{
+  "meta": {
+    "version": "dataset-coverage-dashboard-v1",
+    "kind": "coverage-dashboard",
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T10:44:45.375Z",
+    "researchOnly": true,
+    "engineConnected": false,
+    "engineCandidate": false,
+    "engineAdmission": "PROHIBITED",
+    "predictionHashSha256": "621f4dbc2ad7439804f88ba213452e5e2675396e889a26580f79b11ad9e58051",
+    "predictionUnchanged": true,
+    "datasetFilesUnchanged": true,
+    "conclusion": "DATASET_COVERAGE_DASHBOARD_CREATED",
+    "note": "Read-only coverage summary from existing research artifacts. No scores or Engine admission."
+  },
+  "sources": [
+    "data/research/registry.json",
+    "src/lib/research/registry.ts",
+    "data/research/mlb/2026-07-27-starter-dataset-v1.json",
+    "data/research/mlb/2026-07-27-bullpen-role-dataset-v1_1.json",
+    "data/research/mlb/2026-07-27-lineup-dataset-v1.json",
+    "data/research/hypothesis-evidence-ledger.json",
+    "data/research/contradiction-ledger-v1.json",
+    "data/research/contradiction-severity-audit-v1.json",
+    "HYPOTHESIS_REGISTRY.md",
+    "RESEARCH_LOG.md"
+  ],
+  "coverageSummary": {
+    "collectingDatasets": 3,
+    "notStartedDatasets": 2,
+    "artifactsPresent": 3,
+    "registryEntries": 5,
+    "lineupRegistryGap": false,
+    "gradedGamesOnDate": 15,
+    "sampleTargetGames": 100,
+    "belowMinimumSample": true
+  },
+  "datasets": [
+    {
+      "datasetId": "mlb-bullpen-role",
+      "displayName": "Bullpen Role Dataset v1.1",
+      "status": "COLLECTING",
+      "schemaVersion": "mlb-bullpen-role-dataset-v1.1",
+      "builderVersion": "bullpen-role-classifier-v1.1",
+      "engineAdmission": "PROHIBITED",
+      "inFrameworkRegistry": true,
+      "artifactPresent": true,
+      "artifactPath": "data/research/mlb/2026-07-27-bullpen-role-dataset-v1_1.json",
+      "games": 15,
+      "rows": 563,
+      "sampleTarget": 100,
+      "coveragePctOfTarget": 15,
+      "notes": [
+        "v1.1 classifier",
+        "uniquePitchers=556"
+      ]
+    },
+    {
+      "datasetId": "mlb-starter",
+      "displayName": "Starter Dataset v1",
+      "status": "COLLECTING",
+      "schemaVersion": "mlb-starter-dataset-v1",
+      "builderVersion": "starter-dataset-builder-v1",
+      "engineAdmission": "PROHIBITED",
+      "inFrameworkRegistry": true,
+      "artifactPresent": true,
+      "artifactPath": "data/research/mlb/2026-07-27-starter-dataset-v1.json",
+      "games": 15,
+      "rows": 30,
+      "sampleTarget": 100,
+      "coveragePctOfTarget": 15,
+      "notes": [
+        "status=COLLECTING",
+        "pre-game freeze; Engine PROHIBITED"
+      ]
+    },
+    {
+      "datasetId": "mlb-lineup",
+      "displayName": "Lineup Dataset v1",
+      "status": "COLLECTING",
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "engineAdmission": "PROHIBITED",
+      "inFrameworkRegistry": true,
+      "artifactPresent": true,
+      "artifactPath": "data/research/mlb/2026-07-27-lineup-dataset-v1.json",
+      "games": 15,
+      "rows": 30,
+      "sampleTarget": 100,
+      "coveragePctOfTarget": 15,
+      "notes": [
+        "status=COLLECTING",
+        "post-game actual only; pre-game NOT_COLLECTED"
+      ]
+    },
+    {
+      "datasetId": "mlb-weather",
+      "displayName": "mlb-weather",
+      "status": "NOT_STARTED",
+      "schemaVersion": "mlb-weather-dataset-v0",
+      "builderVersion": "not-implemented",
+      "engineAdmission": "PROHIBITED",
+      "inFrameworkRegistry": true,
+      "artifactPresent": false,
+      "artifactPath": null,
+      "games": null,
+      "rows": null,
+      "sampleTarget": 100,
+      "coveragePctOfTarget": null,
+      "notes": [
+        "no artifact yet"
+      ]
+    },
+    {
+      "datasetId": "mlb-travel",
+      "displayName": "mlb-travel",
+      "status": "NOT_STARTED",
+      "schemaVersion": "mlb-travel-dataset-v0",
+      "builderVersion": "not-implemented",
+      "engineAdmission": "PROHIBITED",
+      "inFrameworkRegistry": true,
+      "artifactPresent": false,
+      "artifactPath": null,
+      "games": null,
+      "rows": null,
+      "sampleTarget": 100,
+      "coveragePctOfTarget": null,
+      "notes": [
+        "no artifact yet"
+      ]
+    }
+  ],
+  "hypotheses": {
+    "fromEvidenceLedger": [
+      {
+        "hypothesisId": "H-BP-ROLE-001",
+        "dataset": "mlb-bullpen-role",
+        "currentStatus": "DATA_COLLECTION",
+        "evidenceCount": 2,
+        "supportingEvents": 2,
+        "contradictingEvents": 0,
+        "contradictionLedgerRefs": 0,
+        "engineAdmission": "PROHIBITED"
+      },
+      {
+        "hypothesisId": "H-BP-ROLE-002",
+        "dataset": "mlb-bullpen-role",
+        "currentStatus": "DATA_COLLECTION",
+        "evidenceCount": 2,
+        "supportingEvents": 2,
+        "contradictingEvents": 0,
+        "contradictionLedgerRefs": 0,
+        "engineAdmission": "PROHIBITED"
+      },
+      {
+        "hypothesisId": "H-BP-ROLE-003",
+        "dataset": "mlb-bullpen-role",
+        "currentStatus": "DATA_COLLECTION",
+        "evidenceCount": 2,
+        "supportingEvents": 2,
+        "contradictingEvents": 0,
+        "contradictionLedgerRefs": 0,
+        "engineAdmission": "PROHIBITED"
+      },
+      {
+        "hypothesisId": "H-BP-ROLE-004",
+        "dataset": "mlb-bullpen-role",
+        "currentStatus": "DATA_COLLECTION",
+        "evidenceCount": 2,
+        "supportingEvents": 2,
+        "contradictingEvents": 0,
+        "contradictionLedgerRefs": 0,
+        "engineAdmission": "PROHIBITED"
+      },
+      {
+        "hypothesisId": "H-BP-ROLE-005",
+        "dataset": "mlb-bullpen-role",
+        "currentStatus": "DATA_COLLECTION",
+        "evidenceCount": 4,
+        "supportingEvents": 3,
+        "contradictingEvents": 1,
+        "contradictionLedgerRefs": 5,
+        "engineAdmission": "PROHIBITED"
+      },
+      {
+        "hypothesisId": "H-BP-ROLE-006",
+        "dataset": "mlb-bullpen-role",
+        "currentStatus": "SURVEY_ONLY",
+        "evidenceCount": 2,
+        "supportingEvents": 1,
+        "contradictingEvents": 1,
+        "contradictionLedgerRefs": 0,
+        "engineAdmission": "PROHIBITED"
+      },
+      {
+        "hypothesisId": "H-BP-ROLE-007",
+        "dataset": "mlb-bullpen-role",
+        "currentStatus": "DATA_COLLECTION",
+        "evidenceCount": 2,
+        "supportingEvents": 0,
+        "contradictingEvents": 2,
+        "contradictionLedgerRefs": 0,
+        "engineAdmission": "PROHIBITED"
+      },
+      {
+        "hypothesisId": "H-ST-001",
+        "dataset": "mlb-starter",
+        "currentStatus": "DATA_COLLECTION",
+        "evidenceCount": 2,
+        "supportingEvents": 2,
+        "contradictingEvents": 0,
+        "contradictionLedgerRefs": 5,
+        "engineAdmission": "PROHIBITED"
+      },
+      {
+        "hypothesisId": "H-ST-002",
+        "dataset": "mlb-starter",
+        "currentStatus": "DATA_COLLECTION",
+        "evidenceCount": 1,
+        "supportingEvents": 1,
+        "contradictingEvents": 0,
+        "contradictionLedgerRefs": 0,
+        "engineAdmission": "PROHIBITED"
+      },
+      {
+        "hypothesisId": "H-ST-003",
+        "dataset": "mlb-starter",
+        "currentStatus": "DATA_COLLECTION",
+        "evidenceCount": 1,
+        "supportingEvents": 1,
+        "contradictingEvents": 0,
+        "contradictionLedgerRefs": 0,
+        "engineAdmission": "PROHIBITED"
+      },
+      {
+        "hypothesisId": "H-ST-004",
+        "dataset": "mlb-starter",
+        "currentStatus": "DATA_COLLECTION",
+        "evidenceCount": 3,
+        "supportingEvents": 0,
+        "contradictingEvents": 3,
+        "contradictionLedgerRefs": 4,
+        "engineAdmission": "PROHIBITED"
+      },
+      {
+        "hypothesisId": "H-LU-001",
+        "dataset": "mlb-lineup",
+        "currentStatus": "DATA_COLLECTION",
+        "evidenceCount": 0,
+        "supportingEvents": 0,
+        "contradictingEvents": 0,
+        "contradictionLedgerRefs": 0,
+        "engineAdmission": "PROHIBITED"
+      },
+      {
+        "hypothesisId": "H-LU-002",
+        "dataset": "mlb-lineup",
+        "currentStatus": "DATA_COLLECTION",
+        "evidenceCount": 0,
+        "supportingEvents": 0,
+        "contradictingEvents": 0,
+        "contradictionLedgerRefs": 0,
+        "engineAdmission": "PROHIBITED"
+      },
+      {
+        "hypothesisId": "H-LU-003",
+        "dataset": "mlb-lineup",
+        "currentStatus": "DATA_COLLECTION",
+        "evidenceCount": 0,
+        "supportingEvents": 0,
+        "contradictingEvents": 0,
+        "contradictionLedgerRefs": 0,
+        "engineAdmission": "PROHIBITED"
+      }
+    ],
+    "lineupRegistryOnly": [],
+    "ledgerTotals": {
+      "hypothesisCount": 14,
+      "bullpenHypotheses": 7,
+      "starterHypotheses": 4,
+      "lineupHypotheses": 3,
+      "totalEvidenceCount": 23,
+      "supportingEventCount": 16,
+      "contradictingEventCount": 7,
+      "engineCandidateCount": 0,
+      "statusBreakdown": {
+        "DATA_COLLECTION": 13,
+        "SURVEY_ONLY": 1,
+        "REVIEW_PENDING": 0
+      }
+    },
+    "registryDocCounts": {
+      "note": "HYPOTHESIS_REGISTRY.md operational counts (includes H-LU)",
+      "totalActiveApprox": 14,
+      "bullpen": 7,
+      "starter": 4,
+      "lineup": 3
+    }
+  },
+  "contradictions": {
+    "eventCount": 10,
+    "uniqueGames": 7,
+    "starter": 5,
+    "bullpen": 5,
+    "lineup": 0,
+    "severityCounts": {
+      "LOW": 0,
+      "MEDIUM": 2,
+      "HIGH": 8
+    }
+  },
+  "limitations": [
+    "Sample 15 games ≪ 100 target — do not claim PROMISING",
+    "Dashboard is descriptive coverage only — not an Engine input"
+  ]
+}

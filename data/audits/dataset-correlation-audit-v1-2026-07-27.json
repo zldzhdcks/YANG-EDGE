@@ -1,0 +1,635 @@
+{
+  "meta": {
+    "version": "dataset-correlation-audit-v1",
+    "kind": "correlation-audit",
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T10:44:11.142Z",
+    "auditedGames": 15,
+    "successGames": 6,
+    "failureGames": 9,
+    "minimumSampleForConclusion": 100,
+    "sampleSufficient": false,
+    "engineCandidate": false,
+    "engineAdmission": "PROHIBITED",
+    "correlationPurpose": "explanatory-only",
+    "predictionHashSha256": "621f4dbc2ad7439804f88ba213452e5e2675396e889a26580f79b11ad9e58051",
+    "predictionUnchanged": true,
+    "datasetFilesUnchanged": true,
+    "conclusion": "DATASET_CORRELATION_COLLECTION_STARTED"
+  },
+  "evidenceSources": [
+    "data/research/mlb/2026-07-27-starter-dataset-v1.json",
+    "data/research/mlb/2026-07-27-bullpen-role-dataset-v1_1.json",
+    "data/research/mlb/2026-07-27-lineup-dataset-v1.json",
+    "data/predictions/mlb/2026-07-27.json",
+    "data/predictions/mlb/2026-07-27-review.json",
+    "data/predictions/mlb/2026-07-27-success-flow-review.json",
+    "data/predictions/mlb/2026-07-27-failure-flow-review.json",
+    "HYPOTHESIS_REGISTRY.md",
+    "RESEARCH_LOG.md"
+  ],
+  "patternSummary": {
+    "starter": [
+      {
+        "key": "STARTER_MATCHED",
+        "count": 15
+      }
+    ],
+    "bullpenRoleComparison": [
+      {
+        "key": "ROLE_STRUCTURE_NEUTRAL",
+        "count": 6
+      },
+      {
+        "key": "ROLE_STRUCTURE_CONFLICTS_BASELINE",
+        "count": 5
+      },
+      {
+        "key": "ROLE_STRUCTURE_SUPPORTS_BASELINE",
+        "count": 3
+      },
+      {
+        "key": "ROLE_STRUCTURE_INSUFFICIENT",
+        "count": 1
+      }
+    ],
+    "lineup": [
+      {
+        "key": "COMPLETE|pre:NOT_COLLECTED",
+        "count": 15
+      }
+    ],
+    "commonSuccessCombinations": [
+      {
+        "key": "starter:STARTER_MATCHED|bullpen:ROLE_STRUCTURE_CONFLICTS_BASELINE|lineup:COMPLETE|flow:BASELINE_SIGNAL_CONFIRMED",
+        "count": 2
+      },
+      {
+        "key": "starter:STARTER_MATCHED|bullpen:ROLE_STRUCTURE_NEUTRAL|lineup:COMPLETE|flow:BASELINE_SIGNAL_CONFIRMED",
+        "count": 2
+      },
+      {
+        "key": "starter:STARTER_MATCHED|bullpen:ROLE_STRUCTURE_NEUTRAL|lineup:COMPLETE|flow:STARTER_ADVANTAGE_REALIZED",
+        "count": 1
+      },
+      {
+        "key": "starter:STARTER_MATCHED|bullpen:ROLE_STRUCTURE_SUPPORTS_BASELINE|lineup:COMPLETE|flow:STARTER_ADVANTAGE_REALIZED",
+        "count": 1
+      }
+    ],
+    "commonFailureCombinations": [
+      {
+        "key": "starter:STARTER_MATCHED|bullpen:ROLE_STRUCTURE_NEUTRAL|lineup:COMPLETE|flow:BULLPEN_FAILURE",
+        "count": 3
+      },
+      {
+        "key": "starter:STARTER_MATCHED|bullpen:ROLE_STRUCTURE_CONFLICTS_BASELINE|lineup:COMPLETE|flow:BULLPEN_FAILURE",
+        "count": 2
+      },
+      {
+        "key": "starter:STARTER_MATCHED|bullpen:ROLE_STRUCTURE_SUPPORTS_BASELINE|lineup:COMPLETE|flow:MULTIPLE_FACTORS",
+        "count": 1
+      },
+      {
+        "key": "starter:STARTER_MATCHED|bullpen:ROLE_STRUCTURE_SUPPORTS_BASELINE|lineup:COMPLETE|flow:STARTER_FAILURE",
+        "count": 1
+      },
+      {
+        "key": "starter:STARTER_MATCHED|bullpen:ROLE_STRUCTURE_INSUFFICIENT|lineup:COMPLETE|flow:MULTIPLE_FACTORS",
+        "count": 1
+      },
+      {
+        "key": "starter:STARTER_MATCHED|bullpen:ROLE_STRUCTURE_CONFLICTS_BASELINE|lineup:COMPLETE|flow:MULTIPLE_FACTORS",
+        "count": 1
+      }
+    ],
+    "contradictoryCombinations": [
+      {
+        "key": "STARTER_MATCHED+STARTER_DISADVANTAGE_VERDICT",
+        "count": 5
+      },
+      {
+        "key": "SUPPORTS_BASELINE+FAILURE",
+        "count": 2
+      },
+      {
+        "key": "CONFLICTS_BASELINE+SUCCESS",
+        "count": 2
+      },
+      {
+        "key": "CONFLICTS_BASELINE+BULLPEN_PROTECTED",
+        "count": 1
+      }
+    ],
+    "crossOutcomeNotes": [
+      {
+        "key": "POSTGAME_LINEUP_ONLY+FAILURE",
+        "count": 9
+      },
+      {
+        "key": "POSTGAME_LINEUP_ONLY+SUCCESS",
+        "count": 6
+      }
+    ]
+  },
+  "games": [
+    {
+      "gameId": "mlb-179589",
+      "match": "New York Yankees @ Philadelphia Phillies",
+      "outcome": "FAILURE",
+      "predictionHit": false,
+      "pitcherDirection": "CONFLICTS_BASELINE",
+      "recommendationGrade": "EDGE PICK",
+      "starter": {
+        "postGame": "STARTER_MATCHED",
+        "probable": "PROBABLE_ONLY",
+        "join": "MATCHED"
+      },
+      "bullpen": {
+        "roleComparison": "ROLE_STRUCTURE_SUPPORTS_BASELINE",
+        "bullpenVerdict": "BULLPEN_DISADVANTAGE",
+        "postOutcome": "MISS"
+      },
+      "lineup": {
+        "preGame": "NOT_COLLECTED",
+        "postGame": "COMPLETE"
+      },
+      "flowReview": {
+        "primary": "MULTIPLE_FACTORS",
+        "secondary": [
+          "STARTER_FAILURE",
+          "BULLPEN_FAILURE"
+        ],
+        "starterVerdict": "STARTER_DISADVANTAGE_REALIZED",
+        "bullpenVerdict": "BULLPEN_DISADVANTAGE"
+      }
+    },
+    {
+      "gameId": "mlb-179590",
+      "match": "Arizona Diamondbacks @ Washington Nationals",
+      "outcome": "FAILURE",
+      "predictionHit": false,
+      "pitcherDirection": null,
+      "recommendationGrade": "PASS",
+      "starter": {
+        "postGame": "STARTER_MATCHED",
+        "probable": "PROBABLE_ONLY",
+        "join": "MATCHED"
+      },
+      "bullpen": {
+        "roleComparison": "ROLE_STRUCTURE_NEUTRAL",
+        "bullpenVerdict": "BULLPEN_COLLAPSE",
+        "postOutcome": "MISS"
+      },
+      "lineup": {
+        "preGame": "NOT_COLLECTED",
+        "postGame": "COMPLETE"
+      },
+      "flowReview": {
+        "primary": "BULLPEN_FAILURE",
+        "secondary": [
+          "OPPONENT_OFFENSE_SURGE"
+        ],
+        "starterVerdict": "STARTERS_EVEN",
+        "bullpenVerdict": "BULLPEN_COLLAPSE"
+      }
+    },
+    {
+      "gameId": "mlb-179591",
+      "match": "Seattle Mariners @ Texas Rangers",
+      "outcome": "FAILURE",
+      "predictionHit": false,
+      "pitcherDirection": null,
+      "recommendationGrade": "WATCH",
+      "starter": {
+        "postGame": "STARTER_MATCHED",
+        "probable": "PROBABLE_ONLY",
+        "join": "MATCHED"
+      },
+      "bullpen": {
+        "roleComparison": "ROLE_STRUCTURE_CONFLICTS_BASELINE",
+        "bullpenVerdict": "BULLPEN_COLLAPSE",
+        "postOutcome": "MISS"
+      },
+      "lineup": {
+        "preGame": "NOT_COLLECTED",
+        "postGame": "COMPLETE"
+      },
+      "flowReview": {
+        "primary": "BULLPEN_FAILURE",
+        "secondary": [
+          "CLOSE_GAME_VARIANCE"
+        ],
+        "starterVerdict": "STARTER_ADVANTAGE_WASTED",
+        "bullpenVerdict": "BULLPEN_COLLAPSE"
+      }
+    },
+    {
+      "gameId": "mlb-179592",
+      "match": "Cleveland Guardians @ Tampa Bay Rays",
+      "outcome": "SUCCESS",
+      "predictionHit": true,
+      "pitcherDirection": "MIXED",
+      "recommendationGrade": "EDGE PICK",
+      "starter": {
+        "postGame": "STARTER_MATCHED",
+        "probable": "PROBABLE_ONLY",
+        "join": "MATCHED"
+      },
+      "bullpen": {
+        "roleComparison": "ROLE_STRUCTURE_CONFLICTS_BASELINE",
+        "bullpenVerdict": "BULLPEN_PROTECTED_LEAD",
+        "postOutcome": "HIT"
+      },
+      "lineup": {
+        "preGame": "NOT_COLLECTED",
+        "postGame": "COMPLETE"
+      },
+      "flowReview": {
+        "primary": "BASELINE_SIGNAL_CONFIRMED",
+        "secondary": [
+          "BULLPEN_PROTECTED_SIGNAL",
+          "MULTIPLE_FACTORS"
+        ],
+        "starterVerdict": "STARTERS_EVEN",
+        "bullpenVerdict": "BULLPEN_PROTECTED_LEAD"
+      }
+    },
+    {
+      "gameId": "mlb-179593",
+      "match": "Cincinnati Reds @ St.Louis Cardinals",
+      "outcome": "FAILURE",
+      "predictionHit": false,
+      "pitcherDirection": null,
+      "recommendationGrade": "PASS",
+      "starter": {
+        "postGame": "STARTER_MATCHED",
+        "probable": "PROBABLE_ONLY",
+        "join": "MATCHED"
+      },
+      "bullpen": {
+        "roleComparison": "ROLE_STRUCTURE_NEUTRAL",
+        "bullpenVerdict": "BULLPEN_COLLAPSE",
+        "postOutcome": "MISS"
+      },
+      "lineup": {
+        "preGame": "NOT_COLLECTED",
+        "postGame": "COMPLETE"
+      },
+      "flowReview": {
+        "primary": "BULLPEN_FAILURE",
+        "secondary": [
+          "CLOSE_GAME_VARIANCE"
+        ],
+        "starterVerdict": "STARTERS_EVEN",
+        "bullpenVerdict": "BULLPEN_COLLAPSE"
+      }
+    },
+    {
+      "gameId": "mlb-179594",
+      "match": "Los Angeles Angels @ San Francisco Giants",
+      "outcome": "FAILURE",
+      "predictionHit": false,
+      "pitcherDirection": null,
+      "recommendationGrade": "WATCH",
+      "starter": {
+        "postGame": "STARTER_MATCHED",
+        "probable": "PROBABLE_ONLY",
+        "join": "MATCHED"
+      },
+      "bullpen": {
+        "roleComparison": "ROLE_STRUCTURE_SUPPORTS_BASELINE",
+        "bullpenVerdict": "NOT_BULLPEN_DRIVEN",
+        "postOutcome": "MISS"
+      },
+      "lineup": {
+        "preGame": "NOT_COLLECTED",
+        "postGame": "COMPLETE"
+      },
+      "flowReview": {
+        "primary": "STARTER_FAILURE",
+        "secondary": [
+          "CLOSE_GAME_VARIANCE"
+        ],
+        "starterVerdict": "STARTER_DISADVANTAGE_REALIZED",
+        "bullpenVerdict": "NOT_BULLPEN_DRIVEN"
+      }
+    },
+    {
+      "gameId": "mlb-179595",
+      "match": "Chicago Cubs @ Pittsburgh Pirates",
+      "outcome": "FAILURE",
+      "predictionHit": false,
+      "pitcherDirection": null,
+      "recommendationGrade": "WATCH",
+      "starter": {
+        "postGame": "STARTER_MATCHED",
+        "probable": "PROBABLE_ONLY",
+        "join": "MATCHED"
+      },
+      "bullpen": {
+        "roleComparison": "ROLE_STRUCTURE_INSUFFICIENT",
+        "bullpenVerdict": "NOT_BULLPEN_DRIVEN",
+        "postOutcome": "MISS"
+      },
+      "lineup": {
+        "preGame": "NOT_COLLECTED",
+        "postGame": "COMPLETE"
+      },
+      "flowReview": {
+        "primary": "MULTIPLE_FACTORS",
+        "secondary": [
+          "STARTER_FAILURE",
+          "OPPONENT_OFFENSE_SURGE"
+        ],
+        "starterVerdict": "STARTER_DISADVANTAGE_REALIZED",
+        "bullpenVerdict": "NOT_BULLPEN_DRIVEN"
+      }
+    },
+    {
+      "gameId": "mlb-179596",
+      "match": "Athletics @ Minnesota Twins",
+      "outcome": "SUCCESS",
+      "predictionHit": true,
+      "pitcherDirection": null,
+      "recommendationGrade": "WATCH",
+      "starter": {
+        "postGame": "STARTER_MATCHED",
+        "probable": "PROBABLE_ONLY",
+        "join": "MATCHED"
+      },
+      "bullpen": {
+        "roleComparison": "ROLE_STRUCTURE_CONFLICTS_BASELINE",
+        "bullpenVerdict": "BULLPEN_WARNING_SURVIVED",
+        "postOutcome": "HIT"
+      },
+      "lineup": {
+        "preGame": "NOT_COLLECTED",
+        "postGame": "COMPLETE"
+      },
+      "flowReview": {
+        "primary": "BASELINE_SIGNAL_CONFIRMED",
+        "secondary": [
+          "STARTER_ADVANTAGE_REALIZED",
+          "MULTIPLE_FACTORS"
+        ],
+        "starterVerdict": "STARTER_ADVANTAGE_REALIZED",
+        "bullpenVerdict": "BULLPEN_WARNING_SURVIVED"
+      }
+    },
+    {
+      "gameId": "mlb-179597",
+      "match": "Los Angeles Dodgers @ New York Mets",
+      "outcome": "FAILURE",
+      "predictionHit": false,
+      "pitcherDirection": "MIXED",
+      "recommendationGrade": "EDGE PICK",
+      "starter": {
+        "postGame": "STARTER_MATCHED",
+        "probable": "PROBABLE_ONLY",
+        "join": "MATCHED"
+      },
+      "bullpen": {
+        "roleComparison": "ROLE_STRUCTURE_CONFLICTS_BASELINE",
+        "bullpenVerdict": "BULLPEN_COLLAPSE",
+        "postOutcome": "MISS"
+      },
+      "lineup": {
+        "preGame": "NOT_COLLECTED",
+        "postGame": "COMPLETE"
+      },
+      "flowReview": {
+        "primary": "BULLPEN_FAILURE",
+        "secondary": [
+          "OPPONENT_OFFENSE_SURGE"
+        ],
+        "starterVerdict": "STARTER_ADVANTAGE_WASTED",
+        "bullpenVerdict": "BULLPEN_COLLAPSE"
+      }
+    },
+    {
+      "gameId": "mlb-179598",
+      "match": "Colorado Rockies @ Milwaukee Brewers",
+      "outcome": "SUCCESS",
+      "predictionHit": true,
+      "pitcherDirection": null,
+      "recommendationGrade": "EDGE PICK",
+      "starter": {
+        "postGame": "STARTER_MATCHED",
+        "probable": "PROBABLE_ONLY",
+        "join": "MATCHED"
+      },
+      "bullpen": {
+        "roleComparison": "ROLE_STRUCTURE_NEUTRAL",
+        "bullpenVerdict": "BULLPEN_PROTECTED_LEAD",
+        "postOutcome": "HIT"
+      },
+      "lineup": {
+        "preGame": "NOT_COLLECTED",
+        "postGame": "COMPLETE"
+      },
+      "flowReview": {
+        "primary": "BASELINE_SIGNAL_CONFIRMED",
+        "secondary": [
+          "STARTER_ADVANTAGE_REALIZED",
+          "MULTIPLE_FACTORS"
+        ],
+        "starterVerdict": "STARTER_ADVANTAGE_REALIZED",
+        "bullpenVerdict": "BULLPEN_PROTECTED_LEAD"
+      }
+    },
+    {
+      "gameId": "mlb-179599",
+      "match": "San Diego Padres @ Miami Marlins",
+      "outcome": "SUCCESS",
+      "predictionHit": true,
+      "pitcherDirection": "MIXED",
+      "recommendationGrade": "EDGE PICK",
+      "starter": {
+        "postGame": "STARTER_MATCHED",
+        "probable": "PROBABLE_ONLY",
+        "join": "MATCHED"
+      },
+      "bullpen": {
+        "roleComparison": "ROLE_STRUCTURE_NEUTRAL",
+        "bullpenVerdict": "BULLPEN_CREATED_WIN",
+        "postOutcome": "HIT"
+      },
+      "lineup": {
+        "preGame": "NOT_COLLECTED",
+        "postGame": "COMPLETE"
+      },
+      "flowReview": {
+        "primary": "BASELINE_SIGNAL_CONFIRMED",
+        "secondary": [
+          "BULLPEN_PROTECTED_SIGNAL",
+          "MULTIPLE_FACTORS"
+        ],
+        "starterVerdict": "STARTER_DISADVANTAGE_OVERCOME",
+        "bullpenVerdict": "BULLPEN_CREATED_WIN"
+      }
+    },
+    {
+      "gameId": "mlb-179600",
+      "match": "Kansas City Royals @ Detroit Tigers",
+      "outcome": "FAILURE",
+      "predictionHit": false,
+      "pitcherDirection": null,
+      "recommendationGrade": "PASS",
+      "starter": {
+        "postGame": "STARTER_MATCHED",
+        "probable": "PROBABLE_ONLY",
+        "join": "MATCHED"
+      },
+      "bullpen": {
+        "roleComparison": "ROLE_STRUCTURE_NEUTRAL",
+        "bullpenVerdict": "BULLPEN_COLLAPSE",
+        "postOutcome": "MISS"
+      },
+      "lineup": {
+        "preGame": "NOT_COLLECTED",
+        "postGame": "COMPLETE"
+      },
+      "flowReview": {
+        "primary": "BULLPEN_FAILURE",
+        "secondary": [
+          "CLOSE_GAME_VARIANCE"
+        ],
+        "starterVerdict": "STARTERS_EVEN",
+        "bullpenVerdict": "BULLPEN_COLLAPSE"
+      }
+    },
+    {
+      "gameId": "mlb-179601",
+      "match": "Houston Astros @ Chicago White Sox",
+      "outcome": "FAILURE",
+      "predictionHit": false,
+      "pitcherDirection": "MIXED",
+      "recommendationGrade": "EDGE PICK",
+      "starter": {
+        "postGame": "STARTER_MATCHED",
+        "probable": "PROBABLE_ONLY",
+        "join": "MATCHED"
+      },
+      "bullpen": {
+        "roleComparison": "ROLE_STRUCTURE_CONFLICTS_BASELINE",
+        "bullpenVerdict": "BULLPEN_COLLAPSE",
+        "postOutcome": "MISS"
+      },
+      "lineup": {
+        "preGame": "NOT_COLLECTED",
+        "postGame": "COMPLETE"
+      },
+      "flowReview": {
+        "primary": "MULTIPLE_FACTORS",
+        "secondary": [
+          "STARTER_FAILURE",
+          "BULLPEN_FAILURE"
+        ],
+        "starterVerdict": "STARTER_DISADVANTAGE_REALIZED",
+        "bullpenVerdict": "BULLPEN_COLLAPSE"
+      }
+    },
+    {
+      "gameId": "mlb-179602",
+      "match": "Toronto Blue Jays @ Boston Red Sox",
+      "outcome": "SUCCESS",
+      "predictionHit": true,
+      "pitcherDirection": null,
+      "recommendationGrade": "PASS",
+      "starter": {
+        "postGame": "STARTER_MATCHED",
+        "probable": "PROBABLE_ONLY",
+        "join": "MATCHED"
+      },
+      "bullpen": {
+        "roleComparison": "ROLE_STRUCTURE_NEUTRAL",
+        "bullpenVerdict": "BULLPEN_PROTECTED_LEAD",
+        "postOutcome": "HIT"
+      },
+      "lineup": {
+        "preGame": "NOT_COLLECTED",
+        "postGame": "COMPLETE"
+      },
+      "flowReview": {
+        "primary": "STARTER_ADVANTAGE_REALIZED",
+        "secondary": [
+          "BULLPEN_PROTECTED_SIGNAL",
+          "MULTIPLE_FACTORS"
+        ],
+        "starterVerdict": "STARTER_ADVANTAGE_REALIZED",
+        "bullpenVerdict": "BULLPEN_PROTECTED_LEAD"
+      }
+    },
+    {
+      "gameId": "mlb-179603",
+      "match": "Atlanta Braves @ Baltimore Orioles",
+      "outcome": "SUCCESS",
+      "predictionHit": true,
+      "pitcherDirection": null,
+      "recommendationGrade": "PASS",
+      "starter": {
+        "postGame": "STARTER_MATCHED",
+        "probable": "PROBABLE_ONLY",
+        "join": "MATCHED"
+      },
+      "bullpen": {
+        "roleComparison": "ROLE_STRUCTURE_SUPPORTS_BASELINE",
+        "bullpenVerdict": "BULLPEN_PROTECTED_LEAD",
+        "postOutcome": "HIT"
+      },
+      "lineup": {
+        "preGame": "NOT_COLLECTED",
+        "postGame": "COMPLETE"
+      },
+      "flowReview": {
+        "primary": "STARTER_ADVANTAGE_REALIZED",
+        "secondary": [
+          "BULLPEN_PROTECTED_SIGNAL",
+          "MULTIPLE_FACTORS"
+        ],
+        "starterVerdict": "STARTER_ADVANTAGE_REALIZED",
+        "bullpenVerdict": "BULLPEN_PROTECTED_LEAD"
+      }
+    }
+  ],
+  "hypothesisImpact": {
+    "starterHST": {
+      "ids": [
+        "H-ST-001",
+        "H-ST-002",
+        "H-ST-003",
+        "H-ST-004"
+      ],
+      "note": "STARTER_MATCHED on all 15 games; no STARTER_CHANGED — H-ST-004 not testable yet",
+      "engineAdmission": "PROHIBITED"
+    },
+    "bullpenHBP": {
+      "ids": [
+        "H-BP-ROLE-001",
+        "H-BP-ROLE-002",
+        "H-BP-ROLE-003",
+        "H-BP-ROLE-004",
+        "H-BP-ROLE-005",
+        "H-BP-ROLE-007"
+      ],
+      "note": "Role comparison labels co-occur with flow verdicts but n=15 — descriptive only",
+      "engineAdmission": "PROHIBITED"
+    },
+    "lineupHLU": {
+      "ids": [
+        "H-LU-001",
+        "H-LU-002",
+        "H-LU-003"
+      ],
+      "note": "Lineup post-game COMPLETE for all; pre-game NOT_COLLECTED — H-LU-003 cannot be evaluated",
+      "engineAdmission": "PROHIBITED"
+    }
+  },
+  "limitations": [
+    "Single finished slate (15 games) — below ≥100 target",
+    "No causal inference; counts are co-occurrence only",
+    "Lineup has no pre-game snapshot on this date",
+    "Correlation not promoted to Engine candidate"
+  ]
+}

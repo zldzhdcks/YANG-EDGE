@@ -4,18 +4,18 @@
  * Classifier / threshold / Engine / Framework / immutable prediction 불변.
  *
  * 실행:
- *   npx tsx --env-file=.env.local scripts/validate-mlb-bullpen-v1_1-date.ts [YYYY-MM-DD]
+ *   tsx --env-file=.env.local scripts/validate-mlb-bullpen-v1_1-date.ts [YYYY-MM-DD]
+ *   tsx --env-file=.env.local scripts/validate-mlb-bullpen-v1_1-date.ts 2026-07-27 --skip-postgame-steps
+ *   npm run research:bullpen-validate -- 2026-07-27 --skip-postgame-steps
  */
 import { createHash } from "node:crypto";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { spawn } from "node:child_process";
+import { spawnLocalTsxScript } from "./lib/spawn-local-tsx";
 
-const DATE =
-  process.argv[2]?.trim() ||
-  process.env.MLB_TARGET_DATE_KST?.trim() ||
-  "2026-07-28";
 const BASELINE_DATE = "2026-07-27";
+const KNOWN_FLAGS = new Set(["--skip-postgame-steps"]);
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
 const IMMUTABLE_KEYS = [
   "predictionId",
@@ -51,6 +51,64 @@ const IMMUTABLE_KEYS = [
   "integrityWarnings",
 ] as const;
 
+type CliArgs = {
+  date: string;
+  skipPostgameSteps: boolean;
+};
+
+type PostgameArtifactCounts = {
+  graded: number;
+  hits: number;
+  fails: number;
+  pending: number;
+  total: number;
+};
+
+type SlateSnapshot = {
+  total: number;
+  finished: number;
+  inProgress: number;
+  notStarted: number;
+  counts: Record<string, number>;
+  remaining: string | null;
+  source: "api-baseball" | "postgame-artifacts";
+};
+
+function parseCliArgs(argv: string[]): CliArgs {
+  let date: string | null = null;
+  let skipPostgameSteps = false;
+
+  for (const arg of argv.slice(2)) {
+    if (arg.startsWith("--")) {
+      if (KNOWN_FLAGS.has(arg)) {
+        if (arg === "--skip-postgame-steps") skipPostgameSteps = true;
+        continue;
+      }
+      throw new Error(`Unknown option: ${arg}`);
+    }
+    if (DATE_RE.test(arg)) {
+      if (date != null) {
+        throw new Error(`Multiple dates specified: ${date}, ${arg}`);
+      }
+      date = arg;
+      continue;
+    }
+    throw new Error(`Unknown argument: ${arg}`);
+  }
+
+  return {
+    date:
+      date?.trim() ||
+      process.env.MLB_TARGET_DATE_KST?.trim() ||
+      "2026-07-28",
+    skipPostgameSteps,
+  };
+}
+
+function postgameHint(date: string): string {
+  return `Run postgame first: npm run research:postgame -- ${date}`;
+}
+
 function sha256(text: string): string {
   return createHash("sha256").update(text, "utf8").digest("hex");
 }
@@ -80,7 +138,16 @@ function snapshotImmutableHash(raw: string): string {
   return sha256(hashes.join("|"));
 }
 
-async function fetchSlate(date: string) {
+async function fileExists(rel: string): Promise<boolean> {
+  try {
+    await access(path.join(process.cwd(), rel));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function fetchSlate(date: string): Promise<SlateSnapshot> {
   const base = (
     process.env.BASEBALL_API_BASE_URL || "https://v1.baseball.api-sports.io"
   ).replace(/\/$/, "");
@@ -119,23 +186,8 @@ async function fetchSlate(date: string) {
     notStarted,
     counts,
     remaining: r.headers.get("x-ratelimit-requests-remaining"),
+    source: "api-baseball",
   };
-}
-
-function run(scriptRel: string, args: string[] = []): Promise<number> {
-  return new Promise((resolve, reject) => {
-    const child = spawn(
-      process.platform === "win32" ? "npx.cmd" : "npx",
-      ["tsx", "--env-file=.env.local", path.join(process.cwd(), scriptRel), ...args],
-      {
-        cwd: process.cwd(),
-        stdio: "inherit",
-        shell: process.platform === "win32",
-      },
-    );
-    child.on("error", reject);
-    child.on("close", (c) => resolve(c ?? 1));
-  });
 }
 
 async function readJson(rel: string): Promise<Record<string, unknown> | null> {
@@ -148,19 +200,317 @@ async function readJson(rel: string): Promise<Record<string, unknown> | null> {
   }
 }
 
+function countPredictionResults(
+  predictions: unknown[],
+): PostgameArtifactCounts {
+  let graded = 0;
+  let hits = 0;
+  let fails = 0;
+  let pending = 0;
+
+  for (const raw of predictions) {
+    const p = asRecord(raw);
+    if (!p) continue;
+    const resultStatus = asString(p.resultStatus);
+    if (resultStatus === "graded") {
+      graded += 1;
+      if (p.predictionHit === true) hits += 1;
+      else if (p.predictionHit === false) fails += 1;
+    } else if (resultStatus === "pending" || resultStatus == null) {
+      pending += 1;
+    }
+  }
+
+  return {
+    graded,
+    hits,
+    fails,
+    pending,
+    total: predictions.length,
+  };
+}
+
+function countReviewGames(review: Record<string, unknown>): {
+  worked: number;
+  failed: number;
+  pending: number;
+} {
+  const games = Array.isArray(review.games) ? review.games : [];
+  let worked = 0;
+  let failed = 0;
+  let pending = 0;
+
+  for (const raw of games) {
+    const g = asRecord(raw);
+    if (!g) continue;
+    const resultStatus = asString(g.resultStatus);
+    const feedback = asString(g.feedbackClassification);
+    if (resultStatus === "graded") {
+      if (feedback === "SIGNAL_WORKED") worked += 1;
+      else if (feedback === "SIGNAL_FAILED") failed += 1;
+    } else if (resultStatus === "pending") {
+      pending += 1;
+    }
+  }
+
+  return { worked, failed, pending };
+}
+
+async function assertFlowReviewFile(
+  date: string,
+  rel: string,
+  metaCountKey: string,
+  expectedCount: number,
+  label: string,
+): Promise<void> {
+  const doc = await readJson(rel);
+  if (!doc) {
+    throw new Error(
+      `Missing ${label} artifact: ${rel}. ${postgameHint(date)}`,
+    );
+  }
+  const games = Array.isArray(doc.games) ? doc.games : [];
+  const metaCount = asNumber(asRecord(doc.meta)?.[metaCountKey]);
+  if (metaCount != null && games.length !== metaCount) {
+    throw new Error(
+      `${label} count drift: meta.${metaCountKey}=${metaCount} but games.length=${games.length}`,
+    );
+  }
+  if (expectedCount > 0 && games.length !== expectedCount) {
+    throw new Error(
+      `${label} count drift: review expects ${expectedCount} but games.length=${games.length}`,
+    );
+  }
+  if (metaCount != null && metaCount !== expectedCount) {
+    throw new Error(
+      `${label} count drift: review expects ${expectedCount} but meta.${metaCountKey}=${metaCount}`,
+    );
+  }
+}
+
+async function assertPostgameArtifacts(
+  date: string,
+): Promise<{ counts: PostgameArtifactCounts; slate: SlateSnapshot }> {
+  const predRel = `data/predictions/mlb/${date}.json`;
+  const reviewRel = `data/predictions/mlb/${date}-review.json`;
+
+  if (!(await fileExists(predRel))) {
+    throw new Error(`Missing prediction artifact: ${predRel}. ${postgameHint(date)}`);
+  }
+  if (!(await fileExists(reviewRel))) {
+    throw new Error(`Missing review artifact: ${reviewRel}. ${postgameHint(date)}`);
+  }
+
+  const pred = await readJson(predRel);
+  const review = await readJson(reviewRel);
+  if (!pred || !review) {
+    throw new Error(`Unable to read postgame artifacts. ${postgameHint(date)}`);
+  }
+
+  const summary = asRecord(review.summary) ?? {};
+  const reviewGraded = asNumber(summary.graded) ?? 0;
+  const reviewHits = asNumber(summary.hits) ?? 0;
+  const reviewFails = asNumber(summary.fails) ?? 0;
+  const reviewPending = asNumber(summary.pending) ?? 0;
+  const reviewTotal = asNumber(summary.total) ?? null;
+
+  const predCounts = countPredictionResults(
+    Array.isArray(pred.predictions) ? pred.predictions : [],
+  );
+
+  if (
+    predCounts.graded !== reviewGraded ||
+    predCounts.hits !== reviewHits ||
+    predCounts.fails !== reviewFails ||
+    predCounts.pending !== reviewPending
+  ) {
+    throw new Error(
+      [
+        "Review summary drift vs prediction results:",
+        `review graded/hits/fails/pending=${reviewGraded}/${reviewHits}/${reviewFails}/${reviewPending}`,
+        `prediction graded/hits/fails/pending=${predCounts.graded}/${predCounts.hits}/${predCounts.fails}/${predCounts.pending}`,
+        postgameHint(date),
+      ].join(" "),
+    );
+  }
+
+  const gameCounts = countReviewGames(review);
+  if (gameCounts.worked !== reviewHits || gameCounts.failed !== reviewFails) {
+    throw new Error(
+      [
+        "Review games drift vs summary:",
+        `games worked/failed=${gameCounts.worked}/${gameCounts.failed}`,
+        `summary hits/fails=${reviewHits}/${reviewFails}`,
+        postgameHint(date),
+      ].join(" "),
+    );
+  }
+
+  if (reviewGraded > 0) {
+    if (reviewHits > 0) {
+      await assertFlowReviewFile(
+        date,
+        `data/predictions/mlb/${date}-success-flow-review.json`,
+        "successGames",
+        reviewHits,
+        "Success flow review",
+      );
+    }
+    if (reviewFails > 0) {
+      await assertFlowReviewFile(
+        date,
+        `data/predictions/mlb/${date}-failure-flow-review.json`,
+        "failedGames",
+        reviewFails,
+        "Failure flow review",
+      );
+    }
+  }
+
+  const total =
+    reviewTotal ?? predCounts.total ?? reviewGraded + reviewPending;
+  const slate: SlateSnapshot = {
+    total,
+    finished: reviewGraded,
+    inProgress: 0,
+    notStarted: reviewPending,
+    counts: {
+      GRADED: reviewGraded,
+      PENDING: reviewPending,
+    },
+    remaining: null,
+    source: "postgame-artifacts",
+  };
+
+  return {
+    counts: {
+      graded: reviewGraded,
+      hits: reviewHits,
+      fails: reviewFails,
+      pending: reviewPending,
+      total,
+    },
+    slate,
+  };
+}
+
+async function runBullpenPipeline(date: string): Promise<{
+  bullpenHashBefore: string | null;
+  bullpenHashAfter: string | null;
+  cacheNetwork: number | null;
+  cacheReuseOk: boolean;
+  failWarn: number | null;
+  failTotal: number | null;
+  successStable: number | null;
+  successTotal: number | null;
+  unkRate: number | null;
+  clsRate: number | null;
+  roleCounts: Record<string, unknown> | null;
+  fp: number;
+  fn: number;
+}> {
+  const steps = [
+    ["scripts/audit-mlb-pregame-bullpen-risk.ts", [date]],
+    ["scripts/build-mlb-bullpen-role-dataset-v1_1.ts", [date]],
+  ] as const;
+
+  for (const [script, args] of steps) {
+    console.log(`\n--- ${script} ---`);
+    const code = await spawnLocalTsxScript(script, [...args]);
+    if (code !== 0) throw new Error(`${script} failed (${code})`);
+  }
+
+  const bullpenPath = `data/research/mlb/${date}-bullpen-role-dataset-v1_1.json`;
+  const bullpen1 = await readJson(bullpenPath);
+  const bullpenHashBefore = asString(asRecord(bullpen1?.meta)?.resultHashSha256);
+  const cache1 = asRecord(bullpen1?.cacheUsage) ?? {};
+  const net1 = asNumber(cache1.networkCalls) ?? 0;
+
+  console.log("\n--- scripts/build-mlb-bullpen-role-dataset-v1_1.ts (warm re-run) ---");
+  const code2 = await spawnLocalTsxScript(
+    "scripts/build-mlb-bullpen-role-dataset-v1_1.ts",
+    [date],
+  );
+  if (code2 !== 0) throw new Error("bullpen warm re-run failed");
+
+  const bullpen2 = await readJson(bullpenPath);
+  const bullpenHashAfter = asString(asRecord(bullpen2?.meta)?.resultHashSha256);
+  const cache2 = asRecord(bullpen2?.cacheUsage) ?? {};
+  const cacheNetwork = asNumber(cache2.networkCalls);
+  const cacheReuseOk = cacheNetwork === 0;
+
+  const sum = asRecord(bullpen2?.summary) ?? {};
+  const roleCounts = asRecord(sum.roleCounts) ?? {};
+  const rows = asNumber(sum.classifiedPitcherRows) ?? 0;
+  const unk = asNumber(roleCounts.UNKNOWN) ?? 0;
+  const cls = asNumber(asRecord(sum.classificationStatusCounts)?.CLASSIFIED) ?? 0;
+  const unkRate = rows > 0 ? Math.round((unk / rows) * 1000) / 10 : null;
+  const clsRate = rows > 0 ? Math.round((cls / rows) * 1000) / 10 : null;
+
+  const games = Array.isArray(bullpen2?.gameCompares)
+    ? (bullpen2!.gameCompares as unknown[])
+    : [];
+  let falsePositive = 0;
+  let falseNegative = 0;
+  for (const raw of games) {
+    const g = asRecord(raw);
+    if (!g) continue;
+    const outcome = asString(g.outcome);
+    const overall = asString(g.overallRoleComparison);
+    if (outcome === "HIT" && overall === "ROLE_STRUCTURE_CONFLICTS_BASELINE") {
+      falsePositive += 1;
+    }
+    if (outcome === "MISS" && overall === "ROLE_STRUCTURE_SUPPORTS_BASELINE") {
+      falseNegative += 1;
+    }
+  }
+
+  if (net1 > 0 && !cacheReuseOk) {
+    // surfaced via remainingIssues in caller
+  }
+  if (bullpenHashBefore !== bullpenHashAfter) {
+    // surfaced via remainingIssues in caller
+  }
+
+  return {
+    bullpenHashBefore,
+    bullpenHashAfter,
+    cacheNetwork,
+    cacheReuseOk,
+    failWarn: asNumber(sum.failCollapsePregameKeyWarning),
+    failTotal: asNumber(sum.failCollapseTotal),
+    successStable: asNumber(sum.successProtectedPregameStable),
+    successTotal: asNumber(sum.successProtectedTotal),
+    unkRate,
+    clsRate,
+    roleCounts,
+    fp: falsePositive,
+    fn: falseNegative,
+  };
+}
+
 async function main() {
-  console.log(`=== Bullpen v1.1 date validation (${DATE}) ===`);
+  const { date: DATE, skipPostgameSteps } = parseCliArgs(process.argv);
+  console.log(
+    `=== Bullpen v1.1 date validation (${DATE})${skipPostgameSteps ? " [skip-postgame-steps]" : ""} ===`,
+  );
 
   const predPath = path.join(
     process.cwd(),
     "data/predictions/mlb",
     `${DATE}.json`,
   );
+
+  let prechecked: { counts: PostgameArtifactCounts; slate: SlateSnapshot } | null =
+    null;
+  if (skipPostgameSteps) {
+    prechecked = await assertPostgameArtifacts(DATE);
+  }
+
   const predRawBefore = await readFile(predPath, "utf8");
   const predImmutableBefore = snapshotImmutableHash(predRawBefore);
   const predFileHashBefore = sha256(predRawBefore);
 
-  const slate = await fetchSlate(DATE);
   const baseline27 = await readJson(
     "data/research/mlb/2026-07-27-bullpen-role-dataset-v1_1.json",
   );
@@ -182,6 +532,7 @@ async function main() {
   const graded27 = asNumber(asRecord(review27?.summary)?.graded) ?? 14;
   const v11 = asRecord(compare27?.v11) ?? {};
 
+  let slate: SlateSnapshot;
   let pipelineRan = false;
   let gradedNew = 0;
   let failWarn: number | null = null;
@@ -199,106 +550,95 @@ async function main() {
   let bullpenHashAfter: string | null = null;
   let cacheNetwork: number | null = null;
   let cacheReuseOk = false;
-  let remainingIssues: string[] = [];
+  const remainingIssues: string[] = [];
 
-  if (slate.finished === 0) {
-    remainingIssues.push(
-      `${DATE} 종료 경기 0 (status=${JSON.stringify(slate.counts)}) — 채점/리뷰/Bullpen 추가 표본 대기`,
-    );
+  if (skipPostgameSteps) {
+    const { counts, slate: artifactSlate } = prechecked!;
+    slate = artifactSlate;
+
+    if (counts.graded === 0) {
+      remainingIssues.push(
+        `${DATE} graded games 0 — AWAITING_FINISHED_GAMES (postgame artifacts present but no Final results yet)`,
+      );
+    } else {
+      const bullpen = await runBullpenPipeline(DATE);
+      pipelineRan = true;
+      gradedNew = counts.graded;
+      failWarn = bullpen.failWarn;
+      failTotal = bullpen.failTotal;
+      successStable = bullpen.successStable;
+      successTotal = bullpen.successTotal;
+      fp = bullpen.fp;
+      fn = bullpen.fn;
+      unkRate = bullpen.unkRate;
+      clsRate = bullpen.clsRate;
+      roleCounts = bullpen.roleCounts;
+      bullpenHashBefore = bullpen.bullpenHashBefore;
+      bullpenHashAfter = bullpen.bullpenHashAfter;
+      cacheNetwork = bullpen.cacheNetwork;
+      cacheReuseOk = bullpen.cacheReuseOk;
+      if ((cacheNetwork ?? 0) > 0 && !cacheReuseOk) {
+        remainingIssues.push("warm cache reuse incomplete");
+      }
+      if (bullpenHashBefore !== bullpenHashAfter) {
+        remainingIssues.push("bullpen result hash not reproducible");
+      }
+    }
   } else {
-    // Grade + reviews + bullpen + warm re-run for hash
-    const steps = [
-      ["scripts/grade-mlb-research-predictions.ts", [DATE]],
-      ["scripts/review-mlb-failed-game-flow.ts", [DATE]],
-      ["scripts/review-mlb-success-game-flow.ts", [DATE]],
-      ["scripts/audit-mlb-pregame-bullpen-risk.ts", [DATE]],
-      ["scripts/build-mlb-bullpen-role-dataset-v1_1.ts", [DATE]],
-    ] as const;
-    for (const [script, args] of steps) {
-      console.log(`\n--- ${script} ---`);
-      const code = await run(script, [...args]);
-      if (code !== 0) throw new Error(`${script} failed (${code})`);
-    }
-    pipelineRan = true;
+    slate = await fetchSlate(DATE);
 
-    const bullpenPath = `data/research/mlb/${DATE}-bullpen-role-dataset-v1_1.json`;
-    const bullpen1 = await readJson(bullpenPath);
-    bullpenHashBefore = asString(asRecord(bullpen1?.meta)?.resultHashSha256);
-    const cache1 = asRecord(bullpen1?.cacheUsage) ?? {};
-    const net1 = asNumber(cache1.networkCalls) ?? 0;
-
-    // warm re-run
-    const code2 = await run("scripts/build-mlb-bullpen-role-dataset-v1_1.ts", [
-      DATE,
-    ]);
-    if (code2 !== 0) throw new Error("bullpen warm re-run failed");
-    const bullpen2 = await readJson(bullpenPath);
-    bullpenHashAfter = asString(asRecord(bullpen2?.meta)?.resultHashSha256);
-    const cache2 = asRecord(bullpen2?.cacheUsage) ?? {};
-    cacheNetwork = asNumber(cache2.networkCalls);
-    cacheReuseOk = cacheNetwork === 0;
-
-    const sum = asRecord(bullpen2?.summary) ?? {};
-    roleCounts = asRecord(sum.roleCounts) ?? {};
-    const rows = asNumber(sum.classifiedPitcherRows) ?? 0;
-    const unk = asNumber(roleCounts.UNKNOWN) ?? 0;
-    const cls =
-      asNumber(asRecord(sum.classificationStatusCounts)?.CLASSIFIED) ?? 0;
-    unkRate = rows > 0 ? Math.round((unk / rows) * 1000) / 10 : null;
-    clsRate = rows > 0 ? Math.round((cls / rows) * 1000) / 10 : null;
-    failWarn = asNumber(sum.failCollapsePregameKeyWarning);
-    failTotal = asNumber(sum.failCollapseTotal);
-    successStable = asNumber(sum.successProtectedPregameStable);
-    successTotal = asNumber(sum.successProtectedTotal);
-
-    const review = await readJson(`data/predictions/mlb/${DATE}-review.json`);
-    gradedNew = asNumber(asRecord(review?.summary)?.graded) ?? slate.finished;
-
-    // FP/FN vs outcome using overallRoleComparison
-    const games = Array.isArray(bullpen2?.gameCompares)
-      ? (bullpen2!.gameCompares as unknown[])
-      : [];
-    let falsePositive = 0;
-    let falseNegative = 0;
-    for (const raw of games) {
-      const g = asRecord(raw);
-      if (!g) continue;
-      const outcome = asString(g.outcome);
-      const overall = asString(g.overallRoleComparison);
-      if (
-        outcome === "HIT" &&
-        overall === "ROLE_STRUCTURE_CONFLICTS_BASELINE"
-      ) {
-        falsePositive += 1;
+    if (slate.finished === 0) {
+      remainingIssues.push(
+        `${DATE} 종료 경기 0 (status=${JSON.stringify(slate.counts)}) — AWAITING_FINISHED_GAMES`,
+      );
+    } else {
+      const steps = [
+        ["scripts/grade-mlb-research-predictions.ts", [DATE]],
+        ["scripts/review-mlb-failed-game-flow.ts", [DATE]],
+        ["scripts/review-mlb-success-game-flow.ts", [DATE]],
+      ] as const;
+      for (const [script, args] of steps) {
+        console.log(`\n--- ${script} ---`);
+        const code = await spawnLocalTsxScript(script, [...args]);
+        if (code !== 0) throw new Error(`${script} failed (${code})`);
       }
-      if (
-        outcome === "MISS" &&
-        overall === "ROLE_STRUCTURE_SUPPORTS_BASELINE"
-      ) {
-        falseNegative += 1;
-      }
-    }
-    fp = falsePositive;
-    fn = falseNegative;
 
-    if (net1 > 0 && !cacheReuseOk) {
-      remainingIssues.push("warm cache reuse incomplete");
-    }
-    if (bullpenHashBefore !== bullpenHashAfter) {
-      remainingIssues.push("bullpen result hash not reproducible");
+      const bullpen = await runBullpenPipeline(DATE);
+      pipelineRan = true;
+      bullpenHashBefore = bullpen.bullpenHashBefore;
+      bullpenHashAfter = bullpen.bullpenHashAfter;
+      cacheNetwork = bullpen.cacheNetwork;
+      cacheReuseOk = bullpen.cacheReuseOk;
+      failWarn = bullpen.failWarn;
+      failTotal = bullpen.failTotal;
+      successStable = bullpen.successStable;
+      successTotal = bullpen.successTotal;
+      fp = bullpen.fp;
+      fn = bullpen.fn;
+      unkRate = bullpen.unkRate;
+      clsRate = bullpen.clsRate;
+      roleCounts = bullpen.roleCounts;
+
+      const review = await readJson(`data/predictions/mlb/${DATE}-review.json`);
+      gradedNew = asNumber(asRecord(review?.summary)?.graded) ?? slate.finished;
+
+      if ((cacheNetwork ?? 0) > 0 && !cacheReuseOk) {
+        remainingIssues.push("warm cache reuse incomplete");
+      }
+      if (bullpenHashBefore !== bullpenHashAfter) {
+        remainingIssues.push("bullpen result hash not reproducible");
+      }
     }
   }
 
   const predRawAfter = await readFile(predPath, "utf8");
   const predImmutableAfter = snapshotImmutableHash(predRawAfter);
   const predImmutableOk = predImmutableBefore === predImmutableAfter;
-  // 채점 전엔 파일 전체도 불변이어야 함
   const predFileUnchangedIfIdle =
     !pipelineRan || sha256(predRawAfter) !== predFileHashBefore
       ? predImmutableOk
       : predImmutableOk;
 
-  // H-BP-ROLE-006 collection status only
   const availabilityPrev = await readJson(
     "data/research/mlb/h-bp-role-006-availability-survey.json",
   );
@@ -328,7 +668,6 @@ async function main() {
     "utf8",
   );
 
-  // H-BP-ROLE-007 observation (UNKNOWN natural decline) — observation only
   const role007 = {
     meta: {
       hypothesisId: "H-BP-ROLE-007",
@@ -393,7 +732,7 @@ async function main() {
   );
   if (!pipelineRan) {
     remainingIssues.push(
-      "H-BP-ROLE-007 awaiting finished 07-28 sample for UNKNOWN delta",
+      "H-BP-ROLE-007 awaiting finished sample for UNKNOWN delta",
     );
   }
 
@@ -405,6 +744,7 @@ async function main() {
       version: "bullpen-v1.1-date-validation-v1",
       generatedAt: new Date().toISOString(),
       targetDateKst: DATE,
+      skipPostgameSteps,
       classifierVersion: "bullpen-role-classifier-v1.1",
       classifierLogicChanged: false,
       engineConnected: false,
@@ -421,6 +761,7 @@ async function main() {
       cacheReuseNetworkCalls: cacheNetwork,
       cacheReuseOk: !pipelineRan || cacheReuseOk,
       pipelineRan,
+      slateSource: slate.source,
     },
     slate,
     metrics: {
@@ -475,8 +816,7 @@ async function main() {
   await mkdir(path.dirname(outPath), { recursive: true });
   await writeFile(outPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");
 
-  // Daily report: reuse written validation JSON only (no recompute)
-  const reportCode = await run(
+  const reportCode = await spawnLocalTsxScript(
     "scripts/build-mlb-bullpen-v1_1-daily-report.ts",
     [DATE],
   );
@@ -484,9 +824,9 @@ async function main() {
     throw new Error(`daily report failed (exit ${reportCode})`);
   }
 
-  if (pipelineRan) {
+  if (pipelineRan && !skipPostgameSteps) {
     console.log("\n--- Site Feedback/Learning refresh (post research) ---");
-    const refreshCode = await run(
+    const refreshCode = await spawnLocalTsxScript(
       "scripts/refresh-site-feedback-learning.ts",
       [DATE],
     );
@@ -498,6 +838,7 @@ async function main() {
   }
 
   console.log(`\nfinished=${slate.finished} pipelineRan=${pipelineRan}`);
+  console.log(`skipPostgameSteps=${skipPostgameSteps}`);
   console.log(`immutableOk=${predImmutableOk}`);
   console.log(`conclusion=${conclusion}`);
   console.log(`저장: ${outPath}`);

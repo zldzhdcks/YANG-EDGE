@@ -2,6 +2,8 @@
 
 공통 연구 Dataset 계약. Bullpen, Starter, Weather, Travel 등이 동일한 metadata · hash · audit · scorecard · hypothesis 연계를 사용한다.
 
+**Multi-sport boundary (MLB vs future sports, no schema change):** [MULTI_SPORT_RESEARCH_BOUNDARY.md](./MULTI_SPORT_RESEARCH_BOUNDARY.md)
+
 ```text
 Engine 연결: PROHIBITED (기본)
 적중률만으로 VALIDATED/PROMISING 승격 금지

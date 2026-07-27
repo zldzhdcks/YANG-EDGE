@@ -15,6 +15,8 @@ import { getMatchDisplayLabel, getTeamDisplayName } from "@/lib/teams";
 
 type GameCardProps = {
   game: GameData;
+  /** /games 목록 날짜 — 연구 상세 fromDate (홈·픽 등에서는 전달하지 않음) */
+  fromDate?: string;
   /** 매칭 확정된 배당만 전달된다. 없으면 표시하지 않음 (빈 값·0 금지). */
   odds?: OddsData | null;
   oddsAvailability?: OddsAvailability;
@@ -191,6 +193,7 @@ function GameCardBody({
 
 export default function GameCard({
   game,
+  fromDate,
   odds = null,
   oddsAvailability = "not-found",
   oddsUnavailableReason = null,
@@ -204,6 +207,7 @@ export default function GameCard({
   return (
     <AnalysisNavLink
       gameId={getResearchAnalysisGameId(game)}
+      fromDate={fromDate}
       className={wrapperClass}
     >
       <GameCardBody

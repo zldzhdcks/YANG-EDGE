@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "version": "contradiction-ledger-v1-audit",
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T10:44:12.428Z",
+    "conclusion": "CONTRADICTION_EVIDENCE_COLLECTION_STARTED",
+    "predictionHashSha256": "621f4dbc2ad7439804f88ba213452e5e2675396e889a26580f79b11ad9e58051"
+  },
+  "totals": {
+    "contradictionEvents": 10,
+    "starterContradictions": 5,
+    "bullpenContradictions": 5,
+    "lineupContradictions": 0,
+    "uniqueGames": 7,
+    "typeCounts": [
+      {
+        "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE",
+        "count": 4
+      },
+      {
+        "type": "BULLPEN_ROLE_SUPPORTS_PREDICTION_FAILED",
+        "count": 2
+      },
+      {
+        "type": "BULLPEN_ROLE_CONFLICTS_PREDICTION_SUCCEEDED",
+        "count": 2
+      },
+      {
+        "type": "BULLPEN_ROLE_CONFLICTS_FLOW_PROTECTED",
+        "count": 1
+      },
+      {
+        "type": "STARTER_IDENTITY_MATCHED_FLOW_DISADVANTAGE_OVERCOME",
+        "count": 1
+      }
+    ]
+  },
+  "checks": [
+    {
+      "id": "prediction-hash-recorded",
+      "passed": true,
+      "detail": "621f4dbc2ad7439804f88ba213452e5e2675396e889a26580f79b11ad9e58051"
+    },
+    {
+      "id": "engine-prohibited",
+      "passed": true,
+      "detail": "PROHIBITED"
+    },
+    {
+      "id": "hypothesis-status-unchanged",
+      "passed": true,
+      "detail": "no registry promotion"
+    }
+  ]
+}

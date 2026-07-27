@@ -7,7 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "refresh:feedback-learning": "tsx --env-file=.env.local scripts/refresh-site-feedback-learning.ts"
+    "refresh:feedback-learning": "tsx --env-file=.env.local scripts/refresh-site-feedback-learning.ts",
+    "research:starter": "tsx --env-file=.env.local scripts/run-mlb-starter-accumulation-with-summary-v1.ts",
+    "research:bullpen": "tsx --env-file=.env.local scripts/build-mlb-bullpen-role-dataset-v1_1.ts",
+    "research:bullpen-validate": "tsx --env-file=.env.local scripts/validate-mlb-bullpen-v1_1-date.ts",
+    "research:lineup": "tsx --env-file=.env.local scripts/build-mlb-lineup-dataset-v1.ts",
+    "research:status": "tsx scripts/check-mlb-research-pipeline-status-v1.ts",
+    "research:postgame": "tsx --env-file=.env.local scripts/run-mlb-postgame-pipeline.ts",
+    "research:ops": "tsx --env-file=.env.local scripts/run-mlb-research-ops-pipeline-v1.ts",
+    "research:dashboard": "tsx --env-file=.env.local scripts/build-dataset-coverage-dashboard-v1.ts",
+    "research:starter-summary": "tsx --env-file=.env.local scripts/summarize-mlb-starter-accumulation-v1.ts",
+    "research:lineup-probe": "tsx --env-file=.env.local scripts/probe-mlb-pregame-lineup-availability-v1.ts"
   },
   "dependencies": {
     "next": "16.2.10",
@@ -23,6 +33,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
     "tailwindcss": "^4",
+    "tsx": "4.19.2",
     "typescript": "^5"
   }
 }
