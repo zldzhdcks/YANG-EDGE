@@ -1,4 +1,5 @@
 import type { AnalysisViewModel } from "@/lib/edge/to-analysis-view";
+import { formatEdgeScoreUserDisplay } from "@/lib/edge/edge-score-semantics";
 import { getConfidenceLabel } from "@/types/analysis";
 import Card from "@/components/ui/Card";
 import StatBox from "@/components/ui/StatBox";
@@ -47,6 +48,12 @@ export default function PredictionHero({ analysis }: PredictionHeroProps) {
       ? ""
       : `${valueEdge > 0 ? "+" : ""}${valueEdge.toFixed(1)}%`;
   const valueEdgePositive = valueEdge != null && valueEdge > 0;
+  const edgeDisplay = formatEdgeScoreUserDisplay({
+    homeSideEdgeScore: analysis.edgeScoreRaw,
+    baselinePick: analysis.pickTeam,
+    homeTeam: analysis.homeTeam,
+    awayTeam: analysis.awayTeam,
+  });
 
   return (
     <Card as="section" padding="lg">
@@ -89,9 +96,9 @@ export default function PredictionHero({ analysis }: PredictionHeroProps) {
         />
         <StatBox
           label="EDGE Score"
-          value={`+${analysis.edgeScore}`}
-          hint={analysis.gradeLabel}
-          accent
+          value={edgeDisplay.primaryValue}
+          hint={edgeDisplay.statusLabelKo}
+          accent={edgeDisplay.predictedSideEdge != null && edgeDisplay.predictedSideEdge > 0}
           size="md"
         />
         <StatBox

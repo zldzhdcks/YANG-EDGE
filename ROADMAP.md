@@ -41,7 +41,7 @@
 |------|-------------|------|
 | 개인 베팅 가계부 | `/ledger` | 브라우저 `localStorage` (`yang-edge:private-ledger:v1`). 서버 전송 없음 |
 | 오늘 경기 일정 UI | `/games` | `SportsProvider.getGames` + (가능 시) football·odds 보강. **graded MLB는 카드에 최종 스코어·예측 적중/실패·예측 팀 표시** |
-| 홈 상태 구분 | `/` | Today Pick / Featured / 오늘 경기: `success` · `empty` · `error` 구분. **일정=Provider · 분석=Dummy 샘플 라벨** |
+| 홈 상태 구분 | `/` | TODAY EDGE PICK v1.1 (upcoming 슬레이트) · 오늘 경기: `success` · `empty` · `error` · Dummy TodayPick/Featured **공개 홈 미노출** |
 | 이용 안내(푸터) | 공통 Footer | 참고용·비보장·데이터 출처 원칙 문구 |
 | 헤더 내비 | Header | `/games`, `/ledger`, Feedback/Learning 등 (EDGE Ranking `/picks`·EDGE Combo `/toto`는 공개 내비에서 HIDDEN) |
 | Feedback / Learning | `/feedback`, `/learning` | MLB post-game export(`refresh-site-feedback-learning`) 후 mirror·dashboard 갱신 · `force-dynamic` |
@@ -53,7 +53,7 @@
 | 기능 | 되는 것 | 안 되는 것 / 제한 |
 |------|---------|-------------------|
 | TheSportsDB 일정 | NPB·KBO `eventsday` → `GameData` 매핑, KST 변환 | 무료 키 **요청당 리그별 최대 3건**. 유료 키 전량 여부는 미검증 |
-| 홈 Today EDGE Pick | 일정 로드 + Engine 파이프라인 + **연구용 샘플 분석** 배너 | Engine 입력이 **dummy gameId 3개뿐**. 실일정 ID와 불일치 → Pick 비는 것이 정상일 수 있음. **실추천 아님** |
+| 홈 TODAY EDGE PICK | `/` · `GET /api/today-edge-picks` | 연구 snapshot + Dataset completeness 기준 최대 3경기 · **현재 KST 이후 upcoming 슬레이트만** · 엄격 EDGE_PICK 미충족 시 **RESEARCH_CANDIDATE fallback** · 종료 경기 재노출 없음 · `force-dynamic` |
 | 홈 Featured / 오늘 경기 요약 | 동일 `buildHomeFeed` + 샘플 안내 · analyzed=`샘플 분석` | Featured·분석 수는 Engine 가용 경기에 의존. 실일정만 있으면 0에 가까움 |
 | `/api/games` odds | 키 있으면 h2h 매칭·표시 보강 | 키 없으면 일정만. 배당 매칭 실패 시 Value Edge 없음 |
 | `/api/games` football | `FOOTBALL_API_KEY` 있으면 관심 리그 병합 | 키/한도 없으면 야구 일정만 또는 partial |

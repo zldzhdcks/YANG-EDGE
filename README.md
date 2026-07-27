@@ -19,7 +19,8 @@ Provider·환경변수·API는 **[docs/API.md](./docs/API.md)** 를 보세요.
 요약:
 
 - **실일정:** TheSportsDB (NPB/KBO) — `SPORTS_PROVIDER` + `.env.local` 필요
-- **홈:** 일정은 Provider 실데이터 · 분석(Today Pick/Featured)은 **Dummy Engine 샘플** (공통 샘플 배너)
+- **홈:** 일정은 Provider 실데이터 · **TODAY EDGE PICK**은 현재 KST 이후 가장 가까운 연구 슬레이트만 사용하며, 엄격 기준 미충족 시 연구 후보 fallback을 제공한다 (종료 경기·과거 snapshot fallback 없음, 최대 3경기)
+- **EDGE Score:** artifact·Engine의 **signed home-side** 연구값이며, 음수는 양수로 강제 변환(`Math.abs`)하지 않는다 — UI는 예측 팀 기준 우위 여부로 표시 ([EDGE_SCORE_SEMANTICS.md](./EDGE_SCORE_SEMANTICS.md))
 - **분석 Engine 입력:** 현재 dummy gameId 일부만 (실일정과 ID 체계가 다를 수 있음)
 - **개인 가계부:** `/ledger` — 브라우저 localStorage 전용
 - **Feedback / Learning:** MLB post-game 후 `refresh-site-feedback-learning` (export → dashboard)로 갱신 · 페이지는 `force-dynamic`

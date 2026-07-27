@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-07-27T13:57:51.639Z",
+  "formulaMeaning": "Home-side weighted factor sum × 30. Positive = home advantage, negative = away advantage.",
+  "scoreReferenceSide": "HOME",
+  "predictedTeamField": "baselinePick",
+  "distribution": {
+    "totalGames": 27,
+    "predictedSidePositive": 27,
+    "predictedSideZero": 0,
+    "predictedSideNegative": 0,
+    "homeSideRawPositive": 11,
+    "homeSideRawNegative": 16,
+    "homeSideRawZero": 0
+  },
+  "signBindingIssues": 0,
+  "texasRangersValidation": {
+    "gameId": "mlb-179605",
+    "homeTeam": "Texas Rangers",
+    "awayTeam": "Seattle Mariners",
+    "baselinePick": "Texas Rangers",
+    "homeSideEdgeScore": 8.7,
+    "predictedSideEdge": 8.7,
+    "alignsWithPick": true,
+    "semanticsCode": "EDGE_POSITIVE",
+    "signBindingIssue": false
+  },
+  "arizonaValidation": {
+    "gameId": "mlb-179608",
+    "homeTeam": "Pittsburgh Pirates",
+    "awayTeam": "Arizona Diamondbacks",
+    "baselinePick": "Arizona Diamondbacks",
+    "homeSideEdgeScore": -2.8,
+    "predictedSideEdge": 2.8,
+    "alignsWithPick": true,
+    "semanticsCode": "EDGE_POSITIVE",
+    "signBindingIssue": false
+  },
+  "negativeInStrictEdgePicks": 0,
+  "mathAbsDisplayUsages": [
+    "src/lib/edge/to-analysis-view.ts — removed display Math.abs (v1.2 audit fix)",
+    "src/lib/home/build-home-feed.ts — dummy engine selection only (not research snapshot)",
+    "src/lib/edge/recommendation-grade.ts — grade magnitude only (Engine unchanged)"
+  ]
+}

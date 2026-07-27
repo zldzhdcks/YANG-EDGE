@@ -17,7 +17,7 @@ export default function HeroSection() {
         <br />
         일정은 Provider 실데이터를 사용하고,
         <br />
-        홈 분석 수치는 현재 연구용 Dummy Engine 샘플입니다.
+        TODAY EDGE PICK은 연구 스냅샷 기준으로 선정합니다.
       </p>
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">

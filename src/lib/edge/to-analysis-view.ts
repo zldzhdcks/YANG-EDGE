@@ -2,6 +2,7 @@ import type { AnalysisData as EngineAnalysisData } from "@/types/engine-analysis
 import type { ReasonIcon, RecommendationGrade } from "@/types/analysis";
 import { buildMarketComparison } from "@/lib/market";
 import type { DecimalOddsInput } from "@/lib/market";
+import { formatEdgeScoreUserDisplay } from "./edge-score-semantics";
 import { runEdgeEngine } from "./run-edge-engine";
 import {
   getRecommendationGrade,
@@ -51,7 +52,9 @@ export type AnalysisViewModel = {
   starRating: number;
   winProbability: number;
   confidence: number;
-  /** 화면 표시용 절댓값 (추천 팀 EDGE 크기) */
+  /** Home-side raw EDGE (artifact convention). */
+  edgeScoreRaw: number;
+  /** Predicted-side signed EDGE for display (not Math.abs). */
   edgeScore: number;
   grade: RecommendationGrade;
   gradeLabel: string;
@@ -205,8 +208,18 @@ export function buildAnalysisView(
 ): AnalysisViewModel {
   const result = runEdgeEngine(engineInput);
   const market = toMarketDisplayFields(engineInput, result, marketOdds);
-  // 추천 등급: Engine 원본 edgeScore(부호 포함) → |EDGE| 구간 매핑
   const recommendation = getRecommendationGrade(result.edgeScore);
+  const edgeScoreRaw = Math.round(result.edgeScore * 10) / 10;
+  const edgeDisplay = formatEdgeScoreUserDisplay({
+    homeSideEdgeScore: result.edgeScore,
+    baselinePick: result.pickTeamName,
+    homeTeam: engineInput.homeTeam,
+    awayTeam: engineInput.awayTeam,
+  });
+  const edgeScoreDisplay =
+    edgeDisplay.predictedSideEdge != null && edgeDisplay.predictedSideEdge > 0
+      ? edgeDisplay.predictedSideEdge
+      : edgeScoreRaw;
 
   const reasons: AnalysisReasonView[] = result.reasons.map((reason, index) => ({
     id: `reason-${reason.factor ?? index}`,
@@ -239,7 +252,8 @@ export function buildAnalysisView(
     starRating: starFromEdgeScore(result.edgeScore),
     winProbability: Math.round(result.winProbability),
     confidence: Math.round(result.confidence),
-    edgeScore: Math.round(Math.abs(result.edgeScore) * 10) / 10,
+    edgeScoreRaw,
+    edgeScore: Math.round(edgeScoreDisplay * 10) / 10,
     grade: result.grade,
     gradeLabel: result.label,
     recommendationGrade: recommendation.grade,

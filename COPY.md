@@ -42,11 +42,103 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 | Headline L2 | `가치를 찾습니다.` |
 | Description L1 | `축구 · 야구 · 농구` |
 | Description L2 | `일정은 Provider 실데이터를 사용하고,` |
-| Description L3 | `홈 분석 수치는 현재 연구용 Dummy Engine 샘플입니다.` |
+| Description L3 | `TODAY EDGE PICK은 연구 스냅샷 기준으로 선정합니다.` |
 | CTA Primary | `오늘 경기 보기` |
 | CTA Secondary | `내 가계부` |
 
-### Today AI Pick (홈 섹션)
+### TODAY EDGE PICK (홈 섹션 · v1.2)
+
+| Key | Copy |
+|-----|------|
+| Section Label | `TODAY EDGE PICK` |
+| Target Date | `대상 경기일 {YYYY-MM-DD} KST` |
+| Updated At | `업데이트 {HH:mm} KST` |
+| Guidance · Mixed | `현재 연구 기준을 충족한 EDGE PICK과 추가 연구 후보를 함께 표시합니다.` |
+| Guidance · Research Only | `엄격한 EDGE PICK 기준을 충족한 경기는 없습니다. 대신 현재 예정 경기 중 분석 우선순위가 높은 연구 후보를 표시합니다.` |
+| Empty · Preparing | `다음 경기 분석을 준비 중입니다.` |
+| Empty · No Picks | `선정된 EDGE PICK이 없습니다.` |
+| Empty · Explanation | `현재 시각 이후 사용할 수 있는 연구 스냅샷이 없습니다. 과거 종료 경기는 EDGE PICK으로 다시 표시하지 않습니다.` |
+| Empty · Next Date | `다음 분석 예정: {YYYY-MM-DD}` |
+| Footnote | `TODAY EDGE PICK은 현재 시각 이후 예정 경기 중 연구 스냅샷·Dataset completeness 기준으로 최대 3경기만 선정합니다. 연구 후보는 정식 EDGE PICK이 아닙니다. 실추천·베팅 조언이 아닙니다.` |
+| EDGE PICK Badge | `EDGE PICK ①` · `EDGE PICK ②` · `EDGE PICK ③` |
+| Research Badge | `연구 후보 ①` · `연구 후보 ②` · `연구 후보 ③` |
+| EDGE PICK Description | `현재 연구 기준을 충족한 EDGE PICK입니다.` |
+| Research Description | `현재 예정 경기 중 분석 우선순위가 높은 연구 후보입니다. 일부 핵심 데이터가 부족하여 정식 EDGE PICK은 아닙니다.` |
+| CTA | `연구 분석 보기 →` |
+
+#### 연구 후보 부족 사유 (한국어 표시)
+
+| Code | Copy |
+|------|------|
+| BASELINE_NOT_MET | `Baseline 후보 기준 미충족` |
+| RESEARCH_PARTIAL | `연구 데이터 일부 부족` |
+| BULLPEN_PENDING | `불펜 데이터 연구 대기 중` |
+| LINEUP_PARTIAL | `경기 전 라인업 일부 미수집` |
+| WEATHER_PARTIAL | `날씨 예보 미수집` |
+| ODDS_PARTIAL | `개장·최신 배당 일부 미수집` |
+| INJURY_PARTIAL | `부상 정보 일부 미수집` |
+
+#### EDGE Score 표시
+
+| Code | Copy |
+|------|------|
+| EDGE positive | `Baseline 대비 우위` |
+| EDGE zero / negative | `Baseline 기준 우위 없음` |
+| General UI policy | `일반 화면에는 예측 팀 기준 EDGE만 표시하고 원본 홈 기준 EDGE는 노출하지 않는다.` |
+| Technical UI policy | `연구 기술 정보에서만 원본 홈 기준 EDGE와 예측 팀 기준 EDGE를 함께 표시한다.` |
+| EDGE Reference Side | `EDGE 기준 방향` |
+| Raw Home-side EDGE | `원본 홈 기준 EDGE` |
+| Predicted-side EDGE | `예측 팀 기준 EDGE` |
+| Display Reference | `화면 표시 기준` |
+| MARKET_CONFLICT | `시장 방향과 모델 판단이 충돌` |
+| Research EDGE_NO_POSITIVE | `Baseline 기준 우위 없음` |
+
+#### 다음 경기 (Research Snapshot)
+
+| Key | Copy |
+|-----|------|
+| Section Title | `다음 경기` |
+| Target Date | `대상 경기일 {YYYY-MM-DD} KST` |
+| CTA | `연구 보기 →` |
+
+### TODAY EDGE PICK (홈 섹션 · v1.1 — superseded by v1.2)
+
+| Key | Copy |
+|-----|------|
+| Section Label | `TODAY EDGE PICK` |
+| Target Date | `대상 경기일 {YYYY-MM-DD} KST` |
+| Updated At | `업데이트 {HH:mm} KST` |
+| Empty · Preparing | `다음 경기 분석을 준비 중입니다.` |
+| Empty · Explanation | `현재 시각 이후 사용할 수 있는 연구 스냅샷이 없습니다. 과거 종료 경기는 EDGE PICK으로 다시 표시하지 않습니다.` |
+| Empty · Next Date | `다음 분석 예정: {YYYY-MM-DD}` |
+| Empty · No Eligible | `선정 기준을 충족한 TODAY EDGE PICK 후보가 없습니다.` |
+| Footnote | `TODAY EDGE PICK은 현재 시각 이후 예정 경기 중 연구 스냅샷·Dataset completeness 기준으로 최대 3경기만 선정합니다. 실추천·베팅 조언이 아닙니다.` |
+| Rank Badge | `EDGE PICK ①` · `EDGE PICK ②` · `EDGE PICK ③` |
+| CTA | `연구 분석 보기 →` |
+
+#### 선정 이유 (한국어 표시)
+
+| Code | Copy |
+|------|------|
+| STARTER_COMPLETE | `선발 데이터 확보` |
+| BULLPEN_COMPLETE | `불펜 데이터 확보` |
+| TRAVEL_COMPLETE | `이동·휴식 데이터 확보` |
+| ODDS_COMPLETE | `시장 배당 확보` |
+| HIGH_CONFIDENCE | `상대적으로 높은 신뢰도` |
+| VALUE_EDGE_POSITIVE | `AI 확률이 시장 확률보다 높음` |
+| PREDICTION_SNAPSHOT_VERIFIED | `예측 스냅샷 확인` |
+| BASELINE_CANDIDATE | `Baseline 후보 조건 충족` |
+
+#### 데이터 부족 (한국어 표시)
+
+| Code | Copy |
+|------|------|
+| LINEUP_PARTIAL | `경기 전 라인업 일부 미수집` |
+| WEATHER_PARTIAL | `날씨 예보 미수집` |
+| INJURY_PARTIAL | `부상 정보 일부 미수집` |
+| ODDS_PARTIAL | `개장·최신 배당 일부 미수집` |
+
+### Today AI Pick (홈 섹션 · Dummy · 공개 홈 미노출)
 
 | Key | Copy |
 |-----|------|

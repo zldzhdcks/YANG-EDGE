@@ -12,6 +12,10 @@ import {
   mapStatusCodesDisplay,
   predictionOutcomeKo,
 } from "@/lib/research/research-analysis-display-map";
+import {
+  formatEdgeScoreUserDisplay,
+  formatRawHomeSideEdgeForTechnical,
+} from "@/lib/edge/edge-score-semantics";
 import Card from "@/components/ui/Card";
 import Link from "next/link";
 import PredictionResultBadge from "@/components/research/PredictionResultBadge";
@@ -130,6 +134,53 @@ function MetricRow({
       ) : (
         <MissingHint availability={field.availability} />
       )}
+    </div>
+  );
+}
+
+function EdgeScoreMetricRow({
+  view,
+}: {
+  view: ResearchAnalysisView;
+}) {
+  const raw = view.edgeScore;
+  const baselinePick = view.prediction.value;
+  const homeTeam = view.gameInfo.homeTeam;
+  const awayTeam = view.gameInfo.awayTeam;
+
+  if (
+    raw.availability !== "COLLECTED" ||
+    raw.value == null ||
+    !baselinePick ||
+    !homeTeam ||
+    !awayTeam
+  ) {
+    return (
+      <div className="flex items-baseline justify-between gap-3 border-b border-white/[0.04] py-2 last:border-b-0">
+        <span className="text-xs text-zinc-500">EDGE 점수</span>
+        <MissingHint availability={raw.availability} />
+      </div>
+    );
+  }
+
+  const display = formatEdgeScoreUserDisplay({
+    homeSideEdgeScore: raw.value,
+    baselinePick,
+    homeTeam,
+    awayTeam,
+  });
+
+  return (
+    <div className="border-b border-white/[0.04] py-2 last:border-b-0">
+      <div className="flex items-baseline justify-between gap-3">
+        <span className="text-xs text-zinc-500">EDGE 점수</span>
+        <div className="text-right">
+          <span className="tabular-nums text-sm font-semibold text-white">
+            {display.primaryValue}
+          </span>
+          <p className="mt-0.5 text-xs text-zinc-500">{display.statusLabelKo}</p>
+        </div>
+      </div>
     </div>
   );
 }
@@ -294,11 +345,7 @@ export default function ResearchAnalysisViewer({ view, gamesBackHref }: Props) {
                   field={view.confidence}
                   render={(v) => String(v)}
                 />
-                <MetricRow
-                  label="EDGE 점수"
-                  field={view.edgeScore}
-                  render={(v) => formatSigned(v)}
-                />
+                <EdgeScoreMetricRow view={view} />
                 <MetricRow
                   label="가치 차이"
                   field={view.valueEdge}
@@ -721,6 +768,50 @@ export default function ResearchAnalysisViewer({ view, gamesBackHref }: Props) {
                   </li>
                   <li>bullpen: {availabilityLabelEn(bullpenAvail)}</li>
                 </ul>
+              </div>
+
+              <div>
+                <p className="text-xs text-zinc-500">EDGE 기술 세부</p>
+                {view.edgeScore.availability === "COLLECTED" &&
+                view.edgeScore.value != null &&
+                view.prediction.value != null &&
+                view.gameInfo.homeTeam != null &&
+                view.gameInfo.awayTeam != null ? (
+                  (() => {
+                    const edgeDetails = formatEdgeScoreUserDisplay({
+                      homeSideEdgeScore: view.edgeScore.value,
+                      baselinePick: view.prediction.value,
+                      homeTeam: view.gameInfo.homeTeam,
+                      awayTeam: view.gameInfo.awayTeam,
+                    });
+
+                    return (
+                      <ul className="mt-1 space-y-0.5 font-mono text-[11px] text-zinc-400">
+                        <li>EDGE 기준 방향: HOME</li>
+                        <li>
+                          원본 홈 기준 EDGE:{" "}
+                          {formatRawHomeSideEdgeForTechnical(view.edgeScore.value)}
+                        </li>
+                        <li>
+                          예측 팀 기준 EDGE:{" "}
+                          {edgeDetails.predictedSideEdge != null
+                            ? formatRawHomeSideEdgeForTechnical(
+                                edgeDetails.predictedSideEdge,
+                              )
+                            : "null"}
+                        </li>
+                        <li>화면 표시 기준: PREDICTED_SIDE</li>
+                      </ul>
+                    );
+                  })()
+                ) : (
+                  <div className="mt-1">
+                    <MissingHint
+                      availability={view.edgeScore.availability}
+                      english
+                    />
+                  </div>
+                )}
               </div>
 
               <div>
