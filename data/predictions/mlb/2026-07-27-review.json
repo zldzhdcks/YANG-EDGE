@@ -2,7 +2,7 @@
   "meta": {
     "version": "mlb-research-prediction-review-v1",
     "dateKst": "2026-07-27",
-    "generatedAt": "2026-07-26T15:07:55.903Z",
+    "generatedAt": "2026-07-27T02:36:49.188Z",
     "snapshot": "data/predictions/mlb/2026-07-27.json",
     "resultSource": "api-baseball",
     "mlbStatsApiUsed": false,
@@ -12,13 +12,13 @@
   },
   "apiUsage": {
     "apiBaseball": {
-      "calls": 1,
-      "remaining": 7460,
-      "limit": 7500,
+      "calls": 0,
+      "remaining": null,
+      "limit": null,
       "datesQueried": [
         "2026-07-27"
       ],
-      "cacheHits": 0
+      "cacheHits": 1
     },
     "mlbStatsApi": {
       "calls": 0,
@@ -28,59 +28,59 @@
   },
   "summary": {
     "total": 15,
-    "graded": 0,
-    "hits": 0,
-    "fails": 0,
-    "pending": 15,
+    "graded": 15,
+    "hits": 6,
+    "fails": 9,
+    "pending": 0,
     "inconclusive": 0,
     "overallHitRate": {
-      "hitRate": null,
-      "status": "INSUFFICIENT_SAMPLE"
+      "hitRate": 40,
+      "status": "OK"
     },
     "baselineCandidate": {
       "label": "BASELINE_CANDIDATE",
-      "n": 0,
-      "hits": 0,
-      "fails": 0,
-      "hitRate": null,
-      "status": "INSUFFICIENT_SAMPLE"
+      "n": 5,
+      "hits": 2,
+      "fails": 3,
+      "hitRate": 40,
+      "status": "OK"
     },
     "pass": {
       "label": "PASS",
-      "n": 0,
-      "hits": 0,
-      "fails": 0,
-      "hitRate": null,
-      "status": "INSUFFICIENT_SAMPLE"
+      "n": 9,
+      "hits": 3,
+      "fails": 6,
+      "hitRate": 33.3,
+      "status": "OK"
     },
     "hold4": {
       "label": "HOLD_4",
-      "n": 0,
-      "hits": 0,
-      "fails": 0,
+      "n": 4,
+      "hits": 2,
+      "fails": 2,
       "hitRate": null,
       "status": "INSUFFICIENT_SAMPLE"
     },
     "marketConflictBrewers": {
       "gameId": "mlb-179598",
       "pick": "Milwaukee Brewers",
-      "score": "?-?",
-      "winner": null,
-      "hit": null,
-      "feedback": null,
-      "resultStatus": "pending"
+      "score": "11-2",
+      "winner": "home",
+      "hit": true,
+      "feedback": "SIGNAL_WORKED",
+      "resultStatus": "graded"
     },
     "yankeesDrop": {
       "gameId": "mlb-179589",
       "pick": "New York Yankees",
       "pitcherDirection": "CONFLICTS_BASELINE",
-      "score": "?-?",
-      "winner": null,
-      "hit": null,
-      "feedback": null,
-      "resultStatus": "pending"
+      "score": "11-4",
+      "winner": "home",
+      "hit": false,
+      "feedback": "SIGNAL_FAILED",
+      "resultStatus": "graded"
     },
-    "pitcherConflictWarningRole": "채점 미완",
+    "pitcherConflictWarningRole": "CONFLICT 경고 후 실제 실패 사례 존재 (단정 금지, 관찰만)",
     "byPitcherDirection": [
       {
         "label": "SUPPORTS_BASELINE",
@@ -92,45 +92,45 @@
       },
       {
         "label": "CONFLICTS_BASELINE",
-        "n": 0,
+        "n": 1,
         "hits": 0,
-        "fails": 0,
+        "fails": 1,
         "hitRate": null,
         "status": "INSUFFICIENT_SAMPLE"
       },
       {
         "label": "MIXED",
-        "n": 0,
-        "hits": 0,
-        "fails": 0,
+        "n": 4,
+        "hits": 2,
+        "fails": 2,
         "hitRate": null,
         "status": "INSUFFICIENT_SAMPLE"
       },
       {
         "label": "NONE",
-        "n": 0,
-        "hits": 0,
-        "fails": 0,
-        "hitRate": null,
-        "status": "INSUFFICIENT_SAMPLE"
+        "n": 10,
+        "hits": 4,
+        "fails": 6,
+        "hitRate": 40,
+        "status": "OK"
       }
     ],
     "byConfidence": [
       {
         "label": "confidence<50",
-        "n": 0,
-        "hits": 0,
-        "fails": 0,
-        "hitRate": null,
-        "status": "INSUFFICIENT_SAMPLE"
+        "n": 7,
+        "hits": 2,
+        "fails": 5,
+        "hitRate": 28.6,
+        "status": "OK"
       },
       {
         "label": "confidence_50_59",
-        "n": 0,
-        "hits": 0,
-        "fails": 0,
-        "hitRate": null,
-        "status": "INSUFFICIENT_SAMPLE"
+        "n": 8,
+        "hits": 4,
+        "fails": 4,
+        "hitRate": 50,
+        "status": "OK"
       },
       {
         "label": "confidence>=60",
@@ -144,25 +144,25 @@
     "byValueEdge": [
       {
         "label": "valueEdge<=0",
-        "n": 0,
-        "hits": 0,
-        "fails": 0,
-        "hitRate": null,
-        "status": "INSUFFICIENT_SAMPLE"
+        "n": 6,
+        "hits": 3,
+        "fails": 3,
+        "hitRate": 50,
+        "status": "OK"
       },
       {
         "label": "valueEdge_0_10",
-        "n": 0,
-        "hits": 0,
-        "fails": 0,
-        "hitRate": null,
-        "status": "INSUFFICIENT_SAMPLE"
+        "n": 5,
+        "hits": 2,
+        "fails": 3,
+        "hitRate": 40,
+        "status": "OK"
       },
       {
         "label": "valueEdge>=10",
-        "n": 0,
-        "hits": 0,
-        "fails": 0,
+        "n": 4,
+        "hits": 1,
+        "fails": 3,
         "hitRate": null,
         "status": "INSUFFICIENT_SAMPLE"
       }
@@ -174,69 +174,69 @@
   "importantComparisons": {
     "candidate5HitRate": {
       "label": "BASELINE_CANDIDATE",
-      "n": 0,
-      "hits": 0,
-      "fails": 0,
-      "hitRate": null,
-      "status": "INSUFFICIENT_SAMPLE"
+      "n": 5,
+      "hits": 2,
+      "fails": 3,
+      "hitRate": 40,
+      "status": "OK"
     },
     "all15HitRate": {
-      "n": 0,
-      "hits": 0,
-      "fails": 0,
-      "hitRate": null,
-      "status": "INSUFFICIENT_SAMPLE"
+      "n": 15,
+      "hits": 6,
+      "fails": 9,
+      "hitRate": 40,
+      "status": "OK"
     },
     "yankeesDrop": {
       "gameId": "mlb-179589",
-      "resultStatus": "pending",
-      "predictionHit": null,
-      "feedbackClassification": null,
+      "resultStatus": "graded",
+      "predictionHit": false,
+      "feedbackClassification": "SIGNAL_FAILED",
       "pitcherDirection": "CONFLICTS_BASELINE",
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 11,
+      "awayScore": 4
     },
     "marketConflictBrewers": {
       "gameId": "mlb-179598",
-      "resultStatus": "pending",
-      "predictionHit": null,
-      "feedbackClassification": null,
-      "homeScore": null,
-      "awayScore": null
+      "resultStatus": "graded",
+      "predictionHit": true,
+      "feedbackClassification": "SIGNAL_WORKED",
+      "homeScore": 11,
+      "awayScore": 2
     },
-    "pitcherConflictWarningRole": "채점 미완",
+    "pitcherConflictWarningRole": "CONFLICT 경고 후 실제 실패 사례 존재 (단정 금지, 관찰만)",
     "hold4": {
       "games": [
         {
           "gameId": "mlb-179592",
-          "resultStatus": "pending",
-          "predictionHit": null,
+          "resultStatus": "graded",
+          "predictionHit": true,
           "pitcherDirection": "MIXED"
         },
         {
           "gameId": "mlb-179597",
-          "resultStatus": "pending",
-          "predictionHit": null,
+          "resultStatus": "graded",
+          "predictionHit": false,
           "pitcherDirection": "MIXED"
         },
         {
           "gameId": "mlb-179599",
-          "resultStatus": "pending",
-          "predictionHit": null,
+          "resultStatus": "graded",
+          "predictionHit": true,
           "pitcherDirection": "MIXED"
         },
         {
           "gameId": "mlb-179601",
-          "resultStatus": "pending",
-          "predictionHit": null,
+          "resultStatus": "graded",
+          "predictionHit": false,
           "pitcherDirection": "MIXED"
         }
       ],
       "hitRate": {
         "label": "HOLD_4",
-        "n": 0,
-        "hits": 0,
-        "fails": 0,
+        "n": 4,
+        "hits": 2,
+        "fails": 2,
         "hitRate": null,
         "status": "INSUFFICIENT_SAMPLE"
       }
@@ -248,10 +248,10 @@
       "gameId": "mlb-179589",
       "match": "New York Yankees @ Philadelphia Phillies",
       "baselinePick": "New York Yankees",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 11,
+      "awayScore": 4,
+      "actualWinner": "home",
+      "predictionHit": false,
       "baselineStatus": "BASELINE_CANDIDATE",
       "modelProbability": 61,
       "marketProbability": 39,
@@ -274,21 +274,27 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "선발투수 방향과 Baseline 충돌",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     },
     {
       "gameId": "mlb-179590",
       "match": "Arizona Diamondbacks @ Washington Nationals",
       "baselinePick": "Arizona Diamondbacks",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 10,
+      "awayScore": 7,
+      "actualWinner": "home",
+      "predictionHit": false,
       "baselineStatus": "PASS",
       "modelProbability": 51,
       "marketProbability": 52,
@@ -311,21 +317,28 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "시장과 모델 방향 충돌 (Value Edge < 0)",
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     },
     {
       "gameId": "mlb-179591",
       "match": "Seattle Mariners @ Texas Rangers",
       "baselinePick": "Texas Rangers",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 4,
+      "awayScore": 6,
+      "actualWinner": "away",
+      "predictionHit": false,
       "baselineStatus": "PASS",
       "modelProbability": 59,
       "marketProbability": 50,
@@ -348,21 +361,26 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     },
     {
       "gameId": "mlb-179592",
       "match": "Cleveland Guardians @ Tampa Bay Rays",
       "baselinePick": "Tampa Bay Rays",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 1,
+      "awayScore": 0,
+      "actualWinner": "home",
+      "predictionHit": true,
       "baselineStatus": "BASELINE_CANDIDATE",
       "modelProbability": 63,
       "marketProbability": 56,
@@ -385,21 +403,27 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_WORKED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치했습니다.",
+        "한 경기로 신호 유효성을 확정할 수 없습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "선발투수 지표 MIXED",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     },
     {
       "gameId": "mlb-179593",
       "match": "Cincinnati Reds @ St.Louis Cardinals",
       "baselinePick": "St.Louis Cardinals",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 3,
+      "awayScore": 5,
+      "actualWinner": "away",
+      "predictionHit": false,
       "baselineStatus": "PASS",
       "modelProbability": 53,
       "marketProbability": 56,
@@ -422,21 +446,28 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "시장과 모델 방향 충돌 (Value Edge < 0)",
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     },
     {
       "gameId": "mlb-179594",
       "match": "Los Angeles Angels @ San Francisco Giants",
       "baselinePick": "San Francisco Giants",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 3,
+      "awayScore": 4,
+      "actualWinner": "away",
+      "predictionHit": false,
       "baselineStatus": "PASS",
       "modelProbability": 58,
       "marketProbability": 51,
@@ -459,21 +490,26 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     },
     {
       "gameId": "mlb-179595",
       "match": "Chicago Cubs @ Pittsburgh Pirates",
       "baselinePick": "Chicago Cubs",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 8,
+      "awayScore": 7,
+      "actualWinner": "home",
+      "predictionHit": false,
       "baselineStatus": "PASS",
       "modelProbability": 57,
       "marketProbability": 46,
@@ -496,21 +532,27 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     },
     {
       "gameId": "mlb-179596",
       "match": "Athletics @ Minnesota Twins",
       "baselinePick": "Minnesota Twins",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 11,
+      "awayScore": 8,
+      "actualWinner": "home",
+      "predictionHit": true,
       "baselineStatus": "PASS",
       "modelProbability": 56,
       "marketProbability": 56,
@@ -533,21 +575,26 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_WORKED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치했습니다.",
+        "한 경기로 신호 유효성을 확정할 수 없습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     },
     {
       "gameId": "mlb-179597",
       "match": "Los Angeles Dodgers @ New York Mets",
       "baselinePick": "Los Angeles Dodgers",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 8,
+      "awayScore": 3,
+      "actualWinner": "home",
+      "predictionHit": false,
       "baselineStatus": "BASELINE_CANDIDATE",
       "modelProbability": 64,
       "marketProbability": 59,
@@ -570,21 +617,27 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "선발투수 지표 MIXED",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     },
     {
       "gameId": "mlb-179598",
       "match": "Colorado Rockies @ Milwaukee Brewers",
       "baselinePick": "Milwaukee Brewers",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 11,
+      "awayScore": 2,
+      "actualWinner": "home",
+      "predictionHit": true,
       "baselineStatus": "MARKET_CONFLICT",
       "modelProbability": 61,
       "marketProbability": 75,
@@ -607,21 +660,27 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_WORKED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치했습니다.",
+        "한 경기로 신호 유효성을 확정할 수 없습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "시장과 모델 방향 충돌 (Value Edge < 0)",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     },
     {
       "gameId": "mlb-179599",
       "match": "San Diego Padres @ Miami Marlins",
       "baselinePick": "San Diego Padres",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 3,
+      "awayScore": 5,
+      "actualWinner": "away",
+      "predictionHit": true,
       "baselineStatus": "BASELINE_CANDIDATE",
       "modelProbability": 62,
       "marketProbability": 46,
@@ -644,21 +703,27 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_WORKED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치했습니다.",
+        "한 경기로 신호 유효성을 확정할 수 없습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "선발투수 지표 MIXED",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     },
     {
       "gameId": "mlb-179600",
       "match": "Kansas City Royals @ Detroit Tigers",
       "baselinePick": "Detroit Tigers",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 4,
+      "awayScore": 5,
+      "actualWinner": "away",
+      "predictionHit": false,
       "baselineStatus": "PASS",
       "modelProbability": 50,
       "marketProbability": 63,
@@ -681,21 +746,28 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "시장과 모델 방향 충돌 (Value Edge < 0)",
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     },
     {
       "gameId": "mlb-179601",
       "match": "Houston Astros @ Chicago White Sox",
       "baselinePick": "Houston Astros",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 12,
+      "awayScore": 3,
+      "actualWinner": "home",
+      "predictionHit": false,
       "baselineStatus": "BASELINE_CANDIDATE",
       "modelProbability": 63,
       "marketProbability": 49,
@@ -718,21 +790,28 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "선발투수 지표 MIXED",
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     },
     {
       "gameId": "mlb-179602",
       "match": "Toronto Blue Jays @ Boston Red Sox",
       "baselinePick": "Boston Red Sox",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 6,
+      "awayScore": 1,
+      "actualWinner": "home",
+      "predictionHit": true,
       "baselineStatus": "PASS",
       "modelProbability": 50,
       "marketProbability": 57,
@@ -755,21 +834,28 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_WORKED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치했습니다.",
+        "한 경기로 신호 유효성을 확정할 수 없습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "시장과 모델 방향 충돌 (Value Edge < 0)",
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     },
     {
       "gameId": "mlb-179603",
       "match": "Atlanta Braves @ Baltimore Orioles",
       "baselinePick": "Atlanta Braves",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 2,
+      "awayScore": 3,
+      "actualWinner": "away",
+      "predictionHit": true,
       "baselineStatus": "PASS",
       "modelProbability": 51,
       "marketProbability": 50,
@@ -792,12 +878,18 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_WORKED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치했습니다.",
+        "한 경기로 신호 유효성을 확정할 수 없습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     }
   ]
 }

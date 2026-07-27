@@ -5,6 +5,9 @@ import FeedbackSummary from "@/components/feedback/FeedbackSummary";
 import FeedbackDaySection from "@/components/feedback/FeedbackDaySection";
 import { loadFeedbackCenterData } from "@/lib/feedback/load-feedback-review";
 
+/** Always read latest data/predictions/*-review.json (post-game export). */
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "EDGE 피드백 센터 | YANG EDGE",
   description:
@@ -42,7 +45,10 @@ export default async function FeedbackPage() {
               <FeedbackSummary summary={data.summary} />
               <div className="space-y-12">
                 {data.days.map((day) => (
-                  <FeedbackDaySection key={day.meta.dateKst} day={day} />
+                  <FeedbackDaySection
+                    key={`${day.meta.dateKst}-${day.meta.sourceSnapshot ?? day.reviews[0]?.league ?? "day"}`}
+                    day={day}
+                  />
                 ))}
               </div>
             </>

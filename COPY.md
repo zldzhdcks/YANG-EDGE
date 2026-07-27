@@ -27,8 +27,8 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 |-----|------|
 | Logo | `YANG EDGE` |
 | Nav · Games | `오늘 경기` |
-| Nav · Ranking | `EDGE Ranking` |
-| Nav · Combo | `EDGE Combo` |
+| Nav · Ranking | `EDGE Ranking` | ※ 공개 내비 HIDDEN (`/picks` 직접 URL만) |
+| Nav · Combo | `EDGE Combo` | ※ 공개 내비 HIDDEN (`/toto` 직접 URL만) |
 | Nav · Ledger | `내 가계부` |
 | Nav · Login | `로그인` |  ※ 현재 `/#login` placeholder. 기능 미구현 |
 
@@ -44,7 +44,7 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 | Description L2 | `배트맨 기준 경기를 분석하여` |
 | Description L3 | `EDGE Score + Confidence + EDGE + 분석 근거를 제공합니다.` |
 | CTA Primary | `오늘 경기 보기` |
-| CTA Secondary | `EDGE Ranking 보기` |
+| CTA Secondary | `내 가계부` |
 
 ### Today AI Pick (홈 섹션)
 
@@ -100,27 +100,28 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 
 ## AI PICK
 
-홈 CTA·네비에서 쓰는 진입 표현.  
-상세 리스트 화면은 **EDGE Ranking** 섹션을 본다.
+홈·네비의 공개 Ranking 진입은 **비노출(HIDDEN)**.  
+`/picks`는 직접 URL 전용 고정 샘플이며, 상세는 **EDGE Ranking** 섹션을 본다.
 
 | Key | Copy | Status |
 |-----|------|--------|
-| Nav / CTA | `EDGE Ranking` | 사용 중 |
-| CTA · View | `EDGE Ranking 보기` | 사용 중 |
-| Label · Badge | `EDGE Pick` | 사용 중 |
+| Nav / CTA | `EDGE Ranking` | 공개 내비 비노출 |
+| CTA · View | `EDGE Ranking 보기` | 홈 Hero에서 제거 (보조 CTA → `내 가계부`) |
+| Label · Badge | `EDGE Pick` | 사용 중 (샘플·홈 Feature 등) |
 | Alias | `EDGE Pick` | 사용 중 |
 
 ---
 
 ## EDGE Ranking
 
-페이지: `/picks`
+페이지: `/picks` (공개 UI HIDDEN · robots noindex · 샘플 고지 배너)
 
 | Key | Copy | Status |
 |-----|------|--------|
 | Eyebrow | `EDGE` | 사용 중 |
 | Title | `EDGE Ranking` | 사용 중 |
-| Subtitle | `오늘 가장 가치 있는 경기` | 사용 중 |
+| Subtitle | `고정 샘플 순위 (실데이터·실추천 아님)` | 사용 중 |
+| Banner · Title | `고정 샘플 · 개발용 (실제 Pick 아님)` | 사용 중 |
 | Badge · Top | `EDGE Pick` | 사용 중 |
 | Stat · Confidence | `Confidence` | 사용 중 |
 | Stat · EDGE | `EDGE` | 사용 중 |
@@ -193,7 +194,8 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 | Key | Copy | Where |
 |-----|------|-------|
 | View Today Games | `오늘 경기 보기` | Home Hero |
-| View Ranking | `EDGE Ranking 보기` | Home Hero |
+| View Ledger | `내 가계부` | Home Hero (보조 CTA) |
+| View Ranking | `EDGE Ranking 보기` | 홈에서 제거 · `/picks` 공개 비노출 |
 | Detail Analysis | `상세 분석 →` | Home EDGE Pick |
 | Analyze | `분석` | Games card |
 | Back | `← 뒤로가기` | EDGE Detail |

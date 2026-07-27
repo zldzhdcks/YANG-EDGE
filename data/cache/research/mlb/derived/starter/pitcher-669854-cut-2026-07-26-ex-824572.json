@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "schemaVersion": "mlb-starter-dataset-v1",
+    "builderVersion": "starter-dataset-builder-v1",
+    "generatedAt": "2026-07-27T01:51:18.970Z",
+    "dataThroughDate": "2026-07-27",
+    "source": "INTERNAL_RESEARCH_ONLY",
+    "inputHash": "862d13c26747e001c4d1676012d69246ed9bf7b9466e4fc52b14e76531b65fa2",
+    "recordCount": 1
+  },
+  "data": {
+    "seasonStats": {
+      "era": 7.71,
+      "whip": 1.07,
+      "inningsPitched": 4.7,
+      "gamesPlayed": 1,
+      "gamesStarted": 1,
+      "wins": 0,
+      "losses": 0,
+      "strikeOuts": 8,
+      "baseOnBalls": 3,
+      "homeRuns": 2
+    },
+    "recentStarts": [
+      {
+        "date": "2026-07-20",
+        "gamePk": 824167,
+        "inningsPitched": 4.666666666666667,
+        "earnedRuns": 4,
+        "strikeOuts": 8,
+        "baseOnBalls": 3,
+        "hits": 2,
+        "homeRuns": 2,
+        "numberOfPitches": 86,
+        "win": false,
+        "loss": false
+      }
+    ],
+    "sampleSize": 1,
+    "targetGameExcludedCount": 1,
+    "cutoffExcludedCount": 1,
+    "keptSplitCount": 1,
+    "statsSource": "mlb-statsapi:/people/{id}/stats?stats=gameLog&group=pitching (pre-cutoff aggregate)",
+    "leakageFlags": [
+      "LEAKAGE_ROWS_EXCLUDED"
+    ]
+  }
+}

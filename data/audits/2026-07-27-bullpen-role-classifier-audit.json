@@ -1,0 +1,1720 @@
+{
+  "meta": {
+    "version": "mlb-bullpen-role-classifier-audit-v1",
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T00:35:28.017Z",
+    "auditOnly": true,
+    "datasetHashSha256": "6bbe6a0e5d6eb65f9ac1f1500d41ce288898b4df8c30ab80c749596cbd9f2648",
+    "hypothesesHashSha256": "cd406222f978509b6ed28fe7604aec7809f79e5000ea5c1819459cbd286f8781",
+    "datasetUnchanged": true,
+    "hypothesesUnchanged": true,
+    "hypothesesCountsNotModified": true,
+    "engineModified": false,
+    "weightsModified": false,
+    "networkCalls": 0,
+    "legal": {
+      "mlbStatsCommercialUseUnverified": true,
+      "publicRuntimeUseAllowed": false,
+      "researchBulkCallsShouldBeMinimized": true,
+      "noTosBypass": true,
+      "noAutoPolling": true
+    },
+    "note": "v1.1 설계 제안만. 타입·분류기·가설 수치·dataset 미변경."
+  },
+  "classificationBias": {
+    "observedRoleCounts": {
+      "LONG_RELIEF": 110,
+      "HIGH_LEVERAGE_RELIEF": 98,
+      "SETUP": 75,
+      "MOP_UP": 27,
+      "UNKNOWN": 81,
+      "OPENER": 5,
+      "CLOSER": 31,
+      "MIDDLE_RELIEF": 1
+    },
+    "middleReliefPath": {
+      "codeCondition": "n>=3 && avgOuts in [2,4.5] && saveRate<0.2 && holdRate<0.25 → MIDDLE score=2",
+      "middleEligibleRows": 123,
+      "actuallyClassifiedMiddle": 1,
+      "absorbedOrConflicted": 122,
+      "absorptionBreakdown": {
+        "HIGH_LEVERAGE_RELIEF": 65,
+        "MOP_UP": 24,
+        "OPENER": 5,
+        "SETUP": 3,
+        "UNKNOWN": 25
+      },
+      "samples": [
+        {
+          "playerId": 640454,
+          "inferredRole": "HIGH_LEVERAGE_RELIEF",
+          "avgOuts": 2.8,
+          "sampleSize": 5,
+          "topScores": [
+            {
+              "role": "HIGH_LEVERAGE_RELIEF",
+              "score": 5,
+              "why": "late-close-freq,leverage-without-sv-hld"
+            },
+            {
+              "role": "SETUP",
+              "score": 3,
+              "why": "7-8-close,pre-closer-pattern"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "HIGH_LEVERAGE_RELIEF"
+        },
+        {
+          "playerId": 664875,
+          "inferredRole": "HIGH_LEVERAGE_RELIEF",
+          "avgOuts": 2.714,
+          "sampleSize": 7,
+          "topScores": [
+            {
+              "role": "HIGH_LEVERAGE_RELIEF",
+              "score": 5,
+              "why": "late-close-freq,leverage-without-sv-hld"
+            },
+            {
+              "role": "CLOSER",
+              "score": 4,
+              "why": "finish+saves,9th-close"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "HIGH_LEVERAGE_RELIEF"
+        },
+        {
+          "playerId": 668820,
+          "inferredRole": "MOP_UP",
+          "avgOuts": 2.667,
+          "sampleSize": 3,
+          "topScores": [
+            {
+              "role": "MOP_UP",
+              "score": 3,
+              "why": "blowout-entries"
+            },
+            {
+              "role": "CLOSER",
+              "score": 2,
+              "why": "9th-close"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "MOP_UP"
+        },
+        {
+          "playerId": 687223,
+          "inferredRole": "OPENER",
+          "avgOuts": 4,
+          "sampleSize": 7,
+          "topScores": [
+            {
+              "role": "OPENER",
+              "score": 3,
+              "why": "short-starts"
+            },
+            {
+              "role": "LONG_RELIEF",
+              "score": 2,
+              "why": "avgOuts>=4"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "OPENER"
+        },
+        {
+          "playerId": 687377,
+          "inferredRole": "HIGH_LEVERAGE_RELIEF",
+          "avgOuts": 2.5,
+          "sampleSize": 8,
+          "topScores": [
+            {
+              "role": "HIGH_LEVERAGE_RELIEF",
+              "score": 5,
+              "why": "late-close-freq,leverage-without-sv-hld"
+            },
+            {
+              "role": "SETUP",
+              "score": 3,
+              "why": "7-8-close,pre-closer-pattern"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "HIGH_LEVERAGE_RELIEF"
+        },
+        {
+          "playerId": 687849,
+          "inferredRole": "HIGH_LEVERAGE_RELIEF",
+          "avgOuts": 3.75,
+          "sampleSize": 4,
+          "topScores": [
+            {
+              "role": "HIGH_LEVERAGE_RELIEF",
+              "score": 5,
+              "why": "late-close-freq,leverage-without-sv-hld"
+            },
+            {
+              "role": "MOP_UP",
+              "score": 3,
+              "why": "blowout-entries"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "HIGH_LEVERAGE_RELIEF"
+        },
+        {
+          "playerId": 657044,
+          "inferredRole": "MOP_UP",
+          "avgOuts": 2.818,
+          "sampleSize": 11,
+          "topScores": [
+            {
+              "role": "MOP_UP",
+              "score": 3,
+              "why": "blowout-entries"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "MOP_UP"
+        },
+        {
+          "playerId": 664199,
+          "inferredRole": "HIGH_LEVERAGE_RELIEF",
+          "avgOuts": 3.154,
+          "sampleSize": 13,
+          "topScores": [
+            {
+              "role": "HIGH_LEVERAGE_RELIEF",
+              "score": 5,
+              "why": "late-close-freq,leverage-without-sv-hld"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            },
+            {
+              "role": "SETUP",
+              "score": 1,
+              "why": "pre-closer-pattern"
+            }
+          ],
+          "absorbedBy": "HIGH_LEVERAGE_RELIEF"
+        },
+        {
+          "playerId": 686753,
+          "inferredRole": "MOP_UP",
+          "avgOuts": 4,
+          "sampleSize": 6,
+          "topScores": [
+            {
+              "role": "MOP_UP",
+              "score": 3,
+              "why": "blowout-entries"
+            },
+            {
+              "role": "LONG_RELIEF",
+              "score": 2,
+              "why": "avgOuts>=4"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "MOP_UP"
+        },
+        {
+          "playerId": 455119,
+          "inferredRole": "HIGH_LEVERAGE_RELIEF",
+          "avgOuts": 2.75,
+          "sampleSize": 4,
+          "topScores": [
+            {
+              "role": "HIGH_LEVERAGE_RELIEF",
+              "score": 5,
+              "why": "late-close-freq,leverage-without-sv-hld"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            },
+            {
+              "role": "SETUP",
+              "score": 2,
+              "why": "7-8-close"
+            }
+          ],
+          "absorbedBy": "HIGH_LEVERAGE_RELIEF"
+        },
+        {
+          "playerId": 641302,
+          "inferredRole": "SETUP",
+          "avgOuts": 2.846,
+          "sampleSize": 13,
+          "topScores": [
+            {
+              "role": "SETUP",
+              "score": 6,
+              "why": "holds,7-8-close,pre-closer-pattern"
+            },
+            {
+              "role": "HIGH_LEVERAGE_RELIEF",
+              "score": 3,
+              "why": "late-close-freq"
+            },
+            {
+              "role": "OPENER",
+              "score": 3,
+              "why": "short-starts"
+            }
+          ],
+          "absorbedBy": "SETUP"
+        },
+        {
+          "playerId": 668390,
+          "inferredRole": "UNKNOWN",
+          "avgOuts": 3.2,
+          "sampleSize": 10,
+          "topScores": [
+            {
+              "role": "HIGH_LEVERAGE_RELIEF",
+              "score": 3,
+              "why": "late-close-freq"
+            },
+            {
+              "role": "SETUP",
+              "score": 3,
+              "why": "7-8-close,pre-closer-pattern"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "HIGH_LEVERAGE_RELIEF"
+        },
+        {
+          "playerId": 686560,
+          "inferredRole": "MOP_UP",
+          "avgOuts": 3.6,
+          "sampleSize": 5,
+          "topScores": [
+            {
+              "role": "MOP_UP",
+              "score": 3,
+              "why": "blowout-entries"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "MOP_UP"
+        },
+        {
+          "playerId": 687239,
+          "inferredRole": "HIGH_LEVERAGE_RELIEF",
+          "avgOuts": 3.143,
+          "sampleSize": 7,
+          "topScores": [
+            {
+              "role": "HIGH_LEVERAGE_RELIEF",
+              "score": 5,
+              "why": "late-close-freq,leverage-without-sv-hld"
+            },
+            {
+              "role": "MOP_UP",
+              "score": 3,
+              "why": "blowout-entries"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "HIGH_LEVERAGE_RELIEF"
+        },
+        {
+          "playerId": 695239,
+          "inferredRole": "SETUP",
+          "avgOuts": 2.077,
+          "sampleSize": 13,
+          "topScores": [
+            {
+              "role": "SETUP",
+              "score": 6,
+              "why": "holds,7-8-close,pre-closer-pattern"
+            },
+            {
+              "role": "HIGH_LEVERAGE_RELIEF",
+              "score": 3,
+              "why": "late-close-freq"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "SETUP"
+        },
+        {
+          "playerId": 621074,
+          "inferredRole": "HIGH_LEVERAGE_RELIEF",
+          "avgOuts": 3.182,
+          "sampleSize": 11,
+          "topScores": [
+            {
+              "role": "HIGH_LEVERAGE_RELIEF",
+              "score": 5,
+              "why": "late-close-freq,leverage-without-sv-hld"
+            },
+            {
+              "role": "MOP_UP",
+              "score": 3,
+              "why": "blowout-entries"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "HIGH_LEVERAGE_RELIEF"
+        },
+        {
+          "playerId": 677961,
+          "inferredRole": "MOP_UP",
+          "avgOuts": 4,
+          "sampleSize": 7,
+          "topScores": [
+            {
+              "role": "MOP_UP",
+              "score": 3,
+              "why": "blowout-entries"
+            },
+            {
+              "role": "LONG_RELIEF",
+              "score": 2,
+              "why": "avgOuts>=4"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "MOP_UP"
+        },
+        {
+          "playerId": 678606,
+          "inferredRole": "HIGH_LEVERAGE_RELIEF",
+          "avgOuts": 2.7,
+          "sampleSize": 10,
+          "topScores": [
+            {
+              "role": "HIGH_LEVERAGE_RELIEF",
+              "score": 5,
+              "why": "late-close-freq,leverage-without-sv-hld"
+            },
+            {
+              "role": "SETUP",
+              "score": 3,
+              "why": "7-8-close,pre-closer-pattern"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "HIGH_LEVERAGE_RELIEF"
+        },
+        {
+          "playerId": 689546,
+          "inferredRole": "HIGH_LEVERAGE_RELIEF",
+          "avgOuts": 3.857,
+          "sampleSize": 7,
+          "topScores": [
+            {
+              "role": "HIGH_LEVERAGE_RELIEF",
+              "score": 5,
+              "why": "late-close-freq,leverage-without-sv-hld"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            },
+            {
+              "role": "SETUP",
+              "score": 2,
+              "why": "7-8-close"
+            }
+          ],
+          "absorbedBy": "HIGH_LEVERAGE_RELIEF"
+        },
+        {
+          "playerId": 518886,
+          "inferredRole": "MOP_UP",
+          "avgOuts": 3.3,
+          "sampleSize": 10,
+          "topScores": [
+            {
+              "role": "MOP_UP",
+              "score": 3,
+              "why": "blowout-entries"
+            },
+            {
+              "role": "HIGH_LEVERAGE_RELIEF",
+              "score": 2,
+              "why": "leverage-without-sv-hld"
+            },
+            {
+              "role": "MIDDLE_RELIEF",
+              "score": 2,
+              "why": "mixed-1-2ip"
+            }
+          ],
+          "absorbedBy": "MOP_UP"
+        }
+      ]
+    },
+    "longReliefPath": {
+      "codeCondition": "avgOuts>=5 → score 3; avgOuts>=4 → score 2",
+      "counts": {
+        "avgOutsGte5": 98,
+        "avgOutsGte4lt5": 12,
+        "sampleSize1": 30,
+        "sampleSize2": 17,
+        "sampleSizeLt3": 47,
+        "avgOutsExactlyFromFewApps": 47
+      },
+      "longWithStarterShortOutingSignal": 10,
+      "singleOutingCanForceLong": "sampleSize=1 & outs>=4 (e.g. 2IP=6 outs) → avgOuts>=4 → LONG"
+    },
+    "starterMixingInAvgOuts": {
+      "confirmedInCode": true,
+      "detail": "buildRoleEvidence totals outs across ALL appearances including pitcherSlotIndex===0 (starter/opener slots)",
+      "classifySourceHasSlotFilterForAvgOuts": "slot used for opener rate only; avgOuts sums all outs"
+    },
+    "priorityOrderBias": {
+      "found": true,
+      "detail": "MIDDLE score=2 loses to HIGH_LEVERAGE(2-3), LONG(2-3), SETUP/CLOSER(≥3). When avgOuts in [4,4.5], MIDDLE and LONG both score 2 → conflict → UNKNOWN",
+      "middleMaxScore": 2,
+      "highLeverageTypicalScore": 3,
+      "longTypicalScore": "2-3"
+    },
+    "thinSampleOverClassification": {
+      "sampleSizeLt3AndNotUnknown": 78,
+      "sampleSizeLt3AndNotLowConfidence": 0,
+      "issue": true
+    },
+    "duplicateRows": {
+      "totalRows": 428,
+      "uniquePlayerIds": 421,
+      "duplicatePlayerCount": 7,
+      "extraRows": 7,
+      "intentional": true,
+      "reason": "build script key=`${gameId}:${playerId}` — 동일 투수가 14경기 중 여러 팀 snapshot에 등장하면 row 중복. per-game cutoff snapshot 의도.",
+      "examples": [
+        {
+          "playerId": 640454,
+          "rows": 2,
+          "teams": [
+            "Washington Nationals",
+            "Athletics"
+          ],
+          "cutoffs": [
+            "2026-07-26T17:35:00Z",
+            "2026-07-26T18:10:00Z"
+          ],
+          "roles": [
+            "HIGH_LEVERAGE_RELIEF"
+          ]
+        },
+        {
+          "playerId": 676742,
+          "rows": 2,
+          "teams": [
+            "Pittsburgh Pirates",
+            "Baltimore Orioles"
+          ],
+          "cutoffs": [
+            "2026-07-26T17:35:00Z"
+          ],
+          "roles": [
+            "MOP_UP",
+            "CLOSER"
+          ]
+        },
+        {
+          "playerId": 676760,
+          "rows": 2,
+          "teams": [
+            "Pittsburgh Pirates",
+            "San Diego Padres"
+          ],
+          "cutoffs": [
+            "2026-07-26T17:35:00Z",
+            "2026-07-26T17:40:00Z"
+          ],
+          "roles": [
+            "LONG_RELIEF",
+            "MOP_UP"
+          ]
+        },
+        {
+          "playerId": 685126,
+          "rows": 2,
+          "teams": [
+            "Pittsburgh Pirates",
+            "Chicago White Sox"
+          ],
+          "cutoffs": [
+            "2026-07-26T17:35:00Z",
+            "2026-07-26T18:10:00Z"
+          ],
+          "roles": [
+            "HIGH_LEVERAGE_RELIEF"
+          ]
+        },
+        {
+          "playerId": 650644,
+          "rows": 2,
+          "teams": [
+            "Chicago Cubs",
+            "Athletics"
+          ],
+          "cutoffs": [
+            "2026-07-26T17:35:00Z",
+            "2026-07-26T18:10:00Z"
+          ],
+          "roles": [
+            "LONG_RELIEF"
+          ]
+        },
+        {
+          "playerId": 669060,
+          "rows": 2,
+          "teams": [
+            "Chicago Cubs",
+            "Milwaukee Brewers"
+          ],
+          "cutoffs": [
+            "2026-07-26T17:35:00Z",
+            "2026-07-26T18:10:00Z"
+          ],
+          "roles": [
+            "LONG_RELIEF",
+            "HIGH_LEVERAGE_RELIEF"
+          ]
+        },
+        {
+          "playerId": 667297,
+          "rows": 2,
+          "teams": [
+            "Minnesota Twins",
+            "Toronto Blue Jays"
+          ],
+          "cutoffs": [
+            "2026-07-26T18:10:00Z",
+            "2026-07-26T17:35:00Z"
+          ],
+          "roles": [
+            "SETUP",
+            "HIGH_LEVERAGE_RELIEF"
+          ]
+        }
+      ]
+    }
+  },
+  "roleStats": [
+    {
+      "role": "CLOSER",
+      "count": 31,
+      "sampleSize": {
+        "mean": 8.258,
+        "median": 9,
+        "p25": 8,
+        "p75": 10
+      },
+      "confidence": {
+        "high": 24,
+        "medium": 3,
+        "low": 4
+      },
+      "topEvidenceCombos": [
+        {
+          "combo": "saves,finish+saves,9th-close",
+          "count": 27
+        },
+        {
+          "combo": "saves,finish+saves",
+          "count": 2
+        },
+        {
+          "combo": "finish+saves,9th-close",
+          "count": 2
+        }
+      ],
+      "avgOuts": {
+        "mean": 3.247,
+        "median": 2.9
+      },
+      "avgAppearances": {
+        "mean": 8.258,
+        "median": 9
+      },
+      "closeGameEntryRateMean": 0.815,
+      "mopUpEntryRateMean": 0.182,
+      "finishRateMean": 0.778,
+      "saves": {
+        "mean": 4.065,
+        "total": 126
+      },
+      "holds": {
+        "mean": 0.258,
+        "total": 8
+      },
+      "twoInningPlusAvgProxyRate": 0.065,
+      "note": "twoInningPlusAvgProxyRate uses avgOuts>=6 (≈2.0 IP mean), not per-appearance 2IP+ count (not stored in v1 rows)"
+    },
+    {
+      "role": "SETUP",
+      "count": 75,
+      "sampleSize": {
+        "mean": 8.52,
+        "median": 10,
+        "p25": 5.5,
+        "p75": 11
+      },
+      "confidence": {
+        "high": 51,
+        "medium": 18,
+        "low": 6
+      },
+      "topEvidenceCombos": [
+        {
+          "combo": "holds,7-8-close,pre-closer-pattern",
+          "count": 56
+        },
+        {
+          "combo": "holds,pre-closer-pattern",
+          "count": 15
+        },
+        {
+          "combo": "holds,7-8-close",
+          "count": 4
+        }
+      ],
+      "avgOuts": {
+        "mean": 3.2,
+        "median": 3
+      },
+      "avgAppearances": {
+        "mean": 8.52,
+        "median": 10
+      },
+      "closeGameEntryRateMean": 0.712,
+      "mopUpEntryRateMean": 0.187,
+      "finishRateMean": 0.113,
+      "saves": {
+        "mean": 0.2,
+        "total": 15
+      },
+      "holds": {
+        "mean": 3.373,
+        "total": 253
+      },
+      "twoInningPlusAvgProxyRate": 0.04,
+      "note": "twoInningPlusAvgProxyRate uses avgOuts>=6 (≈2.0 IP mean), not per-appearance 2IP+ count (not stored in v1 rows)"
+    },
+    {
+      "role": "HIGH_LEVERAGE_RELIEF",
+      "count": 98,
+      "sampleSize": {
+        "mean": 6.571,
+        "median": 7,
+        "p25": 3.25,
+        "p75": 10
+      },
+      "confidence": {
+        "high": 34,
+        "medium": 43,
+        "low": 21
+      },
+      "topEvidenceCombos": [
+        {
+          "combo": "late-close-freq,leverage-without-sv-hld",
+          "count": 63
+        },
+        {
+          "combo": "late-close-freq",
+          "count": 35
+        }
+      ],
+      "avgOuts": {
+        "mean": 3.416,
+        "median": 3.042
+      },
+      "avgAppearances": {
+        "mean": 6.571,
+        "median": 7
+      },
+      "closeGameEntryRateMean": 0.632,
+      "mopUpEntryRateMean": 0.291,
+      "finishRateMean": 0.305,
+      "saves": {
+        "mean": 0.133,
+        "total": 13
+      },
+      "holds": {
+        "mean": 0.5,
+        "total": 49
+      },
+      "twoInningPlusAvgProxyRate": 0.041,
+      "note": "twoInningPlusAvgProxyRate uses avgOuts>=6 (≈2.0 IP mean), not per-appearance 2IP+ count (not stored in v1 rows)"
+    },
+    {
+      "role": "MIDDLE_RELIEF",
+      "count": 1,
+      "sampleSize": {
+        "mean": 9,
+        "median": 9,
+        "p25": 9,
+        "p75": 9
+      },
+      "confidence": {
+        "high": 0,
+        "medium": 0,
+        "low": 1
+      },
+      "topEvidenceCombos": [
+        {
+          "combo": "mixed-1-2ip",
+          "count": 1
+        }
+      ],
+      "avgOuts": {
+        "mean": 2.667,
+        "median": 2.667
+      },
+      "avgAppearances": {
+        "mean": 9,
+        "median": 9
+      },
+      "closeGameEntryRateMean": 0.222,
+      "mopUpEntryRateMean": 0.333,
+      "finishRateMean": 0.333,
+      "saves": {
+        "mean": 0,
+        "total": 0
+      },
+      "holds": {
+        "mean": 2,
+        "total": 2
+      },
+      "twoInningPlusAvgProxyRate": 0,
+      "note": "twoInningPlusAvgProxyRate uses avgOuts>=6 (≈2.0 IP mean), not per-appearance 2IP+ count (not stored in v1 rows)"
+    },
+    {
+      "role": "LONG_RELIEF",
+      "count": 110,
+      "sampleSize": {
+        "mean": 3.136,
+        "median": 3,
+        "p25": 1,
+        "p75": 5
+      },
+      "confidence": {
+        "high": 0,
+        "medium": 62,
+        "low": 48
+      },
+      "topEvidenceCombos": [
+        {
+          "combo": "avgOuts>=5",
+          "count": 98
+        },
+        {
+          "combo": "avgOuts>=4",
+          "count": 12
+        }
+      ],
+      "avgOuts": {
+        "mean": 10.622,
+        "median": 12
+      },
+      "avgAppearances": {
+        "mean": 3.136,
+        "median": 3
+      },
+      "closeGameEntryRateMean": 0.025,
+      "mopUpEntryRateMean": 0.288,
+      "finishRateMean": 0.166,
+      "saves": {
+        "mean": 0.009,
+        "total": 1
+      },
+      "holds": {
+        "mean": 0.009,
+        "total": 1
+      },
+      "twoInningPlusAvgProxyRate": 0.845,
+      "note": "twoInningPlusAvgProxyRate uses avgOuts>=6 (≈2.0 IP mean), not per-appearance 2IP+ count (not stored in v1 rows)"
+    },
+    {
+      "role": "OPENER",
+      "count": 5,
+      "sampleSize": {
+        "mean": 8.4,
+        "median": 9,
+        "p25": 7,
+        "p75": 9
+      },
+      "confidence": {
+        "high": 0,
+        "medium": 5,
+        "low": 0
+      },
+      "topEvidenceCombos": [
+        {
+          "combo": "short-starts",
+          "count": 5
+        }
+      ],
+      "avgOuts": {
+        "mean": 3.326,
+        "median": 3.333
+      },
+      "avgAppearances": {
+        "mean": 8.4,
+        "median": 9
+      },
+      "closeGameEntryRateMean": 0.25,
+      "mopUpEntryRateMean": 0.34,
+      "finishRateMean": 0.142,
+      "saves": {
+        "mean": 0,
+        "total": 0
+      },
+      "holds": {
+        "mean": 0.2,
+        "total": 1
+      },
+      "twoInningPlusAvgProxyRate": 0,
+      "note": "twoInningPlusAvgProxyRate uses avgOuts>=6 (≈2.0 IP mean), not per-appearance 2IP+ count (not stored in v1 rows)"
+    },
+    {
+      "role": "MOP_UP",
+      "count": 27,
+      "sampleSize": {
+        "mean": 5.63,
+        "median": 5,
+        "p25": 3.5,
+        "p75": 7
+      },
+      "confidence": {
+        "high": 0,
+        "medium": 27,
+        "low": 0
+      },
+      "topEvidenceCombos": [
+        {
+          "combo": "blowout-entries",
+          "count": 27
+        }
+      ],
+      "avgOuts": {
+        "mean": 3.451,
+        "median": 3.4
+      },
+      "avgAppearances": {
+        "mean": 5.63,
+        "median": 5
+      },
+      "closeGameEntryRateMean": 0.186,
+      "mopUpEntryRateMean": 0.737,
+      "finishRateMean": 0.444,
+      "saves": {
+        "mean": 0.037,
+        "total": 1
+      },
+      "holds": {
+        "mean": 0.148,
+        "total": 4
+      },
+      "twoInningPlusAvgProxyRate": 0,
+      "note": "twoInningPlusAvgProxyRate uses avgOuts>=6 (≈2.0 IP mean), not per-appearance 2IP+ count (not stored in v1 rows)"
+    },
+    {
+      "role": "UNKNOWN",
+      "count": 81,
+      "sampleSize": {
+        "mean": 4.852,
+        "median": 2,
+        "p25": 1,
+        "p75": 9
+      },
+      "confidence": {
+        "high": 0,
+        "medium": 0,
+        "low": 81
+      },
+      "topEvidenceCombos": [
+        {
+          "combo": "(fallback/no-score-match)",
+          "count": 81
+        }
+      ],
+      "avgOuts": {
+        "mean": 4.23,
+        "median": 3.1
+      },
+      "avgAppearances": {
+        "mean": 4.852,
+        "median": 2
+      },
+      "closeGameEntryRateMean": 0.359,
+      "mopUpEntryRateMean": 0.547,
+      "finishRateMean": 0.473,
+      "saves": {
+        "mean": 0.247,
+        "total": 20
+      },
+      "holds": {
+        "mean": 0.506,
+        "total": 41
+      },
+      "twoInningPlusAvgProxyRate": 0.259,
+      "note": "twoInningPlusAvgProxyRate uses avgOuts>=6 (≈2.0 IP mean), not per-appearance 2IP+ count (not stored in v1 rows)"
+    }
+  ],
+  "roleConflicts": {
+    "multiSignalRows": 271,
+    "multiSignalExamples": [
+      {
+        "playerId": 640454,
+        "playerName": "Matt Krook",
+        "inferredRole": "HIGH_LEVERAGE_RELIEF",
+        "scores": [
+          {
+            "role": "HIGH_LEVERAGE_RELIEF",
+            "score": 5,
+            "why": "late-close-freq,leverage-without-sv-hld"
+          },
+          {
+            "role": "SETUP",
+            "score": 3,
+            "why": "7-8-close,pre-closer-pattern"
+          },
+          {
+            "role": "MIDDLE_RELIEF",
+            "score": 2,
+            "why": "mixed-1-2ip"
+          }
+        ]
+      },
+      {
+        "playerId": 663992,
+        "playerName": "Richard Lovelady",
+        "inferredRole": "SETUP",
+        "scores": [
+          {
+            "role": "SETUP",
+            "score": 6,
+            "why": "holds,7-8-close,pre-closer-pattern"
+          },
+          {
+            "role": "HIGH_LEVERAGE_RELIEF",
+            "score": 3,
+            "why": "late-close-freq"
+          }
+        ]
+      },
+      {
+        "playerId": 664875,
+        "playerName": "Justin Lawrence",
+        "inferredRole": "HIGH_LEVERAGE_RELIEF",
+        "scores": [
+          {
+            "role": "HIGH_LEVERAGE_RELIEF",
+            "score": 5,
+            "why": "late-close-freq,leverage-without-sv-hld"
+          },
+          {
+            "role": "CLOSER",
+            "score": 4,
+            "why": "finish+saves,9th-close"
+          },
+          {
+            "role": "MIDDLE_RELIEF",
+            "score": 2,
+            "why": "mixed-1-2ip"
+          }
+        ]
+      },
+      {
+        "playerId": 668820,
+        "playerName": "Max Kranick",
+        "inferredRole": "MOP_UP",
+        "scores": [
+          {
+            "role": "MOP_UP",
+            "score": 3,
+            "why": "blowout-entries"
+          },
+          {
+            "role": "CLOSER",
+            "score": 2,
+            "why": "9th-close"
+          },
+          {
+            "role": "MIDDLE_RELIEF",
+            "score": 2,
+            "why": "mixed-1-2ip"
+          }
+        ]
+      },
+      {
+        "playerId": 676571,
+        "playerName": "PJ Poulin",
+        "inferredRole": "SETUP",
+        "scores": [
+          {
+            "role": "SETUP",
+            "score": 5,
+            "why": "holds,7-8-close"
+          },
+          {
+            "role": "CLOSER",
+            "score": 3,
+            "why": "saves"
+          },
+          {
+            "role": "OPENER",
+            "score": 3,
+            "why": "short-starts"
+          }
+        ]
+      },
+      {
+        "playerId": 676680,
+        "playerName": "Tom Cosgrove",
+        "inferredRole": "SETUP",
+        "scores": [
+          {
+            "role": "SETUP",
+            "score": 5,
+            "why": "holds,7-8-close"
+          },
+          {
+            "role": "HIGH_LEVERAGE_RELIEF",
+            "score": 3,
+            "why": "late-close-freq"
+          }
+        ]
+      },
+      {
+        "playerId": 678868,
+        "playerName": "Eddy Yean",
+        "inferredRole": "SETUP",
+        "scores": [
+          {
+            "role": "SETUP",
+            "score": 6,
+            "why": "holds,7-8-close,pre-closer-pattern"
+          },
+          {
+            "role": "LONG_RELIEF",
+            "score": 3,
+            "why": "avgOuts>=5"
+          },
+          {
+            "role": "MOP_UP",
+            "score": 3,
+            "why": "blowout-entries"
+          }
+        ]
+      },
+      {
+        "playerId": 680730,
+        "playerName": "Mitchell Parker",
+        "inferredRole": "SETUP",
+        "scores": [
+          {
+            "role": "SETUP",
+            "score": 4,
+            "why": "holds,pre-closer-pattern"
+          },
+          {
+            "role": "HIGH_LEVERAGE_RELIEF",
+            "score": 3,
+            "why": "late-close-freq"
+          },
+          {
+            "role": "LONG_RELIEF",
+            "score": 3,
+            "why": "avgOuts>=5"
+          }
+        ]
+      },
+      {
+        "playerId": 683000,
+        "playerName": "Riley Cornelio",
+        "inferredRole": "MOP_UP",
+        "scores": [
+          {
+            "role": "MOP_UP",
+            "score": 3,
+            "why": "blowout-entries"
+          },
+          {
+            "role": "LONG_RELIEF",
+            "score": 2,
+            "why": "avgOuts>=4"
+          }
+        ]
+      },
+      {
+        "playerId": 687223,
+        "playerName": "Carson Palmquist",
+        "inferredRole": "OPENER",
+        "scores": [
+          {
+            "role": "OPENER",
+            "score": 3,
+            "why": "short-starts"
+          },
+          {
+            "role": "LONG_RELIEF",
+            "score": 2,
+            "why": "avgOuts>=4"
+          },
+          {
+            "role": "MIDDLE_RELIEF",
+            "score": 2,
+            "why": "mixed-1-2ip"
+          }
+        ]
+      },
+      {
+        "playerId": 687377,
+        "playerName": "Orlando Ribalta",
+        "inferredRole": "HIGH_LEVERAGE_RELIEF",
+        "scores": [
+          {
+            "role": "HIGH_LEVERAGE_RELIEF",
+            "score": 5,
+            "why": "late-close-freq,leverage-without-sv-hld"
+          },
+          {
+            "role": "SETUP",
+            "score": 3,
+            "why": "7-8-close,pre-closer-pattern"
+          },
+          {
+            "role": "MIDDLE_RELIEF",
+            "score": 2,
+            "why": "mixed-1-2ip"
+          }
+        ]
+      },
+      {
+        "playerId": 687849,
+        "playerName": "Zak Kent",
+        "inferredRole": "HIGH_LEVERAGE_RELIEF",
+        "scores": [
+          {
+            "role": "HIGH_LEVERAGE_RELIEF",
+            "score": 5,
+            "why": "late-close-freq,leverage-without-sv-hld"
+          },
+          {
+            "role": "MOP_UP",
+            "score": 3,
+            "why": "blowout-entries"
+          },
+          {
+            "role": "MIDDLE_RELIEF",
+            "score": 2,
+            "why": "mixed-1-2ip"
+          },
+          {
+            "role": "SETUP",
+            "score": 2,
+            "why": "7-8-close"
+          }
+        ]
+      },
+      {
+        "playerId": 690925,
+        "playerName": "Clayton Beeter",
+        "inferredRole": "UNKNOWN",
+        "scores": [
+          {
+            "role": "CLOSER",
+            "score": 5,
+            "why": "saves,finish+saves"
+          },
+          {
+            "role": "SETUP",
+            "score": 5,
+            "why": "holds,7-8-close"
+          }
+        ]
+      },
+      {
+        "playerId": 695418,
+        "playerName": "Brad Lord",
+        "inferredRole": "LONG_RELIEF",
+        "scores": [
+          {
+            "role": "LONG_RELIEF",
+            "score": 3,
+            "why": "avgOuts>=5"
+          },
+          {
+            "role": "SETUP",
+            "score": 2,
+            "why": "7-8-close"
+          }
+        ]
+      },
+      {
+        "playerId": 642528,
+        "playerName": "Jonathan Loáisiga",
+        "inferredRole": "SETUP",
+        "scores": [
+          {
+            "role": "SETUP",
+            "score": 6,
+            "why": "holds,7-8-close,pre-closer-pattern"
+          },
+          {
+            "role": "HIGH_LEVERAGE_RELIEF",
+            "score": 3,
+            "why": "late-close-freq"
+          }
+        ]
+      }
+    ],
+    "pairTallies": {
+      "CLOSER+SETUP": {
+        "bothSignals": 15,
+        "finalRoleA": 7,
+        "finalRoleB": 3,
+        "finalUnknown": 2,
+        "finalOther": 3,
+        "resolutionRule": "highest scoreRoles score wins; equal scores → UNKNOWN; MIDDLE score capped at 2 so loses to HL/LONG/CLOSER/SETUP when those score ≥3"
+      },
+      "SETUP+HIGH_LEVERAGE_RELIEF": {
+        "bothSignals": 175,
+        "finalRoleA": 68,
+        "finalRoleB": 69,
+        "finalUnknown": 35,
+        "finalOther": 3,
+        "resolutionRule": "highest scoreRoles score wins; equal scores → UNKNOWN; MIDDLE score capped at 2 so loses to HL/LONG/CLOSER/SETUP when those score ≥3"
+      },
+      "HIGH_LEVERAGE_RELIEF+MIDDLE_RELIEF": {
+        "bothSignals": 98,
+        "finalRoleA": 65,
+        "finalRoleB": 0,
+        "finalUnknown": 24,
+        "finalOther": 9,
+        "resolutionRule": "highest scoreRoles score wins; equal scores → UNKNOWN; MIDDLE score capped at 2 so loses to HL/LONG/CLOSER/SETUP when those score ≥3"
+      },
+      "MIDDLE_RELIEF+LONG_RELIEF": {
+        "bothSignals": 11,
+        "finalRoleA": 0,
+        "finalRoleB": 0,
+        "finalUnknown": 1,
+        "finalOther": 10,
+        "resolutionRule": "highest scoreRoles score wins; equal scores → UNKNOWN; MIDDLE score capped at 2 so loses to HL/LONG/CLOSER/SETUP when those score ≥3"
+      },
+      "LONG_RELIEF+MOP_UP": {
+        "bothSignals": 22,
+        "finalRoleA": 0,
+        "finalRoleB": 8,
+        "finalUnknown": 11,
+        "finalOther": 3,
+        "resolutionRule": "highest scoreRoles score wins; equal scores → UNKNOWN; MIDDLE score capped at 2 so loses to HL/LONG/CLOSER/SETUP when those score ≥3"
+      },
+      "OPENER+LONG_RELIEF": {
+        "bothSignals": 2,
+        "finalRoleA": 1,
+        "finalRoleB": 0,
+        "finalUnknown": 0,
+        "finalOther": 1,
+        "resolutionRule": "highest scoreRoles score wins; equal scores → UNKNOWN; MIDDLE score capped at 2 so loses to HL/LONG/CLOSER/SETUP when those score ≥3"
+      }
+    },
+    "priorityRule": "equal top scores → UNKNOWN (ROLE_SIGNAL_CONFLICT); else highest score wins; alphabetical only as secondary sort when scores equal before conflict check"
+  },
+  "improvementProposal": {
+    "preferredSchema": {
+      "primaryRole": "BullpenRole",
+      "secondaryRoles": "BullpenRole[]",
+      "roleScores": "Partial<Record<BullpenRole, number>>",
+      "confidence": "high|medium|low",
+      "evidence": "RoleEvidence"
+    },
+    "rationale": [
+      "단일 라벨 강제 시 MIDDLE(score=2)이 LONG/HL(score≥2~3)에 흡수됨",
+      "동점 시 UNKNOWN으로 버려지는 정보 손실",
+      "secondaryRoles로 SETUP∩HL 등 실전 역할을 보존 가능"
+    ],
+    "typeChangeInThisAudit": false
+  },
+  "sampleThresholdProposal": {
+    "sampleByRole": {
+      "CLOSER": {
+        "n": 31,
+        "p25": 8,
+        "median": 9,
+        "p75": 10
+      },
+      "SETUP": {
+        "n": 75,
+        "p25": 5.5,
+        "median": 10,
+        "p75": 11
+      },
+      "HIGH_LEVERAGE_RELIEF": {
+        "n": 98,
+        "p25": 3.25,
+        "median": 7,
+        "p75": 10
+      },
+      "MIDDLE_RELIEF": {
+        "n": 1,
+        "p25": 9,
+        "median": 9,
+        "p75": 9
+      },
+      "LONG_RELIEF": {
+        "n": 110,
+        "p25": 1,
+        "median": 3,
+        "p75": 5
+      },
+      "OPENER": {
+        "n": 5,
+        "p25": 7,
+        "median": 9,
+        "p75": 9
+      },
+      "MOP_UP": {
+        "n": 27,
+        "p25": 3.5,
+        "median": 5,
+        "p75": 7
+      },
+      "UNKNOWN": {
+        "n": 81,
+        "p25": 1,
+        "median": 2,
+        "p75": 9
+      }
+    },
+    "stabilityBySample": [
+      {
+        "sampleSize": 1,
+        "rows": 67,
+        "unknownRate": 0.373,
+        "longRate": 0.448
+      },
+      {
+        "sampleSize": 2,
+        "rows": 52,
+        "unknownRate": 0.308,
+        "longRate": 0.327
+      },
+      {
+        "sampleSize": 3,
+        "rows": 35,
+        "unknownRate": 0.086,
+        "longRate": 0.4
+      },
+      {
+        "sampleSize": 4,
+        "rows": 33,
+        "unknownRate": 0.03,
+        "longRate": 0.455
+      },
+      {
+        "sampleSize": 5,
+        "rows": 47,
+        "unknownRate": 0.106,
+        "longRate": 0.617
+      },
+      {
+        "sampleSize": 6,
+        "rows": 16,
+        "unknownRate": 0.188,
+        "longRate": 0.188
+      },
+      {
+        "sampleSize": 7,
+        "rows": 22,
+        "unknownRate": 0.045,
+        "longRate": 0.045
+      },
+      {
+        "sampleSize": 8,
+        "rows": 21,
+        "unknownRate": 0.19,
+        "longRate": 0
+      },
+      {
+        "sampleSize": 9,
+        "rows": 36,
+        "unknownRate": 0.083,
+        "longRate": 0.028
+      },
+      {
+        "sampleSize": 10,
+        "rows": 37,
+        "unknownRate": 0.27,
+        "longRate": 0
+      },
+      {
+        "sampleSize": 11,
+        "rows": 34,
+        "unknownRate": 0.206,
+        "longRate": 0
+      },
+      {
+        "sampleSize": 12,
+        "rows": 15,
+        "unknownRate": 0.133,
+        "longRate": 0
+      }
+    ],
+    "proposedMinimums": {
+      "CLOSER_SETUP": {
+        "minReliefAppearances30d": 5,
+        "basis": "CLOSER/SETUP median sample≈ higher roles; sample≤2에서 확정 분류 과다. p25 근처로 5 제안 (현재 CLOSER median 확인)"
+      },
+      "LONG_RELIEF": {
+        "minAppearancesWith2IpPlus": 2,
+        "minSampleSize": 3,
+        "basis": "LONG 중 sampleSize<3 = 47/110. avgOuts 임계만 쓰면 1~2회 등판으로 LONG 확정. 2이닝+ 구원 최소 2회 + 총 표본 3 제안"
+      },
+      "OPENER": {
+        "minShortStarts": 3,
+        "basis": "현재 n>=2 + short rate>=0.5 → 표본 2로도 OPENER. 분포상 5명뿐이라 최소 3회로 상향 제안"
+      },
+      "MOP_UP": {
+        "minBlowoutEntries": 3,
+        "basis": "코드가 이미 n>=3 & mopRate>=0.5 — 유지. 다만 mopRate 분모가 entry 없으면 왜곡"
+      },
+      "MIDDLE_RELIEF": {
+        "minSampleSize": 4,
+        "maxAvgOutsExclusive": 4,
+        "basis": "avgOuts<=4.5가 LONG(>=4)과 겹침. MIDDLE 상한을 avgOuts<4로 내리고 score를 LONG과 분리해야 함"
+      },
+      "HIGH_LEVERAGE_RELIEF": {
+        "minSampleSize": 4,
+        "basis": "HL 조건에 이미 n>=4 일부 있음. 전체 HL에 min 4 통일 제안"
+      },
+      "note": "N은 임의 MLB 상식이 아니라 본 dataset sampleSize 분포·LONG thin 비율·MIDDLE 흡수율 근거"
+    }
+  },
+  "apiCallAnalysis": {
+    "schedule": {
+      "calls": 1,
+      "duplicateUrls": 0,
+      "note": "1× /api/v1/schedule?sportId=1&startDate&endDate"
+    },
+    "boxscore": {
+      "calls": 366,
+      "uniqueGamePk": 360,
+      "duplicateGamePkCalls": 6,
+      "note": "priorSched.length attempts; boxByPk.size successful. No URL dedupe cache in script.",
+      "inferredAttempts": 366
+    },
+    "playByPlay": {
+      "calls": 366,
+      "ok": 366,
+      "fail": 0,
+      "duplicateGamePkCalls": 0,
+      "note": "1 attempt per priorSched gamePk"
+    },
+    "people": {
+      "calls": 0,
+      "presentInBuildScript": false
+    },
+    "gameLog": {
+      "calls": 0,
+      "presentInBuildScript": false
+    },
+    "other": {
+      "calls": 0
+    },
+    "reconciliation": {
+      "formula": "1 schedule + N boxscore attempts + N playByPlay attempts",
+      "N": 366,
+      "expectedTotal": 733,
+      "recordedTotal": 733,
+      "matches": true
+    },
+    "cache": {
+      "inMemoryUrlCache": false,
+      "diskCache": false,
+      "hit": 0,
+      "miss": 733,
+      "note": "매 실행 전량 재호출. 동일 gamePk 재사용은 단일 패스 내 Map에만 존재(중복 fetch 없음)."
+    }
+  },
+  "callReductionDesign": {
+    "goals": {
+      "rerunNewCalls": 0,
+      "firstRunTarget": "≤100 preferred; realistic with PBP ≈ 1+U+U where U=unique prior games for slate teams only"
+    },
+    "estimatedFirstRun": {
+      "current": 733,
+      "withDiskCacheCold_boxAndPbp_30d_slateFiltered": "≈160–220 (estimate; current N=366 includes nearly all MLB)",
+      "withDiskCacheCold_boxOnly_14d_slateFiltered": "≈80–100",
+      "withDiskCacheWarm_rerun": 0
+    },
+    "rules": [
+      "gamePk별 boxscore/playByPlay 최대 1회 (디스크 캐시 키=gamePk)",
+      "player gameLog 호출 금지 (현재도 미사용 — 유지)",
+      "날짜·gamePk·playerId 기반 파생 캐시만 저장",
+      "raw 전체 응답 영구 저장 금지",
+      "자동 폴링 금지"
+    ],
+    "proposedCacheLayout": {
+      "root": "data/cache/research/mlb/",
+      "schedules": "schedules/{startDate}_{endDate}.derived.json",
+      "games": "games/{gamePk}/box-derived.json + pbp-entries-derived.json",
+      "players": "players/{playerId}/not-used-unless-needed.json",
+      "derivedBullpen": "derived-bullpen/{dateKst}/appearances-index.json",
+      "constraints": [
+        "no API keys",
+        "no full raw response bodies",
+        "derived fields only (outs, saves, holds, entryInning, entryScoreDiff, …)"
+      ]
+    }
+  },
+  "reproduction": {
+    "roleCountsFromPitchersArray": {
+      "LONG_RELIEF": 110,
+      "HIGH_LEVERAGE_RELIEF": 98,
+      "SETUP": 75,
+      "MOP_UP": 27,
+      "UNKNOWN": 81,
+      "OPENER": 5,
+      "CLOSER": 31,
+      "MIDDLE_RELIEF": 1
+    },
+    "matchesSummaryRoleCounts": true,
+    "overallFromGamesArray": {
+      "ROLE_STRUCTURE_SUPPORTS_BASELINE": 2,
+      "ROLE_STRUCTURE_CONFLICTS_BASELINE": 7,
+      "ROLE_STRUCTURE_NEUTRAL": 5,
+      "ROLE_STRUCTURE_INSUFFICIENT": 0
+    },
+    "matchesSummaryOverall": true,
+    "hypothesesSnapshotReadOnly": [
+      {
+        "hypothesisId": "H-BP-001",
+        "supportingCount": 2,
+        "contradictingCount": 0,
+        "inconclusiveCount": 12,
+        "currentStatus": "COLLECTING"
+      },
+      {
+        "hypothesisId": "H-BP-002",
+        "supportingCount": 4,
+        "contradictingCount": 4,
+        "inconclusiveCount": 6,
+        "currentStatus": "COLLECTING"
+      },
+      {
+        "hypothesisId": "H-BP-003",
+        "supportingCount": 4,
+        "contradictingCount": 3,
+        "inconclusiveCount": 7,
+        "currentStatus": "COLLECTING"
+      },
+      {
+        "hypothesisId": "H-BP-004",
+        "supportingCount": 2,
+        "contradictingCount": 0,
+        "inconclusiveCount": 12,
+        "currentStatus": "COLLECTING"
+      },
+      {
+        "hypothesisId": "H-BP-005",
+        "supportingCount": 5,
+        "contradictingCount": 6,
+        "inconclusiveCount": 3,
+        "currentStatus": "COLLECTING"
+      },
+      {
+        "hypothesisId": "H-BP-006",
+        "supportingCount": 0,
+        "contradictingCount": 0,
+        "inconclusiveCount": 14,
+        "currentStatus": "COLLECTING"
+      }
+    ],
+    "canReproduceWithoutRebuild": true,
+    "note": "기존 저장 JSON만으로 역할 분포·overall·가설 카운트 재현 가능. 이번 감사는 덮어쓰지 않음."
+  },
+  "conclusion": "MULTIPLE_ISSUES_FOUND",
+  "issuesDetected": [
+    "ROLE_DISTRIBUTION_BIAS_FOUND",
+    "PRIORITY_ORDER_BIAS_FOUND",
+    "SAMPLE_THRESHOLD_TOO_LOW",
+    "CACHE_ARCHITECTURE_REQUIRED"
+  ],
+  "v11SafeDesignNotes": [
+    "primaryRole + secondaryRoles + roleScores 도입 검토 (타입 변경은 별도 PR)",
+    "MIDDLE avgOuts 상한을 LONG 하한과 겹치지 않게 분리",
+    "LONG에 min 2IP+ appearances 조건",
+    "sampleSize < proposed N → UNKNOWN 강제",
+    "연구용 디스크 파생 캐시로 재실행 0콜",
+    "PBP는 leverage 필요 시에만, 또는 boxscore saves/holds만으로 CLOSER/SETUP 1차"
+  ]
+}

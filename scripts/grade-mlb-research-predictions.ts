@@ -1,5 +1,5 @@
 /**
- * 2026-07-27 KST MLB 연구용 예측 15경기 채점 + 사후 피드백 리뷰.
+ * MLB 연구용 예측 채점 + 사후 피드백 리뷰.
  *
  * - 예측 불변 필드는 절대 변경하지 않는다.
  * - 결과 필드만 갱신한다.
@@ -8,13 +8,16 @@
  * - EDGE Engine / weights / 가계부 / UI 미수정.
  *
  * 실행:
- *   npx tsx --env-file=.env.local scripts/grade-mlb-research-predictions.ts
+ *   npx tsx --env-file=.env.local scripts/grade-mlb-research-predictions.ts [YYYY-MM-DD]
  */
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { instantToKst } from "../src/lib/datetime/kst";
 
-const TARGET_DATE_KST = "2026-07-27";
+const TARGET_DATE_KST =
+  process.argv[2]?.trim() ||
+  process.env.MLB_TARGET_DATE_KST?.trim() ||
+  "2026-07-27";
 const MLB_LEAGUE_ID = 1;
 const MLB_SEASON = 2026;
 const FINISHED = new Set(["FT", "AOT", "AP"]);
@@ -612,7 +615,13 @@ async function main() {
   const snapshotRaw = JSON.parse(await readFile(SNAPSHOT_PATH, "utf8"));
   // baseline / pitcher는 리뷰 보강용 참조만 (예측 값 덮어쓰기 금지)
   await readFile(BASELINE_PATH, "utf8");
-  await readFile(PITCHER_PATH, "utf8");
+  try {
+    await readFile(PITCHER_PATH, "utf8");
+  } catch {
+    console.warn(
+      `pitcher review 없음 — 생략: ${path.relative(process.cwd(), PITCHER_PATH)}`,
+    );
+  }
 
   const root = asRecord(snapshotRaw);
   const meta = asRecord(root?.meta) ?? {};

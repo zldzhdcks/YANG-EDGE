@@ -1,0 +1,132 @@
+{
+  "meta": {
+    "version": "bullpen-role-v1-vs-v1.1-compare-v1",
+    "generatedAt": "2026-07-27T02:39:13.003Z",
+    "predictionHashSha256": "621f4dbc2ad7439804f88ba213452e5e2675396e889a26580f79b11ad9e58051",
+    "predictionUnchanged": true,
+    "engineConnected": false,
+    "note": "적중률 개선 목적이 아님. pre-game bullpen 구조 신호 비교만."
+  },
+  "v11": {
+    "failCollapseWarned": 7,
+    "failCollapseTotal": 7,
+    "successProtectedStable": 2,
+    "successProtectedTotal": 5
+  },
+  "v1Summary": {
+    "classifiedPitcherRows": 428,
+    "uniquePlayerIds": 421,
+    "roleCounts": {
+      "CLOSER": 31,
+      "SETUP": 75,
+      "HIGH_LEVERAGE_RELIEF": 98,
+      "MIDDLE_RELIEF": 1,
+      "LONG_RELIEF": 110,
+      "OPENER": 5,
+      "MOP_UP": 27,
+      "UNKNOWN": 81
+    },
+    "confidenceCounts": {
+      "high": 109,
+      "medium": 158,
+      "low": 161
+    },
+    "overallRoleComparison": {
+      "ROLE_STRUCTURE_SUPPORTS_BASELINE": 2,
+      "ROLE_STRUCTURE_CONFLICTS_BASELINE": 7,
+      "ROLE_STRUCTURE_NEUTRAL": 5,
+      "ROLE_STRUCTURE_INSUFFICIENT": 0
+    },
+    "failCollapsePregameKeyWarning": 5,
+    "failCollapseTotal": 6,
+    "successProtectedPregameStable": 1,
+    "successProtectedTotal": 5,
+    "vsSimpleBullpenAudit": "IMPROVED_ON_THIS_SAMPLE",
+    "mostPromisingHypothesis": "H-BP-001",
+    "weakestHypothesis": "H-BP-005",
+    "dataGaps": [
+      "공식 closer/setup roster 필드 없음 → inferredRole만 사용",
+      "부상·말소 미확인 → availabilityUnknown=true 고정",
+      "선발 조기 강판 메타 없음 → H-BP-006 전원 inconclusive",
+      "MIDDLE_RELIEF 분류 과소(1) — HIGH_LEVERAGE/LONG와 경계 재조정 필요"
+    ],
+    "engineUseAllowed": false
+  },
+  "v11Summary": {
+    "classifiedPitcherRows": 563,
+    "uniquePlayerIds": 556,
+    "starterAppearancesExcluded": 675,
+    "roleCounts": {
+      "CLOSER": 31,
+      "SETUP": 58,
+      "HIGH_LEVERAGE_RELIEF": 36,
+      "MIDDLE_RELIEF": 121,
+      "LONG_RELIEF": 28,
+      "OPENER": 0,
+      "MOP_UP": 0,
+      "UNKNOWN": 289
+    },
+    "classificationStatusCounts": {
+      "INSUFFICIENT_SAMPLE": 289,
+      "PROVISIONAL": 69,
+      "CLASSIFIED": 205
+    },
+    "confirmedRolesUnderSample3": 0,
+    "longUnderSample3": 0,
+    "withSecondaryRoles": 164,
+    "overallRoleComparison": {
+      "ROLE_STRUCTURE_SUPPORTS_BASELINE": 3,
+      "ROLE_STRUCTURE_CONFLICTS_BASELINE": 5,
+      "ROLE_STRUCTURE_NEUTRAL": 6,
+      "ROLE_STRUCTURE_INSUFFICIENT": 1
+    },
+    "failCollapsePregameKeyWarning": 7,
+    "failCollapseTotal": 7,
+    "successProtectedPregameStable": 2,
+    "successProtectedTotal": 5,
+    "engineUseAllowed": false
+  },
+  "changedGames": [
+    {
+      "gameId": "mlb-179590",
+      "match": "Arizona Diamondbacks @ Washington Nationals",
+      "v1": "ROLE_STRUCTURE_CONFLICTS_BASELINE",
+      "v11": "ROLE_STRUCTURE_NEUTRAL",
+      "reason": "classifier v1.1 primaryRole/score/sample policy changed team roleFlags → overallRoleComparison"
+    },
+    {
+      "gameId": "mlb-179595",
+      "match": "Chicago Cubs @ Pittsburgh Pirates",
+      "v1": "ROLE_STRUCTURE_SUPPORTS_BASELINE",
+      "v11": "ROLE_STRUCTURE_INSUFFICIENT",
+      "reason": "classifier v1.1 primaryRole/score/sample policy changed team roleFlags → overallRoleComparison"
+    },
+    {
+      "gameId": "mlb-179598",
+      "match": "Colorado Rockies @ Milwaukee Brewers",
+      "v1": "ROLE_STRUCTURE_CONFLICTS_BASELINE",
+      "v11": "ROLE_STRUCTURE_NEUTRAL",
+      "reason": "classifier v1.1 primaryRole/score/sample policy changed team roleFlags → overallRoleComparison"
+    },
+    {
+      "gameId": "mlb-179603",
+      "match": "Atlanta Braves @ Baltimore Orioles",
+      "v1": "ROLE_STRUCTURE_NEUTRAL",
+      "v11": "ROLE_STRUCTURE_SUPPORTS_BASELINE",
+      "reason": "classifier v1.1 primaryRole/score/sample policy changed team roleFlags → overallRoleComparison"
+    }
+  ],
+  "falsePositive": [
+    {
+      "gameId": "mlb-179592",
+      "match": "Cleveland Guardians @ Tampa Bay Rays"
+    },
+    {
+      "gameId": "mlb-179596",
+      "match": "Athletics @ Minnesota Twins"
+    }
+  ],
+  "falseNegative": [],
+  "falsePositiveCount": 2,
+  "falseNegativeCount": 0
+}

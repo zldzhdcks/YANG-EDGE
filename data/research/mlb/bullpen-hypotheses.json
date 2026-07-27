@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "version": "mlb-bullpen-hypotheses-v1",
+    "updatedAt": "2026-07-27T00:25:40.241Z",
+    "autoApply": false,
+    "engineConnected": false,
+    "note": "14경기 초기 평가만. PROMISING 확정 금지. autoApply=false 고정."
+  },
+  "hypotheses": [
+    {
+      "hypothesisId": "H-BP-001",
+      "description": "CLOSER_BACK_TO_BACK은 late-game collapse 위험과 관련 있다",
+      "requiredFields": [
+        "CLOSER_BACK_TO_BACK",
+        "actualCollapse"
+      ],
+      "minimumSampleTarget": 100,
+      "autoApply": false,
+      "sampleCount": 14,
+      "supportingCount": 2,
+      "contradictingCount": 0,
+      "inconclusiveCount": 12,
+      "currentStatus": "COLLECTING",
+      "lastEvaluatedAt": "2026-07-27T00:25:40.241Z"
+    },
+    {
+      "hypothesisId": "H-BP-002",
+      "description": "SETUP_CORE_HEAVY_USAGE는 7~8회 실점 증가와 관련 있다",
+      "requiredFields": [
+        "SETUP_CORE_HEAVY_USAGE",
+        "bullpenVerdict"
+      ],
+      "minimumSampleTarget": 100,
+      "autoApply": false,
+      "sampleCount": 14,
+      "supportingCount": 4,
+      "contradictingCount": 4,
+      "inconclusiveCount": 6,
+      "currentStatus": "COLLECTING",
+      "lastEvaluatedAt": "2026-07-27T00:25:40.241Z"
+    },
+    {
+      "hypothesisId": "H-BP-003",
+      "description": "MULTIPLE_KEY_RELIEVERS_USED_PREVIOUS_DAY는 추천 팀 승률을 낮춘다",
+      "requiredFields": [
+        "MULTIPLE_KEY_RELIEVERS_USED_PREVIOUS_DAY",
+        "outcome"
+      ],
+      "minimumSampleTarget": 100,
+      "autoApply": false,
+      "sampleCount": 14,
+      "supportingCount": 4,
+      "contradictingCount": 3,
+      "inconclusiveCount": 7,
+      "currentStatus": "COLLECTING",
+      "lastEvaluatedAt": "2026-07-27T00:25:40.241Z"
+    },
+    {
+      "hypothesisId": "H-BP-004",
+      "description": "HIGH_LEVERAGE_GROUP_FATIGUED는 접전 패배와 관련 있다",
+      "requiredFields": [
+        "HIGH_LEVERAGE_GROUP_FATIGUED",
+        "outcome"
+      ],
+      "minimumSampleTarget": 100,
+      "autoApply": false,
+      "sampleCount": 14,
+      "supportingCount": 2,
+      "contradictingCount": 0,
+      "inconclusiveCount": 12,
+      "currentStatus": "COLLECTING",
+      "lastEvaluatedAt": "2026-07-27T00:25:40.241Z"
+    },
+    {
+      "hypothesisId": "H-BP-005",
+      "description": "핵심 불펜 2일 이상 휴식은 리드 보호 성공과 관련 있다",
+      "requiredFields": [
+        "keyBullpenRestDays",
+        "actualProtected"
+      ],
+      "minimumSampleTarget": 100,
+      "autoApply": false,
+      "sampleCount": 14,
+      "supportingCount": 5,
+      "contradictingCount": 6,
+      "inconclusiveCount": 3,
+      "currentStatus": "COLLECTING",
+      "lastEvaluatedAt": "2026-07-27T00:25:40.241Z"
+    },
+    {
+      "hypothesisId": "H-BP-006",
+      "description": "MIDDLE_RELIEF_THIN은 선발 조기 강판 경기에서 위험하다",
+      "requiredFields": [
+        "MIDDLE_RELIEF_THIN",
+        "starterEarlyExit"
+      ],
+      "minimumSampleTarget": 200,
+      "autoApply": false,
+      "notes": [
+        "역할 표본 부족 시 minimumSampleTarget=200 권장"
+      ],
+      "sampleCount": 14,
+      "supportingCount": 0,
+      "contradictingCount": 0,
+      "inconclusiveCount": 14,
+      "currentStatus": "COLLECTING",
+      "lastEvaluatedAt": "2026-07-27T00:25:40.241Z"
+    }
+  ]
+}

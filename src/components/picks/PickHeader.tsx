@@ -8,7 +8,7 @@ export default function PickHeader() {
         EDGE Ranking
       </h1>
       <p className="mt-2 text-sm text-zinc-500 sm:text-base">
-        오늘 가장 가치 있는 경기
+        고정 샘플 순위 (실데이터·실추천 아님)
       </p>
     </header>
   );

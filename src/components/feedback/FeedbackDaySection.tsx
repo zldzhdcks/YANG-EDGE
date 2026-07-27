@@ -6,15 +6,17 @@ type FeedbackDaySectionProps = {
 };
 
 export default function FeedbackDaySection({ day }: FeedbackDaySectionProps) {
+  const dayId = `feedback-day-${day.meta.dateKst}-${day.reviews[0]?.league ?? "all"}`;
   return (
-    <section aria-labelledby={`feedback-day-${day.meta.dateKst}`}>
+    <section aria-labelledby={dayId}>
       <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
         <div>
           <h2
-            id={`feedback-day-${day.meta.dateKst}`}
+            id={dayId}
             className="text-sm font-medium tracking-wide text-zinc-500 uppercase"
           >
             {day.meta.dateKst}
+            {day.reviews[0]?.league ? ` · ${day.reviews[0].league}` : ""}
           </h2>
           <p className="mt-1 text-xs text-zinc-600">
             예측 {day.meta.totalPredictions} · 채점 {day.meta.gradedGames} · 적중{" "}

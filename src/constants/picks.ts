@@ -1,5 +1,13 @@
 import type { AiPickData } from "@/types/pick";
 
+/**
+ * Public UI visibility for EDGE Ranking (`/picks`).
+ * HIDDEN = not linked from nav/home/footer; direct URL kept (sample data retained).
+ * Do not wire to MLB research artifacts or present as live picks.
+ */
+export const EDGE_RANKING_PUBLIC_VISIBILITY = "HIDDEN" as const;
+
+/** Fixed sample ranking only — not live recommendations. */
 export const AI_PICKS: AiPickData[] = [
   {
     rank: 1,

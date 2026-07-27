@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "version": "mlb-starter-accumulation-summary-v1",
+    "generatedAt": "2026-07-27T03:23:52.217Z",
+    "recomputed": false,
+    "engineAdmission": "PROHIBITED",
+    "note": "Read-only aggregation of starter-dataset-v1 audit JSON files."
+  },
+  "cumulative": {
+    "auditFiles": 2,
+    "gameCount": 27,
+    "rowCount": 54,
+    "probableAvailable": 53,
+    "probableMissing": 1,
+    "seasonStatsAvailable": 53,
+    "recentStartsAvailable": 53,
+    "starterMatched": 30,
+    "starterChanged": 0,
+    "awaitingResult": 24
+  },
+  "days": [
+    {
+      "dateKst": "2026-07-27",
+      "file": "data/audits/2026-07-27-starter-dataset-v1-audit.json",
+      "gameCount": 15,
+      "rowCount": 30,
+      "probableAvailable": 30,
+      "probableMissing": 0,
+      "starterMatched": 30,
+      "starterChanged": 0,
+      "awaitingResult": 0,
+      "seasonStatsAvailable": 30,
+      "recentStartsAvailable": 30,
+      "joinQuality": {
+        "MATCHED": 30,
+        "AMBIGUOUS": 0,
+        "UNLINKED": 0
+      },
+      "averageSampleSize": 15.8,
+      "targetGameIncluded": 0,
+      "cutoffViolation": 0,
+      "resultHash": "5e44d0adb5aa681c03c4a46c2a34d35ad692fcae94296c1b0b4f2b42467051f1"
+    },
+    {
+      "dateKst": "2026-07-28",
+      "file": "data/audits/2026-07-28-starter-dataset-v1-audit.json",
+      "gameCount": 12,
+      "rowCount": 24,
+      "probableAvailable": 23,
+      "probableMissing": 1,
+      "starterMatched": 0,
+      "starterChanged": 0,
+      "awaitingResult": 24,
+      "seasonStatsAvailable": 23,
+      "recentStartsAvailable": 23,
+      "joinQuality": {
+        "MATCHED": 24,
+        "AMBIGUOUS": 0,
+        "UNLINKED": 0
+      },
+      "averageSampleSize": 14.3,
+      "targetGameIncluded": 0,
+      "cutoffViolation": 0,
+      "resultHash": "cd331b1da66e5ddc430d3cde55dd995605ba77ae626168e28edb1ec1621c30a9"
+    }
+  ]
+}

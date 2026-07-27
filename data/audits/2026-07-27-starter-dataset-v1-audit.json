@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "version": "mlb-starter-dataset-v1-audit",
+    "kind": "starter-dataset-v1-accumulation-audit",
+    "datasetId": "mlb-starter",
+    "schemaVersion": "mlb-starter-dataset-v1",
+    "builderVersion": "starter-dataset-builder-v1",
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T02:32:05.140Z",
+    "datasetStatus": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "researchOnly": true,
+    "preGameCreatedNew": false,
+    "preGameImmutablePreserved": true,
+    "predictionHashSha256": "28f3e3602be4d2482026eb30b60c176335d9686ad6f11251c2a1c43d8b5dee4d",
+    "predictionUnchanged": true,
+    "resultHashSha256": "5e44d0adb5aa681c03c4a46c2a34d35ad692fcae94296c1b0b4f2b42467051f1",
+    "firstResultHash": "5e44d0adb5aa681c03c4a46c2a34d35ad692fcae94296c1b0b4f2b42467051f1",
+    "secondResultHash": "5e44d0adb5aa681c03c4a46c2a34d35ad692fcae94296c1b0b4f2b42467051f1",
+    "hashMatched": true
+  },
+  "totals": {
+    "gameCount": 15,
+    "rowCount": 30,
+    "probableAvailable": 30,
+    "probableMissing": 0,
+    "joinQuality": {
+      "MATCHED": 30,
+      "AMBIGUOUS": 0,
+      "UNLINKED": 0
+    },
+    "seasonStatsAvailable": 30,
+    "recentStartsAvailable": 30,
+    "averageSampleSize": 15.8,
+    "starterMatched": 30,
+    "starterChanged": 0,
+    "awaitingResult": 0,
+    "unknownOrNotFinal": 0,
+    "targetGameIncluded": 0,
+    "cutoffViolation": 0,
+    "probableOverwrite": 0,
+    "confirmedRows": 0,
+    "resultHash": "5e44d0adb5aa681c03c4a46c2a34d35ad692fcae94296c1b0b4f2b42467051f1"
+  },
+  "cache": {
+    "rawHit": 0,
+    "rawMiss": 0,
+    "derivedHit": 0,
+    "derivedMiss": 0,
+    "networkCalls": 0,
+    "postGameRawHit": 58,
+    "postGameRawMiss": 2,
+    "postGameNetworkCalls": 2
+  },
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true,
+      "detail": "28f3e3602be4d2482026eb30b60c176335d9686ad6f11251c2a1c43d8b5dee4d"
+    },
+    {
+      "id": "pregame-immutable",
+      "passed": true,
+      "detail": "skip-overwrite"
+    },
+    {
+      "id": "result-hash-matched",
+      "passed": true,
+      "detail": "5e44d0adb5aa681c03c4a46c2a34d35ad692fcae94296c1b0b4f2b42467051f1 == 5e44d0adb5aa681c03c4a46c2a34d35ad692fcae94296c1b0b4f2b42467051f1"
+    },
+    {
+      "id": "target-game-excluded",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "cutoff-violations-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "confirmed-rows-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "no-matched-changed-while-awaiting-same-row",
+      "passed": true,
+      "detail": "resolver returns AWAITING_RESULT unless abstractGameState=Final"
+    }
+  ],
+  "artifacts": {
+    "preGame": "data/research/mlb/2026-07-27-starter-dataset-v1.json",
+    "postGameReview": "data/research/mlb/2026-07-27-starter-postgame-review-v1.json",
+    "audit": "data/audits/2026-07-27-starter-dataset-v1-audit.json"
+  }
+}

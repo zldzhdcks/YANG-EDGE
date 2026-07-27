@@ -21,7 +21,8 @@
 | 오늘 경기 일정 UI | `/games` | `SportsProvider.getGames` + (가능 시) football·odds 보강 |
 | 홈 상태 구분 | `/` | Today Pick / Featured / 오늘 경기: `success` · `empty` · `error` 구분 |
 | 이용 안내(푸터) | 공통 Footer | 참고용·비보장·데이터 출처 원칙 문구 |
-| 헤더 내비 | Header | `/games`, `/picks`, `/toto`, `/ledger` 라우트 존재 |
+| 헤더 내비 | Header | `/games`, `/ledger`, Feedback/Learning 등 (EDGE Ranking `/picks`·EDGE Combo `/toto`는 공개 내비에서 HIDDEN) |
+| Feedback / Learning | `/feedback`, `/learning` | MLB post-game export(`refresh-site-feedback-learning`) 후 mirror·dashboard 갱신 · `force-dynamic` |
 
 ## 부분 연결
 
@@ -45,8 +46,8 @@
 |------|------|------|
 | `DummyProvider` | `SPORTS_PROVIDER=dummy` **명시 시에만** | 고정일 `GAMES` 상수. 자동 폴백 없음 |
 | Dummy Engine 분석 | `src/constants/dummyAnalysisData.ts` | `npb-softbank-orix`, `npb-hanshin-yomiuri`, `kbo-lg-doosan` |
-| EDGE Ranking 페이지 | `/picks` | `AI_PICKS` 하드코딩. Provider/실일정 미연결 |
-| EDGE Combo 데이터 | `TOTO_ROUND` 등 | TheSportsDB·ApiSports는 `getToto` throw. Dummy 모드에서만 화면 데이터 표시 |
+| EDGE Ranking 페이지 | `/picks` | `AI_PICKS` 하드코딩. **공개 UI HIDDEN**(`EDGE_RANKING_PUBLIC_VISIBILITY`). 직접 URL + 샘플 배너 + noindex. Provider/실일정 미연결 |
+| EDGE Combo 데이터 | `TOTO_ROUND` 등 | 공개 UI HIDDEN(`EDGE_COMBO_PUBLIC_VISIBILITY`). 직접 `/toto`만. TheSportsDB·ApiSports는 `getToto` throw. Dummy에서만 샘플 |
 | TheSportsDB 공용 테스트 키 | 문서 예시 `123` | 무료 제한·테스트 목적. 키를 문서/로그에 실사용 값으로 추가하지 말 것 |
 | Odds/Football Dummy | `ODDS_PROVIDER=dummy` / `FOOTBALL_PROVIDER=dummy` | 명시 선택만 |
 
@@ -79,10 +80,10 @@
 
 | 후보 | 분류 | 근거 | 제안 |
 |------|------|------|------|
-| `/picks` + 내비「EDGE Ranking」 | C / E | 고정 샘플이 “오늘 가치 경기”로 노출. 홈 Featured와 목적 겹침 | 숨김·배지·실데이터 연동 중 택1 |
-| `/toto` + 내비「EDGE Combo」 | C / D | 실 Provider에서 데이터 없음. Dummy에서만 샘플 라운드 | 메뉴에서 빼거나 Dummy 배지 |
+| `/picks` + 내비「EDGE Ranking」 | C / E · **공개 UI HIDDEN** | 내비·홈 Hero·Footer 비노출. `AI_PICKS`·Pick 컴포넌트 유지. 직접 URL + 샘플 고지 + noindex | 실데이터 연동 전까지 공개 재개 금지 |
+| `/toto` EDGE Combo | C / D · **공개 UI HIDDEN** | 내비·홈·Footer 비노출. 핵심 로직·데이터 유지. 직접 URL + 내부 안내 배너 | 축구 연구 재개 시 공개 여부 재검토 |
 | 내비「로그인」 | D | placeholder | 제거 또는 비활성 표기 |
-| 홈 Hero → `/picks` CTA | C 유도 | Ranking이 샘플인데 주요 CTA | `/games` 또는 `/ledger` 위주로 조정 검토 |
+| 홈 Hero 보조 CTA | — | 샘플 Ranking 대신 `/ledger` (`내 가계부`) | 실 Ranking 공개 시 재검토 |
 | 「Why YANG EDGE」섹션명 | F | 실제로는 Featured 경기 카드 | 카피/섹션명 재검토 |
 | `DummyProvider` 파일 | C (유지) | 명시적 개발 모드에 필요 | **삭제 금지** — 자동 폴백만 금지 유지 |
 | README 구 create-next-app 문구 | 문서 | 제품과 무관 | 이번 작업에서 요약으로 교체 |

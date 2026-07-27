@@ -1,0 +1,62 @@
+{
+  "meta": {
+    "hypothesisId": "H-BP-ROLE-006",
+    "description": "Bullpen Availability (IL/option/DFA) pre-game collectability survey",
+    "engineConnected": false,
+    "publicRuntimeUseAllowed": false,
+    "source": "INTERNAL_RESEARCH_ONLY",
+    "probedAt": "2026-07-27T03:23:50.921Z",
+    "sampleTeamId": 139,
+    "statsApiCalls": 3
+  },
+  "endpoints": {
+    "activeRoster": {
+      "path": "/api/v1/teams/{id}/roster?rosterType=active",
+      "httpOk": true,
+      "httpStatus": 200,
+      "rosterCount": 26,
+      "pitcherCount": 13,
+      "statusCodeHistogram": {
+        "A": 26
+      },
+      "collectiblePreGame": true,
+      "notes": [
+        "Provides active roster status codes (A/etc).",
+        "Does not alone prove closer/setup availability.",
+        "IL list may require separate injuries endpoint."
+      ]
+    },
+    "injuries": {
+      "path": "/api/v1/injuries?sportId=1&teamId={id}",
+      "httpOk": false,
+      "httpStatus": 404,
+      "injuryCount": 0,
+      "collectiblePreGame": false,
+      "notes": [
+        "Injuries endpoint unavailable or empty — do not invent IL status"
+      ]
+    },
+    "peopleHydrate": {
+      "path": "/api/v1/people/{id}?hydrate=currentTeam,stats...",
+      "httpOk": true,
+      "httpStatus": 200,
+      "collectiblePreGame": true,
+      "notes": [
+        "Person payload may include current team; not a dedicated IL field guarantee",
+        "Avoid per-player polling at scale without cache"
+      ]
+    }
+  },
+  "researchPolicy": {
+    "mayStore": [
+      "derived: playerId, teamId, rosterStatusCode, injuryListed(bool), asOfTimestamp, cutoffTime"
+    ],
+    "mustNot": [
+      "Engine connection",
+      "public/commercial runtime",
+      "invent closer availability from name",
+      "overwrite prediction snapshots"
+    ],
+    "nextStep": "If injuries+roster both stable with cache, add availabilityUnknown=false only when IL/option confirmed; else keep availabilityUnknown=true"
+  }
+}

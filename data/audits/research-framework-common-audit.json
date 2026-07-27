@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "version": "research-framework-common-audit-v1",
+    "kind": "dataset-common-audit",
+    "generatedAt": "2026-07-27T02:00:00.000Z",
+    "scope": "audit-only",
+    "frameworkStructureChanged": false,
+    "engineImpact": 0,
+    "bullpenChanged": false,
+    "starterChanged": false,
+    "predictionSnapshotChanged": false,
+    "conclusion": "FRAMEWORK_APPROPRIATE_AS_IS"
+  },
+  "subjects": {
+    "bullpen": {
+      "datasetId": "mlb-bullpen-role",
+      "artifact": "data/research/mlb/2026-07-27-bullpen-role-dataset-v1_1.json",
+      "audit": "data/audits/2026-07-27-bullpen-role-v1_1-audit.json",
+      "status": "COLLECTING",
+      "engineAdmission": "PROHIBITED",
+      "domainBuilderImportsFramework": false,
+      "scriptUsesFrameworkAuditShell": false
+    },
+    "starter": {
+      "datasetId": "mlb-starter",
+      "artifact": "data/research/mlb/2026-07-27-starter-dataset-v1.json",
+      "audit": "data/audits/2026-07-27-starter-dataset-v1-audit.json",
+      "status": "COLLECTING",
+      "engineAdmission": "PROHIBITED",
+      "domainBuilderImportsFramework": false,
+      "scriptUsesFrameworkAuditShell": true
+    }
+  },
+  "predictionHashCheck": {
+    "expected": "28f3e3602be4d2482026eb30b60c176335d9686ad6f11251c2a1c43d8b5dee4d",
+    "bullpenMetaPredictionHash": "28f3e3602be4d2482026eb30b60c176335d9686ad6f11251c2a1c43d8b5dee4d",
+    "starterMetaPredictionHash": "28f3e3602be4d2482026eb30b60c176335d9686ad6f11251c2a1c43d8b5dee4d",
+    "note": "This audit writes docs only; prediction files must remain unchanged."
+  },
+  "commonElements": {
+    "metadata": [
+      "researchOnly=true",
+      "engineConnected=false",
+      "engineUseAllowed=false / engineAdmission=PROHIBITED",
+      "dateKst",
+      "generatedAt",
+      "predictionHashSha256",
+      "predictionUnchanged=true",
+      "resultHashSha256",
+      "legal.mlbStatsSource=INTERNAL_RESEARCH_ONLY",
+      "legal.publicRuntimeUseAllowed=false",
+      "legal.commercialRuntimeUseAllowed=false",
+      "legal.rawResponseInResearchCacheOnly=true"
+    ],
+    "hashStructure": [
+      "resultHash over deterministic payload (excludes wall-clock generatedAt from hash body)",
+      "prediction hash recorded for immutability proof",
+      "warm re-run reproducibility expected"
+    ],
+    "cacheStructure": [
+      "cacheUsage.{rawHit, rawMiss, derivedHit, derivedMiss, networkCalls}",
+      "Stats API raw cache under data/cache/research/mlb/raw via research-stats-cache",
+      "domain derived cache under data/cache/research/mlb/derived/{bullpen|starter}"
+    ],
+    "auditStructure": [
+      "totals with row counts",
+      "resultHash recorded",
+      "cache/network stats recorded",
+      "engineConnected=false intent"
+    ],
+    "legalMetadata": [
+      "INTERNAL_RESEARCH_ONLY",
+      "no public/commercial runtime",
+      "raw cache research-only"
+    ],
+    "researchStatus": [
+      "registry status COLLECTING",
+      "engineAdmission PROHIBITED",
+      "hypothesisIds linked in registry + HYPOTHESIS_REGISTRY.md"
+    ],
+    "cutoffHandling": [
+      "per-entity cutoffTime present",
+      "pre-cutoff / as-of filtering required for Stats-derived features"
+    ],
+    "lifecycle": [
+      "dated artifacts under data/research/mlb/",
+      "audits under data/audits/",
+      "no Engine admission path",
+      "minimumSampleTarget 100 in Framework adapters / docs"
+    ]
+  },
+  "differences": {
+    "joinQuality": {
+      "bullpen": "Schedule join exists inside builder; no joinQuality enum on published rows",
+      "starter": "Explicit joinQuality MATCHED|AMBIGUOUS|UNLINKED on every row + summary distribution"
+    },
+    "reviewStructure": {
+      "bullpen": "Consumes success/failure flow reviews as immutable inputs (hashes in meta); role vs outcome compare inside games[]",
+      "starter": "Optional postGameReview on row + separate *-starter-postgame-review-v1.json; never mutates pre-game payload"
+    },
+    "hashExtras": {
+      "bullpen": "successReviewHashSha256, failureReviewHashSha256",
+      "starter": "inputHashSha256; schemaVersion/builderVersion on meta and each row"
+    },
+    "auditShape": {
+      "bullpen": "Custom audit JSON (not createResearchAuditShell)",
+      "starter": "createResearchAuditShell + domain checks[]"
+    }
+  },
+  "bullpenOnlyElements": [
+    "primaryRole / secondaryRoles / roleScores",
+    "CLOSER|SETUP|HIGH_LEVERAGE_RELIEF|MIDDLE_RELIEF|LONG_RELIEF|OPENER|MOP_UP|UNKNOWN",
+    "classificationStatus INSUFFICIENT_SAMPLE|PROVISIONAL|CLASSIFIED",
+    "starterAppearancesExcluded",
+    "overallRoleComparison ROLE_STRUCTURE_*",
+    "failCollapsePregameKeyWarning / successProtectedPregameStable",
+    "bullpen role classifier thresholds and weights (frozen v1.1)",
+    "H-BP-ROLE-001..005"
+  ],
+  "starterOnlyElements": [
+    "probablePitcherId / probablePitcherName / throws",
+    "probableStatus PROBABLE_ONLY|MISSING (no CONFIRMED)",
+    "seasonStats / recentStarts / sampleSize",
+    "side home|away row model (one row per side)",
+    "joinQuality",
+    "postGameReview STARTER_MATCHED|CHANGED|UNKNOWN|NOT_FINAL",
+    "preGameImmutable flag",
+    "targetGameIncludedInStats / cutoffViolations integrity counters",
+    "H-ST-001..004"
+  ],
+  "frameworkForcedFieldsPresence": {
+    "requiredByFrameworkTypesButNotForcedIntoDomainArtifacts": [
+      "ResearchDatasetBase envelope",
+      "frameworkVersion inside dataset meta (starter/bullpen artifacts omit; adapters supply)",
+      "scorecard",
+      "buildResearchResultHash envelope fields"
+    ],
+    "presentViaRegistryOrAdapters": [
+      "datasetId",
+      "status",
+      "schemaVersion",
+      "builderVersion",
+      "engineAdmission",
+      "hypothesisIds",
+      "artifactDatasetPath"
+    ],
+    "verdict": "Framework does not coerce domain JSON into a single rigid envelope; registry+adapters express both datasets."
+  },
+  "frameworkActuallyReused": [
+    "RESEARCH_DATASET_REGISTRY entries for mlb-bullpen-role and mlb-starter",
+    "data/research/registry.json mirror",
+    "bullpenV11FrameworkMetadata() / starterV1FrameworkMetadata() adapters",
+    "createResearchAuditShell used by Starter audit script only",
+    "HYPOTHESIS_REGISTRY.md linkage by datasetId",
+    "DATASET_FRAMEWORK.md status vocabulary (COLLECTING, PROHIBITED admission)"
+  ],
+  "frameworkNotUsedByDomainBuilders": [
+    "buildResearchResultHash / buildResearchInputHash (both domains hash locally)",
+    "emptyScorecard / scorecard.ts",
+    "ResearchDatasetBase wrapper around games/rows",
+    "hypothesis.ts runtime guards during build",
+    "Bullpen builder has zero imports from src/lib/research",
+    "Starter domain lib build-starter-dataset.ts has zero imports from src/lib/research"
+  ],
+  "independentExecutionWithoutFramework": {
+    "bullpen": true,
+    "starterDomainBuilder": true,
+    "starterAuditShellOptional": "Starter script imports audit shell; domain dataset file can be produced without Framework if audit step skipped",
+    "sharedNonFrameworkDependency": "src/lib/mlb/research-stats-cache.ts (MLB research cache, not Framework)"
+  },
+  "removableAbstractionsctionsIfEverTrimmed": [
+    "scorecard.ts until a dataset actually emits scorecards",
+    "weather/travel NOT_STARTED registry placeholders are fine as stubs — not required for bullpen/starter operation"
+  ],
+  "doNotAbstractYet": [
+    "role classification logic",
+    "probable freeze / seasonStats / recentStarts semantics",
+    "joinQuality enum (starter-specific)",
+    "bullpen overallRoleComparison vs starter postGameReview",
+    "forcing both audits into identical JSON before more datasets exist",
+    "unifying resultHash algorithm into Framework-required path (would be a structure change — out of scope)"
+  ],
+  "overdesignRisks": [
+    "Prematurely requiring ResearchDatasetBase on every artifact",
+    "Merging bullpen role cache and starter derived cache schemas",
+    "Shared 'pitcher dataset' abstraction that mixes role and starter features",
+    "Expanding Framework to enforce joinQuality or roleCounts"
+  ],
+  "frameworkModificationNeeded": false,
+  "remainingQuestions": [
+    "Should Bullpen audit eventually optionally adopt createResearchAuditShell for UI uniformity without changing domain meta?",
+    "Should resultHash eventually call buildResearchResultHash for cross-dataset tooling, or keep domain-local hashes?",
+    "When is scorecard.ts first useful — after ≥100-game COLLECTING, or never for these two?",
+    "How to dual-write registry.ts vs registry.json without drift (operational, not schema)?"
+  ],
+  "remainingIssues": [
+    "Bullpen audit shape ≠ Starter ResearchAuditReport shape (acceptable divergence)",
+    "Neither domain builder uses Framework hash helpers (acceptable)",
+    "Hypothesis status labels DATA_COLLECTION/PROPOSED vs Framework COLLECTING vocabulary coexist in docs",
+    "Sample sizes still far below minimumSampleTarget 100"
+  ]
+}

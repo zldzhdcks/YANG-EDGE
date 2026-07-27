@@ -22,8 +22,8 @@ export default function HeroSection() {
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
         <Button href="/games">오늘 경기 보기</Button>
-        <Button href="/picks" variant="outline">
-          EDGE Ranking 보기
+        <Button href="/ledger" variant="outline">
+          내 가계부
         </Button>
       </div>
     </section>

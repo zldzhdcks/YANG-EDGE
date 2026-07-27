@@ -1,5 +1,12 @@
 import type { BudgetOption, TotoRoundData } from "@/types/toto";
 
+/**
+ * Public UI visibility for EDGE Combo (`/toto`).
+ * HIDDEN = not linked from nav/home/footer; direct URL kept for personal research.
+ * Core combo logic and `TOTO_ROUND` data are retained.
+ */
+export const EDGE_COMBO_PUBLIC_VISIBILITY = "HIDDEN" as const;
+
 export const TOTO_BUDGET_OPTIONS: BudgetOption[] = [
   { id: "5k", label: "5천원", amount: 5000 },
   { id: "10k", label: "1만원", amount: 10000 },

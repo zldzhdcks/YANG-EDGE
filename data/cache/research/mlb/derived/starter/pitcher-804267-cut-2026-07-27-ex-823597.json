@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "schemaVersion": "mlb-starter-dataset-v1",
+    "builderVersion": "starter-dataset-builder-v1",
+    "generatedAt": "2026-07-27T02:03:42.952Z",
+    "dataThroughDate": "2026-07-28",
+    "source": "INTERNAL_RESEARCH_ONLY",
+    "inputHash": "33345584845294f866c7bc6edc31de7f1f435e23d961f1498b8783b93e3409dc",
+    "recordCount": 4
+  },
+  "data": {
+    "seasonStats": {
+      "era": 1.93,
+      "whip": 0.86,
+      "inningsPitched": 23.3,
+      "gamesPlayed": 4,
+      "gamesStarted": 4,
+      "wins": 1,
+      "losses": 1,
+      "strikeOuts": 17,
+      "baseOnBalls": 6,
+      "homeRuns": 1
+    },
+    "recentStarts": [
+      {
+        "date": "2026-07-21",
+        "gamePk": 823760,
+        "inningsPitched": 6,
+        "earnedRuns": 0,
+        "strikeOuts": 2,
+        "baseOnBalls": 1,
+        "hits": 3,
+        "homeRuns": 0,
+        "numberOfPitches": 81,
+        "win": true,
+        "loss": false
+      },
+      {
+        "date": "2026-07-12",
+        "gamePk": 823602,
+        "inningsPitched": 7,
+        "earnedRuns": 0,
+        "strikeOuts": 5,
+        "baseOnBalls": 2,
+        "hits": 2,
+        "homeRuns": 0,
+        "numberOfPitches": 82,
+        "win": false,
+        "loss": false
+      },
+      {
+        "date": "2026-06-26",
+        "gamePk": 823610,
+        "inningsPitched": 6,
+        "earnedRuns": 1,
+        "strikeOuts": 7,
+        "baseOnBalls": 1,
+        "hits": 5,
+        "homeRuns": 0,
+        "numberOfPitches": 78,
+        "win": false,
+        "loss": false
+      },
+      {
+        "date": "2026-05-20",
+        "gamePk": 822735,
+        "inningsPitched": 4.333333333333333,
+        "earnedRuns": 4,
+        "strikeOuts": 3,
+        "baseOnBalls": 2,
+        "hits": 4,
+        "homeRuns": 1,
+        "numberOfPitches": 80,
+        "win": false,
+        "loss": true
+      }
+    ],
+    "sampleSize": 4,
+    "targetGameExcludedCount": 0,
+    "cutoffExcludedCount": 0,
+    "keptSplitCount": 4,
+    "statsSource": "mlb-statsapi:/people/{id}/stats?stats=gameLog&group=pitching (pre-cutoff aggregate)",
+    "leakageFlags": []
+  }
+}

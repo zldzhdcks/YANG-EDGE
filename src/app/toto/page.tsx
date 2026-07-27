@@ -3,12 +3,15 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Card from "@/components/ui/Card";
 import TotoPageContent from "@/components/toto/TotoPageContent";
+import { EDGE_COMBO_PUBLIC_VISIBILITY } from "@/constants/toto";
 import { getSportsProvider } from "@/lib/sports";
 import type { TotoData } from "@/lib/sports";
 
 export const metadata: Metadata = {
-  title: "EDGE Combo | YANG EDGE",
-  description: "축구토토 승무패를 EDGE Combo로 분석하고 조합을 생성합니다.",
+  title: "EDGE Combo (내부) | YANG EDGE",
+  description:
+    "내부·개인 연구용 EDGE Combo. 공개 내비게이션에서는 노출되지 않습니다.",
+  robots: { index: false, follow: false },
 };
 
 export default async function TotoPage() {
@@ -23,6 +26,21 @@ export default async function TotoPage() {
     <>
       <Header />
       <main>
+        <div className="mx-auto max-w-5xl px-4 pt-6 sm:px-6">
+          <div
+            role="status"
+            className="rounded-lg border border-amber-500/25 bg-amber-500/10 px-4 py-3 text-sm text-amber-100/90"
+          >
+            <p className="font-medium text-amber-200">
+              내부·개인 연구용 기능 (공개 UI 비노출)
+            </p>
+            <p className="mt-1 text-xs leading-relaxed text-amber-100/70">
+              EDGE Combo는 현재 공개 내비게이션·홈·Footer에 링크되지 않습니다
+              (상태: {EDGE_COMBO_PUBLIC_VISIBILITY}). 직접 URL로만 접근하며,
+              추후 축구 연구 재개 시 공개 여부를 다시 검토합니다.
+            </p>
+          </div>
+        </div>
         {toto ? (
           <TotoPageContent
             round={toto.round}

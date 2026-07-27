@@ -1,0 +1,372 @@
+{
+  "meta": {
+    "version": "starter-dataset-v1-pre-design-audit-v1",
+    "kind": "pre-design-audit",
+    "generatedAt": "2026-07-27T01:42:00.000Z",
+    "scope": "design-only",
+    "builderImplemented": false,
+    "engineConnected": false,
+    "engineImpact": 0,
+    "bullpenV11Changed": false,
+    "researchFrameworkStructureChanged": false,
+    "predictionSnapshotChanged": false,
+    "conclusion": "READY_FOR_MINIMAL_STARTER_DATASET_DESIGN"
+  },
+  "evidenceSources": [
+    "src/lib/mlb/types-pitcher.ts",
+    "src/lib/mlb/build-pitcher-stat-candidate.ts",
+    "scripts/test-mlb-probable-pitcher-stats.ts",
+    "scripts/test-mlb-statsapi-lineups.ts",
+    "scripts/build-mlb-pitcher-comparison.ts",
+    "data/daily-tests/2026-07-27-mlb-pitcher-stat-coverage.json",
+    "data/daily-tests/2026-07-27-mlb-statsapi-lineup-coverage.json",
+    "data/watchlists/2026-07-27-mlb-pitcher-review.json",
+    "data/predictions/mlb/2026-07-27.json",
+    "data/predictions/mlb/2026-07-28.json",
+    "DATA_SOURCES.md",
+    "DATASET_FRAMEWORK.md",
+    "HYPOTHESIS_REGISTRY.md",
+    "src/lib/research/registry.ts",
+    "data/research/mlb/2026-07-27-bullpen-role-dataset-v1_1.json"
+  ],
+  "predictionHashCheck": {
+    "2026-07-27": "28f3e3602be4d2482026eb30b60c176335d9686ad6f11251c2a1c43d8b5dee4d",
+    "2026-07-28": "f46ba674caedacf72e907a15398bf03c7daf2a45b3a5060422af605b709260f2",
+    "note": "Audit writes docs only; prediction files must remain byte-identical after this work."
+  },
+  "currentlyCollectedFields": {
+    "inPredictionSnapshotImmutable": [
+      "pitcherDirection",
+      "pitcherReviewAvailable",
+      "dataAvailability",
+      "usedFactors",
+      "missingFactors",
+      "predictedAt",
+      "sourceSnapshotVersions",
+      "snapshotIntegrity",
+      "integrityWarnings"
+    ],
+    "notInPredictionSnapshot": [
+      "probablePitcherName",
+      "probablePitcherPersonId",
+      "seasonEra",
+      "seasonWhip",
+      "inningsPitched",
+      "recentOutings",
+      "throws"
+    ],
+    "inPitcherStatCoverageArtifact": [
+      "gamePk",
+      "baselineGameId",
+      "homeTeam",
+      "awayTeam",
+      "commenceTimeUtc",
+      "startTimeKst",
+      "cutoffTime",
+      "home/away providerPlayerId (Stats personId)",
+      "fullName",
+      "throws",
+      "seasonEra",
+      "seasonWhip",
+      "inningsPitched",
+      "gamesPlayed",
+      "gamesStarted",
+      "wins",
+      "losses",
+      "strikeOuts",
+      "baseOnBalls",
+      "homeRuns",
+      "recentOutings[] (prior starts: IP/ER/K/BB/H/HR/pitches/W-L)",
+      "lastOutingDate",
+      "statsSource",
+      "status",
+      "missingFields",
+      "warnings",
+      "coreStatCount"
+    ],
+    "inPitcherReviewWatchlist": [
+      "direction (SUPPORTS_BASELINE|CONFLICTS_BASELINE|MIXED|INSUFFICIENT)",
+      "seasonEra/Whip/Ip",
+      "recent3Era/Whip",
+      "throws",
+      "cutoffTime",
+      "recheckRequiredBeforePitch",
+      "legalUse metadata"
+    ],
+    "inLineupCoverage": [
+      "probablePitcherHome/Away {id, fullName}",
+      "confirmedStarterHome/Away (null in Preview)",
+      "gamePk",
+      "coverageStatus"
+    ],
+    "sampleCoverage2026_07_27": {
+      "totalGames": 15,
+      "bothPitchersIdentified": 15,
+      "READY_FOR_BACKTEST": 15,
+      "eraCoveragePercent": 100,
+      "whipCoveragePercent": 100,
+      "inningsCoveragePercent": 100,
+      "recentOutingCoveragePercent": 100,
+      "qualityStartsMissing": 30,
+      "mlbStatsApiCalls": 60,
+      "uniquePitchers": 30
+    }
+  },
+  "preGameUsableFields": [
+    {
+      "field": "probablePitcher.personId",
+      "source": "Stats API schedule hydrate=probablePitcher",
+      "asOf": "snapshot cutoffTime (= commenceTimeUtc or earlier freeze)"
+    },
+    {
+      "field": "probablePitcher.fullName",
+      "source": "same",
+      "asOf": "snapshot cutoffTime"
+    },
+    {
+      "field": "throws",
+      "source": "Stats API /people/{id}",
+      "asOf": "snapshot cutoffTime"
+    },
+    {
+      "field": "seasonEra|seasonWhip|inningsPitched|W-L|K|BB|HR|GS",
+      "source": "gameLog pitching aggregate with date < cutoff UTC date and gamePk ≠ target",
+      "asOf": "pre-cutoff only (leakage-safe path)"
+    },
+    {
+      "field": "recentOutings[0..4]",
+      "source": "same filtered gameLog",
+      "asOf": "prior starts only"
+    },
+    {
+      "field": "pitcherDirection (derived review)",
+      "source": "watchlist pitcher-review (ERA/WHIP vs baseline; recent auxiliary)",
+      "asOf": "pre-game review time; not a Starter Score"
+    },
+    {
+      "field": "team/home-away labels + gamePk + baselineGameId",
+      "source": "schedule + name/time join to API-BASEBALL gameId",
+      "asOf": "pre-game"
+    }
+  ],
+  "prohibitedOrPostGameOnlyFields": [
+    {
+      "field": "target-game outing IP/ER/H/BB/SO/HR/pitches/decision",
+      "reason": "post-first-pitch / post-game boxscore — leakage if used as feature"
+    },
+    {
+      "field": "confirmedStarter from Live/Final pitchers[0]",
+      "reason": "not available as distinct Preview field; post-start confirmation only"
+    },
+    {
+      "field": "STARTER_MATCHED|STARTER_CHANGED|starterVerdict",
+      "reason": "post-game compare labels; may annotate outcomes but not pre-game features"
+    },
+    {
+      "field": "live season endpoint stats without as-of filter",
+      "reason": "LEAKAGE_RISK (SEASON_LIVE_ENDPOINT_NO_ASOF_SNAPSHOT)"
+    },
+    {
+      "field": "qualityStarts",
+      "reason": "not present on current gameLog path (always missing)"
+    },
+    {
+      "field": "SportsDataIO Scrambled Trial names/IDs",
+      "reason": "permanently prohibited"
+    },
+    {
+      "field": "MLB.com HTML crawl fields",
+      "reason": "NO_MLB_HTML_CRAWLING"
+    },
+    {
+      "field": "Starter Score / Pitcher Advantage / Engine factor values",
+      "reason": "out of scope for pre-design; Engine admission PROHIBITED"
+    }
+  ],
+  "probableVsConfirmed": {
+    "distinguishablePreGame": false,
+    "probableAvailable": true,
+    "confirmedAvailablePreGame": false,
+    "mechanism": {
+      "probable": "schedule?hydrate=probablePitcher",
+      "confirmedScaffold": "confirmedStarter* fields exist in lineup coverage but remain null in Preview",
+      "postGameDiff": "success/failure reviews compare probable name vs boxscore starter → STARTER_MATCHED|CHANGED|UNKNOWN"
+    },
+    "integrityRisk": "Prediction snapshot freezes pitcherDirection but not probable identity; late scratches cannot be diffed from snapshot alone."
+  },
+  "sourceTimestampMissingRate": {
+    "sourceRecordable": true,
+    "examples": [
+      "statsSource string on PitcherStatCandidate",
+      "meta.legal / legalUse blocks",
+      "sourceSnapshotVersions on predictions",
+      "research-stats-cache raw meta: fetchedAt, INTERNAL_RESEARCH_ONLY"
+    ],
+    "timestampRecordable": true,
+    "examplesTimestamps": [
+      "cutoffTime",
+      "predictedAt",
+      "generatedAt",
+      "commenceTimeUtc",
+      "cache fetchedAt"
+    ],
+    "missingRateRecordable": true,
+    "examplesMissing": [
+      "missingFields[] on PitcherStatCandidate",
+      "coverage summary *CoveragePercent",
+      "prediction missingFactors (note: 선발투수 remains even when review exists — Engine factor not admitted)"
+    ]
+  },
+  "seasonVsRecentAsOf": {
+    "season": "Recomputed from gameLog splits with date < cutoffDateUtc and gamePk ≠ target game — not live /stats?stats=season",
+    "recentForm": "Up to 5 prior starts in filtered log; pitcher-review uses first 3 for recent3Era/Whip as auxiliary-only",
+    "risks": [
+      "Same-calendar-day exclusion can drop legitimate prior outings (doubleheader/timezone)",
+      "Eval-after-cutoff still OK if gameLog filter applied (EVAL_TIME_AFTER_CUTOFF_BUT_GAMELOG_FILTERED)"
+    ]
+  },
+  "idMappingRisks": [
+    {
+      "risk": "Stats personId/gamePk vs API-BASEBALL mlb-{externalId}",
+      "join": "team name strings + ±3h commence window → baselineGameId may be null"
+    },
+    {
+      "risk": "SportsDataIO Player IDs are not Stats personIds",
+      "join": "do not crosswalk without explicit map; Scrambled forbidden"
+    },
+    {
+      "risk": "HOME_AWAY_REVERSED / TEAM_NAME_MISMATCH",
+      "join": "typed in data-fusion; soft name match can be AMBIGUOUS"
+    },
+    {
+      "risk": "API-BASEBALL players endpoint unsupported",
+      "join": "cannot be primary pitcher-stats source"
+    }
+  ],
+  "apiCallEstimateFor100Games": {
+    "basis": "2026-07-27 slate: 15 games, 30 unique pitchers, 60 Stats API calls (~2/pitcher: people + gameLog) after lineup schedule file existed",
+    "coldEstimate": {
+      "scheduleCalls": "≈1 per US calendar date covering the 100 games (hydrate=probablePitcher)",
+      "peopleAndGameLogCalls": "≈2 × unique starters; worst-case ~200 uniques → ~400 calls; typical multi-day slate lower due to rotation overlap",
+      "totalBallpark": "≈420–450 Stats API calls cold for 100 games if nearly unique starters; far less with day-over-day cache reuse"
+    },
+    "cache": {
+      "possible": true,
+      "paths": [
+        "data/cache/research/mlb/raw|derived via research-stats-cache.ts",
+        "in-memory dedupe within pitcher-stats scripts",
+        "data/cache/mlb-game-results (scores only — not pitcher stats)"
+      ],
+      "warmRerun": "bullpen research cache demonstrated networkCalls=0 on identical inputs"
+    }
+  },
+  "legalStatus": {
+    "mlbStatsApi": "INTERNAL_RESEARCH_ONLY; commercial use not confirmed; no public/commercial runtime connection",
+    "apiBaseball": "commercial subscription available for schedule/results; players stats endpoint unsupported",
+    "oddsApi": "odds only — not starter stats",
+    "sportsDataIo": "non-scrambled only; Scrambled permanently prohibited",
+    "htmlCrawl": "prohibited",
+    "engineAdmissionDefault": "PROHIBITED until licensed commercial-cleared source or explicit admission process"
+  },
+  "bullpenSharedMetadataAuditElements": [
+    "researchOnly / engineConnected / engineUseAllowed=false",
+    "legal.{mlbStatsSource, publicRuntimeUseAllowed, commercialRuntimeUseAllowed, rawResponseInResearchCacheOnly}",
+    "predictionHashSha256 + predictionUnchanged",
+    "resultHashSha256 / inputHash pattern",
+    "cacheUsage.{rawHit, rawMiss, derivedHit, derivedMiss, networkCalls}",
+    "per-entity cutoffTime",
+    "dateKst + generatedAt + schema/builder version labels",
+    "Framework ResearchDatasetMetadata / ResearchAuditReport / DerivedCacheMeta shells"
+  ],
+  "starterSpecificDomainElements": [
+    "probablePitcher identity (personId, name, throws)",
+    "pre-cutoff season aggregates (ERA/WHIP/IP/…)",
+    "recent prior starts (not bullpen role appearances)",
+    "home vs away starter pair per game",
+    "probable vs confirmed / scratch tracking",
+    "pitcherDirection review linkage (optional metadata, not Engine score)",
+    "baselineGameId ↔ gamePk join quality flags"
+  ],
+  "frameworkFitWithoutStructureChange": {
+    "possible": true,
+    "evidence": [
+      "registry already has mlb-starter status=NOT_STARTED schemaVersion=mlb-starter-dataset-v0",
+      "ResearchDatasetMetadata.domain includes starter",
+      "DATASET_FRAMEWORK.md §9: add registry usage + domain module + audit shell + hypotheses without Framework PR changes",
+      "HYPOTHESIS_REGISTRY has no H-ST-* yet — adding rows later is content, not structure change (out of scope for this audit)"
+    ],
+    "thisAuditMustNot": [
+      "edit registry.ts / registry.json",
+      "edit HYPOTHESIS_REGISTRY.md",
+      "implement builder"
+    ]
+  },
+  "candidateHypothesesDraftOnly": [
+    {
+      "id": "H-ST-001",
+      "draft": "Pre-cutoff ERA gap vs baseline pick correlates with SIGNAL_WORKED more than chance (research only)"
+    },
+    {
+      "id": "H-ST-002",
+      "draft": "WHIP gap adds independent pre-game information beyond ERA gap"
+    },
+    {
+      "id": "H-ST-003",
+      "draft": "Recent-3 form as auxiliary signal reduces false confidence when season sample thin"
+    },
+    {
+      "id": "H-ST-004",
+      "draft": "Probable→actual starter changes explain a measurable share of failures tagged STARTER_CHANGED"
+    }
+  ],
+  "minimalSchemaDraft": {
+    "datasetId": "mlb-starter",
+    "schemaVersion": "mlb-starter-dataset-v1",
+    "builderVersion": "not-implemented",
+    "row": {
+      "gameId": "mlb-{externalId}",
+      "gamePk": "number|null",
+      "dateKst": "YYYY-MM-DD",
+      "cutoffTime": "ISO-8601",
+      "homeTeam": "string",
+      "awayTeam": "string",
+      "home": "PitcherStatCandidate-like pre-game block",
+      "away": "PitcherStatCandidate-like pre-game block",
+      "joinQuality": "MATCHED|AMBIGUOUS|UNLINKED",
+      "probableConfirmedStatus": "PROBABLE_ONLY|UNKNOWN",
+      "source": "INTERNAL_RESEARCH_ONLY",
+      "missingFields": "string[]",
+      "warnings": "string[]"
+    },
+    "metaRequired": [
+      "researchOnly",
+      "engineConnected=false",
+      "legal block",
+      "predictionHashSha256 (if linked)",
+      "resultHashSha256",
+      "cacheUsage"
+    ],
+    "explicitlyExcludedFromV1Features": [
+      "target game boxscore outing",
+      "Starter Score",
+      "Engine recommendation/confidence/edge/valueEdge"
+    ]
+  },
+  "openQuestionsBeforeImplementation": [
+    "Freeze probable identity into a research starter artifact at predictedAt without mutating prediction snapshot?",
+    "Canonical join key: require gamePk always, or allow name+time soft join with UNLINKED rows?",
+    "Minimum sample for COLLECTING→PROMISING (Framework says not 14 games — align with ≥100 games)?",
+    "Include pitcherDirection as metadata only, or omit until separate review adapter?",
+    "How to version as-of when recheckRequiredBeforePitch=true and probable changes mid-day?",
+    "Commercial-cleared stats source timeline before any Engine admission discussion?"
+  ],
+  "remainingIssues": [
+    "Confirmed starter not available pre-game in Preview Stats API",
+    "qualityStarts always missing on current gameLog path",
+    "Prediction snapshot does not store probable identity (only direction flags)",
+    "baselineGameId join can fail (name/time window)",
+    "MLB Stats API commercial use unconfirmed — research-only forever until cleared",
+    "No H-ST-* hypotheses registered yet (content add later; Framework structure untouched)",
+    "Builder not implemented (by design for this audit)"
+  ]
+}

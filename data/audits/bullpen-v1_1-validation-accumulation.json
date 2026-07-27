@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "version": "bullpen-v1.1-validation-accumulation-v1",
+    "generatedAt": "2026-07-27T03:23:50.924Z",
+    "classifierVersion": "bullpen-role-classifier-v1.1",
+    "classifierLogicChanged": false,
+    "thresholdsChanged": false,
+    "engineConnected": false,
+    "engineImpact": 0,
+    "frameworkChanged": false,
+    "predictionHashSha256": "621f4dbc2ad7439804f88ba213452e5e2675396e889a26580f79b11ad9e58051",
+    "predictionUnchanged": true,
+    "bullpenResultHashBefore": "0753ad64086c1773732c396a364567ecbbf2c8a250b250528e8aee6928258b8b",
+    "bullpenResultHashAfter": "0753ad64086c1773732c396a364567ecbbf2c8a250b250528e8aee6928258b8b",
+    "bullpenHashMatched": true,
+    "conclusion": "DATA_ACCUMULATION_CONTINUES"
+  },
+  "slateStatus": {
+    "2026-07-27": {
+      "total": 15,
+      "finished": 15,
+      "inProgress": 0,
+      "notStarted": 0,
+      "remaining": "7462",
+      "calls": 1
+    },
+    "2026-07-28": {
+      "total": 12,
+      "finished": 0,
+      "inProgress": 0,
+      "notStarted": 12,
+      "remaining": "7461",
+      "calls": 1
+    },
+    "2026-07-29": {
+      "total": 15,
+      "finished": 0,
+      "inProgress": 0,
+      "notStarted": 15,
+      "remaining": "7460",
+      "calls": 1
+    },
+    "newFinishedSlates": 0,
+    "newFinishedGames": 0,
+    "blocker": "No new finished MLB slate after 2026-07-27 (07-28 NS, Yankees still in progress on 07-27)"
+  },
+  "accumulation": {
+    "newGradedGames": 0,
+    "cumulativeGradedGames": 15,
+    "pendingOnExistingSlate": 0,
+    "nextDaySnapshot": {
+      "saved": false,
+      "games": 0,
+      "path": "C:\\Users\\TCTCTC\\YANG-EDGE\\yang-edge\\data\\predictions\\mlb\\2026-07-28.json",
+      "note": "snapshot already exists — left unchanged"
+    }
+  },
+  "bullpenV11MetricsExistingSlate": {
+    "failPregameWarn": 7,
+    "failTotal": 7,
+    "successStable": 2,
+    "successTotal": 5,
+    "falsePositive": 2,
+    "falseNegative": 0,
+    "unknownRate": 51.3,
+    "opener": 0,
+    "mopUp": 0,
+    "roleCounts": {
+      "CLOSER": 31,
+      "SETUP": 58,
+      "HIGH_LEVERAGE_RELIEF": 36,
+      "MIDDLE_RELIEF": 121,
+      "LONG_RELIEF": 28,
+      "OPENER": 0,
+      "MOP_UP": 0,
+      "UNKNOWN": 289
+    }
+  },
+  "cacheReuse": {
+    "rawHit": 1,
+    "rawMiss": 0,
+    "derivedHit": 1,
+    "derivedMiss": 0,
+    "networkCalls": 0
+  },
+  "availabilityResearch": {
+    "hypothesisId": "H-BP-ROLE-006",
+    "surveyPath": "data/research/mlb/h-bp-role-006-availability-survey.json",
+    "collectible": true,
+    "engineConnected": false
+  },
+  "remainingIssues": [
+    "No new finished slate to re-score Success/Failure flow yet",
+    "OPENER/MOP_UP primary still 0 on v1.1 (classifier frozen)",
+    "availabilityUnknown remains true until H-BP-ROLE-006 collection pipeline exists",
+    "07-28 snapshot UNVERIFIED (missing pitcher/recheck/purchase sources)"
+  ]
+}

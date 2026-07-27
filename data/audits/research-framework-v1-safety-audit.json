@@ -1,0 +1,189 @@
+{
+  "meta": {
+    "version": "research-framework-v1-safety-audit-v1",
+    "frameworkVersion": "research-framework-v1",
+    "generatedAt": "2026-07-27T01:10:34.906Z",
+    "auditOnly": true,
+    "frameworkExtended": false,
+    "registryStructureChanged": false,
+    "bullpenLogicChanged": false,
+    "engineChanged": false,
+    "predictionSnapshotChanged": false
+  },
+  "summary": {
+    "SourceOfTruth": "Runtime SoT = registry.ts; registry.json = mirror (dual-write drift risk)",
+    "HashDeterminism": "Key-order stable; array-order sensitive; undefined omitted; null stable; Date→ISO; float IEEE caveat",
+    "BullpenAdapter": "Metadata mapping only; classifier/build do not import Framework; v1.1 payload intact",
+    "FrameworkIndependence": "Bullpen runs without Framework; Framework has no Engine imports",
+    "StatusGuard": "Demotes premature PROMISING only; does not auto-conclude research",
+    "PlaceholderRisk": "Starter/Weather/Travel are NOT_STARTED stubs — no forced schemas/builders",
+    "EngineIsolation": "PROHIBITED + no edge imports",
+    "conclusion": "SAFE_MINIMAL_SCAFFOLD",
+    "failCount": 0,
+    "warnCount": 0
+  },
+  "checks": [
+    {
+      "id": "SOT_RUNTIME",
+      "passed": true,
+      "detail": "Runtime Source of Truth is RESEARCH_DATASET_REGISTRY in src/lib/research/registry.ts",
+      "severity": "info"
+    },
+    {
+      "id": "SOT_JSON_MIRROR",
+      "passed": true,
+      "detail": "data/research/registry.json is a static mirror, not loaded by Framework runtime code",
+      "severity": "info"
+    },
+    {
+      "id": "SOT_ID_ALIGNMENT",
+      "passed": true,
+      "detail": "datasetId sets match between registry.ts and registry.json",
+      "severity": "info"
+    },
+    {
+      "id": "SOT_FIELD_ALIGNMENT",
+      "passed": true,
+      "detail": "Core fields currently aligned",
+      "severity": "info"
+    },
+    {
+      "id": "SOT_DUAL_WRITE_RISK",
+      "passed": true,
+      "detail": "NOT single Source of Truth operationally: two files must be edited in sync → drift possible. Documented risk; structure not changed in this audit.",
+      "severity": "info"
+    },
+    {
+      "id": "HASH_KEY_ORDER",
+      "passed": true,
+      "detail": "Object key order does not change hash",
+      "severity": "info"
+    },
+    {
+      "id": "HASH_ARRAY_ORDER_SENSITIVE",
+      "passed": true,
+      "detail": "Array order is preserved (not sorted) — callers must keep arrays deterministic",
+      "severity": "info"
+    },
+    {
+      "id": "HASH_UNDEFINED_OMITTED",
+      "passed": true,
+      "detail": "undefined object values are omitted by JSON.stringify (same as missing key)",
+      "severity": "info"
+    },
+    {
+      "id": "HASH_NULL_STABLE",
+      "passed": true,
+      "detail": "null is stable",
+      "severity": "info"
+    },
+    {
+      "id": "HASH_DATE_OBJECT",
+      "passed": true,
+      "detail": "Date objects stringify via JSON to ISO string — same instant → same hash; prefer ISO strings in payloads",
+      "severity": "info"
+    },
+    {
+      "id": "HASH_FLOAT_SAME_EXPR",
+      "passed": true,
+      "detail": "Identical float expressions hash identically",
+      "severity": "info"
+    },
+    {
+      "id": "HASH_FLOAT_IEEE_CAVEAT",
+      "passed": true,
+      "detail": "0.1+0.2 !== 0.3 in IEEE — callers must pre-round floats for semantic equality",
+      "severity": "info"
+    },
+    {
+      "id": "ADAPTER_POINTS_TO_V11_ARTIFACT",
+      "passed": true,
+      "detail": "adapter dataset path=data/research/mlb/2026-07-27-bullpen-role-dataset-v1_1.json",
+      "severity": "info"
+    },
+    {
+      "id": "ADAPTER_NO_CLASSIFIER_IMPORT",
+      "passed": true,
+      "detail": "Bullpen classifier + v1.1 build script do not import Framework",
+      "severity": "info"
+    },
+    {
+      "id": "ADAPTER_NO_PAYLOAD_LOSS",
+      "passed": true,
+      "detail": "Existing v1.1 dataset pitchers/meta intact; adapter only maps metadata",
+      "severity": "info"
+    },
+    {
+      "id": "INDEPENDENCE_BULLPEN",
+      "passed": true,
+      "detail": "Removing Framework would not break Bullpen classifier execution path",
+      "severity": "info"
+    },
+    {
+      "id": "INDEPENDENCE_ENGINE",
+      "passed": true,
+      "detail": "src/lib/research has zero imports from edge/engine",
+      "severity": "info"
+    },
+    {
+      "id": "GUARD_BLOCKS_PROMISING_SMALL_SAMPLE",
+      "passed": true,
+      "detail": "PROMISING + 14 games → COLLECTING (blocks premature promotion)",
+      "severity": "info"
+    },
+    {
+      "id": "GUARD_PASSTHROUGH_COLLECTING",
+      "passed": true,
+      "detail": "COLLECTING unchanged — does not invent PROMISING",
+      "severity": "info"
+    },
+    {
+      "id": "GUARD_PASSTHROUGH_WEAK",
+      "passed": true,
+      "detail": "WEAK unchanged",
+      "severity": "info"
+    },
+    {
+      "id": "GUARD_ALLOWS_PROMISING_LARGE",
+      "passed": true,
+      "detail": "PROMISING allowed only when gradedGames >= 100 (caller still decides)",
+      "severity": "info"
+    },
+    {
+      "id": "GUARD_NOT_AUTO_CONCLUSION",
+      "passed": true,
+      "detail": "Guard only demotes unsafe PROMISING/READY_FOR_BACKTEST; never auto-sets PROMISING/VALIDATED/REJECTED from data",
+      "severity": "info"
+    },
+    {
+      "id": "PLACEHOLDER_mlb-starter",
+      "passed": true,
+      "detail": "mlb-starter: NOT_STARTED placeholder only — no schema force beyond registry row",
+      "severity": "info"
+    },
+    {
+      "id": "PLACEHOLDER_mlb-weather",
+      "passed": true,
+      "detail": "mlb-weather: NOT_STARTED placeholder only — no schema force beyond registry row",
+      "severity": "info"
+    },
+    {
+      "id": "PLACEHOLDER_mlb-travel",
+      "passed": true,
+      "detail": "mlb-travel: NOT_STARTED placeholder only — no schema force beyond registry row",
+      "severity": "info"
+    },
+    {
+      "id": "IMPORT_INDEX_EXPORTS",
+      "passed": true,
+      "detail": "Public index still exports adapter + hash",
+      "severity": "info"
+    }
+  ],
+  "remainingRisks": [
+    "Dual registry.ts + registry.json can drift if only one is updated",
+    "Callers must keep array order deterministic and pre-round floats for semantic hashes",
+    "Placeholders may tempt premature schema design — keep NOT_STARTED until real builder",
+    "Adapter gradedGames:14 is documentation metadata, not an Engine signal"
+  ]
+}

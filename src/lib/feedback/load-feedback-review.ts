@@ -255,6 +255,8 @@ function buildSummary(days: FeedbackDayReview[]): FeedbackCenterData["summary"] 
 
 /**
  * data/predictions/*-review.json 을 읽어 피드백 센터 데이터를 만든다.
+ * - prediction-review-v1 mirror만 포함 (meta.version 또는 유효 reviews)
+ * - 날짜는 파일명 하드코딩이 아니라 meta.dateKst 기준 정렬
  * 파일이 없거나 손상되면 빈 days 를 반환한다.
  */
 export async function loadFeedbackCenterData(): Promise<FeedbackCenterData> {
@@ -264,11 +266,22 @@ export async function loadFeedbackCenterData(): Promise<FeedbackCenterData> {
   const days: FeedbackDayReview[] = [];
   for (const file of files) {
     const day = await loadOneReviewFile(file);
-    if (day) days.push(day);
+    if (!day) continue;
+    // Skip non site-mirror research dumps that don't parse as prediction-review-v1
+    if (
+      day.meta.version !== "prediction-review-v1" &&
+      day.meta.version !== "unknown"
+    ) {
+      continue;
+    }
+    days.push(day);
   }
 
-  // 날짜 내림차순 (파일명 정렬과 동일하게 유지)
-  days.sort((a, b) => b.meta.dateKst.localeCompare(a.meta.dateKst));
+  days.sort((a, b) => {
+    const byDate = b.meta.dateKst.localeCompare(a.meta.dateKst);
+    if (byDate !== 0) return byDate;
+    return (b.meta.generatedAt ?? "").localeCompare(a.meta.generatedAt ?? "");
+  });
 
   return {
     days,

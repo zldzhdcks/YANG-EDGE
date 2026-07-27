@@ -1,0 +1,925 @@
+{
+  "meta": {
+    "version": "prediction-review-v1",
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T03:11:05.785Z",
+    "sourceSnapshot": "data/predictions/mlb/2026-07-27.json",
+    "sourceAnalysis": "data/predictions/mlb/2026-07-27-review.json",
+    "totalPredictions": 15,
+    "gradedGames": 15,
+    "signalWorked": 6,
+    "signalFailed": 9,
+    "inconclusive": 0,
+    "pendingCount": 0,
+    "liveAccuracyPercent": 40,
+    "limitations": [
+      "MLB 연구용 스냅샷 채점 결과이다. 구매 라인이 아니다.",
+      "표본이 작아 적중률로 엔진 성능을 단정하지 않는다.",
+      "실패 원인을 단정하지 않으며 hypotheses는 저장 데이터 근거 가능성만 기록한다."
+    ]
+  },
+  "reviews": [
+    {
+      "gameId": "mlb-179589",
+      "league": "MLB",
+      "match": "New York Yankees vs Philadelphia Phillies",
+      "matchDisplay": "New York Yankees @ Philadelphia Phillies",
+      "recommendedTeam": "New York Yankees",
+      "recommendedSide": "away",
+      "actual": {
+        "homeScore": 11,
+        "awayScore": 4,
+        "scoreline": "11-4",
+        "winner": "home",
+        "winnerTeam": "Philadelphia Phillies",
+        "resultStatus": "graded"
+      },
+      "predictionCorrect": false,
+      "snapshot": {
+        "probability": 61,
+        "edgeScore": -11.4,
+        "confidence": 51,
+        "recommendationGrade": "EDGE PICK",
+        "marketProbability": 39,
+        "valueEdge": 22.5
+      },
+      "evidenceAtPrediction": {
+        "usedData": [
+          "최근 폼",
+          "득점력",
+          "실점 억제",
+          "홈/원정 성적",
+          "리그 순위",
+          "맞대결",
+          "휴식일",
+          "부상/전력",
+          "연승/연패"
+        ],
+        "missingData": [
+          "선발투수"
+        ],
+        "unavailableFactors": [
+          "선발투수"
+        ],
+        "dataAvailability": 0.9,
+        "recentGameCounts": null,
+        "oddsMatched": true
+      },
+      "feedback": {
+        "verdict": "SIGNAL_FAILED",
+        "hypotheses": [
+          "선발투수 방향과 Baseline 충돌",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
+        "notes": [
+          "추천 방향과 실제 결과가 일치하지 않았습니다.",
+          "실패 원인을 단정하지 않습니다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179590",
+      "league": "MLB",
+      "match": "Arizona Diamondbacks vs Washington Nationals",
+      "matchDisplay": "Arizona Diamondbacks @ Washington Nationals",
+      "recommendedTeam": "Arizona Diamondbacks",
+      "recommendedSide": "away",
+      "actual": {
+        "homeScore": 10,
+        "awayScore": 7,
+        "scoreline": "10-7",
+        "winner": "home",
+        "winnerTeam": "Washington Nationals",
+        "resultStatus": "graded"
+      },
+      "predictionCorrect": false,
+      "snapshot": {
+        "probability": 51,
+        "edgeScore": -1.3,
+        "confidence": 39,
+        "recommendationGrade": "PASS",
+        "marketProbability": 52,
+        "valueEdge": -1
+      },
+      "evidenceAtPrediction": {
+        "usedData": [
+          "최근 폼",
+          "득점력",
+          "실점 억제",
+          "홈/원정 성적",
+          "리그 순위",
+          "맞대결",
+          "휴식일",
+          "부상/전력",
+          "연승/연패"
+        ],
+        "missingData": [
+          "선발투수"
+        ],
+        "unavailableFactors": [
+          "선발투수"
+        ],
+        "dataAvailability": 0.9,
+        "recentGameCounts": null,
+        "oddsMatched": true
+      },
+      "feedback": {
+        "verdict": "SIGNAL_FAILED",
+        "hypotheses": [
+          "시장과 모델 방향 충돌 (Value Edge < 0)",
+          "Confidence 50 미만",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
+        "notes": [
+          "추천 방향과 실제 결과가 일치하지 않았습니다.",
+          "실패 원인을 단정하지 않습니다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179591",
+      "league": "MLB",
+      "match": "Seattle Mariners vs Texas Rangers",
+      "matchDisplay": "Seattle Mariners @ Texas Rangers",
+      "recommendedTeam": "Texas Rangers",
+      "recommendedSide": "home",
+      "actual": {
+        "homeScore": 4,
+        "awayScore": 6,
+        "scoreline": "4-6",
+        "winner": "away",
+        "winnerTeam": "Seattle Mariners",
+        "resultStatus": "graded"
+      },
+      "predictionCorrect": false,
+      "snapshot": {
+        "probability": 59,
+        "edgeScore": 8.7,
+        "confidence": 54,
+        "recommendationGrade": "WATCH",
+        "marketProbability": 50,
+        "valueEdge": 8.4
+      },
+      "evidenceAtPrediction": {
+        "usedData": [
+          "최근 폼",
+          "득점력",
+          "실점 억제",
+          "홈/원정 성적",
+          "리그 순위",
+          "맞대결",
+          "휴식일",
+          "부상/전력",
+          "연승/연패"
+        ],
+        "missingData": [
+          "선발투수"
+        ],
+        "unavailableFactors": [
+          "선발투수"
+        ],
+        "dataAvailability": 0.9,
+        "recentGameCounts": null,
+        "oddsMatched": true
+      },
+      "feedback": {
+        "verdict": "SIGNAL_FAILED",
+        "hypotheses": [
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
+        "notes": [
+          "추천 방향과 실제 결과가 일치하지 않았습니다.",
+          "실패 원인을 단정하지 않습니다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179592",
+      "league": "MLB",
+      "match": "Cleveland Guardians vs Tampa Bay Rays",
+      "matchDisplay": "Cleveland Guardians @ Tampa Bay Rays",
+      "recommendedTeam": "Tampa Bay Rays",
+      "recommendedSide": "home",
+      "actual": {
+        "homeScore": 1,
+        "awayScore": 0,
+        "scoreline": "1-0",
+        "winner": "home",
+        "winnerTeam": "Tampa Bay Rays",
+        "resultStatus": "graded"
+      },
+      "predictionCorrect": true,
+      "snapshot": {
+        "probability": 63,
+        "edgeScore": 12.6,
+        "confidence": 57,
+        "recommendationGrade": "EDGE PICK",
+        "marketProbability": 56,
+        "valueEdge": 6.7
+      },
+      "evidenceAtPrediction": {
+        "usedData": [
+          "최근 폼",
+          "득점력",
+          "실점 억제",
+          "홈/원정 성적",
+          "리그 순위",
+          "맞대결",
+          "휴식일",
+          "부상/전력",
+          "연승/연패"
+        ],
+        "missingData": [
+          "선발투수"
+        ],
+        "unavailableFactors": [
+          "선발투수"
+        ],
+        "dataAvailability": 0.9,
+        "recentGameCounts": null,
+        "oddsMatched": true
+      },
+      "feedback": {
+        "verdict": "SIGNAL_WORKED",
+        "hypotheses": [
+          "선발투수 지표 MIXED",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
+        "notes": [
+          "추천 방향과 실제 결과가 일치했습니다.",
+          "한 경기로 신호 유효성을 확정할 수 없습니다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179593",
+      "league": "MLB",
+      "match": "Cincinnati Reds vs St.Louis Cardinals",
+      "matchDisplay": "Cincinnati Reds @ St.Louis Cardinals",
+      "recommendedTeam": "St.Louis Cardinals",
+      "recommendedSide": "home",
+      "actual": {
+        "homeScore": 3,
+        "awayScore": 5,
+        "scoreline": "3-5",
+        "winner": "away",
+        "winnerTeam": "Cincinnati Reds",
+        "resultStatus": "graded"
+      },
+      "predictionCorrect": false,
+      "snapshot": {
+        "probability": 53,
+        "edgeScore": 3.2,
+        "confidence": 44,
+        "recommendationGrade": "PASS",
+        "marketProbability": 56,
+        "valueEdge": -2.4
+      },
+      "evidenceAtPrediction": {
+        "usedData": [
+          "최근 폼",
+          "득점력",
+          "실점 억제",
+          "홈/원정 성적",
+          "리그 순위",
+          "맞대결",
+          "휴식일",
+          "부상/전력",
+          "연승/연패"
+        ],
+        "missingData": [
+          "선발투수"
+        ],
+        "unavailableFactors": [
+          "선발투수"
+        ],
+        "dataAvailability": 0.9,
+        "recentGameCounts": null,
+        "oddsMatched": true
+      },
+      "feedback": {
+        "verdict": "SIGNAL_FAILED",
+        "hypotheses": [
+          "시장과 모델 방향 충돌 (Value Edge < 0)",
+          "Confidence 50 미만",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
+        "notes": [
+          "추천 방향과 실제 결과가 일치하지 않았습니다.",
+          "실패 원인을 단정하지 않습니다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179594",
+      "league": "MLB",
+      "match": "Los Angeles Angels vs San Francisco Giants",
+      "matchDisplay": "Los Angeles Angels @ San Francisco Giants",
+      "recommendedTeam": "San Francisco Giants",
+      "recommendedSide": "home",
+      "actual": {
+        "homeScore": 3,
+        "awayScore": 4,
+        "scoreline": "3-4",
+        "winner": "away",
+        "winnerTeam": "Los Angeles Angels",
+        "resultStatus": "graded"
+      },
+      "predictionCorrect": false,
+      "snapshot": {
+        "probability": 58,
+        "edgeScore": 7.8,
+        "confidence": 54,
+        "recommendationGrade": "WATCH",
+        "marketProbability": 51,
+        "valueEdge": 6.6
+      },
+      "evidenceAtPrediction": {
+        "usedData": [
+          "최근 폼",
+          "득점력",
+          "실점 억제",
+          "홈/원정 성적",
+          "리그 순위",
+          "맞대결",
+          "휴식일",
+          "부상/전력",
+          "연승/연패"
+        ],
+        "missingData": [
+          "선발투수"
+        ],
+        "unavailableFactors": [
+          "선발투수"
+        ],
+        "dataAvailability": 0.9,
+        "recentGameCounts": null,
+        "oddsMatched": true
+      },
+      "feedback": {
+        "verdict": "SIGNAL_FAILED",
+        "hypotheses": [
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
+        "notes": [
+          "추천 방향과 실제 결과가 일치하지 않았습니다.",
+          "실패 원인을 단정하지 않습니다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179595",
+      "league": "MLB",
+      "match": "Chicago Cubs vs Pittsburgh Pirates",
+      "matchDisplay": "Chicago Cubs @ Pittsburgh Pirates",
+      "recommendedTeam": "Chicago Cubs",
+      "recommendedSide": "away",
+      "actual": {
+        "homeScore": 8,
+        "awayScore": 7,
+        "scoreline": "8-7",
+        "winner": "home",
+        "winnerTeam": "Pittsburgh Pirates",
+        "resultStatus": "graded"
+      },
+      "predictionCorrect": false,
+      "snapshot": {
+        "probability": 57,
+        "edgeScore": -6.7,
+        "confidence": 48,
+        "recommendationGrade": "WATCH",
+        "marketProbability": 46,
+        "valueEdge": 10.5
+      },
+      "evidenceAtPrediction": {
+        "usedData": [
+          "최근 폼",
+          "득점력",
+          "실점 억제",
+          "홈/원정 성적",
+          "리그 순위",
+          "맞대결",
+          "휴식일",
+          "부상/전력",
+          "연승/연패"
+        ],
+        "missingData": [
+          "선발투수"
+        ],
+        "unavailableFactors": [
+          "선발투수"
+        ],
+        "dataAvailability": 0.9,
+        "recentGameCounts": null,
+        "oddsMatched": true
+      },
+      "feedback": {
+        "verdict": "SIGNAL_FAILED",
+        "hypotheses": [
+          "Confidence 50 미만",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
+        "notes": [
+          "추천 방향과 실제 결과가 일치하지 않았습니다.",
+          "실패 원인을 단정하지 않습니다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179596",
+      "league": "MLB",
+      "match": "Athletics vs Minnesota Twins",
+      "matchDisplay": "Athletics @ Minnesota Twins",
+      "recommendedTeam": "Minnesota Twins",
+      "recommendedSide": "home",
+      "actual": {
+        "homeScore": 11,
+        "awayScore": 8,
+        "scoreline": "11-8",
+        "winner": "home",
+        "winnerTeam": "Minnesota Twins",
+        "resultStatus": "graded"
+      },
+      "predictionCorrect": true,
+      "snapshot": {
+        "probability": 56,
+        "edgeScore": 6.3,
+        "confidence": 53,
+        "recommendationGrade": "WATCH",
+        "marketProbability": 56,
+        "valueEdge": 0
+      },
+      "evidenceAtPrediction": {
+        "usedData": [
+          "최근 폼",
+          "득점력",
+          "실점 억제",
+          "홈/원정 성적",
+          "리그 순위",
+          "맞대결",
+          "휴식일",
+          "부상/전력",
+          "연승/연패"
+        ],
+        "missingData": [
+          "선발투수"
+        ],
+        "unavailableFactors": [
+          "선발투수"
+        ],
+        "dataAvailability": 0.9,
+        "recentGameCounts": null,
+        "oddsMatched": true
+      },
+      "feedback": {
+        "verdict": "SIGNAL_WORKED",
+        "hypotheses": [
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
+        "notes": [
+          "추천 방향과 실제 결과가 일치했습니다.",
+          "한 경기로 신호 유효성을 확정할 수 없습니다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179597",
+      "league": "MLB",
+      "match": "Los Angeles Dodgers vs New York Mets",
+      "matchDisplay": "Los Angeles Dodgers @ New York Mets",
+      "recommendedTeam": "Los Angeles Dodgers",
+      "recommendedSide": "away",
+      "actual": {
+        "homeScore": 8,
+        "awayScore": 3,
+        "scoreline": "8-3",
+        "winner": "home",
+        "winnerTeam": "New York Mets",
+        "resultStatus": "graded"
+      },
+      "predictionCorrect": false,
+      "snapshot": {
+        "probability": 64,
+        "edgeScore": -14.1,
+        "confidence": 53,
+        "recommendationGrade": "EDGE PICK",
+        "marketProbability": 59,
+        "valueEdge": 5.2
+      },
+      "evidenceAtPrediction": {
+        "usedData": [
+          "최근 폼",
+          "득점력",
+          "실점 억제",
+          "홈/원정 성적",
+          "리그 순위",
+          "맞대결",
+          "휴식일",
+          "부상/전력",
+          "연승/연패"
+        ],
+        "missingData": [
+          "선발투수"
+        ],
+        "unavailableFactors": [
+          "선발투수"
+        ],
+        "dataAvailability": 0.9,
+        "recentGameCounts": null,
+        "oddsMatched": true
+      },
+      "feedback": {
+        "verdict": "SIGNAL_FAILED",
+        "hypotheses": [
+          "선발투수 지표 MIXED",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
+        "notes": [
+          "추천 방향과 실제 결과가 일치하지 않았습니다.",
+          "실패 원인을 단정하지 않습니다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179598",
+      "league": "MLB",
+      "match": "Colorado Rockies vs Milwaukee Brewers",
+      "matchDisplay": "Colorado Rockies @ Milwaukee Brewers",
+      "recommendedTeam": "Milwaukee Brewers",
+      "recommendedSide": "home",
+      "actual": {
+        "homeScore": 11,
+        "awayScore": 2,
+        "scoreline": "11-2",
+        "winner": "home",
+        "winnerTeam": "Milwaukee Brewers",
+        "resultStatus": "graded"
+      },
+      "predictionCorrect": true,
+      "snapshot": {
+        "probability": 61,
+        "edgeScore": 11.4,
+        "confidence": 56,
+        "recommendationGrade": "EDGE PICK",
+        "marketProbability": 75,
+        "valueEdge": -13.7
+      },
+      "evidenceAtPrediction": {
+        "usedData": [
+          "최근 폼",
+          "득점력",
+          "실점 억제",
+          "홈/원정 성적",
+          "리그 순위",
+          "맞대결",
+          "휴식일",
+          "부상/전력",
+          "연승/연패"
+        ],
+        "missingData": [
+          "선발투수"
+        ],
+        "unavailableFactors": [
+          "선발투수"
+        ],
+        "dataAvailability": 0.9,
+        "recentGameCounts": null,
+        "oddsMatched": true
+      },
+      "feedback": {
+        "verdict": "SIGNAL_WORKED",
+        "hypotheses": [
+          "시장과 모델 방향 충돌 (Value Edge < 0)",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
+        "notes": [
+          "추천 방향과 실제 결과가 일치했습니다.",
+          "한 경기로 신호 유효성을 확정할 수 없습니다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179599",
+      "league": "MLB",
+      "match": "San Diego Padres vs Miami Marlins",
+      "matchDisplay": "San Diego Padres @ Miami Marlins",
+      "recommendedTeam": "San Diego Padres",
+      "recommendedSide": "away",
+      "actual": {
+        "homeScore": 3,
+        "awayScore": 5,
+        "scoreline": "3-5",
+        "winner": "away",
+        "winnerTeam": "San Diego Padres",
+        "resultStatus": "graded"
+      },
+      "predictionCorrect": true,
+      "snapshot": {
+        "probability": 62,
+        "edgeScore": -12.4,
+        "confidence": 52,
+        "recommendationGrade": "EDGE PICK",
+        "marketProbability": 46,
+        "valueEdge": 16.6
+      },
+      "evidenceAtPrediction": {
+        "usedData": [
+          "최근 폼",
+          "득점력",
+          "실점 억제",
+          "홈/원정 성적",
+          "리그 순위",
+          "맞대결",
+          "휴식일",
+          "부상/전력",
+          "연승/연패"
+        ],
+        "missingData": [
+          "선발투수"
+        ],
+        "unavailableFactors": [
+          "선발투수"
+        ],
+        "dataAvailability": 0.9,
+        "recentGameCounts": null,
+        "oddsMatched": true
+      },
+      "feedback": {
+        "verdict": "SIGNAL_WORKED",
+        "hypotheses": [
+          "선발투수 지표 MIXED",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
+        "notes": [
+          "추천 방향과 실제 결과가 일치했습니다.",
+          "한 경기로 신호 유효성을 확정할 수 없습니다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179600",
+      "league": "MLB",
+      "match": "Kansas City Royals vs Detroit Tigers",
+      "matchDisplay": "Kansas City Royals @ Detroit Tigers",
+      "recommendedTeam": "Detroit Tigers",
+      "recommendedSide": "home",
+      "actual": {
+        "homeScore": 4,
+        "awayScore": 5,
+        "scoreline": "4-5",
+        "winner": "away",
+        "winnerTeam": "Kansas City Royals",
+        "resultStatus": "graded"
+      },
+      "predictionCorrect": false,
+      "snapshot": {
+        "probability": 50,
+        "edgeScore": 0.4,
+        "confidence": 41,
+        "recommendationGrade": "PASS",
+        "marketProbability": 63,
+        "valueEdge": -12.5
+      },
+      "evidenceAtPrediction": {
+        "usedData": [
+          "최근 폼",
+          "득점력",
+          "실점 억제",
+          "홈/원정 성적",
+          "리그 순위",
+          "맞대결",
+          "휴식일",
+          "부상/전력",
+          "연승/연패"
+        ],
+        "missingData": [
+          "선발투수"
+        ],
+        "unavailableFactors": [
+          "선발투수"
+        ],
+        "dataAvailability": 0.9,
+        "recentGameCounts": null,
+        "oddsMatched": true
+      },
+      "feedback": {
+        "verdict": "SIGNAL_FAILED",
+        "hypotheses": [
+          "시장과 모델 방향 충돌 (Value Edge < 0)",
+          "Confidence 50 미만",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
+        "notes": [
+          "추천 방향과 실제 결과가 일치하지 않았습니다.",
+          "실패 원인을 단정하지 않습니다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179601",
+      "league": "MLB",
+      "match": "Houston Astros vs Chicago White Sox",
+      "matchDisplay": "Houston Astros @ Chicago White Sox",
+      "recommendedTeam": "Houston Astros",
+      "recommendedSide": "away",
+      "actual": {
+        "homeScore": 12,
+        "awayScore": 3,
+        "scoreline": "12-3",
+        "winner": "home",
+        "winnerTeam": "Chicago White Sox",
+        "resultStatus": "graded"
+      },
+      "predictionCorrect": false,
+      "snapshot": {
+        "probability": 63,
+        "edgeScore": -12.5,
+        "confidence": 49,
+        "recommendationGrade": "EDGE PICK",
+        "marketProbability": 49,
+        "valueEdge": 13.2
+      },
+      "evidenceAtPrediction": {
+        "usedData": [
+          "최근 폼",
+          "득점력",
+          "실점 억제",
+          "홈/원정 성적",
+          "리그 순위",
+          "맞대결",
+          "휴식일",
+          "부상/전력",
+          "연승/연패"
+        ],
+        "missingData": [
+          "선발투수"
+        ],
+        "unavailableFactors": [
+          "선발투수"
+        ],
+        "dataAvailability": 0.9,
+        "recentGameCounts": null,
+        "oddsMatched": true
+      },
+      "feedback": {
+        "verdict": "SIGNAL_FAILED",
+        "hypotheses": [
+          "선발투수 지표 MIXED",
+          "Confidence 50 미만",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
+        "notes": [
+          "추천 방향과 실제 결과가 일치하지 않았습니다.",
+          "실패 원인을 단정하지 않습니다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179602",
+      "league": "MLB",
+      "match": "Toronto Blue Jays vs Boston Red Sox",
+      "matchDisplay": "Toronto Blue Jays @ Boston Red Sox",
+      "recommendedTeam": "Boston Red Sox",
+      "recommendedSide": "home",
+      "actual": {
+        "homeScore": 6,
+        "awayScore": 1,
+        "scoreline": "6-1",
+        "winner": "home",
+        "winnerTeam": "Boston Red Sox",
+        "resultStatus": "graded"
+      },
+      "predictionCorrect": true,
+      "snapshot": {
+        "probability": 50,
+        "edgeScore": 0.3,
+        "confidence": 43,
+        "recommendationGrade": "PASS",
+        "marketProbability": 57,
+        "valueEdge": -6.4
+      },
+      "evidenceAtPrediction": {
+        "usedData": [
+          "최근 폼",
+          "득점력",
+          "실점 억제",
+          "홈/원정 성적",
+          "리그 순위",
+          "맞대결",
+          "휴식일",
+          "부상/전력",
+          "연승/연패"
+        ],
+        "missingData": [
+          "선발투수"
+        ],
+        "unavailableFactors": [
+          "선발투수"
+        ],
+        "dataAvailability": 0.9,
+        "recentGameCounts": null,
+        "oddsMatched": true
+      },
+      "feedback": {
+        "verdict": "SIGNAL_WORKED",
+        "hypotheses": [
+          "시장과 모델 방향 충돌 (Value Edge < 0)",
+          "Confidence 50 미만",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
+        "notes": [
+          "추천 방향과 실제 결과가 일치했습니다.",
+          "한 경기로 신호 유효성을 확정할 수 없습니다."
+        ]
+      }
+    },
+    {
+      "gameId": "mlb-179603",
+      "league": "MLB",
+      "match": "Atlanta Braves vs Baltimore Orioles",
+      "matchDisplay": "Atlanta Braves @ Baltimore Orioles",
+      "recommendedTeam": "Atlanta Braves",
+      "recommendedSide": "away",
+      "actual": {
+        "homeScore": 2,
+        "awayScore": 3,
+        "scoreline": "2-3",
+        "winner": "away",
+        "winnerTeam": "Atlanta Braves",
+        "resultStatus": "graded"
+      },
+      "predictionCorrect": true,
+      "snapshot": {
+        "probability": 51,
+        "edgeScore": -0.7,
+        "confidence": 42,
+        "recommendationGrade": "PASS",
+        "marketProbability": 50,
+        "valueEdge": 0.9
+      },
+      "evidenceAtPrediction": {
+        "usedData": [
+          "최근 폼",
+          "득점력",
+          "실점 억제",
+          "홈/원정 성적",
+          "리그 순위",
+          "맞대결",
+          "휴식일",
+          "부상/전력",
+          "연승/연패"
+        ],
+        "missingData": [
+          "선발투수"
+        ],
+        "unavailableFactors": [
+          "선발투수"
+        ],
+        "dataAvailability": 0.9,
+        "recentGameCounts": null,
+        "oddsMatched": true
+      },
+      "feedback": {
+        "verdict": "SIGNAL_WORKED",
+        "hypotheses": [
+          "Confidence 50 미만",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
+        "notes": [
+          "추천 방향과 실제 결과가 일치했습니다.",
+          "한 경기로 신호 유효성을 확정할 수 없습니다."
+        ]
+      }
+    }
+  ]
+}

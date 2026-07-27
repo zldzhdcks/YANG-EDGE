@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "version": "starter-dataset-v1-state-anomaly-audit-v1",
+    "kind": "state-anomaly-audit",
+    "generatedAt": "2026-07-27T02:10:00.000Z",
+    "scope": "audit-only-no-artifact-mutation",
+    "engineImpact": 0,
+    "bullpenChanged": false,
+    "starterSchemaChanged": false,
+    "frameworkStructureChanged": false,
+    "artifactsOverwritten": false,
+    "conclusion": "DATA_STATES_VALID"
+  },
+  "hashCheck": {
+    "starter2026_07_27": {
+      "fileSha256": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "resultHashSha256": "5e44d0adb5aa681c03c4a46c2a34d35ad692fcae94296c1b0b4f2b42467051f1"
+    },
+    "starter2026_07_28": {
+      "fileSha256": "fb0c5655ce2c0203df02ebd8054a6ff596db6268813a4b067f7a837a27837502",
+      "resultHashSha256": "cd331b1da66e5ddc430d3cde55dd995605ba77ae626168e28edb1ec1621c30a9"
+    },
+    "prediction2026_07_27": "28f3e3602be4d2482026eb30b60c176335d9686ad6f11251c2a1c43d8b5dee4d",
+    "prediction2026_07_28": "f46ba674caedacf72e907a15398bf03c7daf2a45b3a5060422af605b709260f2",
+    "note": "Hashes recorded at audit time; this job must not rewrite artifacts."
+  },
+  "joinQualityDefinition": {
+    "definition": "Game/team join only: prediction homeTeam+awayTeam (+ optional startTimeKst) matched to Stats API schedule game for dateKst → sets gamePk/teamIds.",
+    "notPitcherIdentityJoin": true,
+    "code": "src/lib/mlb/build-starter-dataset.ts#joinPredictionToSchedule",
+    "implication": "joinQuality=MATCHED can coexist with probableStatus=MISSING when schedule game is found but that side lacks probablePitcher."
+  },
+  "probableMissing_2026_07_28": {
+    "count": 1,
+    "row": {
+      "gameId": "mlb-179606",
+      "gamePk": 823025,
+      "side": "home",
+      "teamId": 138,
+      "opponentTeamId": 112,
+      "homeTeam": "St.Louis Cardinals",
+      "awayTeam": "Chicago Cubs",
+      "probablePitcherId": null,
+      "probablePitcherName": null,
+      "probableStatus": "MISSING",
+      "joinQuality": "MATCHED",
+      "cutoffTime": "2026-07-27T23:45:00Z"
+    },
+    "counterpartAwayRow": {
+      "gameId": "mlb-179606",
+      "side": "away",
+      "probablePitcherId": 656849,
+      "probablePitcherName": "David Peterson",
+      "probableStatus": "PROBABLE_ONLY",
+      "joinQuality": "MATCHED"
+    },
+    "predictionSnapshot": {
+      "path": "data/predictions/mlb/2026-07-28.json",
+      "gamePresent": true,
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "note": "Snapshot exists for game; does not store probable identity (by design)."
+    },
+    "statsApiScheduleEvidence": {
+      "cachePath": "data/cache/research/mlb/raw/statsapi/api/v1/schedule_sportId_1_startDate_2026-07-27_endDate_2026-07-28_hydrate_probablePitcher.json",
+      "gamePk": 823025,
+      "abstractGameStateAtCache": "Preview",
+      "awayProbablePitcher": {
+        "id": 656849,
+        "fullName": "David Peterson"
+      },
+      "homeProbablePitcher": null,
+      "homeTeamObjectHasProbablePitcherField": false
+    },
+    "causeClassification": "PROBABLE_NOT_ANNOUNCED",
+    "causeDetail": "Stats API schedule hydrate returned the game and away probable, but home (Cardinals) had no probablePitcher field — pitcher not announced for that side at source timestamp.",
+    "joinQualityMatchedReason": "Prediction teams St.Louis Cardinals @ Chicago Cubs (normalized) joined to schedule gamePk 823025; joinQuality does not require pitcher id.",
+    "pipelineIssue": false
+  },
+  "awaitingResult_2026_07_27": {
+    "count": 2,
+    "rows": [
+      {
+        "gameId": "mlb-179589",
+        "gamePk": 823433,
+        "side": "away",
+        "probablePitcherName": "Will Warren",
+        "team": "New York Yankees",
+        "status": "AWAITING_RESULT",
+        "note": "game not Final (abstractGameState=Live)"
+      },
+      {
+        "gameId": "mlb-179589",
+        "gamePk": 823433,
+        "side": "home",
+        "probablePitcherName": "Cristopher Sánchez",
+        "team": "Philadelphia Phillies",
+        "status": "AWAITING_RESULT",
+        "note": "game not Final (abstractGameState=Live)"
+      }
+    ],
+    "sameAsYankeesPending": true,
+    "evidence": {
+      "predictionGame": "mlb-179589 New York Yankees @ Philadelphia Phillies",
+      "gradedReview": "data/predictions/mlb/2026-07-27-review.json summary.pending=1, game resultStatus=pending",
+      "postgameReviewPath": "data/research/mlb/2026-07-27-starter-postgame-review-v1.json"
+    },
+    "cause": "Game still Live/not Final at post-game review time — resolver correctly emits AWAITING_RESULT (no MATCHED/CHANGED).",
+    "finishedButAwaiting": false,
+    "pipelineIssue": false
+  },
+  "commonAuditLog": {
+    "alreadyExistedInResearchLog": false,
+    "researchLogUpdated": true,
+    "entryTitle": "Framework common audit conclusion (Bullpen × Starter)",
+    "bulletsAdded": [
+      "Framework validated against Bullpen and Starter datasets",
+      "No structural modification required",
+      "Domain audit schemas intentionally remain independent",
+      "Framework expansion remains frozen"
+    ]
+  },
+  "pipelineIssue": false,
+  "remainingIssues": [
+    "Re-run 07-27 postgame after mlb-179589 reaches Final",
+    "Cardinals home probable may appear later in schedule — do not backfill frozen 07-28 pre-game row",
+    "Sample still below 100-game COLLECTING target"
+  ]
+}

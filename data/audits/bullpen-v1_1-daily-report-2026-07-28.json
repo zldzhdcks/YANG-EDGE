@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "version": "bullpen-v1.1-daily-validation-report-v1",
+    "kind": "daily-validation-report",
+    "generatedAt": "2026-07-27T03:23:43.855Z",
+    "dateKst": "2026-07-28",
+    "classifierVersion": "bullpen-role-classifier-v1.1",
+    "engineImpact": 0,
+    "recomputed": false,
+    "sourceValidationPath": "data/audits/bullpen-v1_1-validation-2026-07-28.json",
+    "metricsSource": "2026-07-27",
+    "sourceGeneratedAt": "2026-07-27T03:23:42.598Z",
+    "sourceConclusion": "DATA_ACCUMULATION_CONTINUES"
+  },
+  "sections": [
+    {
+      "key": "finishedGames",
+      "label": "종료 경기 수",
+      "value": 0,
+      "display": "0 / 12"
+    },
+    {
+      "key": "cumulativeGames",
+      "label": "누적 경기 수",
+      "value": 15,
+      "display": "15"
+    },
+    {
+      "key": "successFailure",
+      "label": "Success / Failure",
+      "value": {
+        "successStable": 2,
+        "successTotal": 5,
+        "failPregameWarn": 7,
+        "failTotal": 7
+      },
+      "display": "Success 2 / 5 · Failure 7 / 7"
+    },
+    {
+      "key": "bullpenWarning",
+      "label": "Bullpen Warning",
+      "value": {
+        "failPregameWarn": 7,
+        "failTotal": 7
+      },
+      "display": "7 / 7"
+    },
+    {
+      "key": "falsePositive",
+      "label": "False Positive",
+      "value": 2,
+      "display": "2"
+    },
+    {
+      "key": "falseNegative",
+      "label": "False Negative",
+      "value": 0,
+      "display": "0"
+    },
+    {
+      "key": "unknown",
+      "label": "UNKNOWN",
+      "value": {
+        "ratePct": 51.3,
+        "count": 289
+      },
+      "display": "51.3% (289)"
+    },
+    {
+      "key": "classified",
+      "label": "CLASSIFIED",
+      "value": {
+        "ratePct": 36.4
+      },
+      "display": "36.4%"
+    },
+    {
+      "key": "cache",
+      "label": "Cache",
+      "value": {
+        "reuseOk": true,
+        "networkCalls": null
+      },
+      "display": "REUSE_OK (network=n/a)"
+    },
+    {
+      "key": "hash",
+      "label": "Hash",
+      "value": {
+        "predictionImmutableHash": "f0e9449973e63f8987495708aab3101e65e57f643aa1c44505a2e9d237fbcd16",
+        "predictionImmutableUnchanged": true,
+        "bullpenResultHash": "0753ad64086c1773732c396a364567ecbbf2c8a250b250528e8aee6928258b8b",
+        "bullpenHashMatched": true
+      },
+      "display": "predictionImmutable=f0e9449973e63f8987495708aab3101e65e57f643aa1c44505a2e9d237fbcd16 · unchanged=true · bullpenResult=0753ad64086c1773732c396a364567ecbbf2c8a250b250528e8aee6928258b8b · matched=true"
+    },
+    {
+      "key": "remainingIssues",
+      "label": "Remaining Issues",
+      "value": [
+        "2026-07-28 종료 경기 0 (status={\"NS\":12}) — 채점/리뷰/Bullpen 추가 표본 대기",
+        "OPENER/MOP_UP primary still 0 on frozen v1.1 (07-27 baseline)",
+        "availabilityUnknown remains true until H-BP-ROLE-006 collector exists",
+        "H-BP-ROLE-007 awaiting finished 07-28 sample for UNKNOWN delta"
+      ],
+      "display": "- 2026-07-28 종료 경기 0 (status={\"NS\":12}) — 채점/리뷰/Bullpen 추가 표본 대기\n- OPENER/MOP_UP primary still 0 on frozen v1.1 (07-27 baseline)\n- availabilityUnknown remains true until H-BP-ROLE-006 collector exists\n- H-BP-ROLE-007 awaiting finished 07-28 sample for UNKNOWN delta"
+    },
+    {
+      "key": "officialConclusion",
+      "label": "Official Conclusion",
+      "value": "DATA_ACCUMULATION_CONTINUES",
+      "display": "DATA_ACCUMULATION_CONTINUES"
+    }
+  ],
+  "summary": {
+    "finishedGames": 0,
+    "cumulativeGames": 15,
+    "successStable": 2,
+    "successTotal": 5,
+    "failPregameWarn": 7,
+    "failTotal": 7,
+    "falsePositive": 2,
+    "falseNegative": 0,
+    "unknownRatePct": 51.3,
+    "unknownCount": 289,
+    "classifiedRatePct": 36.4,
+    "cacheReuseOk": true,
+    "cacheNetworkCalls": null,
+    "predictionImmutableHash": "f0e9449973e63f8987495708aab3101e65e57f643aa1c44505a2e9d237fbcd16",
+    "predictionImmutableUnchanged": true,
+    "bullpenResultHash": "0753ad64086c1773732c396a364567ecbbf2c8a250b250528e8aee6928258b8b",
+    "bullpenHashMatched": true,
+    "remainingIssues": [
+      "2026-07-28 종료 경기 0 (status={\"NS\":12}) — 채점/리뷰/Bullpen 추가 표본 대기",
+      "OPENER/MOP_UP primary still 0 on frozen v1.1 (07-27 baseline)",
+      "availabilityUnknown remains true until H-BP-ROLE-006 collector exists",
+      "H-BP-ROLE-007 awaiting finished 07-28 sample for UNKNOWN delta"
+    ],
+    "officialConclusion": "DATA_ACCUMULATION_CONTINUES"
+  }
+}

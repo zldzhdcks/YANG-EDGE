@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "version": "failure-flow-review-metadata-audit-v1",
+    "generatedAt": "2026-07-27T03:15:00.000Z",
+    "kind": "failure-flow-review-metadata-audit",
+    "researchOnly": true,
+    "conclusion": "DERIVED_METADATA_REFRESH_FIXED",
+    "note": "Audited meta.failedGames vs games[].length. Root cause: hardcoded failedGames:8 in generator. Not an intentional historical snapshot. Rows remain source of truth for classifications."
+  },
+  "subject": {
+    "artifact": "data/predictions/mlb/2026-07-27-failure-flow-review.json",
+    "generator": "scripts/review-mlb-failed-game-flow.ts",
+    "artifactGeneratedAt": "2026-07-27T02:36:54.655Z"
+  },
+  "meaning": {
+    "meta.failedGames": "Intended count of SIGNAL_FAILED games included in this failure-flow review document",
+    "intendedDerivation": "Should equal games.length (and the filtered SIGNAL_FAILED set size from mlb/{date}-review.json)",
+    "actualImplementationBeforeFix": "Hardcoded literal 8 in generator output meta (+ note text referencing 8경기)"
+  },
+  "observed": {
+    "meta.failedGames": 8,
+    "actualRowCount": 9,
+    "gameIds": [
+      "mlb-179589",
+      "mlb-179590",
+      "mlb-179591",
+      "mlb-179593",
+      "mlb-179594",
+      "mlb-179595",
+      "mlb-179597",
+      "mlb-179600",
+      "mlb-179601"
+    ],
+    "yankees": {
+      "gameId": "mlb-179589",
+      "presentInRows": true,
+      "primary": "MULTIPLE_FACTORS",
+      "preserved": true
+    }
+  },
+  "classification": {
+    "intentionalHistoricalValue": false,
+    "reason": "Generator always writes failedGames:8 regardless of failed.length/gameReviews.length. Artifact already contains 9 rows including Yankees Final; metadata was never derived from rows.",
+    "pipelineRefreshOmission": true,
+    "pipelineDetail": "run-mlb-postgame-pipeline / refresh-site-feedback-learning do not regenerate failure-flow-review. After Yankees grading, failure review was regenerated with 9 rows but hardcoded meta stayed 8."
+  },
+  "otherDrift": [
+    {
+      "artifact": "data/predictions/mlb/2026-07-27-success-flow-review.json",
+      "field": "meta.successGames",
+      "generatorHardcode": 6,
+      "actualRowCount": 6,
+      "currentlyDrifted": false,
+      "latentBug": true,
+      "note": "Same hardcode pattern; currently consistent only because slate has exactly 6 SIGNAL_WORKED"
+    }
+  ],
+  "sourceOfTruth": {
+    "classificationsAndRows": "games[] array",
+    "countMetadata": "must equal games.length (derived, not historical constant)",
+    "feedbackMirror": "data/predictions/{date}-mlb-review.json (independent; already graded=15 worked=6 failed=9)",
+    "learningDashboard": "data/learning/dashboard.json (independent; day 07-27 already 15/6/9)"
+  },
+  "remediation": {
+    "codeChange": [
+      "scripts/review-mlb-failed-game-flow.ts: failedGames = gameReviews.length; note uses dynamic count",
+      "scripts/review-mlb-success-game-flow.ts: successGames = gameReviews.length; note uses dynamic count",
+      "scripts/run-mlb-postgame-pipeline.ts: after grade, run failure + success flow reviews before site refresh"
+    ],
+    "artifactChange": "Surgical meta-only sync on 2026-07-27 failure-flow-review (failedGames 8→9, note text). No game row / classification edits. Success artifact unchanged (already consistent).",
+    "historicalPreservation": "No separate archive required; classifications untouched. Hardcoded 8 was never a dated historical claim.",
+    "feedbackLearningUntouched": true
+  },
+  "verificationPlan": {
+    "failureRows": 9,
+    "successRows": 6,
+    "yankeesPrimary": "MULTIPLE_FACTORS",
+    "feedback": "15/6/9",
+    "learningDay": "15/6/9",
+    "predictionHashUnchanged": true
+  },
+  "postFixVerification": {
+    "meta.failedGames": 9,
+    "failureRows": 9,
+    "successMeta.successGames": 6,
+    "successRows": 6,
+    "yankeesPrimary": "MULTIPLE_FACTORS",
+    "feedback": "15/6/9",
+    "learningDay2026-07-27": "15/6/9",
+    "predictionHashSha256": "621f4dbc2ad7439804f88ba213452e5e2675396e889a26580f79b11ad9e58051",
+    "feedbackLearningUntouched": true,
+    "build": "npm run build OK"
+  }
+}

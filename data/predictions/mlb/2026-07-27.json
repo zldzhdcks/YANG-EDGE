@@ -69,7 +69,7 @@
     "deterministic": true,
     "duplicateSafe": true,
     "note": "구매 마감 이후 연구용 예측 스냅샷. 실제 베팅 라인이 아니다. 예측 필드는 채점 시에도 변경하지 않는다.",
-    "lastGradedAt": "2026-07-26T15:07:55.903Z",
+    "lastGradedAt": "2026-07-27T02:36:49.188Z",
     "resultSource": "api-baseball",
     "mlbStatsApiUsed": false,
     "gradingVersion": "mlb-research-grade-v1"
@@ -87,15 +87,15 @@
     "unchangedOnRerun": false,
     "preservedExistingPredictions": 0,
     "preservedGradedResults": 0,
-    "graded": 0,
-    "hits": 0,
-    "fails": 0,
-    "pending": 15,
+    "graded": 15,
+    "hits": 6,
+    "fails": 9,
+    "pending": 0,
     "inconclusive": 0,
-    "hitRate": null,
-    "hitRateStatus": "INSUFFICIENT_SAMPLE",
-    "newlyGraded": 0,
-    "unchangedGraded": 0,
+    "hitRate": 40,
+    "hitRateStatus": "OK",
+    "newlyGraded": 1,
+    "unchangedGraded": 14,
     "resultCorrectionWarnings": []
   },
   "predictions": [
@@ -151,13 +151,13 @@
       "integrityWarnings": [
         "PITCHER_DIRECTION_WARNING:CONFLICTS_BASELINE"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 11,
+      "awayScore": 4,
+      "actualWinner": "home",
+      "predictionHit": false,
+      "gradedAt": "2026-07-27T02:36:49.188Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-27-mlb-179590",
@@ -209,13 +209,13 @@
       },
       "snapshotIntegrity": "VERIFIED",
       "integrityWarnings": [],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 10,
+      "awayScore": 7,
+      "actualWinner": "home",
+      "predictionHit": false,
+      "gradedAt": "2026-07-26T23:25:33.114Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-27-mlb-179591",
@@ -267,13 +267,13 @@
       },
       "snapshotIntegrity": "VERIFIED",
       "integrityWarnings": [],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 4,
+      "awayScore": 6,
+      "actualWinner": "away",
+      "predictionHit": false,
+      "gradedAt": "2026-07-26T23:25:33.114Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-27-mlb-179592",
@@ -327,13 +327,13 @@
       "integrityWarnings": [
         "PITCHER_DIRECTION_WARNING:MIXED"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 1,
+      "awayScore": 0,
+      "actualWinner": "home",
+      "predictionHit": true,
+      "gradedAt": "2026-07-26T23:25:33.114Z",
+      "feedbackClassification": "SIGNAL_WORKED"
     },
     {
       "predictionId": "mlb-research-2026-07-27-mlb-179593",
@@ -385,13 +385,13 @@
       },
       "snapshotIntegrity": "VERIFIED",
       "integrityWarnings": [],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 3,
+      "awayScore": 5,
+      "actualWinner": "away",
+      "predictionHit": false,
+      "gradedAt": "2026-07-26T23:25:33.114Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-27-mlb-179594",
@@ -443,13 +443,13 @@
       },
       "snapshotIntegrity": "VERIFIED",
       "integrityWarnings": [],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 3,
+      "awayScore": 4,
+      "actualWinner": "away",
+      "predictionHit": false,
+      "gradedAt": "2026-07-26T23:25:33.114Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-27-mlb-179595",
@@ -501,13 +501,13 @@
       },
       "snapshotIntegrity": "VERIFIED",
       "integrityWarnings": [],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 8,
+      "awayScore": 7,
+      "actualWinner": "home",
+      "predictionHit": false,
+      "gradedAt": "2026-07-26T23:25:33.114Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-27-mlb-179596",
@@ -559,13 +559,13 @@
       },
       "snapshotIntegrity": "VERIFIED",
       "integrityWarnings": [],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 11,
+      "awayScore": 8,
+      "actualWinner": "home",
+      "predictionHit": true,
+      "gradedAt": "2026-07-26T23:25:33.114Z",
+      "feedbackClassification": "SIGNAL_WORKED"
     },
     {
       "predictionId": "mlb-research-2026-07-27-mlb-179597",
@@ -619,13 +619,13 @@
       "integrityWarnings": [
         "PITCHER_DIRECTION_WARNING:MIXED"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 8,
+      "awayScore": 3,
+      "actualWinner": "home",
+      "predictionHit": false,
+      "gradedAt": "2026-07-26T23:25:33.114Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-27-mlb-179598",
@@ -677,13 +677,13 @@
       },
       "snapshotIntegrity": "VERIFIED",
       "integrityWarnings": [],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 11,
+      "awayScore": 2,
+      "actualWinner": "home",
+      "predictionHit": true,
+      "gradedAt": "2026-07-26T23:25:33.114Z",
+      "feedbackClassification": "SIGNAL_WORKED"
     },
     {
       "predictionId": "mlb-research-2026-07-27-mlb-179599",
@@ -737,13 +737,13 @@
       "integrityWarnings": [
         "PITCHER_DIRECTION_WARNING:MIXED"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 3,
+      "awayScore": 5,
+      "actualWinner": "away",
+      "predictionHit": true,
+      "gradedAt": "2026-07-26T23:25:33.114Z",
+      "feedbackClassification": "SIGNAL_WORKED"
     },
     {
       "predictionId": "mlb-research-2026-07-27-mlb-179600",
@@ -795,13 +795,13 @@
       },
       "snapshotIntegrity": "VERIFIED",
       "integrityWarnings": [],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 4,
+      "awayScore": 5,
+      "actualWinner": "away",
+      "predictionHit": false,
+      "gradedAt": "2026-07-26T23:25:33.114Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-27-mlb-179601",
@@ -855,13 +855,13 @@
       "integrityWarnings": [
         "PITCHER_DIRECTION_WARNING:MIXED"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 12,
+      "awayScore": 3,
+      "actualWinner": "home",
+      "predictionHit": false,
+      "gradedAt": "2026-07-26T23:25:33.114Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-27-mlb-179602",
@@ -913,13 +913,13 @@
       },
       "snapshotIntegrity": "VERIFIED",
       "integrityWarnings": [],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 6,
+      "awayScore": 1,
+      "actualWinner": "home",
+      "predictionHit": true,
+      "gradedAt": "2026-07-26T23:25:33.114Z",
+      "feedbackClassification": "SIGNAL_WORKED"
     },
     {
       "predictionId": "mlb-research-2026-07-27-mlb-179603",
@@ -971,13 +971,13 @@
       },
       "snapshotIntegrity": "VERIFIED",
       "integrityWarnings": [],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 2,
+      "awayScore": 3,
+      "actualWinner": "away",
+      "predictionHit": true,
+      "gradedAt": "2026-07-26T23:25:33.114Z",
+      "feedbackClassification": "SIGNAL_WORKED"
     }
   ]
 }

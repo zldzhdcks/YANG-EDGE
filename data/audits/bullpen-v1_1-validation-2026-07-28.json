@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "version": "bullpen-v1.1-date-validation-v1",
+    "generatedAt": "2026-07-27T03:23:42.598Z",
+    "targetDateKst": "2026-07-28",
+    "classifierVersion": "bullpen-role-classifier-v1.1",
+    "classifierLogicChanged": false,
+    "engineConnected": false,
+    "engineImpact": 0,
+    "frameworkChanged": false,
+    "conclusion": "DATA_ACCUMULATION_CONTINUES",
+    "predictionImmutableHashBefore": "f0e9449973e63f8987495708aab3101e65e57f643aa1c44505a2e9d237fbcd16",
+    "predictionImmutableHashAfter": "f0e9449973e63f8987495708aab3101e65e57f643aa1c44505a2e9d237fbcd16",
+    "predictionImmutableUnchanged": true,
+    "bullpenResultHashBefore": "0753ad64086c1773732c396a364567ecbbf2c8a250b250528e8aee6928258b8b",
+    "bullpenResultHashAfter": "0753ad64086c1773732c396a364567ecbbf2c8a250b250528e8aee6928258b8b",
+    "bullpenHashMatched": true,
+    "cacheReuseNetworkCalls": null,
+    "cacheReuseOk": true,
+    "pipelineRan": false
+  },
+  "slate": {
+    "total": 12,
+    "finished": 0,
+    "inProgress": 0,
+    "notStarted": 12,
+    "counts": {
+      "NS": 12
+    },
+    "remaining": "7463"
+  },
+  "metrics": {
+    "finishedGames": 0,
+    "cumulativeGradedGames": 15,
+    "failPregameWarn": 7,
+    "failTotal": 7,
+    "successStable": 2,
+    "successTotal": 5,
+    "falsePositive": 2,
+    "falseNegative": 0,
+    "unknownRatePct": 51.3,
+    "classifiedRatePct": 36.4,
+    "roleCounts": {
+      "CLOSER": 31,
+      "SETUP": 58,
+      "HIGH_LEVERAGE_RELIEF": 36,
+      "MIDDLE_RELIEF": 121,
+      "LONG_RELIEF": 28,
+      "OPENER": 0,
+      "MOP_UP": 0,
+      "UNKNOWN": 289
+    },
+    "metricsSource": "2026-07-27"
+  },
+  "hypotheses": {
+    "H-BP-ROLE-006": {
+      "status": "SURVEY_ONLY_PARTIAL_COLLECTIBLE",
+      "engineConnected": false,
+      "collectionStatusPath": "data/research/mlb/h-bp-role-006-availability-survey.json"
+    },
+    "H-BP-ROLE-007": {
+      "status": "INSUFFICIENT_NEW_SAMPLE",
+      "observationPath": "data/research/mlb/h-bp-role-007-unknown-decline-observation.json",
+      "baselineUnknownRatePct": 51.3,
+      "latestUnknownRatePct": 51.3
+    }
+  },
+  "verification": {
+    "predictionImmutableHashUnchanged": true,
+    "engineImpact": 0,
+    "cacheReuse": true,
+    "resultHashReproducible": true
+  },
+  "remainingIssues": [
+    "2026-07-28 종료 경기 0 (status={\"NS\":12}) — 채점/리뷰/Bullpen 추가 표본 대기",
+    "OPENER/MOP_UP primary still 0 on frozen v1.1 (07-27 baseline)",
+    "availabilityUnknown remains true until H-BP-ROLE-006 collector exists",
+    "H-BP-ROLE-007 awaiting finished 07-28 sample for UNKNOWN delta"
+  ]
+}

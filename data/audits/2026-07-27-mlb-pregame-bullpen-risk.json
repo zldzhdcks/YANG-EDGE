@@ -1,0 +1,1729 @@
+{
+  "meta": {
+    "version": "mlb-pregame-bullpen-risk-audit-v1",
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T02:39:05.288Z",
+    "auditOnly": true,
+    "researchOnly": true,
+    "gamesAudited": 14,
+    "successGames": 6,
+    "failureGames": 8,
+    "yankeesExcluded": true,
+    "engineModified": false,
+    "weightsModified": false,
+    "predictionModified": false,
+    "successReviewModified": false,
+    "failureReviewModified": false,
+    "predictionHashSha256": "621f4dbc2ad7439804f88ba213452e5e2675396e889a26580f79b11ad9e58051",
+    "successReviewHashSha256": "1dd34cd6963b7890e72d8ac719b292cc795c061d037a7c2614bfde5511269fd9",
+    "failureReviewHashSha256": "38aa730c44a8c8718f07f4c12c74db550cc8fc4f0dfb79a9f804e4b8e1da0790",
+    "predictionUnchanged": true,
+    "successReviewUnchanged": true,
+    "failureReviewUnchanged": true,
+    "leakageErrors": 0,
+    "deterministic": true,
+    "legal": {
+      "apiBaseball": "primary commercial provider; schedule/result confirmation",
+      "mlbStatsApi": "internal research fallback for relief pitching boxscores; commercial use unverified; not connected to public UI/runtime/paid service",
+      "rawResponsesStored": false,
+      "mlbComHtmlCrawling": false,
+      "sportsDataIoScrambled": false
+    },
+    "note": "사후 연구. 임의 종합 점수 없음. 14경기만으로 Engine/weights 변경을 권고하지 않는다. closer/setup은 API 역할 부재로 지정하지 않음."
+  },
+  "apiUsage": {
+    "apiBaseball": {
+      "calls": 1,
+      "remaining": 7466,
+      "dateGameCounts": {
+        "2026-07-27": 15,
+        "2026-07-26": 15
+      },
+      "note": "불펜 투수별 세부 지표는 API-BASEBALL에서 확보 불가 → Stats API fallback"
+    },
+    "mlbStatsApi": {
+      "calls": 100,
+      "usedAsFallback": true,
+      "boxscoresFetched": 96
+    }
+  },
+  "thresholds": {
+    "last3DaysIp": {
+      "median": 7.2,
+      "p75": 10
+    },
+    "previousDayIp": {
+      "median": 3,
+      "p75": 3.175
+    },
+    "backToBack": {
+      "median": 0,
+      "p75": 1
+    },
+    "last7Era": {
+      "median": 4.275,
+      "p75": 4.854
+    },
+    "last7Whip": {
+      "median": 1.374,
+      "p75": 1.449
+    },
+    "last7Walks": {
+      "median": 9,
+      "p75": 11.75
+    },
+    "last7HomeRuns": {
+      "median": 3,
+      "p75": 4
+    }
+  },
+  "keyQuestions": {
+    "failBullpenImpactPregameWarned": {
+      "question": "실패 6개 불펜 영향 경기 중 몇 개가 경기 전에 고위험으로 식별 가능했는가?",
+      "value": 1,
+      "total": 7
+    },
+    "successBullpenProtectPregameStable": {
+      "question": "성공 5개 불펜 보호 경기 중 몇 개가 경기 전에 안정으로 식별 가능했는가?",
+      "value": 1,
+      "total": 5
+    },
+    "previousDayUsageAssociation": {
+      "question": "전날 사용량이 결과와 가장 연관 있었는가?",
+      "topFlag": "RELIEF_WHIP_POOR_LAST_7",
+      "previousDayRank": 7,
+      "answer": "NO_NOT_TOP"
+    },
+    "last7EraWhipExplanatory": {
+      "question": "최근 7일 ERA/WHIP가 더 설명력이 있었는가?",
+      "eraSeparation": -0.05714285714285716,
+      "whipSeparation": 0.2857142857142857,
+      "answer": "ERA_WHIP_STRONGER_THAN_PREV_DAY"
+    },
+    "backToBackMeaningful": {
+      "question": "연투 지표가 의미 있었는가?",
+      "separation": -0.17142857142857143,
+      "answer": "LITTLE_SEPARATION"
+    },
+    "pregameDistinguishedOutcomes": {
+      "question": "사전 불펜 지표가 성공·실패를 실제로 구분했는가?",
+      "supportedHitRate": 66.7,
+      "conflictedHitRate": 50,
+      "neutralHitRate": 30,
+      "answer": "NO_CLEAR_SEPARATION"
+    },
+    "insufficientGames": {
+      "question": "데이터가 부족해 구분하지 못한 경기는 몇 개인가?",
+      "value": 0
+    }
+  },
+  "summary": {
+    "dataCoverageRate": 100,
+    "BULLPEN_SUPPORTED_BASELINE": {
+      "games": 3,
+      "hitRate": 66.7
+    },
+    "BULLPEN_CONFLICTED_BASELINE": {
+      "games": 2,
+      "hitRate": 50
+    },
+    "BULLPEN_NEUTRAL_PRE_GAME": {
+      "games": 10,
+      "hitRate": 30
+    },
+    "INSUFFICIENT": {
+      "games": 0,
+      "hitRate": null
+    },
+    "failCollapsePregameWarned": 1,
+    "failCollapseTotal": 7,
+    "successProtectedPregameStable": 1,
+    "successProtectedTotal": 5,
+    "falsePositive": 1,
+    "falseNegative": 6,
+    "mostExplanatoryFlag": "RELIEF_WHIP_POOR_LAST_7",
+    "indicatorRanking": [
+      {
+        "flag": "RELIEF_WHIP_POOR_LAST_7",
+        "failCollapseWithFlag": 2,
+        "failCollapseTotal": 7,
+        "successProtectedWithFlag": 0,
+        "successProtectedTotal": 5,
+        "separation": 0.2857142857142857
+      },
+      {
+        "flag": "HIGH_WALK_RATE_LAST_7",
+        "failCollapseWithFlag": 3,
+        "failCollapseTotal": 7,
+        "successProtectedWithFlag": 1,
+        "successProtectedTotal": 5,
+        "separation": 0.22857142857142854
+      },
+      {
+        "flag": "RELIEF_ERA_POOR_LAST_7",
+        "failCollapseWithFlag": 1,
+        "failCollapseTotal": 7,
+        "successProtectedWithFlag": 1,
+        "successProtectedTotal": 5,
+        "separation": -0.05714285714285716
+      },
+      {
+        "flag": "HIGH_HR_RATE_LAST_7",
+        "failCollapseWithFlag": 2,
+        "failCollapseTotal": 7,
+        "successProtectedWithFlag": 2,
+        "successProtectedTotal": 5,
+        "separation": -0.11428571428571432
+      },
+      {
+        "flag": "MULTIPLE_BACK_TO_BACK_RELIEVERS",
+        "failCollapseWithFlag": 3,
+        "failCollapseTotal": 7,
+        "successProtectedWithFlag": 3,
+        "successProtectedTotal": 5,
+        "separation": -0.17142857142857143
+      },
+      {
+        "flag": "HEAVY_USAGE_LAST_3_DAYS",
+        "failCollapseWithFlag": 1,
+        "failCollapseTotal": 7,
+        "successProtectedWithFlag": 3,
+        "successProtectedTotal": 5,
+        "separation": -0.45714285714285713
+      },
+      {
+        "flag": "HEAVY_USAGE_PREVIOUS_DAY",
+        "failCollapseWithFlag": 0,
+        "failCollapseTotal": 7,
+        "successProtectedWithFlag": 3,
+        "successProtectedTotal": 5,
+        "separation": -0.6
+      }
+    ],
+    "conclusion": "SAMPLE_ACCUMULATION_PRIORITY",
+    "weightsChangeRecommended": false
+  },
+  "resultTable": [
+    {
+      "match": "New York Yankees @ Philadelphia Phillies",
+      "outcome": "MISS",
+      "baselinePick": "New York Yankees",
+      "pickLast3Ip": 5,
+      "oppLast3Ip": 9,
+      "pickLast7EraWhip": {
+        "era": 3,
+        "whip": 1.333
+      },
+      "oppLast7EraWhip": {
+        "era": 4.629,
+        "whip": 1.371
+      },
+      "backToBack": {
+        "pick": 1,
+        "opp": 2,
+        "threeDayThreatPick": 1,
+        "threeDayThreatOpp": 2
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "COLLAPSE",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ]
+    },
+    {
+      "match": "Arizona Diamondbacks @ Washington Nationals",
+      "outcome": "MISS",
+      "baselinePick": "Arizona Diamondbacks",
+      "pickLast3Ip": 9,
+      "oppLast3Ip": 10,
+      "pickLast7EraWhip": {
+        "era": 4.551,
+        "whip": 1.416
+      },
+      "oppLast7EraWhip": {
+        "era": 2.077,
+        "whip": 1.077
+      },
+      "backToBack": {
+        "pick": 0,
+        "opp": 0,
+        "threeDayThreatPick": 0,
+        "threeDayThreatOpp": 0
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "COLLAPSE",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ]
+    },
+    {
+      "match": "Seattle Mariners @ Texas Rangers",
+      "outcome": "MISS",
+      "baselinePick": "Texas Rangers",
+      "pickLast3Ip": 6,
+      "oppLast3Ip": 5.2,
+      "pickLast7EraWhip": {
+        "era": 4.808,
+        "whip": 1.438
+      },
+      "oppLast7EraWhip": {
+        "era": 3.24,
+        "whip": 1.08
+      },
+      "backToBack": {
+        "pick": 0,
+        "opp": 0,
+        "threeDayThreatPick": 0,
+        "threeDayThreatOpp": 0
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "COLLAPSE",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ]
+    },
+    {
+      "match": "Cleveland Guardians @ Tampa Bay Rays",
+      "outcome": "HIT",
+      "baselinePick": "Tampa Bay Rays",
+      "pickLast3Ip": 13,
+      "oppLast3Ip": 11.1,
+      "pickLast7EraWhip": {
+        "era": 1.731,
+        "whip": 0.731
+      },
+      "oppLast7EraWhip": {
+        "era": 4.5,
+        "whip": 1.462
+      },
+      "backToBack": {
+        "pick": 1,
+        "opp": 1,
+        "threeDayThreatPick": 1,
+        "threeDayThreatOpp": 0
+      },
+      "pregameDirection": "BULLPEN_SUPPORTED_BASELINE",
+      "actualBullpenResult": "PROTECTED",
+      "aligned": true,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ]
+    },
+    {
+      "match": "Cincinnati Reds @ St.Louis Cardinals",
+      "outcome": "MISS",
+      "baselinePick": "St.Louis Cardinals",
+      "pickLast3Ip": 7.2,
+      "oppLast3Ip": 6.2,
+      "pickLast7EraWhip": {
+        "era": 6.864,
+        "whip": 1.932
+      },
+      "oppLast7EraWhip": {
+        "era": 6,
+        "whip": 1.444
+      },
+      "backToBack": {
+        "pick": 0,
+        "opp": 0,
+        "threeDayThreatPick": 0,
+        "threeDayThreatOpp": 0
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "COLLAPSE",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ]
+    },
+    {
+      "match": "Los Angeles Angels @ San Francisco Giants",
+      "outcome": "MISS",
+      "baselinePick": "San Francisco Giants",
+      "pickLast3Ip": 7,
+      "oppLast3Ip": 10,
+      "pickLast7EraWhip": {
+        "era": 4.869,
+        "whip": 1.525
+      },
+      "oppLast7EraWhip": {
+        "era": 1.191,
+        "whip": 0.706
+      },
+      "backToBack": {
+        "pick": 0,
+        "opp": 2,
+        "threeDayThreatPick": 0,
+        "threeDayThreatOpp": 2
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "NOT_BULLPEN_DRIVEN",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ]
+    },
+    {
+      "match": "Chicago Cubs @ Pittsburgh Pirates",
+      "outcome": "MISS",
+      "baselinePick": "Chicago Cubs",
+      "pickLast3Ip": 6,
+      "oppLast3Ip": 7.2,
+      "pickLast7EraWhip": {
+        "era": 2.7,
+        "whip": 1.2
+      },
+      "oppLast7EraWhip": {
+        "era": 5.478,
+        "whip": 1.478
+      },
+      "backToBack": {
+        "pick": 0,
+        "opp": 0,
+        "threeDayThreatPick": 0,
+        "threeDayThreatOpp": 0
+      },
+      "pregameDirection": "BULLPEN_SUPPORTED_BASELINE",
+      "actualBullpenResult": "NOT_BULLPEN_DRIVEN",
+      "aligned": false,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ]
+    },
+    {
+      "match": "Athletics @ Minnesota Twins",
+      "outcome": "HIT",
+      "baselinePick": "Minnesota Twins",
+      "pickLast3Ip": 13,
+      "oppLast3Ip": 9.2,
+      "pickLast7EraWhip": {
+        "era": 2.755,
+        "whip": 1.378
+      },
+      "oppLast7EraWhip": {
+        "era": 5.538,
+        "whip": 1.654
+      },
+      "backToBack": {
+        "pick": 1,
+        "opp": 1,
+        "threeDayThreatPick": 0,
+        "threeDayThreatOpp": 1
+      },
+      "pregameDirection": "BULLPEN_SUPPORTED_BASELINE",
+      "actualBullpenResult": "WARNING_SURVIVED",
+      "aligned": true,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ]
+    },
+    {
+      "match": "Los Angeles Dodgers @ New York Mets",
+      "outcome": "MISS",
+      "baselinePick": "Los Angeles Dodgers",
+      "pickLast3Ip": 5,
+      "oppLast3Ip": 6,
+      "pickLast7EraWhip": {
+        "era": 4.286,
+        "whip": 1.238
+      },
+      "oppLast7EraWhip": {
+        "era": 2.842,
+        "whip": 1.158
+      },
+      "backToBack": {
+        "pick": 1,
+        "opp": 0,
+        "threeDayThreatPick": 1,
+        "threeDayThreatOpp": 0
+      },
+      "pregameDirection": "BULLPEN_CONFLICTED_BASELINE",
+      "actualBullpenResult": "COLLAPSE",
+      "aligned": true,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ]
+    },
+    {
+      "match": "Colorado Rockies @ Milwaukee Brewers",
+      "outcome": "HIT",
+      "baselinePick": "Milwaukee Brewers",
+      "pickLast3Ip": 6,
+      "oppLast3Ip": 6.2,
+      "pickLast7EraWhip": {
+        "era": 1.929,
+        "whip": 1.414
+      },
+      "oppLast7EraWhip": {
+        "era": 4.558,
+        "whip": 1.286
+      },
+      "backToBack": {
+        "pick": 0,
+        "opp": 0,
+        "threeDayThreatPick": 0,
+        "threeDayThreatOpp": 0
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "PROTECTED",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ]
+    },
+    {
+      "match": "San Diego Padres @ Miami Marlins",
+      "outcome": "HIT",
+      "baselinePick": "San Diego Padres",
+      "pickLast3Ip": 20,
+      "oppLast3Ip": 7.2,
+      "pickLast7EraWhip": {
+        "era": 3.932,
+        "whip": 1.223
+      },
+      "oppLast7EraWhip": {
+        "era": 6.75,
+        "whip": 1.5
+      },
+      "backToBack": {
+        "pick": 1,
+        "opp": 0,
+        "threeDayThreatPick": 0,
+        "threeDayThreatOpp": 0
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "PROTECTED",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ]
+    },
+    {
+      "match": "Kansas City Royals @ Detroit Tigers",
+      "outcome": "MISS",
+      "baselinePick": "Detroit Tigers",
+      "pickLast3Ip": 8.2,
+      "oppLast3Ip": 12,
+      "pickLast7EraWhip": {
+        "era": 3.56,
+        "whip": 1.451
+      },
+      "oppLast7EraWhip": {
+        "era": 6.085,
+        "whip": 1.437
+      },
+      "backToBack": {
+        "pick": 0,
+        "opp": 0,
+        "threeDayThreatPick": 0,
+        "threeDayThreatOpp": 0
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "COLLAPSE",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ]
+    },
+    {
+      "match": "Houston Astros @ Chicago White Sox",
+      "outcome": "MISS",
+      "baselinePick": "Houston Astros",
+      "pickLast3Ip": 10,
+      "oppLast3Ip": 7,
+      "pickLast7EraWhip": {
+        "era": 2.189,
+        "whip": 1.176
+      },
+      "oppLast7EraWhip": {
+        "era": 4.765,
+        "whip": 1.279
+      },
+      "backToBack": {
+        "pick": 3,
+        "opp": 1,
+        "threeDayThreatPick": 3,
+        "threeDayThreatOpp": 1
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "COLLAPSE",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ]
+    },
+    {
+      "match": "Toronto Blue Jays @ Boston Red Sox",
+      "outcome": "HIT",
+      "baselinePick": "Boston Red Sox",
+      "pickLast3Ip": 8.1,
+      "oppLast3Ip": 6,
+      "pickLast7EraWhip": {
+        "era": 2.124,
+        "whip": 1.112
+      },
+      "oppLast7EraWhip": {
+        "era": 4.263,
+        "whip": 1.618
+      },
+      "backToBack": {
+        "pick": 0,
+        "opp": 0,
+        "threeDayThreatPick": 0,
+        "threeDayThreatOpp": 0
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "PROTECTED",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ]
+    },
+    {
+      "match": "Atlanta Braves @ Baltimore Orioles",
+      "outcome": "HIT",
+      "baselinePick": "Atlanta Braves",
+      "pickLast3Ip": 11.2,
+      "oppLast3Ip": 5.2,
+      "pickLast7EraWhip": {
+        "era": 5.082,
+        "whip": 1.376
+      },
+      "oppLast7EraWhip": {
+        "era": 2.7,
+        "whip": 0.9
+      },
+      "backToBack": {
+        "pick": 2,
+        "opp": 2,
+        "threeDayThreatPick": 0,
+        "threeDayThreatOpp": 2
+      },
+      "pregameDirection": "BULLPEN_CONFLICTED_BASELINE",
+      "actualBullpenResult": "PROTECTED",
+      "aligned": false,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ]
+    }
+  ],
+  "games": [
+    {
+      "gameId": "mlb-179589",
+      "match": "New York Yankees @ Philadelphia Phillies",
+      "outcome": "MISS",
+      "baselinePick": "New York Yankees",
+      "pickSide": "away",
+      "cutoffTime": "2026-07-26T23:20:00Z",
+      "teamCutoffs": {
+        "home": "2026-07-26T23:20:00Z",
+        "away": "2026-07-26T23:20:00Z"
+      },
+      "pickBullpen": {
+        "teamId": 147,
+        "teamName": "New York Yankees",
+        "cutoffTime": "2026-07-26T23:20:00Z",
+        "available": true,
+        "priorGamesUsed": 9,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 5,
+        "last3DaysAppearances": 5,
+        "last3DaysBackToBackPitchers": 1,
+        "last3DaysThreeDayThreatPitchers": 1,
+        "previousDayIp": 3.1,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 3,
+        "last7Whip": 1.333,
+        "last7HomeRuns": 1,
+        "last7Walks": 27,
+        "last7SaveSituations": 5,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "MULTIPLE_BACK_TO_BACK_RELIEVERS",
+          "HIGH_WALK_RATE_LAST_7"
+        ]
+      },
+      "oppBullpen": {
+        "teamId": 143,
+        "teamName": "Philadelphia Phillies",
+        "cutoffTime": "2026-07-26T23:20:00Z",
+        "available": true,
+        "priorGamesUsed": 6,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 9,
+        "last3DaysAppearances": 8,
+        "last3DaysBackToBackPitchers": 2,
+        "last3DaysThreeDayThreatPitchers": 2,
+        "previousDayIp": 7,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 4.629,
+        "last7Whip": 1.371,
+        "last7HomeRuns": 4,
+        "last7Walks": 10,
+        "last7SaveSituations": 0,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "HEAVY_USAGE_PREVIOUS_DAY",
+          "MULTIPLE_BACK_TO_BACK_RELIEVERS",
+          "HIGH_HR_RATE_LAST_7"
+        ]
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "COLLAPSE",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ],
+      "leakageCheck": {
+        "usedTargetGame": false,
+        "cutoffRespected": true
+      }
+    },
+    {
+      "gameId": "mlb-179590",
+      "match": "Arizona Diamondbacks @ Washington Nationals",
+      "outcome": "MISS",
+      "baselinePick": "Arizona Diamondbacks",
+      "pickSide": "away",
+      "cutoffTime": "2026-07-26T17:35:00Z",
+      "teamCutoffs": {
+        "home": "2026-07-26T17:35:00Z",
+        "away": "2026-07-26T17:35:00Z"
+      },
+      "pickBullpen": {
+        "teamId": 109,
+        "teamName": "Arizona Diamondbacks",
+        "cutoffTime": "2026-07-26T17:35:00Z",
+        "available": true,
+        "priorGamesUsed": 7,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 9,
+        "last3DaysAppearances": 8,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 3,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 4.551,
+        "last7Whip": 1.416,
+        "last7HomeRuns": 2,
+        "last7Walks": 11,
+        "last7SaveSituations": 1,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN"
+        ]
+      },
+      "oppBullpen": {
+        "teamId": 120,
+        "teamName": "Washington Nationals",
+        "cutoffTime": "2026-07-26T17:35:00Z",
+        "available": true,
+        "priorGamesUsed": 6,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 10,
+        "last3DaysAppearances": 6,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 2.1,
+        "previousDay20PlusPitchCount": 0,
+        "last7Era": 2.077,
+        "last7Whip": 1.077,
+        "last7HomeRuns": 2,
+        "last7Walks": 9,
+        "last7SaveSituations": 3,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "HEAVY_USAGE_LAST_3_DAYS"
+        ]
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "COLLAPSE",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ],
+      "leakageCheck": {
+        "usedTargetGame": false,
+        "cutoffRespected": true
+      }
+    },
+    {
+      "gameId": "mlb-179591",
+      "match": "Seattle Mariners @ Texas Rangers",
+      "outcome": "MISS",
+      "baselinePick": "Texas Rangers",
+      "pickSide": "home",
+      "cutoffTime": "2026-07-26T18:35:00Z",
+      "teamCutoffs": {
+        "home": "2026-07-26T18:35:00Z",
+        "away": "2026-07-26T18:35:00Z"
+      },
+      "pickBullpen": {
+        "teamId": 140,
+        "teamName": "Texas Rangers",
+        "cutoffTime": "2026-07-26T18:35:00Z",
+        "available": true,
+        "priorGamesUsed": 6,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 6,
+        "last3DaysAppearances": 7,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 2,
+        "previousDay20PlusPitchCount": 0,
+        "last7Era": 4.808,
+        "last7Whip": 1.438,
+        "last7HomeRuns": 1,
+        "last7Walks": 8,
+        "last7SaveSituations": 2,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN"
+        ]
+      },
+      "oppBullpen": {
+        "teamId": 136,
+        "teamName": "Seattle Mariners",
+        "cutoffTime": "2026-07-26T18:35:00Z",
+        "available": true,
+        "priorGamesUsed": 6,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 5.2,
+        "last3DaysAppearances": 4,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 3,
+        "previousDay20PlusPitchCount": 2,
+        "last7Era": 3.24,
+        "last7Whip": 1.08,
+        "last7HomeRuns": 2,
+        "last7Walks": 6,
+        "last7SaveSituations": 1,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN"
+        ]
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "COLLAPSE",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ],
+      "leakageCheck": {
+        "usedTargetGame": false,
+        "cutoffRespected": true
+      }
+    },
+    {
+      "gameId": "mlb-179592",
+      "match": "Cleveland Guardians @ Tampa Bay Rays",
+      "outcome": "HIT",
+      "baselinePick": "Tampa Bay Rays",
+      "pickSide": "home",
+      "cutoffTime": "2026-07-26T16:15:00Z",
+      "teamCutoffs": {
+        "home": "2026-07-26T16:15:00Z",
+        "away": "2026-07-26T16:15:00Z"
+      },
+      "pickBullpen": {
+        "teamId": 139,
+        "teamName": "Tampa Bay Rays",
+        "cutoffTime": "2026-07-26T16:15:00Z",
+        "available": true,
+        "priorGamesUsed": 7,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 13,
+        "last3DaysAppearances": 6,
+        "last3DaysBackToBackPitchers": 1,
+        "last3DaysThreeDayThreatPitchers": 1,
+        "previousDayIp": 3,
+        "previousDay20PlusPitchCount": 0,
+        "last7Era": 1.731,
+        "last7Whip": 0.731,
+        "last7HomeRuns": 2,
+        "last7Walks": 4,
+        "last7SaveSituations": 3,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "HEAVY_USAGE_LAST_3_DAYS",
+          "MULTIPLE_BACK_TO_BACK_RELIEVERS"
+        ]
+      },
+      "oppBullpen": {
+        "teamId": 114,
+        "teamName": "Cleveland Guardians",
+        "cutoffTime": "2026-07-26T16:15:00Z",
+        "available": true,
+        "priorGamesUsed": 7,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 11.1,
+        "last3DaysAppearances": 10,
+        "last3DaysBackToBackPitchers": 1,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 2,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 4.5,
+        "last7Whip": 1.462,
+        "last7HomeRuns": 2,
+        "last7Walks": 13,
+        "last7SaveSituations": 1,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "HEAVY_USAGE_LAST_3_DAYS",
+          "MULTIPLE_BACK_TO_BACK_RELIEVERS",
+          "RELIEF_WHIP_POOR_LAST_7",
+          "HIGH_WALK_RATE_LAST_7"
+        ]
+      },
+      "pregameDirection": "BULLPEN_SUPPORTED_BASELINE",
+      "actualBullpenResult": "PROTECTED",
+      "aligned": true,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ],
+      "leakageCheck": {
+        "usedTargetGame": false,
+        "cutoffRespected": true
+      }
+    },
+    {
+      "gameId": "mlb-179593",
+      "match": "Cincinnati Reds @ St.Louis Cardinals",
+      "outcome": "MISS",
+      "baselinePick": "St.Louis Cardinals",
+      "pickSide": "home",
+      "cutoffTime": "2026-07-26T18:15:00Z",
+      "teamCutoffs": {
+        "home": "2026-07-26T18:15:00Z",
+        "away": "2026-07-26T18:15:00Z"
+      },
+      "pickBullpen": {
+        "teamId": 138,
+        "teamName": "St.Louis Cardinals",
+        "cutoffTime": "2026-07-26T18:15:00Z",
+        "available": true,
+        "priorGamesUsed": 7,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 7.2,
+        "last3DaysAppearances": 7,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 2,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 6.864,
+        "last7Whip": 1.932,
+        "last7HomeRuns": 3,
+        "last7Walks": 14,
+        "last7SaveSituations": 1,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "RELIEF_ERA_POOR_LAST_7",
+          "RELIEF_WHIP_POOR_LAST_7",
+          "HIGH_WALK_RATE_LAST_7"
+        ]
+      },
+      "oppBullpen": {
+        "teamId": 113,
+        "teamName": "Cincinnati Reds",
+        "cutoffTime": "2026-07-26T18:15:00Z",
+        "available": true,
+        "priorGamesUsed": 6,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 6.2,
+        "last3DaysAppearances": 7,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 2.2,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 6,
+        "last7Whip": 1.444,
+        "last7HomeRuns": 5,
+        "last7Walks": 6,
+        "last7SaveSituations": 3,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "RELIEF_ERA_POOR_LAST_7",
+          "HIGH_HR_RATE_LAST_7"
+        ]
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "COLLAPSE",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ],
+      "leakageCheck": {
+        "usedTargetGame": false,
+        "cutoffRespected": true
+      }
+    },
+    {
+      "gameId": "mlb-179594",
+      "match": "Los Angeles Angels @ San Francisco Giants",
+      "outcome": "MISS",
+      "baselinePick": "San Francisco Giants",
+      "pickSide": "home",
+      "cutoffTime": "2026-07-26T20:05:00Z",
+      "teamCutoffs": {
+        "home": "2026-07-26T20:05:00Z",
+        "away": "2026-07-26T20:05:00Z"
+      },
+      "pickBullpen": {
+        "teamId": 137,
+        "teamName": "San Francisco Giants",
+        "cutoffTime": "2026-07-26T20:05:00Z",
+        "available": true,
+        "priorGamesUsed": 6,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 7,
+        "last3DaysAppearances": 6,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 3,
+        "previousDay20PlusPitchCount": 2,
+        "last7Era": 4.869,
+        "last7Whip": 1.525,
+        "last7HomeRuns": 3,
+        "last7Walks": 9,
+        "last7SaveSituations": 0,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "RELIEF_ERA_POOR_LAST_7",
+          "RELIEF_WHIP_POOR_LAST_7"
+        ]
+      },
+      "oppBullpen": {
+        "teamId": 108,
+        "teamName": "Los Angeles Angels",
+        "cutoffTime": "2026-07-26T20:05:00Z",
+        "available": true,
+        "priorGamesUsed": 6,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 10,
+        "last3DaysAppearances": 9,
+        "last3DaysBackToBackPitchers": 2,
+        "last3DaysThreeDayThreatPitchers": 2,
+        "previousDayIp": 4.2,
+        "previousDay20PlusPitchCount": 2,
+        "last7Era": 1.191,
+        "last7Whip": 0.706,
+        "last7HomeRuns": 2,
+        "last7Walks": 6,
+        "last7SaveSituations": 1,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "HEAVY_USAGE_PREVIOUS_DAY",
+          "HEAVY_USAGE_LAST_3_DAYS",
+          "MULTIPLE_BACK_TO_BACK_RELIEVERS"
+        ]
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "NOT_BULLPEN_DRIVEN",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ],
+      "leakageCheck": {
+        "usedTargetGame": false,
+        "cutoffRespected": true
+      }
+    },
+    {
+      "gameId": "mlb-179595",
+      "match": "Chicago Cubs @ Pittsburgh Pirates",
+      "outcome": "MISS",
+      "baselinePick": "Chicago Cubs",
+      "pickSide": "away",
+      "cutoffTime": "2026-07-26T17:35:00Z",
+      "teamCutoffs": {
+        "home": "2026-07-26T17:35:00Z",
+        "away": "2026-07-26T17:35:00Z"
+      },
+      "pickBullpen": {
+        "teamId": 112,
+        "teamName": "Chicago Cubs",
+        "cutoffTime": "2026-07-26T17:35:00Z",
+        "available": true,
+        "priorGamesUsed": 6,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 6,
+        "last3DaysAppearances": 4,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 3,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 2.7,
+        "last7Whip": 1.2,
+        "last7HomeRuns": 2,
+        "last7Walks": 6,
+        "last7SaveSituations": 2,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN"
+        ]
+      },
+      "oppBullpen": {
+        "teamId": 134,
+        "teamName": "Pittsburgh Pirates",
+        "cutoffTime": "2026-07-26T17:35:00Z",
+        "available": true,
+        "priorGamesUsed": 7,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 7.2,
+        "last3DaysAppearances": 8,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 3.2,
+        "previousDay20PlusPitchCount": 2,
+        "last7Era": 5.478,
+        "last7Whip": 1.478,
+        "last7HomeRuns": 2,
+        "last7Walks": 9,
+        "last7SaveSituations": 1,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "HEAVY_USAGE_PREVIOUS_DAY",
+          "RELIEF_ERA_POOR_LAST_7",
+          "RELIEF_WHIP_POOR_LAST_7"
+        ]
+      },
+      "pregameDirection": "BULLPEN_SUPPORTED_BASELINE",
+      "actualBullpenResult": "NOT_BULLPEN_DRIVEN",
+      "aligned": false,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ],
+      "leakageCheck": {
+        "usedTargetGame": false,
+        "cutoffRespected": true
+      }
+    },
+    {
+      "gameId": "mlb-179596",
+      "match": "Athletics @ Minnesota Twins",
+      "outcome": "HIT",
+      "baselinePick": "Minnesota Twins",
+      "pickSide": "home",
+      "cutoffTime": "2026-07-26T18:10:00Z",
+      "teamCutoffs": {
+        "home": "2026-07-26T18:10:00Z",
+        "away": "2026-07-26T18:10:00Z"
+      },
+      "pickBullpen": {
+        "teamId": 142,
+        "teamName": "Minnesota Twins",
+        "cutoffTime": "2026-07-26T18:10:00Z",
+        "available": true,
+        "priorGamesUsed": 7,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 13,
+        "last3DaysAppearances": 12,
+        "last3DaysBackToBackPitchers": 1,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 5,
+        "previousDay20PlusPitchCount": 2,
+        "last7Era": 2.755,
+        "last7Whip": 1.378,
+        "last7HomeRuns": 2,
+        "last7Walks": 15,
+        "last7SaveSituations": 2,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "HEAVY_USAGE_PREVIOUS_DAY",
+          "HEAVY_USAGE_LAST_3_DAYS",
+          "MULTIPLE_BACK_TO_BACK_RELIEVERS",
+          "HIGH_WALK_RATE_LAST_7"
+        ]
+      },
+      "oppBullpen": {
+        "teamId": 133,
+        "teamName": "Athletics",
+        "cutoffTime": "2026-07-26T18:10:00Z",
+        "available": true,
+        "priorGamesUsed": 6,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 9.2,
+        "last3DaysAppearances": 8,
+        "last3DaysBackToBackPitchers": 1,
+        "last3DaysThreeDayThreatPitchers": 1,
+        "previousDayIp": 5.2,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 5.538,
+        "last7Whip": 1.654,
+        "last7HomeRuns": 4,
+        "last7Walks": 18,
+        "last7SaveSituations": 2,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "HEAVY_USAGE_PREVIOUS_DAY",
+          "MULTIPLE_BACK_TO_BACK_RELIEVERS",
+          "RELIEF_ERA_POOR_LAST_7",
+          "RELIEF_WHIP_POOR_LAST_7",
+          "HIGH_WALK_RATE_LAST_7",
+          "HIGH_HR_RATE_LAST_7"
+        ]
+      },
+      "pregameDirection": "BULLPEN_SUPPORTED_BASELINE",
+      "actualBullpenResult": "WARNING_SURVIVED",
+      "aligned": true,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ],
+      "leakageCheck": {
+        "usedTargetGame": false,
+        "cutoffRespected": true
+      }
+    },
+    {
+      "gameId": "mlb-179597",
+      "match": "Los Angeles Dodgers @ New York Mets",
+      "outcome": "MISS",
+      "baselinePick": "Los Angeles Dodgers",
+      "pickSide": "away",
+      "cutoffTime": "2026-07-26T17:40:00Z",
+      "teamCutoffs": {
+        "home": "2026-07-26T17:40:00Z",
+        "away": "2026-07-26T17:40:00Z"
+      },
+      "pickBullpen": {
+        "teamId": 119,
+        "teamName": "Los Angeles Dodgers",
+        "cutoffTime": "2026-07-26T17:40:00Z",
+        "available": true,
+        "priorGamesUsed": 8,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 5,
+        "last3DaysAppearances": 6,
+        "last3DaysBackToBackPitchers": 1,
+        "last3DaysThreeDayThreatPitchers": 1,
+        "previousDayIp": 3,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 4.286,
+        "last7Whip": 1.238,
+        "last7HomeRuns": 5,
+        "last7Walks": 11,
+        "last7SaveSituations": 3,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "MULTIPLE_BACK_TO_BACK_RELIEVERS",
+          "HIGH_HR_RATE_LAST_7"
+        ]
+      },
+      "oppBullpen": {
+        "teamId": 121,
+        "teamName": "New York Mets",
+        "cutoffTime": "2026-07-26T17:40:00Z",
+        "available": true,
+        "priorGamesUsed": 6,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 6,
+        "last3DaysAppearances": 5,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 3,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 2.842,
+        "last7Whip": 1.158,
+        "last7HomeRuns": 3,
+        "last7Walks": 5,
+        "last7SaveSituations": 0,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN"
+        ]
+      },
+      "pregameDirection": "BULLPEN_CONFLICTED_BASELINE",
+      "actualBullpenResult": "COLLAPSE",
+      "aligned": true,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ],
+      "leakageCheck": {
+        "usedTargetGame": false,
+        "cutoffRespected": true
+      }
+    },
+    {
+      "gameId": "mlb-179598",
+      "match": "Colorado Rockies @ Milwaukee Brewers",
+      "outcome": "HIT",
+      "baselinePick": "Milwaukee Brewers",
+      "pickSide": "home",
+      "cutoffTime": "2026-07-26T18:10:00Z",
+      "teamCutoffs": {
+        "home": "2026-07-26T18:10:00Z",
+        "away": "2026-07-26T18:10:00Z"
+      },
+      "pickBullpen": {
+        "teamId": 158,
+        "teamName": "Milwaukee Brewers",
+        "cutoffTime": "2026-07-26T18:10:00Z",
+        "available": true,
+        "priorGamesUsed": 6,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 6,
+        "last3DaysAppearances": 5,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 3,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 1.929,
+        "last7Whip": 1.414,
+        "last7HomeRuns": 1,
+        "last7Walks": 11,
+        "last7SaveSituations": 2,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN"
+        ]
+      },
+      "oppBullpen": {
+        "teamId": 115,
+        "teamName": "Colorado Rockies",
+        "cutoffTime": "2026-07-26T18:10:00Z",
+        "available": true,
+        "priorGamesUsed": 6,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 6.2,
+        "last3DaysAppearances": 5,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 3,
+        "previousDay20PlusPitchCount": 2,
+        "last7Era": 4.558,
+        "last7Whip": 1.286,
+        "last7HomeRuns": 3,
+        "last7Walks": 6,
+        "last7SaveSituations": 2,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN"
+        ]
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "PROTECTED",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ],
+      "leakageCheck": {
+        "usedTargetGame": false,
+        "cutoffRespected": true
+      }
+    },
+    {
+      "gameId": "mlb-179599",
+      "match": "San Diego Padres @ Miami Marlins",
+      "outcome": "HIT",
+      "baselinePick": "San Diego Padres",
+      "pickSide": "away",
+      "cutoffTime": "2026-07-26T17:40:00Z",
+      "teamCutoffs": {
+        "home": "2026-07-26T17:40:00Z",
+        "away": "2026-07-26T17:40:00Z"
+      },
+      "pickBullpen": {
+        "teamId": 135,
+        "teamName": "San Diego Padres",
+        "cutoffTime": "2026-07-26T17:40:00Z",
+        "available": true,
+        "priorGamesUsed": 7,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 20,
+        "last3DaysAppearances": 12,
+        "last3DaysBackToBackPitchers": 1,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 6.1,
+        "previousDay20PlusPitchCount": 2,
+        "last7Era": 3.932,
+        "last7Whip": 1.223,
+        "last7HomeRuns": 6,
+        "last7Walks": 8,
+        "last7SaveSituations": 1,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "HEAVY_USAGE_PREVIOUS_DAY",
+          "HEAVY_USAGE_LAST_3_DAYS",
+          "MULTIPLE_BACK_TO_BACK_RELIEVERS",
+          "HIGH_HR_RATE_LAST_7"
+        ]
+      },
+      "oppBullpen": {
+        "teamId": 146,
+        "teamName": "Miami Marlins",
+        "cutoffTime": "2026-07-26T17:40:00Z",
+        "available": true,
+        "priorGamesUsed": 6,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 7.2,
+        "last3DaysAppearances": 7,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 2,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 6.75,
+        "last7Whip": 1.5,
+        "last7HomeRuns": 4,
+        "last7Walks": 12,
+        "last7SaveSituations": 0,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "RELIEF_ERA_POOR_LAST_7",
+          "RELIEF_WHIP_POOR_LAST_7",
+          "HIGH_WALK_RATE_LAST_7",
+          "HIGH_HR_RATE_LAST_7"
+        ]
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "PROTECTED",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ],
+      "leakageCheck": {
+        "usedTargetGame": false,
+        "cutoffRespected": true
+      }
+    },
+    {
+      "gameId": "mlb-179600",
+      "match": "Kansas City Royals @ Detroit Tigers",
+      "outcome": "MISS",
+      "baselinePick": "Detroit Tigers",
+      "pickSide": "home",
+      "cutoffTime": "2026-07-26T17:40:00Z",
+      "teamCutoffs": {
+        "home": "2026-07-26T17:40:00Z",
+        "away": "2026-07-26T17:40:00Z"
+      },
+      "pickBullpen": {
+        "teamId": 116,
+        "teamName": "Detroit Tigers",
+        "cutoffTime": "2026-07-26T17:40:00Z",
+        "available": true,
+        "priorGamesUsed": 7,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 8.2,
+        "last3DaysAppearances": 10,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 3,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 3.56,
+        "last7Whip": 1.451,
+        "last7HomeRuns": 4,
+        "last7Walks": 18,
+        "last7SaveSituations": 3,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "RELIEF_WHIP_POOR_LAST_7",
+          "HIGH_WALK_RATE_LAST_7",
+          "HIGH_HR_RATE_LAST_7"
+        ]
+      },
+      "oppBullpen": {
+        "teamId": 118,
+        "teamName": "Kansas City Royals",
+        "cutoffTime": "2026-07-26T17:40:00Z",
+        "available": true,
+        "priorGamesUsed": 7,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 12,
+        "last3DaysAppearances": 6,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 2,
+        "previousDay20PlusPitchCount": 0,
+        "last7Era": 6.085,
+        "last7Whip": 1.437,
+        "last7HomeRuns": 7,
+        "last7Walks": 10,
+        "last7SaveSituations": 3,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "HEAVY_USAGE_LAST_3_DAYS",
+          "RELIEF_ERA_POOR_LAST_7",
+          "HIGH_HR_RATE_LAST_7"
+        ]
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "COLLAPSE",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ],
+      "leakageCheck": {
+        "usedTargetGame": false,
+        "cutoffRespected": true
+      }
+    },
+    {
+      "gameId": "mlb-179601",
+      "match": "Houston Astros @ Chicago White Sox",
+      "outcome": "MISS",
+      "baselinePick": "Houston Astros",
+      "pickSide": "away",
+      "cutoffTime": "2026-07-26T18:10:00Z",
+      "teamCutoffs": {
+        "home": "2026-07-26T18:10:00Z",
+        "away": "2026-07-26T18:10:00Z"
+      },
+      "pickBullpen": {
+        "teamId": 117,
+        "teamName": "Houston Astros",
+        "cutoffTime": "2026-07-26T18:10:00Z",
+        "available": true,
+        "priorGamesUsed": 6,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 10,
+        "last3DaysAppearances": 9,
+        "last3DaysBackToBackPitchers": 3,
+        "last3DaysThreeDayThreatPitchers": 3,
+        "previousDayIp": 2,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 2.189,
+        "last7Whip": 1.176,
+        "last7HomeRuns": 2,
+        "last7Walks": 5,
+        "last7SaveSituations": 3,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "HEAVY_USAGE_LAST_3_DAYS",
+          "MULTIPLE_BACK_TO_BACK_RELIEVERS"
+        ]
+      },
+      "oppBullpen": {
+        "teamId": 145,
+        "teamName": "Chicago White Sox",
+        "cutoffTime": "2026-07-26T18:10:00Z",
+        "available": true,
+        "priorGamesUsed": 6,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 7,
+        "last3DaysAppearances": 6,
+        "last3DaysBackToBackPitchers": 1,
+        "last3DaysThreeDayThreatPitchers": 1,
+        "previousDayIp": 3,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 4.765,
+        "last7Whip": 1.279,
+        "last7HomeRuns": 3,
+        "last7Walks": 8,
+        "last7SaveSituations": 2,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "MULTIPLE_BACK_TO_BACK_RELIEVERS"
+        ]
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "COLLAPSE",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ],
+      "leakageCheck": {
+        "usedTargetGame": false,
+        "cutoffRespected": true
+      }
+    },
+    {
+      "gameId": "mlb-179602",
+      "match": "Toronto Blue Jays @ Boston Red Sox",
+      "outcome": "HIT",
+      "baselinePick": "Boston Red Sox",
+      "pickSide": "home",
+      "cutoffTime": "2026-07-26T17:35:00Z",
+      "teamCutoffs": {
+        "home": "2026-07-26T17:35:00Z",
+        "away": "2026-07-26T17:35:00Z"
+      },
+      "pickBullpen": {
+        "teamId": 111,
+        "teamName": "Boston Red Sox",
+        "cutoffTime": "2026-07-26T17:35:00Z",
+        "available": true,
+        "priorGamesUsed": 7,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 8.1,
+        "last3DaysAppearances": 5,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 4,
+        "previousDay20PlusPitchCount": 1,
+        "last7Era": 2.124,
+        "last7Whip": 1.112,
+        "last7HomeRuns": 1,
+        "last7Walks": 8,
+        "last7SaveSituations": 4,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "HEAVY_USAGE_PREVIOUS_DAY"
+        ]
+      },
+      "oppBullpen": {
+        "teamId": 141,
+        "teamName": "Toronto Blue Jays",
+        "cutoffTime": "2026-07-26T17:35:00Z",
+        "available": true,
+        "priorGamesUsed": 7,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 6,
+        "last3DaysAppearances": 7,
+        "last3DaysBackToBackPitchers": 0,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 0,
+        "previousDay20PlusPitchCount": 0,
+        "last7Era": 4.263,
+        "last7Whip": 1.618,
+        "last7HomeRuns": 3,
+        "last7Walks": 7,
+        "last7SaveSituations": 1,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "RELIEF_WHIP_POOR_LAST_7"
+        ]
+      },
+      "pregameDirection": "BULLPEN_NEUTRAL_PRE_GAME",
+      "actualBullpenResult": "PROTECTED",
+      "aligned": null,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ],
+      "leakageCheck": {
+        "usedTargetGame": false,
+        "cutoffRespected": true
+      }
+    },
+    {
+      "gameId": "mlb-179603",
+      "match": "Atlanta Braves @ Baltimore Orioles",
+      "outcome": "HIT",
+      "baselinePick": "Atlanta Braves",
+      "pickSide": "away",
+      "cutoffTime": "2026-07-26T17:35:00Z",
+      "teamCutoffs": {
+        "home": "2026-07-26T17:35:00Z",
+        "away": "2026-07-26T17:35:00Z"
+      },
+      "pickBullpen": {
+        "teamId": 144,
+        "teamName": "Atlanta Braves",
+        "cutoffTime": "2026-07-26T17:35:00Z",
+        "available": true,
+        "priorGamesUsed": 7,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 11.2,
+        "last3DaysAppearances": 10,
+        "last3DaysBackToBackPitchers": 2,
+        "last3DaysThreeDayThreatPitchers": 0,
+        "previousDayIp": 3.2,
+        "previousDay20PlusPitchCount": 2,
+        "last7Era": 5.082,
+        "last7Whip": 1.376,
+        "last7HomeRuns": 7,
+        "last7Walks": 12,
+        "last7SaveSituations": 3,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "HEAVY_USAGE_PREVIOUS_DAY",
+          "HEAVY_USAGE_LAST_3_DAYS",
+          "MULTIPLE_BACK_TO_BACK_RELIEVERS",
+          "RELIEF_ERA_POOR_LAST_7",
+          "HIGH_WALK_RATE_LAST_7",
+          "HIGH_HR_RATE_LAST_7"
+        ]
+      },
+      "oppBullpen": {
+        "teamId": 110,
+        "teamName": "Baltimore Orioles",
+        "cutoffTime": "2026-07-26T17:35:00Z",
+        "available": true,
+        "priorGamesUsed": 7,
+        "roleUncertainAppearances": 0,
+        "last3DaysIp": 5.2,
+        "last3DaysAppearances": 7,
+        "last3DaysBackToBackPitchers": 2,
+        "last3DaysThreeDayThreatPitchers": 2,
+        "previousDayIp": 2.2,
+        "previousDay20PlusPitchCount": 0,
+        "last7Era": 2.7,
+        "last7Whip": 0.9,
+        "last7HomeRuns": 5,
+        "last7Walks": 0,
+        "last7SaveSituations": 1,
+        "closerSetupPreviousDayUsed": null,
+        "closerNote": "CLOSER_ROLE_NOT_ASSIGNED",
+        "flags": [
+          "CLOSER_AVAILABILITY_UNKNOWN",
+          "MULTIPLE_BACK_TO_BACK_RELIEVERS",
+          "HIGH_HR_RATE_LAST_7"
+        ]
+      },
+      "pregameDirection": "BULLPEN_CONFLICTED_BASELINE",
+      "actualBullpenResult": "PROTECTED",
+      "aligned": false,
+      "warnings": [
+        "CLOSER_AVAILABILITY_UNKNOWN"
+      ],
+      "leakageCheck": {
+        "usedTargetGame": false,
+        "cutoffRespected": true
+      }
+    }
+  ]
+}

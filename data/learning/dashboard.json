@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "version": "learning-dashboard-v1",
+    "generatedAt": "2026-07-27T03:11:07.049Z",
+    "source": "data/predictions/*-review.json (prediction-review-v1)",
+    "engineRerun": false,
+    "weightsChanged": false,
+    "note": "사후 피드백 집계 대시보드. 모델 재학습·가중치 자동 반영이 아니다. 표본 부족 구간은 INSUFFICIENT_SAMPLE.",
+    "minSample": 10
+  },
+  "summary": {
+    "totalReviews": 18,
+    "graded": 18,
+    "signalWorked": 8,
+    "signalFailed": 10,
+    "inconclusive": 0,
+    "overallHitRate": {
+      "n": 18,
+      "hits": 8,
+      "fails": 10,
+      "hitRate": 44.4,
+      "status": "OK"
+    },
+    "dayCount": 2
+  },
+  "byLeague": [
+    {
+      "label": "KBO",
+      "n": 2,
+      "hits": 1,
+      "fails": 1,
+      "hitRate": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    },
+    {
+      "label": "MLB",
+      "n": 15,
+      "hits": 6,
+      "fails": 9,
+      "hitRate": 40,
+      "status": "OK"
+    },
+    {
+      "label": "NPB",
+      "n": 1,
+      "hits": 1,
+      "fails": 0,
+      "hitRate": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    }
+  ],
+  "byConfidence": [
+    {
+      "label": "confidence<50",
+      "n": 7,
+      "hits": 2,
+      "fails": 5,
+      "hitRate": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    },
+    {
+      "label": "confidence_50_59",
+      "n": 11,
+      "hits": 6,
+      "fails": 5,
+      "hitRate": 54.5,
+      "status": "OK"
+    },
+    {
+      "label": "confidence>=60",
+      "n": 0,
+      "hits": 0,
+      "fails": 0,
+      "hitRate": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    }
+  ],
+  "byRecommendationGrade": [
+    {
+      "label": "EDGE PICK",
+      "n": 9,
+      "hits": 5,
+      "fails": 4,
+      "hitRate": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    },
+    {
+      "label": "PASS",
+      "n": 5,
+      "hits": 2,
+      "fails": 3,
+      "hitRate": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    },
+    {
+      "label": "WATCH",
+      "n": 4,
+      "hits": 1,
+      "fails": 3,
+      "hitRate": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    }
+  ],
+  "byValueEdge": [
+    {
+      "label": "valueEdge<=0",
+      "n": 6,
+      "hits": 3,
+      "fails": 3,
+      "hitRate": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    },
+    {
+      "label": "valueEdge_0_10",
+      "n": 7,
+      "hits": 3,
+      "fails": 4,
+      "hitRate": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    },
+    {
+      "label": "valueEdge>=10",
+      "n": 5,
+      "hits": 2,
+      "fails": 3,
+      "hitRate": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    }
+  ],
+  "recentDays": [
+    {
+      "dateKst": "2026-07-27",
+      "source": "data/predictions/mlb/2026-07-27.json",
+      "gradedGames": 15,
+      "signalWorked": 6,
+      "signalFailed": 9,
+      "inconclusive": 0,
+      "liveAccuracyPercent": 40,
+      "leagues": [
+        "MLB"
+      ]
+    },
+    {
+      "dateKst": "2026-07-25",
+      "source": "data/predictions/2026-07-25.json",
+      "gradedGames": 3,
+      "signalWorked": 2,
+      "signalFailed": 1,
+      "inconclusive": 0,
+      "liveAccuracyPercent": 66.67,
+      "leagues": [
+        "KBO",
+        "NPB"
+      ]
+    }
+  ],
+  "caveats": [
+    "적중/실패만으로 EDGE Engine 성능을 단정하지 않는다.",
+    "표본이 작은 구간은 INSUFFICIENT_SAMPLE로 표시한다.",
+    "이 대시보드는 학습 데이터 축적용이며 자동 가중치 변경을 수행하지 않는다."
+  ]
+}

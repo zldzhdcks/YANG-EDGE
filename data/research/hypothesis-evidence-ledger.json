@@ -1,0 +1,348 @@
+{
+  "meta": {
+    "version": "hypothesis-evidence-ledger-v1",
+    "generatedAt": "2026-07-27T02:51:00.000Z",
+    "kind": "hypothesis-evidence-ledger",
+    "researchOnly": true,
+    "engineConnected": false,
+    "engineAdmissionDefault": "PROHIBITED",
+    "engineCandidates": [],
+    "statusPromotion": "MANUAL_ONLY",
+    "scoring": false,
+    "ranking": false,
+    "note": "Evidence accumulation ledger only. Reuses existing Review/Audit numbers. Does not promote hypothesis status, compute scores, or create Engine candidates.",
+    "sources": [
+      "HYPOTHESIS_REGISTRY.md",
+      "data/audits/2026-07-27-bullpen-role-v1-vs-v1_1.json",
+      "data/audits/bullpen-v1_1-validation-2026-07-27.json",
+      "data/audits/starter-dataset-v1-accumulation-summary.json",
+      "data/research/mlb/2026-07-27-starter-postgame-review-v1.json",
+      "data/predictions/mlb/2026-07-27-success-flow-review.json",
+      "data/predictions/mlb/2026-07-27-failure-flow-review.json",
+      "data/research/mlb/h-bp-role-006-availability-survey.json",
+      "data/research/mlb/h-bp-role-007-unknown-decline-observation.json"
+    ]
+  },
+  "hypotheses": [
+    {
+      "hypothesisId": "H-BP-ROLE-001",
+      "dataset": "mlb-bullpen-role",
+      "currentStatus": "DATA_COLLECTION",
+      "evidenceCount": 2,
+      "supportingEvents": [
+        {
+          "eventId": "E-BP-001-S1",
+          "dateKst": "2026-07-27",
+          "source": "data/audits/2026-07-27-bullpen-role-v1-vs-v1_1.json",
+          "summary": "v1 LONG_RELIEF 110 → v1.1 LONG_RELIEF 28 after starter-appearance exclusion"
+        },
+        {
+          "eventId": "E-BP-001-S2",
+          "dateKst": "2026-07-27",
+          "source": "data/audits/2026-07-27-bullpen-role-v1-vs-v1_1.json",
+          "summary": "starterAppearancesExcluded=675 on full Final slate (v1.1)"
+        }
+      ],
+      "contradictingEvents": [],
+      "lastUpdated": "2026-07-27T02:39:13.003Z",
+      "engineAdmission": "PROHIBITED",
+      "notes": [
+        "Classifier frozen at bullpen-role-classifier-v1.1",
+        "No Engine candidate"
+      ]
+    },
+    {
+      "hypothesisId": "H-BP-ROLE-002",
+      "dataset": "mlb-bullpen-role",
+      "currentStatus": "DATA_COLLECTION",
+      "evidenceCount": 2,
+      "supportingEvents": [
+        {
+          "eventId": "E-BP-002-S1",
+          "dateKst": "2026-07-27",
+          "source": "data/audits/2026-07-27-bullpen-role-v1-vs-v1_1.json",
+          "summary": "confirmedRolesUnderSample3=0"
+        },
+        {
+          "eventId": "E-BP-002-S2",
+          "dateKst": "2026-07-27",
+          "source": "data/audits/2026-07-27-bullpen-role-v1-vs-v1_1.json",
+          "summary": "longUnderSample3=0; INSUFFICIENT_SAMPLE=289"
+        }
+      ],
+      "contradictingEvents": [],
+      "lastUpdated": "2026-07-27T02:39:13.003Z",
+      "engineAdmission": "PROHIBITED",
+      "notes": [
+        "Sample policy held on Final slate rebuild",
+        "No Engine candidate"
+      ]
+    },
+    {
+      "hypothesisId": "H-BP-ROLE-003",
+      "dataset": "mlb-bullpen-role",
+      "currentStatus": "DATA_COLLECTION",
+      "evidenceCount": 2,
+      "supportingEvents": [
+        {
+          "eventId": "E-BP-003-S1",
+          "dateKst": "2026-07-27",
+          "source": "data/audits/2026-07-27-bullpen-role-v1-vs-v1_1.json",
+          "summary": "v1 MIDDLE_RELIEF 1 → v1.1 MIDDLE_RELIEF 121"
+        },
+        {
+          "eventId": "E-BP-003-S2",
+          "dateKst": "2026-07-27",
+          "source": "data/audits/2026-07-27-bullpen-role-v1-vs-v1_1.json",
+          "summary": "CLOSER primary count stable at 31 (no closer inflation vs v1)"
+        }
+      ],
+      "contradictingEvents": [],
+      "lastUpdated": "2026-07-27T02:39:13.003Z",
+      "engineAdmission": "PROHIBITED",
+      "notes": [
+        "Independent MIDDLE share increased without inventing closers on this slate",
+        "No Engine candidate"
+      ]
+    },
+    {
+      "hypothesisId": "H-BP-ROLE-004",
+      "dataset": "mlb-bullpen-role",
+      "currentStatus": "DATA_COLLECTION",
+      "evidenceCount": 2,
+      "supportingEvents": [
+        {
+          "eventId": "E-BP-004-S1",
+          "dateKst": "2026-07-27",
+          "source": "data/audits/2026-07-27-bullpen-role-v1-vs-v1_1.json",
+          "summary": "LONG_RELIEF reduced 110→28 with longUnderSample3=0"
+        },
+        {
+          "eventId": "E-BP-004-S2",
+          "dateKst": "2026-07-27",
+          "source": "data/audits/bullpen-v1_1-validation-2026-07-27.json",
+          "summary": "Final-slate roleCounts.LONG_RELIEF=28; OPENER=0; MOP_UP=0"
+        }
+      ],
+      "contradictingEvents": [],
+      "lastUpdated": "2026-07-27T02:41:02.702Z",
+      "engineAdmission": "PROHIBITED",
+      "notes": [
+        "OPENER/MOP_UP primary still 0 — observed gap, not scored as contradiction",
+        "No Engine candidate"
+      ]
+    },
+    {
+      "hypothesisId": "H-BP-ROLE-005",
+      "dataset": "mlb-bullpen-role",
+      "currentStatus": "DATA_COLLECTION",
+      "evidenceCount": 4,
+      "supportingEvents": [
+        {
+          "eventId": "E-BP-005-S1",
+          "dateKst": "2026-07-27",
+          "source": "data/audits/2026-07-27-bullpen-role-v1-vs-v1_1.json",
+          "summary": "withSecondaryRoles=164 on Final slate"
+        },
+        {
+          "eventId": "E-BP-005-S2",
+          "dateKst": "2026-07-27",
+          "source": "data/audits/bullpen-v1_1-validation-2026-07-27.json",
+          "summary": "failPregameWarn 7/7; successStable 2/5 (research signal only)"
+        },
+        {
+          "eventId": "E-BP-005-S3",
+          "dateKst": "2026-07-27",
+          "source": "data/predictions/mlb/2026-07-27-failure-flow-review.json",
+          "summary": "Failure summary BULLPEN_FAILURE=5; bullpenImpactGames=7; conclusion=BULLPEN_DATA_PRIORITY"
+        }
+      ],
+      "contradictingEvents": [
+        {
+          "eventId": "E-BP-005-C1",
+          "dateKst": "2026-07-27",
+          "source": "data/audits/bullpen-v1_1-validation-2026-07-27.json",
+          "summary": "falsePositive=2 on Final slate role-structure vs outcome compare"
+        }
+      ],
+      "lastUpdated": "2026-07-27T02:41:02.702Z",
+      "engineAdmission": "PROHIBITED",
+      "notes": [
+        "Success review bullpenProtectedGames=5 (observation only; not Engine signal)",
+        "No Engine candidate"
+      ]
+    },
+    {
+      "hypothesisId": "H-BP-ROLE-006",
+      "dataset": "mlb-bullpen-role",
+      "currentStatus": "SURVEY_ONLY",
+      "evidenceCount": 2,
+      "supportingEvents": [
+        {
+          "eventId": "E-BP-006-S1",
+          "dateKst": "2026-07-27",
+          "source": "data/research/mlb/h-bp-role-006-availability-survey.json",
+          "summary": "feasibility=PARTIAL_COLLECTIBLE; primary source rosterType=40Man status.code"
+        }
+      ],
+      "contradictingEvents": [
+        {
+          "eventId": "E-BP-006-C1",
+          "dateKst": "2026-07-27",
+          "source": "data/research/mlb/h-bp-role-006-availability-survey.json",
+          "summary": "/api/v1/injuries HTTP 404; collectorImplemented=false; availabilityUnknown remains true"
+        }
+      ],
+      "lastUpdated": "2026-07-27T01:28:08.251Z",
+      "engineAdmission": "PROHIBITED",
+      "notes": [
+        "Survey only — no classifier wiring",
+        "No Engine candidate"
+      ]
+    },
+    {
+      "hypothesisId": "H-BP-ROLE-007",
+      "dataset": "mlb-bullpen-role",
+      "currentStatus": "DATA_COLLECTION",
+      "evidenceCount": 2,
+      "supportingEvents": [],
+      "contradictingEvents": [
+        {
+          "eventId": "E-BP-007-C1",
+          "dateKst": "2026-07-27",
+          "source": "data/research/mlb/h-bp-role-007-unknown-decline-observation.json",
+          "summary": "UNKNOWN rate stable 51.3% (269/524 partial → 289/563 full Final); delta=0"
+        },
+        {
+          "eventId": "E-BP-007-C2",
+          "dateKst": "2026-07-27",
+          "source": "data/research/mlb/h-bp-role-007-unknown-decline-observation.json",
+          "summary": "verdict=UNKNOWN_RATE_STABLE_OR_INCONCLUSIVE (does not yet support natural decline)"
+        }
+      ],
+      "lastUpdated": "2026-07-27T02:41:02.702Z",
+      "engineAdmission": "PROHIBITED",
+      "notes": [
+        "Cross-day decline still needs finished 07-28+ slate",
+        "No Engine candidate"
+      ]
+    },
+    {
+      "hypothesisId": "H-ST-001",
+      "dataset": "mlb-starter",
+      "currentStatus": "DATA_COLLECTION",
+      "evidenceCount": 2,
+      "supportingEvents": [
+        {
+          "eventId": "E-ST-001-S1",
+          "dateKst": "2026-07-27",
+          "source": "data/audits/starter-dataset-v1-accumulation-summary.json",
+          "summary": "Cumulative seasonStatsAvailable=53 / rowCount=54 (pre-cutoff ERA present for collection)"
+        },
+        {
+          "eventId": "E-ST-001-S2",
+          "dateKst": "2026-07-27",
+          "source": "data/predictions/mlb/2026-07-27-success-flow-review.json",
+          "summary": "Success primary STARTER_ADVANTAGE_REALIZED=2 of successGames=6 (collection signal only; no ERA-gap test)"
+        }
+      ],
+      "contradictingEvents": [],
+      "lastUpdated": "2026-07-27T02:39:14.373Z",
+      "engineAdmission": "PROHIBITED",
+      "notes": [
+        "No PROMISING evaluation; ERA-gap vs SIGNAL_WORKED test not run",
+        "No Engine candidate"
+      ]
+    },
+    {
+      "hypothesisId": "H-ST-002",
+      "dataset": "mlb-starter",
+      "currentStatus": "DATA_COLLECTION",
+      "evidenceCount": 1,
+      "supportingEvents": [
+        {
+          "eventId": "E-ST-002-S1",
+          "dateKst": "2026-07-27",
+          "source": "data/audits/starter-dataset-v1-accumulation-summary.json",
+          "summary": "seasonStatsAvailable=53 — WHIP fields available in pre-game freeze payload (independence test not run)"
+        }
+      ],
+      "contradictingEvents": [],
+      "lastUpdated": "2026-07-27T02:39:14.373Z",
+      "engineAdmission": "PROHIBITED",
+      "notes": [
+        "Collection-phase availability only",
+        "No Engine candidate"
+      ]
+    },
+    {
+      "hypothesisId": "H-ST-003",
+      "dataset": "mlb-starter",
+      "currentStatus": "DATA_COLLECTION",
+      "evidenceCount": 1,
+      "supportingEvents": [
+        {
+          "eventId": "E-ST-003-S1",
+          "dateKst": "2026-07-27",
+          "source": "data/audits/starter-dataset-v1-accumulation-summary.json",
+          "summary": "recentStartsAvailable=53; day avg sampleSize 15.8 (07-27) / 14.3 (07-28)"
+        }
+      ],
+      "contradictingEvents": [],
+      "lastUpdated": "2026-07-27T02:39:14.373Z",
+      "engineAdmission": "PROHIBITED",
+      "notes": [
+        "Thin-sample auxiliary test pending more days",
+        "No Engine candidate"
+      ]
+    },
+    {
+      "hypothesisId": "H-ST-004",
+      "dataset": "mlb-starter",
+      "currentStatus": "DATA_COLLECTION",
+      "evidenceCount": 3,
+      "supportingEvents": [],
+      "contradictingEvents": [
+        {
+          "eventId": "E-ST-004-C1",
+          "dateKst": "2026-07-27",
+          "source": "data/research/mlb/2026-07-27-starter-postgame-review-v1.json",
+          "summary": "STARTER_CHANGED=0 on Final slate (MATCHED=30 / AWAITING=0) — no changed-starter failure cases yet"
+        },
+        {
+          "eventId": "E-ST-004-C2",
+          "dateKst": "2026-07-27",
+          "source": "data/audits/starter-dataset-v1-accumulation-summary.json",
+          "summary": "Cumulative STARTER_CHANGED=0; AWAITING_RESULT=24 (07-28 unfinished)"
+        },
+        {
+          "eventId": "E-ST-004-C3",
+          "dateKst": "2026-07-27",
+          "source": "data/predictions/mlb/2026-07-27-failure-flow-review.json",
+          "summary": "Failure STARTER_FAILURE=1 while STARTER_CHANGED=0 — failures occurred without probable→actual change on this slate"
+        }
+      ],
+      "lastUpdated": "2026-07-27T02:39:14.373Z",
+      "engineAdmission": "PROHIBITED",
+      "notes": [
+        "Yankees@Phillies Final rows are STARTER_MATCHED (not CHANGED)",
+        "Hypothesis remains DATA_COLLECTION; zero CHANGED cases ≠ rejection",
+        "No Engine candidate"
+      ]
+    }
+  ],
+  "totals": {
+    "hypothesisCount": 11,
+    "bullpenHypotheses": 7,
+    "starterHypotheses": 4,
+    "totalEvidenceCount": 23,
+    "supportingEventCount": 16,
+    "contradictingEventCount": 7,
+    "engineCandidateCount": 0,
+    "statusBreakdown": {
+      "DATA_COLLECTION": 10,
+      "SURVEY_ONLY": 1,
+      "REVIEW_PENDING": 0
+    }
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "meta": {
+    "version": "hypothesis-registry-ledger-consistency-audit-v1",
+    "generatedAt": "2026-07-27T03:00:00.000Z",
+    "kind": "hypothesis-registry-ledger-consistency-audit",
+    "researchOnly": true,
+    "engineConnected": false,
+    "engineImpact": 0,
+    "frameworkChanged": false,
+    "ledgerEventsChanged": false,
+    "hypothesisStatusChanges": 0,
+    "engineCandidateCount": 0,
+    "conclusion": "HYPOTHESIS_DOCUMENT_DRIFT_FIXED",
+    "note": "Compared HYPOTHESIS_REGISTRY.md undated cumulative figures to latest Evidence Ledger citations and Audit/Review artifacts. Updated Registry summaries only. Ledger events untouched. Historical dated figures preserved."
+  },
+  "roles": {
+    "registry": "Current hypothesis status and short sample/evidence summary",
+    "ledger": "Append-only individual supporting/contradicting evidence events",
+    "documentedInRegistry": true
+  },
+  "sourcesCompared": [
+    "HYPOTHESIS_REGISTRY.md (pre-fix)",
+    "data/research/hypothesis-evidence-ledger.json",
+    "data/audits/bullpen-v1_1-validation-2026-07-27.json",
+    "data/audits/2026-07-27-bullpen-role-v1-vs-v1_1.json",
+    "data/audits/starter-dataset-v1-accumulation-summary.json",
+    "data/research/mlb/2026-07-27-starter-postgame-review-v1.json",
+    "data/research/mlb/h-bp-role-007-unknown-decline-observation.json",
+    "data/research/mlb/h-bp-role-006-availability-survey.json"
+  ],
+  "currentSamples": {
+    "bullpen": {
+      "asOfDate": "2026-07-27",
+      "source": "data/audits/bullpen-v1_1-validation-2026-07-27.json",
+      "gradedGames": 15,
+      "classifiedPitcherRows": 563,
+      "unknown": 289,
+      "unknownRatePct": 51.3,
+      "classified": 205,
+      "classifiedRatePct": 36.4,
+      "failPregameWarn": "7/7",
+      "successStable": "2/5"
+    },
+    "starter": {
+      "asOfDate": "2026-07-27",
+      "source": "data/audits/starter-dataset-v1-accumulation-summary.json",
+      "gameCount": 27,
+      "rowCount": 54,
+      "probableAvailable": 53,
+      "probableMissing": 1,
+      "starterMatched": 30,
+      "starterChanged": 0,
+      "awaitingResult": 24,
+      "day2026_07_27_postgame": {
+        "source": "data/research/mlb/2026-07-27-starter-postgame-review-v1.json",
+        "starterMatched": 30,
+        "starterChanged": 0,
+        "awaitingResult": 0
+      }
+    }
+  },
+  "historicalPreserved": [
+    {
+      "label": "Bullpen PRE_YANKEES_FINAL partial slate",
+      "values": "rows 524 · UNKNOWN 269 (51.3%)",
+      "source": "data/research/mlb/h-bp-role-007-unknown-decline-observation.json"
+    },
+    {
+      "label": "Bullpen v1 baseline roleCounts (compare input)",
+      "values": "LONG 110 · MIDDLE 1 · CLOSER 31 · UNKNOWN 81",
+      "source": "data/audits/2026-07-27-bullpen-role-v1-vs-v1_1.json#v1Summary"
+    },
+    {
+      "label": "Starter 2026-07-28 unfinished day",
+      "values": "MATCHED 0 · AWAITING 24",
+      "source": "data/audits/starter-dataset-v1-accumulation-summary.json#days[2026-07-28]"
+    }
+  ],
+  "staleRegistryFindings": [
+    {
+      "id": "bullpen-header-cumulative",
+      "registryHad": "graded 14 · rows 524 · UNKNOWN 269",
+      "latest": "graded 15 · rows 563 · UNKNOWN 289",
+      "action": "UPDATED_CURRENT_WITH_ASOF"
+    },
+    {
+      "id": "H-BP-ROLE-001..005-sample-column",
+      "registryHad": "14 graded games (524 rows)",
+      "latest": "15 graded · 563 rows",
+      "action": "UPDATED_CURRENT_WITH_ASOF"
+    },
+    {
+      "id": "H-BP-ROLE-001-starterExcluded",
+      "registryHad": "starter appearances excluded 630 (undated)",
+      "latest": "675 on Final slate; 630 treated as older undated/partial-era figure",
+      "action": "UPDATED_CURRENT_PRESERVE_NOTE"
+    },
+    {
+      "id": "H-BP-ROLE-002-insufficient",
+      "registryHad": "INSUFFICIENT_SAMPLE 269",
+      "latest": "289",
+      "action": "UPDATED_CURRENT"
+    },
+    {
+      "id": "H-BP-ROLE-003-middle-closer",
+      "registryHad": "MIDDLE 110 · CLOSER 31→29",
+      "latest": "MIDDLE 121 · CLOSER 31",
+      "action": "UPDATED_CURRENT_PRESERVE_V1_MIDDLE_1"
+    },
+    {
+      "id": "H-BP-ROLE-005-secondary-failwarn",
+      "registryHad": "withSecondaryRoles 152/524 · fail 6/6",
+      "latest": "164/563 · fail 7/7",
+      "action": "UPDATED_CURRENT"
+    },
+    {
+      "id": "H-BP-ROLE-006-survey-wording",
+      "registryHad": "survey wording OK but risk of reading as prediction sample",
+      "latest": "explicit Survey only (not graded-game sample)",
+      "action": "CLARIFIED_SURVEY_ONLY"
+    },
+    {
+      "id": "H-BP-ROLE-007-verdict",
+      "registryHad": "07-28 awaiting · INSUFFICIENT_NEW_SAMPLE",
+      "latest": "Final-slate observed · delta 0 · UNKNOWN_RATE_STABLE_OR_INCONCLUSIVE; 07-28 still awaiting cross-day",
+      "action": "UPDATED_CURRENT_PRESERVE_PARTIAL_51_3"
+    },
+    {
+      "id": "starter-header-matched-awaiting",
+      "registryHad": "MATCHED 28 · AWAITING 26",
+      "latest": "MATCHED 30 · AWAITING 24",
+      "action": "UPDATED_CURRENT_WITH_ASOF"
+    },
+    {
+      "id": "H-ST-004-yankees-awaiting",
+      "registryHad": "MATCHED 28 · AWAITING 26 · Yankees still non-Final",
+      "latest": "MATCHED 30 · AWAITING 24 cumulative; Yankees Final STARTER_MATCHED",
+      "action": "UPDATED_CURRENT"
+    }
+  ],
+  "counts": {
+    "totalHypotheses": 11,
+    "discarded": 0,
+    "staleRegistryEntries": 10,
+    "updatedEntries": 10,
+    "historicalValuesPreserved": 3,
+    "hypothesisStatusChanges": 0,
+    "ledgerEventChanges": 0,
+    "engineCandidates": 0,
+    "statusBreakdownUnchanged": {
+      "DATA_COLLECTION": 10,
+      "SURVEY_ONLY": 1,
+      "REVIEW_PENDING": 0
+    }
+  },
+  "verification": {
+    "registryHypothesisCount": 11,
+    "discardedHypotheses": 0,
+    "statusChanges": 0,
+    "engineCandidate": 0,
+    "ledgerEventChanges": 0,
+    "datasetImpact": 0,
+    "predictionImpact": 0,
+    "engineImpact": 0,
+    "frameworkImpact": 0,
+    "documentsUpdated": ["HYPOTHESIS_REGISTRY.md"],
+    "documentsUnchanged": [
+      "data/research/hypothesis-evidence-ledger.json",
+      "PROJECT_MEMORY.md"
+    ],
+    "auditArtifact": "data/audits/hypothesis-registry-ledger-consistency-audit.json"
+  },
+  "remainingIssues": [
+    "COPY.md / brand docs may still describe EDGE Combo or older research copy — out of scope",
+    "Registry table evidence cells remain human summaries; Ledger remains source of discrete events"
+  ]
+}

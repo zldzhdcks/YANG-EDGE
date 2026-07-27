@@ -1,0 +1,240 @@
+{
+  "meta": {
+    "version": "home-dummy-data-boundary-audit-v1",
+    "generatedAt": "2026-07-27T03:35:00.000Z",
+    "kind": "home-dummy-data-boundary-audit",
+    "researchOnly": true,
+    "codeChanged": false,
+    "engineImpact": 0,
+    "frameworkChanged": false,
+    "predictionImpact": 0,
+    "datasetImpact": 0,
+    "mlbResearchArtifactsConnected": false,
+    "conclusion": "HOME_DUMMY_LABELING_NEEDED",
+    "note": "Audit only. Maps home card data boundaries (schedule vs dummy Engine vs sample analysis). No UI or Engine changes."
+  },
+  "homeSections": [
+    {
+      "section": "HeroSection",
+      "component": "src/components/home/HeroSection.tsx",
+      "scheduleData": false,
+      "engineData": false,
+      "researchArtifacts": false,
+      "analysisLinks": false,
+      "misleadingRisk": "MEDIUM",
+      "detail": "Product copy implies live EDGE Score/Confidence/analysis for all sports; no sample disclaimer."
+    },
+    {
+      "section": "TodayPick",
+      "component": "src/components/home/TodayPick.tsx",
+      "scheduleData": "partial — team names/league from Provider GameData",
+      "engineData": "full — winProbability, confidence, edgeScore, reasons from runEdgeEngine(dummy input)",
+      "researchArtifacts": false,
+      "analysisLinks": true,
+      "linkTarget": "/analysis/[gameId] via AnalysisNavLink",
+      "misleadingRisk": "HIGH",
+      "detail": "Section label 'EDGE Pick'. Sample badge only when providerKind=dummy; Engine always DummyEngineAnalysisProvider regardless of schedule provider."
+    },
+    {
+      "section": "TodayGames",
+      "component": "src/components/home/TodayGames.tsx + SportCard.tsx",
+      "scheduleData": "todayGames count from Provider",
+      "engineData": "analyzedGames count = games with dummy engine input only",
+      "researchArtifacts": false,
+      "analysisLinks": false,
+      "misleadingRisk": "MEDIUM",
+      "detail": "'EDGE 분석 완료' reads as production analysis coverage; no dummy boundary label."
+    },
+    {
+      "section": "WhyYangEdge (Featured)",
+      "component": "src/components/home/WhyYangEdge.tsx + FeatureCard.tsx",
+      "scheduleData": "partial — match titles from GameData teams",
+      "engineData": "full — EDGE, Confidence, recommendation grade badges",
+      "researchArtifacts": false,
+      "analysisLinks": false,
+      "misleadingRisk": "HIGH",
+      "detail": "Section title 'Why YANG EDGE' but renders Featured pick cards. No sample badge. Grade badges (WATCH/EDGE PICK/TOP EDGE) look like live recommendations."
+    }
+  ],
+  "dataPipeline": {
+    "entry": "src/app/page.tsx",
+    "loaders": [
+      "loadTodayPick() → src/lib/api/today-pick.ts",
+      "loadHomeGames() → src/lib/api/home-games.ts"
+    ],
+    "sharedBuilder": "buildHomeFeed(games) — src/lib/home/build-home-feed.ts",
+    "scheduleSource": {
+      "dummy": "constants/games.ts GAMES[] (DEFAULT_GAME_DATE 2026-07-23)",
+      "thesportsdb": "TheSportsDbProvider.getGames() — NPB/KBO eventsday (real API schedule)",
+      "apisports": "not implemented (throws)"
+    },
+    "engineSource": {
+      "provider": "DummyEngineAnalysisProvider only — src/lib/engine/analysis-data-provider.ts",
+      "records": "constants/dummyAnalysisData.ts",
+      "gameIds": [
+        "npb-softbank-orix",
+        "npb-hanshin-yomiuri",
+        "kbo-lg-doosan"
+      ],
+      "note": "buildHomeFeed skips games without engine input; no MLB research prediction IDs"
+    },
+    "valueEdge": "resolveAnalysisMarketOdds for baseball pick only; optional; separate from research artifacts"
+  },
+  "actualDataElements": [
+    "TheSportsDB (default): NPB/KBO team names, league, date, startTime (KST), externalId",
+    "DummyProvider: fixed GAMES[] schedule rows (multi-sport sample slate)",
+    "SportCard todayGames count (per sport, from Provider schedule)",
+    "Empty-state messages when schedule 0 or pick criteria not met"
+  ],
+  "dummyDataElements": [
+    "All EDGE Engine outputs on home (winProbability, confidence, edgeScore, grade, reasons)",
+    "TodayPick aiWinRate / confidence / edgeValue",
+    "Featured card EDGE + Confidence + recommendation grade",
+    "SportCard analyzedGames (counts dummy-engine-matched games only)",
+    "DummyProvider entire schedule when SPORTS_PROVIDER=dummy",
+    "Value Edge on home (when odds match dummy baseball game only)"
+  ],
+  "sampleAnalysisLinks": {
+    "fromHome": [
+      {
+        "source": "TodayPick success state",
+        "cta": "상세 분석 →",
+        "component": "AnalysisNavLink",
+        "resolvesTo": "/analysis/{gameId}",
+        "worksWhen": "gameId in dummyAnalysisData (3 IDs only)"
+      }
+    ],
+    "fromFeatured": [],
+    "relatedSampleIds": {
+      "engineReady": [
+        "npb-softbank-orix",
+        "npb-hanshin-yomiuri",
+        "kbo-lg-doosan"
+      ],
+      "picksPageSample": [
+        "npb-softbank-orix",
+        "kbo-lg-doosan",
+        "kbl-seoul-anyang",
+        "kleague-ulsan-jeonbuk",
+        "npb-hanshin-yomiuri"
+      ],
+      "note": "/picks is HIDDEN from public nav; home TodayPick is separate path"
+    },
+    "brokenLinkRisk": "LOW on home — link only rendered when pick exists; pick gameId always engine-backed. Featured has no /analysis links."
+  },
+  "misleadingLabels": [
+    {
+      "location": "layout metadata",
+      "text": "EDGE가 오늘 가장 가치 있는 경기를 찾아드립니다",
+      "issue": "Implies daily validated picks; home never reads research graded MLB"
+    },
+    {
+      "location": "HeroSection body",
+      "text": "EDGE Score + Confidence + EDGE + 분석 근거를 제공합니다",
+      "issue": "No qualification that Engine input is 3-game dummy sample"
+    },
+    {
+      "location": "TodayPick section eyebrow",
+      "text": "EDGE Pick",
+      "issue": "Presented as today's pick; only sample engine when shown"
+    },
+    {
+      "location": "TodayPickStats",
+      "text": "승리 확률 / EDGE Confidence / EDGE Score",
+      "issue": "Numeric stats from dummy engine; no sample label unless providerKind=dummy"
+    },
+    {
+      "location": "SportCard",
+      "text": "EDGE 분석 완료",
+      "issue": "Counts dummy engine matches, not research or live analysis"
+    },
+    {
+      "location": "WhyYangEdge section title",
+      "text": "Why YANG EDGE",
+      "issue": "Section actually shows Featured recommendation cards, not product explainer"
+    },
+    {
+      "location": "FeatureCard Badge",
+      "text": "WATCH / EDGE PICK / TOP EDGE",
+      "issue": "Recommendation grades on dummy engine output; no sample disclaimer"
+    },
+    {
+      "location": "COPY.md Why YANG EDGE bodies",
+      "text": "자동 업데이트 / 매일 학습하는 EDGE Engine",
+      "issue": "Documented copy not rendered on home, but sets product expectation if reused"
+    }
+  ],
+  "misleadingCTAs": [
+    {
+      "location": "TodayPick",
+      "text": "상세 분석 →",
+      "issue": "Leads to /analysis/[id] with dummy AnalysisData; looks like verified analysis"
+    },
+    {
+      "location": "HeroSection (resolved)",
+      "text": "EDGE Ranking 보기",
+      "issue": "Removed in prior picks visibility work; Hero now uses 내 가계부"
+    }
+  ],
+  "publicRisk": {
+    "level": "HIGH",
+    "when": "SPORTS_PROVIDER=dummy — full TodayPick + Featured with realistic-looking EDGE stats",
+    "mediumWhen": "thesportsdb default — real schedule shown; pick/featured usually empty; Hero/metadata still claim live pick discovery",
+    "lowWhen": "API key missing — error/empty states; less pick misrepresentation"
+  },
+  "providerScenarios": [
+    {
+      "provider": "thesportsdb (default)",
+      "schedule": "real NPB/KBO today",
+      "pickLikely": "empty-pick (real gameIds rarely match dummy engine IDs)",
+      "featuredLikely": "empty",
+      "analyzedCount": "0 for baseball unless ID collision",
+      "misleadingSurface": "Hero + metadata + empty pick wording"
+    },
+    {
+      "provider": "dummy",
+      "schedule": "fixed 2026-07-23 sample slate (10 games)",
+      "pickLikely": "success (top dummy engine game)",
+      "featuredLikely": "up to 3 cards",
+      "analyzedCount": "3 baseball",
+      "misleadingSurface": "TodayPick + Featured + analyzed count; only small amber provider badge on TodayPick"
+    }
+  ],
+  "researchConnection": {
+    "homeReadsMlbArtifacts": false,
+    "feedbackLearningOnHome": false,
+    "gradedMlbOnHome": false,
+    "idNamespaceGap": "Research uses mlb-179xxx; home Engine uses npb-*/kbo-* dummy IDs"
+  },
+  "recommendedMinimalAction": {
+    "choice": "dummy 결과 명확한 샘플 표시",
+    "priority": "PREFERRED",
+    "steps": [
+      "Decouple sample labeling from providerKind: show banner whenever Engine input is DummyEngineAnalysisProvider (always today).",
+      "Add matching sample notice on Featured (WhyYangEdge) and SportCard analyzedGames when count > 0 from dummy engine.",
+      "Relabel TodayPick section or add subtitle: '엔진 샘플 출력 (실추천·연구 채점 아님)'.",
+      "Soften root metadata/Hero only if product copy is updated in a follow-up (COPY.md coordination)."
+    ],
+    "alternative": {
+      "choice": "일정 정보만 유지하고 추천 영역 숨김",
+      "when": "Hide TodayPick + WhyYangEdge until per-game AnalysisData is not dummy-only; keep TodayGames schedule-only."
+    },
+    "explicitlyNotRecommended": [
+      "Wire home to MLB research artifacts in this pass",
+      "Delete dummy constants or present dummy numbers as verified picks",
+      "Expose research hit rates or audit metrics on home"
+    ]
+  },
+  "relatedDocs": {
+    "priorFreshnessAudit": "data/audits/homepage-data-freshness-audit.json",
+    "picksVisibility": "EDGE_RANKING_PUBLIC_VISIBILITY=HIDDEN (separate from home TodayPick)"
+  },
+  "verification": {
+    "codeChanged": false,
+    "engineImpact": 0,
+    "predictionHash": "unchanged",
+    "feedbackLearningImpact": 0,
+    "buildRequired": false,
+    "buildNote": "Audit-only; no code diff"
+  }
+}

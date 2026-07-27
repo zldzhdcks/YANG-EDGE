@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "version": "homepage-data-freshness-audit-v1",
+    "generatedAt": "2026-07-27T03:10:00.000Z",
+    "kind": "homepage-data-freshness-audit",
+    "researchOnly": true,
+    "codeChanged": false,
+    "engineImpact": 0,
+    "frameworkChanged": false,
+    "predictionImpact": 0,
+    "datasetImpact": 0,
+    "mlbStatsRuntimeConnection": false,
+    "conclusion": "MULTIPLE_FRESHNESS_ISSUES_FOUND",
+    "note": "Audit only. Maps UI data sources vs research artifacts, cache/static behavior, hardcoded dates, and manual pipeline gaps. No automation implemented."
+  },
+  "screens": [
+    {
+      "route": "/",
+      "name": "Home",
+      "dataSource": [
+        "getSportsProvider().getGames()",
+        "buildHomeFeed → getEngineAnalysisData (DummyEngineAnalysisProvider)"
+      ],
+      "readsResearchArtifacts": false,
+      "dateSelection": "provider getKstToday() for schedule",
+      "rendering": "dynamic (ƒ)",
+      "staleRisk": "HIGH — never displays research graded MLB slate; Engine only for dummy IDs"
+    },
+    {
+      "route": "/games",
+      "name": "Today games list",
+      "dataSource": ["GET /api/games?date= (client fetch cache:no-store)"],
+      "readsResearchArtifacts": false,
+      "dateSelection": "client getKstToday() + DatePicker",
+      "rendering": "static shell + client runtime fetch",
+      "staleRisk": "LOW for schedule · research results not shown"
+    },
+    {
+      "route": "/picks",
+      "name": "EDGE Ranking",
+      "dataSource": ["constants/picks.ts AI_PICKS"],
+      "readsResearchArtifacts": false,
+      "dateSelection": "hardcoded sample",
+      "rendering": "static (○)",
+      "staleRisk": "HIGH — fixed sample"
+    },
+    {
+      "route": "/analysis/[gameId]",
+      "name": "EDGE Detail",
+      "dataSource": ["getEngineAnalysisData → dummyAnalysisData"],
+      "readsResearchArtifacts": false,
+      "dateSelection": "dummy dates in constants",
+      "rendering": "dynamic (ƒ)",
+      "staleRisk": "HIGH for real MLB ids — no engine input"
+    },
+    {
+      "route": "/feedback",
+      "name": "Feedback Center",
+      "dataSource": ["data/predictions/*-review.json via readdir/readFile"],
+      "readsResearchArtifacts": "indirect via export-mlb-feedback-review.ts",
+      "dateSelection": "all review files sorted by dateKst desc",
+      "rendering": "static (○) — build-time bake risk",
+      "staleRisk": "HIGH — export file outdated + static page"
+    },
+    {
+      "route": "/learning",
+      "name": "Learning Dashboard",
+      "dataSource": ["data/learning/dashboard.json"],
+      "readsResearchArtifacts": "indirect via build-learning-dashboard.ts",
+      "dateSelection": "dashboard recentDays",
+      "rendering": "static (○) — build-time bake risk",
+      "staleRisk": "HIGH — dashboard generatedAt 2026-07-26; MLB day graded 14"
+    },
+    {
+      "route": null,
+      "name": "Success/Failure flow reviews",
+      "dataSource": [
+        "data/predictions/mlb/*-success-flow-review.json",
+        "data/predictions/mlb/*-failure-flow-review.json"
+      ],
+      "readsResearchArtifacts": true,
+      "publicUi": false,
+      "staleRisk": "N/A — no public screen"
+    },
+    {
+      "route": null,
+      "name": "Bullpen / Starter research",
+      "dataSource": ["data/research/mlb/*", "data/audits/*"],
+      "readsResearchArtifacts": true,
+      "publicUi": false,
+      "staleRisk": "N/A — no public screen"
+    }
+  ],
+  "hardcodedDates": [
+    {
+      "path": "src/constants/games.ts",
+      "value": "DEFAULT_GAME_DATE=2026-07-23"
+    },
+    {
+      "path": "src/constants/dummyAnalysisData.ts",
+      "value": "sample game dates 2026-07-18..23"
+    },
+    {
+      "path": "src/lib/research/registry.ts",
+      "value": "artifact paths pinned to 2026-07-27 (research registry only)"
+    },
+    {
+      "path": "scripts/* default argv",
+      "value": "often 2026-07-27"
+    }
+  ],
+  "cachePolicy": {
+    "pageDynamicExports": "none found on main UI pages",
+    "buildRouteKinds": {
+      "dynamic": ["/", "/analysis/[gameId]", "many /api/*"],
+      "static": ["/feedback", "/learning", "/picks", "/games", "/ledger", "/toto"]
+    },
+    "clientGamesFetch": "cache:no-store",
+    "apiGetInternal": "cache:no-store",
+    "apiGetExternal": "revalidate:60"
+  },
+  "scriptsBridgingResearchToSite": [
+    {
+      "script": "scripts/export-mlb-feedback-review.ts",
+      "in": "data/predictions/mlb/{date}.json + {date}-review.json",
+      "out": "data/predictions/{date}-mlb-review.json"
+    },
+    {
+      "script": "scripts/build-learning-dashboard.ts",
+      "in": "data/predictions/*-review.json",
+      "out": "data/learning/dashboard.json"
+    },
+    {
+      "script": "scripts/run-mlb-postgame-pipeline.ts",
+      "steps": ["grade", "export-mlb-feedback-review", "build-learning-dashboard"],
+      "note": "Does not update home feed; must be re-run after new finals"
+    }
+  ],
+  "mismatch2026_07_27": {
+    "researchMlbReview": {
+      "path": "data/predictions/mlb/2026-07-27-review.json",
+      "graded": 15,
+      "yankees": "SIGNAL_FAILED / graded"
+    },
+    "siteMlbExport": {
+      "path": "data/predictions/2026-07-27-mlb-review.json",
+      "generatedAt": "2026-07-26T23:27:24.757Z",
+      "gradedGames": 14,
+      "yankees": "pending"
+    },
+    "learningDashboard": {
+      "path": "data/learning/dashboard.json",
+      "generatedAt": "2026-07-26T23:27:26.052Z",
+      "day2026_07_27_gradedGames": 14,
+      "summaryGraded": 17
+    },
+    "home": {
+      "showsResearchGradedCounts": false,
+      "showsYankeesResult": false
+    }
+  },
+  "breakPoints": [
+    "Research artifacts not wired into home buildHomeFeed",
+    "Manual export + learning dashboard rebuild required after grade",
+    "Feedback/Learning statically prerendered at build",
+    "Success/Failure and Bullpen/Starter have no public UI",
+    "Engine analysis IDs are dummy-only vs research mlb-* ids"
+  ],
+  "manualUpdatePoints": [
+    "npx tsx --env-file=.env.local scripts/run-mlb-postgame-pipeline.ts 2026-07-27",
+    "npm run build (to refresh static /feedback and /learning)"
+  ],
+  "researchUiSplit": true,
+  "rootCause": "Multiple independent gaps: (1) home/live UI never reads research prediction/audit artifacts; (2) Feedback/Learning depend on manually regenerated site mirror files that are currently older than mlb/*-review.json; (3) Feedback/Learning routes are statically prerendered so even fresh files need rebuild or force-dynamic.",
+  "recommendedMinimalSolution": {
+    "primary": "CACHE_POLICY_FIX on /feedback and /learning (force-dynamic or short revalidate) + re-run export/dashboard pipeline",
+    "secondaryIfHomeNeedsResearchNumbers": "Generate data/site/latest-summary.json from research pipeline; home reads summary only — do not connect MLB Stats API to public runtime",
+    "alternativesEvaluated": [
+      "1 latest artifact auto-discovery",
+      "2 site latest-summary.json",
+      "3 cache policy adjustment"
+    ],
+    "preferredOrder": ["3", "2", "1"]
+  },
+  "legalRuntime": {
+    "mlbStatsApi": "INTERNAL_RESEARCH_ONLY",
+    "publicRuntimeStatsApiAllowed": false,
+    "cronDbWebhookProposed": false
+  },
+  "verification": {
+    "codeChanges": 0,
+    "datasetImpact": 0,
+    "predictionImpact": 0,
+    "engineImpact": 0,
+    "frameworkImpact": 0,
+    "documentsCreated": [
+      "data/audits/homepage-data-freshness-audit.json",
+      "HOMEPAGE_DATA_FRESHNESS.md"
+    ]
+  },
+  "remainingIssues": [
+    "Product decision needed: should home show research graded stats at all?",
+    "Static Feedback/Learning will remain stale until cache policy or rebuild process is changed (out of scope for this audit)"
+  ]
+}

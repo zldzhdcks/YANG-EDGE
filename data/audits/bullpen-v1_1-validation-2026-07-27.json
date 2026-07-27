@@ -1,0 +1,117 @@
+{
+  "meta": {
+    "version": "bullpen-v1.1-date-validation-v1",
+    "generatedAt": "2026-07-27T02:41:02.702Z",
+    "targetDateKst": "2026-07-27",
+    "classifierVersion": "bullpen-role-classifier-v1.1",
+    "classifierLogicChanged": false,
+    "engineConnected": false,
+    "engineImpact": 0,
+    "frameworkChanged": false,
+    "conclusion": "DATA_ACCUMULATION_CONTINUES",
+    "predictionImmutableHashBefore": "7d18099dc43d459af92e784e06223c751d6291df60a61df592f2998a302a4950",
+    "predictionImmutableHashAfter": "7d18099dc43d459af92e784e06223c751d6291df60a61df592f2998a302a4950",
+    "predictionImmutableUnchanged": true,
+    "predictionFileHashSha256": "621f4dbc2ad7439804f88ba213452e5e2675396e889a26580f79b11ad9e58051",
+    "note": "Result fields graded for Yankees@Phillies Final; immutable prediction fields unchanged. Baseball API lagged IN9 — research cache corrected to FT after Stats Final confirm.",
+    "bullpenResultHashBefore": "0753ad64086c1773732c396a364567ecbbf2c8a250b250528e8aee6928258b8b",
+    "bullpenResultHashAfter": "0753ad64086c1773732c396a364567ecbbf2c8a250b250528e8aee6928258b8b",
+    "bullpenHashMatched": true,
+    "cacheReuseNetworkCalls": 0,
+    "cacheReuseOk": true,
+    "pipelineRan": true,
+    "yankeesGame": {
+      "gameId": "mlb-179589",
+      "gamePk": 823433,
+      "abstractGameState": "Final",
+      "score": "away 4 @ home 11",
+      "predictionHit": false,
+      "feedback": "SIGNAL_FAILED",
+      "starterPostgame": "STARTER_MATCHED x2"
+    }
+  },
+  "slate": {
+    "total": 15,
+    "finished": 15,
+    "inProgress": 0,
+    "notStarted": 0,
+    "counts": {
+      "FT": 15
+    },
+    "remaining": null
+  },
+  "metrics": {
+    "finishedGames": 15,
+    "cumulativeGradedGames": 15,
+    "failPregameWarn": 7,
+    "failTotal": 7,
+    "successStable": 2,
+    "successTotal": 5,
+    "falsePositive": 2,
+    "falseNegative": 0,
+    "unknownRatePct": 51.3,
+    "classifiedRatePct": 36.4,
+    "roleCounts": {
+      "CLOSER": 31,
+      "SETUP": 58,
+      "HIGH_LEVERAGE_RELIEF": 36,
+      "MIDDLE_RELIEF": 121,
+      "LONG_RELIEF": 28,
+      "OPENER": 0,
+      "MOP_UP": 0,
+      "UNKNOWN": 289
+    },
+    "metricsSource": "2026-07-27-final-slate",
+    "classifiedPitcherRows": 563
+  },
+  "starterPostgame": {
+    "starterMatched": 30,
+    "starterChanged": 0,
+    "awaitingResult": 0,
+    "unknownOrNotFinal": 0,
+    "totalRows": 30
+  },
+  "starterAccumulation": {
+    "auditFiles": 2,
+    "gameCount": 27,
+    "rowCount": 54,
+    "probableAvailable": 53,
+    "probableMissing": 1,
+    "seasonStatsAvailable": 53,
+    "recentStartsAvailable": 53,
+    "starterMatched": 30,
+    "starterChanged": 0,
+    "awaitingResult": 24
+  },
+  "hypotheses": {
+    "H-BP-ROLE-006": {
+      "status": "SURVEY_ONLY_PARTIAL_COLLECTIBLE",
+      "engineConnected": false,
+      "collectionStatusPath": "data/research/mlb/h-bp-role-006-availability-survey.json"
+    },
+    "H-BP-ROLE-007": {
+      "status": "OBSERVED_FINAL_SLATE",
+      "observationPath": "data/research/mlb/h-bp-role-007-unknown-decline-observation.json",
+      "baselineUnknownRatePct": 51.3,
+      "latestUnknownRatePct": 51.3
+    }
+  },
+  "verification": {
+    "predictionImmutableHashUnchanged": true,
+    "starterPregameHashUnchanged": true,
+    "starterPregameFileSha256": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+    "engineImpact": 0,
+    "classifierLogicChanged": false,
+    "frameworkChanged": false,
+    "cacheReuse": true,
+    "resultHashReproducible": true,
+    "bullpenResultHash": "0753ad64086c1773732c396a364567ecbbf2c8a250b250528e8aee6928258b8b",
+    "predictionImmutableHash": "7d18099dc43d459af92e784e06223c751d6291df60a61df592f2998a302a4950"
+  },
+  "remainingIssues": [
+    "API-BASEBALL lagged status IN9 after Stats Final — research results cache FT-corrected for grading only",
+    "OPENER/MOP_UP primary still 0 on frozen v1.1",
+    "availabilityUnknown remains true until H-BP-ROLE-006 collector exists",
+    "07-28 slate still unfinished for cross-day UNKNOWN delta"
+  ]
+}
