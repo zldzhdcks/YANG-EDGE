@@ -1,0 +1,278 @@
+{
+  "meta": {
+    "version": "lineup-dataset-v1-pre-design-audit-v1",
+    "kind": "pre-design-audit",
+    "generatedAt": "2026-07-27T05:55:00.000Z",
+    "scope": "design-only",
+    "dateKstAudited": "2026-07-27",
+    "builderImplemented": false,
+    "engineConnected": false,
+    "engineImpact": 0,
+    "starterDatasetChanged": false,
+    "bullpenDatasetChanged": false,
+    "researchFrameworkStructureChanged": false,
+    "predictionSnapshotChanged": false,
+    "preGameArtifactBackfill": 0,
+    "uiChanged": false,
+    "conclusion": "READY_FOR_MINIMAL_LINEUP_DATASET_DESIGN"
+  },
+  "evidenceSources": [
+    "data/predictions/mlb/2026-07-27.json",
+    "data/research/mlb/2026-07-27-starter-dataset-v1.json",
+    "data/cache/research/mlb/raw/statsapi/api/v1/game/{gamePk}/boxscore.json",
+    "data/daily-tests/2026-07-27-mlb-statsapi-lineup-coverage.json",
+    "scripts/test-mlb-statsapi-lineups.ts",
+    "STARTER_DATASET_V1_DESIGN.md",
+    "data/audits/starter-dataset-v1-pre-design-audit.json",
+    "DATA_SOURCES.md",
+    "HYPOTHESIS_REGISTRY.md",
+    "DATASET_FRAMEWORK.md",
+    "src/lib/research/types.ts",
+    "src/lib/research/registry.ts",
+    "src/lib/research/load-research-analysis-view.ts",
+    "src/components/analysis/ResearchAnalysisViewer.tsx"
+  ],
+  "predictionHashCheck": {
+    "2026-07-27_referenceFromStarterDatasetMeta": "28f3e3602be4d2482026eb30b60c176335d9686ad6f11251c2a1c43d8b5dee4d",
+    "note": "Audit writes docs only; prediction snapshot and immutable fields must remain byte-identical. No backfill into prediction or pre-game lineup artifacts."
+  },
+  "auditedGames": {
+    "dateKst": "2026-07-27",
+    "gradedPredictionGames": 15,
+    "gamePksFromStarterDataset": [
+      823433, 822706, 822870, 822950, 823028, 823194, 823354, 823678,
+      823599, 823755, 823840, 824246, 824572, 824730, 824810
+    ],
+    "boxscoreCachePresent": 15,
+    "playByPlayCachePresentForThoseGamePks": 0
+  },
+  "postGameActualStartingLineup": {
+    "available": true,
+    "gamesWithBothTeamsComplete": 15,
+    "completeTeamLineups": 30,
+    "incompleteTeamLineups": 0,
+    "source": "Stats API boxscore (research cache wrapper meta+body)",
+    "cachePathPattern": "data/cache/research/mlb/raw/statsapi/api/v1/game/{gamePk}/boxscore.json",
+    "extractionRule": "players[].battingOrder matching /^[1-9]00$/ are original starting batting-order slots 1–9; gameStatus.isSubstitute===false on all 270 starters observed",
+    "fieldsObserved": {
+      "playerId": "person.id — available",
+      "playerName": "person.fullName — available",
+      "battingOrderSlot": "battingOrder '100'..'900' → slots 1..9 — available",
+      "defensivePosition": "position.abbreviation (incl. DH) — available",
+      "isDH": "position.abbreviation==='DH' — available (30/30 sides had DH; universal DH era)",
+      "battingSide": "NOT in boxscore person; available via /api/v1/people/{id}.batSide.code with extra research calls",
+      "homeAway": "boxscore.teams.home|away — available",
+      "teamIdName": "team.team.id / team.team.name — available on team object",
+      "gamePk": "path + starter/join — available"
+    },
+    "dhAndPitcherInLineup": {
+      "dhStarters": 30,
+      "pitcherInStartingLineup": 0
+    }
+  },
+  "battingOrderSemantics": {
+    "playersDotBattingOrder": {
+      "meaning": "Encoded batting-order history. Suffix 00 = original starter for that slot; 01+ (e.g. 801, 301) = later occupants of that slot after PH/PR/defensive replacement.",
+      "isStartingOrder": true,
+      "isFinalOrder": false,
+      "evidence": "Across 15 games, *00 always yields exactly 9 non-substitute batters per side; substitutes carry *0[1-9] codes and isSubstitute=true."
+    },
+    "teamDotBattingOrder": {
+      "meaning": "Array of 9 personIds reflecting current/final batting order after substitutions — NOT reliable as starting lineup.",
+      "isStartingOrder": false,
+      "isFinalOrCurrentOrder": true,
+      "evidence": "29/30 team-sides mismatched team.battingOrder vs *00 starters (only 1 side unchanged). Example gamePk 823433 home slot 8: final id ≠ starter Gabriel Rincones Jr."
+    },
+    "recommendation": "Use players[].battingOrder *00 (+ isSubstitute===false) for postGameActualLineup. Do not use team.battingOrder as starting lineup."
+  },
+  "startingVsSubstitutionDistinction": {
+    "possible": true,
+    "methods": [
+      "battingOrder regex /^[1-9]00$/ → starter",
+      "gameStatus.isSubstitute === true → substitute (observed on PH/defensive replacements)",
+      "allPositions may include PH before defensive abbreviation"
+    ],
+    "playByPlayRequiredForStarterExtraction": false,
+    "playByPlayOptionalUses": [
+      "Cross-check first plate appearance order",
+      "Per-PA batSide from matchup.batSide if people endpoint not fetched",
+      "Substitution event timing (beyond v1 minimal schema)"
+    ],
+    "playByPlayMinScopeIfNeeded": "GET /api/v1/game/{gamePk}/playByPlay once per Final game; not required for v1 starting-nine extraction when boxscore *00 rule holds"
+  },
+  "preGameLineupSnapshot": {
+    "historical2026_07_27": {
+      "status": "NOT_COLLECTED",
+      "backfillFromPostGameForbidden": true,
+      "reason": "No frozen pre-game lineup research artifact exists for these games. Post-game boxscore actuals must not be written into preGameLineupSnapshot."
+    },
+    "scheduleHydrateLineupsProbe": {
+      "artifact": "data/daily-tests/2026-07-27-mlb-statsapi-lineup-coverage.json",
+      "fetchedAt": "2026-07-26T13:14:48.666Z",
+      "detailedStateAtFetch": "Pre-Game (schedule)",
+      "lineupsBothSides": 0,
+      "homeOnly": 1,
+      "awayOnly": 1,
+      "notPublished": 13,
+      "endpoint": "GET /api/v1/schedule?hydrate=probablePitcher,lineups",
+      "note": "Pre-game batting orders appear late and asymmetrically; coverage is incomplete hours before first pitch."
+    },
+    "probableVsConfirmedLineup": {
+      "distinguishableAsSeparateApiFields": false,
+      "mechanism": "When schedule.lineups.homePlayers/awayPlayers appear, treat as PUBLISHED_PREGAME; no distinct confirmed-lineup field found in Preview. Post-game *00 is ACTUAL_STARTING label only.",
+      "analogy": "Same pattern as probablePitcher vs Live/Final confirmed starter"
+    },
+    "cutoffSourceTimestamp": {
+      "lineupAnnouncementTimeDedicatedField": false,
+      "recordable": [
+        "responseFetchedAt / cache meta.fetchedAt",
+        "cutoffTime (commenceTimeUtc or research freeze, same pattern as Starter)",
+        "schedule detailedState at fetch"
+      ],
+      "unavailable": [
+        "Official club lineup announcement clock as first-class Stats API field (not observed)"
+      ]
+    }
+  },
+  "postGameLabelPolicy": {
+    "artifactName": "postGameActualLineup",
+    "allowedUses": [
+      "research review",
+      "future preGame vs actual comparison label",
+      "Analysis Viewer display (future; not this audit)"
+    ],
+    "forbiddenUses": [
+      "Engine feature",
+      "Lineup Score",
+      "Confidence / EDGE / Value Edge / recommendation",
+      "Backfill into preGameLineupSnapshot or prediction snapshot"
+    ],
+    "engineAdmissionDefault": "PROHIBITED"
+  },
+  "idMappingRisks": [
+    {
+      "risk": "gamePk (Stats) ↔ mlb-{externalId} (API-BASEBALL / prediction)",
+      "mitigation": "Reuse Starter Dataset join (gamePk on starter rows); flag UNLINKED if missing"
+    },
+    {
+      "risk": "HOME_AWAY_REVERSED / team name soft match",
+      "mitigation": "Prefer Stats team.id; verify home/away against prediction homeTeam/awayTeam strings"
+    },
+    {
+      "risk": "team.battingOrder mistaken for starters after PH",
+      "mitigation": "Documented: use *00 only"
+    },
+    {
+      "risk": "SportsDataIO Player IDs / Scrambled",
+      "mitigation": "Do not crosswalk; Scrambled permanently prohibited"
+    },
+    {
+      "risk": "batSide people cache currently pitcher-heavy; batters cold-miss",
+      "mitigation": "Optional derived people cache; mark battingSide missingFields when not fetched"
+    }
+  ],
+  "apiCallEstimateFor100Games": {
+    "postGameMinimalCold": {
+      "boxscore": 100,
+      "playByPlay": 0,
+      "peopleForBatSide": 0,
+      "total": 100,
+      "note": "Starting nine + position + DH without battingSide"
+    },
+    "postGameWithBatSideCold": {
+      "boxscore": 100,
+      "people": "~unique batters; worst-case ≤1800 (18×100), typical multi-day reuse much lower (ballpark 400–900)",
+      "playByPlay": 0,
+      "totalBallpark": "500–1000 Stats API calls cold"
+    },
+    "preGameFutureCollection": {
+      "scheduleHydrateLineups": "≈1 call per US calendar date covering slate",
+      "note": "May need near-first-pitch re-fetch; do not mass-poll live feed"
+    },
+    "cacheReuse2026_07_27": {
+      "boxscoreRawHit": "15/15 for audited gamePks",
+      "playByPlayRawHit": "0/15 for audited gamePks (repo has other gamePks with PBP)",
+      "peopleBattersHit": "0/18 on sample game 823433 starters",
+      "warmRerunPostGameMinimal": "networkCalls=0 if boxscore cache retained"
+    }
+  },
+  "legalStatus": {
+    "mlbStatsApi": "INTERNAL_RESEARCH_ONLY; NO_PUBLIC_RUNTIME_CONNECTION; NO_COMMERCIAL_RUNTIME_CONNECTION; COMMERCIAL_USE_NOT_CONFIRMED",
+    "htmlCrawl": "prohibited",
+    "sportsDataIoScrambled": "permanently prohibited",
+    "engineAdmissionDefault": "PROHIBITED"
+  },
+  "starterBullpenCommonMetadataAuditElements": [
+    "researchOnly / engineConnected / engineUseAllowed=false",
+    "legal.{mlbStatsSource, publicRuntimeUseAllowed, commercialRuntimeUseAllowed, rawResponseInResearchCacheOnly}",
+    "predictionHashSha256 + predictionUnchanged",
+    "resultHashSha256 / inputHash pattern",
+    "cacheUsage.{rawHit, rawMiss, derivedHit, derivedMiss, networkCalls}",
+    "per-entity cutoffTime / fetchedAt",
+    "dateKst + generatedAt + schema/builder version labels",
+    "Framework ResearchDatasetMetadata / ResearchAuditReport / DerivedCacheMeta shells",
+    "missingFields[] / warnings[]"
+  ],
+  "lineupSpecificDomainElements": [
+    "preGameLineupSnapshot vs postGameActualLineup separation",
+    "starting batting order slots 1–9 (*00 rule)",
+    "defensivePosition + isDH",
+    "substitute separation (isSubstitute / non-00 battingOrder)",
+    "optional battingSide via /people/{id}",
+    "PUBLISHED_PREGAME vs NOT_COLLECTED vs ACTUAL_STARTING statuses",
+    "no Lineup Score / OPS / wRC+ in v1 minimal design"
+  ],
+  "frameworkFitWithoutStructureChange": {
+    "structureChangeNeeded": false,
+    "evidence": [
+      "ResearchDatasetMetadata.domain already includes 'lineup'",
+      "DATASET_FRAMEWORK allows adding registry usage + domain module without Framework PR structure change",
+      "No mlb-lineup registry entry yet — future content registration only (out of scope for this audit)"
+    ],
+    "thisAuditMustNot": [
+      "edit registry.ts / Framework hash/audit modules",
+      "add HYPOTHESIS_REGISTRY rows",
+      "edit PROJECT_MEMORY.md"
+    ]
+  },
+  "hypothesisCandidatesDesignOnly": [
+    {
+      "id": "H-LU-001",
+      "question": "Pre-cutoff published lineup completeness (both sides) correlates with reduced late identity/order mismatch vs postGameActualLineup?"
+    },
+    {
+      "id": "H-LU-002",
+      "question": "Pre-game vs actual starting-nine player identity mismatch rate is material enough to explain a subset of prediction failures?"
+    },
+    {
+      "id": "H-LU-003",
+      "question": "Batting-order slot stability (same 9 ids, different order) vs full player swap have different failure associations?"
+    },
+    {
+      "id": "H-LU-004",
+      "question": "DH vs non-DH defensive alignment markers add explanatory value beyond starter/bullpen datasets alone?"
+    }
+  ],
+  "analysisViewerConnection": {
+    "uiModifiedThisAudit": false,
+    "futureDisplayPossible": true,
+    "mechanism": "Same pattern as starter/bullpen: research artifact under data/research/mlb/ → load-research-analysis-view → ResearchAnalysisViewer section",
+    "currentState": "No lineup section in ResearchAnalysisViewer; loader has no lineup artifact binding"
+  },
+  "gapsNotedButNonBlocking": [
+    "battingSide absent from boxscore person (resolvable via people endpoint)",
+    "playByPlay not cached for 2026-07-27 audited gamePks (not required for *00 extraction)",
+    "pre-game lineups historically NOT_COLLECTED (by design; do not backfill)",
+    "no dedicated lineup announcement timestamp field"
+  ],
+  "regressionGuards": {
+    "codeChanges": 0,
+    "engineChanges": 0,
+    "weightsRecommendationConfidenceEdgeValueEdge": 0,
+    "starterBullpenDatasetChanges": 0,
+    "frameworkStructureChanges": 0,
+    "predictionImmutableFieldChanges": 0,
+    "preGameBackfill": 0
+  },
+  "officialConclusion": "READY_FOR_MINIMAL_LINEUP_DATASET_DESIGN"
+}

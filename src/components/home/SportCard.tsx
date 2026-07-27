@@ -1,5 +1,6 @@
 import type { SportData } from "@/types/sport";
 import Card from "@/components/ui/Card";
+import { SAMPLE_ANALYZED_COUNT_LABEL } from "@/constants/home-sample";
 
 type SportCardProps = {
   sport: SportData;
@@ -19,7 +20,9 @@ export default function SportCard({ sport }: SportCardProps) {
           </span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-sm text-zinc-400">EDGE 분석 완료</span>
+          <span className="text-sm text-zinc-400">
+            {SAMPLE_ANALYZED_COUNT_LABEL}
+          </span>
           <span className="text-sm font-semibold text-blue-400">
             {sport.analyzedGames}
           </span>

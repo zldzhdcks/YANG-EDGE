@@ -91,6 +91,23 @@ Notes (Starter):
 
 ---
 
+## Lineup hypotheses
+
+| ID | 제목 | Dataset | 현재 상태 | 표본 수 (current) | 현재 근거 | Engine 사용 | 다음 액션 |
+|----|------|---------|-----------|-------------------|-----------|-------------|-----------|
+| H-LU-001 | 실제 라인업 구성은 팀 시즌 평균과 다른 경기 설명력을 가질 수 있다 | mlb-lineup | DATA_COLLECTION | asOf 2026-07-27: **15** games / **30** team lineups · target ≥100 | Post-game actual starting nines only; pre-game NOT_COLLECTED; no Lineup Score | PROHIBITED | Accumulate finished slates; never backfill pre-game from boxscore |
+| H-LU-002 | 핵심 타자 결장 여부가 전체 라인업 구성보다 더 안정적인 신호일 수 있다 | mlb-lineup | DATA_COLLECTION | asOf 2026-07-27: **15** games / **30** team lineups · target ≥100 | Absence scoring not implemented; identity slots collected for future compare only | PROHIBITED | Keep collecting actuals; do not invent absence score |
+| H-LU-003 | pre-game lineup 확보 품질 자체가 prediction 품질 경고가 될 수 있다 | mlb-lineup | DATA_COLLECTION | asOf 2026-07-27: pre-game **NOT_COLLECTED** (0 frozen snapshots) | Historical slate has no pre-game artifact; cadence TBD | PROHIBITED | Define pre-game collection cadence before evaluating warning signal |
+
+Notes (Lineup):
+
+- `postGameActualLineup` = review/label only. Engine PROHIBITED.
+- Never treat Final boxscore as pre-game snapshot.
+- `team.battingOrder` is not starting lineup; use `players[].battingOrder` `*00` only.
+- battingSide / OPS / wRC+ out of v1 scope.
+
+---
+
 ## Discarded hypotheses
 
 | ID | 제목 | Dataset | 폐기 사유 | 폐기일 | 비고 |
@@ -103,16 +120,17 @@ Notes (Starter):
 
 | Metric | Count |
 |--------|------:|
-| Total active H-* | 11 |
+| Total active H-* | 14 |
 | Bullpen (H-BP-ROLE-*) | 7 |
 | Starter (H-ST-*) | 4 |
-| DATA_COLLECTION | 10 |
+| Lineup (H-LU-*) | 3 |
+| DATA_COLLECTION | 13 |
 | SURVEY_ONLY | 1 |
 | REVIEW_PENDING | 0 |
 | Engine Candidate (REVIEW or ALLOWED) | 0 |
 | Discarded | 0 |
 
-Numbers reuse existing audits/summaries / ledger citations only — **no new calculations**. Statuses unchanged this pass.
+Numbers reuse existing audits/summaries / ledger citations only — **no new calculations**. Statuses unchanged this pass except newly registered H-LU-* as DATA_COLLECTION.
 
 ---
 

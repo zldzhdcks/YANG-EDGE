@@ -1,0 +1,166 @@
+{
+  "meta": {
+    "version": "mlb-provider-coverage-audit-v1",
+    "generatedAt": "2026-07-27T04:30:00.000Z",
+    "kind": "provider-coverage-audit",
+    "targetDateKst": "2026-07-28",
+    "researchOnly": true,
+    "codeChanged": false,
+    "predictionModified": false,
+    "gamesAddedOrRemoved": 0,
+    "engineImpact": 0,
+    "conclusion": "COVERAGE_DIFFERENCE_EXPLAINED",
+    "note": "12 vs 15 is calendar-basis mismatch: API-BASEBALL date+Asia/Seoul vs MLB Stats dates[].date (US/official). Same KST day → 12 vs 12 and full team-pair match after St.Louis alias normalization."
+  },
+  "prediction": {
+    "path": "data/predictions/mlb/2026-07-28.json",
+    "dateKst": "2026-07-28",
+    "gameCount": 12,
+    "intentionalSubset": true,
+    "basis": "API-BASEBALL KST slate via analysis-coverage/baseline pipeline (totalGames=12)",
+    "immutableHashSha256": "f0e9449973e63f8987495708aab3101e65e57f643aa1c44505a2e9d237fbcd16",
+    "immutableHashUnchanged": true
+  },
+  "providers": {
+    "apiBaseball": {
+      "query": {
+        "date": "2026-07-28",
+        "timezone": "Asia/Seoul",
+        "league": 1,
+        "season": 2026
+      },
+      "liveCount": 12,
+      "cachePath": "data/cache/mlb-game-results/2026-07-28.json",
+      "cacheCount": 12
+    },
+    "mlbStatsInternal": {
+      "cachePath": "data/cache/research/mlb/raw/statsapi/api/v1/schedule_sportId_1_startDate_2026-07-27_endDate_2026-07-28_hydrate_probablePitcher.json",
+      "fetchedAt": "2026-07-27T02:03:38.416Z",
+      "publicRuntime": false,
+      "statsOfficialDate2026-07-27": 12,
+      "statsOfficialDate2026-07-28": 15,
+      "convertedKstDate2026-07-28": 12,
+      "convertedKstDate2026-07-29FromThisCache": 15
+    }
+  },
+  "naiveComparison_statsOfficialDate28_vs_apiKst28": {
+    "apiGames": 12,
+    "statsGames": 15,
+    "matchedByTeamPair": 11,
+    "apiOnly": [
+      {
+        "externalId": "179605",
+        "pair": "Seattle Mariners @ Texas Rangers",
+        "startTimeKst": "03:35",
+        "explanation": "On Stats as official date 2026-07-27 (gamePk 822868); KST calendar still 2026-07-28"
+      }
+    ],
+    "statsOnly": [
+      {
+        "gamePk": 822949,
+        "pair": "Texas Rangers @ Tampa Bay Rays",
+        "startTimeKst": "07:40",
+        "kstDate": "2026-07-29",
+        "doubleHeader": "N",
+        "gameNumber": 1,
+        "status": "Preview/Scheduled",
+        "ifNecessary": "N"
+      },
+      {
+        "gamePk": 823676,
+        "pair": "Kansas City Royals @ Minnesota Twins",
+        "startTimeKst": "08:40",
+        "kstDate": "2026-07-29",
+        "doubleHeader": "N",
+        "gameNumber": 1,
+        "status": "Preview/Scheduled",
+        "ifNecessary": "N"
+      },
+      {
+        "gamePk": 823275,
+        "pair": "Colorado Rockies @ San Diego Padres",
+        "startTimeKst": "10:40",
+        "kstDate": "2026-07-29",
+        "doubleHeader": "N",
+        "gameNumber": 1,
+        "status": "Preview/Scheduled",
+        "ifNecessary": "N"
+      },
+      {
+        "gamePk": 823923,
+        "pair": "Seattle Mariners @ Los Angeles Dodgers",
+        "startTimeKst": "11:10",
+        "kstDate": "2026-07-29",
+        "doubleHeader": "N",
+        "gameNumber": 1,
+        "status": "Preview/Scheduled",
+        "ifNecessary": "N"
+      }
+    ],
+    "note": "Count gap 15-12=3, but team-pair unmatched is asymmetric (1 API-only + 4 Stats-only) because one API game belongs to Stats official 07-27 and four Stats 07-28 games fall on KST 07-29. An additional Cubs@Cardinals on Stats 07-28 (gamePk 823026, KST 07-29) can be falsely team-matched to the KST 07-28 Cubs@Cardinals if schedule-date windows are mixed."
+  },
+  "alignedComparison_kstCalendar2026-07-28": {
+    "apiGames": 12,
+    "statsGamesConvertedToKst28": 12,
+    "matchedGames": 12,
+    "apiOnly": [],
+    "statsOnly": [],
+    "mappingNote": "Initial auditor false-negative on Cubs@Cardinals due to 'St.Louis' vs 'St. Louis' alias; same gamePk 823025 after normalization.",
+    "sourceStatsOfficialDateForAll12": "2026-07-27",
+    "verdict": "FULL_COVERAGE_ON_SAME_KST_DAY"
+  },
+  "doubleheaders": {
+    "count": 0,
+    "games": []
+  },
+  "postponedOrRescheduled": {
+    "count": 0,
+    "evidence": "All Stats rows ifNecessary=N, resumeDate=null, detailedState=Scheduled/Preview"
+  },
+  "mappingFailures": {
+    "productRuntime": false,
+    "auditAliasOnly": [
+      {
+        "apiName": "St.Louis Cardinals",
+        "statsName": "St. Louis Cardinals",
+        "impact": "Audit matcher only; not a missing fixture"
+      }
+    ],
+    "startTimeMismatchesAmongTruePairs": 0
+  },
+  "filterDifferences": {
+    "leagueFilter": "Both MLB (API league=1 / Stats sportId=1)",
+    "dateBasis": {
+      "apiBaseball": "calendar date in Asia/Seoul",
+      "mlbStats": "dates[].date = official MLB schedule date (US-oriented); gameDate ISO → convert for KST"
+    },
+    "predictionSlate": "Intentionally API-BASEBALL KST day games only (12); not a merge of Stats US-date 15"
+  },
+  "rootCause": {
+    "primary": "CALENDAR_BASIS_MISMATCH",
+    "detail": "Comparing Stats official date 2026-07-28 (15 games, all land on KST 2026-07-29) to API-BASEBALL timezone=Asia/Seoul date 2026-07-28 (12 games = Stats official 2026-07-27 evening slate). Not Provider omission of the same KST day.",
+    "notPrimary": [
+      "DOUBLEHEADER",
+      "POSTPONED",
+      "TEAM_MAPPING_PRODUCT_BUG",
+      "LEAGUE_FILTER_EXCLUSION"
+    ]
+  },
+  "sampleBiasRisk": {
+    "level": "LOW_FOR_KST_PIPELINE",
+    "detail": "Research snapshot already consistent with API-BASEBALL KST day. Bias appears only if Stats official-date counts are compared without KST conversion, or if consecutive-night same matchups are joined by team pair without gamePk/timestamp.",
+    "recommendation": "Always convert Stats gameDate→KST before coverage compares; prefer gamePk linkage for research joins."
+  },
+  "recommendedAction": {
+    "codeChangeNow": "none",
+    "artifactChangeNow": "none",
+    "docs": "When citing Stats game counts next to KST research dates, state calendar basis explicitly",
+    "optionalFollowUp": "Shared team-name normalizer for St.Louis spacing if future automated joins are added (research-only)"
+  },
+  "verification": {
+    "predictionImmutableHash": "f0e9449973e63f8987495708aab3101e65e57f643aa1c44505a2e9d237fbcd16",
+    "gamesAddedOrRemoved": 0,
+    "providerRuntimeChanged": false,
+    "engineBullpenStarterFrameworkImpact": 0
+  }
+}

@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import AnalysisContent from "@/components/analysis/AnalysisContent";
-import { getEngineAnalysisData } from "@/lib/engine/analysis-data-provider";
-import { buildAnalysisView } from "@/lib/edge/to-analysis-view";
-import { resolveAnalysisMarketOdds } from "@/lib/edge/resolve-analysis-market-odds";
-import { getSportsProvider } from "@/lib/sports";
-import { getMatchDisplayLabel } from "@/lib/teams";
-import type { GameData } from "@/types/game";
+import ResearchAnalysisViewer from "@/components/analysis/ResearchAnalysisViewer";
+import SampleAnalysisNotice from "@/components/home/SampleAnalysisNotice";
+import { loadResearchAnalysisView } from "@/lib/research/load-research-analysis-view";
 
 type AnalysisPageProps = {
   params: Promise<{ gameId: string }>;
@@ -18,64 +13,32 @@ export async function generateMetadata({
   params,
 }: AnalysisPageProps): Promise<Metadata> {
   const { gameId } = await params;
-  const engineInput = await getEngineAnalysisData(gameId);
+  const view = await loadResearchAnalysisView(gameId);
+  const titleBase =
+    view.gameInfo.availability === "COLLECTED"
+      ? view.gameInfo.matchLabel
+      : gameId;
 
-  if (!engineInput) {
-    return { title: "EDGE Detail | YANG EDGE" };
-  }
-
-  const view = buildAnalysisView(engineInput);
   return {
-    title: `${getMatchDisplayLabel(view.homeTeam, view.awayTeam)} | YANG EDGE`,
-    description: view.summary,
+    title: `${titleBase} · 경기 연구 보기 | YANG EDGE`,
+    description:
+      "경기 연구 보기 — 읽기 전용 연구 artifact. 실추천이 아닙니다.",
+    robots: { index: false, follow: false },
   };
 }
 
 export default async function AnalysisPage({ params }: AnalysisPageProps) {
   const { gameId } = await params;
-  const [engineInput, games] = await Promise.all([
-    getEngineAnalysisData(gameId),
-    getSportsProvider()
-      .getGames()
-      .catch((): GameData[] => []),
-  ]);
-
-  const gameExists =
-    games.some((game) => game.id === gameId) ||
-    games.some((game) => game.externalId === gameId);
-
-  if (!engineInput) {
-    return (
-      <>
-        <Header />
-        <main>
-          <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
-            <p className="text-sm text-zinc-400">
-              {gameExists
-                ? "이 경기의 EDGE 분석 데이터가 아직 준비되지 않았습니다."
-                : "경기를 찾을 수 없습니다."}
-            </p>
-            <Link
-              href="/games"
-              className="mt-8 inline-flex text-sm text-blue-400 hover:text-blue-300"
-            >
-              ← 오늘 경기로 돌아가기
-            </Link>
-          </div>
-        </main>
-        <Footer />
-      </>
-    );
-  }
-
-  const marketOdds = await resolveAnalysisMarketOdds(engineInput);
-  const analysis = buildAnalysisView(engineInput, marketOdds);
+  const view = await loadResearchAnalysisView(gameId);
 
   return (
     <>
       <Header />
       <main>
-        <AnalysisContent analysis={analysis} />
+        <div className="mx-auto max-w-5xl px-4 pt-6 sm:px-6">
+          <SampleAnalysisNotice />
+        </div>
+        <ResearchAnalysisViewer view={view} />
       </main>
       <Footer />
     </>

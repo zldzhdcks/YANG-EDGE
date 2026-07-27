@@ -57,6 +57,7 @@ function LeagueSection({ group }: { group: LeagueGroup }) {
             oddsAvailability={item.oddsAvailability}
             oddsUnavailableReason={item.oddsUnavailableReason}
             recommendation={item.recommendation ?? null}
+            researchOutcome={item.researchOutcome ?? null}
             hideLeague
           />
         ))}

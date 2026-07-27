@@ -13,6 +13,10 @@ import {
   type OddsEnrichmentMeta,
 } from "@/lib/games/attach-odds";
 import { attachRecommendationGrades } from "@/lib/games/attach-recommendation-grades";
+import {
+  loadMlbResearchOutcomesByDate,
+  lookupMlbResearchOutcome,
+} from "@/lib/research/load-mlb-game-research-outcomes";
 import { toBareGameWithOdds, type GameWithOdds } from "@/types/game-with-odds";
 import type { GameData } from "@/types/game";
 import { getKstToday } from "@/lib/datetime/kst";
@@ -232,6 +236,32 @@ export async function GET(request: Request) {
     items = await attachRecommendationGrades(items);
   } catch {
     // 등급 enrichment 실패 시 recommendation=null 유지
+  }
+
+  // Graded research outcomes — read-only snapshot. Fail soft.
+  if (date) {
+    try {
+      const outcomes = await loadMlbResearchOutcomesByDate(date);
+      if (outcomes.size > 0) {
+        items = items.map((item) => {
+          const hit = lookupMlbResearchOutcome(outcomes, item.game);
+          if (!hit) return item;
+          return {
+            ...item,
+            researchOutcome: {
+              homeScore: hit.homeScore,
+              awayScore: hit.awayScore,
+              homeTeam: hit.homeTeam,
+              awayTeam: hit.awayTeam,
+              predictedTeam: hit.predictedTeam,
+              predictionHit: hit.predictionHit,
+            },
+          };
+        });
+      }
+    } catch {
+      // research outcome enrichment 실패 시 카드는 기존대로
+    }
   }
 
   const partial =

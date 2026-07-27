@@ -34,3 +34,16 @@
 | Accumulation pipeline | Date-arg orchestrator + immutable pre-game + Final-gated postgame |
 | Non-Final postgame | `AWAITING_RESULT` only (no MATCHED/CHANGED) |
 | 07-27 embedded postGameReview in pre-game rows | Frozen legacy; new dates keep postGameReview null in pre-game |
+
+## Lineup Dataset v1
+
+| Issue | Status |
+|-------|--------|
+| Pre-game lineup collection cadence undefined | Open — near-cutoff re-fetch policy not fixed |
+| Official lineup announcement timestamp absent from Stats API | Open — only `fetchedAt` / research `cutoffTime` recordable |
+| Historical 2026-07-27 pre-game snapshots | `NOT_COLLECTED` by design; no backfill from Final boxscore |
+| battingSide not in boxscore person | Deferred — people API mass-fetch forbidden in v1 |
+| `team.battingOrder` ≠ starting lineup | Documented; builder uses `players[].battingOrder` `*00` only |
+| MLB Stats API commercial use unconfirmed | `INTERNAL_RESEARCH_ONLY`; Engine PROHIBITED |
+| Sample &lt; 100 games | COLLECTING — do not claim PROMISING |
+| Lineup Score / absence score | Not implemented (forbidden in v1) |

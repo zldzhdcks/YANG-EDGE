@@ -1,14 +1,17 @@
 import type { GameData } from "@/types/game";
+import { getResearchAnalysisGameId } from "@/types/game";
 import type { OddsData } from "@/lib/odds";
 import {
   getOddsAvailabilityLabel,
   type GameRecommendationGrade,
+  type GameResearchOutcomeDisplay,
   type OddsAvailability,
 } from "@/types/game-with-odds";
 import Badge from "@/components/ui/Badge";
 import { buttonClasses } from "@/components/ui/Button";
 import AnalysisNavLink from "@/components/analysis/AnalysisNavLink";
-import { getMatchDisplayLabel } from "@/lib/teams";
+import PredictionResultBadge from "@/components/research/PredictionResultBadge";
+import { getMatchDisplayLabel, getTeamDisplayName } from "@/lib/teams";
 
 type GameCardProps = {
   game: GameData;
@@ -18,6 +21,8 @@ type GameCardProps = {
   oddsUnavailableReason?: string | null;
   /** Engine 결과가 있을 때만. 없으면 배지 미표시. */
   recommendation?: GameRecommendationGrade | null;
+  /** graded research snapshot — /games 목록 전용. 홈 SportCard에는 미사용. */
+  researchOutcome?: GameResearchOutcomeDisplay | null;
   /** 리그 그룹 헤더가 있을 때 카드 내 리그 라벨 숨김 */
   hideLeague?: boolean;
 };
@@ -54,6 +59,44 @@ function OddsRow({ odds }: { odds: OddsData }) {
   );
 }
 
+function ResearchOutcomeRow({
+  outcome,
+  sport,
+  league,
+}: {
+  outcome: GameResearchOutcomeDisplay;
+  sport: GameData["sport"];
+  league: string;
+}) {
+  const home = getTeamDisplayName({
+    originalName: outcome.homeTeam,
+    sport,
+    league,
+  });
+  const away = getTeamDisplayName({
+    originalName: outcome.awayTeam,
+    sport,
+    league,
+  });
+  const pick = getTeamDisplayName({
+    originalName: outcome.predictedTeam,
+    sport,
+    league,
+  });
+
+  return (
+    <div className="mt-2 space-y-1">
+      <p className="text-sm tabular-nums text-zinc-300">
+        {home} {outcome.homeScore}–{outcome.awayScore} {away}
+      </p>
+      <div className="flex flex-wrap items-center gap-2">
+        <PredictionResultBadge hit={outcome.predictionHit} />
+        <span className="text-xs text-zinc-500">예측 팀: {pick}</span>
+      </div>
+    </div>
+  );
+}
+
 /** recommendation-grade 색 토큰 → 기존 Badge variant (새 색 추가 없음) */
 function gradeBadgeVariant(
   color: GameRecommendationGrade["color"],
@@ -77,15 +120,16 @@ function GameCardBody({
   oddsAvailability = "not-found",
   oddsUnavailableReason = null,
   recommendation = null,
+  researchOutcome = null,
   hideLeague = false,
 }: GameCardProps) {
   const matchLabel = getMatchDisplayLabel(game.homeTeam, game.awayTeam, {
     sport: game.sport,
     league: game.league,
   });
-  const analysisReady = game.aiAnalysisAvailable;
   const showGrade = recommendation != null;
   const unavailableLabel = getOddsAvailabilityLabel(oddsAvailability);
+  const showResearchResult = researchOutcome != null;
 
   return (
     <div className="flex items-start justify-between gap-4 rounded-xl px-1 py-1 transition-colors group-hover:bg-white/[0.02] sm:px-3 sm:py-2">
@@ -113,7 +157,13 @@ function GameCardBody({
         <p className="mt-2 text-sm tabular-nums text-zinc-400">
           {game.startTime}
         </p>
-        {oddsAvailability === "available" && odds ? (
+        {showResearchResult ? (
+          <ResearchOutcomeRow
+            outcome={researchOutcome}
+            sport={game.sport}
+            league={game.league}
+          />
+        ) : oddsAvailability === "available" && odds ? (
           <OddsRow odds={odds} />
         ) : (
           unavailableLabel && (
@@ -127,23 +177,14 @@ function GameCardBody({
         )}
       </div>
 
-      {analysisReady ? (
-        <span
-          className={buttonClasses({
-            size: "sm",
-            className: "h-9 shrink-0 px-4 text-sm group-hover:bg-blue-500",
-          })}
-        >
-          분석
-        </span>
-      ) : (
-        <span
-          aria-disabled="true"
-          className="inline-flex h-9 shrink-0 cursor-not-allowed items-center rounded-lg border border-white/[0.06] bg-zinc-900/40 px-4 text-sm font-medium text-zinc-600"
-        >
-          분석 준비중
-        </span>
-      )}
+      <span
+        className={buttonClasses({
+          size: "sm",
+          className: "h-9 shrink-0 px-4 text-sm group-hover:bg-blue-500",
+        })}
+      >
+        연구 보기
+      </span>
     </div>
   );
 }
@@ -154,36 +195,26 @@ export default function GameCard({
   oddsAvailability = "not-found",
   oddsUnavailableReason = null,
   recommendation = null,
+  researchOutcome = null,
   hideLeague = false,
 }: GameCardProps) {
   const wrapperClass =
     "group block w-full border-b border-white/[0.06] py-5 first:pt-0 last:border-b-0 last:pb-0";
 
-  if (game.aiAnalysisAvailable) {
-    return (
-      <AnalysisNavLink gameId={game.id} className={wrapperClass}>
-        <GameCardBody
-          game={game}
-          odds={odds}
-          oddsAvailability={oddsAvailability}
-          oddsUnavailableReason={oddsUnavailableReason}
-          recommendation={recommendation}
-          hideLeague={hideLeague}
-        />
-      </AnalysisNavLink>
-    );
-  }
-
   return (
-    <div className={wrapperClass}>
+    <AnalysisNavLink
+      gameId={getResearchAnalysisGameId(game)}
+      className={wrapperClass}
+    >
       <GameCardBody
         game={game}
         odds={odds}
         oddsAvailability={oddsAvailability}
         oddsUnavailableReason={oddsUnavailableReason}
         recommendation={recommendation}
+        researchOutcome={researchOutcome}
         hideLeague={hideLeague}
       />
-    </div>
+    </AnalysisNavLink>
   );
 }

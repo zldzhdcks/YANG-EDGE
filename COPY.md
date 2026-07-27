@@ -41,8 +41,8 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 | Headline L1 | `우리는 승자를 찾지 않습니다.` |
 | Headline L2 | `가치를 찾습니다.` |
 | Description L1 | `축구 · 야구 · 농구` |
-| Description L2 | `배트맨 기준 경기를 분석하여` |
-| Description L3 | `EDGE Score + Confidence + EDGE + 분석 근거를 제공합니다.` |
+| Description L2 | `일정은 Provider 실데이터를 사용하고,` |
+| Description L3 | `홈 분석 수치는 현재 연구용 Dummy Engine 샘플입니다.` |
 | CTA Primary | `오늘 경기 보기` |
 | CTA Secondary | `내 가계부` |
 
@@ -51,11 +51,13 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 | Key | Copy |
 |-----|------|
 | Section Label | `EDGE Pick` |
+| Sample Banner | `연구용 샘플 분석 (실추천 아님)` |
+| Stats Note | `승리 확률 · Confidence · EDGE Score는 샘플 Engine 출력입니다 (실추천 아님).` |
 | Stat · Score | `EDGE Score` |
-| Stat · Confidence | `Confidence` |
-| Stat · EDGE | `EDGE` |
+| Stat · Confidence | `EDGE Confidence` |
+| Stat · Win | `승리 확률` |
 | Reasons Label | `분석 이유` |
-| CTA | `상세 분석 →` |
+| CTA | `샘플 분석 보기 →` |
 
 ### Today Games (홈 섹션)
 
@@ -63,22 +65,17 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 |-----|------|
 | Section Title | `오늘 경기` |
 | Card · Games Label | `오늘 경기` |
-| Card · Analyzed Label | `EDGE 분석 완료` |
+| Card · Analyzed Label | `샘플 분석` |
 | Card · Games Unit | `{n}경기` |
 
-### Why YANG EDGE
+### Featured (홈 섹션 · 구 Why YANG EDGE)
 
 | Key | Copy |
 |-----|------|
-| Section Title | `Why YANG EDGE` |
-| Feature 1 Title | `하나의 화면에서 모든 데이터` |
-| Feature 1 Body | `축구, 야구, 농구 경기를 한곳에서 확인합니다.` |
-| Feature 2 Title | `EDGE 근거 제공` |
-| Feature 2 Body | `EDGE Score 뒤에 숨은 분석 근거를 함께 제공합니다.` |
-| Feature 3 Title | `자동 업데이트` |
-| Feature 3 Body | `경기 일정과 분석 결과가 실시간으로 반영됩니다.` |
-| Feature 4 Title | `매일 학습하는 EDGE Engine` |
-| Feature 4 Body | `경기 결과를 학습해 분석 정확도를 높입니다.` |
+| Section Title | `Featured` |
+| Section Subtitle | `Dummy Engine 샘플 기준 관심 경기 (실추천 아님)` |
+| Sample Banner | `연구용 샘플 분석 (실추천 아님)` |
+| Card · Stats Note | `등급·EDGE·Confidence는 샘플 Engine 출력 (실추천 아님)` |
 
 ### Footer
 
@@ -94,7 +91,7 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 | Key | Copy |
 |-----|------|
 | Title | `YANG EDGE \| AI 스포츠 분석 플랫폼` |
-| Description | `EDGE가 오늘 가장 가치 있는 경기를 찾아드립니다. EDGE Score, Confidence, EDGE와 분석 근거를 제공합니다.` |
+| Description | `개인용 스포츠 일정·가계부·분석 프로토타입. 홈 일정은 Provider 데이터, 홈 분석 수치는 현재 Dummy Engine 샘플입니다.` |
 
 ---
 
@@ -131,30 +128,41 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 
 ---
 
-## EDGE Detail
+## EDGE Detail / 경기 연구 보기
 
-페이지: `/analysis/[gameId]`  
-경기 하나를 선택했을 때 보는 핵심 분석 화면.
+페이지: `/analysis/[gameId]` (robots noindex)  
+읽기 전용 연구 뷰어. Engine 재계산·추측 없음. artifact에 있는 값만 표시.
 
 | Key | Copy | Status |
 |-----|------|--------|
-| Back | `← 뒤로가기` | 사용 중 |
-| Hero Label | `EDGE Pick` | 사용 중 |
-| Pick Format | `{team} 승` | 사용 중 |
-| Stat · Win Probability | `승리 확률` | 사용 중 |
-| Stat · Confidence | `EDGE Confidence` | 사용 중 |
-| Stat · Confidence Hint | `매우 높음` / `높음` / `보통` / `낮음` | 사용 중 |
-| Stat · EDGE Score | `EDGE Score` | 사용 중 |
-| Stat · EDGE Score Hint | `Strong Edge` / `Solid Edge` / `Slight Edge` / `Marginal Edge` | 사용 중 |
-| Stat · Grade | `EDGE Grade` | 사용 중 |
-| Summary Label | `EDGE 한줄 요약` | 사용 중 |
-| Reasons Title | `추천 이유` | 사용 중 |
-| Risks Title | `주의 요소` | 사용 중 |
-| Score Title | `예상 점수` | 사용 중 |
-| Disclaimer | `현재 시제품은 예시 데이터를 사용합니다.` | 사용 중 (`constants/prototype.ts`) |
-| Not Found | `경기를 찾을 수 없습니다.` | 사용 중 |
-| No Analysis | `이 경기의 EDGE 데이터가 아직 준비되지 않았습니다.` | 사용 중 |
+| Eyebrow | `연구` | 사용 중 |
+| Title | `경기 연구 보기` | 사용 중 |
+| Notice | `경기 연구 보기 — 읽기 전용입니다…` | 사용 중 |
+| Empty field | `미수집` / `연구 대기 중` | 사용 중 |
+| Outcome (finished) | `예측 적중` / `예측 실패` (SIGNAL_*·hit= 일반 화면 비표시) | 사용 중 |
+| 연구 상태 | `COLLECTED` / `PARTIAL` / `AWAITING_RESEARCH` (값은 영문 코드 유지) | 사용 중 |
+| Game phase | `종료 경기` / `시작 전` | 사용 중 |
+| Summary title | `경기 요약 · 경기 종료` | 사용 중 (종료 경기) |
+| Labels KO | 예측 · 승리 확률 · 신뢰도 · EDGE 점수 · 가치 차이 · 예상 선발 · 선발 상태 · 선발 신원 · 선발 세부 지표 · 불펜 상태 · 데이터 수집 상태 · 시장 배당 · 주요 요인 · 보조 요인 · 학습 요약 · 예측 팀 · 상대 팀 | 사용 중 |
+| Pitching section | `투수진 현황` | 사용 중 |
+| Review labels | `성공 복기` · `실패 복기` | 사용 중 |
+| Completeness KO | `수집됨` / `일부 부족` / `연구 대기 중` / `미수집` | 사용 중 |
+| MIXED | `선발 ERA·WHIP가 Baseline과 혼합 판정` + `MIXED` 보조 | 사용 중 |
+| Status code KO | STARTER_MATCHED · PROBABLE_ONLY · ROLE_STRUCTURE_* · SIGNAL_* · BASELINE_SIGNAL_CONFIRMED · BULLPEN_PROTECTED_SIGNAL · MULTIPLE_FACTORS · ADVERSE_MOVE · MIXED | 사용 중 |
+| Starter metrics warning | `예측 당시 선발 세부 지표 부족` | 사용 중 |
+| Prediction-time note | `예측 당시 기준` | 사용 중 |
+| Sections (finished) | 경기 요약·경기 종료 · 경기 전 예측(+예측 지표) · 투수진 현황 · 시장 배당 · 경기 후 복기 · 연구 기술 정보 | 사용 중 |
+| Sections (pre-game) | 경기 정보 · 경기 전 예측(+예측 지표) · 투수진 현황 · 시장 배당 · 연구 기술 정보 | 사용 중 |
+| 연구 기술 정보 | feedbackClassification · predictionHit · Completeness raw · Prediction Hash · paths (영문 유지) | 사용 중 |
+| Binding | Prediction snapshot + Starter/Bullpen datasets + Review artifacts (read-only) | 사용 중 |
+| Analysis URL | `mlb-{api-baseball externalId}` via `getResearchAnalysisGameId` | 사용 중 |
+| Sample banner | `연구용 샘플 분석 (실추천 아님)` | 사용 중 (SampleAnalysisNotice) |
 | Back to Games | `← 오늘 경기로 돌아가기` | 사용 중 |
+| Games CTA | `연구 보기` | 사용 중 (`GameCard`) |
+| Finished card score | `{홈팀} {홈스코어}–{원정스코어} {원정팀}` | 사용 중 (graded만) |
+| Finished card result | `예측 적중`(초록 Badge) / `예측 실패`(빨강 Badge) | 사용 중 |
+| Finished card pick | `예측 팀: …` | 사용 중 |
+| Failure empty | `분류된 주요 원인 없음` | 사용 중 |
 
 ---
 
@@ -196,8 +204,8 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 | View Today Games | `오늘 경기 보기` | Home Hero |
 | View Ledger | `내 가계부` | Home Hero (보조 CTA) |
 | View Ranking | `EDGE Ranking 보기` | 홈에서 제거 · `/picks` 공개 비노출 |
-| Detail Analysis | `상세 분석 →` | Home EDGE Pick |
-| Analyze | `분석` | Games card |
+| Detail Analysis | `샘플 분석 보기 →` | Home EDGE Pick |
+| Analyze | `연구 보기` | Games card |
 | Back | `← 뒤로가기` | EDGE Detail |
 | View Odds | `배당 보기` | EDGE Detail |
 | Detail Data | `상세 데이터` | EDGE Detail |

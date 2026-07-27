@@ -4,6 +4,11 @@ import StatBox from "@/components/ui/StatBox";
 import AnalysisNavLink from "@/components/analysis/AnalysisNavLink";
 import { getMatchDisplayLabel } from "@/lib/teams";
 import { TODAY_PICK_MIN_ABS_EDGE } from "@/lib/home/build-home-feed";
+import {
+  SAMPLE_ANALYSIS_CTA,
+  SAMPLE_ANALYSIS_NOT_LIVE,
+} from "@/constants/home-sample";
+import SampleAnalysisNotice from "./SampleAnalysisNotice";
 import TodayPickStats from "./TodayPickStats";
 import TodayPickReasons from "./TodayPickReasons";
 
@@ -33,22 +38,22 @@ function hasComparableMarket(pick: TodayPickData): boolean {
 function EmptyPickCard({
   title,
   description,
-  isDummy,
+  isDummySchedule,
 }: {
   title: string;
   description?: string;
-  isDummy?: boolean;
+  isDummySchedule?: boolean;
 }) {
   return (
     <section id="today-pick" className="mx-auto max-w-5xl px-4 pb-16 sm:px-6">
       <p className="mb-4 text-xs font-medium tracking-widest text-blue-500 uppercase">
-        오늘의 EDGE PICK
+        EDGE Pick
       </p>
 
       <Card padding="lg" className="rounded-xl">
-        {isDummy ? (
+        {isDummySchedule ? (
           <p className="mb-2 text-[11px] font-medium tracking-wide text-amber-500/90">
-            테스트 데이터 (SPORTS_PROVIDER=dummy)
+            테스트 일정 (SPORTS_PROVIDER=dummy)
           </p>
         ) : null}
         <h2 className="text-xl font-bold text-white sm:text-2xl">{title}</h2>
@@ -61,13 +66,13 @@ function EmptyPickCard({
 }
 
 export default function TodayPick({ result }: TodayPickProps) {
-  const isDummy = result.providerKind === "dummy";
+  const isDummySchedule = result.providerKind === "dummy";
 
   if (result.status === "error") {
     return (
       <EmptyPickCard
         title="경기 데이터를 불러오지 못했습니다. 잠시 후 다시 확인해 주세요."
-        isDummy={isDummy}
+        isDummySchedule={isDummySchedule}
       />
     );
   }
@@ -76,7 +81,7 @@ export default function TodayPick({ result }: TodayPickProps) {
     return (
       <EmptyPickCard
         title="오늘 등록된 경기 일정이 없습니다."
-        isDummy={isDummy}
+        isDummySchedule={isDummySchedule}
       />
     );
   }
@@ -84,9 +89,9 @@ export default function TodayPick({ result }: TodayPickProps) {
   if (result.status === "empty-pick") {
     return (
       <EmptyPickCard
-        title="오늘은 추천 기준을 충족한 경기가 없습니다."
-        description={`YANG EDGE는 |EDGE Score| ${TODAY_PICK_MIN_ABS_EDGE} 이상인 경기만 추천합니다.`}
-        isDummy={isDummy}
+        title="샘플 Engine 입력과 매칭된 경기가 없습니다."
+        description={`현재 홈 분석은 Dummy Engine 샘플(3경기)만 사용합니다. |EDGE Score| ${TODAY_PICK_MIN_ABS_EDGE} 이상인 샘플이 있을 때만 아래에 표시됩니다. 실추천이 아닙니다.`}
+        isDummySchedule={isDummySchedule}
       />
     );
   }
@@ -105,16 +110,23 @@ export default function TodayPick({ result }: TodayPickProps) {
         EDGE Pick
       </p>
 
+      <SampleAnalysisNotice className="mb-4" />
+
       <Card padding="lg" className="rounded-xl">
-        {isDummy ? (
+        {isDummySchedule ? (
           <p className="mb-2 text-[11px] font-medium tracking-wide text-amber-500/90">
-            테스트 데이터 (SPORTS_PROVIDER=dummy)
+            테스트 일정 (SPORTS_PROVIDER=dummy)
           </p>
         ) : null}
         <p className="text-xs font-medium text-zinc-500">{pick.league}</p>
         <h2 className="mt-1 text-xl font-bold text-white sm:text-2xl">
           {matchLabel}
         </h2>
+
+        <p className="mt-2 text-[11px] leading-relaxed text-zinc-500">
+          승리 확률 · Confidence · EDGE Score는 샘플 Engine 출력입니다 (
+          {SAMPLE_ANALYSIS_NOT_LIVE}).
+        </p>
 
         <TodayPickStats
           aiWinRate={pick.aiWinRate}
@@ -148,7 +160,7 @@ export default function TodayPick({ result }: TodayPickProps) {
             gameId={pick.gameId}
             className="inline-flex w-fit shrink-0 self-end text-sm font-medium whitespace-nowrap text-blue-400 hover:text-blue-300"
           >
-            상세 분석
+            {SAMPLE_ANALYSIS_CTA}
             <span aria-hidden>→</span>
           </AnalysisNavLink>
         </div>

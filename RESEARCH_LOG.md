@@ -225,3 +225,43 @@ meta.failedGames was hardcoded to 8 in `review-mlb-failed-game-flow.ts` while `g
 
 ### Official conclusion
 DERIVED_METADATA_REFRESH_FIXED
+
+---
+
+## 2026-07-27 — Lineup Dataset v1 (minimal builder)
+
+### Purpose
+Store post-game actual starting lineups for internal research/review. Separate from pre-game snapshots. No Lineup Score / Engine.
+
+### Scope
+- Allowed: boxscore `*00` starters, substitutes array (non-analysis), dataset + audit, Viewer display, H-LU registry rows, docs
+- Forbidden: pre-game backfill, battingSide people mass-fetch, Engine/weights/Confidence/EDGE/Value Edge, Starter/Bullpen mutation, Framework structure change, PROJECT_MEMORY
+
+### Inputs
+- data/predictions/mlb/2026-07-27.json (read-only hash)
+- data/research/mlb/2026-07-27-starter-dataset-v1.json (gamePk join only)
+- data/cache/research/mlb/raw/statsapi/api/v1/game/{gamePk}/boxscore.json
+
+### Outputs
+- data/research/mlb/2026-07-27-lineup-dataset-v1.json
+- data/audits/2026-07-27-lineup-dataset-v1-audit.json
+- Research Analysis Viewer: 실제 선발 라인업 section (finished games only)
+
+### Results (summary)
+- 15 games / 30 team lineups / 30 COMPLETE / 270 starters
+- batting slot dup=0 miss=0 · substitutesSeparated recorded · starters-as-sub=0
+- preGameStatus=NOT_COLLECTED · battingSide=0 · peopleApiCalls=0
+- first/second resultHash matched `af52186d2bed8e493dd012e220c6c17453570c583d7616f4c9964110d2a9aafb`
+- rawHit 15 / rawMiss 0 · warm networkCalls 0
+- prediction file hash unchanged
+- Engine admission PROHIBITED
+
+### Official conclusion
+LINEUP_DATASET_V1_CREATED_DATA_COLLECTION
+
+### Engine connection
+PROHIBITED
+
+### Follow-ups
+- Define pre-game lineup collection cadence
+- Accumulate toward ≥100 games before any PROMISING discussion

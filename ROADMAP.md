@@ -18,8 +18,8 @@
 | 기능 | 경로 / 위치 | 근거 |
 |------|-------------|------|
 | 개인 베팅 가계부 | `/ledger` | 브라우저 `localStorage` (`yang-edge:private-ledger:v1`). 서버 전송 없음 |
-| 오늘 경기 일정 UI | `/games` | `SportsProvider.getGames` + (가능 시) football·odds 보강 |
-| 홈 상태 구분 | `/` | Today Pick / Featured / 오늘 경기: `success` · `empty` · `error` 구분 |
+| 오늘 경기 일정 UI | `/games` | `SportsProvider.getGames` + (가능 시) football·odds 보강. **graded MLB는 카드에 최종 스코어·예측 적중/실패·예측 팀 표시** |
+| 홈 상태 구분 | `/` | Today Pick / Featured / 오늘 경기: `success` · `empty` · `error` 구분. **일정=Provider · 분석=Dummy 샘플 라벨** |
 | 이용 안내(푸터) | 공통 Footer | 참고용·비보장·데이터 출처 원칙 문구 |
 | 헤더 내비 | Header | `/games`, `/ledger`, Feedback/Learning 등 (EDGE Ranking `/picks`·EDGE Combo `/toto`는 공개 내비에서 HIDDEN) |
 | Feedback / Learning | `/feedback`, `/learning` | MLB post-game export(`refresh-site-feedback-learning`) 후 mirror·dashboard 갱신 · `force-dynamic` |
@@ -31,11 +31,11 @@
 | 기능 | 되는 것 | 안 되는 것 / 제한 |
 |------|---------|-------------------|
 | TheSportsDB 일정 | NPB·KBO `eventsday` → `GameData` 매핑, KST 변환 | 무료 키 **요청당 리그별 최대 3건**. 유료 키 전량 여부는 미검증 |
-| 홈 Today EDGE Pick | 일정 로드 + Engine 파이프라인 + 상태 UI | Engine 입력이 **dummy gameId 3개뿐**. 실일정 ID와 불일치 → Pick 비는 것이 정상일 수 있음 |
-| 홈 Featured / 오늘 경기 요약 | 동일 `buildHomeFeed` | Featured·분석 수는 Engine 가용 경기에 의존. 실일정만 있으면 0에 가까움 |
+| 홈 Today EDGE Pick | 일정 로드 + Engine 파이프라인 + **연구용 샘플 분석** 배너 | Engine 입력이 **dummy gameId 3개뿐**. 실일정 ID와 불일치 → Pick 비는 것이 정상일 수 있음. **실추천 아님** |
+| 홈 Featured / 오늘 경기 요약 | 동일 `buildHomeFeed` + 샘플 안내 · analyzed=`샘플 분석` | Featured·분석 수는 Engine 가용 경기에 의존. 실일정만 있으면 0에 가까움 |
 | `/api/games` odds | 키 있으면 h2h 매칭·표시 보강 | 키 없으면 일정만. 배당 매칭 실패 시 Value Edge 없음 |
 | `/api/games` football | `FOOTBALL_API_KEY` 있으면 관심 리그 병합 | 키/한도 없으면 야구 일정만 또는 partial |
-| `/analysis/[gameId]` | dummy Engine ID면 EDGE Detail + (가능 시) odds Value Edge | 실 TheSportsDB 일정 ID로는 Engine 없음 → “준비되지 않음” |
+| `/analysis/[gameId]` | Research Analysis Viewer v1 — 요약 우선·기술 정보(hash/paths) 접기 · Status=`COLLECTED`/`PARTIAL`/`AWAITING_RESEARCH` | Engine 재계산 없음. 실 TheSportsDB 슬러그만으로는 snapshot 없으면 Awaiting |
 | Value Edge | 야구 2-way + 배당 매칭 시에만 | 축구 3-way 모델 미지원. 홈 Pick도 동일 제약 |
 
 ## 테스트 전용
@@ -84,7 +84,7 @@
 | `/toto` EDGE Combo | C / D · **공개 UI HIDDEN** | 내비·홈·Footer 비노출. 핵심 로직·데이터 유지. 직접 URL + 내부 안내 배너 | 축구 연구 재개 시 공개 여부 재검토 |
 | 내비「로그인」 | D | placeholder | 제거 또는 비활성 표기 |
 | 홈 Hero 보조 CTA | — | 샘플 Ranking 대신 `/ledger` (`내 가계부`) | 실 Ranking 공개 시 재검토 |
-| 「Why YANG EDGE」섹션명 | F | 실제로는 Featured 경기 카드 | 카피/섹션명 재검토 |
+| 「Why YANG EDGE」섹션명 | F · **Featured로 변경** | Featured 샘플 그리드 + 공통 샘플 배너 | 제품 설명 카피는 COPY에서 분리 |
 | `DummyProvider` 파일 | C (유지) | 명시적 개발 모드에 필요 | **삭제 금지** — 자동 폴백만 금지 유지 |
 | README 구 create-next-app 문구 | 문서 | 제품과 무관 | 이번 작업에서 요약으로 교체 |
 

@@ -50,7 +50,17 @@ export type GameRecommendationGrade = {
  * 배당이 없거나 신뢰도가 낮으면 odds=null (빈 값·0 표시 금지).
  * odds.bookmakers 는 상세 페이지 확장용으로 보존하되 카드에는 노출하지 않는다.
  * recommendation 은 Engine 결과가 있을 때만 채운다 (없으면 null → 배지 미표시).
+ * researchOutcome 은 graded research snapshot이 있을 때만 (시작 전·Live 미표시).
  */
+export type GameResearchOutcomeDisplay = {
+  homeScore: number;
+  awayScore: number;
+  homeTeam: string;
+  awayTeam: string;
+  predictedTeam: string;
+  predictionHit: boolean;
+};
+
 export type GameWithOdds = {
   game: GameData;
   odds: OddsData | null;
@@ -58,6 +68,7 @@ export type GameWithOdds = {
   oddsAvailability: OddsAvailability;
   oddsUnavailableReason: string | null;
   recommendation?: GameRecommendationGrade | null;
+  researchOutcome?: GameResearchOutcomeDisplay | null;
 };
 
 export function toBareGameWithOdds(game: GameData): GameWithOdds {
@@ -68,5 +79,6 @@ export function toBareGameWithOdds(game: GameData): GameWithOdds {
     oddsAvailability: "not-found",
     oddsUnavailableReason: null,
     recommendation: null,
+    researchOutcome: null,
   };
 }

@@ -1,5 +1,6 @@
 import type { HomeGamesLoadResult } from "@/types/home";
 import Card from "@/components/ui/Card";
+import SampleAnalysisNotice from "./SampleAnalysisNotice";
 import FeatureCard from "./FeatureCard";
 
 type WhyYangEdgeProps = {
@@ -7,9 +8,17 @@ type WhyYangEdgeProps = {
 };
 
 export default function WhyYangEdge({ result }: WhyYangEdgeProps) {
+  const showFeatured =
+    result.status === "success" && result.featured.length > 0;
+
   return (
     <section className="mx-auto max-w-5xl px-4 pb-20 sm:px-6">
-      <h2 className="mb-6 text-lg font-semibold text-white">Why YANG EDGE</h2>
+      <h2 className="mb-2 text-lg font-semibold text-white">Featured</h2>
+      <p className="mb-4 text-sm text-zinc-500">
+        Dummy Engine 샘플 기준 관심 경기 (실추천 아님)
+      </p>
+
+      {showFeatured ? <SampleAnalysisNotice className="mb-4" /> : null}
 
       {result.status === "error" ? (
         <Card padding="lg" className="rounded-xl">
@@ -26,7 +35,7 @@ export default function WhyYangEdge({ result }: WhyYangEdgeProps) {
       ) : result.featured.length === 0 ? (
         <Card padding="lg" className="rounded-xl">
           <p className="text-sm text-zinc-400">
-            현재 관심 기준을 충족한 경기가 없습니다.
+            현재 샘플 Engine 기준을 충족한 경기가 없습니다.
           </p>
         </Card>
       ) : (

@@ -23,6 +23,7 @@ Allowed:
 - Research disk cache under `data/cache/research/mlb/`
 - Derived bullpen features for audits and datasets under `data/research/` and `data/audits/`
 - Derived starter dataset features under `data/research/mlb/*-starter-dataset-v1.json` and `data/cache/research/mlb/derived/starter/` (INTERNAL_RESEARCH_ONLY)
+- Derived lineup dataset features under `data/research/mlb/*-lineup-dataset-v1.json` (INTERNAL_RESEARCH_ONLY; post-game actual starting lineups; Engine PROHIBITED)
 
 Prohibited:
 

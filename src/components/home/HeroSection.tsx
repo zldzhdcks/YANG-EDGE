@@ -15,9 +15,9 @@ export default function HeroSection() {
       <p className="mt-5 max-w-xl text-sm leading-relaxed text-zinc-400 sm:text-base">
         축구 · 야구 · 농구
         <br />
-        배트맨 기준 경기를 분석하여
+        일정은 Provider 실데이터를 사용하고,
         <br />
-        EDGE Score + Confidence + EDGE + 분석 근거를 제공합니다.
+        홈 분석 수치는 현재 연구용 Dummy Engine 샘플입니다.
       </p>
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">

@@ -32,6 +32,24 @@ export function getAnalysisPath(gameId: string): string {
   return `/analysis/${gameId}`;
 }
 
+/**
+ * Research Analysis Viewer 경로용 gameId.
+ * MLB api-baseball 경기는 prediction snapshot의 `mlb-{externalId}`와 맞춘다.
+ * (UI 내부 `buildGameId` 슬러그와 research artifact id가 다르기 때문)
+ */
+export function getResearchAnalysisGameId(
+  game: Pick<GameData, "id" | "league" | "externalId" | "externalProvider">,
+): string {
+  if (
+    game.externalProvider === "api-baseball" &&
+    game.externalId &&
+    (game.league === "MLB" || game.id.startsWith("mlb-"))
+  ) {
+    return `mlb-${game.externalId}`;
+  }
+  return game.id;
+}
+
 export function getMatchLabel(game: Pick<GameData, "homeTeam" | "awayTeam">): string {
   return `${game.homeTeam} vs ${game.awayTeam}`;
 }

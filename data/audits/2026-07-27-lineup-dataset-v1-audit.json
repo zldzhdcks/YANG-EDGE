@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "version": "mlb-lineup-dataset-v1-audit",
+    "kind": "lineup-dataset-v1-build-audit",
+    "datasetId": "mlb-lineup",
+    "schemaVersion": "mlb-lineup-dataset-v1",
+    "builderVersion": "lineup-dataset-builder-v1",
+    "dateKst": "2026-07-27",
+    "generatedAt": "2026-07-27T06:40:58.952Z",
+    "datasetStatus": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "researchOnly": true,
+    "predictionHashSha256": "621f4dbc2ad7439804f88ba213452e5e2675396e889a26580f79b11ad9e58051",
+    "predictionUnchanged": true,
+    "inputHashSha256": "7bd2f1fefbaeb74024f7a6a7ffcaaa647524942eab83cf0746bb6defcd852632",
+    "resultHashSha256": "af52186d2bed8e493dd012e220c6c17453570c583d7616f4c9964110d2a9aafb",
+    "firstResultHash": "af52186d2bed8e493dd012e220c6c17453570c583d7616f4c9964110d2a9aafb",
+    "secondResultHash": "af52186d2bed8e493dd012e220c6c17453570c583d7616f4c9964110d2a9aafb",
+    "hashMatched": true
+  },
+  "totals": {
+    "totalGames": 15,
+    "teamLineups": 30,
+    "completeLineups": 30,
+    "incompleteLineups": 0,
+    "totalStarters": 270,
+    "battingSlotDuplicates": 0,
+    "battingSlotMissing": 0,
+    "substitutesSeparated": 62,
+    "startersMarkedSubstitute": 0,
+    "preGameStatus": "NOT_COLLECTED",
+    "postGameStatuses": {
+      "COMPLETE": 30,
+      "INCOMPLETE": 0
+    },
+    "battingSideCollected": 0,
+    "peopleApiCalls": 0
+  },
+  "cache": {
+    "firstRun": {
+      "rawHit": 15,
+      "rawMiss": 0,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 0
+    },
+    "secondRunWarm": {
+      "rawHit": 15,
+      "rawMiss": 0,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 0
+    }
+  },
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true,
+      "detail": "621f4dbc2ad7439804f88ba213452e5e2675396e889a26580f79b11ad9e58051"
+    },
+    {
+      "id": "result-hash-matched",
+      "passed": true,
+      "detail": "af52186d2bed8e493dd012e220c6c17453570c583d7616f4c9964110d2a9aafb == af52186d2bed8e493dd012e220c6c17453570c583d7616f4c9964110d2a9aafb"
+    },
+    {
+      "id": "warm-network-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "pregame-not-backfilled",
+      "passed": true,
+      "detail": "NOT_COLLECTED"
+    },
+    {
+      "id": "batting-side-not-collected",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "people-api-calls-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "complete-lineups-nine-starters",
+      "passed": true,
+      "detail": "complete=30"
+    },
+    {
+      "id": "substitute-not-in-starters",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "slot-dup-missing-zero-when-complete",
+      "passed": true,
+      "detail": "dup=0 miss=0"
+    },
+    {
+      "id": "engine-prohibited",
+      "passed": true,
+      "detail": "PROHIBITED"
+    }
+  ],
+  "legal": {
+    "mlbStatsSource": "INTERNAL_RESEARCH_ONLY",
+    "publicRuntimeUseAllowed": false,
+    "commercialRuntimeUseAllowed": false,
+    "rawResponseInResearchCacheOnly": true,
+    "mlbHtmlCrawling": false,
+    "sportsDataIoScrambled": false
+  },
+  "notes": [
+    "postGameActualLineup only — review/label use",
+    "preGameStatus=NOT_COLLECTED — no backfill from boxscore",
+    "battingSide not collected (no people API)",
+    "team.battingOrder not used for starters",
+    "Engine admission PROHIBITED"
+  ]
+}

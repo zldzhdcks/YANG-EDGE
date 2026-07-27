@@ -2,6 +2,7 @@ import type { FeatureData } from "@/types/feature";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import { getMatchDisplayLabel, getTeamDisplayName } from "@/lib/teams";
+import SampleAnalysisNotice from "./SampleAnalysisNotice";
 
 type FeatureCardProps = {
   feature: FeatureData;
@@ -106,11 +107,15 @@ export default function FeatureCard({ feature }: FeatureCardProps) {
           </Badge>
         )}
       </div>
+      <SampleAnalysisNotice compact className="mb-2" />
       <h3 className="text-sm font-semibold text-white">
         {featureMatchLabel(feature)}
       </h3>
       <p className="mt-1.5 text-sm leading-relaxed text-zinc-500">
         {featureDescription(feature)}
+      </p>
+      <p className="mt-2 text-[11px] text-zinc-600">
+        등급·EDGE·Confidence는 샘플 Engine 출력 (실추천 아님)
       </p>
     </Card>
   );

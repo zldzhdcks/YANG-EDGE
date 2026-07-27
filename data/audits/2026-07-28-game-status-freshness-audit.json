@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "version": "mlb-game-status-freshness-audit-v1",
+    "generatedAt": "2026-07-27T04:15:00.000Z",
+    "kind": "game-status-freshness-audit",
+    "targetDateKst": "2026-07-28",
+    "researchOnly": true,
+    "codeChanged": false,
+    "predictionModified": false,
+    "statusForceCorrected": false,
+    "engineImpact": 0,
+    "conclusion": "NS_STATUS_VALID",
+    "note": "Live API-BASEBALL refresh confirms NS×12. Wall-clock is 2026-07-27 ~13:13 KST; earliest pitch 2026-07-28 03:35 KST (~14h later). Not date-mapping error, not stale-cache lock."
+  },
+  "prediction": {
+    "path": "data/predictions/mlb/2026-07-28.json",
+    "dateKst": "2026-07-28",
+    "timezoneBasis": "KST (meta.dateKst + startTimeKst)",
+    "fixtureCount": 12,
+    "externalIds": [
+      "179605",
+      "179608",
+      "179610",
+      "179611",
+      "179609",
+      "179604",
+      "179612",
+      "179613",
+      "179606",
+      "179615",
+      "179614",
+      "179607"
+    ],
+    "immutableHashSha256": "f0e9449973e63f8987495708aab3101e65e57f643aa1c44505a2e9d237fbcd16",
+    "immutableHashUnchanged": true
+  },
+  "apiQuery": {
+    "provider": "API-BASEBALL",
+    "endpoint": "/games",
+    "params": {
+      "league": "1",
+      "season": "2026",
+      "date": "2026-07-28",
+      "timezone": "Asia/Seoul"
+    },
+    "codePaths": [
+      "scripts/grade-mlb-research-predictions.ts fetchGamesForDate",
+      "scripts/validate-mlb-bullpen-v1_1-date.ts fetchSlate"
+    ],
+    "networkRefreshPerformed": true,
+    "httpCache": "no-store"
+  },
+  "wallClock": {
+    "auditedAtUtc": "2026-07-27T04:13:23.440Z",
+    "auditedAtKst": "2026-07-27 13:13",
+    "earliestPredictionStartKst": "2026-07-28 03:35",
+    "minutesUntilEarliestStart": 862,
+    "allPredictionStartsInFuture": true
+  },
+  "dateMapping": {
+    "kstDateMatchesApiFixtureDate": true,
+    "apiFixtureTimezone": "Asia/Seoul",
+    "predictionIdsOn2026-07-27": [],
+    "predictionIdsOn2026-07-28": 12,
+    "predictionIdsOn2026-07-29": [],
+    "alternateDateMatches": "none — fixtures exclusive to 2026-07-28 KST query",
+    "verdict": "DATE_MAPPING_OK"
+  },
+  "diskCache": {
+    "path": "data/cache/mlb-game-results/2026-07-28.json",
+    "fetchedAt": "2026-07-27T03:59:59.516Z",
+    "ageMinutesAtAudit": 13,
+    "ttlMinutes": 5,
+    "wouldBeUsedByGradeAtAudit": false,
+    "cachedStatuses": { "NS": 12 },
+    "staleLock": false,
+    "note": "TTL 5m — grade re-fetches when expired. Bullpen slate fetch always networks (no disk cache)."
+  },
+  "liveRefresh": {
+    "2026-07-27": { "total": 15, "counts": { "FT": 15 }, "matchedPredictionIds": 0 },
+    "2026-07-28": { "total": 12, "counts": { "NS": 12 }, "matchedPredictionIds": 12 },
+    "2026-07-29": { "total": 15, "counts": { "NS": 15 }, "matchedPredictionIds": 0 },
+    "refreshedStatuses": { "NS": 12 },
+    "matchesDiskCacheStatuses": true
+  },
+  "fixtures": [
+    {
+      "externalId": "179605",
+      "startTimeKst": "03:35",
+      "match": "Seattle Mariners @ Texas Rangers",
+      "apiStatus": "NS",
+      "apiDate": "2026-07-28T03:35:00+09:00"
+    },
+    {
+      "externalId": "179608",
+      "startTimeKst": "07:40",
+      "match": "Arizona Diamondbacks @ Pittsburgh Pirates",
+      "apiStatus": "NS",
+      "apiDate": "2026-07-28T07:40:00+09:00"
+    },
+    {
+      "externalId": "179610",
+      "startTimeKst": "07:40",
+      "match": "Philadelphia Phillies @ Miami Marlins",
+      "apiStatus": "NS",
+      "apiDate": "2026-07-28T07:40:00+09:00"
+    },
+    {
+      "externalId": "179611",
+      "startTimeKst": "07:40",
+      "match": "Baltimore Orioles @ Detroit Tigers",
+      "apiStatus": "NS",
+      "apiDate": "2026-07-28T07:40:00+09:00"
+    },
+    {
+      "externalId": "179609",
+      "startTimeKst": "07:45",
+      "match": "Toronto Blue Jays @ Washington Nationals",
+      "apiStatus": "NS",
+      "apiDate": "2026-07-28T07:45:00+09:00"
+    },
+    {
+      "externalId": "179604",
+      "startTimeKst": "08:10",
+      "match": "Atlanta Braves @ New York Mets",
+      "apiStatus": "NS",
+      "apiDate": "2026-07-28T08:10:00+09:00"
+    },
+    {
+      "externalId": "179612",
+      "startTimeKst": "08:10",
+      "match": "Cleveland Guardians @ Cincinnati Reds",
+      "apiStatus": "NS",
+      "apiDate": "2026-07-28T08:10:00+09:00"
+    },
+    {
+      "externalId": "179613",
+      "startTimeKst": "08:40",
+      "match": "New York Yankees @ Chicago White Sox",
+      "apiStatus": "NS",
+      "apiDate": "2026-07-28T08:40:00+09:00"
+    },
+    {
+      "externalId": "179606",
+      "startTimeKst": "08:45",
+      "match": "Chicago Cubs @ St.Louis Cardinals",
+      "apiStatus": "NS",
+      "apiDate": "2026-07-28T08:45:00+09:00"
+    },
+    {
+      "externalId": "179615",
+      "startTimeKst": "10:38",
+      "match": "Houston Astros @ Los Angeles Angels",
+      "apiStatus": "NS",
+      "apiDate": "2026-07-28T10:38:00+09:00"
+    },
+    {
+      "externalId": "179614",
+      "startTimeKst": "10:40",
+      "match": "Boston Red Sox @ Athletics",
+      "apiStatus": "NS",
+      "apiDate": "2026-07-28T10:40:00+09:00"
+    },
+    {
+      "externalId": "179607",
+      "startTimeKst": "10:45",
+      "match": "Milwaukee Brewers @ San Francisco Giants",
+      "apiStatus": "NS",
+      "apiDate": "2026-07-28T10:45:00+09:00"
+    }
+  ],
+  "mlbStatsInternalComparison": {
+    "connectedToPublicRuntime": false,
+    "cachePath": "data/cache/research/mlb/raw/statsapi/api/v1/schedule_sportId_1_startDate_2026-07-27_endDate_2026-07-28_hydrate_probablePitcher.json",
+    "fetchedAt": "2026-07-27T02:03:38.416Z",
+    "day2026-07-28": {
+      "gameCount": 15,
+      "abstractGameState": "Preview (all)"
+    },
+    "alignment": "Consistent with not-started: Stats Preview ≈ API-BASEBALL NS. Count 15 vs prediction slate 12 is expected (research snapshot subset).",
+    "autoCorrectApplied": false
+  },
+  "rootCause": {
+    "classification": "PRE_GAME_NOT_STARTED",
+    "not": [
+      "DATE_MAPPING_ISSUE",
+      "STALE_STATUS_CACHE_LOCK",
+      "PROVIDER_STATUS_DELAY"
+    ],
+    "detail": "Audit wall-clock is still 2026-07-27 afternoon KST. All 12 slate games start on 2026-07-28 KST. Live and cached API both report NS; Stats research schedule also Preview."
+  },
+  "recommendations": {
+    "codeChangeNow": "none",
+    "artifactChangeNow": "none",
+    "nextAction": "Re-run postgame pipeline after first pitches (earliest ~2026-07-28 03:35 KST) or after FT appears. Optional: delete data/cache/mlb-game-results/2026-07-28.json only if TTL somehow blocks (not observed).",
+    "forceRefreshOptionExists": false,
+    "manualInvalidateIfNeeded": "data/cache/mlb-game-results/2026-07-28.json (grade TTL 5m already forces refresh when expired)"
+  },
+  "verification": {
+    "predictionImmutableHash": "f0e9449973e63f8987495708aab3101e65e57f643aa1c44505a2e9d237fbcd16",
+    "preGameArtifactChanged": false,
+    "statusForceCorrected": false,
+    "engineBullpenStarterFrameworkImpact": 0
+  }
+}
