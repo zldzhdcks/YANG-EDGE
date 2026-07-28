@@ -17,6 +17,8 @@ import {
   loadMlbResearchOutcomesByDate,
   lookupMlbResearchOutcome,
 } from "@/lib/research/load-mlb-game-research-outcomes";
+import { attachKboOddsComparisonToGames } from "@/lib/games/attach-kbo-odds-comparison";
+import { dedupeGameWithOddsItems } from "@/lib/games/unique-games";
 import { toBareGameWithOdds, type GameWithOdds } from "@/types/game-with-odds";
 import type { GameData } from "@/types/game";
 import { getKstToday } from "@/lib/datetime/kst";
@@ -263,6 +265,16 @@ export async function GET(request: Request) {
       // research outcome enrichment 실패 시 카드는 기존대로
     }
   }
+
+  if (date) {
+    try {
+      items = await attachKboOddsComparisonToGames(items, date);
+    } catch {
+      // comparison artifact enrichment 실패 시 기존 카드 유지
+    }
+  }
+
+  items = dedupeGameWithOddsItems(items);
 
   const partial =
     !sportsMeta.ok ||

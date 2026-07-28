@@ -22,7 +22,8 @@
     "research:kbo-odds-comparison": "tsx --env-file=.env.local scripts/build-kbo-odds-comparison-v1.ts",
     "research:kbo-slate-readiness": "tsx --env-file=.env.local scripts/check-kbo-today-slate-readiness-v1.ts",
     "research:kbo-operator-input": "tsx --env-file=.env.local scripts/validate-kbo-operator-input-v1.ts",
-    "research:kbo-operator-markets": "tsx --env-file=.env.local scripts/validate-kbo-operator-market-input-v2.ts"
+    "research:kbo-operator-markets": "tsx --env-file=.env.local scripts/validate-kbo-operator-market-input-v2.ts",
+    "research:games-unique-ids": "tsx --env-file=.env.local scripts/audit-game-list-unique-ids.ts"
   },
   "dependencies": {
     "next": "16.2.10",

@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { GameWithOdds } from "@/types/game-with-odds";
 import Card from "@/components/ui/Card";
 import { groupGamesByLeague, type LeagueGroup } from "@/lib/games/group";
+import { getStableGameRenderKey } from "@/lib/games/unique-games";
 import GameCard from "./GameCard";
 
 type GameListProps = {
@@ -59,9 +60,10 @@ function LeagueSection({
       <Card padding="none" className="rounded-xl px-4 sm:px-6">
         {shown.map((item) => (
           <GameCard
-            key={item.game.id}
+            key={getStableGameRenderKey(item.game)}
             game={item.game}
             odds={item.oddsMatch.matched ? item.odds : null}
+            oddsComparison={item.oddsComparison ?? null}
             oddsAvailability={item.oddsAvailability}
             oddsUnavailableReason={item.oddsUnavailableReason}
             recommendation={item.recommendation ?? null}

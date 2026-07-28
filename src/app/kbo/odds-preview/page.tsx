@@ -14,10 +14,19 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-const TARGET_DATE = "2026-07-28";
+const DEFAULT_TARGET_DATE = "2026-07-28";
 
-export default async function KboOddsPreviewPage() {
-  const document = await loadKboOddsComparisonDocument(TARGET_DATE);
+export default async function KboOddsPreviewPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ date?: string }>;
+}) {
+  const { date } = await searchParams;
+  const targetDate =
+    typeof date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(date)
+      ? date
+      : DEFAULT_TARGET_DATE;
+  const document = await loadKboOddsComparisonDocument(targetDate);
 
   return (
     <>
@@ -37,8 +46,9 @@ export default async function KboOddsPreviewPage() {
         {!document ? (
           <Card padding="md">
             <p className="text-sm text-zinc-400">
-              배당 비교 artifact가 없습니다. 먼저
-              ` npm run research:kbo-odds-comparison -- 2026-07-28 `를 실행하세요.
+              배당 비교 artifact가 없습니다. 먼저{" "}
+              <code>{`npm run research:kbo-odds-comparison -- ${targetDate}`}</code>
+              {" "}를 실행하세요.
             </p>
           </Card>
         ) : (

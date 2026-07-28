@@ -19,6 +19,24 @@ type GameCardProps = {
   fromDate?: string;
   /** 매칭 확정된 배당만 전달된다. 없으면 표시하지 않음 (빈 값·0 금지). */
   odds?: OddsData | null;
+  oddsComparison?: {
+    domestic: {
+      homeOdds: number | null;
+      awayOdds: number | null;
+      reviewStatus: "DRAFT" | "VERIFIED" | "REJECTED";
+      sourceLabel: string;
+    } | null;
+    overseas: {
+      homeOdds: number | null;
+      awayOdds: number | null;
+      providerLabel: string;
+    } | null;
+    comparisonStatus:
+      | "COMPARABLE"
+      | "MARKET_RULE_UNVERIFIED"
+      | "DOMESTIC_MISSING"
+      | "OVERSEAS_MISSING";
+  } | null;
   oddsAvailability?: OddsAvailability;
   oddsUnavailableReason?: string | null;
   /** Engine 결과가 있을 때만. 없으면 배지 미표시. */
@@ -57,6 +75,73 @@ function OddsRow({ odds }: { odds: OddsData }) {
         <span className="mx-1.5 text-zinc-600">·</span>
         <span>원정 {formatOdds(odds.bestAwayOdds)}</span>
       </p>
+    </div>
+  );
+}
+
+function reviewStatusLabel(reviewStatus: "DRAFT" | "VERIFIED" | "REJECTED"): string {
+  switch (reviewStatus) {
+    case "VERIFIED":
+      return "국내 배당 검수 완료";
+    case "REJECTED":
+      return "국내 배당 사용 제외";
+    case "DRAFT":
+    default:
+      return "국내 배당 검수 전";
+  }
+}
+
+function KboOddsComparisonRow({
+  oddsComparison,
+}: {
+  oddsComparison: NonNullable<GameCardProps["oddsComparison"]>;
+}) {
+  const domestic = oddsComparison.domestic;
+  const overseas = oddsComparison.overseas;
+
+  return (
+    <div className="mt-3 space-y-3">
+      <div>
+        <p className="text-[11px] font-medium tracking-wide text-zinc-500">
+          국내 프로토
+        </p>
+        <p className="mt-0.5 text-sm tabular-nums text-zinc-300">
+          <span>
+            홈 {domestic?.homeOdds != null ? formatOdds(domestic.homeOdds) : "—"}
+          </span>
+          <span className="mx-1.5 text-zinc-600">·</span>
+          <span>
+            원정 {domestic?.awayOdds != null ? formatOdds(domestic.awayOdds) : "—"}
+          </span>
+        </p>
+        <p className="mt-0.5 text-xs text-amber-300">
+          {domestic ? reviewStatusLabel(domestic.reviewStatus) : "국내 배당 미수집"}
+        </p>
+      </div>
+
+      <div>
+        <p className="text-[11px] font-medium tracking-wide text-zinc-500">
+          해외 시장
+        </p>
+        <p className="mt-0.5 text-sm tabular-nums text-zinc-300">
+          <span>
+            홈 {overseas?.homeOdds != null ? formatOdds(overseas.homeOdds) : "—"}
+          </span>
+          <span className="mx-1.5 text-zinc-600">·</span>
+          <span>
+            원정 {overseas?.awayOdds != null ? formatOdds(overseas.awayOdds) : "—"}
+          </span>
+        </p>
+        <p className="mt-0.5 text-xs text-zinc-500">
+          {overseas?.providerLabel ?? "해외 배당 미수집"}
+        </p>
+      </div>
+
+      {oddsComparison.comparisonStatus === "MARKET_RULE_UNVERIFIED" && (
+        <p className="text-xs text-amber-300">
+          시장 규칙 확인 전 단순 병렬 표시
+        </p>
+      )}
     </div>
   );
 }
@@ -119,6 +204,7 @@ function gradeBadgeVariant(
 function GameCardBody({
   game,
   odds,
+  oddsComparison = null,
   oddsAvailability = "not-found",
   oddsUnavailableReason = null,
   recommendation = null,
@@ -165,6 +251,8 @@ function GameCardBody({
             sport={game.sport}
             league={game.league}
           />
+        ) : game.league === "KBO" && oddsComparison ? (
+          <KboOddsComparisonRow oddsComparison={oddsComparison} />
         ) : oddsAvailability === "available" && odds ? (
           <OddsRow odds={odds} />
         ) : (
@@ -195,6 +283,7 @@ export default function GameCard({
   game,
   fromDate,
   odds = null,
+  oddsComparison = null,
   oddsAvailability = "not-found",
   oddsUnavailableReason = null,
   recommendation = null,
@@ -213,6 +302,7 @@ export default function GameCard({
       <GameCardBody
         game={game}
         odds={odds}
+        oddsComparison={oddsComparison}
         oddsAvailability={oddsAvailability}
         oddsUnavailableReason={oddsUnavailableReason}
         recommendation={recommendation}

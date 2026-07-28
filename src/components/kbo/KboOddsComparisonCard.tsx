@@ -76,7 +76,7 @@ export default function KboOddsComparisonCard({
         <p>운영자 입력 국내 배당과 해외 Provider 배당의 단순 비교입니다.</p>
         <p>추천·구매 지시가 아닙니다.</p>
         {row.comparison.status === "MARKET_RULE_UNVERIFIED" && (
-          <p className="text-amber-300">시장 규칙 미확인으로 숫자 차이 비교는 보류합니다.</p>
+          <p className="text-amber-300">시장 규칙 확인 전 단순 병렬 표시</p>
         )}
       </div>
     </Card>

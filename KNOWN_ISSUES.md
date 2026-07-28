@@ -97,6 +97,7 @@
 | Integrated operator market input v2 | 2026-07-28 draft is `READY_FOR_OPERATOR_REVIEW`; review state still `DRAFT` |
 | Full-slate identity coverage | Resolved for 2026-07-28 with API-BASEBALL; public/commercial rights remain unconfirmed |
 | KBO odds comparison v1 | `MONEYLINE_2WAY` only; overseas market rules remain `MARKET_RULE_UNVERIFIED`, so raw odds are shown without numeric comparison |
+| `/games` duplicate React key warning | Root cause was `buildGameId(league-home-away)` collision risk for same-matchup provider rows; `/api/games` now dedupes by real-game identity and `GameList` uses provider-backed composite render key |
 
 ## Soccer Research Pipeline v1 (pre-design)
 

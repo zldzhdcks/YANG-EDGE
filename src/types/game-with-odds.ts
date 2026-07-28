@@ -67,6 +67,24 @@ export type GameWithOdds = {
   oddsMatch: GameOddsMatchInfo;
   oddsAvailability: OddsAvailability;
   oddsUnavailableReason: string | null;
+  oddsComparison?: {
+    domestic: {
+      homeOdds: number | null;
+      awayOdds: number | null;
+      reviewStatus: "DRAFT" | "VERIFIED" | "REJECTED";
+      sourceLabel: string;
+    } | null;
+    overseas: {
+      homeOdds: number | null;
+      awayOdds: number | null;
+      providerLabel: string;
+    } | null;
+    comparisonStatus:
+      | "COMPARABLE"
+      | "MARKET_RULE_UNVERIFIED"
+      | "DOMESTIC_MISSING"
+      | "OVERSEAS_MISSING";
+  } | null;
   recommendation?: GameRecommendationGrade | null;
   researchOutcome?: GameResearchOutcomeDisplay | null;
 };
@@ -78,6 +96,7 @@ export function toBareGameWithOdds(game: GameData): GameWithOdds {
     oddsMatch: { matched: false, confidence: 0, method: "none" },
     oddsAvailability: "not-found",
     oddsUnavailableReason: null,
+    oddsComparison: null,
     recommendation: null,
     researchOutcome: null,
   };

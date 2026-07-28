@@ -91,6 +91,11 @@ KBO odds comparison preview:
 - scope: internal research preview only
 - policy: 운영자 입력 국내 배당과 해외 Provider 배당의 단순 비교이며 추천·구매 지시가 아닙니다.
 
+`/games` KBO 카드:
+
+- selected date의 KBO odds comparison artifact가 있으면 국내 프로토(위) + 해외 시장(아래) 두 줄을 표시
+- artifact가 없으면 기존 odds availability 흐름을 유지
+
 Research ops 실행 순서 (`research:ops`):
 
 1. `audit-dataset-correlation-v1`

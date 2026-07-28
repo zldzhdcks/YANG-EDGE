@@ -18,9 +18,23 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 | Domestic Label | `국내 프로토` |
 | Overseas Label | `해외 시장` |
 | Domestic Draft | `국내 배당 검수 전` |
-| Domestic Verified | `검수 완료` |
+| Domestic Verified | `국내 배당 검수 완료` |
 | Overseas Missing | `해외 배당 미수집` |
-| Rule Unverified | `시장 규칙 미확인으로 숫자 차이 비교는 보류합니다.` |
+| Domestic Missing | `국내 배당 미수집` |
+| Rule Unverified | `시장 규칙 확인 전 단순 병렬 표시` |
+
+### /games KBO Card
+
+| Key | Copy |
+|-----|------|
+| Domestic Label | `국내 프로토` |
+| Overseas Label | `해외 시장` |
+| Domestic Draft | `국내 배당 검수 전` |
+| Domestic Verified | `국내 배당 검수 완료` |
+| Domestic Rejected | `국내 배당 사용 제외` |
+| Domestic Missing | `국내 배당 미수집` |
+| Overseas Missing | `해외 배당 미수집` |
+| Rule Unverified | `시장 규칙 확인 전 단순 병렬 표시` |
 
 ---
 
