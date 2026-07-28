@@ -2,7 +2,7 @@
   "meta": {
     "version": "mlb-research-prediction-review-v1",
     "dateKst": "2026-07-28",
-    "generatedAt": "2026-07-27T03:59:59.517Z",
+    "generatedAt": "2026-07-27T23:56:37.136Z",
     "snapshot": "data/predictions/mlb/2026-07-28.json",
     "resultSource": "api-baseball",
     "mlbStatsApiUsed": false,
@@ -13,7 +13,7 @@
   "apiUsage": {
     "apiBaseball": {
       "calls": 1,
-      "remaining": 7457,
+      "remaining": 7399,
       "limit": 7500,
       "datesQueried": [
         "2026-07-28"
@@ -28,11 +28,11 @@
   },
   "summary": {
     "total": 12,
-    "graded": 0,
-    "hits": 0,
+    "graded": 1,
+    "hits": 1,
     "fails": 0,
-    "pending": 12,
-    "inconclusive": 0,
+    "pending": 10,
+    "inconclusive": 1,
     "overallHitRate": {
       "hitRate": null,
       "status": "INSUFFICIENT_SAMPLE"
@@ -47,8 +47,8 @@
     },
     "pass": {
       "label": "PASS",
-      "n": 0,
-      "hits": 0,
+      "n": 1,
+      "hits": 1,
       "fails": 0,
       "hitRate": null,
       "status": "INSUFFICIENT_SAMPLE"
@@ -91,8 +91,8 @@
       },
       {
         "label": "NONE",
-        "n": 0,
-        "hits": 0,
+        "n": 1,
+        "hits": 1,
         "fails": 0,
         "hitRate": null,
         "status": "INSUFFICIENT_SAMPLE"
@@ -109,8 +109,8 @@
       },
       {
         "label": "confidence_50_59",
-        "n": 0,
-        "hits": 0,
+        "n": 1,
+        "hits": 1,
         "fails": 0,
         "hitRate": null,
         "status": "INSUFFICIENT_SAMPLE"
@@ -164,8 +164,8 @@
       "status": "INSUFFICIENT_SAMPLE"
     },
     "all15HitRate": {
-      "n": 0,
-      "hits": 0,
+      "n": 1,
+      "hits": 1,
       "fails": 0,
       "hitRate": null,
       "status": "INSUFFICIENT_SAMPLE"
@@ -191,10 +191,10 @@
       "gameId": "mlb-179605",
       "match": "Seattle Mariners @ Texas Rangers",
       "baselinePick": "Texas Rangers",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
+      "homeScore": 7,
+      "awayScore": 3,
+      "actualWinner": "home",
+      "predictionHit": true,
       "baselineStatus": "PASS",
       "modelProbability": 59,
       "marketProbability": null,
@@ -217,19 +217,24 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "SIGNAL_WORKED",
+      "resultStatus": "graded",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "추천 방향과 실제 결과가 일치했습니다.",
+        "한 경기로 신호 유효성을 확정할 수 없습니다."
       ],
-      "hypotheses": []
+      "hypotheses": [
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
     },
     {
       "gameId": "mlb-179608",
       "match": "Arizona Diamondbacks @ Pittsburgh Pirates",
       "baselinePick": "Arizona Diamondbacks",
-      "homeScore": null,
-      "awayScore": null,
+      "homeScore": 0,
+      "awayScore": 0,
       "actualWinner": null,
       "predictionHit": null,
       "baselineStatus": "PASS",
@@ -265,8 +270,8 @@
       "gameId": "mlb-179610",
       "match": "Philadelphia Phillies @ Miami Marlins",
       "baselinePick": "Philadelphia Phillies",
-      "homeScore": null,
-      "awayScore": null,
+      "homeScore": 5,
+      "awayScore": 2,
       "actualWinner": null,
       "predictionHit": null,
       "baselineStatus": "PASS",
@@ -302,8 +307,8 @@
       "gameId": "mlb-179611",
       "match": "Baltimore Orioles @ Detroit Tigers",
       "baselinePick": "Detroit Tigers",
-      "homeScore": null,
-      "awayScore": null,
+      "homeScore": 1,
+      "awayScore": 4,
       "actualWinner": null,
       "predictionHit": null,
       "baselineStatus": "PASS",
@@ -339,8 +344,8 @@
       "gameId": "mlb-179609",
       "match": "Toronto Blue Jays @ Washington Nationals",
       "baselinePick": "Washington Nationals",
-      "homeScore": null,
-      "awayScore": null,
+      "homeScore": 1,
+      "awayScore": 2,
       "actualWinner": null,
       "predictionHit": null,
       "baselineStatus": "PASS",
@@ -376,8 +381,8 @@
       "gameId": "mlb-179604",
       "match": "Atlanta Braves @ New York Mets",
       "baselinePick": "Atlanta Braves",
-      "homeScore": null,
-      "awayScore": null,
+      "homeScore": 3,
+      "awayScore": 1,
       "actualWinner": null,
       "predictionHit": null,
       "baselineStatus": "PASS",
@@ -439,10 +444,10 @@
       "missingFactors": [
         "선발투수"
       ],
-      "feedbackClassification": null,
-      "resultStatus": "pending",
+      "feedbackClassification": "INCONCLUSIVE",
+      "resultStatus": "inconclusive",
       "reviewNotes": [
-        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+        "결과가 확정되지 않아 신호 일치 여부를 판단할 수 없습니다."
       ],
       "hypotheses": []
     },

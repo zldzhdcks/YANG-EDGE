@@ -1,0 +1,100 @@
+{
+  "meta": {
+    "version": "mlb-failure-flow-review-v1",
+    "dateKst": "2026-07-28",
+    "generatedAt": "2026-07-27T23:56:39.163Z",
+    "failedGames": 0,
+    "researchOnly": true,
+    "engineModified": false,
+    "weightsModified": false,
+    "predictionModified": false,
+    "predictionHashSha256": "f2b3526a38fc03f7ec3a0a8369a4a802c8383c2a83640b9d5ea947e40698c93e",
+    "predictionUnchanged": true,
+    "legal": {
+      "apiBaseball": "primary commercial provider for scores/innings",
+      "mlbStatsApi": "internal research fallback only; commercial use unverified; not connected to public UI/runtime/paid service",
+      "rawResponsesStored": false,
+      "mlbComHtmlCrawling": false,
+      "sportsDataIoScrambled": false
+    },
+    "note": "사후 연구. 실패 원인을 단정하지 않으며 경기 흐름 분류만 수행. 0경기만으로 weights 변경을 권고하지 않는다.",
+    "deterministicFingerprint": "8e7f042304dded01ac8bd27e6de05b006a9dfe413ae6a0f192b67589e454c020"
+  },
+  "apiUsage": {
+    "apiBaseball": {
+      "calls": 1,
+      "remaining": 7398
+    },
+    "mlbStatsApi": {
+      "calls": 2,
+      "usedAsFallback": true
+    }
+  },
+  "summary": {
+    "STARTER_FAILURE": 0,
+    "BULLPEN_FAILURE": 0,
+    "OFFENSIVE_FAILURE": 0,
+    "OPPONENT_OFFENSE_SURGE": 0,
+    "CLOSE_GAME_VARIANCE": 0,
+    "UNEXPLAINED": 0,
+    "MULTIPLE_FACTORS": 0,
+    "preGameKnownRiskGames": 0,
+    "inGameOnlyStrongGames": 0,
+    "bullpenImpactGames": 0,
+    "offenseFailGames": 0,
+    "conclusion": "SAMPLE_ACCUMULATION_PRIORITY",
+    "weightsChangeRecommended": false
+  },
+  "developmentPriority": [
+    {
+      "item": "불펜 최근 사용량·성적 추가",
+      "relatedFailures": 0,
+      "preGameCollectible": true,
+      "formalApiAvailable": "연구용 Stats API 가능, 상용 미확인",
+      "priority": 1,
+      "performanceGainUnverified": true
+    },
+    {
+      "item": "추가 데이터보다 표본 축적 우선",
+      "relatedFailures": 8,
+      "preGameCollectible": true,
+      "formalApiAvailable": true,
+      "priority": 1,
+      "performanceGainUnverified": true
+    },
+    {
+      "item": "선발투수 변수 보강",
+      "relatedFailures": 0,
+      "preGameCollectible": true,
+      "formalApiAvailable": "부분 (API-BASEBALL 제한적 / Stats API 연구용)",
+      "priority": 2,
+      "performanceGainUnverified": true
+    },
+    {
+      "item": "시장 이동 수집 강화",
+      "relatedFailures": 0,
+      "preGameCollectible": true,
+      "formalApiAvailable": true,
+      "priority": 3,
+      "performanceGainUnverified": true
+    },
+    {
+      "item": "확정 라인업 추가",
+      "relatedFailures": 0,
+      "preGameCollectible": true,
+      "formalApiAvailable": "부분",
+      "priority": 4,
+      "performanceGainUnverified": true
+    },
+    {
+      "item": "공격 세부 지표 추가",
+      "relatedFailures": 0,
+      "preGameCollectible": false,
+      "formalApiAvailable": "사후 boxscore 위주",
+      "priority": 5,
+      "performanceGainUnverified": true
+    }
+  ],
+  "importantFailures": [],
+  "games": []
+}

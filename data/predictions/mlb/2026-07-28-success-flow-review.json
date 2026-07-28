@@ -1,0 +1,289 @@
+{
+  "meta": {
+    "version": "mlb-success-flow-review-v1",
+    "dateKst": "2026-07-28",
+    "generatedAt": "2026-07-27T23:56:41.147Z",
+    "successGames": 1,
+    "researchOnly": true,
+    "engineModified": false,
+    "weightsModified": false,
+    "predictionModified": false,
+    "failureReviewModified": false,
+    "predictionHashSha256": "f2b3526a38fc03f7ec3a0a8369a4a802c8383c2a83640b9d5ea947e40698c93e",
+    "failureReviewHashSha256": "f7478ffb77f6385d6f12df0064943052190c7c73d4b6138b77c62e960835a80f",
+    "predictionUnchanged": true,
+    "failureReviewUnchanged": true,
+    "legal": {
+      "apiBaseball": "primary commercial provider for scores/innings",
+      "mlbStatsApi": "internal research fallback only; commercial use unverified; not connected to public UI/runtime/paid service",
+      "rawResponsesStored": false,
+      "mlbComHtmlCrawling": false,
+      "sportsDataIoScrambled": false
+    },
+    "note": "사후 연구. 승리 원인을 단정하지 않으며 경기 흐름 분류만 수행. 1경기만으로 weights 변경을 권고하지 않는다."
+  },
+  "apiUsage": {
+    "apiBaseball": {
+      "calls": 1,
+      "remaining": 7397
+    },
+    "mlbStatsApi": {
+      "calls": 3,
+      "usedAsFallback": true
+    }
+  },
+  "summary": {
+    "BASELINE_SIGNAL_CONFIRMED": 1,
+    "STARTER_ADVANTAGE_REALIZED": 0,
+    "BULLPEN_PROTECTED_SIGNAL": 0,
+    "OFFENSIVE_EDGE_REALIZED": 0,
+    "MARKET_ALIGNED_WIN": 0,
+    "MARKET_CONTRARIAN_WIN": 0,
+    "CLOSE_GAME_VARIANCE_FAVORED": 0,
+    "LUCKY_RESULT_POSSIBLE": 0,
+    "UNEXPLAINED_SUCCESS": 0,
+    "MULTIPLE_FACTORS": 0,
+    "starterAdvantageGames": 1,
+    "bullpenProtectedGames": 1,
+    "offenseLedGames": 1,
+    "marketAlignedWins": 0,
+    "marketContrarianWins": 0,
+    "luckyPossibleGames": 0,
+    "conclusion": "MULTI_FACTOR_RESEARCH",
+    "weightsChangeRecommended": false
+  },
+  "comparisonWithFailures": {
+    "successBullpenProtectRate": 100,
+    "failBullpenCollapseRate": null,
+    "successStarterAdvantageRate": 100,
+    "failStarterDisadvantageRate": null,
+    "successOffenseEdgeRate": 100,
+    "failOffenseFailRate": null,
+    "marketAlignedWins": 0,
+    "marketContrarianWins": 0,
+    "repeatedBothSides": [
+      "선발투수 팩터 예측 시점 누락(missingFactors)",
+      "불펜 구간이 결과 흐름과 자주 연관"
+    ],
+    "successOnlyPatterns": [],
+    "failureOnlyPatterns": [],
+    "note": "표본 6 vs 8 — 인과관계 단정 금지"
+  },
+  "developmentPriority": [
+    {
+      "item": "불펜 최근 사용량·성적",
+      "successExplained": 1,
+      "failureRelated": 0,
+      "preGameCollectible": true,
+      "formalApiAvailable": "연구용 Stats API / 상용 미확인",
+      "priority": 1,
+      "performanceGainUnverified": true
+    },
+    {
+      "item": "표본 축적",
+      "successExplained": 1,
+      "failureRelated": 0,
+      "preGameCollectible": true,
+      "formalApiAvailable": true,
+      "priority": 1,
+      "performanceGainUnverified": true
+    },
+    {
+      "item": "선발투수 변수",
+      "successExplained": 1,
+      "failureRelated": 0,
+      "preGameCollectible": true,
+      "formalApiAvailable": "부분",
+      "priority": 2,
+      "performanceGainUnverified": true
+    },
+    {
+      "item": "시장 이동 수집",
+      "successExplained": 0,
+      "failureRelated": 0,
+      "preGameCollectible": true,
+      "formalApiAvailable": true,
+      "priority": 3,
+      "performanceGainUnverified": true
+    },
+    {
+      "item": "공격 세부 지표",
+      "successExplained": 1,
+      "failureRelated": 0,
+      "preGameCollectible": false,
+      "formalApiAvailable": "사후 boxscore 위주",
+      "priority": 4,
+      "performanceGainUnverified": true
+    },
+    {
+      "item": "라인업",
+      "successExplained": 0,
+      "failureRelated": 0,
+      "preGameCollectible": true,
+      "formalApiAvailable": "부분",
+      "priority": 5,
+      "performanceGainUnverified": true
+    }
+  ],
+  "games": [
+    {
+      "gameId": "mlb-179605",
+      "match": "Seattle Mariners @ Texas Rangers",
+      "baselinePick": "Texas Rangers",
+      "pickSide": "home",
+      "homeScore": 7,
+      "awayScore": 3,
+      "actualWinner": "Texas Rangers",
+      "edgeScore": 8.7,
+      "confidence": 54,
+      "valueEdge": null,
+      "baselineStatus": "PASS",
+      "pitcherDirection": null,
+      "warnings": [
+        "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
+        "RESEARCH_ACCUMULATION_SNAPSHOT"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "sources": {
+        "apiBaseballGame": true,
+        "mlbStatsBoxscore": true,
+        "gamePk": 822868
+      },
+      "starters": {
+        "home": {
+          "probable": "Kumar Rocker",
+          "actual": {
+            "side": "home",
+            "role": "starter",
+            "name": "Kumar Rocker",
+            "playerId": 677958,
+            "inningsPitched": "6.2",
+            "outs": 20,
+            "runs": 2,
+            "earnedRuns": 2,
+            "hits": 4,
+            "walks": 2,
+            "strikeouts": 7,
+            "homeRuns": 1,
+            "pitches": 88,
+            "decision": "(W, 4-8)"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "away": {
+          "probable": "George Kirby",
+          "actual": {
+            "side": "away",
+            "role": "starter",
+            "name": "George Kirby",
+            "playerId": 669923,
+            "inningsPitched": "4.0",
+            "outs": 12,
+            "runs": 7,
+            "earnedRuns": 7,
+            "hits": 7,
+            "walks": 0,
+            "strikeouts": 3,
+            "homeRuns": 4,
+            "pitches": 66,
+            "decision": "(L, 8-9)"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "starterVerdict": "STARTER_ADVANTAGE_REALIZED"
+      },
+      "bullpen": {
+        "pickReliefRuns": 1,
+        "verdict": "BULLPEN_PROTECTED_LEAD"
+      },
+      "offense": {
+        "pickRuns": 7,
+        "oppRuns": 3,
+        "pickHits": 11,
+        "pickWalks": 1,
+        "pickHomeRuns": 4,
+        "pickLeftOnBase": 12,
+        "verdict": "OFFENSE_DOMINATED"
+      },
+      "flow": {
+        "pickFirstLeadInning": 1,
+        "maxPickLead": 5,
+        "opponentTookLeadInning": null,
+        "allowedLeadLoss": false,
+        "tieCount": 0,
+        "scoreAfter6": {
+          "home": 7,
+          "away": 2
+        },
+        "runsAfter6": {
+          "pick": 0,
+          "opponent": 1
+        },
+        "finalScore": {
+          "home": 7,
+          "away": 3
+        },
+        "pickLedDuringGame": true,
+        "earlyLead": true
+      },
+      "signals": [
+        {
+          "signal": "baseline usedFactors present",
+          "timing": "PRE_GAME_SIGNAL_PRESENT",
+          "note": "최근 폼, 득점력, 실점 억제, 홈/원정 성적, 리그 순위, 맞대결, 휴식일, 부상/전력, 연승/연패"
+        },
+        {
+          "signal": "edgeScore=8.7",
+          "timing": "PRE_GAME_SIGNAL_PRESENT",
+          "note": "저장된 EDGE"
+        },
+        {
+          "signal": "confidence=54",
+          "timing": "PRE_GAME_SIGNAL_PRESENT",
+          "note": "저장 Confidence"
+        },
+        {
+          "signal": "starter outing favored pick",
+          "timing": "POST_GAME_ONLY",
+          "note": "경기 후 확인된 선발 투구 결과"
+        },
+        {
+          "signal": "bullpen protected lead",
+          "timing": "POST_GAME_ONLY",
+          "note": "경기 후 확인된 불펜 구간"
+        }
+      ],
+      "successTypes": {
+        "primary": "BASELINE_SIGNAL_CONFIRMED",
+        "secondary": [
+          "STARTER_ADVANTAGE_REALIZED",
+          "MULTIPLE_FACTORS"
+        ]
+      },
+      "specialQuestions": {
+        "earlyAdvantage": true,
+        "starterAdvantageRealized": true,
+        "bullpenProtected": true,
+        "offenseLed": true,
+        "marketAligned": null,
+        "marketContrarian": null,
+        "preGameSignalsPresent": true,
+        "luckyPossible": false
+      },
+      "note": "불펜·선발 판정은 승리 원인 단정이 아니라 경기 흐름 분류이다."
+    }
+  ]
+}
