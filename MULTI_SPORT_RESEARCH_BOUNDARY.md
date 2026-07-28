@@ -145,6 +145,10 @@ Common lifecycle below applies to these four sports only. Sport-specific payload
 2. MLB vs new sport **common / different** audit (same method as `DATASET_COMMON_AUDIT.md`).
 3. Promote to Framework **only** fields/patterns repeated in both — not MLB-only fields.
 
+**KBO pre-design (2026-07-28):** First non-MLB **league** under sport `BASEBALL` entered design audit only — [KBO_MLB_COMMON_DIFFERENCE_AUDIT.md](./KBO_MLB_COMMON_DIFFERENCE_AUDIT.md). Conclusion: `COMMON_EXTRACTION_CANDIDATES_FOUND`. **No Framework change** until a real KBO Dataset artifact exists (trigger step 1 still unmet).
+
+**Soccer pre-design (2026-07-28):** First non-baseball sport audit confirms lifecycle/meta/hash/audit patterns are reusable as **design candidates**, but soccer result taxonomy, market grading, lineup/formation, and league-table context remain sport-specific. Conclusion: `COMMON_CONTRACT_DESIGN_CANDIDATE`. **No Framework change**.
+
 ---
 
 ## 6. ID and Viewer boundaries

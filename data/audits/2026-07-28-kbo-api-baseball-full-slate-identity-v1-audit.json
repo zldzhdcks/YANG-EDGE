@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "version": "kbo-schedule-result-identity-v1-audit",
+    "kind": "kbo-schedule-result-identity-v1-build-audit",
+    "datasetId": "kbo-schedule-result-identity",
+    "schemaVersion": "kbo-schedule-result-identity-v1",
+    "builderVersion": "kbo-schedule-result-identity-builder-v1",
+    "targetDate": "2026-07-28",
+    "primaryProvider": "API_BASEBALL",
+    "generatedAt": "2026-07-28T08:02:15.146Z",
+    "datasetStatus": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "researchOnly": true,
+    "inputHashSha256": "5609c434785131add017ae3471e90dcf8d8dde2ceb2032750385cedeb5376c7b",
+    "resultHashSha256": "b226837fd25a7c2738e83a51cd068303c253ce299480caa852e11656e204ecdf",
+    "previousResultHash": null,
+    "resultHashRegressionMatched": true,
+    "firstResultHash": "b226837fd25a7c2738e83a51cd068303c253ce299480caa852e11656e204ecdf",
+    "secondResultHash": "b226837fd25a7c2738e83a51cd068303c253ce299480caa852e11656e204ecdf",
+    "hashMatched": true,
+    "warmRerunHashMatched": true,
+    "architectureLayer": "service"
+  },
+  "provider": {
+    "id": "API_BASEBALL",
+    "leagueId": "5",
+    "legalStatus": "NEEDS_LEGAL_REVIEW",
+    "publicDisplay": "UNCONFIRMED",
+    "commercialUse": "UNCONFIRMED"
+  },
+  "providerGamesFetched": 5,
+  "datasetGamesCreated": 5,
+  "missingProviderGameId": 0,
+  "teamMappingsMatched": 10,
+  "teamMappingsUnmatched": 0,
+  "scheduled": 5,
+  "live": 0,
+  "final": 0,
+  "draw": 0,
+  "postponed": 0,
+  "cancelled": 0,
+  "noGame": 0,
+  "suspended": 0,
+  "unknown": 0,
+  "scheduleChanges": 0,
+  "cacheUsage": {
+    "firstRun": {
+      "rawHit": 1,
+      "rawMiss": 0,
+      "networkCalls": 0
+    },
+    "secondRunWarm": {
+      "rawHit": 1,
+      "rawMiss": 0,
+      "networkCalls": 0
+    }
+  },
+  "networkCalls": {
+    "firstRun": 0,
+    "secondRunWarm": 0
+  },
+  "registryStatus": "REGISTERED",
+  "engineImpact": "NONE",
+  "regressionHashes": {
+    "before": {
+      "mlbPrediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "mlbStarter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "mlbBullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "mlbLineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "mlbWeather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19"
+    },
+    "after": {
+      "mlbPrediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "mlbStarter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "mlbBullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "mlbLineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "mlbWeather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19"
+    },
+    "unchanged": true
+  },
+  "warnings": [],
+  "missing": [],
+  "checks": [
+    {
+      "id": "result-hash-matched",
+      "passed": true,
+      "detail": "b226837fd25a7c2738e83a51cd068303c253ce299480caa852e11656e204ecdf == b226837fd25a7c2738e83a51cd068303c253ce299480caa852e11656e204ecdf"
+    },
+    {
+      "id": "result-hash-regression",
+      "passed": true,
+      "detail": "skipped for non-baseline date"
+    },
+    {
+      "id": "warm-network-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "internal-game-id-format",
+      "passed": true,
+      "detail": "kbo-{providerGameId}"
+    },
+    {
+      "id": "betman-not-checked",
+      "passed": true,
+      "detail": "NOT_CHECKED"
+    },
+    {
+      "id": "engine-prohibited",
+      "passed": true,
+      "detail": "PROHIBITED"
+    },
+    {
+      "id": "mlb-regression-unchanged",
+      "passed": true,
+      "detail": "MLB prediction/datasets unchanged"
+    }
+  ],
+  "notes": [
+    "KBO Schedule/Result Identity v1 — provider-agnostic identity only.",
+    "Betman scope reference NOT_CHECKED in v1.",
+    "No Prediction / Engine / Grade pipeline."
+  ]
+}

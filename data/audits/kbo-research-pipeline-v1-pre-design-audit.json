@@ -1,0 +1,221 @@
+{
+  "meta": {
+    "version": "kbo-research-pipeline-v1-pre-design-audit",
+    "kind": "pre-design-audit",
+    "generatedAt": "2026-07-28T06:45:00.000Z",
+    "researchOnly": true,
+    "engineConnected": false,
+    "engineAdmission": "PROHIBITED",
+    "codeChange": false,
+    "registryChange": false,
+    "frameworkChange": false,
+    "officialConclusion": "READY_FOR_KBO_MINIMAL_RESEARCH_DATASET",
+    "note": "Read-only pre-design. No KBO Dataset/Builder/Prediction/Viewer. No Betman crawl."
+  },
+  "currentCodeStatus": {
+    "scheduleProvider": "PARTIAL_THESPORTSDB_KBO_4830",
+    "oddsResolver": "PARTIAL_ODDS_API_KBO_KEYS",
+    "teamAliases": "PRESENT",
+    "researchPredictionSnapshots": "NONE",
+    "researchDatasets": "NONE",
+    "researchViewer": "MLB_ONLY",
+    "gradeAndReviewScripts": "MLB_ONLY",
+    "dummySamples": "PRESENT_NOT_RESEARCH",
+    "registryKboIds": "NONE"
+  },
+  "betmanBoundary": {
+    "scopeRole": "ANALYSIS_CANDIDATE_SLATE_ONLY",
+    "dataProviderRole": "FORBIDDEN",
+    "prohibited": [
+      "BETMAN_HTML_CRAWLING",
+      "LOGIN_AUTOMATION",
+      "HTML_PARSING",
+      "BULK_ODDS_COPY",
+      "TREATING_BETMAN_AS_SPORTS_API"
+    ]
+  },
+  "auditedProviders": [
+    {
+      "id": "thesportsdb",
+      "schedule": "AVAILABLE_WITH_PLAN_LIMITS",
+      "results": "LIMITED",
+      "starter": "NOT_AVAILABLE_AS_RESEARCH_GRADE",
+      "lineup": "NOT_AVAILABLE_AS_RESEARCH_GRADE",
+      "bullpen": "NOT_AVAILABLE",
+      "injury": "NOT_AVAILABLE",
+      "weather": "NOT_AVAILABLE",
+      "odds": "NOT_AVAILABLE",
+      "historical": "LIMITED_FREE_PLAN",
+      "rateLimits": "eventsday_max_3_per_league_free",
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "publicDisplay": "PUBLIC_DISPLAY_UNCONFIRMED"
+    },
+    {
+      "id": "api-baseball",
+      "schedule": "AVAILABLE_CANDIDATE",
+      "results": "AVAILABLE_CANDIDATE",
+      "starter": "ENDPOINT_NOT_SUPPORTED_IN_REPO_PROBE",
+      "lineup": "ENDPOINT_NOT_SUPPORTED_IN_REPO_PROBE",
+      "bullpen": "ENDPOINT_NOT_SUPPORTED_IN_REPO_PROBE",
+      "injury": "ENDPOINT_NOT_SUPPORTED_IN_REPO_PROBE",
+      "weather": "NOT_AVAILABLE",
+      "odds": "ENDPOINT_EXISTS_PLAN_DEPENDENT",
+      "historical": "GAMES_SEASON_CANDIDATE",
+      "rateLimits": "PLAN_DEPENDENT",
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "publicDisplay": "PUBLIC_DISPLAY_UNCONFIRMED",
+      "evidence": "scripts/test-api-baseball-coverage.ts"
+    },
+    {
+      "id": "sportsdataio",
+      "schedule": "CANDIDATE_IF_LICENSED",
+      "results": "CANDIDATE_IF_LICENSED",
+      "starter": "CANDIDATE_IF_NON_SCRAMBLED",
+      "lineup": "CANDIDATE_IF_NON_SCRAMBLED",
+      "bullpen": "CANDIDATE_IF_NON_SCRAMBLED",
+      "injury": "CANDIDATE_IF_NON_SCRAMBLED",
+      "weather": "UNKNOWN",
+      "odds": "UNKNOWN",
+      "historical": "CANDIDATE_IF_LICENSED",
+      "rateLimits": "CONTRACT",
+      "legalStatus": "COMMERCIAL_LICENSE_REQUIRED",
+      "publicDisplay": "PUBLIC_DISPLAY_UNCONFIRMED",
+      "scrambled": "BLOCKED"
+    },
+    {
+      "id": "official-kbo-or-partner",
+      "schedule": "UNKNOWN_WITHOUT_CONTRACT",
+      "results": "UNKNOWN_WITHOUT_CONTRACT",
+      "starter": "UNKNOWN_WITHOUT_CONTRACT",
+      "lineup": "UNKNOWN_WITHOUT_CONTRACT",
+      "bullpen": "UNKNOWN_WITHOUT_CONTRACT",
+      "injury": "UNKNOWN_WITHOUT_CONTRACT",
+      "weather": "UNKNOWN",
+      "odds": "UNKNOWN",
+      "historical": "UNKNOWN",
+      "rateLimits": "UNKNOWN",
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "publicDisplay": "PUBLIC_DISPLAY_UNCONFIRMED",
+      "htmlCrawlAlternative": "BLOCKED_DO_NOT_PROPOSE"
+    },
+    {
+      "id": "the-odds-api",
+      "schedule": "NOT_A_SCHEDULE_PROVIDER",
+      "results": "NOT_AVAILABLE",
+      "starter": "NOT_AVAILABLE",
+      "lineup": "NOT_AVAILABLE",
+      "bullpen": "NOT_AVAILABLE",
+      "injury": "NOT_AVAILABLE",
+      "weather": "NOT_AVAILABLE",
+      "odds": "KBO_KEYS_IN_RESOLVER_CANDIDATE",
+      "historical": "PLAN_DEPENDENT",
+      "rateLimits": "PLAN_DEPENDENT",
+      "legalStatus": "PER_USE_LEGAL_REVIEW_REQUIRED",
+      "publicDisplay": "PUBLIC_DISPLAY_UNCONFIRMED"
+    },
+    {
+      "id": "betman",
+      "schedule": "SCOPE_ALIGNMENT_ONLY",
+      "results": "FORBIDDEN_AS_PROVIDER",
+      "starter": "FORBIDDEN_AS_PROVIDER",
+      "lineup": "FORBIDDEN_AS_PROVIDER",
+      "bullpen": "FORBIDDEN_AS_PROVIDER",
+      "injury": "FORBIDDEN_AS_PROVIDER",
+      "weather": "FORBIDDEN_AS_PROVIDER",
+      "odds": "FORBIDDEN_AS_PROVIDER",
+      "historical": "FORBIDDEN_AS_PROVIDER",
+      "rateLimits": "N_A",
+      "legalStatus": "BLOCKED",
+      "publicDisplay": "BLOCKED"
+    }
+  ],
+  "availabilitySummary": {
+    "schedule": "PARTIAL_AVAILABLE",
+    "result": "PARTIAL_CANDIDATE",
+    "starter": "NOT_COLLECTED_NO_CLEARED_SOURCE",
+    "lineup": "FUTURE_GATED",
+    "bullpen": "FUTURE_GATED",
+    "injury": "FUTURE_GATED",
+    "odds": "CANDIDATE_AFTER_LEGAL_REVIEW",
+    "weather": "FUTURE_GATED_KOREA_PROVIDER_NEEDED"
+  },
+  "predictionSnapshotFeasibility": {
+    "homeTeam": "COLLECTIBLE",
+    "awayTeam": "COLLECTIBLE",
+    "league": "COLLECTIBLE",
+    "startTimeKst": "COLLECTIBLE",
+    "probableStarter": "NOT_COLLECTED_OR_FUTURE_GATED",
+    "marketOdds": "CANDIDATE",
+    "baselinePick": "FUTURE_GATED",
+    "modelProbability": "FUTURE_GATED",
+    "confidence": "FUTURE_GATED",
+    "edgeScore": "FUTURE_GATED",
+    "valueEdge": "FUTURE_GATED",
+    "dummyForbidden": true
+  },
+  "gradingCompatibility": {
+    "mlbStatusesPresent": [
+      "pending",
+      "graded",
+      "inconclusive",
+      "postponed",
+      "cancelled"
+    ],
+    "kboNeedsDocumented": [
+      "draw",
+      "no_game",
+      "suspended",
+      "void"
+    ],
+    "codeChangeThisMission": false,
+    "recommendation": "Future KBO grade adapter; do not silently overload MLB grader"
+  },
+  "gameId": {
+    "mlbPattern": "mlb-{externalId}",
+    "legacyScheduleSlug": "kbo-{home}-{away}",
+    "recommendation": "kbo-{providerGameId}",
+    "betmanIdAsPrimary": false,
+    "separateIds": {
+      "internalGameId": true,
+      "providerExternalId": true,
+      "betmanFixtureId": true
+    },
+    "codeChangeThisMission": false
+  },
+  "firstDatasetRecommendation": {
+    "order": [
+      "schedule-result-identity",
+      "starter",
+      "lineup",
+      "bullpen",
+      "travel-rest",
+      "weather",
+      "injury",
+      "odds-history"
+    ],
+    "nextMission": "Implement exactly one minimal Dataset after Provider mini-clearance"
+  },
+  "abstractionTrigger": {
+    "conclusion": "COMMON_EXTRACTION_CANDIDATES_FOUND",
+    "frameworkChange": "NO_FRAMEWORK_CHANGE",
+    "reason": "Lifecycle candidates confirmed conceptually; no KBO Dataset artifact yet — no Framework field promotion"
+  },
+  "checks": [
+    {
+      "id": "NO_REGISTRY_KBO",
+      "passed": true
+    },
+    {
+      "id": "NO_BUILDER",
+      "passed": true
+    },
+    {
+      "id": "NO_DUMMY_RESEARCH_PREDICTION",
+      "passed": true
+    },
+    {
+      "id": "NO_BETMAN_CRAWL_PROPOSAL",
+      "passed": true
+    }
+  ]
+}

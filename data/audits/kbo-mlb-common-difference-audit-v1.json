@@ -1,0 +1,185 @@
+{
+  "meta": {
+    "version": "kbo-mlb-common-difference-audit-v1",
+    "kind": "common-difference-audit",
+    "generatedAt": "2026-07-28T06:45:00.000Z",
+    "researchOnly": true,
+    "engineConnected": false,
+    "frameworkChange": false,
+    "officialConclusion": "COMMON_EXTRACTION_CANDIDATES_FOUND",
+    "relatedDocs": [
+      "KBO_MLB_COMMON_DIFFERENCE_AUDIT.md",
+      "KBO_RESEARCH_PIPELINE_V1_DESIGN.md",
+      "MULTI_SPORT_RESEARCH_BOUNDARY.md"
+    ]
+  },
+  "lifecycleClassification": [
+    {
+      "item": "pregame_prediction_snapshot_freeze",
+      "class": "COMMON_CANDIDATE"
+    },
+    {
+      "item": "resultStatus",
+      "class": "COMMON_CANDIDATE"
+    },
+    {
+      "item": "automatic_grade",
+      "class": "COMMON_CANDIDATE"
+    },
+    {
+      "item": "success_failure_review",
+      "class": "COMMON_CANDIDATE"
+    },
+    {
+      "item": "cutoffTime",
+      "class": "COMMON_CANDIDATE"
+    },
+    {
+      "item": "collectionPhase",
+      "class": "COMMON_CANDIDATE"
+    },
+    {
+      "item": "legalStatus",
+      "class": "COMMON_CONFIRMED"
+    },
+    {
+      "item": "researchOnly",
+      "class": "COMMON_CONFIRMED"
+    },
+    {
+      "item": "inputHash",
+      "class": "COMMON_CONFIRMED"
+    },
+    {
+      "item": "resultHash",
+      "class": "COMMON_CONFIRMED"
+    },
+    {
+      "item": "cacheUsage",
+      "class": "COMMON_CANDIDATE"
+    },
+    {
+      "item": "warnings",
+      "class": "COMMON_CONFIRMED"
+    },
+    {
+      "item": "missing",
+      "class": "COMMON_CONFIRMED"
+    },
+    {
+      "item": "engineAdmission_PROHIBITED_default",
+      "class": "COMMON_CONFIRMED"
+    },
+    {
+      "item": "evidence_ledger",
+      "class": "COMMON_CANDIDATE"
+    },
+    {
+      "item": "contradiction_ledger",
+      "class": "COMMON_CANDIDATE"
+    },
+    {
+      "item": "sample_growth_dashboard",
+      "class": "COMMON_CANDIDATE"
+    },
+    {
+      "item": "completeness_trend",
+      "class": "COMMON_CANDIDATE"
+    },
+    {
+      "item": "engine_gate_dashboard",
+      "class": "COMMON_CANDIDATE"
+    },
+    {
+      "item": "research_quality_dashboard",
+      "class": "COMMON_CANDIDATE"
+    },
+    {
+      "item": "mlb_stats_api_cache_layout",
+      "class": "MLB_ONLY"
+    },
+    {
+      "item": "bullpen_role_classifier_vocabulary",
+      "class": "MLB_ONLY"
+    }
+  ],
+  "mlbCommonConfirmed": [
+    "legalStatus",
+    "researchOnly",
+    "inputHash",
+    "resultHash",
+    "warnings",
+    "missing",
+    "engineAdmission_PROHIBITED_default"
+  ],
+  "mlbCommonCandidates": [
+    "pregame_prediction_snapshot_freeze",
+    "resultStatus",
+    "automatic_grade",
+    "success_failure_review",
+    "cutoffTime",
+    "collectionPhase",
+    "cacheUsage",
+    "evidence_ledger",
+    "contradiction_ledger",
+    "sample_growth_dashboard",
+    "completeness_trend",
+    "engine_gate_dashboard",
+    "research_quality_dashboard",
+    "travel_rest_method",
+    "odds_history_pattern",
+    "lineup_postgame_phase"
+  ],
+  "mlbOnly": [
+    "mlb_stats_api_cache_layout",
+    "bullpen_role_classifier_vocabulary",
+    "gamePk",
+    "noaa_us_weather_as_default"
+  ],
+  "kboSpecificDifferences": [
+    "foreign_starter_share_rules",
+    "rotation_structure",
+    "bullpen_role_publicity",
+    "doubleheader_identity",
+    "rainout_nogame_suspended_mapping",
+    "extra_innings_and_draw_rules",
+    "postseason_rules",
+    "designated_hitter",
+    "lineup_announcement_timing",
+    "roster_entry_release",
+    "korea_travel_distances",
+    "monday_rest_schedule_pattern",
+    "provider_status_codes",
+    "ko_en_team_name_join"
+  ],
+  "domainJudgments": {
+    "starter": "KBO_SPECIFIC_SOURCE_COMMON_FREEZE_PATTERN",
+    "bullpen": "KBO_SPECIFIC",
+    "lineup": "COMMON_CANDIDATE_PHASE_KBO_SPECIFIC_JOIN",
+    "weather": "KBO_SPECIFIC_PROVIDER",
+    "travel": "COMMON_CANDIDATE_METHOD",
+    "odds": "COMMON_CANDIDATE_PLUS_LEGAL",
+    "injury": "KBO_SPECIFIC",
+    "scheduleIntegrity": "FIRST_DATASET_CANDIDATE"
+  },
+  "abstractionAnswers": {
+    "repeatedStructures": "Research lifecycle and metadata shells (candidates)",
+    "lookalikeBecauseBaseball": "Starter/Bullpen/Lineup domains",
+    "providerBound": "MLB Stats API, NOAA US, mlb/ cache paths",
+    "frameworkPromotionNow": false
+  },
+  "checks": [
+    {
+      "id": "NO_FRAMEWORK_FIELD_ADD",
+      "passed": true
+    },
+    {
+      "id": "NO_ENGINE_VARIABLE_INTERPRETATION",
+      "passed": true
+    },
+    {
+      "id": "NO_REGISTRY_PLACEHOLDER",
+      "passed": true
+    }
+  ]
+}

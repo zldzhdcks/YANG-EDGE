@@ -37,7 +37,7 @@ export const TEAM_ALIASES: TeamAliasEntry[] = [
   },
   {
     displayName: "KIA",
-    originalNames: ["Kia Tigers", "KIA Tigers", "KIA", "기아", "기아 타이거즈"],
+    originalNames: ["Kia Tigers", "KIA Tigers", "KIA", "KIA 타이거즈", "기아", "기아 타이거즈"],
     league: "KBO",
     sport: "baseball",
   },
@@ -67,7 +67,7 @@ export const TEAM_ALIASES: TeamAliasEntry[] = [
   },
   {
     displayName: "KT",
-    originalNames: ["KT Wiz", "kt wiz", "KT", "KT 위즈"],
+    originalNames: ["KT Wiz", "KT Wiz Suwon", "kt wiz", "KT", "KT 위즈"],
     league: "KBO",
     sport: "baseball",
   },

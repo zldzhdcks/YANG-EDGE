@@ -1,0 +1,206 @@
+{
+  "meta": {
+    "datasetId": "kbo-schedule-result-identity",
+    "schemaVersion": "kbo-schedule-result-identity-v1",
+    "builderVersion": "kbo-schedule-result-identity-builder-v1",
+    "status": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "researchOnly": true,
+    "dateKst": "2026-07-24",
+    "collectionPhase": "POST_GAME_RESULT_IDENTITY",
+    "generatedAt": "2026-07-28T07:05:51.675Z",
+    "inputHashSha256": "a72014b53e26cf4ce91172efcf9b9f3cb6e267350824e6d08e6c67c539913fb4",
+    "resultHashSha256": "b6527db3df7652eaf239f734309df5973fc1d7c2b1526d5799945a9092245c02",
+    "legalStatus": "INTERNAL_RESEARCH_ONLY",
+    "publicDisplay": "UNCONFIRMED",
+    "commercialUse": "UNCONFIRMED",
+    "sourceCutoff": "2026-07-24T18:30:00+09:00",
+    "notes": [
+      "KBO Schedule/Result Identity v1 — provider-agnostic identity only.",
+      "Betman scope reference NOT_CHECKED in v1.",
+      "No Prediction / Engine / Grade pipeline."
+    ]
+  },
+  "cacheUsage": {
+    "rawHit": 1,
+    "rawMiss": 0,
+    "networkCalls": 0
+  },
+  "warnings": [
+    "PROVIDER_LIMITED_COVERAGE: TheSportsDB free tier may return at most 3 events per league per request; fetched=3"
+  ],
+  "missing": [],
+  "summary": {
+    "providerGamesFetched": 3,
+    "datasetGamesCreated": 3,
+    "missingProviderGameId": 0,
+    "teamMappingsMatched": 6,
+    "teamMappingsUnmatched": 0,
+    "scheduled": 0,
+    "live": 0,
+    "final": 3,
+    "draw": 0,
+    "postponed": 0,
+    "cancelled": 0,
+    "noGame": 0,
+    "suspended": 0,
+    "unknown": 0,
+    "scheduleChanges": 0
+  },
+  "rows": [
+    {
+      "internalGameId": "kbo-2400369",
+      "sport": "baseball",
+      "league": "KBO",
+      "season": "2026",
+      "dateKst": "2026-07-24",
+      "homeTeam": {
+        "providerName": "Lotte Giants",
+        "canonicalNameKo": "롯데",
+        "canonicalNameEn": "Lotte Giants",
+        "canonicalTeamId": "kbo-롯데",
+        "mappingStatus": "MATCHED"
+      },
+      "awayTeam": {
+        "providerName": "KT Wiz",
+        "canonicalNameKo": "KT",
+        "canonicalNameEn": "KT Wiz",
+        "canonicalTeamId": "kbo-kt",
+        "mappingStatus": "MATCHED"
+      },
+      "homeTeamId": "139821",
+      "awayTeamId": "139827",
+      "venueName": "Sajik Baseball Stadium",
+      "provider": {
+        "id": "THESPORTSDB",
+        "leagueId": "4830",
+        "legalStatus": "INTERNAL_RESEARCH_ONLY",
+        "publicDisplay": "UNCONFIRMED",
+        "commercialUse": "UNCONFIRMED"
+      },
+      "providerGameId": "2400369",
+      "providerStatusRaw": "FT",
+      "gameStatus": "FINAL",
+      "betmanScopeReference": "NOT_CHECKED",
+      "collectionPhase": "POST_GAME_RESULT_IDENTITY",
+      "time": {
+        "providerStartTime": "2026-07-24T09:30:00Z",
+        "startTimeKst": "2026-07-24T18:30:00+09:00",
+        "firstObservedAt": "2026-07-28T06:59:33.708Z",
+        "lastObservedAt": "2026-07-28T07:05:51.675Z",
+        "cutoffTime": "2026-07-24T18:30:00+09:00",
+        "scheduleChanges": []
+      },
+      "result": {
+        "resultStatus": "GRADED",
+        "homeScore": 4,
+        "awayScore": 5,
+        "winner": "AWAY"
+      },
+      "generatedAt": "2026-07-28T07:05:51.675Z"
+    },
+    {
+      "internalGameId": "kbo-2400370",
+      "sport": "baseball",
+      "league": "KBO",
+      "season": "2026",
+      "dateKst": "2026-07-24",
+      "homeTeam": {
+        "providerName": "SSG Landers",
+        "canonicalNameKo": "SSG",
+        "canonicalNameEn": "SSG Landers",
+        "canonicalTeamId": "kbo-ssg",
+        "mappingStatus": "MATCHED"
+      },
+      "awayTeam": {
+        "providerName": "NC Dinos",
+        "canonicalNameKo": "NC",
+        "canonicalNameEn": "NC Dinos",
+        "canonicalTeamId": "kbo-nc",
+        "mappingStatus": "MATCHED"
+      },
+      "homeTeamId": "139828",
+      "awayTeamId": "139819",
+      "venueName": "Incheon SSG Landers Field",
+      "provider": {
+        "id": "THESPORTSDB",
+        "leagueId": "4830",
+        "legalStatus": "INTERNAL_RESEARCH_ONLY",
+        "publicDisplay": "UNCONFIRMED",
+        "commercialUse": "UNCONFIRMED"
+      },
+      "providerGameId": "2400370",
+      "providerStatusRaw": "FT",
+      "gameStatus": "FINAL",
+      "betmanScopeReference": "NOT_CHECKED",
+      "collectionPhase": "POST_GAME_RESULT_IDENTITY",
+      "time": {
+        "providerStartTime": "2026-07-24T09:30:00Z",
+        "startTimeKst": "2026-07-24T18:30:00+09:00",
+        "firstObservedAt": "2026-07-28T06:59:33.708Z",
+        "lastObservedAt": "2026-07-28T07:05:51.675Z",
+        "cutoffTime": "2026-07-24T18:30:00+09:00",
+        "scheduleChanges": []
+      },
+      "result": {
+        "resultStatus": "GRADED",
+        "homeScore": 7,
+        "awayScore": 3,
+        "winner": "HOME"
+      },
+      "generatedAt": "2026-07-28T07:05:51.675Z"
+    },
+    {
+      "internalGameId": "kbo-2400371",
+      "sport": "baseball",
+      "league": "KBO",
+      "season": "2026",
+      "dateKst": "2026-07-24",
+      "homeTeam": {
+        "providerName": "Kia Tigers",
+        "canonicalNameKo": "KIA",
+        "canonicalNameEn": "Kia Tigers",
+        "canonicalTeamId": "kbo-kia",
+        "mappingStatus": "MATCHED"
+      },
+      "awayTeam": {
+        "providerName": "Kiwoom Heroes",
+        "canonicalNameKo": "키움",
+        "canonicalNameEn": "Kiwoom Heroes",
+        "canonicalTeamId": "kbo-키움",
+        "mappingStatus": "MATCHED"
+      },
+      "homeTeamId": "139824",
+      "awayTeamId": "139823",
+      "venueName": "Gwangju-Kia Champions Field",
+      "provider": {
+        "id": "THESPORTSDB",
+        "leagueId": "4830",
+        "legalStatus": "INTERNAL_RESEARCH_ONLY",
+        "publicDisplay": "UNCONFIRMED",
+        "commercialUse": "UNCONFIRMED"
+      },
+      "providerGameId": "2400371",
+      "providerStatusRaw": "FT",
+      "gameStatus": "FINAL",
+      "betmanScopeReference": "NOT_CHECKED",
+      "collectionPhase": "POST_GAME_RESULT_IDENTITY",
+      "time": {
+        "providerStartTime": "2026-07-24T09:30:00Z",
+        "startTimeKst": "2026-07-24T18:30:00+09:00",
+        "firstObservedAt": "2026-07-28T06:59:33.708Z",
+        "lastObservedAt": "2026-07-28T07:05:51.675Z",
+        "cutoffTime": "2026-07-24T18:30:00+09:00",
+        "scheduleChanges": []
+      },
+      "result": {
+        "resultStatus": "GRADED",
+        "homeScore": 5,
+        "awayScore": 8,
+        "winner": "AWAY"
+      },
+      "generatedAt": "2026-07-28T07:05:51.675Z"
+    }
+  ]
+}

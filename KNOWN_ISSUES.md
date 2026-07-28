@@ -75,3 +75,38 @@
 | Coordinates not in schedule cache | Open — requires `/venues?hydrate=location` or static registry |
 | Season-first / cache boundary | Open — `joinQuality=MISSING_PREVIOUS`; no inference |
 | KST slate vs `officialDate` for rolling windows | Open — window policy needed for `gamesInLastNDays` |
+
+## KBO Research Pipeline v1
+
+| Issue | Status |
+|-------|--------|
+| Schedule/Result Identity v1 | **COLLECTING** — Provider/Service/Builder layered; API-BASEBALL `5` primary + legacy TheSportsDB artifact preserved |
+| Pipeline architecture | Provider → Service → Builder; file cache only; no Redis/WebSocket/polling |
+| Feature flag | `KBO_IDENTITY_COLLECTION_ENABLED` — collection CLI only, not Engine admission |
+| KBO Prediction / Starter / Bullpen / Lineup | Not implemented (by design) |
+| Stable research `gameId` | `kbo-{providerGameId}` in identity v1 |
+| Betman scope matching | `NOT_CHECKED` in v1 |
+| Probable starter / lineup / bullpen / injury Providers | Open — API-BASEBALL lacks those endpoints per repo probe |
+| Korea weather Provider | Open — NOAA US-only insufficient |
+| Grade taxonomy for draw / no-game / suspended | Open — identity v1 stores normalized status; MLB grader not extended |
+| Provider commercial / public display rights | `UNCONFIRMED` — no forced selection |
+| Today slate completeness | Resolved for 2026-07-28 via API-BASEBALL full-slate provider; legacy TheSportsDB still limited to 3 games |
+| Betman target scope input | Manual operator input only; default `NOT_ENTERED` |
+| Proto odds input | Manual operator input only; default `NOT_ENTERED` |
+| Operator input verified state | `VERIFIED_FOR_RESEARCH_INPUT` does not imply Prediction/Engine/public use approval |
+| Integrated operator market input v2 | 2026-07-28 draft is `READY_FOR_OPERATOR_REVIEW`; review state still `DRAFT` |
+| Full-slate identity coverage | Resolved for 2026-07-28 with API-BASEBALL; public/commercial rights remain unconfirmed |
+| KBO odds comparison v1 | `MONEYLINE_2WAY` only; overseas market rules remain `MARKET_RULE_UNVERIFIED`, so raw odds are shown without numeric comparison |
+
+## Soccer Research Pipeline v1 (pre-design)
+
+| Issue | Status |
+|-------|--------|
+| Soccer research Dataset artifacts | Not implemented — pre-design only |
+| Stable research `gameId` | Recommend `soccer-{providerFixtureId}`; do not use Betman id or team/date slug as primary |
+| Result / grade taxonomy | Draw, extra time, penalties, and abandoned states require soccer-specific contract |
+| Starting XI / formation availability | Provider coverage depends on league/season and near-kickoff timing |
+| Injury / suspension reliability | Competition-dependent; post-game backfill leakage risk high |
+| League table / form leakage | Must preserve cutoff and avoid post-match recompute contamination |
+| Non-major Betman league coverage | Candidate only after lawful provider coverage and mapping validation |
+| Provider commercial / public display rights | `NEEDS_LEGAL_REVIEW` / `COMMERCIAL_LICENSE_REQUIRED` depending on provider |

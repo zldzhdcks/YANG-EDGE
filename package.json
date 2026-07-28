@@ -17,7 +17,12 @@
     "research:ops": "tsx --env-file=.env.local scripts/run-mlb-research-ops-pipeline-v1.ts",
     "research:dashboard": "tsx --env-file=.env.local scripts/build-dataset-coverage-dashboard-v1.ts",
     "research:starter-summary": "tsx --env-file=.env.local scripts/summarize-mlb-starter-accumulation-v1.ts",
-    "research:lineup-probe": "tsx --env-file=.env.local scripts/probe-mlb-pregame-lineup-availability-v1.ts"
+    "research:lineup-probe": "tsx --env-file=.env.local scripts/probe-mlb-pregame-lineup-availability-v1.ts",
+    "research:kbo-identity": "tsx --env-file=.env.local scripts/build-kbo-schedule-result-identity-v1.ts",
+    "research:kbo-odds-comparison": "tsx --env-file=.env.local scripts/build-kbo-odds-comparison-v1.ts",
+    "research:kbo-slate-readiness": "tsx --env-file=.env.local scripts/check-kbo-today-slate-readiness-v1.ts",
+    "research:kbo-operator-input": "tsx --env-file=.env.local scripts/validate-kbo-operator-input-v1.ts",
+    "research:kbo-operator-markets": "tsx --env-file=.env.local scripts/validate-kbo-operator-market-input-v2.ts"
   },
   "dependencies": {
     "next": "16.2.10",

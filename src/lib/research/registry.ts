@@ -107,6 +107,19 @@ export const RESEARCH_DATASET_REGISTRY: ResearchDatasetRegistryEntry[] = [
     notes:
       "Injury Dataset v1 collecting PRE_GAME_ROSTER from 40Man + transactions only. No severity/expectedReturn inference. Framework adapter only; builder independent of Framework.",
   },
+  {
+    datasetId: "kbo-schedule-result-identity",
+    status: "COLLECTING",
+    schemaVersion: "kbo-schedule-result-identity-v1",
+    builderVersion: "kbo-schedule-result-identity-builder-v1",
+    frameworkVersion: RESEARCH_FRAMEWORK_VERSION,
+    artifactDatasetPath:
+      "data/research/kbo/2026-07-24-schedule-result-identity-v1.json",
+    hypothesisIds: [],
+    engineAdmission: "PROHIBITED",
+    notes:
+      "KBO Schedule/Result Identity v1 — TheSportsDB league 4830 only. No Prediction/Engine. Framework adapter only; builder independent of Framework.",
+  },
 ];
 
 export function getRegistryEntry(
@@ -456,6 +469,55 @@ export function weatherV1FrameworkMetadata(
       "Framework adapter only — domain builder does not import Framework.",
       "Engine admission remains PROHIBITED.",
       "Forecast provider not selected; no Weather Score.",
+    ],
+    ...overrides,
+  };
+}
+
+/** KBO Schedule/Result Identity v1 → Framework metadata 매핑 (도메인 builder 비의존) */
+export function kboScheduleResultIdentityV1FrameworkMetadata(
+  overrides?: Partial<ResearchDatasetMetadata>,
+): ResearchDatasetMetadata {
+  const entry = getRegistryEntry("kbo-schedule-result-identity")!;
+  return {
+    datasetId: entry.datasetId,
+    displayName: "KBO Schedule / Result Identity Dataset",
+    domain: "other",
+    league: "KBO",
+    status: entry.status,
+    versions: {
+      frameworkVersion: RESEARCH_FRAMEWORK_VERSION,
+      schemaVersion: entry.schemaVersion,
+      builderVersion: entry.builderVersion,
+      compatibility: "experimental",
+      notes:
+        "v1 schedule/result identity only; TheSportsDB 4830; betmanScopeReference NOT_CHECKED",
+    },
+    legal: {
+      source: "INTERNAL_RESEARCH_ONLY",
+      publicRuntimeUseAllowed: false,
+      commercialRuntimeUseAllowed: false,
+      engineConnected: false,
+      rawResponseInResearchCacheOnly: true,
+      mlbHtmlCrawling: false,
+      sportsDataIoScrambled: false,
+    },
+    hypothesisIds: entry.hypothesisIds,
+    artifactPaths: {
+      dataset: entry.artifactDatasetPath ?? undefined,
+      audit: "data/audits/2026-07-24-kbo-schedule-result-identity-v1-audit.json",
+      derivedCache: "data/cache/research/kbo/raw/thesportsdb/",
+    },
+    sample: {
+      minimumSampleTarget: 100,
+    },
+    createdAt: "2026-07-28T00:00:00.000Z",
+    updatedAt: null,
+    lastAuditedAt: null,
+    notes: [
+      "Framework adapter only — domain builder does not import Framework.",
+      "Engine admission remains PROHIBITED.",
+      "No Prediction / Starter / Bullpen / Lineup.",
     ],
     ...overrides,
   };

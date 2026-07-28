@@ -1,0 +1,127 @@
+{
+  "meta": {
+    "version": "kbo-schedule-result-identity-v1-audit",
+    "kind": "kbo-schedule-result-identity-v1-build-audit",
+    "datasetId": "kbo-schedule-result-identity",
+    "schemaVersion": "kbo-schedule-result-identity-v1",
+    "builderVersion": "kbo-schedule-result-identity-builder-v1",
+    "targetDate": "2026-07-24",
+    "generatedAt": "2026-07-28T07:05:51.693Z",
+    "datasetStatus": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "researchOnly": true,
+    "inputHashSha256": "a72014b53e26cf4ce91172efcf9b9f3cb6e267350824e6d08e6c67c539913fb4",
+    "resultHashSha256": "b6527db3df7652eaf239f734309df5973fc1d7c2b1526d5799945a9092245c02",
+    "previousResultHash": "b6527db3df7652eaf239f734309df5973fc1d7c2b1526d5799945a9092245c02",
+    "resultHashRegressionMatched": true,
+    "firstResultHash": "b6527db3df7652eaf239f734309df5973fc1d7c2b1526d5799945a9092245c02",
+    "secondResultHash": "b6527db3df7652eaf239f734309df5973fc1d7c2b1526d5799945a9092245c02",
+    "hashMatched": true,
+    "warmRerunHashMatched": true,
+    "architectureLayer": "service"
+  },
+  "provider": {
+    "id": "THESPORTSDB",
+    "leagueId": "4830",
+    "legalStatus": "INTERNAL_RESEARCH_ONLY",
+    "publicDisplay": "UNCONFIRMED",
+    "commercialUse": "UNCONFIRMED"
+  },
+  "providerGamesFetched": 3,
+  "datasetGamesCreated": 3,
+  "missingProviderGameId": 0,
+  "teamMappingsMatched": 6,
+  "teamMappingsUnmatched": 0,
+  "scheduled": 0,
+  "live": 0,
+  "final": 3,
+  "draw": 0,
+  "postponed": 0,
+  "cancelled": 0,
+  "noGame": 0,
+  "suspended": 0,
+  "unknown": 0,
+  "scheduleChanges": 0,
+  "cacheUsage": {
+    "firstRun": {
+      "rawHit": 1,
+      "rawMiss": 0,
+      "networkCalls": 0
+    },
+    "secondRunWarm": {
+      "rawHit": 1,
+      "rawMiss": 0,
+      "networkCalls": 0
+    }
+  },
+  "networkCalls": {
+    "firstRun": 0,
+    "secondRunWarm": 0
+  },
+  "registryStatus": "REGISTERED",
+  "engineImpact": "NONE",
+  "regressionHashes": {
+    "before": {
+      "mlbPrediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "mlbStarter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "mlbBullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "mlbLineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "mlbWeather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19"
+    },
+    "after": {
+      "mlbPrediction": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+      "mlbStarter": "67e34b664f60db55bf0f1fc83e7b704ef1efebbf5c41cef1676714fc19a1f993",
+      "mlbBullpen": "f7fc2b732ca84bef90d8a5c6cf7679ba3d3e69fd9e9f8f7cd0ea3e845c2e4e8a",
+      "mlbLineup": "6c5cafc494035310ba571d2c397c59e2fdded4ba8db3e7f3e14dfb2695ba8dcb",
+      "mlbWeather": "726b87a5993d1f79be61425333521056def6d3015440c6937275fa0d9530ba19"
+    },
+    "unchanged": true
+  },
+  "warnings": [
+    "PROVIDER_LIMITED_COVERAGE: TheSportsDB free tier may return at most 3 events per league per request; fetched=3"
+  ],
+  "missing": [],
+  "checks": [
+    {
+      "id": "result-hash-matched",
+      "passed": true,
+      "detail": "b6527db3df7652eaf239f734309df5973fc1d7c2b1526d5799945a9092245c02 == b6527db3df7652eaf239f734309df5973fc1d7c2b1526d5799945a9092245c02"
+    },
+    {
+      "id": "result-hash-regression",
+      "passed": true,
+      "detail": "b6527db3df7652eaf239f734309df5973fc1d7c2b1526d5799945a9092245c02 == b6527db3df7652eaf239f734309df5973fc1d7c2b1526d5799945a9092245c02"
+    },
+    {
+      "id": "warm-network-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "internal-game-id-format",
+      "passed": true,
+      "detail": "kbo-{providerGameId}"
+    },
+    {
+      "id": "betman-not-checked",
+      "passed": true,
+      "detail": "NOT_CHECKED"
+    },
+    {
+      "id": "engine-prohibited",
+      "passed": true,
+      "detail": "PROHIBITED"
+    },
+    {
+      "id": "mlb-regression-unchanged",
+      "passed": true,
+      "detail": "MLB prediction/datasets unchanged"
+    }
+  ],
+  "notes": [
+    "KBO Schedule/Result Identity v1 — provider-agnostic identity only.",
+    "Betman scope reference NOT_CHECKED in v1.",
+    "No Prediction / Engine / Grade pipeline."
+  ]
+}

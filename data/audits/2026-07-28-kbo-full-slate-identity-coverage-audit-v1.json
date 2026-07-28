@@ -1,0 +1,164 @@
+{
+  "meta": {
+    "version": "kbo-full-slate-identity-coverage-audit-v1",
+    "generatedAt": "2026-07-28T00:00:00.000Z",
+    "conclusion": "KBO_FULL_SLATE_IDENTITY_COVERAGE_AUDITED"
+  },
+  "targetDate": "2026-07-28",
+  "expectedGames": 5,
+  "currentProvider": {
+    "id": "THESPORTSDB",
+    "leagueId": "4830",
+    "endpoint": "eventsday.php",
+    "coverage": "PARTIAL_COVERAGE",
+    "freeLimit": 3
+  },
+  "missingGames": [
+    "KBO-20260728-SAMSUNG-KIA",
+    "KBO-20260728-SSG-DOOSAN"
+  ],
+  "auditedProviders": [
+    {
+      "provider": "THESPORTSDB_FREE",
+      "fullSlateCandidate": false,
+      "stableProviderIds": true,
+      "paidPlanRequired": true,
+      "verifiedTodayFiveGames": false,
+      "legalStatus": "PUBLIC_DISPLAY_UNCONFIRMED"
+    },
+    {
+      "provider": "API_BASEBALL",
+      "fullSlateCandidate": true,
+      "stableProviderIds": true,
+      "paidPlanRequired": "NOT_PROVEN_REQUIRED_IN_CURRENT_ENV",
+      "verifiedTodayFiveGames": true,
+      "legalStatus": "NEEDS_LEGAL_REVIEW"
+    },
+    {
+      "provider": "SPORTSDATAIO",
+      "fullSlateCandidate": "POSSIBLE_BUT_NOT_VERIFIED",
+      "stableProviderIds": "LIKELY",
+      "paidPlanRequired": true,
+      "verifiedTodayFiveGames": false,
+      "legalStatus": "COMMERCIAL_LICENSE_REQUIRED"
+    },
+    {
+      "provider": "OFFICIAL_OR_PARTNER",
+      "fullSlateCandidate": "UNKNOWN",
+      "stableProviderIds": "UNKNOWN",
+      "paidPlanRequired": "UNKNOWN",
+      "verifiedTodayFiveGames": false,
+      "legalStatus": "NEEDS_LEGAL_REVIEW"
+    }
+  ],
+  "verifiedGames": {
+    "samsungVsKia": {
+      "status": "VERIFIED",
+      "source": "API_BASEBALL",
+      "providerGameId": 181905,
+      "providerHomeTeamId": 97,
+      "providerAwayTeamId": 90,
+      "providerStartTime": "2026-07-28T09:30:00+00:00",
+      "providerStatusRaw": "NS",
+      "providerLeagueId": 5
+    },
+    "ssgVsDoosan": {
+      "status": "VERIFIED",
+      "source": "API_BASEBALL",
+      "providerGameId": 181906,
+      "providerHomeTeamId": 647,
+      "providerAwayTeamId": 88,
+      "providerStartTime": "2026-07-28T09:30:00+00:00",
+      "providerStatusRaw": "NS",
+      "providerLeagueId": 5
+    }
+  },
+  "existingThreeGameCrossCheck": [
+    {
+      "internalGameId": "kbo-2400384",
+      "thesportsdbGameId": "2400384",
+      "apiBaseballGameId": 181902,
+      "teamsAligned": true,
+      "startTimeAligned": true,
+      "statusAligned": true
+    },
+    {
+      "internalGameId": "kbo-2400385",
+      "thesportsdbGameId": "2400385",
+      "apiBaseballGameId": 181903,
+      "teamsAligned": true,
+      "startTimeAligned": true,
+      "statusAligned": true
+    },
+    {
+      "internalGameId": "kbo-2400386",
+      "thesportsdbGameId": "2400386",
+      "apiBaseballGameId": 181904,
+      "teamsAligned": true,
+      "startTimeAligned": true,
+      "statusAligned": true
+    }
+  ],
+  "providerCrosswalkCandidate": {
+    "implementNow": false,
+    "fields": [
+      "internalGameId",
+      "providerRefs[].providerId",
+      "providerRefs[].providerGameId",
+      "providerRefs[].providerHomeTeamId",
+      "providerRefs[].providerAwayTeamId",
+      "providerRefs[].observedAt",
+      "providerRefs[].mappingEvidence",
+      "providerRefs[].mappingStatus"
+    ]
+  },
+  "operatorConfirmedIdentity": {
+    "decision": "RESEARCH_ONLY_FALLBACK_CANDIDATE",
+    "dualIdentityFeasibility": true,
+    "primaryRecommendation": false,
+    "candidateInternalIdPrefix": "kbo-op-{date}-{operatorGameId}",
+    "legalStatus": "INTERNAL_RESEARCH_ONLY"
+  },
+  "recommendedSolution": "B",
+  "recommendationReason": [
+    "API-BASEBALL today query verified all 5 games with provider-backed game ids",
+    "The two missing games are directly verifiable without invented ids",
+    "Existing 3 TheSportsDB games cross-check cleanly on teams/time/status",
+    "Avoids relying on operator-only identity as the primary key",
+    "Avoids assuming TheSportsDB premium behavior without direct verification"
+  ],
+  "paidPlanRequired": {
+    "theSportsDbPremiumForFullSlate": true,
+    "apiBaseballForCurrentEnvironment": false,
+    "commercialOrLongTermLegalReviewStillNeeded": true
+  },
+  "legalStatus": {
+    "theSportsDb": "PUBLIC_DISPLAY_UNCONFIRMED",
+    "apiBaseball": "NEEDS_LEGAL_REVIEW",
+    "sportsDataIo": "COMMERCIAL_LICENSE_REQUIRED",
+    "operatorScreenshots": "INTERNAL_RESEARCH_ONLY",
+    "publicDisplay": "LEGAL_CLEARANCE_PENDING"
+  },
+  "operatorMarketV2Impact": {
+    "fileChanged": false,
+    "statusChanged": false,
+    "currentStatus": "PARTIALLY_MAPPED",
+    "reviewStatus": "DRAFT"
+  },
+  "readinessImpact": {
+    "currentStatus": "RESEARCH_INPUTS_PARTIAL",
+    "promoted": false
+  },
+  "registryImpact": "NONE",
+  "frameworkImpact": "NONE",
+  "codeImpact": "READ_ONLY_AUDIT_ONLY",
+  "kboIdentityHash": "945d57556859c96679c8793303373851e39e8b8b75df6b7978b87c716f8bf09e",
+  "regression": {
+    "kboIdentityChanged": false,
+    "operatorMarketV2Changed": false,
+    "mlbPredictionChanged": false,
+    "mlbDatasetChanged": false,
+    "todayEdgePickChanged": false,
+    "engineImpact": "NONE"
+  }
+}

@@ -1,0 +1,401 @@
+{
+  "meta": {
+    "datasetId": "kbo-schedule-result-identity",
+    "schemaVersion": "kbo-schedule-result-identity-v1",
+    "builderVersion": "kbo-schedule-result-identity-builder-v1",
+    "status": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "researchOnly": true,
+    "dateKst": "2026-07-28",
+    "collectionPhase": "PRE_GAME_SCHEDULE_IDENTITY",
+    "generatedAt": "2026-07-28T08:02:15.086Z",
+    "inputHashSha256": "5609c434785131add017ae3471e90dcf8d8dde2ceb2032750385cedeb5376c7b",
+    "resultHashSha256": "b226837fd25a7c2738e83a51cd068303c253ce299480caa852e11656e204ecdf",
+    "legalStatus": "INTERNAL_RESEARCH_ONLY",
+    "publicDisplay": "UNCONFIRMED",
+    "commercialUse": "UNCONFIRMED",
+    "sourceCutoff": "2026-07-28T18:30:00+09:00",
+    "notes": [
+      "KBO Schedule/Result Identity v1 — provider-agnostic identity only.",
+      "Betman scope reference NOT_CHECKED in v1.",
+      "No Prediction / Engine / Grade pipeline."
+    ]
+  },
+  "cacheUsage": {
+    "rawHit": 1,
+    "rawMiss": 0,
+    "networkCalls": 0
+  },
+  "warnings": [],
+  "missing": [],
+  "summary": {
+    "providerGamesFetched": 5,
+    "datasetGamesCreated": 5,
+    "missingProviderGameId": 0,
+    "teamMappingsMatched": 10,
+    "teamMappingsUnmatched": 0,
+    "scheduled": 5,
+    "live": 0,
+    "final": 0,
+    "draw": 0,
+    "postponed": 0,
+    "cancelled": 0,
+    "noGame": 0,
+    "suspended": 0,
+    "unknown": 0,
+    "scheduleChanges": 0
+  },
+  "rows": [
+    {
+      "internalGameId": "kbo-181902",
+      "primaryProvider": "API_BASEBALL",
+      "sport": "baseball",
+      "league": "KBO",
+      "season": "2026",
+      "dateKst": "2026-07-28",
+      "homeTeam": {
+        "providerName": "Hanwha Eagles",
+        "canonicalNameKo": "한화",
+        "canonicalNameEn": "Hanwha Eagles",
+        "canonicalTeamId": "kbo-한화",
+        "mappingStatus": "MATCHED"
+      },
+      "awayTeam": {
+        "providerName": "Lotte Giants",
+        "canonicalNameKo": "롯데",
+        "canonicalNameEn": "Lotte Giants",
+        "canonicalTeamId": "kbo-롯데",
+        "mappingStatus": "MATCHED"
+      },
+      "homeTeamId": "89",
+      "awayTeamId": "94",
+      "venueName": null,
+      "provider": {
+        "id": "API_BASEBALL",
+        "leagueId": "5",
+        "legalStatus": "NEEDS_LEGAL_REVIEW",
+        "publicDisplay": "UNCONFIRMED",
+        "commercialUse": "UNCONFIRMED"
+      },
+      "providerGameId": "181902",
+      "providerStatusRaw": "NS",
+      "gameStatus": "SCHEDULED",
+      "betmanScopeReference": "NOT_CHECKED",
+      "providerRefs": [
+        {
+          "providerId": "API_BASEBALL",
+          "providerGameId": "181902",
+          "providerHomeTeamId": "89",
+          "providerAwayTeamId": "94",
+          "providerStartTime": "2026-07-28T09:30:00+00:00",
+          "mappingStatus": "MATCHED",
+          "mappingEvidence": "primary provider normalized row",
+          "observedAt": "2026-07-28T08:02:15.086Z"
+        },
+        {
+          "providerId": "THESPORTSDB",
+          "providerGameId": "2400384",
+          "providerHomeTeamId": "139826",
+          "providerAwayTeamId": "139821",
+          "providerStartTime": "2026-07-28T09:30:00Z",
+          "mappingStatus": "MATCHED",
+          "mappingEvidence": "canonicalTeamIds + startTimeKst + direction",
+          "observedAt": "2026-07-28T08:02:15.086Z"
+        }
+      ],
+      "collectionPhase": "PRE_GAME_SCHEDULE_IDENTITY",
+      "time": {
+        "providerStartTime": "2026-07-28T09:30:00+00:00",
+        "startTimeKst": "2026-07-28T18:30:00+09:00",
+        "firstObservedAt": "2026-07-28T07:59:30.582Z",
+        "lastObservedAt": "2026-07-28T08:02:15.086Z",
+        "cutoffTime": "2026-07-28T18:30:00+09:00",
+        "scheduleChanges": []
+      },
+      "result": {
+        "resultStatus": "PENDING",
+        "homeScore": null,
+        "awayScore": null,
+        "winner": null
+      },
+      "generatedAt": "2026-07-28T08:02:15.086Z"
+    },
+    {
+      "internalGameId": "kbo-181903",
+      "primaryProvider": "API_BASEBALL",
+      "sport": "baseball",
+      "league": "KBO",
+      "season": "2026",
+      "dateKst": "2026-07-28",
+      "homeTeam": {
+        "providerName": "LG Twins",
+        "canonicalNameKo": "LG",
+        "canonicalNameEn": "LG Twins",
+        "canonicalTeamId": "kbo-lg",
+        "mappingStatus": "MATCHED"
+      },
+      "awayTeam": {
+        "providerName": "Kiwoom Heroes",
+        "canonicalNameKo": "키움",
+        "canonicalNameEn": "Kiwoom Heroes",
+        "canonicalTeamId": "kbo-키움",
+        "mappingStatus": "MATCHED"
+      },
+      "homeTeamId": "93",
+      "awayTeamId": "92",
+      "venueName": null,
+      "provider": {
+        "id": "API_BASEBALL",
+        "leagueId": "5",
+        "legalStatus": "NEEDS_LEGAL_REVIEW",
+        "publicDisplay": "UNCONFIRMED",
+        "commercialUse": "UNCONFIRMED"
+      },
+      "providerGameId": "181903",
+      "providerStatusRaw": "NS",
+      "gameStatus": "SCHEDULED",
+      "betmanScopeReference": "NOT_CHECKED",
+      "providerRefs": [
+        {
+          "providerId": "API_BASEBALL",
+          "providerGameId": "181903",
+          "providerHomeTeamId": "93",
+          "providerAwayTeamId": "92",
+          "providerStartTime": "2026-07-28T09:30:00+00:00",
+          "mappingStatus": "MATCHED",
+          "mappingEvidence": "primary provider normalized row",
+          "observedAt": "2026-07-28T08:02:15.086Z"
+        },
+        {
+          "providerId": "THESPORTSDB",
+          "providerGameId": "2400385",
+          "providerHomeTeamId": "139820",
+          "providerAwayTeamId": "139823",
+          "providerStartTime": "2026-07-28T09:30:00Z",
+          "mappingStatus": "MATCHED",
+          "mappingEvidence": "canonicalTeamIds + startTimeKst + direction",
+          "observedAt": "2026-07-28T08:02:15.086Z"
+        }
+      ],
+      "collectionPhase": "PRE_GAME_SCHEDULE_IDENTITY",
+      "time": {
+        "providerStartTime": "2026-07-28T09:30:00+00:00",
+        "startTimeKst": "2026-07-28T18:30:00+09:00",
+        "firstObservedAt": "2026-07-28T07:59:30.582Z",
+        "lastObservedAt": "2026-07-28T08:02:15.086Z",
+        "cutoffTime": "2026-07-28T18:30:00+09:00",
+        "scheduleChanges": []
+      },
+      "result": {
+        "resultStatus": "PENDING",
+        "homeScore": null,
+        "awayScore": null,
+        "winner": null
+      },
+      "generatedAt": "2026-07-28T08:02:15.086Z"
+    },
+    {
+      "internalGameId": "kbo-181904",
+      "primaryProvider": "API_BASEBALL",
+      "sport": "baseball",
+      "league": "KBO",
+      "season": "2026",
+      "dateKst": "2026-07-28",
+      "homeTeam": {
+        "providerName": "NC Dinos",
+        "canonicalNameKo": "NC",
+        "canonicalNameEn": "NC Dinos",
+        "canonicalTeamId": "kbo-nc",
+        "mappingStatus": "MATCHED"
+      },
+      "awayTeam": {
+        "providerName": "KT Wiz Suwon",
+        "canonicalNameKo": "KT",
+        "canonicalNameEn": "KT Wiz",
+        "canonicalTeamId": "kbo-kt",
+        "mappingStatus": "MATCHED"
+      },
+      "homeTeamId": "95",
+      "awayTeamId": "91",
+      "venueName": null,
+      "provider": {
+        "id": "API_BASEBALL",
+        "leagueId": "5",
+        "legalStatus": "NEEDS_LEGAL_REVIEW",
+        "publicDisplay": "UNCONFIRMED",
+        "commercialUse": "UNCONFIRMED"
+      },
+      "providerGameId": "181904",
+      "providerStatusRaw": "NS",
+      "gameStatus": "SCHEDULED",
+      "betmanScopeReference": "NOT_CHECKED",
+      "providerRefs": [
+        {
+          "providerId": "API_BASEBALL",
+          "providerGameId": "181904",
+          "providerHomeTeamId": "95",
+          "providerAwayTeamId": "91",
+          "providerStartTime": "2026-07-28T09:30:00+00:00",
+          "mappingStatus": "MATCHED",
+          "mappingEvidence": "primary provider normalized row",
+          "observedAt": "2026-07-28T08:02:15.086Z"
+        },
+        {
+          "providerId": "THESPORTSDB",
+          "providerGameId": "2400386",
+          "providerHomeTeamId": "139819",
+          "providerAwayTeamId": "139827",
+          "providerStartTime": "2026-07-28T09:30:00Z",
+          "mappingStatus": "MATCHED",
+          "mappingEvidence": "canonicalTeamIds + startTimeKst + direction",
+          "observedAt": "2026-07-28T08:02:15.086Z"
+        }
+      ],
+      "collectionPhase": "PRE_GAME_SCHEDULE_IDENTITY",
+      "time": {
+        "providerStartTime": "2026-07-28T09:30:00+00:00",
+        "startTimeKst": "2026-07-28T18:30:00+09:00",
+        "firstObservedAt": "2026-07-28T07:59:30.582Z",
+        "lastObservedAt": "2026-07-28T08:02:15.086Z",
+        "cutoffTime": "2026-07-28T18:30:00+09:00",
+        "scheduleChanges": []
+      },
+      "result": {
+        "resultStatus": "PENDING",
+        "homeScore": null,
+        "awayScore": null,
+        "winner": null
+      },
+      "generatedAt": "2026-07-28T08:02:15.086Z"
+    },
+    {
+      "internalGameId": "kbo-181905",
+      "primaryProvider": "API_BASEBALL",
+      "sport": "baseball",
+      "league": "KBO",
+      "season": "2026",
+      "dateKst": "2026-07-28",
+      "homeTeam": {
+        "providerName": "Samsung Lions",
+        "canonicalNameKo": "삼성",
+        "canonicalNameEn": "Samsung Lions",
+        "canonicalTeamId": "kbo-삼성",
+        "mappingStatus": "MATCHED"
+      },
+      "awayTeam": {
+        "providerName": "KIA Tigers",
+        "canonicalNameKo": "KIA",
+        "canonicalNameEn": "Kia Tigers",
+        "canonicalTeamId": "kbo-kia",
+        "mappingStatus": "MATCHED"
+      },
+      "homeTeamId": "97",
+      "awayTeamId": "90",
+      "venueName": null,
+      "provider": {
+        "id": "API_BASEBALL",
+        "leagueId": "5",
+        "legalStatus": "NEEDS_LEGAL_REVIEW",
+        "publicDisplay": "UNCONFIRMED",
+        "commercialUse": "UNCONFIRMED"
+      },
+      "providerGameId": "181905",
+      "providerStatusRaw": "NS",
+      "gameStatus": "SCHEDULED",
+      "betmanScopeReference": "NOT_CHECKED",
+      "providerRefs": [
+        {
+          "providerId": "API_BASEBALL",
+          "providerGameId": "181905",
+          "providerHomeTeamId": "97",
+          "providerAwayTeamId": "90",
+          "providerStartTime": "2026-07-28T09:30:00+00:00",
+          "mappingStatus": "MATCHED",
+          "mappingEvidence": "primary provider normalized row",
+          "observedAt": "2026-07-28T08:02:15.086Z"
+        }
+      ],
+      "collectionPhase": "PRE_GAME_SCHEDULE_IDENTITY",
+      "time": {
+        "providerStartTime": "2026-07-28T09:30:00+00:00",
+        "startTimeKst": "2026-07-28T18:30:00+09:00",
+        "firstObservedAt": "2026-07-28T07:59:30.582Z",
+        "lastObservedAt": "2026-07-28T08:02:15.086Z",
+        "cutoffTime": "2026-07-28T18:30:00+09:00",
+        "scheduleChanges": []
+      },
+      "result": {
+        "resultStatus": "PENDING",
+        "homeScore": null,
+        "awayScore": null,
+        "winner": null
+      },
+      "generatedAt": "2026-07-28T08:02:15.086Z"
+    },
+    {
+      "internalGameId": "kbo-181906",
+      "primaryProvider": "API_BASEBALL",
+      "sport": "baseball",
+      "league": "KBO",
+      "season": "2026",
+      "dateKst": "2026-07-28",
+      "homeTeam": {
+        "providerName": "SSG Landers",
+        "canonicalNameKo": "SSG",
+        "canonicalNameEn": "SSG Landers",
+        "canonicalTeamId": "kbo-ssg",
+        "mappingStatus": "MATCHED"
+      },
+      "awayTeam": {
+        "providerName": "Doosan Bears",
+        "canonicalNameKo": "두산",
+        "canonicalNameEn": "Doosan Bears",
+        "canonicalTeamId": "kbo-두산",
+        "mappingStatus": "MATCHED"
+      },
+      "homeTeamId": "647",
+      "awayTeamId": "88",
+      "venueName": null,
+      "provider": {
+        "id": "API_BASEBALL",
+        "leagueId": "5",
+        "legalStatus": "NEEDS_LEGAL_REVIEW",
+        "publicDisplay": "UNCONFIRMED",
+        "commercialUse": "UNCONFIRMED"
+      },
+      "providerGameId": "181906",
+      "providerStatusRaw": "NS",
+      "gameStatus": "SCHEDULED",
+      "betmanScopeReference": "NOT_CHECKED",
+      "providerRefs": [
+        {
+          "providerId": "API_BASEBALL",
+          "providerGameId": "181906",
+          "providerHomeTeamId": "647",
+          "providerAwayTeamId": "88",
+          "providerStartTime": "2026-07-28T09:30:00+00:00",
+          "mappingStatus": "MATCHED",
+          "mappingEvidence": "primary provider normalized row",
+          "observedAt": "2026-07-28T08:02:15.086Z"
+        }
+      ],
+      "collectionPhase": "PRE_GAME_SCHEDULE_IDENTITY",
+      "time": {
+        "providerStartTime": "2026-07-28T09:30:00+00:00",
+        "startTimeKst": "2026-07-28T18:30:00+09:00",
+        "firstObservedAt": "2026-07-28T07:59:30.582Z",
+        "lastObservedAt": "2026-07-28T08:02:15.086Z",
+        "cutoffTime": "2026-07-28T18:30:00+09:00",
+        "scheduleChanges": []
+      },
+      "result": {
+        "resultStatus": "PENDING",
+        "homeScore": null,
+        "awayScore": null,
+        "winner": null
+      },
+      "generatedAt": "2026-07-28T08:02:15.086Z"
+    }
+  ]
+}

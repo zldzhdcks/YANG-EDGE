@@ -18,7 +18,7 @@ Provider·환경변수·API는 **[docs/API.md](./docs/API.md)** 를 보세요.
 
 요약:
 
-- **실일정:** TheSportsDB (NPB/KBO) — `SPORTS_PROVIDER` + `.env.local` 필요
+- **실일정:** NPB/KBO는 provider 실데이터 기반이며, KBO identity는 현재 `KBO_IDENTITY_PROVIDER` 기본값 `API_BASEBALL` full-slate artifact를 우선 사용한다 (legacy TheSportsDB artifact preserved)
 - **홈:** 일정은 Provider 실데이터 · **TODAY EDGE PICK**은 현재 KST 이후 가장 가까운 연구 슬레이트만 사용하며, 엄격 기준 미충족 시 연구 후보 fallback을 제공한다 (종료 경기·과거 snapshot fallback 없음, 최대 3경기)
 - **EDGE Score:** artifact·Engine의 **signed home-side** 연구값이며, 음수는 양수로 강제 변환(`Math.abs`)하지 않는다 — UI는 예측 팀 기준 우위 여부로 표시 ([EDGE_SCORE_SEMANTICS.md](./EDGE_SCORE_SEMANTICS.md))
 - **분석 Engine 입력:** 현재 dummy gameId 일부만 (실일정과 ID 체계가 다를 수 있음)
@@ -69,6 +69,27 @@ Bullpen Validation만 단독 실행할 때는 `--skip-postgame-steps` 없이 실
 | `research:dashboard` | Dataset coverage dashboard만 |
 | `research:starter-summary` | Starter accumulation summary만 |
 | `research:lineup-probe` | Pre-game lineup availability probe (append-only) |
+| `research:kbo-identity` | KBO Schedule/Result Identity dataset v1 (`YYYY-MM-DD`) |
+| `research:kbo-odds-comparison` | KBO 국내/해외 배당 비교 dataset v1 (`YYYY-MM-DD`) |
+| `research:kbo-slate-readiness` | KBO 오늘 슬레이트 / 배당 입력 readiness audit (`YYYY-MM-DD`, 생략 시 KST today) |
+| `research:kbo-operator-input` | KBO 배트맨 scope / proto odds 수동 입력 validator (`YYYY-MM-DD`, 생략 시 KST today) |
+| `research:kbo-operator-markets` | KBO 통합 Game/Market/Selection v2 입력 validator (`YYYY-MM-DD`, 생략 시 KST today) |
+
+KBO identity provider 선택:
+
+```bash
+# default: API_BASEBALL
+npm run research:kbo-identity -- 2026-07-28
+
+# PowerShell example: legacy TheSportsDB artifact rebuild
+$env:KBO_IDENTITY_PROVIDER="THESPORTSDB"; npm run research:kbo-identity -- 2026-07-28
+```
+
+KBO odds comparison preview:
+
+- route: `/kbo/odds-preview`
+- scope: internal research preview only
+- policy: 운영자 입력 국내 배당과 해외 Provider 배당의 단순 비교이며 추천·구매 지시가 아닙니다.
 
 Research ops 실행 순서 (`research:ops`):
 

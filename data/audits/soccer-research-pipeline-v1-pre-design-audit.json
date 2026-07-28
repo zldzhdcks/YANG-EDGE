@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "version": "soccer-research-pipeline-v1-pre-design-audit",
+    "generatedAt": "2026-07-28T00:00:00.000Z",
+    "conclusion": "READY_FOR_SOCCER_MINIMAL_RESEARCH_DATASET"
+  },
+  "currentSoccerCodeStatus": {
+    "schedule": "PARTIAL_IMPLEMENTED",
+    "teamMapping": "PARTIAL_IMPLEMENTED",
+    "odds": "PARTIAL_IMPLEMENTED",
+    "dummyAnalysis": "LEGACY_SAMPLE_ONLY",
+    "prediction": "NOT_IMPLEMENTED",
+    "researchDataset": "NOT_IMPLEMENTED",
+    "viewer": "NOT_CONNECTED",
+    "grade": "NOT_IMPLEMENTED"
+  },
+  "providers": {
+    "apiFootball": {
+      "schedule": "AVAILABLE",
+      "result": "AVAILABLE",
+      "lineup": "COVERAGE_DEPENDENT",
+      "formation": "COVERAGE_DEPENDENT",
+      "injury": "COVERAGE_DEPENDENT",
+      "referee": "AVAILABLE_IN_FIXTURE_CONTEXT",
+      "odds": "AVAILABLE_BY_ENDPOINT",
+      "historical": "PARTIAL",
+      "leagueCoverage": "BROAD_BUT_PROVIDER_SEASON_COVERAGE_MUST_BE_CHECKED",
+      "legalStatus": "NEEDS_LEGAL_REVIEW"
+    },
+    "sportsDataIoSoccer": {
+      "schedule": "AVAILABLE",
+      "result": "AVAILABLE",
+      "lineup": "AVAILABLE",
+      "formation": "AVAILABLE",
+      "injury": "PARTIAL_TO_AVAILABLE",
+      "odds": "AVAILABLE",
+      "historical": "AVAILABLE",
+      "leagueCoverage": "VERY_BROAD",
+      "legalStatus": "COMMERCIAL_LICENSE_REQUIRED"
+    },
+    "theSportsDb": {
+      "schedule": "PARTIAL",
+      "result": "PARTIAL",
+      "lineup": "UNCLEAR",
+      "formation": "UNCLEAR",
+      "injury": "UNCLEAR",
+      "odds": "WEAK",
+      "historical": "PARTIAL",
+      "leagueCoverage": "UNCLEAR",
+      "legalStatus": "PUBLIC_DISPLAY_UNCONFIRMED"
+    },
+    "theOddsApi": {
+      "schedule": "NOT_PRIMARY_SOURCE",
+      "result": "NOT_PRIMARY_SOURCE",
+      "odds": "AVAILABLE",
+      "historical": "LIMITED_BY_RETENTION",
+      "legalStatus": "PER_USE_LEGAL_REVIEW"
+    }
+  },
+  "betmanBoundary": {
+    "scopeOnly": true,
+    "provider": false,
+    "htmlCrawling": false,
+    "loginAutomation": false,
+    "hiddenApiUse": false,
+    "defaultBetmanScopeStatus": "NOT_CHECKED"
+  },
+  "resultGradeDifferences": {
+    "drawCoreOutcome": true,
+    "extraTimeSplitNeeded": true,
+    "penaltyShootoutSplitNeeded": true,
+    "singleWinnerModelSufficient": false
+  },
+  "marketDifferences": {
+    "winnerOnlyGradingSufficient": false,
+    "candidateMarkets": [
+      "1X2",
+      "handicap",
+      "under_over",
+      "both_teams_to_score",
+      "double_chance",
+      "first_half",
+      "correct_score"
+    ]
+  },
+  "datasetCandidates": [
+    {
+      "dataset": "schedule-result-identity",
+      "priority": 1,
+      "providerFeasibility": "HIGH",
+      "legalRisk": "LOWEST_RELATIVE",
+      "preGame": true,
+      "postGame": true
+    },
+    {
+      "dataset": "starting-xi-lineup",
+      "priority": 2,
+      "providerFeasibility": "MEDIUM",
+      "legalRisk": "MEDIUM",
+      "leakageRisk": "HIGH"
+    },
+    {
+      "dataset": "injury-suspension",
+      "priority": 3,
+      "providerFeasibility": "MEDIUM",
+      "legalRisk": "MEDIUM",
+      "leakageRisk": "HIGH"
+    },
+    {
+      "dataset": "team-form",
+      "priority": 4,
+      "providerFeasibility": "MEDIUM_HIGH",
+      "legalRisk": "MEDIUM",
+      "leakageRisk": "MEDIUM"
+    }
+  ],
+  "recommendations": {
+    "firstDataset": "Soccer Schedule / Result Identity Dataset v1",
+    "gameId": "soccer-{providerFixtureId}",
+    "teamIdentity": {
+      "stringOnlyMatchingAllowed": false,
+      "mappingStatusValues": [
+        "MATCHED",
+        "UNMATCHED",
+        "AMBIGUOUS",
+        "NOT_CHECKED"
+      ]
+    },
+    "sportProviderContractDecision": "DO_NOT_IMPLEMENT_NOW"
+  },
+  "frameworkDecision": {
+    "conclusion": "NO_FRAMEWORK_CHANGE",
+    "registryChange": false,
+    "datasetRegistration": false,
+    "featureFlagCreation": false
+  },
+  "regression": {
+    "mlbPredictionChanged": false,
+    "mlbDatasetChanged": false,
+    "kboIdentityChanged": false,
+    "todayEdgePickChanged": false,
+    "engineImpact": "NONE"
+  }
+}

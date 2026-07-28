@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "version": "dataset-evidence-dashboard-v1-audit",
+    "generatedAt": "2026-07-28T06:36:45.643Z",
+    "officialConclusion": "DATASET_EVIDENCE_DASHBOARD_V1_CREATED"
+  },
+  "inputDatasetCountExpected": 7,
+  "inputDatasetCountObserved": 7,
+  "missingDatasets": [],
+  "datesAudited": [
+    "2026-07-27",
+    "2026-07-28"
+  ],
+  "predictionHashes": {
+    "2026-07-27": "3cd98c965d6951d41a2e5baf537707ac0065ea47ab1e6b93b60d8c65cceaff17",
+    "2026-07-28": "2ed920f4c28e5954015acad2f7835a2241f2a32e75c7b09674906d571490b028"
+  },
+  "regression": {
+    "hashesUnchanged": true,
+    "checkedFiles": 11,
+    "engineImpact": 0,
+    "predictionMutated": false,
+    "datasetMutated": false
+  },
+  "counts": {
+    "totalGames": 27,
+    "workedGames": 11,
+    "failedGames": 15,
+    "pendingGames": 1
+  },
+  "datasetEvidenceSummary": [
+    {
+      "datasetId": "starter",
+      "displayName": "Starter",
+      "present": 27,
+      "worked": 11,
+      "failed": 15,
+      "pending": 1,
+      "presenceRate": 100,
+      "completeRate": 96.3,
+      "partialRate": 3.7,
+      "missingRate": 0
+    },
+    {
+      "datasetId": "bullpen",
+      "displayName": "Bullpen",
+      "present": 26,
+      "worked": 11,
+      "failed": 15,
+      "pending": 0,
+      "presenceRate": 96.3,
+      "completeRate": 96.3,
+      "partialRate": 0,
+      "missingRate": 3.7
+    },
+    {
+      "datasetId": "lineup",
+      "displayName": "Lineup",
+      "present": 15,
+      "worked": 6,
+      "failed": 9,
+      "pending": 0,
+      "presenceRate": 55.6,
+      "completeRate": 0,
+      "partialRate": 55.6,
+      "missingRate": 44.4
+    },
+    {
+      "datasetId": "weather",
+      "displayName": "Weather",
+      "present": 15,
+      "worked": 6,
+      "failed": 9,
+      "pending": 0,
+      "presenceRate": 55.6,
+      "completeRate": 0,
+      "partialRate": 55.6,
+      "missingRate": 44.4
+    },
+    {
+      "datasetId": "travel",
+      "displayName": "Travel",
+      "present": 15,
+      "worked": 6,
+      "failed": 9,
+      "pending": 0,
+      "presenceRate": 55.6,
+      "completeRate": 55.6,
+      "partialRate": 0,
+      "missingRate": 44.4
+    },
+    {
+      "datasetId": "odds",
+      "displayName": "Odds History",
+      "present": 15,
+      "worked": 6,
+      "failed": 9,
+      "pending": 0,
+      "presenceRate": 55.6,
+      "completeRate": 22.2,
+      "partialRate": 33.3,
+      "missingRate": 44.4
+    },
+    {
+      "datasetId": "injury",
+      "displayName": "Injury",
+      "present": 27,
+      "worked": 11,
+      "failed": 15,
+      "pending": 1,
+      "presenceRate": 100,
+      "completeRate": 44.4,
+      "partialRate": 55.6,
+      "missingRate": 0
+    }
+  ],
+  "checks": [
+    {
+      "id": "SEVEN_DATASETS",
+      "passed": true,
+      "detail": "datasets=7"
+    },
+    {
+      "id": "HASHES_UNCHANGED",
+      "passed": true
+    },
+    {
+      "id": "NO_ENGINE_WEIGHTS",
+      "passed": true,
+      "detail": "dashboard stores presence counts only"
+    }
+  ]
+}

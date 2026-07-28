@@ -2,21 +2,21 @@
   "meta": {
     "version": "prediction-review-v1",
     "dateKst": "2026-07-28",
-    "generatedAt": "2026-07-27T23:56:41.783Z",
+    "generatedAt": "2026-07-28T06:26:49.048Z",
     "sourceSnapshot": "data/predictions/mlb/2026-07-28.json",
     "sourceAnalysis": "data/predictions/mlb/2026-07-28-review.json",
     "totalPredictions": 12,
-    "gradedGames": 1,
-    "signalWorked": 1,
-    "signalFailed": 0,
-    "inconclusive": 11,
-    "pendingCount": 10,
-    "liveAccuracyPercent": 100,
+    "gradedGames": 11,
+    "signalWorked": 5,
+    "signalFailed": 6,
+    "inconclusive": 1,
+    "pendingCount": 1,
+    "liveAccuracyPercent": 45.45,
     "limitations": [
       "MLB 연구용 스냅샷 채점 결과이다. 구매 라인이 아니다.",
       "표본이 작아 적중률로 엔진 성능을 단정하지 않는다.",
       "실패 원인을 단정하지 않으며 hypotheses는 저장 데이터 근거 가능성만 기록한다.",
-      "pending 10경기는 종료 후 동일 파이프라인으로 추가 채점한다."
+      "pending 1경기는 종료 후 동일 파이프라인으로 추가 채점한다."
     ]
   },
   "reviews": [
@@ -87,14 +87,14 @@
       "recommendedTeam": "Arizona Diamondbacks",
       "recommendedSide": "away",
       "actual": {
-        "homeScore": 0,
-        "awayScore": 0,
-        "scoreline": "0-0",
-        "winner": null,
-        "winnerTeam": null,
-        "resultStatus": "pending"
+        "homeScore": 3,
+        "awayScore": 2,
+        "scoreline": "3-2",
+        "winner": "home",
+        "winnerTeam": "Pittsburgh Pirates",
+        "resultStatus": "graded"
       },
-      "predictionCorrect": null,
+      "predictionCorrect": false,
       "snapshot": {
         "probability": 53,
         "edgeScore": -2.8,
@@ -126,10 +126,16 @@
         "oddsMatched": null
       },
       "feedback": {
-        "verdict": "INCONCLUSIVE",
-        "hypotheses": [],
+        "verdict": "SIGNAL_FAILED",
+        "hypotheses": [
+          "Confidence 50 미만",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
         "notes": [
-          "경기가 아직 종료되지 않아 채점하지 않았습니다."
+          "추천 방향과 실제 결과가 일치하지 않았습니다.",
+          "실패 원인을 단정하지 않습니다."
         ]
       }
     },
@@ -141,14 +147,14 @@
       "recommendedTeam": "Philadelphia Phillies",
       "recommendedSide": "away",
       "actual": {
-        "homeScore": 5,
-        "awayScore": 2,
-        "scoreline": "5-2",
-        "winner": null,
-        "winnerTeam": null,
-        "resultStatus": "pending"
+        "homeScore": 8,
+        "awayScore": 7,
+        "scoreline": "8-7",
+        "winner": "home",
+        "winnerTeam": "Miami Marlins",
+        "resultStatus": "graded"
       },
-      "predictionCorrect": null,
+      "predictionCorrect": false,
       "snapshot": {
         "probability": 56,
         "edgeScore": -6.2,
@@ -180,10 +186,15 @@
         "oddsMatched": null
       },
       "feedback": {
-        "verdict": "INCONCLUSIVE",
-        "hypotheses": [],
+        "verdict": "SIGNAL_FAILED",
+        "hypotheses": [
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
         "notes": [
-          "경기가 아직 종료되지 않아 채점하지 않았습니다."
+          "추천 방향과 실제 결과가 일치하지 않았습니다.",
+          "실패 원인을 단정하지 않습니다."
         ]
       }
     },
@@ -195,14 +206,14 @@
       "recommendedTeam": "Detroit Tigers",
       "recommendedSide": "home",
       "actual": {
-        "homeScore": 1,
-        "awayScore": 4,
-        "scoreline": "1-4",
-        "winner": null,
-        "winnerTeam": null,
-        "resultStatus": "pending"
+        "homeScore": 5,
+        "awayScore": 8,
+        "scoreline": "5-8",
+        "winner": "away",
+        "winnerTeam": "Baltimore Orioles",
+        "resultStatus": "graded"
       },
-      "predictionCorrect": null,
+      "predictionCorrect": false,
       "snapshot": {
         "probability": 50,
         "edgeScore": 0.2,
@@ -234,10 +245,16 @@
         "oddsMatched": null
       },
       "feedback": {
-        "verdict": "INCONCLUSIVE",
-        "hypotheses": [],
+        "verdict": "SIGNAL_FAILED",
+        "hypotheses": [
+          "Confidence 50 미만",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
         "notes": [
-          "경기가 아직 종료되지 않아 채점하지 않았습니다."
+          "추천 방향과 실제 결과가 일치하지 않았습니다.",
+          "실패 원인을 단정하지 않습니다."
         ]
       }
     },
@@ -249,14 +266,14 @@
       "recommendedTeam": "Washington Nationals",
       "recommendedSide": "home",
       "actual": {
-        "homeScore": 1,
-        "awayScore": 2,
-        "scoreline": "1-2",
-        "winner": null,
-        "winnerTeam": null,
-        "resultStatus": "pending"
+        "homeScore": 2,
+        "awayScore": 3,
+        "scoreline": "2-3",
+        "winner": "away",
+        "winnerTeam": "Toronto Blue Jays",
+        "resultStatus": "graded"
       },
-      "predictionCorrect": null,
+      "predictionCorrect": false,
       "snapshot": {
         "probability": 56,
         "edgeScore": 6.4,
@@ -289,10 +306,16 @@
         "oddsMatched": null
       },
       "feedback": {
-        "verdict": "INCONCLUSIVE",
-        "hypotheses": [],
+        "verdict": "SIGNAL_FAILED",
+        "hypotheses": [
+          "Confidence 50 미만",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
         "notes": [
-          "경기가 아직 종료되지 않아 채점하지 않았습니다."
+          "추천 방향과 실제 결과가 일치하지 않았습니다.",
+          "실패 원인을 단정하지 않습니다."
         ]
       }
     },
@@ -304,14 +327,14 @@
       "recommendedTeam": "Atlanta Braves",
       "recommendedSide": "away",
       "actual": {
-        "homeScore": 3,
-        "awayScore": 1,
-        "scoreline": "3-1",
-        "winner": null,
-        "winnerTeam": null,
-        "resultStatus": "pending"
+        "homeScore": 14,
+        "awayScore": 3,
+        "scoreline": "14-3",
+        "winner": "home",
+        "winnerTeam": "New York Mets",
+        "resultStatus": "graded"
       },
-      "predictionCorrect": null,
+      "predictionCorrect": false,
       "snapshot": {
         "probability": 57,
         "edgeScore": -7,
@@ -343,10 +366,16 @@
         "oddsMatched": null
       },
       "feedback": {
-        "verdict": "INCONCLUSIVE",
-        "hypotheses": [],
+        "verdict": "SIGNAL_FAILED",
+        "hypotheses": [
+          "Confidence 50 미만",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
         "notes": [
-          "경기가 아직 종료되지 않아 채점하지 않았습니다."
+          "추천 방향과 실제 결과가 일치하지 않았습니다.",
+          "실패 원인을 단정하지 않습니다."
         ]
       }
     },
@@ -363,7 +392,7 @@
         "scoreline": null,
         "winner": null,
         "winnerTeam": null,
-        "resultStatus": "result-not-found"
+        "resultStatus": "pending"
       },
       "predictionCorrect": null,
       "snapshot": {
@@ -400,7 +429,7 @@
         "verdict": "INCONCLUSIVE",
         "hypotheses": [],
         "notes": [
-          "결과가 확정되지 않아 신호 일치 여부를 판단할 수 없습니다."
+          "경기가 아직 종료되지 않아 채점하지 않았습니다."
         ]
       }
     },
@@ -412,14 +441,14 @@
       "recommendedTeam": "New York Yankees",
       "recommendedSide": "away",
       "actual": {
-        "homeScore": null,
-        "awayScore": null,
-        "scoreline": null,
-        "winner": null,
-        "winnerTeam": null,
-        "resultStatus": "pending"
+        "homeScore": 5,
+        "awayScore": 9,
+        "scoreline": "5-9",
+        "winner": "away",
+        "winnerTeam": "New York Yankees",
+        "resultStatus": "graded"
       },
-      "predictionCorrect": null,
+      "predictionCorrect": true,
       "snapshot": {
         "probability": 58,
         "edgeScore": -8.1,
@@ -451,10 +480,16 @@
         "oddsMatched": null
       },
       "feedback": {
-        "verdict": "INCONCLUSIVE",
-        "hypotheses": [],
+        "verdict": "SIGNAL_WORKED",
+        "hypotheses": [
+          "Confidence 50 미만",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
         "notes": [
-          "경기가 아직 종료되지 않아 채점하지 않았습니다."
+          "추천 방향과 실제 결과가 일치했습니다.",
+          "한 경기로 신호 유효성을 확정할 수 없습니다."
         ]
       }
     },
@@ -466,14 +501,14 @@
       "recommendedTeam": "Chicago Cubs",
       "recommendedSide": "away",
       "actual": {
-        "homeScore": null,
-        "awayScore": null,
-        "scoreline": null,
-        "winner": null,
-        "winnerTeam": null,
-        "resultStatus": "pending"
+        "homeScore": 3,
+        "awayScore": 7,
+        "scoreline": "3-7",
+        "winner": "away",
+        "winnerTeam": "Chicago Cubs",
+        "resultStatus": "graded"
       },
-      "predictionCorrect": null,
+      "predictionCorrect": true,
       "snapshot": {
         "probability": 57,
         "edgeScore": -6.5,
@@ -505,10 +540,15 @@
         "oddsMatched": null
       },
       "feedback": {
-        "verdict": "INCONCLUSIVE",
-        "hypotheses": [],
+        "verdict": "SIGNAL_WORKED",
+        "hypotheses": [
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
         "notes": [
-          "경기가 아직 종료되지 않아 채점하지 않았습니다."
+          "추천 방향과 실제 결과가 일치했습니다.",
+          "한 경기로 신호 유효성을 확정할 수 없습니다."
         ]
       }
     },
@@ -520,14 +560,14 @@
       "recommendedTeam": "Houston Astros",
       "recommendedSide": "away",
       "actual": {
-        "homeScore": null,
-        "awayScore": null,
-        "scoreline": null,
-        "winner": null,
-        "winnerTeam": null,
-        "resultStatus": "pending"
+        "homeScore": 4,
+        "awayScore": 6,
+        "scoreline": "4-6",
+        "winner": "away",
+        "winnerTeam": "Houston Astros",
+        "resultStatus": "graded"
       },
-      "predictionCorrect": null,
+      "predictionCorrect": true,
       "snapshot": {
         "probability": 61,
         "edgeScore": -11.5,
@@ -559,10 +599,15 @@
         "oddsMatched": null
       },
       "feedback": {
-        "verdict": "INCONCLUSIVE",
-        "hypotheses": [],
+        "verdict": "SIGNAL_WORKED",
+        "hypotheses": [
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
         "notes": [
-          "경기가 아직 종료되지 않아 채점하지 않았습니다."
+          "추천 방향과 실제 결과가 일치했습니다.",
+          "한 경기로 신호 유효성을 확정할 수 없습니다."
         ]
       }
     },
@@ -574,14 +619,14 @@
       "recommendedTeam": "Boston Red Sox",
       "recommendedSide": "away",
       "actual": {
-        "homeScore": null,
-        "awayScore": null,
-        "scoreline": null,
-        "winner": null,
-        "winnerTeam": null,
-        "resultStatus": "pending"
+        "homeScore": 2,
+        "awayScore": 4,
+        "scoreline": "2-4",
+        "winner": "away",
+        "winnerTeam": "Boston Red Sox",
+        "resultStatus": "graded"
       },
-      "predictionCorrect": null,
+      "predictionCorrect": true,
       "snapshot": {
         "probability": 55,
         "edgeScore": -4.6,
@@ -614,10 +659,16 @@
         "oddsMatched": null
       },
       "feedback": {
-        "verdict": "INCONCLUSIVE",
-        "hypotheses": [],
+        "verdict": "SIGNAL_WORKED",
+        "hypotheses": [
+          "Confidence 50 미만",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
         "notes": [
-          "경기가 아직 종료되지 않아 채점하지 않았습니다."
+          "추천 방향과 실제 결과가 일치했습니다.",
+          "한 경기로 신호 유효성을 확정할 수 없습니다."
         ]
       }
     },
@@ -629,14 +680,14 @@
       "recommendedTeam": "Milwaukee Brewers",
       "recommendedSide": "away",
       "actual": {
-        "homeScore": null,
-        "awayScore": null,
-        "scoreline": null,
-        "winner": null,
-        "winnerTeam": null,
-        "resultStatus": "pending"
+        "homeScore": 3,
+        "awayScore": 0,
+        "scoreline": "3-0",
+        "winner": "home",
+        "winnerTeam": "San Francisco Giants",
+        "resultStatus": "graded"
       },
-      "predictionCorrect": null,
+      "predictionCorrect": false,
       "snapshot": {
         "probability": 53,
         "edgeScore": -2.8,
@@ -668,10 +719,16 @@
         "oddsMatched": null
       },
       "feedback": {
-        "verdict": "INCONCLUSIVE",
-        "hypotheses": [],
+        "verdict": "SIGNAL_FAILED",
+        "hypotheses": [
+          "Confidence 50 미만",
+          "선발투수 누락",
+          "단일 경기 변동성",
+          "최근 경기 표본 제한 가능성"
+        ],
         "notes": [
-          "경기가 아직 종료되지 않아 채점하지 않았습니다."
+          "추천 방향과 실제 결과가 일치하지 않았습니다.",
+          "실패 원인을 단정하지 않습니다."
         ]
       }
     }

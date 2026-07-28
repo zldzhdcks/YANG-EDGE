@@ -6,6 +6,24 @@ YANG EDGE에서 사용하는 **모든 UI 문구**의 기준 문서입니다.
 
 ---
 
+## KBO Odds Comparison
+
+페이지: `/kbo/odds-preview` (내부 연구 preview 전용 · robots noindex)
+
+| Key | Copy |
+|-----|------|
+| Page Title | `KBO 시장 배당 비교` |
+| Page Subtitle | `운영자 입력 국내 배당과 해외 Provider 배당의 단순 비교입니다.` |
+| Disclaimer | `추천·구매 지시가 아닙니다.` |
+| Domestic Label | `국내 프로토` |
+| Overseas Label | `해외 시장` |
+| Domestic Draft | `국내 배당 검수 전` |
+| Domestic Verified | `검수 완료` |
+| Overseas Missing | `해외 배당 미수집` |
+| Rule Unverified | `시장 규칙 미확인으로 숫자 차이 비교는 보류합니다.` |
+
+---
+
 ## 이 문서를 어떻게 쓰는가
 
 1. **새 문구를 쓰기 전에** 이 문서에 먼저 추가한다.

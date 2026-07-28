@@ -1,0 +1,161 @@
+{
+  "meta": {
+    "version": "kbo-identity-pipeline-architecture-alignment-v1",
+    "generatedAt": "2026-07-28T07:06:37.462Z",
+    "conclusion": "KBO_IDENTITY_PIPELINE_ARCHITECTURE_ALIGNED"
+  },
+  "providerBoundary": {
+    "interface": "src/lib/kbo/providers/kbo-schedule-provider.ts",
+    "adapter": "src/lib/kbo/providers/thesportsdb-kbo-schedule-provider.ts",
+    "builderDirectReferences": {
+      "4830": 0,
+      "TheSportsDB": 0,
+      "thesportsdb": 0,
+      "eventsday.php": 0,
+      "idEvent": 0,
+      "strHomeTeam": 0,
+      "strAwayTeam": 0,
+      "strStatus": 0,
+      "strTimestamp": 0,
+      "total": 0
+    },
+    "builderDirectReferencesZero": true
+  },
+  "serviceBoundary": {
+    "file": "src/lib/kbo/services/kbo-identity-collection-service.ts",
+    "responsibilities": [
+      "featureFlagCheck",
+      "providerCall",
+      "teamResolver",
+      "builderCall",
+      "previousArtifactLoad"
+    ],
+    "engineCalls": false,
+    "predictionCalls": false
+  },
+  "builderPurity": {
+    "file": "C:\\Users\\TCTCTC\\YANG-EDGE\\yang-edge\\src\\lib\\kbo\\build-schedule-result-identity-dataset.ts",
+    "httpCalls": false,
+    "envReads": false,
+    "frameworkImports": false,
+    "providerRawFields": true
+  },
+  "cacheBoundary": {
+    "location": "data/cache/research/kbo/raw/thesportsdb/",
+    "redisUsage": false,
+    "databaseUsage": false,
+    "warmRerunNetworkCalls": 0,
+    "warmRerunNetworkZero": true
+  },
+  "featureFlag": {
+    "name": "KBO_IDENTITY_COLLECTION_ENABLED",
+    "defaultPolicy": "enabled unless explicit false",
+    "controlsCollectionOnly": true,
+    "doesNotEnableEngine": true,
+    "doesNotEnablePrediction": true,
+    "doesNotEnablePublicUi": true,
+    "forbiddenFlags": [
+      "KBO_ENGINE_ENABLED",
+      "KBO_PREDICTION_ENABLED",
+      "KBO_EDGE_PICK_ENABLED",
+      "KBO_PUBLIC_ENABLED"
+    ]
+  },
+  "engineIsolation": {
+    "engineAdmission": "PROHIBITED",
+    "engineImpact": "NONE"
+  },
+  "predictionIsolation": {
+    "kboPredictionArtifacts": false,
+    "mlbPredictionMutated": false
+  },
+  "viewerIsolation": {
+    "viewerConnected": false,
+    "homeListConnected": false,
+    "todayEdgePickConnected": false
+  },
+  "redisUsage": false,
+  "websocketUsage": false,
+  "pollingUsage": {
+    "automaticPolling": false,
+    "currentPolicy": "manual CLI only",
+    "futureCandidate": "30s-5min HTTP polling (documented, not implemented)"
+  },
+  "llmUsage": {
+    "implemented": false,
+    "status": "FUTURE_GATED",
+    "futureInputContract": [
+      "summary",
+      "verifiedFactors",
+      "risks",
+      "missingData",
+      "sourceIds",
+      "cutoffTime"
+    ]
+  },
+  "providerSpecificReferences": {
+    "4830": 0,
+    "TheSportsDB": 0,
+    "thesportsdb": 0,
+    "eventsday.php": 0,
+    "idEvent": 0,
+    "strHomeTeam": 0,
+    "strAwayTeam": 0,
+    "strStatus": 0,
+    "strTimestamp": 0,
+    "total": 0
+  },
+  "warmRerun": {
+    "hashMatched": true,
+    "networkCalls": 0
+  },
+  "resultHash": {
+    "previous": "b6527db3df7652eaf239f734309df5973fc1d7c2b1526d5799945a9092245c02",
+    "current": "b6527db3df7652eaf239f734309df5973fc1d7c2b1526d5799945a9092245c02",
+    "regressionMatched": true,
+    "inputHashChangedReason": null
+  },
+  "regression20260724": {
+    "providerGamesFetched": 3,
+    "datasetGamesCreated": 3,
+    "internalGameIds": [
+      "kbo-2400369",
+      "kbo-2400370",
+      "kbo-2400371"
+    ],
+    "teamMappingsMatched": 6,
+    "teamMappingsUnmatched": 0
+  },
+  "checks": [
+    {
+      "id": "builder-provider-refs-zero",
+      "passed": true,
+      "detail": "{\"4830\":0,\"TheSportsDB\":0,\"thesportsdb\":0,\"eventsday.php\":0,\"idEvent\":0,\"strHomeTeam\":0,\"strAwayTeam\":0,\"strStatus\":0,\"strTimestamp\":0,\"total\":0}"
+    },
+    {
+      "id": "warm-rerun-hash",
+      "passed": true,
+      "detail": "b6527db3df7652eaf239f734309df5973fc1d7c2b1526d5799945a9092245c02"
+    },
+    {
+      "id": "result-hash-regression",
+      "passed": true,
+      "detail": "b6527db3df7652eaf239f734309df5973fc1d7c2b1526d5799945a9092245c02 vs b6527db3df7652eaf239f734309df5973fc1d7c2b1526d5799945a9092245c02"
+    },
+    {
+      "id": "warm-network-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "no-redis",
+      "passed": true,
+      "detail": "file cache only"
+    },
+    {
+      "id": "no-websocket",
+      "passed": true,
+      "detail": "not implemented"
+    }
+  ]
+}
