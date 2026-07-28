@@ -13,17 +13,27 @@
 
 ## 현재 상태
 
-코드 기준 사실과 우선순위는 **[ROADMAP.md](./ROADMAP.md)** 를 보세요.  
+방향·단계 로드맵은 **[Project Roadmap v2](./docs/PROJECT_ROADMAP_V2.md)** 를 보세요.  
+코드 기준 사실·구현 현황은 **[ROADMAP.md](./ROADMAP.md)** 를 보세요.  
 Provider·환경변수·API는 **[docs/API.md](./docs/API.md)** 를 보세요.
 
 ## 프로젝트 정책 문서
 
 | 문서 | 설명 |
 |------|------|
+| [Project Roadmap v2](./docs/PROJECT_ROADMAP_V2.md) | AI Sports Research Platform 방향·단계 (Prediction ≠ 목적) |
+| [ROADMAP.md](./ROADMAP.md) | 코드 기준 현황 인벤토리 (구현 사실) |
 | [Development & Compliance Charter](./docs/DEVELOPMENT_COMPLIANCE_CHARTER.md) | 개발·Compliance·공개·사업화 기준 헌장 (Evidence + Compliance First) |
 | [PROJECT_MEMORY.md](./PROJECT_MEMORY.md) | 제품·연구 범위와 운영 기억 |
 | [DATA_SOURCES.md](./DATA_SOURCES.md) | 데이터 소스·권리·수집 정책 |
-| [ROADMAP.md](./ROADMAP.md) | 현재 상태와 우선순위 |
+
+## Project Governance
+
+| 문서 | 설명 |
+|------|------|
+| [Research Governance & Core Principles v1](./docs/RESEARCH_GOVERNANCE_V1.md) | 연구·운영·데이터·품질 핵심 원칙 (5년+ 운영 전제) |
+| [Project Roadmap v2](./docs/PROJECT_ROADMAP_V2.md) | Research / Trust / Knowledge / Automation / Product 단계 |
+| [Development & Compliance Charter](./docs/DEVELOPMENT_COMPLIANCE_CHARTER.md) | Evidence + Compliance First · 공개·사업화 게이트 |
 
 요약:
 
