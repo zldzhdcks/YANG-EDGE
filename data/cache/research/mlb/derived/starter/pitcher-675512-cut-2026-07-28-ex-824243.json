@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "schemaVersion": "mlb-starter-dataset-v1",
+    "builderVersion": "starter-dataset-builder-v1",
+    "generatedAt": "2026-07-28T14:00:34.239Z",
+    "dataThroughDate": "2026-07-29",
+    "source": "INTERNAL_RESEARCH_ONLY",
+    "inputHash": "19ffaae889d27a1d039a32f1394069f25cf88bb924ecad37a0787dde4f5c6675",
+    "recordCount": 10
+  },
+  "data": {
+    "seasonStats": {
+      "era": 1.95,
+      "whip": 0.95,
+      "inningsPitched": 60,
+      "gamesPlayed": 10,
+      "gamesStarted": 10,
+      "wins": 5,
+      "losses": 1,
+      "strikeOuts": 55,
+      "baseOnBalls": 19,
+      "homeRuns": 8
+    },
+    "recentStarts": [
+      {
+        "date": "2026-07-23",
+        "gamePk": 824247,
+        "inningsPitched": 5,
+        "earnedRuns": 2,
+        "strikeOuts": 5,
+        "baseOnBalls": 4,
+        "hits": 5,
+        "homeRuns": 1,
+        "numberOfPitches": 90,
+        "win": false,
+        "loss": false
+      },
+      {
+        "date": "2026-07-17",
+        "gamePk": 824009,
+        "inningsPitched": 5.666666666666667,
+        "earnedRuns": 1,
+        "strikeOuts": 9,
+        "baseOnBalls": 4,
+        "hits": 4,
+        "homeRuns": 0,
+        "numberOfPitches": 94,
+        "win": false,
+        "loss": false
+      },
+      {
+        "date": "2026-07-08",
+        "gamePk": 824253,
+        "inningsPitched": 5.333333333333333,
+        "earnedRuns": 0,
+        "strikeOuts": 9,
+        "baseOnBalls": 1,
+        "hits": 4,
+        "homeRuns": 0,
+        "numberOfPitches": 91,
+        "win": true,
+        "loss": false
+      },
+      {
+        "date": "2026-07-01",
+        "gamePk": 823530,
+        "inningsPitched": 6.333333333333333,
+        "earnedRuns": 0,
+        "strikeOuts": 7,
+        "baseOnBalls": 1,
+        "hits": 2,
+        "homeRuns": 0,
+        "numberOfPitches": 84,
+        "win": false,
+        "loss": false
+      },
+      {
+        "date": "2026-06-25",
+        "gamePk": 824258,
+        "inningsPitched": 6,
+        "earnedRuns": 1,
+        "strikeOuts": 6,
+        "baseOnBalls": 0,
+        "hits": 2,
+        "homeRuns": 1,
+        "numberOfPitches": 88,
+        "win": false,
+        "loss": true
+      }
+    ],
+    "sampleSize": 10,
+    "targetGameExcludedCount": 0,
+    "cutoffExcludedCount": 0,
+    "keptSplitCount": 10,
+    "statsSource": "mlb-statsapi:/people/{id}/stats?stats=gameLog&group=pitching (pre-cutoff aggregate)",
+    "leakageFlags": []
+  }
+}

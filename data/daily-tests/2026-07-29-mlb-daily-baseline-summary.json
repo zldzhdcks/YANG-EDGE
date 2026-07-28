@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "version": "mlb-daily-baseline-v1",
+    "generatedAt": "2026-07-28T13:58:50.881Z",
+    "targetDateKst": "2026-07-29",
+    "engineWeightsChanged": false,
+    "sportsDataIoUsed": false,
+    "mlbStatsApiInEngine": false,
+    "predictionSnapshotSaved": false,
+    "deterministic": true
+  },
+  "counts": {
+    "totalGames": 16,
+    "BASELINE_CANDIDATE": 4,
+    "PASS": 12,
+    "INSUFFICIENT_DATA": 0,
+    "DAILY_HIGH": 0,
+    "DAILY_MEDIUM": 1,
+    "DAILY_WATCH": 1,
+    "DAILY_DROP": 14
+  },
+  "earliestFinalDecisionKst": "2026-07-28 22:50 KST",
+  "previousDay2250Candidates": [
+    {
+      "gameId": "mlb-179627",
+      "match": "Cincinnati Reds vs Cleveland Guardians",
+      "pickTeam": "Cincinnati Reds",
+      "dailyClass": "DAILY_WATCH",
+      "recommendedFinalDecisionKst": "2026-07-28 22:50 KST"
+    }
+  ],
+  "morningRecheckCandidates": [
+    {
+      "gameId": "mlb-179627",
+      "match": "Cincinnati Reds vs Cleveland Guardians",
+      "pickTeam": "Cincinnati Reds",
+      "dailyClass": "DAILY_WATCH"
+    }
+  ],
+  "commonMissingFactors": [
+    "선발투수"
+  ],
+  "notUsableAsBettingLineReason": "선발투수·라인업·부상·순위가 Engine에 미반영인 Baseline이다. 확정 추천·베팅 라인이 아니며 재확인이 필요하다.",
+  "apiUsage": {
+    "coverage": null,
+    "coverageMeta": {
+      "version": "mlb-analysis-coverage-v1",
+      "generatedAt": "2026-07-28T13:58:48.125Z",
+      "targetDateKst": "2026-07-29",
+      "rules": {
+        "apiBaseballOnlyForAnalysisValues": true,
+        "sportsDataIoValuesUsed": false,
+        "sportsDataIoReason": "Trial response marked Scrambled",
+        "oddsUsedForMarketOnly": true,
+        "missingValuesImputed": false
+      },
+      "dataAvailabilityDenominator": {
+        "factors": [
+          "recentForm",
+          "homeAway",
+          "scoring",
+          "defense",
+          "leagueStanding",
+          "headToHead",
+          "rest",
+          "injuries",
+          "streak",
+          "startingPitcher"
+        ],
+        "count": 10,
+        "note": "실제 가용한 EDGE factor 그룹만 계산. SportsDataIO Trial 값 제외."
+      }
+    },
+    "baselineDeterministic": true,
+    "filterDeterministic": true
+  },
+  "observeCandidates": [
+    {
+      "gameId": "mlb-179629",
+      "match": "Athletics vs Boston Red Sox",
+      "pickTeam": "Boston Red Sox",
+      "dailyClass": "DAILY_MEDIUM",
+      "edgeScore": -12.1,
+      "confidence": 57,
+      "valueEdge": 4.3,
+      "bestOdds": 1.72,
+      "recommendedFinalDecisionKst": "2026-07-29 09:10 KST",
+      "purchaseTimingClass": "SAME_DAY_DECISION_AVAILABLE"
+    },
+    {
+      "gameId": "mlb-179627",
+      "match": "Cincinnati Reds vs Cleveland Guardians",
+      "pickTeam": "Cincinnati Reds",
+      "dailyClass": "DAILY_WATCH",
+      "edgeScore": 10,
+      "confidence": 44,
+      "valueEdge": 14.2,
+      "bestOdds": 2.15,
+      "recommendedFinalDecisionKst": "2026-07-28 22:50 KST",
+      "purchaseTimingClass": "CONDITIONAL_MORNING_WINDOW"
+    }
+  ]
+}

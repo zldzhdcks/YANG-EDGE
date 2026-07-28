@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "version": "mlb-h2h-historical-odds-probe-v1",
+    "generatedAt": "2026-07-28T12:14:02.098Z",
+    "conclusion": "MLB_H2H_HISTORICAL_ODDS_MINIMAL_PROBE_COMPLETED",
+    "charterRef": "docs/DEVELOPMENT_COMPLIANCE_CHARTER.md",
+    "designRefs": [
+      "HISTORICAL_ODDS_TIMELINE_DATASET_V1_DESIGN.md",
+      "MARKET_MOVEMENT_SEMANTICS_V1.md",
+      "MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDIT_V1.md"
+    ]
+  },
+  "probeStatus": "PLAN_BLOCKED",
+  "historicalPlanAvailable": false,
+  "providerErrorCode": "HISTORICAL_UNAVAILABLE_ON_FREE_USAGE_PLAN",
+  "blockReason": "Historical odds endpoint returned HTTP 401; official message states Historical is only available on paid usage plans. No further Historical calls were made.",
+  "target": {
+    "internalGameId": "mlb-179589",
+    "providerEventId": "210e6566d3641ee245e8a099a1679244",
+    "homeTeam": "Philadelphia Phillies",
+    "awayTeam": "New York Yankees",
+    "scheduledStartTime": "2026-07-26T23:21:00Z",
+    "dateKst": "2026-07-27",
+    "market": "h2h",
+    "region": "us",
+    "bookmakerLimit": 10,
+    "snapshotLimitDesignMax": 12,
+    "snapshotLimitRequested": 4,
+    "snapshotSelectionPolicy": "24h/6h/1h/5m before commence (capped for credit budget)",
+    "estimatedCredits": 40,
+    "creditCap": 50,
+    "identitySource": [
+      "data/predictions/mlb/2026-07-27.json",
+      "data/research/mlb/2026-07-27-odds-history-dataset-v1.json",
+      "data/predictions/mlb/2026-07-27-odds-timeline.json"
+    ],
+    "resultPresent": true,
+    "homeScore": 11,
+    "awayScore": 4
+  },
+  "environmentAudit": {
+    "oddsApiKeyPresent": true,
+    "oddsApiKeyLogged": false,
+    "baseUrl": "https://api.the-odds-api.com/v4",
+    "existingCaller": "src/lib/odds/the-odds-api-provider.ts (live odds only; no /historical)",
+    "rawCachePathCandidate": "data/cache/research/market-intelligence/raw/the-odds-api/mlb/",
+    "persistentRawCacheUsed": false
+  },
+  "cost": {
+    "estimatedCreditsBefore": 40,
+    "actualCreditsUsed": 0,
+    "actualCreditsNote": "x-requests-remaining unchanged (139→139); blocked Historical call did not consume quota headers",
+    "requestsMade": 1,
+    "snapshotRequests": 1,
+    "regionCount": 1,
+    "marketCount": 1,
+    "bookmakerCount": 0,
+    "creditCap": 50,
+    "costCapBlocked": false
+  },
+  "usageBefore": {
+    "remaining": 139,
+    "used": 361,
+    "last": 0
+  },
+  "usageAfter": {
+    "remaining": 139,
+    "used": 361,
+    "last": 0
+  },
+  "pullStatuses": [
+    {
+      "requestedDate": "2026-07-25T23:21:00Z",
+      "endpoint": "/v4/historical/sports/baseball_mlb/events/{eventId}/odds",
+      "status": 401,
+      "errorCode": "HISTORICAL_UNAVAILABLE_ON_FREE_USAGE_PLAN",
+      "snippet": "{\"message\":\"Historical odds are only available on paid usage plans...\",\"error_code\":\"HISTORICAL_UNAVAILABLE_ON_FREE_USAGE_PLAN\"}"
+    }
+  ],
+  "snapshotsRequested": 4,
+  "snapshotsReturned": 0,
+  "preGameSnapshots": 0,
+  "postStartSnapshots": 0,
+  "bookmakersReturned": 0,
+  "selectionsNormalized": 0,
+  "invalidOdds": 0,
+  "exactDuplicates": 0,
+  "revisionCandidates": 0,
+  "identityMapping": "NOT_EVALUATED_NO_HISTORICAL_PAYLOAD",
+  "preProbeIdentityEvidence": {
+    "internalGameId": "mlb-179589",
+    "providerEventId": "210e6566d3641ee245e8a099a1679244",
+    "homeTeam": "Philadelphia Phillies",
+    "awayTeam": "New York Yankees",
+    "scheduledStartTime": "2026-07-26T23:21:00Z",
+    "mappingBasis": "existing project artifacts (event id + teams + commence); not string-only",
+    "statusIfHistoricalReturned": "WOULD_REQUIRE_PAYLOAD_CONFIRMATION"
+  },
+  "marketRuleStatus": "UNVERIFIED",
+  "officialOpeningStatus": "NOT_AVAILABLE",
+  "firstObservedPreGame": null,
+  "latestPreGame": null,
+  "officialClosingStatus": "NOT_AVAILABLE",
+  "observedMovementCount": null,
+  "schemaFit": "NOT_EVALUATED_PLAN_BLOCKED",
+  "missingProviderFields": "NOT_EVALUATED",
+  "providerSpecificFields": "NOT_EVALUATED",
+  "rawStoragePolicy": "NO_RAW_STORED_PLAN_BLOCKED",
+  "cachePolicy": "NO_PERSISTENT_RAW_CACHE_CACHE_GATE_NOT_PASSED",
+  "schemaSampleWritten": false,
+  "complianceGates": {
+    "LEGAL_GATE": "NOT_PASSED",
+    "LICENSE_GATE": "NOT_PASSED",
+    "CACHE_GATE": "NOT_PASSED",
+    "REDISTRIBUTION_GATE": "NOT_PASSED",
+    "COST_GATE": "PROBE_BUDGET_OK_BUT_PLAN_BLOCKED",
+    "DATA_QUALITY_GATE": "NOT_PASSED",
+    "MARKET_RULE_GATE": "NOT_PASSED",
+    "note": "PLAN_BLOCKED does not clear any legal/license gate; paid upgrade not performed"
+  },
+  "impact": {
+    "dataset": 0,
+    "registry": 0,
+    "framework": 0,
+    "prediction": 0,
+    "engine": 0,
+    "existingMlbOddsHistory": 0,
+    "kboArtifacts": 0
+  },
+  "nextStepIfPaidPlan": {
+    "rerun": "npx tsx --env-file=.env.local scripts/probe-mlb-h2h-historical-odds-v1.ts",
+    "sameTarget": true,
+    "stillNoBulk": true,
+    "stillNoBuilder": true
+  }
+}

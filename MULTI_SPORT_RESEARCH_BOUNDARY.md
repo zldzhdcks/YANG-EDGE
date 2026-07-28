@@ -4,7 +4,7 @@ YANG EDGE 연구 시스템에서 **종목 공통 뼈대**와 **MLB 전용 도메
 
 이 문서는 설계·운영 가이드이며, Framework 타입·Registry schema·Dataset artifact를 변경하지 않는다. 두 번째 실제 종목 Dataset이 생기기 전까지 Multi-Sport Framework 확장은 하지 않는다.
 
-**관련 문서:** [DATASET_FRAMEWORK.md](./DATASET_FRAMEWORK.md) · [DATASET_COMMON_AUDIT.md](./DATASET_COMMON_AUDIT.md) · [PROJECT_MEMORY.md](./PROJECT_MEMORY.md) §23–§24 · [DATA_SOURCES.md](./DATA_SOURCES.md) · [HYPOTHESIS_REGISTRY.md](./HYPOTHESIS_REGISTRY.md)
+**관련 문서:** [DATASET_FRAMEWORK.md](./DATASET_FRAMEWORK.md) · [DATASET_COMMON_AUDIT.md](./DATASET_COMMON_AUDIT.md) · [PROJECT_MEMORY.md](./PROJECT_MEMORY.md) §23–§24 · [DATA_SOURCES.md](./DATA_SOURCES.md) · [HYPOTHESIS_REGISTRY.md](./HYPOTHESIS_REGISTRY.md) · [MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDIT_V1.md](./MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDIT_V1.md) · [docs/DEVELOPMENT_COMPLIANCE_CHARTER.md](./docs/DEVELOPMENT_COMPLIANCE_CHARTER.md)
 
 **Official conclusion:** `MULTI_SPORT_RESEARCH_BOUNDARY_DEFINED`
 
@@ -29,6 +29,7 @@ YANG EDGE 연구 시스템에서 **종목 공통 뼈대**와 **MLB 전용 도메
 - A Betman-scheduled league — including non-major competitions (e.g. Norwegian football) — may become a **candidate** after activation gates (Betman confirmation, lawful data, ID mapping, snapshot/grade/review support, legal clearance).
 - Games **not** on Betman are out of public analysis / recommendation scope.
 - **Betman schedule ≠ official sports Provider API.** Match Provider calendars to Betman separately; never crawl Betman HTML, automate login, or treat Betman as a data Provider.
+- **Daily Full-Slate v1:** `research:betman-slate` registers operator-confirmed Betman slate across four sports, matches Provider identity, and records minimum analysis level — internal research only ([BETMAN_DAILY_FULL_SLATE_COVERAGE_V1.md](./BETMAN_DAILY_FULL_SLATE_COVERAGE_V1.md)).
 
 Common lifecycle below applies to these four sports only. Sport-specific payloads stay independent.
 

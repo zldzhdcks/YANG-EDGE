@@ -1,0 +1,135 @@
+{
+  "meta": {
+    "version": "mlb-weather-dataset-v1-audit",
+    "kind": "weather-dataset-v1-build-audit",
+    "datasetId": "mlb-weather",
+    "schemaVersion": "mlb-weather-dataset-v1",
+    "builderVersion": "weather-dataset-builder-v1",
+    "dateKst": "2026-07-29",
+    "generatedAt": "2026-07-28T14:00:58.631Z",
+    "datasetStatus": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "researchOnly": true,
+    "predictionHashSha256": "c13a4684969f2bdd4dcac2fe3299b0e3d0ba128e588c51ee4a8fa4b9b9785804",
+    "predictionUnchanged": true,
+    "inputHashSha256": "95ccf5c823a534613f0ab2148593080626668102f111f2128b94d9187515c0fe",
+    "resultHashSha256": "7ba19a5b52f719991b08a906229a7cc5497289b1b9a8f78d31414361051d157a",
+    "firstResultHash": "7ba19a5b52f719991b08a906229a7cc5497289b1b9a8f78d31414361051d157a",
+    "secondResultHash": "7ba19a5b52f719991b08a906229a7cc5497289b1b9a8f78d31414361051d157a",
+    "hashMatched": true
+  },
+  "games": 16,
+  "venues": 16,
+  "roofTypes": {
+    "OPEN": 14,
+    "DOME": 1,
+    "RETRACTABLE": 1,
+    "UNKNOWN": 0
+  },
+  "forecastMissing": 16,
+  "providerStatus": {
+    "selected": null,
+    "candidates": [
+      "noaa-nws-api",
+      "open-meteo",
+      "openweathermap-one-call"
+    ],
+    "status": "NOT_SELECTED"
+  },
+  "weatherCollected": 0,
+  "weatherMissing": 16,
+  "cacheUsage": {
+    "firstRun": {
+      "rawHit": 27,
+      "rawMiss": 6,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 6
+    },
+    "secondRunWarm": {
+      "rawHit": 33,
+      "rawMiss": 0,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 0
+    }
+  },
+  "networkCalls": {
+    "firstRun": 6,
+    "secondRunWarm": 0
+  },
+  "regressionHashes": {
+    "before": {
+      "prediction": "c13a4684969f2bdd4dcac2fe3299b0e3d0ba128e588c51ee4a8fa4b9b9785804",
+      "starter": "c304dda267f5bf620764e95f43f9b8963ac5cee976ee2e05fb5c74dc5c7e2854",
+      "bullpen": null,
+      "lineup": null
+    },
+    "after": {
+      "prediction": "c13a4684969f2bdd4dcac2fe3299b0e3d0ba128e588c51ee4a8fa4b9b9785804",
+      "starter": "c304dda267f5bf620764e95f43f9b8963ac5cee976ee2e05fb5c74dc5c7e2854",
+      "bullpen": null,
+      "lineup": null
+    },
+    "unchanged": true
+  },
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true,
+      "detail": "c13a4684969f2bdd4dcac2fe3299b0e3d0ba128e588c51ee4a8fa4b9b9785804"
+    },
+    {
+      "id": "result-hash-matched",
+      "passed": true,
+      "detail": "7ba19a5b52f719991b08a906229a7cc5497289b1b9a8f78d31414361051d157a == 7ba19a5b52f719991b08a906229a7cc5497289b1b9a8f78d31414361051d157a"
+    },
+    {
+      "id": "warm-network-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "provider-not-selected",
+      "passed": true,
+      "detail": "NOT_SELECTED"
+    },
+    {
+      "id": "forecast-not-collected",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "roof-status-unknown",
+      "passed": true,
+      "detail": "UNKNOWN"
+    },
+    {
+      "id": "regression-hashes-unchanged",
+      "passed": true,
+      "detail": "prediction/starter/bullpen/lineup"
+    },
+    {
+      "id": "engine-prohibited",
+      "passed": true,
+      "detail": "PROHIBITED"
+    }
+  ],
+  "legal": {
+    "mlbStatsSource": "INTERNAL_RESEARCH_ONLY",
+    "publicRuntimeUseAllowed": false,
+    "commercialRuntimeUseAllowed": false,
+    "rawResponseInResearchCacheOnly": true,
+    "mlbHtmlCrawling": false,
+    "sportsDataIoScrambled": false,
+    "weatherProviderScraping": false
+  },
+  "notes": [
+    "PRE_GAME_FORECAST only — POST_GAME_OBSERVED not implemented",
+    "Forecast provider NOT_SELECTED — all forecast fields NOT_COLLECTED",
+    "roofStatus=UNKNOWN only — no open/closed inference",
+    "Environment dataset v1 — reproducible venue snapshot at cutoff",
+    "Engine admission PROHIBITED"
+  ]
+}

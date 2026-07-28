@@ -19,10 +19,14 @@
     "research:starter-summary": "tsx --env-file=.env.local scripts/summarize-mlb-starter-accumulation-v1.ts",
     "research:lineup-probe": "tsx --env-file=.env.local scripts/probe-mlb-pregame-lineup-availability-v1.ts",
     "research:kbo-identity": "tsx --env-file=.env.local scripts/build-kbo-schedule-result-identity-v1.ts",
+    "research:kbo-postgame-identity": "tsx --env-file=.env.local scripts/update-kbo-postgame-result-identity-v1.ts",
     "research:kbo-odds-comparison": "tsx --env-file=.env.local scripts/build-kbo-odds-comparison-v1.ts",
+    "research:kbo-market-feedback": "tsx --env-file=.env.local scripts/build-kbo-market-result-feedback-v1.ts",
+    "research:kbo-starter-input": "tsx --env-file=.env.local scripts/validate-kbo-starter-operator-input-v1.ts",
     "research:kbo-slate-readiness": "tsx --env-file=.env.local scripts/check-kbo-today-slate-readiness-v1.ts",
     "research:kbo-operator-input": "tsx --env-file=.env.local scripts/validate-kbo-operator-input-v1.ts",
     "research:kbo-operator-markets": "tsx --env-file=.env.local scripts/validate-kbo-operator-market-input-v2.ts",
+    "research:betman-slate": "tsx --env-file=.env.local scripts/validate-betman-daily-slate-v1.ts",
     "research:games-unique-ids": "tsx --env-file=.env.local scripts/audit-game-list-unique-ids.ts"
   },
   "dependencies": {

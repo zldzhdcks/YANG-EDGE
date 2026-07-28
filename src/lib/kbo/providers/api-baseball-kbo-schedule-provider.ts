@@ -67,16 +67,16 @@ function mapApiBaseballStatus(rawStatus: string | null): KboGameStatus {
   if (
     raw === "LIVE" ||
     raw === "IN_PLAY" ||
-    raw === "SUSP" ||
     raw === "INT" ||
-    /^\d/.test(raw)
+    /^IN\d+$/i.test(raw) ||
+    /^\d+$/.test(raw)
   ) {
     return "LIVE";
   }
   if (raw === "FT" || raw === "AOT" || raw === "FINAL") return "FINAL";
   if (raw === "POSTP" || raw === "POSTPONED") return "POSTPONED";
   if (raw === "CANC" || raw === "CANCELLED") return "CANCELLED";
-  if (raw === "SUSPENDED") return "SUSPENDED";
+  if (raw === "SUSP" || raw === "SUSPENDED") return "SUSPENDED";
   return "UNKNOWN";
 }
 
@@ -138,6 +138,7 @@ export type ApiBaseballKboScheduleProviderOptions = {
   baseUrl?: string;
   apiKey?: string;
   cwd?: string;
+  forceRefresh?: boolean;
 };
 
 export class ApiBaseballKboScheduleProvider implements KboScheduleProvider {
@@ -145,6 +146,7 @@ export class ApiBaseballKboScheduleProvider implements KboScheduleProvider {
   private readonly baseUrl: string;
   private readonly apiKey: string;
   private readonly cwd?: string;
+  private readonly forceRefresh: boolean;
 
   constructor(options: ApiBaseballKboScheduleProviderOptions = {}) {
     this.usage = createKboCacheUsage();
@@ -158,6 +160,7 @@ export class ApiBaseballKboScheduleProvider implements KboScheduleProvider {
       process.env.FOOTBALL_API_KEY?.trim() ||
       "";
     this.cwd = options.cwd;
+    this.forceRefresh = options.forceRefresh === true;
   }
 
   getProviderMetadata(): KboScheduleProviderMetadata {
@@ -188,6 +191,7 @@ export class ApiBaseballKboScheduleProvider implements KboScheduleProvider {
         this.usage,
         { baseUrl: this.baseUrl, apiKey: this.apiKey },
         this.cwd,
+        { forceRefresh: this.forceRefresh },
       );
     } catch (error) {
       const message =

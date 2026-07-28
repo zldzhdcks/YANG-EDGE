@@ -1,0 +1,377 @@
+{
+  "meta": {
+    "version": "kbo-starter-data-source-readiness-audit-v1",
+    "kind": "read-only-pre-implementation-audit",
+    "generatedAt": "2026-07-28T14:20:00.000Z",
+    "researchOnly": true,
+    "engineConnected": false,
+    "engineAdmission": "PROHIBITED",
+    "codeChange": false,
+    "registryChange": false,
+    "frameworkChange": false,
+    "officialConclusion": "KBO_STARTER_DATA_SOURCE_READINESS_AUDITED",
+    "note": "No KBO Prediction, Starter Builder, Adapter, Viewer, or Engine changes in this pass."
+  },
+  "currentPipelineState": {
+    "scheduleResultIdentity": "READY",
+    "identityProvider": "API_BASEBALL",
+    "operatorMarket": "PARTIAL",
+    "overseasOdds": "PARTIAL",
+    "kboPrediction": "NOT_IMPLEMENTED",
+    "starter": "FUTURE_GATED"
+  },
+  "repoProviderAudit": {
+    "apiBaseball": {
+      "implementation": "src/lib/kbo/providers/api-baseball-kbo-schedule-provider.ts",
+      "endpointUsed": "games?league=5&season={year}",
+      "baseUrl": "https://v1.baseball.api-sports.io",
+      "documentedEndpointsInRepo": [
+        "timezone",
+        "seasons",
+        "countries",
+        "leagues",
+        "teams",
+        "teams/statistics",
+        "standings",
+        "games",
+        "games/h2h",
+        "odds"
+      ],
+      "lineupOrPlayerEndpointsInRepo": "NONE",
+      "parsedGameFields": [
+        "id",
+        "date",
+        "time",
+        "status",
+        "teams.home/away.id/name",
+        "scores.home/away.total"
+      ],
+      "starterFieldsInParsedModel": false
+    },
+    "theSportsDb": {
+      "implementation": "src/lib/kbo/providers/thesportsdb-kbo-schedule-provider.ts",
+      "endpointUsed": "eventsday.php?d={dateKst}&l=4830",
+      "freeTierLimit": "3 events per league per day",
+      "parsedEventFields": [
+        "idEvent",
+        "idAPIfootball",
+        "strHomeTeam",
+        "strAwayTeam",
+        "idHomeTeam",
+        "idAwayTeam",
+        "strStatus",
+        "intHomeScore",
+        "intAwayScore"
+      ],
+      "starterFieldsInParsedModel": false
+    },
+    "storedIdentityExample": {
+      "dateKst": "2026-07-28",
+      "artifact": "data/research/kbo/2026-07-28-schedule-result-identity-v1-api-baseball.json",
+      "games": 5,
+      "internalGameIdPattern": "kbo-{providerGameId}",
+      "apiBaseballTeamIds": {
+        "Doosan": "88",
+        "Hanwha": "89",
+        "KIA": "90",
+        "KT": "91",
+        "Kiwoom": "92",
+        "LG": "93",
+        "Lotte": "94",
+        "NC": "95",
+        "Samsung": "97",
+        "SSG": "647"
+      }
+    },
+    "mlbStarterReference": {
+      "types": "src/lib/mlb/starter-dataset-types.ts",
+      "builder": "src/lib/mlb/build-starter-dataset.ts",
+      "outputPattern": "data/research/mlb/{date}-starter-dataset-v1.json",
+      "source": "MLB Stats API schedule hydrate=probablePitcher",
+      "preGameImmutable": true,
+      "postGameReviewSeparate": true
+    }
+  },
+  "apiBaseballProbe": {
+    "method": "READ_ONLY_CACHE_INSPECTION",
+    "networkCallsThisAudit": 0,
+    "priorRepoProbe": "scripts/test-api-baseball-coverage.ts",
+    "sampleGames": [
+      {
+        "providerGameId": "181902",
+        "internalGameId": "kbo-181902",
+        "match": "Lotte @ Hanwha",
+        "status": "FT",
+        "cachePath": "data/cache/research/kbo/raw/api-baseball/games_league_5_season_2026.json",
+        "responseTopLevelKeys": [
+          "id",
+          "date",
+          "time",
+          "timestamp",
+          "timezone",
+          "week",
+          "status",
+          "country",
+          "league",
+          "teams",
+          "scores"
+        ],
+        "pitcherOrLineupKeysPresent": false,
+        "preGameVsPostGameStarterSeparable": false,
+        "note": "Finished game includes inning hits/errors but no pitcher identity fields."
+      },
+      {
+        "providerGameId": "181906",
+        "internalGameId": "kbo-181906",
+        "match": "Doosan @ SSG",
+        "status": "FT",
+        "cachePath": "data/cache/research/kbo/raw/api-baseball/games_league_5_season_2026.json",
+        "pitcherOrLineupKeysPresent": false,
+        "preGameVsPostGameStarterSeparable": false
+      }
+    ],
+    "conclusion": "API-BASEBALL games endpoint does not expose probable/confirmed starter fields in repo cache or parsed provider model. No documented lineups/players endpoint in repo."
+  },
+  "auditedProviders": [
+    {
+      "providerId": "API_BASEBALL",
+      "starterAvailable": false,
+      "probableStarterAvailable": false,
+      "confirmedStarterAvailable": false,
+      "playerIdAvailable": false,
+      "handednessAvailable": false,
+      "announcementTimeAvailable": false,
+      "historicalStarterAvailable": false,
+      "preGameAvailability": "NOT_AVAILABLE",
+      "rateLimit": "PLAN_DEPENDENT",
+      "planRequirement": "API-Sports baseball subscription",
+      "commercialUse": "UNCONFIRMED",
+      "cachePermission": "INTERNAL_RESEARCH_CACHE_ONLY",
+      "publicDisplay": "UNCONFIRMED",
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "evidence": "scripts/test-api-baseball-coverage.ts; cached games_league_5_season_2026.json"
+    },
+    {
+      "providerId": "THESPORTSDB",
+      "starterAvailable": false,
+      "probableStarterAvailable": false,
+      "confirmedStarterAvailable": false,
+      "playerIdAvailable": false,
+      "handednessAvailable": false,
+      "announcementTimeAvailable": false,
+      "historicalStarterAvailable": false,
+      "preGameAvailability": "NOT_AVAILABLE",
+      "rateLimit": "FREE_3_EVENTS_PER_LEAGUE_PER_DAY",
+      "planRequirement": "Paid plan for full slate unverified",
+      "commercialUse": "UNCONFIRMED",
+      "cachePermission": "INTERNAL_RESEARCH_CACHE_ONLY",
+      "publicDisplay": "UNCONFIRMED",
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "evidence": "data/cache/research/kbo/raw/thesportsdb/eventsday.php_d_2026-07-28_l_4830.json"
+    },
+    {
+      "providerId": "SPORTSDATAIO",
+      "starterAvailable": "UNKNOWN_KBO_COVERAGE",
+      "probableStarterAvailable": "CANDIDATE_IF_NON_SCRAMBLED",
+      "confirmedStarterAvailable": "CANDIDATE_IF_NON_SCRAMBLED",
+      "playerIdAvailable": "CANDIDATE_IF_NON_SCRAMBLED",
+      "handednessAvailable": "UNKNOWN",
+      "announcementTimeAvailable": "UNKNOWN",
+      "historicalStarterAvailable": "CANDIDATE_IF_LICENSED",
+      "preGameAvailability": "UNKNOWN_WITHOUT_KBO_CONTRACT_PROBE",
+      "rateLimit": "CONTRACT",
+      "planRequirement": "COMMERCIAL_LICENSE_REQUIRED",
+      "commercialUse": "LICENSE_REQUIRED",
+      "cachePermission": "INTERNAL_RESEARCH_ONLY_IF_CLEARED",
+      "publicDisplay": "UNCONFIRMED",
+      "legalStatus": "COMMERCIAL_LICENSE_REQUIRED",
+      "scrambled": "BLOCKED",
+      "evidence": "MLB implementation src/lib/sportsdata/sportsdata-provider.ts — KBO path not implemented in repo"
+    },
+    {
+      "providerId": "OFFICIAL_KBO_OR_PARTNER",
+      "starterAvailable": "UNKNOWN_WITHOUT_CONTRACT",
+      "probableStarterAvailable": "UNKNOWN_WITHOUT_CONTRACT",
+      "confirmedStarterAvailable": "UNKNOWN_WITHOUT_CONTRACT",
+      "playerIdAvailable": "UNKNOWN_WITHOUT_CONTRACT",
+      "handednessAvailable": "UNKNOWN_WITHOUT_CONTRACT",
+      "announcementTimeAvailable": "UNKNOWN_WITHOUT_CONTRACT",
+      "historicalStarterAvailable": "UNKNOWN_WITHOUT_CONTRACT",
+      "preGameAvailability": "UNKNOWN",
+      "rateLimit": "UNKNOWN",
+      "planRequirement": "OFFICIAL_OR_PARTNER_AGREEMENT",
+      "commercialUse": "CONTRACT_REQUIRED",
+      "cachePermission": "CONTRACT_DEPENDENT",
+      "publicDisplay": "CONTRACT_DEPENDENT",
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "htmlCrawlAlternative": "BLOCKED"
+    },
+    {
+      "providerId": "SPORTRADAR_GLOBAL_BASEBALL",
+      "starterAvailable": "UNKNOWN_WITHOUT_CONTRACT",
+      "probableStarterAvailable": "DOCUMENTED_AS_COVERAGE_DEPENDENT",
+      "confirmedStarterAvailable": "DOCUMENTED_AS_COVERAGE_DEPENDENT",
+      "playerIdAvailable": "UNKNOWN",
+      "handednessAvailable": "UNKNOWN",
+      "announcementTimeAvailable": "UNKNOWN",
+      "historicalStarterAvailable": "CANDIDATE_IF_LICENSED",
+      "preGameAvailability": "UNKNOWN",
+      "rateLimit": "CONTRACT",
+      "planRequirement": "COMMERCIAL_LICENSE_REQUIRED",
+      "commercialUse": "LICENSE_REQUIRED",
+      "cachePermission": "CONTRACT_DEPENDENT",
+      "publicDisplay": "CONTRACT_DEPENDENT",
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "note": "Listed as third-party candidate only; no repo integration or probe in this pass."
+    },
+    {
+      "providerId": "OPERATOR_VERIFIED_INPUT",
+      "starterAvailable": true,
+      "probableStarterAvailable": true,
+      "confirmedStarterAvailable": true,
+      "playerIdAvailable": "OPTIONAL",
+      "handednessAvailable": "OPTIONAL",
+      "announcementTimeAvailable": "OPERATOR_CAPTURED",
+      "historicalStarterAvailable": "IF_ARCHIVED",
+      "preGameAvailability": "YES_IF_REVIEWED_BEFORE_START",
+      "rateLimit": "N_A",
+      "planRequirement": "INTERNAL_OPERATOR_WORKFLOW",
+      "commercialUse": "INTERNAL_RESEARCH_ONLY",
+      "cachePermission": "ALLOWED",
+      "publicDisplay": "UNCONFIRMED",
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "note": "Fallback path when no cleared API provides pre-game starters. Requires DRAFT/VERIFIED review."
+    }
+  ],
+  "officialAnnouncementTiming": {
+    "kboProbableStarterGeneralTiming": "UNKNOWN_OFFICIAL_RULE",
+    "reportedPractice": {
+      "status": "SECONDARY_SOURCES_ONLY",
+      "typicalDayBeforeEvening": "REPORTED_18_00_22_00_KST",
+      "sameSeriesConsecutive": "REPORTED_MAY_ANNOUNCE_AFTER_PRIOR_GAME",
+      "opponentChangeNoonDeadline": "REPORTED_12_00_KST_GAME_DAY",
+      "lineupNearFirstPitch": "REPORTED_1_2_HOURS_BEFORE",
+      "sources": [
+        "https://www.a-ha.io/questions/4bcf38521e2ee82587c271ecfbfa0832",
+        "https://www.mt.co.kr/sports/2026/07/28/2026072815463441267"
+      ]
+    },
+    "doubleHeaderProcedure": "UNKNOWN",
+    "starterChangeAfterRain": "OBSERVED_IN_MEDIA_NOT_OFFICIAL_API",
+    "rainCancelReschedule": "UNKNOWN_OFFICIAL_RULE"
+  },
+  "starterIdentityCandidateSchema": {
+    "fields": [
+      "gameId",
+      "teamSide",
+      "teamId",
+      "starterPlayerId",
+      "starterName",
+      "throwingHand",
+      "starterStatus",
+      "sourceType",
+      "announcedAt",
+      "collectedAt",
+      "cutoffTime",
+      "isPreGame",
+      "mappingStatus",
+      "warnings",
+      "missing"
+    ],
+    "starterStatusCandidates": [
+      "CONFIRMED",
+      "PROBABLE",
+      "OPERATOR_VERIFIED",
+      "NOT_ANNOUNCED",
+      "CHANGED",
+      "UNKNOWN"
+    ],
+    "postGameSeparateLabel": "POST_GAME_STARTER_CONFIRMATION"
+  },
+  "preGameCutoffPolicy": {
+    "rule": "collectedAt < scheduledStartTime required for pre-game starter rows",
+    "postGameBoxScoreLabel": "POST_GAME_STARTER_CONFIRMATION",
+    "backfillProhibited": true,
+    "rotationGuessProhibited": true
+  },
+  "operatorInputCandidateSchema": {
+    "pathPattern": "data/operator-input/kbo/{DATE}-starter-confirmation-v1.json",
+    "createInThisPass": false,
+    "requiredFields": [
+      "gameId",
+      "homeStarter",
+      "awayStarter",
+      "sourceReference",
+      "capturedAt",
+      "reviewedAt",
+      "reviewStatus"
+    ],
+    "reviewStatusValues": ["DRAFT", "VERIFIED", "REJECTED"]
+  },
+  "mlbStarterReusability": {
+    "COMMON_CONFIRMED": [
+      "internal gameId join key",
+      "teamSide / home-away side model",
+      "cutoffTime",
+      "collectionPhase pre vs post separation",
+      "preGameImmutable flag",
+      "postGameReview annotation separate from pre-game row",
+      "warnings",
+      "missing",
+      "inputHashSha256 / resultHashSha256",
+      "legalStatus INTERNAL_RESEARCH_ONLY",
+      "researchOnly / engineAdmission PROHIBITED"
+    ],
+    "COMMON_CANDIDATE": [
+      "confirmed vs probable status taxonomy",
+      "operator reviewStatus workflow",
+      "cacheUsage rawHit/rawMiss/networkCalls",
+      "joinQuality / mappingStatus"
+    ],
+    "KBO_SPECIFIC": [
+      "kbo-{providerGameId} identity keys",
+      "canonicalTeamId kbo-{koSlug}",
+      "KBO announcement timing and CHANGE handling",
+      "operator sourceReference to team SNS / KBO app / broadcast note",
+      "draw / no-game void interactions with starter rows"
+    ],
+    "NOT_REUSABLE": [
+      "gamePk",
+      "probablePitcherId from MLB Stats API",
+      "Stats API /people throws lookup",
+      "seasonStats/recentStarts from MLB gameLog",
+      "MLB-specific probableStatus PROBABLE_ONLY enum without KBO mapping"
+    ],
+    "frameworkPromotion": "PROHIBITED_THIS_PASS"
+  },
+  "predictionReadinessGates": {
+    "STARTER_PROVIDER_GATE": "BLOCKED",
+    "STARTER_IDENTITY_GATE": "PARTIAL",
+    "PRE_GAME_CUTOFF_GATE": "NOT_IMPLEMENTED",
+    "LEGAL_GATE": "BLOCKED",
+    "LICENSE_GATE": "BLOCKED",
+    "CACHE_GATE": "READY",
+    "DATA_QUALITY_GATE": "BLOCKED",
+    "kboPredictionImplementation": "BLOCKED"
+  },
+  "recommendedSourceStrategy": "HYBRID_PROVIDER_OPERATOR_REQUIRED",
+  "recommendedSourceStrategyRationale": "Current identity provider API-BASEBALL has no pre-game starter endpoint or fields. TheSportsDB likewise. Paid providers (SportsDataIO, Sportradar, official KBO) remain unverified in repo. Operator-verified capture is required until a cleared API path is proven.",
+  "nextImplementationRecommendation": {
+    "choice": "A",
+    "label": "KBO Starter Operator Input v1",
+    "alternativesRejected": {
+      "B_KBO_Starter_Provider_Adapter_v1": "Blocked — no cleared pre-game provider",
+      "C_KBO_Starter_Dataset_Builder_v1": "Blocked — provider gate fails",
+      "D_Defer": "Not chosen — operator input path is minimum viable pre-prediction step"
+    }
+  },
+  "regression": {
+    "kboIdentity": "UNCHANGED",
+    "kboOperatorMarket": "UNCHANGED",
+    "kboOddsComparison": "UNCHANGED",
+    "kboMarketFeedback": "UNCHANGED",
+    "mlbPrediction": "UNCHANGED",
+    "todayEdgePick": "UNCHANGED",
+    "engineImpact": 0
+  }
+}

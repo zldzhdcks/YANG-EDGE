@@ -23,7 +23,7 @@ Read-only design note. **No Builder / Dataset / Prediction / Viewer / Engine / R
 | Grade / Success / Failure review | **MLB scripts only** |
 | Registry | **No `kbo-*` Dataset IDs** (correct — do not register until Provider + legal clearance) |
 
-**Boundary:** Betman (배트맨) defines **which games may enter scope**; it is **not** a sports data Provider. No Betman HTML crawl / login automation.
+**Boundary:** Betman (배트맨) defines **which games may enter scope**; it is **not** a sports data Provider. No Betman HTML crawl / login automation. Multi-sport Daily Slate operator input: [BETMAN_DAILY_FULL_SLATE_COVERAGE_V1.md](./BETMAN_DAILY_FULL_SLATE_COVERAGE_V1.md).
 
 ---
 
@@ -75,7 +75,7 @@ Alternate `baseball-kbo-{providerGameId}` is unnecessary if league prefix `kbo-`
 | Field | Feasibility |
 |-------|-------------|
 | `homeTeam` / `awayTeam` / `league` / `startTimeKst` | **Collectible** from schedule Providers (after mapping) |
-| `probable starter` | **NOT_COLLECTED** via API-BASEBALL (no endpoint in repo probe); needs other licensed source → `FUTURE_GATED` until cleared |
+| `probable starter` | **NOT_COLLECTED** via API-BASEBALL (no endpoint in repo probe); **Prediction BLOCKED** — see [KBO_STARTER_DATA_SOURCE_READINESS_AUDIT_V1.md](./KBO_STARTER_DATA_SOURCE_READINESS_AUDIT_V1.md) |
 | `market odds` | **Candidate** via The Odds API (legal per-use) — not auto-assumed complete |
 | `baselinePick` / `modelProbability` / `confidence` / `edgeScore` / `valueEdge` | Require analysis pipeline + legal inputs — **FUTURE_GATED**; Dummy values **forbidden** for research freeze |
 
@@ -101,7 +101,7 @@ Proposal only: extend result taxonomy in a **KBO grade adapter** later; do not o
 Recommended order by **data feasibility first** (not Engine importance):
 
 1. **Schedule / Result Identity** — stable `gameId` + final score/status join (unlocks grade loop)
-2. Starter — **blocked** until lawful probable/confirmed source
+2. Starter — **blocked** until lawful probable/confirmed source ([KBO_STARTER_DATA_SOURCE_READINESS_AUDIT_V1.md](./KBO_STARTER_DATA_SOURCE_READINESS_AUDIT_V1.md): operator input v1 recommended first)
 3. Lineup — post-game more likely than pre-game; Provider TBD
 4. Bullpen — appearance logs Provider TBD
 5. Travel / Rest — schedule+venue derived (pattern reusable; Korea venues)

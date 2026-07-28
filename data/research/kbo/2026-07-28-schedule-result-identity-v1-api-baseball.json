@@ -8,10 +8,10 @@
     "engineConnected": false,
     "researchOnly": true,
     "dateKst": "2026-07-28",
-    "collectionPhase": "PRE_GAME_SCHEDULE_IDENTITY",
-    "generatedAt": "2026-07-28T08:02:15.086Z",
-    "inputHashSha256": "5609c434785131add017ae3471e90dcf8d8dde2ceb2032750385cedeb5376c7b",
-    "resultHashSha256": "b226837fd25a7c2738e83a51cd068303c253ce299480caa852e11656e204ecdf",
+    "collectionPhase": "POST_GAME_RESULT_IDENTITY",
+    "generatedAt": "2026-07-28T14:08:42.773Z",
+    "inputHashSha256": "cf90dda09cd8347bfb9d35f2a2d9ce6277cfd5f26db1a93bc508da454ab2a7ee",
+    "resultHashSha256": "177b88c0da3fb481653a5b98d30f1dde8d02a80f09e0facb4d3159f765ee2193",
     "legalStatus": "INTERNAL_RESEARCH_ONLY",
     "publicDisplay": "UNCONFIRMED",
     "commercialUse": "UNCONFIRMED",
@@ -19,13 +19,14 @@
     "notes": [
       "KBO Schedule/Result Identity v1 — provider-agnostic identity only.",
       "Betman scope reference NOT_CHECKED in v1.",
-      "No Prediction / Engine / Grade pipeline."
+      "No Prediction / Engine / Grade pipeline.",
+      "Postgame result identity updated at 2026-07-28T14:08:42.773Z (result region only)."
     ]
   },
   "cacheUsage": {
-    "rawHit": 1,
-    "rawMiss": 0,
-    "networkCalls": 0
+    "rawHit": 0,
+    "rawMiss": 1,
+    "networkCalls": 1
   },
   "warnings": [],
   "missing": [],
@@ -35,9 +36,9 @@
     "missingProviderGameId": 0,
     "teamMappingsMatched": 10,
     "teamMappingsUnmatched": 0,
-    "scheduled": 5,
+    "scheduled": 0,
     "live": 0,
-    "final": 0,
+    "final": 5,
     "draw": 0,
     "postponed": 0,
     "cancelled": 0,
@@ -79,8 +80,8 @@
         "commercialUse": "UNCONFIRMED"
       },
       "providerGameId": "181902",
-      "providerStatusRaw": "NS",
-      "gameStatus": "SCHEDULED",
+      "providerStatusRaw": "FT",
+      "gameStatus": "FINAL",
       "betmanScopeReference": "NOT_CHECKED",
       "providerRefs": [
         {
@@ -104,22 +105,22 @@
           "observedAt": "2026-07-28T08:02:15.086Z"
         }
       ],
-      "collectionPhase": "PRE_GAME_SCHEDULE_IDENTITY",
+      "collectionPhase": "POST_GAME_RESULT_IDENTITY",
       "time": {
         "providerStartTime": "2026-07-28T09:30:00+00:00",
         "startTimeKst": "2026-07-28T18:30:00+09:00",
         "firstObservedAt": "2026-07-28T07:59:30.582Z",
-        "lastObservedAt": "2026-07-28T08:02:15.086Z",
+        "lastObservedAt": "2026-07-28T14:08:42.773Z",
         "cutoffTime": "2026-07-28T18:30:00+09:00",
         "scheduleChanges": []
       },
       "result": {
-        "resultStatus": "PENDING",
-        "homeScore": null,
-        "awayScore": null,
-        "winner": null
+        "resultStatus": "GRADED",
+        "homeScore": 3,
+        "awayScore": 9,
+        "winner": "AWAY"
       },
-      "generatedAt": "2026-07-28T08:02:15.086Z"
+      "generatedAt": "2026-07-28T14:08:42.773Z"
     },
     {
       "internalGameId": "kbo-181903",
@@ -153,8 +154,8 @@
         "commercialUse": "UNCONFIRMED"
       },
       "providerGameId": "181903",
-      "providerStatusRaw": "NS",
-      "gameStatus": "SCHEDULED",
+      "providerStatusRaw": "FT",
+      "gameStatus": "FINAL",
       "betmanScopeReference": "NOT_CHECKED",
       "providerRefs": [
         {
@@ -178,22 +179,22 @@
           "observedAt": "2026-07-28T08:02:15.086Z"
         }
       ],
-      "collectionPhase": "PRE_GAME_SCHEDULE_IDENTITY",
+      "collectionPhase": "POST_GAME_RESULT_IDENTITY",
       "time": {
         "providerStartTime": "2026-07-28T09:30:00+00:00",
         "startTimeKst": "2026-07-28T18:30:00+09:00",
         "firstObservedAt": "2026-07-28T07:59:30.582Z",
-        "lastObservedAt": "2026-07-28T08:02:15.086Z",
+        "lastObservedAt": "2026-07-28T14:08:42.773Z",
         "cutoffTime": "2026-07-28T18:30:00+09:00",
         "scheduleChanges": []
       },
       "result": {
-        "resultStatus": "PENDING",
-        "homeScore": null,
-        "awayScore": null,
-        "winner": null
+        "resultStatus": "GRADED",
+        "homeScore": 5,
+        "awayScore": 3,
+        "winner": "HOME"
       },
-      "generatedAt": "2026-07-28T08:02:15.086Z"
+      "generatedAt": "2026-07-28T14:08:42.773Z"
     },
     {
       "internalGameId": "kbo-181904",
@@ -227,8 +228,8 @@
         "commercialUse": "UNCONFIRMED"
       },
       "providerGameId": "181904",
-      "providerStatusRaw": "NS",
-      "gameStatus": "SCHEDULED",
+      "providerStatusRaw": "FT",
+      "gameStatus": "FINAL",
       "betmanScopeReference": "NOT_CHECKED",
       "providerRefs": [
         {
@@ -252,22 +253,22 @@
           "observedAt": "2026-07-28T08:02:15.086Z"
         }
       ],
-      "collectionPhase": "PRE_GAME_SCHEDULE_IDENTITY",
+      "collectionPhase": "POST_GAME_RESULT_IDENTITY",
       "time": {
         "providerStartTime": "2026-07-28T09:30:00+00:00",
         "startTimeKst": "2026-07-28T18:30:00+09:00",
         "firstObservedAt": "2026-07-28T07:59:30.582Z",
-        "lastObservedAt": "2026-07-28T08:02:15.086Z",
+        "lastObservedAt": "2026-07-28T14:08:42.773Z",
         "cutoffTime": "2026-07-28T18:30:00+09:00",
         "scheduleChanges": []
       },
       "result": {
-        "resultStatus": "PENDING",
-        "homeScore": null,
-        "awayScore": null,
-        "winner": null
+        "resultStatus": "GRADED",
+        "homeScore": 0,
+        "awayScore": 10,
+        "winner": "AWAY"
       },
-      "generatedAt": "2026-07-28T08:02:15.086Z"
+      "generatedAt": "2026-07-28T14:08:42.773Z"
     },
     {
       "internalGameId": "kbo-181905",
@@ -301,8 +302,8 @@
         "commercialUse": "UNCONFIRMED"
       },
       "providerGameId": "181905",
-      "providerStatusRaw": "NS",
-      "gameStatus": "SCHEDULED",
+      "providerStatusRaw": "FT",
+      "gameStatus": "FINAL",
       "betmanScopeReference": "NOT_CHECKED",
       "providerRefs": [
         {
@@ -316,22 +317,22 @@
           "observedAt": "2026-07-28T08:02:15.086Z"
         }
       ],
-      "collectionPhase": "PRE_GAME_SCHEDULE_IDENTITY",
+      "collectionPhase": "POST_GAME_RESULT_IDENTITY",
       "time": {
         "providerStartTime": "2026-07-28T09:30:00+00:00",
         "startTimeKst": "2026-07-28T18:30:00+09:00",
         "firstObservedAt": "2026-07-28T07:59:30.582Z",
-        "lastObservedAt": "2026-07-28T08:02:15.086Z",
+        "lastObservedAt": "2026-07-28T14:08:42.773Z",
         "cutoffTime": "2026-07-28T18:30:00+09:00",
         "scheduleChanges": []
       },
       "result": {
-        "resultStatus": "PENDING",
-        "homeScore": null,
-        "awayScore": null,
-        "winner": null
+        "resultStatus": "GRADED",
+        "homeScore": 12,
+        "awayScore": 5,
+        "winner": "HOME"
       },
-      "generatedAt": "2026-07-28T08:02:15.086Z"
+      "generatedAt": "2026-07-28T14:08:42.773Z"
     },
     {
       "internalGameId": "kbo-181906",
@@ -365,8 +366,8 @@
         "commercialUse": "UNCONFIRMED"
       },
       "providerGameId": "181906",
-      "providerStatusRaw": "NS",
-      "gameStatus": "SCHEDULED",
+      "providerStatusRaw": "FT",
+      "gameStatus": "FINAL",
       "betmanScopeReference": "NOT_CHECKED",
       "providerRefs": [
         {
@@ -380,22 +381,22 @@
           "observedAt": "2026-07-28T08:02:15.086Z"
         }
       ],
-      "collectionPhase": "PRE_GAME_SCHEDULE_IDENTITY",
+      "collectionPhase": "POST_GAME_RESULT_IDENTITY",
       "time": {
         "providerStartTime": "2026-07-28T09:30:00+00:00",
         "startTimeKst": "2026-07-28T18:30:00+09:00",
         "firstObservedAt": "2026-07-28T07:59:30.582Z",
-        "lastObservedAt": "2026-07-28T08:02:15.086Z",
+        "lastObservedAt": "2026-07-28T14:08:42.773Z",
         "cutoffTime": "2026-07-28T18:30:00+09:00",
         "scheduleChanges": []
       },
       "result": {
-        "resultStatus": "PENDING",
-        "homeScore": null,
-        "awayScore": null,
-        "winner": null
+        "resultStatus": "GRADED",
+        "homeScore": 1,
+        "awayScore": 2,
+        "winner": "AWAY"
       },
-      "generatedAt": "2026-07-28T08:02:15.086Z"
+      "generatedAt": "2026-07-28T14:08:42.773Z"
     }
   ]
 }

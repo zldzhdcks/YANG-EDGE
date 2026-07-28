@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "version": "historical-odds-cost-storage-estimate-v1",
+    "generatedAt": "2026-07-28T12:00:00.000Z",
+    "provider": "THE_ODDS_API",
+    "currencyUsd": "UNKNOWN",
+    "basis": "Official docs: historical featured cost = 10 credits per region per market; empty snapshots do not count; paid plan required",
+    "probeExecuted": false,
+    "notes": [
+      "Credit math is formula-based only; monthly USD price depends on subscribed plan (not recorded here)",
+      "Whole-sport historical /odds endpoint returns slate snapshot, not a single game; event endpoint costs per event",
+      "Volleyball excluded from Odds API scenarios (NOT_SUPPORTED)"
+    ]
+  },
+  "assumptions": {
+    "regionsPerRequest": 1,
+    "marketsPerRequest": 1,
+    "marketExample": "h2h",
+    "featuredHistoricalCreditUnit": 10,
+    "bookmakersPerEventTypical": "MEDIUM",
+    "selectionsPerH2hBaseballBasketball": 2,
+    "selectionsPerH2hSoccer": 3,
+    "preGameWindowHoursTypical": "UNKNOWN",
+    "snapshotIntervalMinutesPostSep2022": 5,
+    "snapshotIntervalMinutesPreSep2022": 10
+  },
+  "scenarios": {
+    "A_opening_plus_latest_only": {
+      "description": "Two featured historical sport-slate pulls (opening window + latest pre-game window) for one sport key / one region / h2h",
+      "requests": 2,
+      "credits": 20,
+      "estimatedStorageRows": "LOW",
+      "estimatedJsonSize": "LOW",
+      "cacheBenefit": "HIGH_IF_DISK_CACHED",
+      "dailyOperationalCostCredits": "UNKNOWN",
+      "monthlyOperationalCostCredits": "UNKNOWN",
+      "monthlyOperationalCostUsd": "UNKNOWN"
+    },
+    "B_thirty_minute_timeline": {
+      "description": "Page snapshots every ~30 minutes across a pre-game window (window length UNKNOWN → credit band)",
+      "requests": "MEDIUM",
+      "credits": "MEDIUM_TO_HIGH",
+      "estimatedStorageRows": "MEDIUM",
+      "estimatedJsonSize": "MEDIUM",
+      "cacheBenefit": "HIGH",
+      "dailyOperationalCostCredits": "UNKNOWN",
+      "monthlyOperationalCostCredits": "UNKNOWN",
+      "monthlyOperationalCostUsd": "UNKNOWN",
+      "exampleIf12Snapshots": {
+        "requests": 12,
+        "credits": 120,
+        "note": "Illustrative only if 12 pulls × 10 credits; not a measured window"
+      }
+    },
+    "C_five_minute_timeline": {
+      "description": "Follow native 5-minute snapshot cadence for a pre-game window",
+      "requests": "HIGH",
+      "credits": "HIGH",
+      "estimatedStorageRows": "HIGH",
+      "estimatedJsonSize": "HIGH",
+      "cacheBenefit": "HIGH",
+      "dailyOperationalCostCredits": "UNKNOWN",
+      "monthlyOperationalCostCredits": "UNKNOWN",
+      "monthlyOperationalCostUsd": "UNKNOWN",
+      "exampleIf48Snapshots": {
+        "requests": 48,
+        "credits": 480,
+        "note": "Illustrative 4h × 5min cadence; window not verified per sport"
+      }
+    },
+    "D_one_league_one_season": {
+      "description": "All slate days × chosen cadence for one league season",
+      "requests": "HIGH",
+      "credits": "HIGH",
+      "estimatedStorageRows": "HIGH",
+      "estimatedJsonSize": "HIGH",
+      "cacheBenefit": "ESSENTIAL",
+      "dailyOperationalCostCredits": "UNKNOWN",
+      "monthlyOperationalCostCredits": "UNKNOWN",
+      "monthlyOperationalCostUsd": "UNKNOWN"
+    },
+    "E_four_supported_sports_full": {
+      "description": "BASEBALL+SOCCER+BASKETBALL+VOLLEYBALL full historical",
+      "feasibleOnTheOddsApiAlone": false,
+      "blockingGap": "VOLLEYBALL_AND_KBL_NOT_SUPPORTED",
+      "requests": "NOT_APPLICABLE",
+      "credits": "NOT_APPLICABLE",
+      "estimatedStorageRows": "HIGH_IF_MULTI_PROVIDER",
+      "estimatedJsonSize": "HIGH_IF_MULTI_PROVIDER",
+      "cacheBenefit": "ESSENTIAL",
+      "dailyOperationalCostCredits": "UNKNOWN",
+      "monthlyOperationalCostCredits": "UNKNOWN",
+      "monthlyOperationalCostUsd": "UNKNOWN"
+    }
+  },
+  "storageUnits": {
+    "snapshotsPerGame": {
+      "openingPlusLatest": 2,
+      "thirtyMinuteBand": "MEDIUM",
+      "fiveMinuteBand": "HIGH"
+    },
+    "bookmakersPerSnapshot": "MEDIUM",
+    "marketsPerBookmaker": "LOW_IF_H2H_ONLY",
+    "selectionsPerMarket": {
+      "baseball_h2h": 2,
+      "basketball_h2h": 2,
+      "soccer_h2h": 3
+    },
+    "rowsPerGameEstimate": {
+      "openingPlusLatestH2hAggregateBest": "LOW",
+      "openingPlusLatestAllBookmakers": "MEDIUM",
+      "fullFiveMinuteAllBookmakers": "HIGH"
+    },
+    "rowsPerSeasonEstimate": "HIGH",
+    "rowsPerYearAllFourSportsEstimate": "HIGH_OR_NOT_FEASIBLE_WITHOUT_VOLLEYBALL_PROVIDER"
+  },
+  "cachePolicyNotes": {
+    "projectMemoryCache": "5_MINUTES_IN_PROCESS",
+    "researchDiskCacheExists": true,
+    "historicalArchivePermission": "NEEDS_LEGAL_REVIEW",
+    "redistribution": "NEEDS_LEGAL_REVIEW"
+  }
+}

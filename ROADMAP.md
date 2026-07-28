@@ -10,8 +10,13 @@
 | **현재** | `PRIVATE_RESEARCH_PROTOTYPE` | 찬양님 단독 사용 · MLB 연구 파이프라인 · Viewer·복기 우선 · 공개 UI는 일정 + **라벨된 샘플** 분석 |
 | **미래** | `PUBLIC_AI_SPORTS_ANALYSIS_PLATFORM` | “AI가 왜 그렇게 판단했는가”를 설명하는 공개 제품 — **데이터·법적·표본·Backtest 게이트 통과 전 구현 금지** |
 
-제품 비전·설명 정책·법적 경계: [PROJECT_MEMORY.md §22](./PROJECT_MEMORY.md#22-product-vision-and-direction-july-2026)  
-종목·배트맨 편성 범위: [PROJECT_MEMORY.md §24](./PROJECT_MEMORY.md#24-supported-sports-and-betman-배트맨-scope) · [MULTI_SPORT_RESEARCH_BOUNDARY.md](./MULTI_SPORT_RESEARCH_BOUNDARY.md)
+제품 비전·설명 정책·법적 경계: [PROJECT_MEMORY.md §22](./PROJECT_MEMORY.md#22-product-vision-and-direction-july-2026) · [Development & Compliance Charter](./docs/DEVELOPMENT_COMPLIANCE_CHARTER.md)  
+종목·배트맨 편성 범위: [PROJECT_MEMORY.md §24](./PROJECT_MEMORY.md#24-supported-sports-and-betman-배트맨-scope) · [MULTI_SPORT_RESEARCH_BOUNDARY.md](./MULTI_SPORT_RESEARCH_BOUNDARY.md)  
+해외 Historical Odds 사전 감사: [MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDIT_V1.md](./MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDIT_V1.md)  
+Timeline Dataset 사전 설계: [HISTORICAL_ODDS_TIMELINE_DATASET_V1_DESIGN.md](./HISTORICAL_ODDS_TIMELINE_DATASET_V1_DESIGN.md) (`DESIGN_ONLY`)  
+MLB h2h Historical 최소 Probe: [MLB_H2H_HISTORICAL_ODDS_PROBE_V1.md](./MLB_H2H_HISTORICAL_ODDS_PROBE_V1.md) — 현재 `PLAN_BLOCKED` (free plan)  
+Historical 유료 도입 판단: [HISTORICAL_ODDS_PAID_PROVIDER_BUSINESS_DECISION_AUDIT_V1.md](./HISTORICAL_ODDS_PAID_PROVIDER_BUSINESS_DECISION_AUDIT_V1.md) — **HOLD**  
+Market Intelligence Hypothesis Registry 사전 설계: [MARKET_INTELLIGENCE_HYPOTHESIS_REGISTRY_V1.md](./MARKET_INTELLIGENCE_HYPOTHESIS_REGISTRY_V1.md) (`DESIGN_ONLY` · Prediction Registry와 분리)
 
 ## 제품 원칙
 
@@ -116,6 +121,31 @@
 `research:ops` 순서: correlation audit → contradiction ledger → severity → dashboard → starter summary.
 
 예측 스냅샷 freeze는 수동 유지. 상세: [RESEARCH_PIPELINE_AUTOMATION_AUDIT_V1.md](./RESEARCH_PIPELINE_AUTOMATION_AUDIT_V1.md).
+
+## KBO 연구 파이프라인 (v1 · 부분 구현)
+
+| 단계 | 상태 |
+|------|------|
+| Schedule / Result Identity | READY (API-BASEBALL) |
+| Operator Market / Odds | PARTIAL |
+| Market Result Feedback | v1 observation only |
+| **Starter** | **Operator Input v1** — validator ready; Prediction still BLOCKED |
+| Prediction | NOT_IMPLEMENTED |
+
+KBO Prediction은 선발 pre-game 소스 확보 전 구현 금지.
+
+## Betman Daily Full-Slate Coverage v1 (internal)
+
+| Surface | Status |
+|---------|--------|
+| Operator input | `data/operator-input/betman/{DATE}-daily-slate-v1.json` — manual / OCR-reviewed only |
+| CLI | `npm run research:betman-slate -- YYYY-MM-DD` |
+| Artifact | `data/research/daily-slates/{DATE}-betman-full-slate-v1.json` |
+| Internal API | `GET /api/research/daily-slate?date=` |
+| Viewer | Deferred — API + artifact only in v1 |
+| Tennis | Excluded (`UNSUPPORTED_SPORT`) |
+
+Doc: [BETMAN_DAILY_FULL_SLATE_COVERAGE_V1.md](./BETMAN_DAILY_FULL_SLATE_COVERAGE_V1.md)
 
 ## Multi-Sport Extraction (미래 단계 · 게이트 통과 전 착수 금지)
 

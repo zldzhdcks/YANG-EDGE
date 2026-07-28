@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "version": "historical-odds-timeline-dataset-v1-pre-design-audit",
+    "generatedAt": "2026-07-28T12:10:00.000Z",
+    "conclusion": "HISTORICAL_ODDS_TIMELINE_DATASET_V1_DESIGNED",
+    "datasetStatus": "DESIGN_ONLY",
+    "engineAdmission": "PROHIBITED",
+    "historicalApiCalls": 0,
+    "charterRef": "docs/DEVELOPMENT_COMPLIANCE_CHARTER.md",
+    "designDocs": [
+      "HISTORICAL_ODDS_TIMELINE_DATASET_V1_DESIGN.md",
+      "MARKET_MOVEMENT_SEMANTICS_V1.md"
+    ]
+  },
+  "currentOddsHistoryLimitations": [
+    "MLB Odds History v1 stores openingOdds/latestOdds summaries from prediction snapshot, not Historical API timeline",
+    "bookmaker collapsed to AGGREGATE_BEST — per-bookmaker raw prices lost",
+    "h2h only; no spreads/totals/period markets in History v1",
+    "KBO odds comparison uses AGGREGATE_BEST overseas + operator domestic — not a Historical Timeline store",
+    "closingOdds explicitly not collected; must not invent Closing"
+  ],
+  "recommendedStorageModel": "NORMALIZED_RAW_ROWS_PLUS_DERIVED_TIMELINE_SUMMARY",
+  "hierarchy": [
+    "Sport",
+    "League",
+    "Game",
+    "OddsProvider",
+    "Bookmaker",
+    "Market",
+    "Snapshot",
+    "Selection"
+  ],
+  "policies": {
+    "preGameCutoff": "snapshotTime < scheduledStartTimeAtSnapshot",
+    "officialOpeningPolicy": "OPENING_CANDIDATE_ONLY_UNLESS_PROVIDER_DEFINED",
+    "latestPreGamePolicy": "LATEST_SNAPSHOT_BEFORE_START",
+    "officialClosingPolicy": "NO_CLOSING_ODDS_FIELD_USE_CLOSING_CANDIDATE_PHASE_ONLY",
+    "aggregateBestVsConsensus": "AGGREGATE_BEST_IS_NOT_CONSENSUS",
+    "domesticBoundary": "SEPARATE_SOURCE_TYPE_DOMESTIC_OPERATOR_VERIFIED",
+    "gitStoragePolicy": "SCHEMA_AUDIT_SMALL_SAMPLE_ONLY_NO_FULL_RAW_HISTORICAL_IN_GIT"
+  },
+  "movement": {
+    "countDefinitionCandidate": "COUNT_ONLY_WHEN_ODDS_DECIMAL_CHANGES_INSIDE_SAME_KEY",
+    "directionSemantics": [
+      "SHORTENED",
+      "DRIFTED",
+      "UNCHANGED",
+      "REVERSAL",
+      "FLIPPED_FAVORITE",
+      "UNKNOWN"
+    ],
+    "speedStatus": "FORMULA_UNSET",
+    "consensusStatus": "FORMULA_NOT_SELECTED",
+    "clvBoundary": "FUTURE_RESEARCH_ONLY_REQUIRES_VERIFIED_MARKET_RULES"
+  },
+  "fieldClassification": {
+    "commonCandidate": [
+      "GameIdentity",
+      "Provider",
+      "Bookmaker",
+      "Snapshot",
+      "Selection",
+      "Odds",
+      "MarketRule",
+      "OutcomeJoin",
+      "Movement",
+      "Consensus",
+      "CLV"
+    ],
+    "sportSpecific": ["PeriodSets", "SetOrQuarterContracts"],
+    "marketSpecific": ["Line", "HandicapBasis", "BTTS", "DrawNoBet"],
+    "providerSpecific": ["providerSportKey", "region", "quotaCost"]
+  },
+  "rawPathRecommendation": "data/research/market-intelligence/raw/{provider}/{sport}/{league}/{dateKst}.json",
+  "derivedPathRecommendation": "data/research/market-intelligence/derived/{sport}/{league}/{internalGameId}-timeline-summary-v1.json",
+  "directoriesCreated": false,
+  "hashPolicy": {
+    "sortOrder": [
+      "gameId",
+      "provider",
+      "bookmaker",
+      "market",
+      "line",
+      "snapshotTime",
+      "selectionCode"
+    ],
+    "excludeExecutionTimestampsFromStableHash": true
+  },
+  "duplicatePolicy": {
+    "key": [
+      "provider",
+      "providerEventId",
+      "bookmakerKey",
+      "marketKey",
+      "period",
+      "line",
+      "snapshotTime",
+      "selectionCode"
+    ],
+    "oddsChangeSameKey": "KEEP_REVISION"
+  },
+  "missingPolicy": [
+    "NO_EVENT_IDENTITY",
+    "NO_BOOKMAKERS",
+    "NO_MARKETS",
+    "NO_PRE_GAME_SNAPSHOT",
+    "NO_LATEST_PRE_GAME",
+    "MARKET_RULE_UNVERIFIED",
+    "SELECTION_MAPPING_FAILED",
+    "START_TIME_UNKNOWN",
+    "LEGAL_GATE_BLOCKED",
+    "PLAN_BLOCKED",
+    "CACHE_POLICY_UNKNOWN"
+  ],
+  "complianceGates": {
+    "LEGAL_GATE": "NOT_PASSED",
+    "LICENSE_GATE": "NOT_PASSED",
+    "CACHE_GATE": "NOT_PASSED",
+    "REDISTRIBUTION_GATE": "NOT_PASSED",
+    "COST_GATE": "NOT_PASSED",
+    "DATA_QUALITY_GATE": "NOT_PASSED",
+    "MARKET_RULE_GATE": "NOT_PASSED",
+    "builderRecommended": false
+  },
+  "firstProbeContract": {
+    "league": "MLB",
+    "market": "h2h",
+    "scope": "ONE_DATE_OR_ONE_GAME",
+    "maxSnapshots": 12,
+    "maxBookmakers": 10,
+    "maxCredits": 50,
+    "bulkCollection": false,
+    "validate": [
+      "SchemaFit",
+      "ProviderFieldGap",
+      "MarketRuleGap",
+      "Cost",
+      "LicenseGate"
+    ]
+  },
+  "impact": {
+    "framework": 0,
+    "registry": 0,
+    "code": 0,
+    "prediction": 0,
+    "engine": 0,
+    "typesGenerated": 0,
+    "builderGenerated": 0
+  }
+}

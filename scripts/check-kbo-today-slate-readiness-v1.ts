@@ -34,6 +34,7 @@ type AnalysisReadiness =
   | "MARKET_INPUT_PENDING"
   | "RESEARCH_INPUTS_PARTIAL"
   | "READY_FOR_RESEARCH_SNAPSHOT_AUDIT"
+  | "STARTER_INPUT_VERIFIED"
   | "READY_FOR_PREDICTION";
 
 type IdentityRow = {
@@ -42,7 +43,13 @@ type IdentityRow = {
   awayTeam: { canonicalNameKo: string | null; mappingStatus: MappingStatus };
   time: { startTimeKst: string | null };
   providerStatusRaw: string | null;
-  result: { resultStatus: string | null };
+  gameStatus?: string | null;
+  result: {
+    resultStatus: string | null;
+    homeScore?: number | null;
+    awayScore?: number | null;
+    winner?: string | null;
+  };
 };
 
 type IdentityDocument = {
@@ -57,12 +64,22 @@ type IdentityDocument = {
     datasetGamesCreated: number;
     teamMappingsMatched: number;
     teamMappingsUnmatched: number;
+    final?: number;
+    draw?: number;
+    postponed?: number;
+    cancelled?: number;
+    noGame?: number;
+    suspended?: number;
   };
   rows: IdentityRow[];
 };
 
 type OperatorInputAudit = {
   inputReadyStatus?: string;
+};
+
+type OperatorStarterInputAudit = {
+  inputStatus?: string;
 };
 
 type OperatorMarketsV2Audit = {
@@ -218,6 +235,11 @@ async function main() {
     "data/audits",
     `${dateKst}-kbo-operator-markets-v2-audit.json`,
   );
+  const starterOperatorAuditPath = path.join(
+    cwd,
+    "data/audits",
+    `${dateKst}-kbo-starter-operator-input-v1-audit.json`,
+  );
 
   const betmanInput = await readJsonIfExists<{ games?: OperatorScopeGame[] }>(
     betmanPath,
@@ -230,6 +252,8 @@ async function main() {
   );
   const operatorMarketsV2Audit =
     await readJsonIfExists<OperatorMarketsV2Audit>(operatorMarketsV2AuditPath);
+  const starterOperatorAudit =
+    await readJsonIfExists<OperatorStarterInputAudit>(starterOperatorAuditPath);
 
   const hasV2OperatorInput =
     (operatorMarketsV2Audit?.gamesEntered ?? 0) > 0 ||
@@ -262,6 +286,16 @@ async function main() {
   } else if (operatorAudit?.inputReadyStatus === "DRAFT") {
     readiness = "MARKET_INPUT_PENDING";
   }
+  if (starterOperatorAudit?.inputStatus === "VERIFIED_FOR_RESEARCH_INPUT") {
+    readiness = "STARTER_INPUT_VERIFIED";
+  } else if (
+    starterOperatorAudit?.inputStatus === "DRAFT" ||
+    starterOperatorAudit?.inputStatus === "PARTIALLY_VERIFIED"
+  ) {
+    if (readiness === "IDENTITY_ONLY") {
+      readiness = "RESEARCH_INPUTS_PARTIAL";
+    }
+  }
   const blockingReasons = buildBlockingReasons({
     coverage,
     betmanScopeStatus,
@@ -291,28 +325,64 @@ async function main() {
   const gameStatuses = identity.rows.map((row) => ({
     internalGameId: row.internalGameId,
     providerStatusRaw: row.providerStatusRaw,
+    gameStatus: row.gameStatus ?? null,
     resultStatus: row.result.resultStatus,
   }));
+
+  const resultCoverage = {
+    finalGames: identity.summary.final ?? 0,
+    drawGames: identity.summary.draw ?? 0,
+    pendingGames: identity.rows.filter(
+      (row) => row.result.resultStatus === "PENDING",
+    ).length,
+    postponedGames: identity.summary.postponed ?? 0,
+    cancelledGames: identity.summary.cancelled ?? 0,
+    noGameGames: identity.summary.noGame ?? 0,
+    suspendedGames: identity.summary.suspended ?? 0,
+    inconclusiveGames: identity.rows.filter(
+      (row) => row.result.resultStatus === "INCONCLUSIVE",
+    ).length,
+    specialStatusGames: identity.rows.filter((row) =>
+      [
+        "POSTPONED",
+        "CANCELLED",
+        "NO_GAME",
+        "SUSPENDED",
+        "INCONCLUSIVE",
+        "UNKNOWN",
+      ].includes(row.gameStatus ?? ""),
+    ).length,
+    scoresResolved: identity.rows.filter(
+      (row) => row.result.homeScore != null && row.result.awayScore != null,
+    ).length,
+    winnersResolved: identity.rows.filter(
+      (row) =>
+        row.result.winner === "HOME" ||
+        row.result.winner === "AWAY" ||
+        row.result.winner === "DRAW",
+    ).length,
+  };
 
   const startTimes = identity.rows.map((row) => ({
     internalGameId: row.internalGameId,
     startTimeKst: row.time.startTimeKst,
   }));
 
-  const analysisAvailability = identity.rows.map((row) => ({
-    internalGameId: row.internalGameId,
-    identity: "COLLECTED",
-    schedule: "COLLECTED",
-    resultStatus: "COLLECTED",
-    starter: "FUTURE_GATED",
-    bullpen: "FUTURE_GATED",
-    lineup: "FUTURE_GATED",
-    travelRest: "FUTURE_GATED",
-    weather: "FUTURE_GATED",
-    injury: "FUTURE_GATED",
-    odds: "NOT_COLLECTED",
-    predictionSnapshot: "FUTURE_GATED",
-  }));
+  const analysisAvailability = identity.rows.map((row) => {
+    const base = availabilityBase();
+    if (starterOperatorAudit?.inputStatus === "VERIFIED_FOR_RESEARCH_INPUT") {
+      base.starter = "COLLECTED";
+    } else if (
+      starterOperatorAudit?.inputStatus === "DRAFT" ||
+      starterOperatorAudit?.inputStatus === "PARTIALLY_VERIFIED"
+    ) {
+      base.starter = "PARTIAL";
+    }
+    return {
+      internalGameId: row.internalGameId,
+      ...base,
+    };
+  });
 
   const audit = {
     meta: {
@@ -330,6 +400,7 @@ async function main() {
     teamMappings,
     startTimes,
     gameStatuses,
+    resultCoverage,
     betmanScopeStatus,
     oddsInputStatus,
     analysisReadiness: readiness,
@@ -346,12 +417,15 @@ async function main() {
       protoOddsPath,
       operatorAuditPath,
       operatorMarketsV2AuditPath,
+      starterOperatorAuditPath,
       identityProvider,
       betmanEntered: betmanInput != null,
       protoOddsEntered: protoOddsInput != null,
       operatorAuditStatus: operatorAudit?.inputReadyStatus ?? "NOT_ENTERED",
       operatorMarketsV2AuditStatus:
         operatorMarketsV2Audit?.inputStatus ?? "NOT_ENTERED",
+      starterOperatorInputAuditStatus:
+        starterOperatorAudit?.inputStatus ?? "NOT_ENTERED",
     },
     kboIdentityResultHash: identity.meta.resultHashSha256,
   };
@@ -371,6 +445,11 @@ async function main() {
   console.log("");
   console.log("Identity games:");
   console.log(String(identity.summary.datasetGamesCreated));
+  console.log("");
+  console.log("Result coverage:");
+  console.log(
+    `final=${resultCoverage.finalGames} pending=${resultCoverage.pendingGames} special=${resultCoverage.specialStatusGames}`,
+  );
   console.log("");
   console.log("Betman scope:");
   console.log(betmanScopeStatus);

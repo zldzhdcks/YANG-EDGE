@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "version": "market-intelligence-hypothesis-registry-v1-pre-design",
+    "generatedAt": "2026-07-28T12:30:00.000Z",
+    "conclusion": "MARKET_INTELLIGENCE_HYPOTHESIS_REGISTRY_V1_DESIGNED",
+    "datasetStatus": "DESIGN_ONLY",
+    "historicalApiCalls": 0,
+    "charterRef": "docs/DEVELOPMENT_COMPLIANCE_CHARTER.md",
+    "designDocs": [
+      "MARKET_INTELLIGENCE_HYPOTHESIS_REGISTRY_V1.md",
+      "MARKET_INTELLIGENCE_RESEARCH_WORKFLOW.md"
+    ]
+  },
+  "researchSeparation": {
+    "predictionRegistry": "HYPOTHESIS_REGISTRY.md",
+    "marketIntelligenceRegistry": "MARKET_INTELLIGENCE_HYPOTHESIS_REGISTRY_V1.md",
+    "directInfluence": "FORBIDDEN",
+    "predictionEngineReadsMiRegistry": false,
+    "miMutatesPredictionOrEngine": false
+  },
+  "hypothesisModelFields": [
+    "hypothesisId",
+    "title",
+    "description",
+    "category",
+    "status",
+    "createdAt",
+    "createdBy",
+    "researchOnly",
+    "legalStatus",
+    "engineAdmission",
+    "evidenceCount",
+    "sampleCount",
+    "worked",
+    "failed",
+    "pending",
+    "backtestStatus",
+    "promotionStatus"
+  ],
+  "categories": [
+    "OPENING_DRIFT",
+    "LATE_MOVE",
+    "BOOKMAKER_DISAGREEMENT",
+    "CONSENSUS",
+    "CLV",
+    "MOVEMENT_SPEED",
+    "VOLATILITY",
+    "LINE_MOVEMENT",
+    "OTHER"
+  ],
+  "lifecycleStatuses": [
+    "IDEA",
+    "COLLECTING",
+    "UNDER_BACKTEST",
+    "NEEDS_MORE_SAMPLE",
+    "READY_FOR_REVIEW",
+    "REJECTED",
+    "APPROVED_FOR_ENGINE_REVIEW",
+    "ENGINE_APPROVED"
+  ],
+  "engineApprovedMeansAutoWire": false,
+  "autoPromotion": false,
+  "forbiddenMetrics": [
+    "ConfidenceScore",
+    "AccuracyScore",
+    "Importance",
+    "Weight"
+  ],
+  "sampleTargetsCandidate": [100, 500, 1000],
+  "rejectionPolicy": "KEEP_REJECTED_DO_NOT_DELETE",
+  "evidenceSourceTypes": [
+    "HISTORICAL_ODDS_TIMELINE",
+    "LIVE_ODDS_SNAPSHOT",
+    "DOMESTIC_OPERATOR_VERIFIED",
+    "PREDICTION_DATASET",
+    "OTHER"
+  ],
+  "complianceDefaults": {
+    "researchOnly": true,
+    "legalStatus": "INTERNAL_RESEARCH_ONLY",
+    "engineAdmission": "PROHIBITED"
+  },
+  "fieldClassification": {
+    "COMMON": [
+      "hypothesisId",
+      "title",
+      "description",
+      "status",
+      "createdAt",
+      "researchOnly",
+      "legalStatus",
+      "engineAdmission",
+      "sampleCount",
+      "worked",
+      "failed",
+      "pending",
+      "evidenceId",
+      "datasetId",
+      "gameId",
+      "sport",
+      "league"
+    ],
+    "PREDICTION_ONLY": [
+      "H-BP/H-ST/H-LU namespaces",
+      "predictionSnapshotHashes",
+      "EDGE_SCORE_links",
+      "bullpenRoleFeatures"
+    ],
+    "MARKET_ONLY": [
+      "MI namespace",
+      "OPENING_DRIFT",
+      "LATE_MOVE",
+      "BOOKMAKER_DISAGREEMENT",
+      "CONSENSUS",
+      "CLV",
+      "MOVEMENT_SPEED",
+      "VOLATILITY",
+      "LINE_MOVEMENT",
+      "sourceType HISTORICAL_ODDS_TIMELINE",
+      "bookmakerKey references"
+    ],
+    "FUTURE": [
+      "MI ops markdown file instantiation",
+      "MI evidence ledger JSON",
+      "MI dashboard rows",
+      "manual Engine bridge after dual admission"
+    ],
+    "UNKNOWN": [
+      "exact consensus formula",
+      "exact movement speed formula",
+      "official Closing product",
+      "volleyball odds evidence source"
+    ]
+  },
+  "impact": {
+    "framework": 0,
+    "registryImplementation": 0,
+    "prediction": 0,
+    "engine": 0,
+    "builder": 0,
+    "dataset": 0,
+    "historicalApi": 0
+  }
+}

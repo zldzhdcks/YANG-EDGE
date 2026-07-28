@@ -1,0 +1,879 @@
+{
+  "meta": {
+    "version": "mlb-betting-line-filter-v1",
+    "generatedAt": "2026-07-28T13:58:50.823Z",
+    "targetDateKst": "2026-07-29",
+    "inputBaseline": "data\\daily-tests\\2026-07-29-mlb-baseline-analysis.json",
+    "inputCoverage": "data\\daily-tests\\2026-07-29-mlb-analysis-coverage.json",
+    "singlesOnly": true,
+    "parlaysBuilt": false,
+    "predictionSnapshotSaved": false,
+    "uiConnected": false,
+    "confidenceAutoReject": false,
+    "note": "Confidence는 탈락 기준이 아니며 <50은 warning/경계 분류만 한다.",
+    "dailyBaselineOrchestrated": true,
+    "purchasePlan": "data/plans/2026-07-29-mlb-purchase-plan.json",
+    "orchestratedAt": "2026-07-28T13:58:50.879Z"
+  },
+  "summary": {
+    "totalBaselineCandidates": 4,
+    "counts": {
+      "REVIEW_PRIORITY": 1,
+      "REVIEW_SECONDARY": 1,
+      "MARKET_CONFLICT": 2,
+      "INSUFFICIENT": 0
+    },
+    "deterministic": true,
+    "reviewTargets": [
+      {
+        "gameId": "mlb-179629",
+        "match": "Athletics vs Boston Red Sox",
+        "pickTeam": "Boston Red Sox",
+        "classification": "REVIEW_PRIORITY",
+        "valueEdge": 4.3,
+        "edgeScore": -12.1,
+        "confidence": 57,
+        "bestOdds": 1.72
+      },
+      {
+        "gameId": "mlb-179627",
+        "match": "Cincinnati Reds vs Cleveland Guardians",
+        "pickTeam": "Cincinnati Reds",
+        "classification": "REVIEW_SECONDARY",
+        "valueEdge": 14.2,
+        "edgeScore": 10,
+        "confidence": 44,
+        "bestOdds": 2.15
+      }
+    ],
+    "marketConflicts": [
+      {
+        "gameId": "mlb-179624",
+        "match": "Los Angeles Dodgers vs Seattle Mariners",
+        "pickTeam": "Los Angeles Dodgers",
+        "valueEdge": -1.4,
+        "edgeScore": 11.5
+      },
+      {
+        "gameId": "mlb-179620",
+        "match": "San Diego Padres vs Colorado Rockies",
+        "pickTeam": "San Diego Padres",
+        "valueEdge": -2.3,
+        "edgeScore": 12.1
+      }
+    ],
+    "topValueEdge": [
+      {
+        "gameId": "mlb-179627",
+        "match": "Cincinnati Reds vs Cleveland Guardians",
+        "pickTeam": "Cincinnati Reds",
+        "valueEdge": 14.2,
+        "edgeScore": 10,
+        "confidence": 44,
+        "bestOdds": 2.15,
+        "classification": "REVIEW_SECONDARY"
+      },
+      {
+        "gameId": "mlb-179629",
+        "match": "Athletics vs Boston Red Sox",
+        "pickTeam": "Boston Red Sox",
+        "valueEdge": 4.3,
+        "edgeScore": -12.1,
+        "confidence": 57,
+        "bestOdds": 1.72,
+        "classification": "REVIEW_PRIORITY"
+      },
+      {
+        "gameId": "mlb-179624",
+        "match": "Los Angeles Dodgers vs Seattle Mariners",
+        "pickTeam": "Los Angeles Dodgers",
+        "valueEdge": -1.4,
+        "edgeScore": 11.5,
+        "confidence": 47,
+        "bestOdds": 1.58,
+        "classification": "MARKET_CONFLICT"
+      }
+    ],
+    "cannotConfirmBeforePitchers": "모든 후보에서 선발투수가 미확보이다. Baseline 결과이므로 선발·부상·라인업 반영 전 확정 추천으로 사용할 수 없다."
+  },
+  "lines": [
+    {
+      "gameId": "mlb-179629",
+      "match": "Athletics vs Boston Red Sox",
+      "homeTeam": "Athletics",
+      "awayTeam": "Boston Red Sox",
+      "pickTeam": "Boston Red Sox",
+      "pickTeamId": "away",
+      "startTimeKst": "10:40",
+      "dateKst": "2026-07-29",
+      "bestOdds": 1.72,
+      "modelWinProbability": 62,
+      "marketProbability": 58,
+      "valueEdge": 4.3,
+      "edgeScore": -12.1,
+      "confidence": 57,
+      "dataAvailability": 0.9,
+      "classification": "REVIEW_PRIORITY",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "|EDGE| >= 10, Value Edge > 0, 시장·표본·배당 비교 가능"
+      ]
+    },
+    {
+      "gameId": "mlb-179627",
+      "match": "Cincinnati Reds vs Cleveland Guardians",
+      "homeTeam": "Cincinnati Reds",
+      "awayTeam": "Cleveland Guardians",
+      "pickTeam": "Cincinnati Reds",
+      "pickTeamId": "home",
+      "startTimeKst": "08:10",
+      "dateKst": "2026-07-29",
+      "bestOdds": 2.15,
+      "modelWinProbability": 60,
+      "marketProbability": 46,
+      "valueEdge": 14.2,
+      "edgeScore": 10,
+      "confidence": 44,
+      "dataAvailability": 0.9,
+      "classification": "REVIEW_SECONDARY",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보",
+        "Confidence < 50"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "Value Edge 양수이나 Confidence < 50 경계"
+      ]
+    },
+    {
+      "gameId": "mlb-179624",
+      "match": "Los Angeles Dodgers vs Seattle Mariners",
+      "homeTeam": "Los Angeles Dodgers",
+      "awayTeam": "Seattle Mariners",
+      "pickTeam": "Los Angeles Dodgers",
+      "pickTeamId": "home",
+      "startTimeKst": "11:10",
+      "dateKst": "2026-07-29",
+      "bestOdds": 1.58,
+      "modelWinProbability": 62,
+      "marketProbability": 63,
+      "valueEdge": -1.4,
+      "edgeScore": 11.5,
+      "confidence": 47,
+      "dataAvailability": 0.8,
+      "classification": "MARKET_CONFLICT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보",
+        "Confidence < 50"
+      ],
+      "missingData": [
+        "선발투수",
+        "맞대결"
+      ],
+      "reasons": [
+        "|EDGE| >= 10 이지만 Value Edge <= 0"
+      ]
+    },
+    {
+      "gameId": "mlb-179620",
+      "match": "San Diego Padres vs Colorado Rockies",
+      "homeTeam": "San Diego Padres",
+      "awayTeam": "Colorado Rockies",
+      "pickTeam": "San Diego Padres",
+      "pickTeamId": "home",
+      "startTimeKst": "10:40",
+      "dateKst": "2026-07-29",
+      "bestOdds": 1.58,
+      "modelWinProbability": 62,
+      "marketProbability": 64,
+      "valueEdge": -2.3,
+      "edgeScore": 12.1,
+      "confidence": 57,
+      "dataAvailability": 0.9,
+      "classification": "MARKET_CONFLICT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "|EDGE| >= 10 이지만 Value Edge <= 0"
+      ]
+    }
+  ],
+  "dailyCandidates": [
+    {
+      "gameId": "mlb-179629",
+      "match": "Athletics vs Boston Red Sox",
+      "homeTeam": "Athletics",
+      "awayTeam": "Boston Red Sox",
+      "pickTeam": "Boston Red Sox",
+      "pickTeamId": "away",
+      "startTimeKst": "10:40",
+      "dateKst": "2026-07-29",
+      "bestOdds": 1.72,
+      "modelWinProbability": 62,
+      "marketProbability": 58,
+      "valueEdge": 4.3,
+      "edgeScore": -12.1,
+      "confidence": 57,
+      "dataAvailability": 0.9,
+      "classification": "REVIEW_PRIORITY",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "|EDGE| >= 10, Value Edge > 0, 시장·표본·배당 비교 가능"
+      ],
+      "purchaseTimingClass": "SAME_DAY_DECISION_AVAILABLE",
+      "recommendedInitialAnalysisKst": "2026-07-29 08:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-29 08:00 KST",
+      "recommendedFinalDecisionKst": "2026-07-29 09:10 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED"
+      ],
+      "dailyClass": "DAILY_MEDIUM"
+    },
+    {
+      "gameId": "mlb-179627",
+      "match": "Cincinnati Reds vs Cleveland Guardians",
+      "homeTeam": "Cincinnati Reds",
+      "awayTeam": "Cleveland Guardians",
+      "pickTeam": "Cincinnati Reds",
+      "pickTeamId": "home",
+      "startTimeKst": "08:10",
+      "dateKst": "2026-07-29",
+      "bestOdds": 2.15,
+      "modelWinProbability": 60,
+      "marketProbability": 46,
+      "valueEdge": 14.2,
+      "edgeScore": 10,
+      "confidence": 44,
+      "dataAvailability": 0.9,
+      "classification": "REVIEW_SECONDARY",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보",
+        "Confidence < 50"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "Value Edge 양수이나 Confidence < 50 경계"
+      ],
+      "purchaseTimingClass": "CONDITIONAL_MORNING_WINDOW",
+      "recommendedInitialAnalysisKst": "2026-07-28 18:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-28 21:30 KST",
+      "recommendedFinalDecisionKst": "2026-07-28 22:50 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED",
+        "NARROW_MORNING_WINDOW",
+        "MISSED_INITIAL_ANALYSIS",
+        "MISSED_ODDS_REFRESH",
+        "MISSED_FINAL_DECISION"
+      ],
+      "dailyClass": "DAILY_WATCH"
+    },
+    {
+      "gameId": "mlb-179616",
+      "match": "New York Mets vs Atlanta Braves",
+      "homeTeam": "New York Mets",
+      "awayTeam": "Atlanta Braves",
+      "pickTeam": "New York Mets",
+      "pickTeamId": null,
+      "startTimeKst": "08:10",
+      "dateKst": "2026-07-29",
+      "bestOdds": null,
+      "modelWinProbability": 54,
+      "marketProbability": 41,
+      "valueEdge": 13.4,
+      "edgeScore": 3.9,
+      "confidence": 37,
+      "dataAvailability": 0.9,
+      "classification": "INSUFFICIENT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "baseline PASS"
+      ],
+      "purchaseTimingClass": "CONDITIONAL_MORNING_WINDOW",
+      "recommendedInitialAnalysisKst": "2026-07-28 18:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-28 21:30 KST",
+      "recommendedFinalDecisionKst": "2026-07-28 22:50 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED",
+        "NARROW_MORNING_WINDOW",
+        "MISSED_INITIAL_ANALYSIS",
+        "MISSED_ODDS_REFRESH",
+        "MISSED_FINAL_DECISION"
+      ],
+      "dailyClass": "DAILY_DROP"
+    },
+    {
+      "gameId": "mlb-179626",
+      "match": "Detroit Tigers vs Baltimore Orioles",
+      "homeTeam": "Detroit Tigers",
+      "awayTeam": "Baltimore Orioles",
+      "pickTeam": "Baltimore Orioles",
+      "pickTeamId": null,
+      "startTimeKst": "07:40",
+      "dateKst": "2026-07-29",
+      "bestOdds": null,
+      "modelWinProbability": 56,
+      "marketProbability": 43,
+      "valueEdge": 12.5,
+      "edgeScore": -5.9,
+      "confidence": 48,
+      "dataAvailability": 0.9,
+      "classification": "INSUFFICIENT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "baseline PASS"
+      ],
+      "purchaseTimingClass": "PREVIOUS_DAY_DECISION_REQUIRED",
+      "recommendedInitialAnalysisKst": "2026-07-28 18:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-28 21:30 KST",
+      "recommendedFinalDecisionKst": "2026-07-28 22:50 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED",
+        "MISSED_INITIAL_ANALYSIS",
+        "MISSED_ODDS_REFRESH",
+        "MISSED_FINAL_DECISION"
+      ],
+      "dailyClass": "DAILY_DROP"
+    },
+    {
+      "gameId": "mlb-179618",
+      "match": "St.Louis Cardinals vs Chicago Cubs",
+      "homeTeam": "St.Louis Cardinals",
+      "awayTeam": "Chicago Cubs",
+      "pickTeam": "Chicago Cubs",
+      "pickTeamId": null,
+      "startTimeKst": "08:45",
+      "dateKst": "2026-07-29",
+      "bestOdds": null,
+      "modelWinProbability": 59,
+      "marketProbability": 51,
+      "valueEdge": 7.7,
+      "edgeScore": -9,
+      "confidence": 51,
+      "dataAvailability": 0.9,
+      "classification": "INSUFFICIENT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "baseline PASS"
+      ],
+      "purchaseTimingClass": "CONDITIONAL_MORNING_WINDOW",
+      "recommendedInitialAnalysisKst": "2026-07-28 18:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-28 21:30 KST",
+      "recommendedFinalDecisionKst": "2026-07-28 22:50 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED",
+        "NARROW_MORNING_WINDOW",
+        "MISSED_INITIAL_ANALYSIS",
+        "MISSED_ODDS_REFRESH",
+        "MISSED_FINAL_DECISION"
+      ],
+      "dailyClass": "DAILY_DROP"
+    },
+    {
+      "gameId": "mlb-179622",
+      "match": "Washington Nationals vs Toronto Blue Jays",
+      "homeTeam": "Washington Nationals",
+      "awayTeam": "Toronto Blue Jays",
+      "pickTeam": "Toronto Blue Jays",
+      "pickTeamId": null,
+      "startTimeKst": "07:45",
+      "dateKst": "2026-07-29",
+      "bestOdds": null,
+      "modelWinProbability": 50,
+      "marketProbability": 44,
+      "valueEdge": 6.3,
+      "edgeScore": -0.2,
+      "confidence": 40,
+      "dataAvailability": 0.9,
+      "classification": "INSUFFICIENT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "baseline PASS"
+      ],
+      "purchaseTimingClass": "PREVIOUS_DAY_DECISION_REQUIRED",
+      "recommendedInitialAnalysisKst": "2026-07-28 18:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-28 21:30 KST",
+      "recommendedFinalDecisionKst": "2026-07-28 22:50 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED",
+        "MISSED_INITIAL_ANALYSIS",
+        "MISSED_ODDS_REFRESH",
+        "MISSED_FINAL_DECISION"
+      ],
+      "dailyClass": "DAILY_DROP"
+    },
+    {
+      "gameId": "mlb-179630",
+      "match": "Miami Marlins vs Philadelphia Phillies",
+      "homeTeam": "Miami Marlins",
+      "awayTeam": "Philadelphia Phillies",
+      "pickTeam": "Philadelphia Phillies",
+      "pickTeamId": null,
+      "startTimeKst": "07:40",
+      "dateKst": "2026-07-29",
+      "bestOdds": null,
+      "modelWinProbability": 53,
+      "marketProbability": 49,
+      "valueEdge": 3.4,
+      "edgeScore": -2.7,
+      "confidence": 44,
+      "dataAvailability": 0.9,
+      "classification": "INSUFFICIENT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "baseline PASS"
+      ],
+      "purchaseTimingClass": "PREVIOUS_DAY_DECISION_REQUIRED",
+      "recommendedInitialAnalysisKst": "2026-07-28 18:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-28 21:30 KST",
+      "recommendedFinalDecisionKst": "2026-07-28 22:50 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED",
+        "MISSED_INITIAL_ANALYSIS",
+        "MISSED_ODDS_REFRESH",
+        "MISSED_FINAL_DECISION"
+      ],
+      "dailyClass": "DAILY_DROP"
+    },
+    {
+      "gameId": "mlb-179612",
+      "match": "Cincinnati Reds vs Cleveland Guardians",
+      "homeTeam": "Cincinnati Reds",
+      "awayTeam": "Cleveland Guardians",
+      "pickTeam": "Cincinnati Reds",
+      "pickTeamId": null,
+      "startTimeKst": "02:40",
+      "dateKst": "2026-07-29",
+      "bestOdds": null,
+      "modelWinProbability": 59,
+      "marketProbability": 59,
+      "valueEdge": 0,
+      "edgeScore": 9.1,
+      "confidence": 41,
+      "dataAvailability": 0.9,
+      "classification": "INSUFFICIENT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "baseline PASS"
+      ],
+      "purchaseTimingClass": "CONDITIONAL_MORNING_WINDOW",
+      "recommendedInitialAnalysisKst": "2026-07-28 18:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-28 21:30 KST",
+      "recommendedFinalDecisionKst": "2026-07-28 22:50 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED",
+        "NARROW_MORNING_WINDOW",
+        "MISSED_INITIAL_ANALYSIS",
+        "MISSED_ODDS_REFRESH",
+        "MISSED_FINAL_DECISION"
+      ],
+      "dailyClass": "DAILY_DROP"
+    },
+    {
+      "gameId": "mlb-179628",
+      "match": "Chicago White Sox vs New York Yankees",
+      "homeTeam": "Chicago White Sox",
+      "awayTeam": "New York Yankees",
+      "pickTeam": "New York Yankees",
+      "pickTeamId": null,
+      "startTimeKst": "08:40",
+      "dateKst": "2026-07-29",
+      "bestOdds": null,
+      "modelWinProbability": 55,
+      "marketProbability": 55,
+      "valueEdge": -0.2,
+      "edgeScore": -5,
+      "confidence": 47,
+      "dataAvailability": 0.9,
+      "classification": "INSUFFICIENT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "baseline PASS"
+      ],
+      "purchaseTimingClass": "CONDITIONAL_MORNING_WINDOW",
+      "recommendedInitialAnalysisKst": "2026-07-28 18:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-28 21:30 KST",
+      "recommendedFinalDecisionKst": "2026-07-28 22:50 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED",
+        "NARROW_MORNING_WINDOW",
+        "MISSED_INITIAL_ANALYSIS",
+        "MISSED_ODDS_REFRESH",
+        "MISSED_FINAL_DECISION"
+      ],
+      "dailyClass": "DAILY_DROP"
+    },
+    {
+      "gameId": "mlb-179621",
+      "match": "Pittsburgh Pirates vs Arizona Diamondbacks",
+      "homeTeam": "Pittsburgh Pirates",
+      "awayTeam": "Arizona Diamondbacks",
+      "pickTeam": "Pittsburgh Pirates",
+      "pickTeamId": null,
+      "startTimeKst": "07:40",
+      "dateKst": "2026-07-29",
+      "bestOdds": null,
+      "modelWinProbability": 50,
+      "marketProbability": 52,
+      "valueEdge": -1.9,
+      "edgeScore": 0,
+      "confidence": 43,
+      "dataAvailability": 0.9,
+      "classification": "INSUFFICIENT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "baseline PASS"
+      ],
+      "purchaseTimingClass": "PREVIOUS_DAY_DECISION_REQUIRED",
+      "recommendedInitialAnalysisKst": "2026-07-28 18:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-28 21:30 KST",
+      "recommendedFinalDecisionKst": "2026-07-28 22:50 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED",
+        "MISSED_INITIAL_ANALYSIS",
+        "MISSED_ODDS_REFRESH",
+        "MISSED_FINAL_DECISION"
+      ],
+      "dailyClass": "DAILY_DROP"
+    },
+    {
+      "gameId": "mlb-179623",
+      "match": "Minnesota Twins vs Kansas City Royals",
+      "homeTeam": "Minnesota Twins",
+      "awayTeam": "Kansas City Royals",
+      "pickTeam": "Minnesota Twins",
+      "pickTeamId": null,
+      "startTimeKst": "08:40",
+      "dateKst": "2026-07-29",
+      "bestOdds": null,
+      "modelWinProbability": 55,
+      "marketProbability": 59,
+      "valueEdge": -4.3,
+      "edgeScore": 5.1,
+      "confidence": 44,
+      "dataAvailability": 0.9,
+      "classification": "INSUFFICIENT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "baseline PASS"
+      ],
+      "purchaseTimingClass": "CONDITIONAL_MORNING_WINDOW",
+      "recommendedInitialAnalysisKst": "2026-07-28 18:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-28 21:30 KST",
+      "recommendedFinalDecisionKst": "2026-07-28 22:50 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED",
+        "NARROW_MORNING_WINDOW",
+        "MISSED_INITIAL_ANALYSIS",
+        "MISSED_ODDS_REFRESH",
+        "MISSED_FINAL_DECISION"
+      ],
+      "dailyClass": "DAILY_DROP"
+    },
+    {
+      "gameId": "mlb-179617",
+      "match": "Tampa Bay Rays vs Texas Rangers",
+      "homeTeam": "Tampa Bay Rays",
+      "awayTeam": "Texas Rangers",
+      "pickTeam": "Tampa Bay Rays",
+      "pickTeamId": null,
+      "startTimeKst": "07:40",
+      "dateKst": "2026-07-29",
+      "bestOdds": null,
+      "modelWinProbability": 57,
+      "marketProbability": 62,
+      "valueEdge": -5.5,
+      "edgeScore": 6.8,
+      "confidence": 38,
+      "dataAvailability": 0.8,
+      "classification": "INSUFFICIENT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수",
+        "맞대결"
+      ],
+      "reasons": [
+        "baseline PASS"
+      ],
+      "purchaseTimingClass": "PREVIOUS_DAY_DECISION_REQUIRED",
+      "recommendedInitialAnalysisKst": "2026-07-28 18:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-28 21:30 KST",
+      "recommendedFinalDecisionKst": "2026-07-28 22:50 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED",
+        "MISSED_INITIAL_ANALYSIS",
+        "MISSED_ODDS_REFRESH",
+        "MISSED_FINAL_DECISION"
+      ],
+      "dailyClass": "DAILY_DROP"
+    },
+    {
+      "gameId": "mlb-179625",
+      "match": "Los Angeles Angels vs Houston Astros",
+      "homeTeam": "Los Angeles Angels",
+      "awayTeam": "Houston Astros",
+      "pickTeam": "Houston Astros",
+      "pickTeamId": null,
+      "startTimeKst": "10:38",
+      "dateKst": "2026-07-29",
+      "bestOdds": null,
+      "modelWinProbability": 60,
+      "marketProbability": 50,
+      "valueEdge": 9.7,
+      "edgeScore": -9.7,
+      "confidence": 55,
+      "dataAvailability": 0.9,
+      "classification": "INSUFFICIENT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "baseline PASS"
+      ],
+      "purchaseTimingClass": "SAME_DAY_DECISION_AVAILABLE",
+      "recommendedInitialAnalysisKst": "2026-07-29 08:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-29 08:00 KST",
+      "recommendedFinalDecisionKst": "2026-07-29 09:08 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED"
+      ],
+      "dailyClass": "DAILY_DROP"
+    },
+    {
+      "gameId": "mlb-179620",
+      "match": "San Diego Padres vs Colorado Rockies",
+      "homeTeam": "San Diego Padres",
+      "awayTeam": "Colorado Rockies",
+      "pickTeam": "San Diego Padres",
+      "pickTeamId": "home",
+      "startTimeKst": "10:40",
+      "dateKst": "2026-07-29",
+      "bestOdds": 1.58,
+      "modelWinProbability": 62,
+      "marketProbability": 64,
+      "valueEdge": -2.3,
+      "edgeScore": 12.1,
+      "confidence": 57,
+      "dataAvailability": 0.9,
+      "classification": "MARKET_CONFLICT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "|EDGE| >= 10 이지만 Value Edge <= 0"
+      ],
+      "purchaseTimingClass": "SAME_DAY_DECISION_AVAILABLE",
+      "recommendedInitialAnalysisKst": "2026-07-29 08:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-29 08:00 KST",
+      "recommendedFinalDecisionKst": "2026-07-29 09:10 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED"
+      ],
+      "dailyClass": "DAILY_DROP"
+    },
+    {
+      "gameId": "mlb-179619",
+      "match": "San Francisco Giants vs Milwaukee Brewers",
+      "homeTeam": "San Francisco Giants",
+      "awayTeam": "Milwaukee Brewers",
+      "pickTeam": "Milwaukee Brewers",
+      "pickTeamId": null,
+      "startTimeKst": "10:45",
+      "dateKst": "2026-07-29",
+      "bestOdds": null,
+      "modelWinProbability": 51,
+      "marketProbability": 58,
+      "valueEdge": -7.5,
+      "edgeScore": -1,
+      "confidence": 33,
+      "dataAvailability": 0.9,
+      "classification": "INSUFFICIENT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보"
+      ],
+      "missingData": [
+        "선발투수"
+      ],
+      "reasons": [
+        "baseline PASS"
+      ],
+      "purchaseTimingClass": "SAME_DAY_DECISION_AVAILABLE",
+      "recommendedInitialAnalysisKst": "2026-07-29 08:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-29 08:00 KST",
+      "recommendedFinalDecisionKst": "2026-07-29 09:15 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED"
+      ],
+      "dailyClass": "DAILY_DROP"
+    },
+    {
+      "gameId": "mlb-179624",
+      "match": "Los Angeles Dodgers vs Seattle Mariners",
+      "homeTeam": "Los Angeles Dodgers",
+      "awayTeam": "Seattle Mariners",
+      "pickTeam": "Los Angeles Dodgers",
+      "pickTeamId": "home",
+      "startTimeKst": "11:10",
+      "dateKst": "2026-07-29",
+      "bestOdds": 1.58,
+      "modelWinProbability": 62,
+      "marketProbability": 63,
+      "valueEdge": -1.4,
+      "edgeScore": 11.5,
+      "confidence": 47,
+      "dataAvailability": 0.8,
+      "classification": "MARKET_CONFLICT",
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보",
+        "Confidence < 50"
+      ],
+      "missingData": [
+        "선발투수",
+        "맞대결"
+      ],
+      "reasons": [
+        "|EDGE| >= 10 이지만 Value Edge <= 0"
+      ],
+      "purchaseTimingClass": "SAME_DAY_DECISION_AVAILABLE",
+      "recommendedInitialAnalysisKst": "2026-07-29 08:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-29 08:10 KST",
+      "recommendedFinalDecisionKst": "2026-07-29 09:40 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED"
+      ],
+      "dailyClass": "DAILY_DROP"
+    }
+  ],
+  "dailySummary": {
+    "DAILY_HIGH": 0,
+    "DAILY_MEDIUM": 1,
+    "DAILY_WATCH": 1,
+    "DAILY_DROP": 14
+  }
+}

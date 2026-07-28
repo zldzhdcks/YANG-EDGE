@@ -1,0 +1,301 @@
+{
+  "meta": {
+    "version": "multi-sport-historical-odds-coverage-audit-v1",
+    "generatedAt": "2026-07-28T12:00:00.000Z",
+    "conclusion": "MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDITED",
+    "probeExecuted": false,
+    "charterRef": "docs/DEVELOPMENT_COMPLIANCE_CHARTER.md",
+    "sources": [
+      "https://the-odds-api.com/historical-odds-data/",
+      "https://the-odds-api.com/liveapi/guides/v4/",
+      "https://the-odds-api.com/sports-odds-data/sports-apis.html",
+      "src/lib/odds/the-odds-api-provider.ts",
+      "src/lib/odds/sport-key-resolver.ts",
+      "src/lib/mlb/odds-history-dataset-types.ts",
+      "src/lib/kbo/providers/the-odds-api-kbo-provider.ts"
+    ]
+  },
+  "supportedSports": ["BASEBALL", "SOCCER", "BASKETBALL", "VOLLEYBALL"],
+  "excludedSports": ["TENNIS"],
+  "projectCodeAudit": {
+    "primaryProvider": "THE_ODDS_API",
+    "historicalEndpointUsed": false,
+    "liveMarketsInUse": ["h2h"],
+    "regionsInUse": ["eu"],
+    "sportKeysObservedOrResolved": [
+      "baseball_mlb",
+      "baseball_kbo",
+      "baseball_npb",
+      "soccer_* (dynamic via /sports hints)"
+    ],
+    "openingOddsSource": "PREDICTION_OR_RESEARCH_SNAPSHOT_NOT_HISTORICAL_API",
+    "latestOddsSource": "PRE_GAME_CAPTURE_OR_LIVE_ODDS_NOT_HISTORICAL_API",
+    "closingOddsCollected": false,
+    "memoryCacheTtlSeconds": 300,
+    "diskRawCachePaths": [
+      "data/cache/research/mlb/raw/the-odds-api/",
+      "data/cache/research/kbo/raw/"
+    ]
+  },
+  "documentedServiceWide": {
+    "provider": "THE_ODDS_API",
+    "featuredHistoricalStart": "2020-06-06",
+    "featuredSnapshotIntervalBeforeSep2022": "10_MINUTES",
+    "featuredSnapshotIntervalFromSep2022": "5_MINUTES",
+    "additionalMarketsStart": "2023-05-03",
+    "additionalMarketsInterval": "5_MINUTES",
+    "paidPlanRequired": true,
+    "featuredHistoricalQuotaCost": "10_PER_REGION_PER_MARKET",
+    "eventHistoricalQuotaCost": "10_PER_REGION_PER_MARKET_PER_EVENT",
+    "officialClosingProductDocumented": false
+  },
+  "providers": [
+    {
+      "id": "THE_ODDS_API",
+      "historicalOddsSupported": true,
+      "supportedSports": ["BASEBALL", "SOCCER", "BASKETBALL"],
+      "volleyballSupported": false,
+      "earliestDocumentedDate": "2020-06-06",
+      "snapshotInterval": "10_MIN_THEN_5_MIN",
+      "openingAvailable": "RESEARCH_DEFINABLE_FROM_SNAPSHOTS",
+      "closingAvailable": false,
+      "closingCandidateAvailable": true,
+      "bookmakerBreakdown": true,
+      "consensusAvailable": "DERIVABLE_NOT_NATIVE",
+      "rateLimit": "PLAN_QUOTA_CREDITS",
+      "requestCost": "10_PER_REGION_PER_MARKET_HISTORICAL_FEATURED",
+      "cachePermission": "NEEDS_LEGAL_REVIEW",
+      "redistributionPermission": "NEEDS_LEGAL_REVIEW",
+      "commercialUse": "NEEDS_LEGAL_REVIEW",
+      "attributionRequirement": "NEEDS_LEGAL_REVIEW",
+      "legalStatus": "PER_USE_LEGAL_REVIEW"
+    },
+    {
+      "id": "API_SPORTS_FAMILY",
+      "historicalOddsSupported": "NOT_VERIFIED",
+      "supportedSports": ["BASEBALL", "SOCCER", "BASKETBALL", "VOLLEYBALL"],
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "notes": "Strong schedule/results candidate; odds historical not verified in this audit"
+    },
+    {
+      "id": "SPORTSDATAIO",
+      "historicalOddsSupported": "NOT_VERIFIED",
+      "supportedSports": ["BASEBALL"],
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "scrambled": "BLOCKED"
+    },
+    {
+      "id": "OFFICIAL_OR_LICENSED_LEAGUE_FEED",
+      "historicalOddsSupported": "UNKNOWN",
+      "legalStatus": "COMMERCIAL_LICENSE_REQUIRED"
+    }
+  ],
+  "leagueCoverage": [
+    {
+      "sport": "BASEBALL",
+      "league": "MLB",
+      "providerSportKey": "baseball_mlb",
+      "testDate": null,
+      "eventsReturned": null,
+      "marketsReturned": null,
+      "bookmakersReturned": null,
+      "earliestVerifiedSnapshot": null,
+      "latestVerifiedSnapshot": null,
+      "earliestDocumentedSnapshot": "2020-06-30T20:55:00Z",
+      "coverageStatus": "DOCUMENTED_AVAILABLE_NOT_PROBED",
+      "warnings": ["NOT_PROBED", "MARKET_RULE_UNVERIFIED"]
+    },
+    {
+      "sport": "BASEBALL",
+      "league": "KBO",
+      "providerSportKey": "baseball_kbo",
+      "testDate": null,
+      "eventsReturned": null,
+      "marketsReturned": null,
+      "bookmakersReturned": null,
+      "earliestVerifiedSnapshot": null,
+      "latestVerifiedSnapshot": null,
+      "earliestDocumentedSnapshot": "2024-03-28T21:10:40Z",
+      "coverageStatus": "DOCUMENTED_AVAILABLE_NOT_PROBED",
+      "warnings": [
+        "NOT_PROBED",
+        "DO_NOT_ASSUME_2020_COVERAGE",
+        "MARKET_RULE_UNVERIFIED"
+      ]
+    },
+    {
+      "sport": "BASEBALL",
+      "league": "NPB",
+      "providerSportKey": "baseball_npb",
+      "testDate": null,
+      "eventsReturned": null,
+      "marketsReturned": null,
+      "bookmakersReturned": null,
+      "earliestVerifiedSnapshot": null,
+      "latestVerifiedSnapshot": null,
+      "earliestDocumentedSnapshot": "2024-03-28T21:10:40Z",
+      "coverageStatus": "DOCUMENTED_AVAILABLE_NOT_PROBED",
+      "warnings": ["NOT_PROBED", "MARKET_RULE_UNVERIFIED"]
+    },
+    {
+      "sport": "SOCCER",
+      "league": "EPL",
+      "providerSportKey": "soccer_epl",
+      "earliestDocumentedSnapshot": "2020-06-06T10:05:00Z",
+      "coverageStatus": "DOCUMENTED_AVAILABLE_NOT_PROBED",
+      "warnings": ["NOT_PROBED", "H2H_3WAY_DRAW_EXPECTED", "MARKET_RULE_UNVERIFIED"]
+    },
+    {
+      "sport": "SOCCER",
+      "league": "La Liga",
+      "providerSportKey": "soccer_spain_la_liga",
+      "earliestDocumentedSnapshot": "2020-06-06T10:05:00Z",
+      "coverageStatus": "DOCUMENTED_AVAILABLE_NOT_PROBED",
+      "warnings": ["NOT_PROBED", "MARKET_RULE_UNVERIFIED"]
+    },
+    {
+      "sport": "SOCCER",
+      "league": "Bundesliga",
+      "providerSportKey": "soccer_germany_bundesliga",
+      "earliestDocumentedSnapshot": "2020-06-06T10:05:00Z",
+      "coverageStatus": "DOCUMENTED_AVAILABLE_NOT_PROBED",
+      "warnings": ["NOT_PROBED", "MARKET_RULE_UNVERIFIED"]
+    },
+    {
+      "sport": "SOCCER",
+      "league": "Serie A",
+      "providerSportKey": "soccer_italy_serie_a",
+      "earliestDocumentedSnapshot": "2020-06-06T10:05:00Z",
+      "coverageStatus": "DOCUMENTED_AVAILABLE_NOT_PROBED",
+      "warnings": ["NOT_PROBED", "MARKET_RULE_UNVERIFIED"]
+    },
+    {
+      "sport": "SOCCER",
+      "league": "Ligue 1",
+      "providerSportKey": "soccer_france_ligue_one",
+      "earliestDocumentedSnapshot": "2020-07-16T00:55:00Z",
+      "coverageStatus": "DOCUMENTED_AVAILABLE_NOT_PROBED",
+      "warnings": ["NOT_PROBED", "MARKET_RULE_UNVERIFIED"]
+    },
+    {
+      "sport": "SOCCER",
+      "league": "K League 1",
+      "providerSportKey": "soccer_korea_kleague1",
+      "earliestDocumentedSnapshot": "2020-06-06T10:05:00Z",
+      "coverageStatus": "DOCUMENTED_AVAILABLE_NOT_PROBED",
+      "warnings": ["NOT_PROBED", "MARKET_RULE_UNVERIFIED"]
+    },
+    {
+      "sport": "SOCCER",
+      "league": "Norway Eliteserien",
+      "providerSportKey": "soccer_norway_eliteserien",
+      "earliestDocumentedSnapshot": "2020-06-06T10:05:00Z",
+      "coverageStatus": "DOCUMENTED_AVAILABLE_NOT_PROBED",
+      "warnings": ["NOT_PROBED", "BETMAN_SCOPE_CANDIDATE", "MARKET_RULE_UNVERIFIED"]
+    },
+    {
+      "sport": "SOCCER",
+      "league": "UEFA Champions League",
+      "providerSportKey": "soccer_uefa_champs_league",
+      "earliestDocumentedSnapshot": "2020-07-10T16:15:00Z",
+      "coverageStatus": "DOCUMENTED_AVAILABLE_NOT_PROBED",
+      "warnings": ["NOT_PROBED", "PERIOD_SETTLEMENT_SEPARATION_REQUIRED"]
+    },
+    {
+      "sport": "BASKETBALL",
+      "league": "NBA",
+      "providerSportKey": "basketball_nba",
+      "earliestDocumentedSnapshot": "2020-06-27T03:55:00Z",
+      "coverageStatus": "DOCUMENTED_AVAILABLE_NOT_PROBED",
+      "warnings": ["NOT_PROBED", "OT_INCLUSION_UNVERIFIED"]
+    },
+    {
+      "sport": "BASKETBALL",
+      "league": "EuroLeague",
+      "providerSportKey": "basketball_euroleague",
+      "earliestDocumentedSnapshot": "2020-09-24T00:25:00Z",
+      "coverageStatus": "DOCUMENTED_AVAILABLE_NOT_PROBED",
+      "warnings": ["NOT_PROBED", "OT_INCLUSION_UNVERIFIED"]
+    },
+    {
+      "sport": "BASKETBALL",
+      "league": "KBL",
+      "providerSportKey": null,
+      "earliestDocumentedSnapshot": null,
+      "coverageStatus": "NOT_SUPPORTED",
+      "warnings": ["NO_THE_ODDS_API_SPORT_KEY"]
+    },
+    {
+      "sport": "BASKETBALL",
+      "league": "WKBL",
+      "providerSportKey": null,
+      "earliestDocumentedSnapshot": null,
+      "coverageStatus": "NOT_SUPPORTED",
+      "warnings": ["NO_THE_ODDS_API_SPORT_KEY"]
+    },
+    {
+      "sport": "VOLLEYBALL",
+      "league": "V-League Men",
+      "providerSportKey": null,
+      "earliestDocumentedSnapshot": null,
+      "coverageStatus": "NOT_SUPPORTED",
+      "warnings": ["NO_THE_ODDS_API_VOLLEYBALL_GROUP"]
+    },
+    {
+      "sport": "VOLLEYBALL",
+      "league": "V-League Women",
+      "providerSportKey": null,
+      "earliestDocumentedSnapshot": null,
+      "coverageStatus": "NOT_SUPPORTED",
+      "warnings": ["NO_THE_ODDS_API_VOLLEYBALL_GROUP"]
+    }
+  ],
+  "timingModel": {
+    "labels": [
+      "OPENING",
+      "INTERMEDIATE",
+      "LATEST_PRE_GAME",
+      "CLOSING_CANDIDATE",
+      "POST_START",
+      "POST_GAME"
+    ],
+    "officialClosingDocumented": false,
+    "preGameCutoffRule": "snapshotTime < scheduledStartTimeAtSnapshot",
+    "postStartAllowedInPreGameResearch": false
+  },
+  "marketRuleStatusBySport": {
+    "BASEBALL": "UNVERIFIED",
+    "SOCCER": "UNVERIFIED",
+    "BASKETBALL": "UNVERIFIED",
+    "VOLLEYBALL": "UNKNOWN"
+  },
+  "koreanProtoHistorical": {
+    "bulkRestore": "FORBIDDEN_WITHOUT_LICENSE",
+    "betmanCrawl": "FORBIDDEN",
+    "allowed": ["OPERATOR_MANUAL_INPUT", "OCR_DRAFT_PLUS_OPERATOR_REVIEW", "FORWARD_SELF_ARCHIVE"]
+  },
+  "gates": {
+    "LEGAL_GATE": "NOT_PASSED",
+    "LICENSE_GATE": "NOT_PASSED",
+    "CACHE_GATE": "NOT_PASSED",
+    "REDISTRIBUTION_GATE": "NOT_PASSED",
+    "COST_GATE": "NOT_PASSED",
+    "DATA_QUALITY_GATE": "NOT_PASSED",
+    "MARKET_RULE_GATE": "NOT_PASSED",
+    "builderRecommended": false
+  },
+  "providerConclusion": "MULTI_PROVIDER_REQUIRED",
+  "providerConclusionNotes": [
+    "THE_ODDS_API_PRIMARY_CANDIDATE for baseball/soccer/NBA/EuroLeague slice",
+    "Volleyball and KBL/WKBL require another licensed provider for four-sport parity"
+  ],
+  "firstImplementationRecommendation": "A_MLB_H2H_HISTORICAL_COVERAGE_PROBE",
+  "codeImpact": {
+    "framework": 0,
+    "registry": 0,
+    "prediction": 0,
+    "engine": 0,
+    "viewer": 0,
+    "historicalBuilder": 0
+  }
+}

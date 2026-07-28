@@ -1,5 +1,7 @@
 # Data Sources
 
+개발·수집·공개 판단의 상위 기준: **[Development & Compliance Charter](./docs/DEVELOPMENT_COMPLIANCE_CHARTER.md)**.
+
 ## Supported sports (product scope)
 
 YANG EDGE targets **four sports only**: baseball (야구), soccer (축구), basketball (농구), volleyball (배구).
@@ -25,6 +27,25 @@ PER_USE_LEGAL_REVIEW_REQUIRED
 ```
 
 The Odds API may be used for research and reference odds where plan terms allow. Display, caching, redistribution, and commercial product use still require explicit clearance per deployment.
+
+### Historical Odds (pre-audit)
+
+Multi-sport Historical Odds coverage is documented in:
+
+- [MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDIT_V1.md](./MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDIT_V1.md)
+- [MARKET_INTELLIGENCE_RESEARCH_DESIGN.md](./MARKET_INTELLIGENCE_RESEARCH_DESIGN.md)
+- [HISTORICAL_ODDS_TIMELINE_DATASET_V1_DESIGN.md](./HISTORICAL_ODDS_TIMELINE_DATASET_V1_DESIGN.md)
+- `data/audits/multi-sport-historical-odds-coverage-audit-v1.json`
+
+Key documented constraints (The Odds API official docs):
+
+- Featured historical start **2020-06-06** (service-wide) ≠ per-league earliest (e.g. KBO/NPB **2024-03-28**)
+- Paid plan required; Historical Builder not recommended until compliance gates pass
+- Volleyball / KBL not listed on Odds API sports catalog → multi-provider required for four-sport parity
+- Do not treat last pre-game snapshot as official Closing unless the provider documents Closing
+- MLB h2h minimal Historical probe (2026-07-28): **`PLAN_BLOCKED`** on free plan — see [MLB_H2H_HISTORICAL_ODDS_PROBE_V1.md](./MLB_H2H_HISTORICAL_ODDS_PROBE_V1.md)
+- Paid Historical business decision (2026-07-28): **HOLD** — see [HISTORICAL_ODDS_PAID_PROVIDER_BUSINESS_DECISION_AUDIT_V1.md](./HISTORICAL_ODDS_PAID_PROVIDER_BUSINESS_DECISION_AUDIT_V1.md)
+- Market Intelligence Hypothesis Registry pre-design: [MARKET_INTELLIGENCE_HYPOTHESIS_REGISTRY_V1.md](./MARKET_INTELLIGENCE_HYPOTHESIS_REGISTRY_V1.md) — separate from Prediction [HYPOTHESIS_REGISTRY.md](./HYPOTHESIS_REGISTRY.md); no Engine coupling
 
 ## Korean Proto / Sports Toto odds
 
@@ -55,6 +76,14 @@ Operator manual entry or future OCR-assisted entry:
 | Betman site | **Not** a crawlable data API |
 
 Schedule confirmation (when recorded in future admin tooling) should store **source**, **confirmedAt**, **operator**, and **revision history**.
+
+### Betman Daily Full-Slate operator input (v1)
+
+- Path: `data/operator-input/betman/{DATE}-daily-slate-v1.json`
+- Template: `data/operator-input/betman/templates/daily-slate-v1-template.json`
+- CLI: `npm run research:betman-slate -- YYYY-MM-DD`
+- Covers baseball · soccer · basketball · volleyball in one slate; tennis excluded
+- Does **not** grant public or commercial odds rights — see [BETMAN_DAILY_FULL_SLATE_COVERAGE_V1.md](./BETMAN_DAILY_FULL_SLATE_COVERAGE_V1.md)
 
 ### Permanently prohibited (proto / Betman)
 
@@ -156,6 +185,8 @@ COMMERCIAL_USE_UNCONFIRMED
 - Full-slate identity coverage audit (`2026-07-28`) recommends a provider-backed alternative over invented IDs: [KBO_FULL_SLATE_IDENTITY_COVERAGE_AUDIT_V1.md](./KBO_FULL_SLATE_IDENTITY_COVERAGE_AUDIT_V1.md)
 - API-BASEBALL provider implementation and migration notes: [KBO_API_BASEBALL_IDENTITY_PROVIDER_V1.md](./KBO_API_BASEBALL_IDENTITY_PROVIDER_V1.md) · [KBO_IDENTITY_PROVIDER_MIGRATION.md](./KBO_IDENTITY_PROVIDER_MIGRATION.md)
 - KBO odds comparison v1 uses operator-entered domestic proto odds + The Odds API overseas `baseball_kbo` `h2h` market only: [KBO_ODDS_COMPARISON_V1.md](./KBO_ODDS_COMPARISON_V1.md)
+- KBO market result feedback v1 links post-game identity results with pre-game domestic/overseas odds (observation only): [KBO_MARKET_RESULT_FEEDBACK_V1.md](./KBO_MARKET_RESULT_FEEDBACK_V1.md)
+- KBO starter operator input v1: `npm run research:kbo-starter-input -- YYYY-MM-DD` · spec: [KBO_STARTER_OPERATOR_INPUT_V1.md](./KBO_STARTER_OPERATOR_INPUT_V1.md)
 - **Do not** treat Betman or KBO official-site HTML as a data Provider.
 
 ## The Odds API (KBO odds comparison v1)

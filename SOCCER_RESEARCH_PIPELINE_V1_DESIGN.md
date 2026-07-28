@@ -28,6 +28,7 @@ YANG EDGE의 첫 비야구 종목인 축구 Research Pipeline 사전 설계 문�
 - Betman schedule determines candidate scope only.
 - Provider fixture schedule, IDs, and stats must come from lawful sports data Providers.
 - Betman HTML crawling, login automation, hidden API use, and bulk odds copying remain prohibited.
+- Multi-sport Betman Daily Slate v1 (operator input + identity match + minimum analysis): [BETMAN_DAILY_FULL_SLATE_COVERAGE_V1.md](./BETMAN_DAILY_FULL_SLATE_COVERAGE_V1.md) — soccer uses API-Football fixture cache when present.
 
 ## League scope
 

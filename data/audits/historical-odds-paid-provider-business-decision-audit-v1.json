@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "version": "historical-odds-paid-provider-business-decision-audit-v1",
+    "generatedAt": "2026-07-28T12:20:00.000Z",
+    "conclusion": "HISTORICAL_ODDS_BUSINESS_DECISION_AUDITED",
+    "recommendation": "HOLD",
+    "historicalApiCalls": 0,
+    "charterRef": "docs/DEVELOPMENT_COMPLIANCE_CHARTER.md",
+    "sources": [
+      "https://the-odds-api.com/",
+      "https://the-odds-api.com/terms-and-conditions.html",
+      "https://the-odds-api.com/historical-odds-data/",
+      "https://sportsdata.io/developers",
+      "MLB_H2H_HISTORICAL_ODDS_PROBE_V1.md",
+      "MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDIT_V1.md",
+      "data/audits/historical-odds-cost-storage-estimate-v1.json"
+    ]
+  },
+  "comparedProviders": [
+    "THE_ODDS_API",
+    "SPORTSDATAIO",
+    "API_SPORTS",
+    "OTHER_LICENSED_FEED"
+  ],
+  "theOddsApi": {
+    "historicalAvailability": {
+      "free": false,
+      "paid": true,
+      "evidence": "PLAN_BLOCKED probe + official Historical docs"
+    },
+    "lowestPaidPlanWithHistorical": {
+      "name": "20K",
+      "monthlyUsd": 30,
+      "creditsPerMonth": 20000,
+      "annualUsdIfMonthlyContinuous": 360
+    },
+    "otherPlans": [
+      { "name": "100K", "monthlyUsd": 59, "creditsPerMonth": 100000 },
+      { "name": "5M", "monthlyUsd": 119, "creditsPerMonth": 5000000 },
+      { "name": "15M", "monthlyUsd": 249, "creditsPerMonth": 15000000 }
+    ],
+    "historicalCreditUnit": "10_PER_REGION_PER_MARKET",
+    "commercialUse": "CONDITIONAL_ALLOWED_IN_OWN_APPS_NOT_AS_PRIMARY_DATA_PRODUCT",
+    "researchUse": "CONDITIONAL_ALLOWED",
+    "internalCache": "ENCOURAGED_IN_DOCS_STILL_NEEDS_PROJECT_LEGAL_STAMP",
+    "redistribution": "FORBIDDEN_AS_STANDALONE_DATA_PRODUCT",
+    "publicDisplay": "CONDITIONAL_NEEDS_LEGAL_REVIEW",
+    "rawOddsStorage": "CONDITIONAL_FOR_OWN_PRODUCT_NOT_REDISTRIBUTION",
+    "bookmakerDisplay": "IDENTIFICATION_ALLOWED_NO_ENDORSEMENT",
+    "attribution": "NEEDS_REVIEW",
+    "rateLimit": "DOCUMENTED_429_BEHAVIOR"
+  },
+  "sportsDataIo": {
+    "historicalAvailability": "VAULT_AND_COMMERCIAL_SALES_DISCOVERY_LAB_ODDS_DELAYED",
+    "lowestSelfServeOdds": { "monthlyUsd": 99, "annualUsd": 599, "tier": "Discovery Lab Odds" },
+    "commercialUse": "DISCOVERY_LAB_NOT_FOR_COMMERCIAL_REDISTRIBUTION_FULL_COMMERCIAL_QUOTE",
+    "researchUse": "VAULT_CANDIDATE_SALES",
+    "cachePolicy": "NEEDS_LEGAL_REVIEW",
+    "redistribution": "RESTRICTED",
+    "publicDisplay": "NEEDS_LEGAL_REVIEW",
+    "scrambled": "BLOCKED_FOR_RESEARCH_CLAIMS"
+  },
+  "apiSports": {
+    "historicalOddsTimelineParityWithOddsApi": "NOT_VERIFIED",
+    "scheduleResultsHistorical": "IN_USE_FOR_KBO_MLB_IDENTITY",
+    "volleyballCandidate": true,
+    "commercialUse": "NEEDS_LEGAL_REVIEW",
+    "priceFloorPublicMarketing": "CONFIRM_ON_DASHBOARD_APPROX_10_TO_39_USD_CLASS"
+  },
+  "projectedUsageTheOddsApi": {
+    "method": "SLATE_DAY_FEATURED_H2H_1_REGION",
+    "openingPlusLatestCreditsPerSportDay": 20,
+    "fiveMinuteFourHourWindowCreditsPerSportDay": 480,
+    "yearlyOpeningPlusLatestCredits": {
+      "MLB": 3240,
+      "KBO": 2880,
+      "NPB": 2860,
+      "NBA": 1640,
+      "SOCCER_MULTI": "HIGH_UNKNOWN",
+      "VOLLEYBALL": "NOT_SUPPORTED"
+    },
+    "yearlyFiveMinuteCreditsOrderOfMagnitude": {
+      "MLB": 78000,
+      "KBO": 69000,
+      "NPB": 69000,
+      "NBA": 39000,
+      "SOCCER_MULTI": "VERY_HIGH",
+      "VOLLEYBALL": "NOT_SUPPORTED"
+    }
+  },
+  "projectedStorage": {
+    "openingPlusLatest": "LOW_TO_MEDIUM",
+    "fiveMinuteTimeline": "HIGH",
+    "gitPolicy": "NO_FULL_RAW_HISTORICAL_IN_GIT"
+  },
+  "estimatedYearlyCost": {
+    "holdPath": 0,
+    "minimalPaidProbePathMonthlyFloorUsd": 30,
+    "openingLatestMultiBaseballNbaIf20kSufficientUsd": 360,
+    "fiveMinuteSingleLeagueLikelyUsd": 708,
+    "fiveMinuteMultiLeagueLikelyUsd": 1428,
+    "notes": "USD from public Odds API list only; annual discounts UNKNOWN"
+  },
+  "researchValue": [
+    "OPENING_DRIFT_CANDIDATE",
+    "LATE_MOVE_CANDIDATE",
+    "MOVEMENT_SPEED_CANDIDATE",
+    "BOOKMAKER_DISAGREEMENT",
+    "CONSENSUS_CANDIDATE",
+    "CLV_CANDIDATE",
+    "MARKET_CONFIDENCE_PROXY_CANDIDATE"
+  ],
+  "researchNonClaims": [
+    "DOES_NOT_IMPLY_HIGHER_HIT_RATE",
+    "DOES_NOT_PROVE_SMART_MONEY",
+    "DOES_NOT_AUTHORIZE_ENGINE_WEIGHTS"
+  ],
+  "risks": {
+    "legal": "MEDIUM_HIGH_UNTIL_REVIEW",
+    "business": "MEDIUM_SPEND_BEFORE_MONETIZATION",
+    "technical": "MEDIUM_COVERAGE_AND_SCHEMA_GAPS"
+  },
+  "roiAssessment": "RESEARCH_OPTION_VALUE_ONLY_NO_HIT_RATE_ROI_CLAIM",
+  "recommendation": "HOLD",
+  "recommendationRationale": [
+    "Private research stage does not require paid Historical now",
+    "Free plan blocked Historical; schema fit on paid key still unproven",
+    "Charter compliance gates not cleared",
+    "5-minute multi-sport burn rate escalates quickly",
+    "Volleyball/KBL gap remains after paying Odds API",
+    "Optional later: time-boxed $30 plan for MLB schema-fit only after operator approval"
+  ],
+  "impact": {
+    "dataset": 0,
+    "prediction": 0,
+    "engine": 0,
+    "registry": 0,
+    "framework": 0
+  }
+}

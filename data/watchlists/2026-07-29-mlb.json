@@ -1,0 +1,134 @@
+{
+  "meta": {
+    "version": "mlb-watchlist-v1",
+    "targetDateKst": "2026-07-29",
+    "kind": "observation-watchlist",
+    "recommendation": false,
+    "bettingInstruction": false,
+    "predictionSnapshotSaved": false,
+    "generatedAt": "2026-07-28T13:58:50.881Z",
+    "note": "Baseline 1차 관찰 후보. 선발·라인업·부상·최신 Odds 재확인 필요. 확정 추천 아님.",
+    "purchasePlanAttached": true,
+    "baselineOnly": true
+  },
+  "summary": {
+    "total": 2,
+    "high": 0,
+    "medium": 1,
+    "watch": 1,
+    "excluded": [],
+    "commonRecheckReasons": [
+      "STARTING_PITCHER_REQUIRED",
+      "LINEUP_REQUIRED",
+      "INJURY_STATUS_REQUIRED",
+      "ODDS_REFRESH_REQUIRED",
+      "STANDINGS_UNAVAILABLE"
+    ],
+    "notARecommendationReason": "선발·라인업·부상·순위 미반영 Baseline 관찰 목록이며 SportsDataIO Trial Scrambled 값을 Engine에 사용하지 않았다."
+  },
+  "games": [
+    {
+      "gameId": "mlb-179629",
+      "startTimeKst": "10:40",
+      "homeTeam": "Athletics",
+      "awayTeam": "Boston Red Sox",
+      "baselinePick": "Boston Red Sox",
+      "baselineOdds": 1.72,
+      "modelProbability": 62,
+      "marketProbability": 58,
+      "valueEdge": 4.3,
+      "edgeScore": -12.1,
+      "confidence": 57,
+      "dataAvailability": 0.9,
+      "currentClassification": "REVIEW_PRIORITY",
+      "missingData": [
+        "선발투수"
+      ],
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보",
+        "OFFICIAL_CLOSE_UNVERIFIED",
+        "dailyClass:DAILY_MEDIUM",
+        "purchaseTiming:SAME_DAY_DECISION_AVAILABLE",
+        "SPORTSDATA_TRIAL_SCRAMBLED_NOT_USED"
+      ],
+      "recheckRequired": true,
+      "recheckReasons": [
+        "STARTING_PITCHER_REQUIRED",
+        "LINEUP_REQUIRED",
+        "INJURY_STATUS_REQUIRED",
+        "ODDS_REFRESH_REQUIRED",
+        "STANDINGS_UNAVAILABLE"
+      ],
+      "priority": "MEDIUM",
+      "createdAt": "2026-07-28T13:58:50.881Z",
+      "version": "mlb-watchlist-v1",
+      "dailyClass": "DAILY_MEDIUM",
+      "purchaseTimingClass": "SAME_DAY_DECISION_AVAILABLE",
+      "recommendedInitialAnalysisKst": "2026-07-29 08:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-29 08:00 KST",
+      "recommendedFinalDecisionKst": "2026-07-29 09:10 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED"
+      ]
+    },
+    {
+      "gameId": "mlb-179627",
+      "startTimeKst": "08:10",
+      "homeTeam": "Cincinnati Reds",
+      "awayTeam": "Cleveland Guardians",
+      "baselinePick": "Cincinnati Reds",
+      "baselineOdds": 2.15,
+      "modelProbability": 60,
+      "marketProbability": 46,
+      "valueEdge": 14.2,
+      "edgeScore": 10,
+      "confidence": 44,
+      "dataAvailability": 0.9,
+      "currentClassification": "REVIEW_SECONDARY",
+      "missingData": [
+        "선발투수"
+      ],
+      "warnings": [
+        "선발투수 미확보",
+        "부상 미확보",
+        "순위 미확보",
+        "Confidence < 50",
+        "OFFICIAL_CLOSE_UNVERIFIED",
+        "NARROW_MORNING_WINDOW",
+        "MISSED_INITIAL_ANALYSIS",
+        "MISSED_ODDS_REFRESH",
+        "MISSED_FINAL_DECISION",
+        "dailyClass:DAILY_WATCH",
+        "purchaseTiming:CONDITIONAL_MORNING_WINDOW",
+        "SPORTSDATA_TRIAL_SCRAMBLED_NOT_USED"
+      ],
+      "recheckRequired": true,
+      "recheckReasons": [
+        "STARTING_PITCHER_REQUIRED",
+        "LINEUP_REQUIRED",
+        "INJURY_STATUS_REQUIRED",
+        "ODDS_REFRESH_REQUIRED",
+        "STANDINGS_UNAVAILABLE"
+      ],
+      "priority": "WATCH",
+      "createdAt": "2026-07-28T13:58:50.881Z",
+      "version": "mlb-watchlist-v1",
+      "dailyClass": "DAILY_WATCH",
+      "purchaseTimingClass": "CONDITIONAL_MORNING_WINDOW",
+      "recommendedInitialAnalysisKst": "2026-07-28 18:00 KST",
+      "recommendedOddsRefreshKst": "2026-07-28 21:30 KST",
+      "recommendedFinalDecisionKst": "2026-07-28 22:50 KST",
+      "officialCloseVerified": false,
+      "purchaseWarnings": [
+        "OFFICIAL_CLOSE_UNVERIFIED",
+        "NARROW_MORNING_WINDOW",
+        "MISSED_INITIAL_ANALYSIS",
+        "MISSED_ODDS_REFRESH",
+        "MISSED_FINAL_DECISION"
+      ]
+    }
+  ]
+}

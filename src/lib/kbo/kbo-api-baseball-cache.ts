@@ -29,49 +29,54 @@ export async function getKboApiBaseballJson(
   usage: KboCacheUsageStats,
   config: KboApiBaseballFetchConfig,
   cwd?: string,
+  options: { forceRefresh?: boolean } = {},
 ): Promise<unknown> {
   const cacheKey = endpointAndQuery.replace(/^\//, "").replace(/[?&=]/g, "_");
   const file = rawCachePath(cacheKey, cwd);
 
-  try {
-    const raw = await readFile(file, "utf8");
-    usage.rawHit += 1;
-    const parsed = JSON.parse(raw) as { body?: unknown };
-    return parsed.body ?? parsed;
-  } catch {
-    usage.rawMiss += 1;
-    usage.networkCalls += 1;
-
-    const cleaned = endpointAndQuery.replace(/^\//, "");
-    const url = `${config.baseUrl.replace(/\/$/, "")}/${cleaned}`;
-    const response = await fetch(url, {
-      headers: { "x-apisports-key": config.apiKey.trim() },
-      cache: "no-store",
-    });
-    if (!response.ok) {
-      throw new Error(`API-BASEBALL ${response.status} ${cleaned}`);
+  if (!options.forceRefresh) {
+    try {
+      const raw = await readFile(file, "utf8");
+      usage.rawHit += 1;
+      const parsed = JSON.parse(raw) as { body?: unknown };
+      return parsed.body ?? parsed;
+    } catch {
+      // miss → network
     }
-    const body = await response.json();
-    await mkdir(path.dirname(file), { recursive: true });
-    await writeFile(
-      file,
-      `${JSON.stringify(
-        {
-          meta: {
-            source: "INTERNAL_RESEARCH_ONLY",
-            provider: "API_BASEBALL",
-            endpoint: cleaned,
-            fetchedAt: new Date().toISOString(),
-            publicRuntimeUseAllowed: false,
-            commercialRuntimeUseAllowed: false,
-          },
-          body,
-        },
-        null,
-        2,
-      )}\n`,
-      "utf8",
-    );
-    return body;
   }
+
+  usage.rawMiss += 1;
+  usage.networkCalls += 1;
+
+  const cleaned = endpointAndQuery.replace(/^\//, "");
+  const url = `${config.baseUrl.replace(/\/$/, "")}/${cleaned}`;
+  const response = await fetch(url, {
+    headers: { "x-apisports-key": config.apiKey.trim() },
+    cache: "no-store",
+  });
+  if (!response.ok) {
+    throw new Error(`API-BASEBALL ${response.status} ${cleaned}`);
+  }
+  const body = await response.json();
+  await mkdir(path.dirname(file), { recursive: true });
+  await writeFile(
+    file,
+    `${JSON.stringify(
+      {
+        meta: {
+          source: "INTERNAL_RESEARCH_ONLY",
+          provider: "API_BASEBALL",
+          endpoint: cleaned,
+          fetchedAt: new Date().toISOString(),
+          publicRuntimeUseAllowed: false,
+          commercialRuntimeUseAllowed: false,
+        },
+        body,
+      },
+      null,
+      2,
+    )}\n`,
+    "utf8",
+  );
+  return body;
 }

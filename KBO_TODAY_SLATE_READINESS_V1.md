@@ -41,6 +41,23 @@ API-BASEBALL full-slate artifact가 선택된 경우:
 - `identityGames = 5`
 - legacy TheSportsDB artifact는 보존되지만 readiness primary는 `KBO_IDENTITY_PROVIDER`를 따른다
 
+## Result coverage
+
+Identity artifact의 result 영역을 읽어 readiness audit에 포함한다:
+
+- `finalGames` / `pendingGames` / `specialStatusGames`
+- `scoresResolved` / `winnersResolved`
+
+Postgame 갱신:
+
+```bash
+npm run research:kbo-postgame-identity -- YYYY-MM-DD
+```
+
+상세: [KBO_POSTGAME_RESULT_IDENTITY_V1.md](./KBO_POSTGAME_RESULT_IDENTITY_V1.md)
+
+`READY_FOR_PREDICTION` 승격은 하지 않는다.
+
 ## Operator input files
 
 실제 운영 입력은 수동만 허용한다.
@@ -59,6 +76,9 @@ Validator / audit:
 - `data/audits/{DATE}-kbo-operator-input-v1-audit.json`
 - `npm run research:kbo-operator-markets -- YYYY-MM-DD`
 - `data/audits/{DATE}-kbo-operator-markets-v2-audit.json`
+- `npm run research:kbo-starter-input -- YYYY-MM-DD`
+- `data/operator-input/kbo/{DATE}-starter-confirmation-v1.json`
+- `data/audits/{DATE}-kbo-starter-operator-input-v1-audit.json`
 
 입력이 없으면:
 
@@ -97,7 +117,7 @@ Betman 경기번호는 primary `gameId`가 아니다.
 
 - identity / schedule / resultStatus: `COLLECTED`
 - odds: `NOT_COLLECTED` unless operator input exists
-- starter / bullpen / lineup / travel / weather / injury / predictionSnapshot: `FUTURE_GATED`
+- starter: `FUTURE_GATED` unless starter operator input audit exists (`PARTIAL` for DRAFT, `COLLECTED` for VERIFIED_FOR_RESEARCH_INPUT)
 
 ## Analysis readiness states
 
@@ -107,11 +127,14 @@ Betman 경기번호는 primary `gameId`가 아니다.
 - `MARKET_INPUT_PENDING`
 - `RESEARCH_INPUTS_PARTIAL`
 - `READY_FOR_RESEARCH_SNAPSHOT_AUDIT`
+- `STARTER_INPUT_VERIFIED`
 - `READY_FOR_PREDICTION`
 
 현재는 KBO prediction pipeline 미구현이므로 `READY_FOR_PREDICTION` 판정 금지.
 
-운영 입력 audit가 `VERIFIED_FOR_RESEARCH_INPUT`이면 readiness는 최대 `READY_FOR_RESEARCH_SNAPSHOT_AUDIT`까지만 올린다.
+Starter operator input audit가 `VERIFIED_FOR_RESEARCH_INPUT`이면 readiness는 최대 `STARTER_INPUT_VERIFIED`까지만 올린다 (Prediction 승인 아님).
+
+운영 입력 audit가 `VERIFIED_FOR_RESEARCH_INPUT`이면 readiness는 최대 `READY_FOR_RESEARCH_SNAPSHOT_AUDIT`까지만 올린다 (market v2).
 v2 audit가 있으면 v1보다 우선 읽는다.
 
 2026-07-28 API-BASEBALL primary 결과:

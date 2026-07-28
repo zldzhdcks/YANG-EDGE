@@ -1,0 +1,1878 @@
+{
+  "meta": {
+    "datasetId": "mlb-travel",
+    "schemaVersion": "mlb-travel-rest-dataset-v1",
+    "builderVersion": "travel-rest-dataset-builder-v1",
+    "status": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "engineUseAllowed": false,
+    "researchOnly": true,
+    "dateKst": "2026-07-29",
+    "generatedAt": "2026-07-28T14:01:00.608Z",
+    "predictionHashSha256": "c13a4684969f2bdd4dcac2fe3299b0e3d0ba128e588c51ee4a8fa4b9b9785804",
+    "predictionUnchanged": true,
+    "inputHashSha256": "850b8e1c2feb676ae0898943f3c29cd828a6f448e56fec3dd24adf3ae5be8eb7",
+    "resultHashSha256": "b2df184aeb2adbac79c1429cf89d46b9cd693ec744bd019dd727232ea9a76efe",
+    "legal": {
+      "mlbStatsSource": "INTERNAL_RESEARCH_ONLY",
+      "publicRuntimeUseAllowed": false,
+      "commercialRuntimeUseAllowed": false,
+      "rawResponseInResearchCacheOnly": true,
+      "mlbHtmlCrawling": false,
+      "sportsDataIoScrambled": false,
+      "routeInference": false
+    },
+    "notes": [
+      "PRE_GAME_SCHEDULE_CONTEXT only — no actual travel or transport inference.",
+      "distanceKm is haversine on official venue coordinates (approximate).",
+      "hoursSincePreviousFinal and extra-inning effects excluded.",
+      "Engine admission PROHIBITED."
+    ]
+  },
+  "cacheUsage": {
+    "rawHit": 12,
+    "rawMiss": 6,
+    "derivedHit": 0,
+    "derivedMiss": 0,
+    "networkCalls": 6
+  },
+  "summary": {
+    "totalGames": 16,
+    "totalRows": 32,
+    "travelResolved": 32,
+    "restResolved": 32,
+    "venueChanges": 8,
+    "timezoneChanges": 7,
+    "joinQuality": {
+      "MATCHED": 32,
+      "MISSING_PREVIOUS": 0
+    }
+  },
+  "rows": [
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179622",
+      "gamePk": 822703,
+      "teamId": 120,
+      "teamName": "Washington Nationals",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T22:45:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 3309,
+          "name": "Nationals Park",
+          "latitude": 38.872861,
+          "longitude": -77.007501,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 3309,
+          "name": "Nationals Park",
+          "latitude": 38.872861,
+          "longitude": -77.007501,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -4,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "HOME_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 5,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "ae0971548fa85aa177a2d4683f8dc698801ef247ca87d83e761b74b0453d5bc5",
+      "resultHash": "014368a440152cec35d63bffb51125ac2255877c3115a4b1e5ae244f60b02739"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179622",
+      "gamePk": 822703,
+      "teamId": 141,
+      "teamName": "Toronto Blue Jays",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T22:45:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 3309,
+          "name": "Nationals Park",
+          "latitude": 38.872861,
+          "longitude": -77.007501,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 3309,
+          "name": "Nationals Park",
+          "latitude": 38.872861,
+          "longitude": -77.007501,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -4,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "AWAY_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 7,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 5,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "d631263acb2697eeff161f1fe0653705ddfb3d51a18e8aae63c8ee064c27ce40",
+      "resultHash": "eb639628f8a4bf1c07cbf8ad636da3bce127c7e4929485a90ae3f27726e656a8"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179617",
+      "gamePk": 822949,
+      "teamId": 139,
+      "teamName": "Tampa Bay Rays",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T22:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 12,
+          "name": "Tropicana Field",
+          "latitude": 27.767778,
+          "longitude": -82.6525,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 12,
+          "name": "Tropicana Field",
+          "latitude": 27.767778,
+          "longitude": -82.6525,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -4,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "HOME_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 1,
+        "gamesLast3": 2,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 2,
+        "hoursSincePreviousScheduledStart": 54.42,
+        "consecutiveHomeGames": 4,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "0fb24f7cf72026fc3511c7c8ec6976b40df8b13ba3e5b501b1b4fd84b3c56759",
+      "resultHash": "abef72d6eb44823529b046c9b6f304a4cfc1e5dc75a151d4420a49481fc673de"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179617",
+      "gamePk": 822949,
+      "teamId": 140,
+      "teamName": "Texas Rangers",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T22:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": true,
+        "previousVenue": {
+          "id": 5325,
+          "name": "Globe Life Field",
+          "latitude": 32.747299,
+          "longitude": -97.081818,
+          "timezoneId": "America/Chicago",
+          "timezoneOffsetHours": -5
+        },
+        "currentVenue": {
+          "id": 12,
+          "name": "Tropicana Field",
+          "latitude": 27.767778,
+          "longitude": -82.6525,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -5,
+          "currentOffsetHours": -4,
+          "changeHours": 1
+        },
+        "distanceKm": 1490.72,
+        "transitionType": "HOME_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 28.08,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 1,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "26807c8b6cebc6bf25172ac5257f1399dcf6d7eee212757d61934025ae130cc6",
+      "resultHash": "9a3e4e77863d84663b389b52a0ad1c023e1948ec64e505b00e111c835a68744c"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179618",
+      "gamePk": 823026,
+      "teamId": 112,
+      "teamName": "Chicago Cubs",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T23:45:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 2889,
+          "name": "Busch Stadium",
+          "latitude": 38.62256667,
+          "longitude": -90.19286667,
+          "timezoneId": "America/Chicago",
+          "timezoneOffsetHours": -5
+        },
+        "currentVenue": {
+          "id": 2889,
+          "name": "Busch Stadium",
+          "latitude": 38.62256667,
+          "longitude": -90.19286667,
+          "timezoneId": "America/Chicago",
+          "timezoneOffsetHours": -5
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -5,
+          "currentOffsetHours": -5,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "AWAY_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 5,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "93c42ef65f85963601b44ec00e2c7c300084c07ecc6553362de81e6ed3e3aac8",
+      "resultHash": "0b61a3cee6d7b12eda68d1cc7207edd3e8182491d558c3cfe684b9ac747810d5"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179618",
+      "gamePk": 823026,
+      "teamId": 138,
+      "teamName": "St.Louis Cardinals",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T23:45:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 2889,
+          "name": "Busch Stadium",
+          "latitude": 38.62256667,
+          "longitude": -90.19286667,
+          "timezoneId": "America/Chicago",
+          "timezoneOffsetHours": -5
+        },
+        "currentVenue": {
+          "id": 2889,
+          "name": "Busch Stadium",
+          "latitude": 38.62256667,
+          "longitude": -90.19286667,
+          "timezoneId": "America/Chicago",
+          "timezoneOffsetHours": -5
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -5,
+          "currentOffsetHours": -5,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "HOME_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 7,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 6,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "d6c3f7afec6e24689edfd67e639b9cbe1bff9fcb67a32ec6c90bf924f7e24234",
+      "resultHash": "7db0c801e75fdd2b39c5b13c76ad4aea8d90b186b5b3f4107497082c0d1e8400"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179619",
+      "gamePk": 823193,
+      "teamId": 137,
+      "teamName": "San Francisco Giants",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-29T01:45:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 2395,
+          "name": "Oracle Park",
+          "latitude": 37.778383,
+          "longitude": -122.389448,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "currentVenue": {
+          "id": 2395,
+          "name": "Oracle Park",
+          "latitude": 37.778383,
+          "longitude": -122.389448,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -7,
+          "currentOffsetHours": -7,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "HOME_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 5,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "acca53e4b6a865a81bce4c6f21ca0bd327bbba4b3e82474fcee30be6f7f428ea",
+      "resultHash": "9af6838d72ee7a6d02973d1d6eca52ba22cff070c51dad356f2a5ddc77c9dd53"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179619",
+      "gamePk": 823193,
+      "teamId": 158,
+      "teamName": "Milwaukee Brewers",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-29T01:45:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 2395,
+          "name": "Oracle Park",
+          "latitude": 37.778383,
+          "longitude": -122.389448,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "currentVenue": {
+          "id": 2395,
+          "name": "Oracle Park",
+          "latitude": 37.778383,
+          "longitude": -122.389448,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -7,
+          "currentOffsetHours": -7,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "AWAY_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 2,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "5b692fe058dc54836091f9a684d22558c951f38b06aceeed547f64f65f7e3134",
+      "resultHash": "2830ca4deb73c7c04805540841adf73ae93897c5900198bd587051b00f4e3031"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179620",
+      "gamePk": 823275,
+      "teamId": 115,
+      "teamName": "Colorado Rockies",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-29T01:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": true,
+        "previousVenue": {
+          "id": 32,
+          "name": "American Family Field",
+          "latitude": 43.02838,
+          "longitude": -87.97099,
+          "timezoneId": "America/Chicago",
+          "timezoneOffsetHours": -5
+        },
+        "currentVenue": {
+          "id": 2680,
+          "name": "Petco Park",
+          "latitude": 32.707861,
+          "longitude": -117.157278,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -5,
+          "currentOffsetHours": -7,
+          "changeHours": -2
+        },
+        "distanceKm": 2788.62,
+        "transitionType": "AWAY_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 1,
+        "gamesLast3": 2,
+        "gamesLast7": 5,
+        "daysSincePreviousGame": 2,
+        "hoursSincePreviousScheduledStart": 55.5,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 4,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "e41896d2185fd0744a33e52ff2602929a6adcff22108a297858241d03a19371f",
+      "resultHash": "153ef59bceda745b2d09070eba295b346c5595ec36bbc91e39bd2d0b37bef32a"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179620",
+      "gamePk": 823275,
+      "teamId": 135,
+      "teamName": "San Diego Padres",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-29T01:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": true,
+        "previousVenue": {
+          "id": 4169,
+          "name": "loanDepot park",
+          "latitude": 25.77796236,
+          "longitude": -80.21951795,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 2680,
+          "name": "Petco Park",
+          "latitude": 32.707861,
+          "longitude": -117.157278,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -7,
+          "changeHours": -3
+        },
+        "distanceKm": 3646.62,
+        "transitionType": "AWAY_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 1,
+        "gamesLast3": 2,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 2,
+        "hoursSincePreviousScheduledStart": 56,
+        "consecutiveHomeGames": 1,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "152cd3a600c1b3ed75630aba9e9690eb377e3a1d5dbe62fb4d1f18b29c4e4936",
+      "resultHash": "4ed357e51ded6967894ab00c2448a1366eb375eea3a766ae9aa821659f7cb0ab"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179621",
+      "gamePk": 823350,
+      "teamId": 109,
+      "teamName": "Arizona Diamondbacks",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T22:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 31,
+          "name": "PNC Park",
+          "latitude": 40.446904,
+          "longitude": -80.005753,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 31,
+          "name": "PNC Park",
+          "latitude": 40.446904,
+          "longitude": -80.005753,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -4,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "AWAY_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 7,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 6,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "c94c1bb6695098465cb03c2d594ae4d7e212baf45f51252b8fe7c5520a538dab",
+      "resultHash": "826daba6b965eeaacf6d17bb15b73794e4a8e473bb84bbe253ef25a4e1771d83"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179621",
+      "gamePk": 823350,
+      "teamId": 134,
+      "teamName": "Pittsburgh Pirates",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T22:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 31,
+          "name": "PNC Park",
+          "latitude": 40.446904,
+          "longitude": -80.005753,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 31,
+          "name": "PNC Park",
+          "latitude": 40.446904,
+          "longitude": -80.005753,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -4,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "HOME_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 7,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 5,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "038b06ecc28d259de438bacd02170f5d238a936da45d93e7de6269f42f06a1d3",
+      "resultHash": "1b161391094ecba55be72fe90128dfb3b760774b95fd64b8e86267f4afc44dab"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179616",
+      "gamePk": 823598,
+      "teamId": 121,
+      "teamName": "New York Mets",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T23:10:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 3289,
+          "name": "Citi Field",
+          "latitude": 40.75753012,
+          "longitude": -73.84559155,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 3289,
+          "name": "Citi Field",
+          "latitude": 40.75753012,
+          "longitude": -73.84559155,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -4,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "HOME_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 5,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "3ffdbd73bc9a75d694a6032f7742567f77375c9d019e16422b32cd7fd115f8e4",
+      "resultHash": "ab53c6ea254306d6a0b0f37c622e7130a36ac8b53674f5a4d80a6d8d45fbc2c9"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179616",
+      "gamePk": 823598,
+      "teamId": 144,
+      "teamName": "Atlanta Braves",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T23:10:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 3289,
+          "name": "Citi Field",
+          "latitude": 40.75753012,
+          "longitude": -73.84559155,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 3289,
+          "name": "Citi Field",
+          "latitude": 40.75753012,
+          "longitude": -73.84559155,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -4,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "AWAY_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 7,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 5,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "443b9a17594e02896cd690682949207f60d6e074ac59bfb617f46415555cd26e",
+      "resultHash": "66aa020a074e32c01ca663699eea638940f6b56d878e3631c567e5ba6c9c420c"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179623",
+      "gamePk": 823676,
+      "teamId": 118,
+      "teamName": "Kansas City Royals",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T23:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": true,
+        "previousVenue": {
+          "id": 2394,
+          "name": "Comerica Park",
+          "latitude": 42.3391151,
+          "longitude": -83.048695,
+          "timezoneId": "America/Detroit",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 3312,
+          "name": "Target Field",
+          "latitude": 44.981829,
+          "longitude": -93.277891,
+          "timezoneId": "America/Chicago",
+          "timezoneOffsetHours": -5
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -5,
+          "changeHours": -1
+        },
+        "distanceKm": 873.02,
+        "transitionType": "AWAY_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 1,
+        "gamesLast3": 2,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 2,
+        "hoursSincePreviousScheduledStart": 54,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 5,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "3eb7dfb21e26e1c0808fc98af1c274f83ab77bf17776a0f94daf9ae15811b663",
+      "resultHash": "d7e066e43dc19969a1196b0424bceaf8aa693a8125f298b0688a737f0f19c861"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179623",
+      "gamePk": 823676,
+      "teamId": 142,
+      "teamName": "Minnesota Twins",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T23:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 3312,
+          "name": "Target Field",
+          "latitude": 44.981829,
+          "longitude": -93.277891,
+          "timezoneId": "America/Chicago",
+          "timezoneOffsetHours": -5
+        },
+        "currentVenue": {
+          "id": 3312,
+          "name": "Target Field",
+          "latitude": 44.981829,
+          "longitude": -93.277891,
+          "timezoneId": "America/Chicago",
+          "timezoneOffsetHours": -5
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -5,
+          "currentOffsetHours": -5,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "HOME_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 1,
+        "gamesLast3": 2,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 2,
+        "hoursSincePreviousScheduledStart": 53.5,
+        "consecutiveHomeGames": 4,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "5f780691d7d50521edfe03404e4f51b51f74f973fd5384e35f4d658ee27a1e5d",
+      "resultHash": "8c85dc32f9cc49816fa6858dfe731f2d251208898605dcb4144c6f9bde78894e"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179630",
+      "gamePk": 823838,
+      "teamId": 143,
+      "teamName": "Philadelphia Phillies",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T22:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 4169,
+          "name": "loanDepot park",
+          "latitude": 25.77796236,
+          "longitude": -80.21951795,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 4169,
+          "name": "loanDepot park",
+          "latitude": 25.77796236,
+          "longitude": -80.21951795,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -4,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "AWAY_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 2,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "98d77c963b5c6497d99be74367c1d4b6711279bacfa35c65f52eaa5625ac88ca",
+      "resultHash": "3f7805b93b41ac210f97d1860e342404fd75b89742e42fe23d7f934ef1a0e145"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179630",
+      "gamePk": 823838,
+      "teamId": 146,
+      "teamName": "Miami Marlins",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T22:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 4169,
+          "name": "loanDepot park",
+          "latitude": 25.77796236,
+          "longitude": -80.21951795,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 4169,
+          "name": "loanDepot park",
+          "latitude": 25.77796236,
+          "longitude": -80.21951795,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -4,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "HOME_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 5,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "a4370a89a33877d380becf1fd21152c810c09c8325f40fcc94266fc42109d451",
+      "resultHash": "ca8352d9faeebe049bf88e0f949f754e35d6dda5af1646049e87da2f0190fd4c"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179624",
+      "gamePk": 823923,
+      "teamId": 119,
+      "teamName": "Los Angeles Dodgers",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-29T02:10:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": true,
+        "previousVenue": {
+          "id": 3289,
+          "name": "Citi Field",
+          "latitude": 40.75753012,
+          "longitude": -73.84559155,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 22,
+          "name": "UNIQLO Field at Dodger Stadium",
+          "latitude": 34.07368,
+          "longitude": -118.24053,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -7,
+          "changeHours": -3
+        },
+        "distanceKm": 3947.67,
+        "transitionType": "AWAY_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 1,
+        "gamesLast3": 2,
+        "gamesLast7": 5,
+        "daysSincePreviousGame": 2,
+        "hoursSincePreviousScheduledStart": 56.5,
+        "consecutiveHomeGames": 1,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "33e10320c78916cd3772cc316403048a2f0cf7cac186ec7682042113cf1f021d",
+      "resultHash": "0aa98c6ee2762ee15b395447214f725584a2e8c5901bfb64fd127cf84854ee78"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179624",
+      "gamePk": 823923,
+      "teamId": 136,
+      "teamName": "Seattle Mariners",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-29T02:10:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": true,
+        "previousVenue": {
+          "id": 5325,
+          "name": "Globe Life Field",
+          "latitude": 32.747299,
+          "longitude": -97.081818,
+          "timezoneId": "America/Chicago",
+          "timezoneOffsetHours": -5
+        },
+        "currentVenue": {
+          "id": 22,
+          "name": "UNIQLO Field at Dodger Stadium",
+          "latitude": 34.07368,
+          "longitude": -118.24053,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -5,
+          "currentOffsetHours": -7,
+          "changeHours": -2
+        },
+        "distanceKm": 1965.97,
+        "transitionType": "AWAY_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 31.58,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 5,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "0ad61123729a5729a5a02e2d16af26e05e438a3a78e882c04d7d9279ac73e977",
+      "resultHash": "d5582d5d9edb2d8eb66bd2c1165e12c814f1d0979919091a5ba245a8adcbf6af"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179625",
+      "gamePk": 824003,
+      "teamId": 108,
+      "teamName": "Los Angeles Angels",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-29T01:38:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 1,
+          "name": "Angel Stadium",
+          "latitude": 33.80019044,
+          "longitude": -117.8823996,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "currentVenue": {
+          "id": 1,
+          "name": "Angel Stadium",
+          "latitude": 33.80019044,
+          "longitude": -117.8823996,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -7,
+          "currentOffsetHours": -7,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "HOME_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 2,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "68bb0134539604f7c9f3f95f7d889f3f12f9ce2908aca3b76f11a23bc69be25f",
+      "resultHash": "d162c3d1f0f6160c9e9f21d6ec4c5c16f76eb179eb0958b054d9939549db337e"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179625",
+      "gamePk": 824003,
+      "teamId": 117,
+      "teamName": "Houston Astros",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-29T01:38:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 1,
+          "name": "Angel Stadium",
+          "latitude": 33.80019044,
+          "longitude": -117.8823996,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "currentVenue": {
+          "id": 1,
+          "name": "Angel Stadium",
+          "latitude": 33.80019044,
+          "longitude": -117.8823996,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -7,
+          "currentOffsetHours": -7,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "AWAY_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 5,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "18162352257247438b83ec522e5a4df1055ec06624e921dab209c51dfbd76368",
+      "resultHash": "b3e89a5184bba75aa2bb53f1bfa5e1d3c705e60894ce62dfa8d678d58c44d836"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179626",
+      "gamePk": 824243,
+      "teamId": 110,
+      "teamName": "Baltimore Orioles",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T22:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 2394,
+          "name": "Comerica Park",
+          "latitude": 42.3391151,
+          "longitude": -83.048695,
+          "timezoneId": "America/Detroit",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 2394,
+          "name": "Comerica Park",
+          "latitude": 42.3391151,
+          "longitude": -83.048695,
+          "timezoneId": "America/Detroit",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -4,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "AWAY_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 7,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 2,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "7816d3e5d9bb7851c5992b29b7f1b75c0fd34df506712be893a20e49920da7b6",
+      "resultHash": "d52957118aa1109c1c07592b90f2d8687997ad617b79341b145404f303443a93"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179626",
+      "gamePk": 824243,
+      "teamId": 116,
+      "teamName": "Detroit Tigers",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T22:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 2394,
+          "name": "Comerica Park",
+          "latitude": 42.3391151,
+          "longitude": -83.048695,
+          "timezoneId": "America/Detroit",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 2394,
+          "name": "Comerica Park",
+          "latitude": 42.3391151,
+          "longitude": -83.048695,
+          "timezoneId": "America/Detroit",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -4,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "HOME_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 7,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 6,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "d8f40a9bda9f17eb9d993fbf2cf6648b2cf10a1e23108dfbd6bd2bbd21ec7569",
+      "resultHash": "ef8cc27c45be3085de7786a8358caade4d7481ef69a4def50dc93eed7a051f0f"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179627",
+      "gamePk": 824489,
+      "teamId": 113,
+      "teamName": "Cincinnati Reds",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T23:10:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 2602,
+          "name": "Great American Ball Park",
+          "latitude": 39.097389,
+          "longitude": -84.506611,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 2602,
+          "name": "Great American Ball Park",
+          "latitude": 39.097389,
+          "longitude": -84.506611,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -4,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "HOME_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 0,
+        "hoursSincePreviousScheduledStart": 5.5,
+        "consecutiveHomeGames": 2,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "684912a2b3d9d0bd328c1b66513003585b859b975d27d304b2a934524584832f",
+      "resultHash": "61b236a742aad6ed56f0bd9afe8982794d4fce066f5332b76cf8ae5d4fe6b2b0"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179627",
+      "gamePk": 824489,
+      "teamId": 114,
+      "teamName": "Cleveland Guardians",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T23:10:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 2602,
+          "name": "Great American Ball Park",
+          "latitude": 39.097389,
+          "longitude": -84.506611,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 2602,
+          "name": "Great American Ball Park",
+          "latitude": 39.097389,
+          "longitude": -84.506611,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -4,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "AWAY_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 7,
+        "daysSincePreviousGame": 0,
+        "hoursSincePreviousScheduledStart": 5.5,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 5,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "047b02cf39808599e56b960a36a5daa2a8f77ec08973249d5efd5d40f9870181",
+      "resultHash": "d1f16838b2360cb8be78453bd9a9a114a757bde03953cfa8e795486182b10de9"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179612",
+      "gamePk": 824490,
+      "teamId": 113,
+      "teamName": "Cincinnati Reds",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T17:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": true,
+        "previousVenue": {
+          "id": 2889,
+          "name": "Busch Stadium",
+          "latitude": 38.62256667,
+          "longitude": -90.19286667,
+          "timezoneId": "America/Chicago",
+          "timezoneOffsetHours": -5
+        },
+        "currentVenue": {
+          "id": 2602,
+          "name": "Great American Ball Park",
+          "latitude": 39.097389,
+          "longitude": -84.506611,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -5,
+          "currentOffsetHours": -4,
+          "changeHours": 1
+        },
+        "distanceKm": 495.09,
+        "transitionType": "AWAY_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 1,
+        "gamesLast3": 2,
+        "gamesLast7": 5,
+        "daysSincePreviousGame": 2,
+        "hoursSincePreviousScheduledStart": 47.42,
+        "consecutiveHomeGames": 1,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "eb877a7ccc6c59d9e2d6cf6b9ccc8871a1272c8826250d4ef38be3672e4a2364",
+      "resultHash": "0e3037a4c93f263095910db2371de8a87377715e761e31c907fe09f1690f1fe5"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179612",
+      "gamePk": 824490,
+      "teamId": 114,
+      "teamName": "Cleveland Guardians",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T17:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": true,
+        "previousVenue": {
+          "id": 12,
+          "name": "Tropicana Field",
+          "latitude": 27.767778,
+          "longitude": -82.6525,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "currentVenue": {
+          "id": 2602,
+          "name": "Great American Ball Park",
+          "latitude": 39.097389,
+          "longitude": -84.506611,
+          "timezoneId": "America/New_York",
+          "timezoneOffsetHours": -4
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -4,
+          "currentOffsetHours": -4,
+          "changeHours": 0
+        },
+        "distanceKm": 1271.4,
+        "transitionType": "AWAY_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 1,
+        "gamesLast3": 2,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 2,
+        "hoursSincePreviousScheduledStart": 49.42,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 4,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "cef9d2c118eed0bee2e1e75d2e1f6743613c168535209daaad17fb230d5f0276",
+      "resultHash": "4c22b69285b22ac40cee642b91423f97c69aed0ea032d021332f5a4853380f1e"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179628",
+      "gamePk": 824569,
+      "teamId": 145,
+      "teamName": "Chicago White Sox",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T23:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 4,
+          "name": "Rate Field",
+          "latitude": 41.83,
+          "longitude": -87.634167,
+          "timezoneId": "America/Chicago",
+          "timezoneOffsetHours": -5
+        },
+        "currentVenue": {
+          "id": 4,
+          "name": "Rate Field",
+          "latitude": 41.83,
+          "longitude": -87.634167,
+          "timezoneId": "America/Chicago",
+          "timezoneOffsetHours": -5
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -5,
+          "currentOffsetHours": -5,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "HOME_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 5,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "84fdccab1c6fb7983048ebb835576875e9923307167150d910acd17e78851f98",
+      "resultHash": "9c8b92385f0632a1340c2ae4974ace36518721c7091423e28e6d07e27c712f0b"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179628",
+      "gamePk": 824569,
+      "teamId": 147,
+      "teamName": "New York Yankees",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-28T23:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 4,
+          "name": "Rate Field",
+          "latitude": 41.83,
+          "longitude": -87.634167,
+          "timezoneId": "America/Chicago",
+          "timezoneOffsetHours": -5
+        },
+        "currentVenue": {
+          "id": 4,
+          "name": "Rate Field",
+          "latitude": 41.83,
+          "longitude": -87.634167,
+          "timezoneId": "America/Chicago",
+          "timezoneOffsetHours": -5
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -5,
+          "currentOffsetHours": -5,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "AWAY_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 7,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 5,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "0129740e92a7d6c5a9dc682c40f2b2debdda7b279b85aba2334963c1fc8fc872",
+      "resultHash": "277fa8a94f35c74b55397fa77e1f9626888edfd8e8416174275ca1c5f0ae0bcf"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179629",
+      "gamePk": 824976,
+      "teamId": 111,
+      "teamName": "Boston Red Sox",
+      "side": "away",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-29T01:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 2529,
+          "name": "Sutter Health Park",
+          "latitude": 38.57994,
+          "longitude": -121.51246,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "currentVenue": {
+          "id": 2529,
+          "name": "Sutter Health Park",
+          "latitude": 38.57994,
+          "longitude": -121.51246,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -7,
+          "currentOffsetHours": -7,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "AWAY_TO_AWAY"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 7,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 0,
+        "consecutiveAwayGames": 2,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "3ce15dda93b85ae2845670b6eb0e14ea97eb1f0f96e45f783d5e6c26334d52db",
+      "resultHash": "9afaa39c75937505fe0cd10a38cbfc784506bb89562989eb547a5b84e490e3bd"
+    },
+    {
+      "schemaVersion": "mlb-travel-rest-dataset-v1",
+      "builderVersion": "travel-rest-dataset-builder-v1",
+      "generatedAt": "2026-07-28T14:01:00.608Z",
+      "gameDate": "2026-07-29",
+      "gameId": "mlb-179629",
+      "gamePk": 824976,
+      "teamId": 133,
+      "teamName": "Athletics",
+      "side": "home",
+      "collectionPhase": "PRE_GAME_SCHEDULE_CONTEXT",
+      "cutoffTime": "2026-07-29T01:40:00Z",
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "joinQuality": "MATCHED",
+      "travel": {
+        "venueChanged": false,
+        "previousVenue": {
+          "id": 2529,
+          "name": "Sutter Health Park",
+          "latitude": 38.57994,
+          "longitude": -121.51246,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "currentVenue": {
+          "id": 2529,
+          "name": "Sutter Health Park",
+          "latitude": 38.57994,
+          "longitude": -121.51246,
+          "timezoneId": "America/Los_Angeles",
+          "timezoneOffsetHours": -7
+        },
+        "timezoneChange": {
+          "previousOffsetHours": -7,
+          "currentOffsetHours": -7,
+          "changeHours": 0
+        },
+        "distanceKm": 0,
+        "transitionType": "HOME_TO_HOME"
+      },
+      "rest": {
+        "gamesLast2": 2,
+        "gamesLast3": 3,
+        "gamesLast7": 6,
+        "daysSincePreviousGame": 1,
+        "hoursSincePreviousScheduledStart": 24,
+        "consecutiveHomeGames": 2,
+        "consecutiveAwayGames": 0,
+        "doubleheaderStatus": "SINGLE"
+      },
+      "missing": [],
+      "warnings": [],
+      "inputHash": "aebd1cdd2df649a6125b9373b9dee83ad98f123549b184914309fae7ea6ba94b",
+      "resultHash": "726c91c65eb4fc77310fb81150732e92d382ebe185a31a257ecd2efaf80d9885"
+    }
+  ]
+}

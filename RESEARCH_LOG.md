@@ -35,6 +35,250 @@ PROHIBITED
 
 ---
 
+## 2026-07-28 — Market Intelligence Hypothesis Registry v1 Pre-design
+
+### Purpose
+- Design a Market Intelligence Hypothesis Registry separate from Prediction Research
+
+### Scope
+- Allowed: design docs + pre-design audit JSON
+- Forbidden: Builder; Dataset; Registry code; Framework; Prediction; Engine; Viewer; Historical API
+
+### Inputs
+- Charter, Timeline design, Movement semantics, MI research design, existing Prediction HYPOTHESIS_REGISTRY patterns
+
+### Outputs
+- MARKET_INTELLIGENCE_HYPOTHESIS_REGISTRY_V1.md
+- MARKET_INTELLIGENCE_RESEARCH_WORKFLOW.md
+- data/audits/market-intelligence-hypothesis-registry-v1-pre-design.json
+
+### Results (summary)
+- Prediction vs MI: no direct influence
+- Status lifecycle with manual promotion only; ENGINE_APPROVED ≠ auto-wire
+- Sample targets 100/500/1000 candidates; no Confidence/Weight scores
+
+### Official conclusion
+MARKET_INTELLIGENCE_HYPOTHESIS_REGISTRY_V1_DESIGNED
+
+### Engine connection
+PROHIBITED
+
+### Follow-ups
+- Instantiate ops registry/ledger only in a later mission after evidence sources exist
+
+---
+
+## 2026-07-28 — Historical Odds Paid Provider Business Decision Audit v1
+
+### Purpose
+- Decide whether YANG EDGE should pay for Historical Odds now
+
+### Scope
+- Allowed: pricing/license/ROI documentation from public sources; cost estimates
+- Forbidden: Historical API calls; Dataset/Builder/Prediction/Engine/Registry/Framework changes; auto billing
+
+### Inputs
+- The Odds API public pricing + terms + Historical docs
+- SportsDataIO developer access page
+- Prior coverage audit, timeline design, PLAN_BLOCKED probe
+
+### Outputs
+- HISTORICAL_ODDS_PAID_PROVIDER_BUSINESS_DECISION_AUDIT_V1.md
+- data/audits/historical-odds-paid-provider-business-decision-audit-v1.json
+
+### Results (summary)
+- Lowest Historical paid floor: The Odds API 20K @ $30/mo
+- Opening+Latest multi-baseball feasible on 20K credits; 5-min timelines escalate to 100K/5M class
+- Recommendation: HOLD (not GO / not permanent NOT RECOMMENDED)
+
+### Official conclusion
+HISTORICAL_ODDS_BUSINESS_DECISION_AUDITED
+
+### Engine connection
+PROHIBITED
+
+### Follow-ups
+- Operator may later approve time-boxed $30 MLB schema-fit probe only
+
+---
+
+## 2026-07-28 — MLB h2h Historical Odds Minimal Probe v1
+
+### Purpose
+- Validate Timeline schema against one capped The Odds API Historical call path
+
+### Scope
+- Allowed: ≤50 credits estimate, 1 MLB game, h2h, stop on plan/cost block
+- Forbidden: bulk harvest; Builder; Registry; Framework; Prediction; Engine; paid auto-upgrade
+
+### Inputs
+- Target: mlb-179589 / event 210e6566d3641ee245e8a099a1679244
+- Design + coverage audit + charter
+
+### Outputs
+- MLB_H2H_HISTORICAL_ODDS_PROBE_V1.md
+- data/audits/mlb-h2h-historical-odds-probe-v1.json
+- scripts/probe-mlb-h2h-historical-odds-v1.ts
+
+### Results (summary)
+- Status: PLAN_BLOCKED (HISTORICAL_UNAVAILABLE_ON_FREE_USAGE_PLAN)
+- Estimated credits: 40; actual header delta: 0
+- Schema fit: not evaluated (no Historical payload)
+- Gates remain NOT_PASSED / NEEDS_REVIEW
+
+### Official conclusion
+MLB_H2H_HISTORICAL_ODDS_MINIMAL_PROBE_COMPLETED
+
+### Engine connection
+PROHIBITED
+
+### Follow-ups
+- Re-run only after operator-approved paid Historical plan; still no Builder until all gates pass
+
+---
+
+## 2026-07-28 — Historical Odds Timeline Dataset v1 Pre-design
+
+### Purpose
+- Design common Historical Odds Timeline structure for Market Intelligence research
+
+### Scope
+- Allowed: design docs + pre-design audit JSON; references to coverage audit / charter
+- Forbidden: Historical API calls; Builder; Dataset artifacts; Registry; Framework; Types code; Prediction; Engine
+
+### Inputs
+- MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDIT_V1.md
+- MARKET_INTELLIGENCE_RESEARCH_DESIGN.md
+- Current MLB Odds History + KBO Odds Comparison structures
+
+### Outputs
+- HISTORICAL_ODDS_TIMELINE_DATASET_V1_DESIGN.md
+- MARKET_MOVEMENT_SEMANTICS_V1.md
+- data/audits/historical-odds-timeline-dataset-v1-pre-design-audit.json
+
+### Results (summary)
+- Recommended storage: normalized raw rows + derived timeline summary
+- Opening/Closing: OPENING_CANDIDATE / LATEST_PRE_GAME / CLOSING_CANDIDATE only
+- Dataset status: DESIGN_ONLY; all compliance gates NOT_PASSED
+- First probe contract: MLB h2h, ≤12 snapshots, ≤50 credits
+
+### Official conclusion
+HISTORICAL_ODDS_TIMELINE_DATASET_V1_DESIGNED
+
+### Engine connection
+PROHIBITED
+
+### Follow-ups
+- MLB h2h Historical Coverage Probe after COST/LICENSE gates
+
+---
+
+## 2026-07-28 — Multi-Sport Historical Odds Coverage Audit v1
+
+### Purpose
+- Read-only feasibility audit of overseas Historical Odds across BASEBALL / SOCCER / BASKETBALL / VOLLEYBALL
+
+### Scope
+- Allowed: documentation + audit JSON; official Odds API docs review; project odds code inventory
+- Forbidden: bulk Historical API calls; Dataset Builder; Registry/Framework/Prediction/Engine/Viewer changes; Betman crawl
+
+### Inputs
+- The Odds API historical + sports catalog docs
+- Project odds providers / MLB odds-history / KBO odds comparison
+- Development & Compliance Charter
+
+### Outputs
+- `MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDIT_V1.md`
+- `MARKET_INTELLIGENCE_RESEARCH_DESIGN.md`
+- `data/audits/multi-sport-historical-odds-coverage-audit-v1.json`
+- `data/audits/historical-odds-cost-storage-estimate-v1.json`
+
+### Results (summary)
+- Service-wide featured historical start 2020-06-06; KBO/NPB earliest documented 2024-03-28
+- Volleyball / KBL not on Odds API sports list
+- All compliance gates NOT_PASSED; provider conclusion MULTI_PROVIDER_REQUIRED
+- Next step recommendation: MLB h2h Historical Coverage Probe only
+
+### Official conclusion
+MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDITED
+
+### Engine connection
+PROHIBITED
+
+### Follow-ups
+- Paid-plan minimal MLB h2h probe after COST/LICENSE gates
+- Volleyball licensed odds provider search
+
+---
+
+## 2026-07-28 — Development & Compliance Charter v1
+
+### Purpose
+- Publish YANG EDGE development principles as an official charter
+
+### Scope
+- Allowed: docs only (`docs/DEVELOPMENT_COMPLIANCE_CHARTER.md` + policy references)
+- Forbidden: Prediction / Engine / Dataset / Registry / Framework / Viewer / hash changes
+
+### Inputs
+- Mission brief: Development & Compliance Charter v1
+
+### Outputs
+- `docs/DEVELOPMENT_COMPLIANCE_CHARTER.md`
+- README / DATA_SOURCES / KNOWN_ISSUES / RESEARCH_LOG references
+
+### Results (summary)
+- Charter sections 1–15 created
+- Compliance Dashboard example states all `NOT_STARTED`
+- No code or research artifact changes
+
+### Official conclusion
+DEVELOPMENT_COMPLIANCE_CHARTER_V1_CREATED
+
+### Engine connection
+PROHIBITED
+
+### Follow-ups
+- Populate Compliance Dashboard statuses as legal/tax/security reviews complete
+
+---
+
+## 2026-07-28 — KBO Postgame Result Identity Update v1
+
+### Purpose
+- Refresh API-BASEBALL Identity Artifact result region for 2026-07-28 KBO slate
+
+### Scope
+- Allowed: provider status / scores / winner / scheduleChanges / resultStatus on API-BASEBALL artifact
+- Forbidden: Operator Market / Odds Comparison edits; Prediction / Grade / EDGE; TheSportsDB overwrite; silent startTime overwrite
+
+### Inputs
+- Provider: API-BASEBALL league 5 (force refresh)
+- Artifact: `data/research/kbo/2026-07-28-schedule-result-identity-v1-api-baseball.json`
+
+### Outputs
+- Updated same-file result region
+- `data/audits/2026-07-28-kbo-postgame-result-identity-v1-audit.json`
+- Docs: `KBO_POSTGAME_RESULT_IDENTITY_V1.md` + identity/readiness/README/KNOWN_ISSUES updates
+
+### Results (summary)
+- Games checked: 5
+- Final: 0 (provider still `INn` → LIVE)
+- Pending: 5
+- Identity immutable: PASS
+- Prediction / Engine: not implemented / 0
+
+### Official conclusion
+KBO_POSTGAME_RESULT_IDENTITY_UPDATED
+
+### Engine connection
+PROHIBITED
+
+### Follow-ups
+- Re-run `npm run research:kbo-postgame-identity -- 2026-07-28` after provider reports `FT`
+
+---
+
 ## 2026-07-28 — KBO Domestic / Overseas Odds Comparison v1
 
 ### Purpose
@@ -74,6 +318,94 @@ PROHIBITED
 ### Follow-ups
 - Verify overseas baseball market rules before enabling numeric differences
 - Keep domestic operator odds in DRAFT until explicit review
+
+---
+
+## 2026-07-28 — KBO Market Result Feedback v1
+
+### Purpose
+- Link finalized API-BASEBALL results with pre-game domestic proto and overseas odds for read-only post-game observation.
+
+### Scope
+- Allowed: final result + MONEYLINE_2WAY domestic/overseas odds join, direction observation, pipeline readiness report
+- Forbidden: Prediction, EDGE PICK, Confidence, ROI, Engine Learning, DRAFT→VERIFIED promotion
+
+### Inputs
+- `data/research/kbo/2026-07-28-schedule-result-identity-v1-api-baseball.json` (5 FINAL)
+- `data/operator-input/kbo/2026-07-28-operator-markets-v2.json` (DRAFT)
+- `data/research/kbo/2026-07-28-odds-comparison-v1.json` (MARKET_RULE_UNVERIFIED)
+
+### Outputs
+- `data/research/kbo/2026-07-28-market-result-feedback-v1.json`
+- `data/audits/2026-07-28-kbo-market-result-feedback-v1-audit.json`
+- `KBO_MARKET_RESULT_FEEDBACK_V1.md`
+
+### Results (summary)
+- games checked: 5 / final: 5 / pending: 0
+- identity immutable hash: PASS
+- domestic/overseas odds: 5 / 5 / both 5
+- domestic direction matched: 3 / overseas matched: 3
+- domestic/overseas direction agreed: 5 / conflicted: 0
+- observation: INSUFFICIENT_SAMPLE
+- prediction: NOT_IMPLEMENTED
+
+### Official conclusion
+KBO_2026_07_28_MARKET_RESULT_FEEDBACK_COMPLETED
+
+### Engine connection
+PROHIBITED
+
+---
+
+## 2026-07-28 — KBO Starter Operator Input v1
+
+### Purpose
+- Operator-entered pre-game starter confirmation with validation, cutoff checks, and audit.
+
+### Outputs
+- `KBO_STARTER_OPERATOR_INPUT_V1.md`
+- `src/lib/kbo/operator-starter/*`
+- `scripts/validate-kbo-starter-operator-input-v1.ts`
+- `data/operator-input/kbo/templates/starter-confirmation-v1-template.json`
+
+### Results (summary)
+- 2026-07-29: no identity → no operator file, audit NOT_ENTERED
+- Validator: no auto VERIFIED promotion, stable input hash, regression unchanged
+
+### Official conclusion
+KBO_STARTER_OPERATOR_INPUT_V1_READY
+
+### Engine connection
+PROHIBITED
+
+---
+
+## 2026-07-28 — KBO Starter Data Source Readiness Audit v1
+
+### Purpose
+- Audit lawful pre-game starter availability before any KBO Prediction or Starter Dataset implementation.
+
+### Scope
+- Allowed: provider/code/cache audit, MLB reusability classification, operator input schema design, prediction gates
+- Forbidden: Prediction, Starter Builder/Adapter, rotation guess, post-game backfill, operator file creation
+
+### Outputs
+- `KBO_STARTER_DATA_SOURCE_READINESS_AUDIT_V1.md`
+- `data/audits/kbo-starter-data-source-readiness-audit-v1.json`
+
+### Results (summary)
+- API-BASEBALL games endpoint: no starter/lineup fields (cache probe 181902, 181906)
+- TheSportsDB: no starter fields
+- SportsDataIO KBO: unverified; commercial license required
+- recommended strategy: HYBRID_PROVIDER_OPERATOR_REQUIRED
+- next implementation: KBO Starter Operator Input v1
+- KBO Prediction: BLOCKED
+
+### Official conclusion
+KBO_STARTER_DATA_SOURCE_READINESS_AUDITED
+
+### Engine connection
+PROHIBITED
 
 ---
 
@@ -513,6 +845,36 @@ Audit soccer as the first non-baseball sport research target without implementin
 
 ### Official conclusion
 READY_FOR_SOCCER_MINIMAL_RESEARCH_DATASET
+
+### Engine connection
+PROHIBITED
+
+---
+
+## 2026-07-29 — Betman Daily Full-Slate Coverage and Minimum Analysis v1
+
+### Purpose
+Register all Betman-scheduled baseball/soccer/basketball/volleyball games for a KST date in one Daily Slate; match Provider Identity; assign minimum analysis level without new Prediction Engine work.
+
+### Scope
+- Allowed: operator input schema, validator, identity matching, analysis resolver, artifact, audit, internal API
+- Forbidden: Betman crawl, OCR auto-save, forced predictions, public UI, tennis support, Engine changes
+
+### Outputs
+- BETMAN_DAILY_FULL_SLATE_COVERAGE_V1.md
+- `src/lib/betman/daily-slate/*`
+- `src/lib/research/daily-slate/resolve-minimum-analysis-level.ts`
+- `scripts/validate-betman-daily-slate-v1.ts`
+- `src/app/api/research/daily-slate/route.ts`
+- `data/operator-input/betman/templates/daily-slate-v1-template.json`
+
+### Results
+- Initial run without operator input: `NOT_ENTERED`, 0 games, `analysisCoverageRate = null`
+- Basketball/Volleyball: `IDENTITY_PROVIDER_NOT_IMPLEMENTED`
+- Viewer deferred to next phase
+
+### Official conclusion
+BETMAN_DAILY_FULL_SLATE_COVERAGE_V1_READY
 
 ### Engine connection
 PROHIBITED

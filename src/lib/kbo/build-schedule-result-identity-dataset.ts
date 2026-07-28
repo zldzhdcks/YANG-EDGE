@@ -60,7 +60,7 @@ function sortKeys(value: unknown): unknown {
   return out;
 }
 
-function buildResultIdentity(
+export function buildKboResultIdentity(
   gameStatus: KboGameStatus,
   homeScore: number | null,
   awayScore: number | null,
@@ -126,6 +126,14 @@ function buildResultIdentity(
   };
 }
 
+function buildResultIdentity(
+  gameStatus: KboGameStatus,
+  homeScore: number | null,
+  awayScore: number | null,
+): KboResultIdentity {
+  return buildKboResultIdentity(gameStatus, homeScore, awayScore);
+}
+
 function rowCollectionPhase(
   resultStatus: KboResultStatus,
 ): KboIdentityCollectionPhase {
@@ -149,6 +157,59 @@ function hashableRow(row: KboScheduleResultIdentityRow): Record<string, unknown>
   delete (time as { firstObservedAt?: string }).firstObservedAt;
   delete (time as { lastObservedAt?: string }).lastObservedAt;
   return { ...rest, time };
+}
+
+export function computeKboIdentityImmutableHash(
+  document: KboScheduleResultIdentityDocument,
+): string {
+  const rows = [...document.rows]
+    .map((row) => ({
+      internalGameId: row.internalGameId,
+      providerGameId: row.providerGameId,
+      primaryProvider: row.primaryProvider ?? null,
+      season: row.season,
+      dateKst: row.dateKst,
+      homeTeam: row.homeTeam,
+      awayTeam: row.awayTeam,
+      homeTeamId: row.homeTeamId,
+      awayTeamId: row.awayTeamId,
+      provider: {
+        id: row.provider.id,
+        leagueId: row.provider.leagueId,
+      },
+      time: {
+        providerStartTime: row.time.providerStartTime,
+        startTimeKst: row.time.startTimeKst,
+        cutoffTime: row.time.cutoffTime,
+        firstObservedAt: row.time.firstObservedAt,
+      },
+    }))
+    .sort((a, b) => a.internalGameId.localeCompare(b.internalGameId));
+
+  return sha256(
+    stableStringify({
+      datasetId: document.meta.datasetId,
+      schemaVersion: document.meta.schemaVersion,
+      dateKst: document.meta.dateKst,
+      rows,
+    }),
+  );
+}
+
+export function computeKboIdentityResultHash(
+  document: Pick<KboScheduleResultIdentityDocument, "meta" | "rows">,
+): string {
+  return sha256(
+    stableStringify({
+      datasetId: document.meta.datasetId,
+      schemaVersion: document.meta.schemaVersion,
+      builderVersion: document.meta.builderVersion,
+      body: {
+        dateKst: document.meta.dateKst,
+        rows: document.rows.map(hashableRow),
+      },
+    }),
+  );
 }
 
 function detectScheduleChanges(

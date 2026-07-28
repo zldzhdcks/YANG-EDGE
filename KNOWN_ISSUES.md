@@ -1,5 +1,8 @@
 # Known Issues
 
+정책·출시 기준: **[Development & Compliance Charter](./docs/DEVELOPMENT_COMPLIANCE_CHARTER.md)**.  
+Historical Odds 사전 감사: **[MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDIT_V1.md](./MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDIT_V1.md)**.
+
 ## Bullpen Role Classifier v1
 
 | Issue | Status in v1.1 |
@@ -85,17 +88,25 @@
 | Feature flag | `KBO_IDENTITY_COLLECTION_ENABLED` — collection CLI only, not Engine admission |
 | KBO Prediction / Starter / Bullpen / Lineup | Not implemented (by design) |
 | Stable research `gameId` | `kbo-{providerGameId}` in identity v1 |
-| Betman scope matching | `NOT_CHECKED` in v1 |
+| Betman scope matching | `NOT_CHECKED` in KBO v1; **multi-sport Daily Slate v1** via `research:betman-slate` (operator input required) |
 | Probable starter / lineup / bullpen / injury Providers | Open — API-BASEBALL lacks those endpoints per repo probe |
 | Korea weather Provider | Open — NOAA US-only insufficient |
 | Grade taxonomy for draw / no-game / suspended | Open — identity v1 stores normalized status; MLB grader not extended |
 | Provider commercial / public display rights | `UNCONFIRMED` — no forced selection |
 | Today slate completeness | Resolved for 2026-07-28 via API-BASEBALL full-slate provider; legacy TheSportsDB still limited to 3 games |
-| Betman target scope input | Manual operator input only; default `NOT_ENTERED` |
+| Betman target scope input | Manual operator input only; default `NOT_ENTERED` — see [BETMAN_DAILY_FULL_SLATE_COVERAGE_V1.md](./BETMAN_DAILY_FULL_SLATE_COVERAGE_V1.md) |
 | Proto odds input | Manual operator input only; default `NOT_ENTERED` |
 | Operator input verified state | `VERIFIED_FOR_RESEARCH_INPUT` does not imply Prediction/Engine/public use approval |
 | Integrated operator market input v2 | 2026-07-28 draft is `READY_FOR_OPERATOR_REVIEW`; review state still `DRAFT` |
 | Full-slate identity coverage | Resolved for 2026-07-28 with API-BASEBALL; public/commercial rights remain unconfirmed |
+| Postgame result identity | Scripted result-region update; 2026-07-28 all 5 games FINAL (provider `FT`) via postgame identity pass |
+| KBO market result feedback v1 | Post-game observation only; domestic DRAFT + overseas MARKET_RULE_UNVERIFIED — no ROI or prediction |
+| KBO starter pre-game source | API-BASEBALL / TheSportsDB — no starter fields; operator input v1 validator: `research:kbo-starter-input` |
+| Multi-sport Historical Odds | Documented-only audit; The Odds API paid Historical not probed; Volleyball/KBL `NOT_SUPPORTED` on Odds API; all compliance gates `NOT_PASSED` → Builder not recommended |
+| Historical Odds Timeline Dataset v1 | Pre-design only (`DESIGN_ONLY`); normalized raw rows + derived summary recommended; no Builder/API/types yet |
+| MLB h2h Historical minimal probe | `PLAN_BLOCKED` on free Odds API plan (`HISTORICAL_UNAVAILABLE_ON_FREE_USAGE_PLAN`); 0 credits consumed; Schema fit pending paid plan |
+| Historical Odds paid plan decision | **HOLD** — do not buy production Historical yet; optional time-boxed $30 probe only after operator approval ([business audit](./HISTORICAL_ODDS_PAID_PROVIDER_BUSINESS_DECISION_AUDIT_V1.md)) |
+| Market Intelligence Hypothesis Registry | Pre-design only; `MI-*` namespace separate from Prediction `H-*`; no auto promotion; Engine default PROHIBITED |
 | KBO odds comparison v1 | `MONEYLINE_2WAY` only; overseas market rules remain `MARKET_RULE_UNVERIFIED`, so raw odds are shown without numeric comparison |
 | `/games` duplicate React key warning | Root cause was `buildGameId(league-home-away)` collision risk for same-matchup provider rows; `/api/games` now dedupes by real-game identity and `GameList` uses provider-backed composite render key |
 

@@ -16,6 +16,15 @@
 코드 기준 사실과 우선순위는 **[ROADMAP.md](./ROADMAP.md)** 를 보세요.  
 Provider·환경변수·API는 **[docs/API.md](./docs/API.md)** 를 보세요.
 
+## 프로젝트 정책 문서
+
+| 문서 | 설명 |
+|------|------|
+| [Development & Compliance Charter](./docs/DEVELOPMENT_COMPLIANCE_CHARTER.md) | 개발·Compliance·공개·사업화 기준 헌장 (Evidence + Compliance First) |
+| [PROJECT_MEMORY.md](./PROJECT_MEMORY.md) | 제품·연구 범위와 운영 기억 |
+| [DATA_SOURCES.md](./DATA_SOURCES.md) | 데이터 소스·권리·수집 정책 |
+| [ROADMAP.md](./ROADMAP.md) | 현재 상태와 우선순위 |
+
 요약:
 
 - **실일정:** NPB/KBO는 provider 실데이터 기반이며, KBO identity는 현재 `KBO_IDENTITY_PROVIDER` 기본값 `API_BASEBALL` full-slate artifact를 우선 사용한다 (legacy TheSportsDB artifact preserved)
@@ -70,10 +79,13 @@ Bullpen Validation만 단독 실행할 때는 `--skip-postgame-steps` 없이 실
 | `research:starter-summary` | Starter accumulation summary만 |
 | `research:lineup-probe` | Pre-game lineup availability probe (append-only) |
 | `research:kbo-identity` | KBO Schedule/Result Identity dataset v1 (`YYYY-MM-DD`) |
+| `research:kbo-postgame-identity` | KBO Postgame Result Identity update v1 (`YYYY-MM-DD`, result region only) |
 | `research:kbo-odds-comparison` | KBO 국내/해외 배당 비교 dataset v1 (`YYYY-MM-DD`) |
+| `research:kbo-starter-input` | KBO 선발투수 Operator Input validator v1 (`YYYY-MM-DD`, 생략 시 KST today) |
 | `research:kbo-slate-readiness` | KBO 오늘 슬레이트 / 배당 입력 readiness audit (`YYYY-MM-DD`, 생략 시 KST today) |
 | `research:kbo-operator-input` | KBO 배트맨 scope / proto odds 수동 입력 validator (`YYYY-MM-DD`, 생략 시 KST today) |
 | `research:kbo-operator-markets` | KBO 통합 Game/Market/Selection v2 입력 validator (`YYYY-MM-DD`, 생략 시 KST today) |
+| `research:betman-slate` | Betman Daily Full-Slate Coverage v1 — operator slate validate + identity match + minimum analysis (`YYYY-MM-DD`, 생략 시 KST today) |
 
 KBO identity provider 선택:
 
