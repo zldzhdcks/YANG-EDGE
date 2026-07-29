@@ -14,6 +14,10 @@ import {
   assertOddsHistoryDatasetIntegrity,
   buildOddsHistoryDatasetV1,
 } from "../src/lib/mlb/build-odds-history-dataset";
+import {
+  EMPTY_PREDICTION_HASH,
+  readOptionalPredictionSnapshot,
+} from "../src/lib/mlb/load-mlb-schedule-targets";
 
 const DATE =
   process.argv[2]?.trim() ||
@@ -40,8 +44,15 @@ async function main() {
     "data/predictions/mlb",
     `${DATE}.json`,
   );
-  const predRawBefore = await readFile(predPath, "utf8");
-  const predHashBefore = sha256(predRawBefore);
+  const optionalPrediction = await readOptionalPredictionSnapshot(DATE);
+  const predictionRaw = optionalPrediction?.raw ?? null;
+  const predHashBefore = optionalPrediction?.hash ?? EMPTY_PREDICTION_HASH;
+
+  if (!optionalPrediction) {
+    console.log(
+      `NOTE: prediction snapshot absent — ${path.relative(process.cwd(), predPath)}. Schedule-only collection continues.`,
+    );
+  }
 
   const regressionBefore = {
     prediction: predHashBefore,
@@ -64,7 +75,7 @@ async function main() {
 
   const first = await buildOddsHistoryDatasetV1({
     dateKst: DATE,
-    predictionRaw: predRawBefore,
+    predictionRaw,
   });
   const integrity = assertOddsHistoryDatasetIntegrity(first.document);
   if (integrity.length > 0) {
@@ -73,7 +84,7 @@ async function main() {
 
   const second = await buildOddsHistoryDatasetV1({
     dateKst: DATE,
-    predictionRaw: predRawBefore,
+    predictionRaw,
   });
   const hashMatched =
     first.document.meta.resultHashSha256 ===
@@ -109,9 +120,12 @@ async function main() {
     "utf8",
   );
 
-  const predHashAfter = sha256(await readFile(predPath, "utf8"));
-  if (predHashAfter !== predHashBefore) {
-    throw new Error("prediction snapshot mutated");
+  let predHashAfter = predHashBefore;
+  if (optionalPrediction) {
+    predHashAfter = sha256(await readFile(predPath, "utf8"));
+    if (predHashAfter !== predHashBefore) {
+      throw new Error("prediction snapshot mutated");
+    }
   }
 
   const regressionAfter = {
@@ -156,11 +170,30 @@ async function main() {
       researchOnly: true,
       predictionHashSha256: predHashBefore,
       predictionUnchanged: predHashAfter === predHashBefore,
+      predictionOptional: optionalPrediction == null,
+      intakeVersion: "mlb-independent-odds-v1",
       inputHashSha256: first.document.meta.inputHashSha256,
       resultHashSha256: first.document.meta.resultHashSha256,
       firstResultHash: first.document.meta.resultHashSha256,
       secondResultHash: second.document.meta.resultHashSha256,
       hashMatched,
+    },
+    independentIntake: {
+      provider: first.document.rows.find((r) => r.provider.id !== "NOT_COLLECTED")
+        ?.provider ?? null,
+      gamesScheduled: first.document.summary.totalGames,
+      gamesMatched: first.document.summary.joinQuality.MATCHED,
+      marketsCollected: first.document.summary.openingCollected,
+      missingMarkets:
+        first.document.summary.totalGames -
+        first.document.summary.openingCollected,
+      missingReasons: [
+        ...new Set(
+          first.document.rows.flatMap((r) =>
+            r.warnings.filter((w) => w.startsWith("NOT_COLLECTED_REASON=")),
+          ),
+        ),
+      ].sort(),
     },
     games: first.document.summary.totalGames,
     openingCollected: first.document.summary.openingCollected,
@@ -186,8 +219,9 @@ async function main() {
     checks: [
       {
         id: "prediction-hash-unchanged",
-        passed: predHashAfter === predHashBefore,
-        detail: predHashBefore,
+        passed: optionalPrediction == null || predHashAfter === predHashBefore,
+        detail:
+          optionalPrediction == null ? "OPTIONAL_ABSENT" : predHashBefore,
       },
       {
         id: "result-hash-matched",
@@ -245,7 +279,10 @@ async function main() {
   }
 
   console.log(
-    `games=${first.document.summary.totalGames} opening=${first.document.summary.openingCollected} latest=${first.document.summary.latestCollected} marketProb=${first.document.summary.marketProbabilityCollected}`,
+    `games=${first.document.summary.totalGames} matched=${first.document.summary.joinQuality.MATCHED} opening=${first.document.summary.openingCollected} latest=${first.document.summary.latestCollected} marketProb=${first.document.summary.marketProbabilityCollected}`,
+  );
+  console.log(
+    `missing=${audit.independentIntake.missingMarkets} provider=${audit.independentIntake.provider?.displayName ?? "NOT_COLLECTED"}`,
   );
   console.log(`movement=${JSON.stringify(first.document.summary.movement)}`);
   console.log(

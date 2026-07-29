@@ -9,6 +9,13 @@
 import { createHash } from "node:crypto";
 import { instantToKst } from "../datetime/kst";
 import {
+  buildMlbScheduleGameTargets,
+  EMPTY_PREDICTION_HASH,
+  fetchMlbScheduleForDateKst,
+  parseOptionalPredictionSnapshot,
+  type MlbOptionalPredictionSnapshot,
+} from "./load-mlb-schedule-targets";
+import {
   aggregatePitchingFromGameLog,
   filterGameLogBeforeCutoff,
   type GameLogSplit,
@@ -568,7 +575,7 @@ function hashableRows(rows: StarterDatasetRow[]): unknown {
 
 export async function buildStarterDatasetV1(input: {
   dateKst: string;
-  predictionRaw: string;
+  predictionRaw?: string | null;
   includePostGameReview?: boolean;
 }): Promise<{
   document: StarterDatasetDocument;
@@ -576,29 +583,18 @@ export async function buildStarterDatasetV1(input: {
   usage: CacheUsageStats;
 }> {
   const usage = createCacheUsage();
-  const predictionHash = sha256(input.predictionRaw);
-  const prediction = JSON.parse(input.predictionRaw) as {
-    meta?: Record<string, unknown>;
-    predictions?: unknown[];
-  };
-  const predictedAt =
-    asString(asRecord(prediction.meta)?.predictedAt) ??
-    asString(asRecord(prediction.meta)?.generatedAt);
-  const preds = Array.isArray(prediction.predictions)
-    ? prediction.predictions
-    : [];
+  const optionalPrediction: MlbOptionalPredictionSnapshot | null =
+    input.predictionRaw != null && input.predictionRaw.trim() !== ""
+      ? parseOptionalPredictionSnapshot(input.predictionRaw, input.dateKst)
+      : null;
+  const predictionHash = optionalPrediction?.hash ?? EMPTY_PREDICTION_HASH;
+  const predictedAt = optionalPrediction?.predictedAt ?? null;
 
-  const prevMs =
-    Date.parse(`${input.dateKst}T12:00:00+09:00`) - 24 * 60 * 60 * 1000;
-  const prevDate =
-    instantToKst(new Date(prevMs).toISOString())?.date ?? input.dateKst;
-  const hydrate = encodeURIComponent("probablePitcher");
-  const scheduleBody = await getRawStatsJson(
-    `/api/v1/schedule?sportId=1&startDate=${prevDate}&endDate=${input.dateKst}&hydrate=${hydrate}`,
-    usage,
-  );
-  const scheduleAll = extractScheduleWithProbables(scheduleBody).filter(
-    (g) => instantToKst(g.commenceTimeUtc)?.date === input.dateKst,
+  const scheduleAll = await fetchMlbScheduleForDateKst(input.dateKst, usage);
+  const scheduleTargets = buildMlbScheduleGameTargets(
+    input.dateKst,
+    scheduleAll,
+    optionalPrediction,
   );
 
   const personMem = new Map<number, PersonPayload | null>();
@@ -607,20 +603,12 @@ export async function buildStarterDatasetV1(input: {
   let targetGameIncludedInStats = 0;
   let cutoffViolations = 0;
 
-  for (const raw of preds) {
-    const pred = asRecord(raw);
-    if (!pred) continue;
-    const gameId = asString(pred.gameId);
-    const homeTeam = asString(pred.homeTeam) ?? "";
-    const awayTeam = asString(pred.awayTeam) ?? "";
-    const startTimeKst = asString(pred.startTimeKst);
-    const join = joinPredictionToSchedule({
-      homeTeam,
-      awayTeam,
-      startTimeKst,
-      dateKst: input.dateKst,
-      schedule: scheduleAll,
-    });
+  for (const target of scheduleTargets) {
+    const game = target.scheduleGame;
+    const gameId = target.gameId;
+    const homeTeam = target.homeTeam;
+    const awayTeam = target.awayTeam;
+    const joinQuality: StarterJoinQuality = "MATCHED";
 
     const sides: Array<{
       side: "home" | "away";
@@ -630,15 +618,15 @@ export async function buildStarterDatasetV1(input: {
     }> = [
       {
         side: "home",
-        teamId: join.game?.homeTeamId ?? null,
-        opponentTeamId: join.game?.awayTeamId ?? null,
-        probable: join.game?.probableHome ?? { id: null, fullName: null },
+        teamId: game.homeTeamId,
+        opponentTeamId: game.awayTeamId,
+        probable: game.probableHome,
       },
       {
         side: "away",
-        teamId: join.game?.awayTeamId ?? null,
-        opponentTeamId: join.game?.homeTeamId ?? null,
-        probable: join.game?.probableAway ?? { id: null, fullName: null },
+        teamId: game.awayTeamId,
+        opponentTeamId: game.homeTeamId,
+        probable: game.probableAway,
       },
     ];
 
@@ -648,7 +636,7 @@ export async function buildStarterDatasetV1(input: {
         "MLB_STATSAPI_COMMERCIAL_USE_UNVERIFIED",
         "PROBABLE_NOT_CONFIRMED",
       ];
-      const cutoffTime = join.game?.commenceTimeUtc ?? null;
+      const cutoffTime = game.commenceTimeUtc;
       const sourceTimestamp = predictedAt ?? cutoffTime;
       let seasonStats: StarterSeasonStats | null = null;
       let recentStarts: StarterRecentStart[] = [];
@@ -656,20 +644,6 @@ export async function buildStarterDatasetV1(input: {
       let throws: "L" | "R" | null = null;
       let probableStatus: "PROBABLE_ONLY" | "MISSING" = "MISSING";
       let postGameReview: StarterPostGameReview | null = null;
-
-      if (join.quality === "UNLINKED") {
-        missingFields.push(
-          "gamePk",
-          "teamId",
-          "probablePitcherId",
-          "seasonStats",
-          "recentStarts",
-        );
-        warnings.push("SCHEDULE_JOIN_UNLINKED");
-      } else if (join.quality === "AMBIGUOUS") {
-        missingFields.push("gamePk", "probablePitcherId");
-        warnings.push("SCHEDULE_JOIN_AMBIGUOUS");
-      }
 
       if (!cutoffTime) {
         missingFields.push("cutoffTime", "seasonStats", "recentStarts");
@@ -685,12 +659,7 @@ export async function buildStarterDatasetV1(input: {
         missingFields.push("probablePitcherId", "probablePitcherName");
       }
 
-      if (
-        hasProbable &&
-        cutoffTime &&
-        join.game &&
-        s.probable.id != null
-      ) {
+      if (hasProbable && cutoffTime && s.probable.id != null) {
         const person = await loadPersonCached(
           s.probable.id,
           usage,
@@ -703,7 +672,7 @@ export async function buildStarterDatasetV1(input: {
         const derived = await loadOrBuildDerivedStats({
           playerId: s.probable.id,
           cutoffTime,
-          targetGamePk: join.game.gamePk,
+          targetGamePk: game.gamePk,
           dateKst: input.dateKst,
           usage,
           gameLogMem,
@@ -727,7 +696,7 @@ export async function buildStarterDatasetV1(input: {
 
         if (input.includePostGameReview === true) {
           postGameReview = await buildPostGameReview({
-            gamePk: join.game.gamePk,
+            gamePk: game.gamePk,
             probableId: s.probable.id,
             probableName: s.probable.fullName,
             side: s.side,
@@ -743,7 +712,7 @@ export async function buildStarterDatasetV1(input: {
         builderVersion: STARTER_BUILDER_VERSION,
         predictionDate: input.dateKst,
         gameId,
-        gamePk: join.game?.gamePk ?? null,
+        gamePk: game.gamePk,
         teamId: s.teamId,
         opponentTeamId: s.opponentTeamId,
         side: s.side,
@@ -758,7 +727,7 @@ export async function buildStarterDatasetV1(input: {
         seasonStats,
         recentStarts,
         sampleSize,
-        joinQuality: join.quality,
+        joinQuality,
         missingFields: [...new Set(missingFields)],
         warnings: [...new Set(warnings)],
         researchOnly: true,
@@ -862,7 +831,7 @@ export async function buildStarterDatasetV1(input: {
     },
     cacheUsage: { ...usage },
     summary: {
-      totalGames: preds.length,
+      totalGames: scheduleTargets.length,
       totalRows: rows.length,
       probableRows,
       missingRows,

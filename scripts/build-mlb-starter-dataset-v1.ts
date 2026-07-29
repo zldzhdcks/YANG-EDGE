@@ -5,7 +5,7 @@
  *   npx tsx --env-file=.env.local scripts/run-mlb-starter-accumulation-v1.ts [YYYY-MM-DD]
  *
  * This script:
- * - aborts if prediction snapshot missing
+ * - uses MLB Stats API schedule when prediction snapshot is absent
  * - does not overwrite existing pre-game artifact (immutable)
  * - builds pre-game only (postGameReview left to accumulation/postgame step)
  */
@@ -16,6 +16,10 @@ import {
   assertStarterDatasetIntegrity,
   buildStarterDatasetV1,
 } from "../src/lib/mlb/build-starter-dataset";
+import {
+  EMPTY_PREDICTION_HASH,
+  readOptionalPredictionSnapshot,
+} from "../src/lib/mlb/load-mlb-schedule-targets";
 
 const DATE =
   process.argv[2]?.trim() ||
@@ -37,17 +41,14 @@ async function exists(p: string): Promise<boolean> {
 
 async function main() {
   console.log(`=== Build MLB Starter Dataset v1 (${DATE}) ===`);
-  const predPath = path.join(
-    process.cwd(),
-    "data/predictions/mlb",
-    `${DATE}.json`,
-  );
-  if (!(await exists(predPath))) {
-    console.error(
-      `ABORT: prediction snapshot missing — ${path.relative(process.cwd(), predPath)}. No artifact written.`,
+  const optionalPrediction = await readOptionalPredictionSnapshot(DATE);
+  const predictionRaw = optionalPrediction?.raw ?? null;
+  const predHashBefore = optionalPrediction?.hash ?? EMPTY_PREDICTION_HASH;
+
+  if (!optionalPrediction) {
+    console.log(
+      `NOTE: prediction snapshot absent — schedule-only collection continues.`,
     );
-    process.exitCode = 2;
-    return;
   }
 
   const outDataset = path.join(
@@ -70,12 +71,9 @@ async function main() {
     return;
   }
 
-  const predRawBefore = await readFile(predPath, "utf8");
-  const predHashBefore = sha256(predRawBefore);
-
   const { document, predictionHash } = await buildStarterDatasetV1({
     dateKst: DATE,
-    predictionRaw: predRawBefore,
+    predictionRaw,
     includePostGameReview: false,
   });
 
@@ -87,10 +85,17 @@ async function main() {
   await mkdir(path.dirname(outDataset), { recursive: true });
   await writeFile(outDataset, `${JSON.stringify(document, null, 2)}\n`, "utf8");
 
-  if (sha256(await readFile(predPath, "utf8")) !== predHashBefore) {
-    throw new Error("prediction snapshot mutated");
+  if (optionalPrediction) {
+    const predPath = path.join(
+      process.cwd(),
+      "data/predictions/mlb",
+      `${DATE}.json`,
+    );
+    if (sha256(await readFile(predPath, "utf8")) !== predHashBefore) {
+      throw new Error("prediction snapshot mutated");
+    }
   }
-  if (predictionHash !== predHashBefore) {
+  if (optionalPrediction && predictionHash !== predHashBefore) {
     throw new Error("prediction hash mismatch");
   }
 

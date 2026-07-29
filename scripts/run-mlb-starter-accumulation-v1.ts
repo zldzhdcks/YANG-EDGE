@@ -1,7 +1,7 @@
 /**
  * MLB Starter Dataset v1 — accumulation orchestrator.
  *
- * - pred missing → abort (no artifact)
+ * - pred missing → schedule-only collection (artifact still written)
  * - existing pre-game → immutable (no overwrite); verify hash stability
  * - post-game review separate; non-Final → AWAITING_RESULT only
  * - no Engine / Score / Bullpen / Framework structure changes
@@ -17,6 +17,10 @@ import {
   buildStarterDatasetV1,
   resolveStarterPostGameReview,
 } from "../src/lib/mlb/build-starter-dataset";
+import {
+  EMPTY_PREDICTION_HASH,
+  readOptionalPredictionSnapshot,
+} from "../src/lib/mlb/load-mlb-schedule-targets";
 import {
   STARTER_AUDIT_VERSION,
   STARTER_BUILDER_VERSION,
@@ -185,16 +189,15 @@ async function main() {
     "data/predictions/mlb",
     `${DATE}.json`,
   );
-  if (!(await exists(predPath))) {
-    console.error(
-      `ABORT: prediction snapshot missing — ${path.relative(process.cwd(), predPath)}. No artifact written.`,
-    );
-    process.exitCode = 2;
-    return;
-  }
+  const optionalPrediction = await readOptionalPredictionSnapshot(DATE);
+  const predictionRaw = optionalPrediction?.raw ?? null;
+  const predHashBefore = optionalPrediction?.hash ?? EMPTY_PREDICTION_HASH;
 
-  const predRawBefore = await readFile(predPath, "utf8");
-  const predHashBefore = sha256(predRawBefore);
+  if (!optionalPrediction) {
+    console.log(
+      `NOTE: prediction snapshot absent — ${path.relative(process.cwd(), predPath)}. Schedule-only collection continues.`,
+    );
+  }
 
   const outDataset = path.join(
     process.cwd(),
@@ -244,12 +247,12 @@ async function main() {
     if (!embeddedReviews) {
       const runA = await buildStarterDatasetV1({
         dateKst: DATE,
-        predictionRaw: predRawBefore,
+        predictionRaw,
         includePostGameReview: false,
       });
       const runB = await buildStarterDatasetV1({
         dateKst: DATE,
-        predictionRaw: predRawBefore,
+        predictionRaw,
         includePostGameReview: false,
       });
       firstHash = runA.document.meta.resultHashSha256;
@@ -276,7 +279,7 @@ async function main() {
     createdNew = true;
     const runA = await buildStarterDatasetV1({
       dateKst: DATE,
-      predictionRaw: predRawBefore,
+      predictionRaw,
       includePostGameReview: false,
     });
     firstHash = runA.document.meta.resultHashSha256;
@@ -294,7 +297,7 @@ async function main() {
 
     const runB = await buildStarterDatasetV1({
       dateKst: DATE,
-      predictionRaw: predRawBefore,
+      predictionRaw,
       includePostGameReview: false,
     });
     secondHash = runB.document.meta.resultHashSha256;
@@ -315,9 +318,11 @@ async function main() {
   const review = await buildPostGameReviewArtifact(DATE, document, datasetRel);
 
   // MATCHED/CHANGED only via Final resolver (AWAITING_RESULT otherwise)
-  const predRawAfter = await readFile(predPath, "utf8");
-  if (sha256(predRawAfter) !== predHashBefore) {
-    throw new Error("prediction snapshot mutated");
+  if (optionalPrediction) {
+    const predRawAfter = await readFile(predPath, "utf8");
+    if (sha256(predRawAfter) !== predHashBefore) {
+      throw new Error("prediction snapshot mutated");
+    }
   }
 
   const s = document.summary;
@@ -338,6 +343,7 @@ async function main() {
       preGameImmutablePreserved: !createdNew,
       predictionHashSha256: predHashBefore,
       predictionUnchanged: true,
+      predictionOptional: optionalPrediction == null,
       resultHashSha256: document.meta.resultHashSha256,
       firstResultHash: firstHash,
       secondResultHash: secondHash,
@@ -375,8 +381,11 @@ async function main() {
     checks: [
       {
         id: "prediction-hash-unchanged",
-        passed: true,
-        detail: predHashBefore,
+        passed: optionalPrediction == null || true,
+        detail:
+          optionalPrediction == null
+            ? "OPTIONAL_ABSENT"
+            : predHashBefore,
       },
       {
         id: "pregame-immutable",
