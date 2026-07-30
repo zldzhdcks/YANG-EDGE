@@ -61,6 +61,12 @@ export type ActualLineupValue = {
   away: ActualLineupSide | null;
 };
 
+export type ConfirmedLineupValue = {
+  reviewStatus: string;
+  home: ActualLineupSide | null;
+  away: ActualLineupSide | null;
+};
+
 export type StarterMetricsAtPrediction =
   | "INCLUDED"
   | "MISSING_DETAIL"
@@ -120,6 +126,7 @@ export type ResearchAnalysisView = {
   }>;
   snapshotGeneratedAt: ResearchField<string>;
   predictionHash: ResearchField<string>;
+  confirmedLineup: ResearchField<ConfirmedLineupValue> | null;
   /** Finished games only — omit from UI when null */
   successReview: ResearchField<SuccessReviewValue> | null;
   failureReview: ResearchField<FailureReviewValue> | null;
@@ -129,6 +136,23 @@ export type ResearchAnalysisView = {
    * Null for pre-game / unfinished — must not display actual lineup.
    */
   actualLineup: ResearchField<ActualLineupValue> | null;
+  researchScore: {
+    total: number;
+    max: number;
+    items: { label: string; score: number; max: number; status: "OK" | "MISSING" }[];
+    overallLabel: "READY" | "PARTIAL" | "BLOCKED" | "UNKNOWN";
+  };
+  oddsComparison: {
+    available: boolean;
+    domesticHome: number | null;
+    domesticAway: number | null;
+    overseasHome: number | null;
+    overseasAway: number | null;
+    diffHome: number | null;
+    diffAway: number | null;
+  };
+  dataFreshness: { label: string; updatedAt: string | null }[];
+  timeline: { time: string; event: string }[];
   sources: {
     predictionPath: string | null;
     starterPath: string | null;
@@ -137,5 +161,7 @@ export type ResearchAnalysisView = {
     reviewPath: string | null;
     successFlowPath: string | null;
     failureFlowPath: string | null;
+    oddsPath: string | null;
+    schedulePath: string | null;
   };
 };

@@ -17,7 +17,8 @@ import { instantToKst } from "../src/lib/datetime/kst";
 const TARGET_DATE_KST =
   process.argv[2]?.trim() ||
   process.env.MLB_TARGET_DATE_KST?.trim() ||
-  "2026-07-27";
+  instantToKst(new Date())?.date ||
+  "2026-07-29";
 const MLB_LEAGUE_ID = 1;
 const MLB_SEASON = 2026;
 const FINISHED = new Set(["FT", "AOT", "AP"]);

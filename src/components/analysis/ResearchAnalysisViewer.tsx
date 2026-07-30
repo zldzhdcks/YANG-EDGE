@@ -252,20 +252,78 @@ export default function ResearchAnalysisViewer({ view, gamesBackHref }: Props) {
         <p className="text-xs font-medium tracking-widest text-blue-500 uppercase">
           연구
         </p>
-        <h1 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
-          경기 연구 보기
-        </h1>
-        <p className="mt-2 text-sm text-zinc-500">{view.sampleNotice}</p>
-        <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
+        {/* Research Header */}
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            {view.gameInfo.matchLabel}
+          </h1>
+          {view.gameInfo.startTimeKst && (
+            <span className="text-lg tabular-nums text-zinc-400">
+              {view.gameInfo.startTimeKst.includes("T")
+                ? new Date(view.gameInfo.startTimeKst).toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: false })
+                : view.gameInfo.startTimeKst}
+            </span>
+          )}
+        </div>
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <span className="text-sm font-semibold text-white">
+            Research Ready
+          </span>
+          <span className={`text-lg font-bold tabular-nums ${
+            view.researchScore.total === 100 ? "text-green-400" :
+            view.researchScore.total >= 40 ? "text-amber-400" :
+            "text-red-400"
+          }`}>
+            {view.researchScore.total}%
+          </span>
+          <span className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold ${
+            view.researchScore.overallLabel === "READY" ? "border-green-800 bg-green-950/40 text-green-400" :
+            view.researchScore.overallLabel === "PARTIAL" ? "border-amber-800 bg-amber-950/40 text-amber-400" :
+            view.researchScore.overallLabel === "BLOCKED" ? "border-red-800 bg-red-950/40 text-red-400" :
+            "border-zinc-700 bg-zinc-800 text-zinc-500"
+          }`}>
+            {view.researchScore.overallLabel}
+          </span>
+        </div>
+        <p className="mt-2 text-xs text-zinc-600">{view.sampleNotice}</p>
+        <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
           <span className="rounded border border-white/10 px-2 py-1 text-zinc-400">
             {view.isFinishedGame ? "종료 경기" : "시작 전"}
-          </span>
-          <span className="rounded border border-white/10 px-2 py-1 font-medium text-zinc-300">
-            연구 상태: {view.researchStatus}
           </span>
           <span className="tabular-nums text-zinc-600">{view.gameId}</span>
         </div>
       </header>
+
+      {process.env.NODE_ENV === "development" && (
+        <div className="mb-6 rounded border border-zinc-700 bg-zinc-900/60 p-3">
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-zinc-500">
+            Debug Info
+          </p>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-[11px] sm:grid-cols-3">
+            {([
+              ["Schedule", view.gameInfo.availability === "COLLECTED"],
+              ["Domestic Odds", view.oddsComparison.domesticHome != null],
+              ["Overseas Odds", view.oddsComparison.overseasHome != null],
+              ["Starter", view.startingPitchers.availability === "COLLECTED"],
+              ["Lineup", view.sources.lineupPath != null],
+              ["Prediction", view.prediction.availability === "COLLECTED"],
+            ] as const).map(([label, pass]) => (
+              <div key={label} className="flex items-center gap-1.5">
+                <span className={`inline-block h-2 w-2 rounded-full ${pass ? "bg-green-500" : "bg-red-500"}`} />
+                <span className="text-zinc-400">{label}</span>
+                <span className={`ml-auto font-mono ${pass ? "text-green-400" : "text-red-400"}`}>
+                  {pass ? "PASS" : "FAIL"}
+                </span>
+              </div>
+            ))}
+          </div>
+          {view.sources.oddsPath && (
+            <p className="mt-2 text-[10px] text-zinc-600">
+              Reader Source: {abbreviatePath(view.sources.oddsPath)}
+            </p>
+          )}
+        </div>
+      )}
 
       <div className="flex flex-col gap-5">
         <Block>
@@ -316,6 +374,30 @@ export default function ResearchAnalysisViewer({ view, gamesBackHref }: Props) {
           )}
         </Block>
 
+        {/* Research Score */}
+        <Block>
+          <SectionHeading title="Research Score" badge={`${view.researchScore.total} / ${view.researchScore.max}`} />
+          <div className="space-y-1.5">
+            {view.researchScore.items.map((item) => (
+              <div key={item.label} className="flex items-center justify-between gap-3">
+                <span className="text-xs text-zinc-400">{item.label}</span>
+                <div className="flex items-center gap-2">
+                  <span className={`text-xs font-semibold tabular-nums ${item.status === "OK" ? "text-green-400" : "text-zinc-600"}`}>
+                    {item.score}
+                  </span>
+                  <span className={`rounded px-1.5 py-0.5 text-[10px] font-medium ${
+                    item.status === "OK"
+                      ? "bg-green-950/40 text-green-400"
+                      : "bg-zinc-800 text-zinc-600"
+                  }`}>
+                    {item.status}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Block>
+
         <Block>
           <SectionHeading title="경기 전 예측" badge={PRE_GAME} />
           <div className="space-y-4">
@@ -328,7 +410,12 @@ export default function ResearchAnalysisViewer({ view, gamesBackHref }: Props) {
                 </p>
               ) : (
                 <div className="mt-1">
-                  <MissingHint availability={view.prediction.availability} />
+                  <p className="text-sm text-amber-400">
+                    Prediction Artifact Missing
+                  </p>
+                  <p className="mt-0.5 text-xs text-zinc-500">
+                    Prediction snapshot이 아직 생성되지 않았습니다.
+                  </p>
                 </div>
               )}
             </div>
@@ -437,28 +524,156 @@ export default function ResearchAnalysisViewer({ view, gamesBackHref }: Props) {
           )}
         </Block>
 
+        {view.gameId.startsWith("kbo-") ? (
+          <Block>
+            <SectionHeading title="라인업 확인" badge={PRE_GAME} />
+            {view.confirmedLineup?.availability === "COLLECTED" &&
+            view.confirmedLineup.value ? (
+              <div className="space-y-4">
+                <p className="text-xs text-zinc-500">
+                  상태: {view.confirmedLineup.value.reviewStatus}
+                </p>
+                {([
+                  ["원정", view.confirmedLineup.value.away],
+                  ["홈", view.confirmedLineup.value.home],
+                ] as const).map(([label, side]) => (
+                  <div key={label} className="rounded border border-white/[0.06] px-3 py-3">
+                    <div className="mb-2 flex items-center gap-2">
+                      <span className="text-sm font-medium text-white">
+                        {label} {side?.teamName ?? "—"}
+                      </span>
+                      {side?.lineupStatus ? (
+                        <span className="text-xs text-zinc-500">
+                          {side.lineupStatus}
+                        </span>
+                      ) : null}
+                    </div>
+                    {side?.batters.length ? (
+                      <ol className="space-y-1 text-sm text-zinc-300">
+                        {side.batters.map((batter) => (
+                          <li key={`${label}-${batter.slot}`} className="tabular-nums">
+                            {batter.slot}. {batter.playerName}
+                            {batter.defensivePosition
+                              ? ` · ${batter.defensivePosition}`
+                              : ""}
+                          </li>
+                        ))}
+                      </ol>
+                    ) : (
+                      <p className="text-sm text-zinc-500">미입력</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-zinc-500">Lineup Missing</p>
+            )}
+          </Block>
+        ) : null}
+
         <Block>
           <SectionHeading title="시장 배당" badge={PRE_GAME} />
           {view.marketOdds.availability === "COLLECTED" &&
           view.marketOdds.value ? (
-            <ul className="space-y-1 text-sm tabular-nums text-zinc-300">
-              <li>개장: {view.marketOdds.value.openingOdds ?? "—"}</li>
-              <li>최신: {view.marketOdds.value.latestOdds ?? "—"}</li>
-              <li className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-2">
-                <span>변동:</span>
-                <CodedText raw={view.marketOdds.value.oddsMovement} />
-              </li>
-              <li>
-                시장 확률:{" "}
-                {view.marketOdds.value.marketProbability != null
-                  ? `${view.marketOdds.value.marketProbability}%`
-                  : "—"}
-              </li>
-            </ul>
+            <div className="space-y-3">
+              <ul className="space-y-1 text-sm tabular-nums text-zinc-300">
+                <li>국내 배당 (홈): {view.marketOdds.value.openingOdds ?? "—"}</li>
+                <li>해외 배당 (홈): {view.marketOdds.value.latestOdds ?? "—"}</li>
+                {view.marketOdds.value.oddsMovement != null && (
+                  <li className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-2">
+                    <span>변동:</span>
+                    <CodedText raw={view.marketOdds.value.oddsMovement} />
+                  </li>
+                )}
+                {view.marketOdds.value.marketProbability != null && (
+                  <li>
+                    시장 확률: {view.marketOdds.value.marketProbability}%
+                  </li>
+                )}
+              </ul>
+            </div>
           ) : (
             <MissingHint availability={view.marketOdds.availability} />
           )}
         </Block>
+
+        {/* Odds Comparison */}
+        {view.oddsComparison.available && (
+          <Block>
+            <SectionHeading title="배당 비교" badge={PRE_GAME} />
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm tabular-nums">
+                <thead>
+                  <tr className="text-xs text-zinc-500">
+                    <th className="py-1 text-left font-normal" />
+                    <th className="py-1 text-right font-normal">홈</th>
+                    <th className="py-1 text-right font-normal">원정</th>
+                  </tr>
+                </thead>
+                <tbody className="text-zinc-300">
+                  <tr className="border-t border-white/[0.04]">
+                    <td className="py-1.5 text-xs text-zinc-500">국내</td>
+                    <td className="py-1.5 text-right">{view.oddsComparison.domesticHome ?? "—"}</td>
+                    <td className="py-1.5 text-right">{view.oddsComparison.domesticAway ?? "—"}</td>
+                  </tr>
+                  <tr className="border-t border-white/[0.04]">
+                    <td className="py-1.5 text-xs text-zinc-500">해외</td>
+                    <td className="py-1.5 text-right">{view.oddsComparison.overseasHome ?? "—"}</td>
+                    <td className="py-1.5 text-right">{view.oddsComparison.overseasAway ?? "—"}</td>
+                  </tr>
+                  <tr className="border-t border-white/[0.06]">
+                    <td className="py-1.5 text-xs text-zinc-500">차이</td>
+                    <td className="py-1.5 text-right font-semibold">
+                      {view.oddsComparison.diffHome != null
+                        ? `${view.oddsComparison.diffHome > 0 ? "+" : ""}${view.oddsComparison.diffHome}`
+                        : "—"}
+                    </td>
+                    <td className="py-1.5 text-right font-semibold">
+                      {view.oddsComparison.diffAway != null
+                        ? `${view.oddsComparison.diffAway > 0 ? "+" : ""}${view.oddsComparison.diffAway}`
+                        : "—"}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-2 text-[10px] text-zinc-600">
+              차이 = 국내 − 해외. 색상만으로 의미를 표현하지 않습니다.
+            </p>
+          </Block>
+        )}
+
+        {/* Data Freshness */}
+        <Block>
+          <SectionHeading title="데이터 최신성" />
+          <div className="space-y-1">
+            {view.dataFreshness.map((item) => (
+              <div key={item.label} className="flex items-center justify-between text-xs">
+                <span className="text-zinc-500">{item.label}</span>
+                <span className={item.updatedAt ? "tabular-nums text-zinc-400" : "text-zinc-600"}>
+                  {item.updatedAt
+                    ? (() => { try { return new Date(item.updatedAt).toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: false }); } catch { return item.updatedAt; } })()
+                    : "미생성"}
+                </span>
+              </div>
+            ))}
+          </div>
+        </Block>
+
+        {/* Timeline */}
+        {view.timeline.length > 0 && (
+          <Block>
+            <SectionHeading title="오늘 변경" />
+            <div className="space-y-1">
+              {view.timeline.map((entry, i) => (
+                <div key={i} className="flex items-center gap-3 text-xs">
+                  <span className="w-12 shrink-0 tabular-nums text-zinc-600 text-right">{entry.time}</span>
+                  <span className="text-zinc-400">{entry.event}</span>
+                </div>
+              ))}
+            </div>
+          </Block>
+        )}
 
         {view.isFinishedGame ? (
           <section className="space-y-3">
@@ -860,6 +1075,8 @@ export default function ResearchAnalysisViewer({ view, gamesBackHref }: Props) {
                       ["review", view.sources.reviewPath],
                       ["success-flow", view.sources.successFlowPath],
                       ["failure-flow", view.sources.failureFlowPath],
+                      ["odds", view.sources.oddsPath],
+                      ["schedule", view.sources.schedulePath],
                     ] as const
                   ).map(([key, path]) => (
                     <li key={key} className="break-all">

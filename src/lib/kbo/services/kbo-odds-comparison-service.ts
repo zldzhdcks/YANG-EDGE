@@ -36,8 +36,21 @@ export async function collectKboOddsComparisonV1(params: {
   const operatorInput =
     await readJson<KboOperatorMarketInputV2>(operatorInputPath);
 
+  const hasManualOverseasForAllGames = identity.rows.every((row) => {
+    const game = operatorInput.games.find(
+      (item) => item.internalGameId === row.internalGameId,
+    );
+    return !!game?.markets.find(
+      (market) =>
+        market.marketType === "OTHER" &&
+        market.period === "FULL_GAME" &&
+        market.displayLabel === "해외 승패",
+    );
+  });
   const provider = createTheOddsApiKboProvider({ cwd });
-  const overseas = await provider.fetchMoneylineByDate(params.dateKst);
+  const overseas = hasManualOverseasForAllGames
+    ? { games: [], warnings: [], missing: [] }
+    : await provider.fetchMoneylineByDate(params.dateKst);
   const generatedAt = params.generatedAt ?? new Date().toISOString();
   const document = buildKboOddsComparisonDocument({
     dateKst: params.dateKst,

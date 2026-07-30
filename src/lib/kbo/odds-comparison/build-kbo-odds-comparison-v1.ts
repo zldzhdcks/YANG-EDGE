@@ -76,6 +76,31 @@ function pickOverseasMarket(game: KboNormalizedOverseasOddsGame | undefined): Kb
   };
 }
 
+function pickManualOverseasMarket(
+  game: KboOperatorGameMarketInput | undefined,
+  capturedAt: string,
+): KboOverseasOddsSource | null {
+  if (!game) return null;
+  const market = game.markets.find(
+    (item) =>
+      item.marketType === "OTHER" &&
+      item.period === "FULL_GAME" &&
+      item.displayLabel === "해외 승패",
+  );
+  if (!market) return null;
+  return {
+    provider: "OPERATOR_MANUAL",
+    sportKey: null,
+    capturedAt,
+    bookmakerPolicy: "MANUAL_INPUT",
+    marketKey: "manual_h2h",
+    selections: market.selections
+      .filter((selection) => selection.selectionCode === "HOME" || selection.selectionCode === "AWAY")
+      .map(formatSelection),
+    legalStatus: "OPERATOR_CONFIRMED",
+  };
+}
+
 function getOdds(source: { selections: Array<{ selectionCode: string; odds: number }> } | null, code: "HOME" | "AWAY"): number | null {
   return source?.selections.find((selection) => selection.selectionCode === code)?.odds ?? null;
 }
@@ -113,7 +138,11 @@ export function buildKboOddsComparisonDocument(input: {
       ) ?? undefined;
 
     const domestic = pickDomesticMarket(operatorGame, input.operatorInput.capturedAt);
-    const overseas = pickOverseasMarket(overseasGame);
+    const manualOverseas = pickManualOverseasMarket(
+      operatorGame,
+      input.operatorInput.capturedAt,
+    );
+    const overseas = manualOverseas ?? pickOverseasMarket(overseasGame);
     const rowWarnings: string[] = [];
     const rowMissing: string[] = [];
 
@@ -134,7 +163,11 @@ export function buildKboOddsComparisonDocument(input: {
     ) {
       status = "SELECTION_MISMATCH";
       rowWarnings.push("SELECTION_MISMATCH");
-    } else if (overseasGame && !overseasGame.ruleVerified) {
+    } else if (
+      overseas.provider === "THE_ODDS_API" &&
+      overseasGame &&
+      !overseasGame.ruleVerified
+    ) {
       status = "MARKET_RULE_UNVERIFIED";
       rowWarnings.push("MARKET_RULE_UNVERIFIED");
     } else if (domestic.reviewStatus === "DRAFT") {

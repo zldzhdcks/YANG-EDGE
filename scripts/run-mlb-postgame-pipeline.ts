@@ -13,8 +13,9 @@
  *   npm run research:postgame -- YYYY-MM-DD
  */
 import { spawnLocalTsxScript } from "./lib/spawn-local-tsx";
+import { getKstToday } from "../src/lib/datetime/kst";
 
-const dateKst = process.argv[2] ?? "2026-07-27";
+const dateKst = process.argv[2]?.trim() || getKstToday();
 
 async function main() {
   console.log(`=== MLB Postgame Pipeline (${dateKst}) ===\n`);

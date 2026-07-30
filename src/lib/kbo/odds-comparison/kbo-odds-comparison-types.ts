@@ -27,13 +27,13 @@ export type KboDomesticOddsSource = {
 };
 
 export type KboOverseasOddsSource = {
-  provider: "THE_ODDS_API";
-  sportKey: string;
+  provider: "THE_ODDS_API" | "OPERATOR_MANUAL";
+  sportKey: string | null;
   capturedAt: string;
-  bookmakerPolicy: "AGGREGATE_BEST";
-  marketKey: "h2h";
+  bookmakerPolicy: "AGGREGATE_BEST" | "MANUAL_INPUT";
+  marketKey: "h2h" | "manual_h2h";
   selections: KboOddsComparisonSelection[];
-  legalStatus: "NEEDS_LEGAL_REVIEW";
+  legalStatus: "NEEDS_LEGAL_REVIEW" | "OPERATOR_CONFIRMED";
 };
 
 export type KboOddsComparisonStatus =
