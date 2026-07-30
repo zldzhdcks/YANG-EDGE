@@ -269,10 +269,17 @@ function mapBookmaker(raw: RawBookmaker): OddsBookmaker | null {
       key: m.key ?? "",
       lastUpdate: m.last_update ?? "",
       outcomes: (m.outcomes ?? [])
-        .filter((o): o is { name: string; price: number } =>
+        .filter((o): o is { name: string; price: number; point?: number } =>
           typeof o.name === "string" && typeof o.price === "number",
         )
-        .map((o) => ({ name: o.name, price: o.price })),
+        .map((o) => ({
+          name: o.name,
+          price: o.price,
+          point:
+            typeof o.point === "number" && Number.isFinite(o.point)
+              ? o.point
+              : null,
+        })),
     })),
   };
 }

@@ -22,6 +22,8 @@ export type GetOddsParams = {
 export type OddsOutcome = {
   name: string;
   price: number;
+  /** Spreads / totals point when provided by Odds API. */
+  point?: number | null;
 };
 
 export type OddsMarket = {

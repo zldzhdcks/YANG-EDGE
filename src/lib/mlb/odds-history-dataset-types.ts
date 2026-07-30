@@ -1,6 +1,9 @@
 /**
  * MLB Odds History Dataset v1 — research-only pre-game market snapshot.
  * Engine admission PROHIBITED. No Closing/Post-game odds. No Odds Score.
+ *
+ * Independent intake (v1): Schedule artifact + authorized Odds Provider.
+ * Prediction Snapshot is optional supplemental metadata only.
  */
 
 export const ODDS_HISTORY_DATASET_ID = "mlb-odds-history";
@@ -17,6 +20,7 @@ export type OddsHistoryMovement =
   | "UNCHANGED"
   | "NOT_COLLECTED";
 
+/** Primary row marketType kept for backward compatibility (moneyline/h2h). */
 export type OddsHistoryMarketType = "h2h";
 
 export type OddsHistoryBookmakerLabel = "AGGREGATE_BEST";
@@ -25,6 +29,32 @@ export type OddsHistoryJoinQuality =
   | "MATCHED"
   | "MISSING_ODDS"
   | "TIMELINE_ONLY";
+
+/** Per-game collection status for independent intake. */
+export type OddsCollectionStatus =
+  | "COLLECTED"
+  | "PARTIAL"
+  | "NOT_COLLECTED"
+  | "PROVIDER_ERROR"
+  | "MATCH_NOT_FOUND"
+  | "INVALID_RESPONSE";
+
+export type OddsNormalizedMarketType =
+  | "moneyline"
+  | "run_line"
+  | "total";
+
+export type OddsNormalizedMarket = {
+  marketType: OddsNormalizedMarketType;
+  selection: string;
+  priceAmerican: number | null;
+  priceDecimal: number | null;
+  point: number | null;
+  bookmaker: string | null;
+  capturedAt: string | null;
+  status: "COLLECTED" | "NOT_COLLECTED";
+  reason: string | null;
+};
 
 export type OddsHistoryProviderSnapshot = {
   id: typeof ODDS_HISTORY_PROVIDER_ID | "NOT_COLLECTED";
@@ -38,8 +68,11 @@ export type OddsHistoryDatasetRow = {
   generatedAt: string;
   gameDate: string;
   gameId: string;
+  /** Alias for consumers expecting internalGameId naming. */
+  internalGameId?: string;
   homeTeam: string;
   awayTeam: string;
+  startTimeKst?: string | null;
   baselinePick: string | null;
   collectionPhase: typeof ODDS_HISTORY_COLLECTION_PHASE;
   cutoffTime: string | null;
@@ -47,6 +80,10 @@ export type OddsHistoryDatasetRow = {
   legalStatus: "REFERENCE_ODDS_RESEARCH_ONLY";
   engineUseAllowed: false;
   joinQuality: OddsHistoryJoinQuality;
+  /** Independent intake status (backward-compatible additive). */
+  collectionStatus?: OddsCollectionStatus;
+  /** Human-readable reason / notes for collectionStatus. */
+  reason?: string | null;
   openingOdds: number | null;
   latestOdds: number | null;
   marketProbability: number | null;
@@ -57,6 +94,8 @@ export type OddsHistoryDatasetRow = {
   capturedAt: string | null;
   oddsEventId: string | null;
   bookmakerCount: number | null;
+  /** Normalized moneyline / run_line / total (additive). */
+  markets?: OddsNormalizedMarket[];
   missing: string[];
   warnings: string[];
   inputHash: string;
@@ -79,6 +118,10 @@ export type OddsHistoryDatasetDocument = {
     predictionUnchanged: true;
     inputHashSha256: string;
     resultHashSha256: string;
+    /** Schedule artifact path (additive). */
+    scheduleSource?: string;
+    /** Provider display (additive). */
+    provider?: string;
     legal: {
       oddsSource: "REFERENCE_ODDS_PROVIDER";
       publicRuntimeUseAllowed: false;
@@ -101,8 +144,13 @@ export type OddsHistoryDatasetDocument = {
     openingCollected: number;
     latestCollected: number;
     marketProbabilityCollected: number;
+    /** Additive independent-intake counters. */
+    collectedGames?: number;
+    partialGames?: number;
+    notCollectedGames?: number;
     movement: Record<OddsHistoryMovement, number>;
     joinQuality: Record<OddsHistoryJoinQuality, number>;
+    collectionStatus?: Record<OddsCollectionStatus, number>;
   };
   rows: OddsHistoryDatasetRow[];
 };

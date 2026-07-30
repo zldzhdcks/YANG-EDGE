@@ -1,15 +1,16 @@
 /**
- * Build MLB Odds History Dataset v1 for a KST date.
+ * MLB Independent Odds Intake v1 — Schedule artifact + authorized Odds Provider.
  *
- * - PRE_GAME_MARKET only (frozen prediction odds + timeline enrichment)
- * - No closing / post-game odds
- * - Engine PROHIBITED
+ * Prediction Snapshot is optional and never required.
+ * No closing / post-game odds. Engine PROHIBITED.
  *
+ *   npm run research:mlb-odds -- YYYY-MM-DD
  *   npx tsx --env-file=.env.local scripts/build-mlb-odds-history-dataset-v1.ts [YYYY-MM-DD]
  */
 import { createHash } from "node:crypto";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { writeJsonAtomic } from "../src/lib/mlb/build-mlb-schedule-artifact";
 import {
   assertOddsHistoryDatasetIntegrity,
   buildOddsHistoryDatasetV1,
@@ -22,7 +23,7 @@ import {
 const DATE =
   process.argv[2]?.trim() ||
   process.env.MLB_TARGET_DATE_KST?.trim() ||
-  "2026-07-27";
+  "";
 
 function sha256(text: string): string {
   return createHash("sha256").update(text, "utf8").digest("hex");
@@ -37,20 +38,25 @@ async function readHashIfExists(rel: string): Promise<string | null> {
 }
 
 async function main() {
-  console.log(`=== Build MLB Odds History Dataset v1 (${DATE}) ===`);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(DATE)) {
+    console.error("Usage: npm run research:mlb-odds -- YYYY-MM-DD");
+    process.exitCode = 1;
+    return;
+  }
 
-  const predPath = path.join(
-    process.cwd(),
-    "data/predictions/mlb",
-    `${DATE}.json`,
-  );
+  console.log(`=== MLB Independent Odds Intake v1 (${DATE}) ===`);
+
   const optionalPrediction = await readOptionalPredictionSnapshot(DATE);
   const predictionRaw = optionalPrediction?.raw ?? null;
   const predHashBefore = optionalPrediction?.hash ?? EMPTY_PREDICTION_HASH;
 
   if (!optionalPrediction) {
     console.log(
-      `NOTE: prediction snapshot absent — ${path.relative(process.cwd(), predPath)}. Schedule-only collection continues.`,
+      "NOTE: prediction snapshot absent — schedule+provider intake continues.",
+    );
+  } else {
+    console.log(
+      "NOTE: prediction snapshot present — used as supplemental metadata only.",
     );
   }
 
@@ -102,26 +108,20 @@ async function main() {
     );
   }
 
-  const outDataset = path.join(
-    process.cwd(),
-    "data/research/mlb",
-    `${DATE}-odds-history-dataset-v1.json`,
-  );
-  const outAudit = path.join(
-    process.cwd(),
-    "data/audits",
-    `${DATE}-odds-history-dataset-v1-audit.json`,
-  );
+  const outDatasetRel = `data/research/mlb/${DATE}-odds-history-dataset-v1.json`;
+  const outAuditRel = `data/audits/${DATE}-odds-history-dataset-v1-audit.json`;
+  const outDataset = path.join(process.cwd(), outDatasetRel);
+  const outAudit = path.join(process.cwd(), outAuditRel);
 
-  await mkdir(path.dirname(outDataset), { recursive: true });
-  await writeFile(
-    outDataset,
-    `${JSON.stringify(first.document, null, 2)}\n`,
-    "utf8",
-  );
+  await writeJsonAtomic(outDataset, first.document);
 
   let predHashAfter = predHashBefore;
   if (optionalPrediction) {
+    const predPath = path.join(
+      process.cwd(),
+      "data/predictions/mlb",
+      `${DATE}.json`,
+    );
     predHashAfter = sha256(await readFile(predPath, "utf8"));
     if (predHashAfter !== predHashBefore) {
       throw new Error("prediction snapshot mutated");
@@ -155,6 +155,15 @@ async function main() {
     regressionBefore.weather === regressionAfter.weather &&
     regressionBefore.travel === regressionAfter.travel;
 
+  const status = first.document.summary.collectionStatus ?? {
+    COLLECTED: 0,
+    PARTIAL: 0,
+    NOT_COLLECTED: 0,
+    PROVIDER_ERROR: 0,
+    MATCH_NOT_FOUND: 0,
+    INVALID_RESPONSE: 0,
+  };
+
   const audit = {
     meta: {
       version: "mlb-odds-history-dataset-v1-audit",
@@ -172,6 +181,7 @@ async function main() {
       predictionUnchanged: predHashAfter === predHashBefore,
       predictionOptional: optionalPrediction == null,
       intakeVersion: "mlb-independent-odds-v1",
+      scheduleSource: first.document.meta.scheduleSource ?? null,
       inputHashSha256: first.document.meta.inputHashSha256,
       resultHashSha256: first.document.meta.resultHashSha256,
       firstResultHash: first.document.meta.resultHashSha256,
@@ -179,19 +189,23 @@ async function main() {
       hashMatched,
     },
     independentIntake: {
-      provider: first.document.rows.find((r) => r.provider.id !== "NOT_COLLECTED")
-        ?.provider ?? null,
-      gamesScheduled: first.document.summary.totalGames,
+      provider: first.document.meta.provider ?? null,
+      scheduleGames: first.document.summary.totalGames,
+      providerEvents: null as number | null,
       gamesMatched: first.document.summary.joinQuality.MATCHED,
-      marketsCollected: first.document.summary.openingCollected,
-      missingMarkets:
-        first.document.summary.totalGames -
-        first.document.summary.openingCollected,
+      collected: status.COLLECTED,
+      partial: status.PARTIAL,
+      notCollected:
+        status.NOT_COLLECTED +
+        status.MATCH_NOT_FOUND +
+        status.PROVIDER_ERROR +
+        status.INVALID_RESPONSE,
+      collectionStatus: status,
       missingReasons: [
         ...new Set(
-          first.document.rows.flatMap((r) =>
-            r.warnings.filter((w) => w.startsWith("NOT_COLLECTED_REASON=")),
-          ),
+          first.document.rows
+            .map((r) => r.reason)
+            .filter((r): r is string => typeof r === "string" && r.length > 0),
         ),
       ].sort(),
     },
@@ -222,6 +236,11 @@ async function main() {
         passed: optionalPrediction == null || predHashAfter === predHashBefore,
         detail:
           optionalPrediction == null ? "OPTIONAL_ABSENT" : predHashBefore,
+      },
+      {
+        id: "schedule-source-present",
+        passed: Boolean(first.document.meta.scheduleSource),
+        detail: first.document.meta.scheduleSource ?? "missing",
       },
       {
         id: "result-hash-matched",
@@ -255,21 +274,41 @@ async function main() {
       {
         id: "regression-hashes-unchanged",
         passed: regressionUnchanged,
-        detail:
-          "prediction/starter/bullpen/lineup/weather/travel",
+        detail: "prediction/starter/bullpen/lineup/weather/travel",
       },
       {
         id: "engine-prohibited",
         passed: first.document.meta.engineAdmission === "PROHIBITED",
         detail: "PROHIBITED",
       },
+      {
+        id: "no-invented-odds",
+        passed: first.document.rows.every(
+          (r) =>
+            r.collectionStatus !== "COLLECTED" ||
+            (r.openingOdds != null && r.latestOdds != null),
+        ),
+        detail: "COLLECTED rows must have opening+latest",
+      },
     ],
     legal: first.document.meta.legal,
     notes: first.document.meta.notes,
+    artifacts: {
+      dataset: outDatasetRel,
+      audit: outAuditRel,
+    },
   };
 
-  await mkdir(path.dirname(outAudit), { recursive: true });
-  await writeFile(outAudit, `${JSON.stringify(audit, null, 2)}\n`, "utf8");
+  // Fill provider event count from cache usage / row oddsEventIds
+  audit.independentIntake.providerEvents = [
+    ...new Set(
+      first.document.rows
+        .map((r) => r.oddsEventId)
+        .filter((id): id is string => typeof id === "string"),
+    ),
+  ].length;
+
+  await writeJsonAtomic(outAudit, audit);
 
   const failed = audit.checks.filter((c) => !c.passed);
   if (failed.length > 0) {
@@ -278,23 +317,27 @@ async function main() {
     );
   }
 
+  console.log(`date=${DATE}`);
+  console.log(`schedule games count=${first.document.summary.totalGames}`);
   console.log(
-    `games=${first.document.summary.totalGames} matched=${first.document.summary.joinQuality.MATCHED} opening=${first.document.summary.openingCollected} latest=${first.document.summary.latestCollected} marketProb=${first.document.summary.marketProbabilityCollected}`,
+    `provider events count=${audit.independentIntake.providerEvents}`,
   );
+  console.log(`matched games count=${first.document.summary.joinQuality.MATCHED}`);
+  console.log(`collected count=${status.COLLECTED}`);
+  console.log(`partial count=${status.PARTIAL}`);
   console.log(
-    `missing=${audit.independentIntake.missingMarkets} provider=${audit.independentIntake.provider?.displayName ?? "NOT_COLLECTED"}`,
+    `not collected count=${audit.independentIntake.notCollected}`,
   );
   console.log(`movement=${JSON.stringify(first.document.summary.movement)}`);
   console.log(
     `rawHit/miss=${first.document.cacheUsage.rawHit}/${first.document.cacheUsage.rawMiss} warmNet=${second.usage.networkCalls}`,
   );
-  console.log(`resultHash=${first.document.meta.resultHashSha256}`);
-  console.log(`저장: ${outDataset}`);
-  console.log(`감사: ${outAudit}`);
-  console.log("ODDS_HISTORY_DATASET_V1_CREATED_DATA_COLLECTION");
+  console.log(`artifact path=${outDatasetRel}`);
+  console.log(`audit path=${outAuditRel}`);
+  console.log("MLB_INDEPENDENT_ODDS_V1_COMPLETE");
 }
 
 main().catch((e) => {
-  console.error(e);
+  console.error(e instanceof Error ? e.message : e);
   process.exitCode = 1;
 });

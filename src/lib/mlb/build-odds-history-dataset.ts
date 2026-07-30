@@ -1,36 +1,32 @@
 /**
- * MLB Odds History Dataset v1 builder — PRE_GAME_MARKET only.
+ * MLB Odds History Dataset v1 builder — independent intake.
  *
- * - Schedule-first targets (MLB Stats API)
- * - Primary odds: The Odds API h2h (lawful provider, research cache)
- * - Optional prediction snapshot enriches baselinePick / gap-fill only
- * - Optional odds-timeline enrichment for movement when snapshots exist
- * - No Engine / Score / Framework imports
+ * Schedule artifact (required) → The Odds API (authorized) → odds-history artifact
+ * Prediction Snapshot is optional supplemental metadata only (never required).
+ * Movement compares only against a previous odds-history artifact for the same date.
  */
 import { createHash } from "node:crypto";
+import { access, mkdir, readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
+import type { GameData } from "@/types/game";
 import { removeBookmakerMargin } from "../market/remove-bookmaker-margin";
-import { buildOddsData } from "../odds/odds-provider";
 import {
   matchOddsToGame,
   normalizeTeamNameForOdds,
 } from "../odds/match-odds-to-game";
+import { buildOddsData } from "../odds/odds-provider";
 import type { OddsBookmaker, OddsData } from "../odds/types";
-import type { GameData } from "@/types/game";
-import { access, mkdir, readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
+import { loadMlbScheduleArtifact } from "./build-mlb-schedule-artifact";
+import {
+  EMPTY_PREDICTION_HASH,
+  parseOptionalPredictionSnapshot,
+  type MlbOptionalPredictionSnapshot,
+} from "./load-mlb-schedule-targets";
+import type { MlbScheduleArtifactGame } from "./mlb-schedule-artifact-types";
 import {
   createCacheUsage,
   type CacheUsageStats,
 } from "./research-stats-cache";
-import {
-  buildMlbScheduleGameTargets,
-  EMPTY_PREDICTION_HASH,
-  fetchMlbScheduleForDateKst,
-  findPredictionForScheduleGame,
-  parseOptionalPredictionSnapshot,
-  type MlbOptionalPredictionSnapshot,
-  type MlbScheduleGameTarget,
-} from "./load-mlb-schedule-targets";
 import {
   ODDS_HISTORY_BUILDER_VERSION,
   ODDS_HISTORY_COLLECTION_PHASE,
@@ -38,14 +34,17 @@ import {
   ODDS_HISTORY_PROVIDER_ID,
   ODDS_HISTORY_SCHEMA_VERSION,
   type BuildOddsHistoryDatasetResult,
+  type OddsCollectionStatus,
   type OddsHistoryDatasetDocument,
   type OddsHistoryDatasetRow,
   type OddsHistoryJoinQuality,
   type OddsHistoryMovement,
   type OddsHistoryProviderSnapshot,
+  type OddsNormalizedMarket,
 } from "./odds-history-dataset-types";
 
 const ODDS_MOVEMENT_EPS = 0.001;
+const COMMENCE_TOLERANCE_MS = 3 * 60 * 60 * 1000;
 
 function sha256(text: string): string {
   return createHash("sha256").update(text, "utf8").digest("hex");
@@ -95,7 +94,15 @@ async function fileExists(p: string): Promise<boolean> {
 }
 
 function oddsResearchCacheRoot(cwd = process.cwd()): string {
-  return path.join(cwd, "data", "cache", "research", "mlb", "raw", "the-odds-api");
+  return path.join(
+    cwd,
+    "data",
+    "cache",
+    "research",
+    "mlb",
+    "raw",
+    "the-odds-api",
+  );
 }
 
 function oddsCacheFileKey(params: Record<string, string>): string {
@@ -125,30 +132,6 @@ async function getRawOddsJson(
   }
 }
 
-type ScheduleOddsTarget = {
-  gameId: string;
-  homeTeam: string;
-  awayTeam: string;
-  startTimeKst: string | null;
-  commenceTimeUtc: string;
-  baselinePick: string | null;
-  predictionOpeningOdds: number | null;
-  predictionLatestOdds: number | null;
-  predictionMarketProbability: number | null;
-  cutoffTime: string | null;
-};
-
-type ProviderH2HMarket = {
-  homeOdds: number | null;
-  awayOdds: number | null;
-  drawOdds: number | null;
-  marketProbabilityPct: number | null;
-  referenceOdds: number | null;
-  collectedAt: string;
-  oddsEventId: string;
-  bookmakerCount: number;
-};
-
 function teamsMatchForOdds(a: string, b: string): boolean {
   const na = normalizeTeamNameForOdds(a);
   const nb = normalizeTeamNameForOdds(b);
@@ -157,6 +140,12 @@ function teamsMatchForOdds(a: string, b: string): boolean {
   return (
     na.length >= 4 && nb.length >= 4 && (na.includes(nb) || nb.includes(na))
   );
+}
+
+function decimalToAmerican(decimal: number | null): number | null {
+  if (decimal == null || !Number.isFinite(decimal) || decimal <= 1) return null;
+  if (decimal >= 2) return Math.round((decimal - 1) * 100);
+  return Math.round(-100 / (decimal - 1));
 }
 
 function pickReferenceTeam(
@@ -207,16 +196,7 @@ function marketProbabilityPctFromProvider(
   return Math.round(prob * 1000) / 10;
 }
 
-function formatH2HWarning(market: ProviderH2HMarket): string {
-  const draw =
-    market.drawOdds != null ? String(market.drawOdds) : "NOT_COLLECTED";
-  return `H2H_HOME=${market.homeOdds ?? "NOT_COLLECTED"}|AWAY=${market.awayOdds ?? "NOT_COLLECTED"}|DRAW=${draw}`;
-}
-
-function parseTheOddsApiEvents(
-  body: unknown,
-  sportKey: string,
-): OddsData[] {
+function parseTheOddsApiEvents(body: unknown, sportKey: string): OddsData[] {
   const rawEvents = Array.isArray(body) ? body : [];
   const out: OddsData[] = [];
   for (const raw of rawEvents) {
@@ -248,9 +228,15 @@ function parseTheOddsApiEvents(
                 const name = asString(o?.name);
                 const price = asNumber(o?.price);
                 if (!name || price == null) return null;
-                return { name, price };
+                const point = asNumber(o?.point);
+                return { name, price, point };
               })
-              .filter((o): o is { name: string; price: number } => o != null),
+              .filter(
+                (
+                  o,
+                ): o is { name: string; price: number; point: number | null } =>
+                  o != null,
+              ),
           };
         }),
       });
@@ -276,164 +262,301 @@ function parseTheOddsApiEvents(
   return out;
 }
 
-function buildScheduleOddsTargets(
+function scheduleGameToGameData(
   dateKst: string,
-  scheduleTargets: MlbScheduleGameTarget[],
-  prediction: MlbOptionalPredictionSnapshot | null,
-): ScheduleOddsTarget[] {
-  return scheduleTargets.map((target) => {
-    const matched = prediction
-      ? findPredictionForScheduleGame(
-          target.scheduleGame,
-          dateKst,
-          prediction.entries,
-        )
-      : null;
-    return {
-      gameId: target.gameId,
-      homeTeam: target.homeTeam,
-      awayTeam: target.awayTeam,
-      startTimeKst: target.startTimeKst,
-      commenceTimeUtc: target.commenceTimeUtc,
-      baselinePick: matched?.baselinePick ?? null,
-      predictionOpeningOdds: matched?.openingOdds ?? null,
-      predictionLatestOdds: matched?.latestOdds ?? null,
-      predictionMarketProbability: matched?.marketProbability ?? null,
-      cutoffTime: matched?.predictedAt ?? target.commenceTimeUtc,
-    };
-  });
+  game: MlbScheduleArtifactGame,
+): GameData {
+  return {
+    id: game.internalGameId,
+    sport: "baseball",
+    league: "MLB",
+    homeTeam: game.homeTeam,
+    awayTeam: game.awayTeam,
+    startTime: game.startTimeKst ?? "TBD",
+    date: dateKst,
+    aiAnalysisAvailable: false,
+  };
 }
 
-function providerMarketFromOdds(
+type MatchResult =
+  | { kind: "MATCHED"; odds: OddsData; method: string }
+  | { kind: "AMBIGUOUS_MATCH"; count: number }
+  | { kind: "MATCH_NOT_FOUND" };
+
+function matchProviderEvent(
+  dateKst: string,
+  game: MlbScheduleArtifactGame,
+  events: OddsData[],
+): MatchResult {
+  const gameData = scheduleGameToGameData(dateKst, game);
+  const candidates: OddsData[] = [];
+
+  for (const odds of events) {
+    const hit = matchOddsToGame(gameData, [odds], {
+      commenceToleranceMs: COMMENCE_TOLERANCE_MS,
+      minConfidence: 0.7,
+    });
+    if (hit) candidates.push(odds);
+  }
+
+  if (candidates.length === 0) return { kind: "MATCH_NOT_FOUND" };
+  if (candidates.length > 1) {
+    return { kind: "AMBIGUOUS_MATCH", count: candidates.length };
+  }
+
+  const single = matchOddsToGame(gameData, candidates, {
+    commenceToleranceMs: COMMENCE_TOLERANCE_MS,
+    minConfidence: 0.7,
+  });
+  if (!single) return { kind: "MATCH_NOT_FOUND" };
+  return { kind: "MATCHED", odds: single.odds, method: single.method };
+}
+
+function bestOutcomePrice(
   odds: OddsData,
-  referenceTeam: string,
+  marketKey: string,
+  nameMatcher: (name: string) => boolean,
+): { price: number; point: number | null; bookmaker: string } | null {
+  let best: { price: number; point: number | null; bookmaker: string } | null =
+    null;
+  for (const bm of odds.bookmakers) {
+    for (const market of bm.markets) {
+      if (market.key !== marketKey) continue;
+      for (const outcome of market.outcomes) {
+        if (!nameMatcher(outcome.name)) continue;
+        const point =
+          typeof outcome.point === "number" && Number.isFinite(outcome.point)
+            ? outcome.point
+            : null;
+        if (!best || outcome.price > best.price) {
+          best = {
+            price: outcome.price,
+            point,
+            bookmaker: bm.title || bm.key,
+          };
+        }
+      }
+    }
+  }
+  return best;
+}
+
+function extractPointFromOutcomes(
+  odds: OddsData,
+  marketKey: string,
+): number | null {
+  for (const bm of odds.bookmakers) {
+    for (const market of bm.markets) {
+      if (market.key !== marketKey) continue;
+      for (const outcome of market.outcomes as Array<{
+        name: string;
+        price: number;
+        point?: number;
+      }>) {
+        if (typeof outcome.point === "number" && Number.isFinite(outcome.point)) {
+          return outcome.point;
+        }
+      }
+    }
+  }
+  return null;
+}
+
+function buildNormalizedMarkets(
+  odds: OddsData | null,
   homeTeam: string,
   awayTeam: string,
-  collectedAt: string,
-): ProviderH2HMarket {
-  return {
-    homeOdds: roundOdds(odds.bestHomeOdds),
-    awayOdds: roundOdds(odds.bestAwayOdds),
-    drawOdds: roundOdds(odds.bestDrawOdds),
-    marketProbabilityPct: marketProbabilityPctFromProvider(
-      odds,
-      referenceTeam,
-      homeTeam,
-      awayTeam,
-    ),
-    referenceOdds: sideOddsFromProvider(odds, referenceTeam, homeTeam, awayTeam),
-    collectedAt,
-    oddsEventId: odds.externalEventId,
-    bookmakerCount: odds.bookmakers.length,
-  };
-}
+  capturedAt: string | null,
+  statusReason: string | null,
+): OddsNormalizedMarket[] {
+  const mk = (
+    marketType: OddsNormalizedMarket["marketType"],
+    selection: string,
+    price: number | null,
+    point: number | null,
+    bookmaker: string | null,
+    ok: boolean,
+    reason: string | null,
+  ): OddsNormalizedMarket => ({
+    marketType,
+    selection,
+    priceAmerican: decimalToAmerican(price),
+    priceDecimal: roundOdds(price),
+    point,
+    bookmaker,
+    capturedAt: ok ? capturedAt : null,
+    status: ok ? "COLLECTED" : "NOT_COLLECTED",
+    reason: ok ? null : reason,
+  });
 
-type TimelineGame = {
-  gameId: string;
-  oddsEventId: string | null;
-  matchStatus: string | null;
-  snapshots: Array<{
-    capturedAt: string;
-    oddsEventId: string;
-    pickOdds: number | null;
-    marketProbability: number | null;
-    bookmakerCount: number;
-  }>;
-};
+  if (!odds) {
+    const reason =
+      statusReason ??
+      "No authorized odds provider response was available for this game.";
+    return [
+      mk("moneyline", "home", null, null, null, false, reason),
+      mk("moneyline", "away", null, null, null, false, reason),
+      mk("run_line", "home", null, null, null, false, reason),
+      mk("run_line", "away", null, null, null, false, reason),
+      mk("total", "over", null, null, null, false, reason),
+      mk("total", "under", null, null, null, false, reason),
+    ];
+  }
 
-
-async function loadTimelineMap(
-  dateKst: string,
-): Promise<{ map: Map<string, TimelineGame>; sportKey: string | null }> {
-  const timelinePath = path.join(
-    process.cwd(),
-    "data/predictions/mlb",
-    `${dateKst}-odds-timeline.json`,
+  const homeMl = roundOdds(odds.bestHomeOdds);
+  const awayMl = roundOdds(odds.bestAwayOdds);
+  const spreadHome = bestOutcomePrice(odds, "spreads", (n) =>
+    teamsMatchForOdds(n, homeTeam),
   );
-  if (!(await fileExists(timelinePath))) {
-    return { map: new Map(), sportKey: null };
-  }
+  const spreadAway = bestOutcomePrice(odds, "spreads", (n) =>
+    teamsMatchForOdds(n, awayTeam),
+  );
+  const totalOver = bestOutcomePrice(
+    odds,
+    "totals",
+    (n) => n.toLowerCase() === "over",
+  );
+  const totalUnder = bestOutcomePrice(
+    odds,
+    "totals",
+    (n) => n.toLowerCase() === "under",
+  );
+  const spreadPoint =
+    spreadHome?.point ??
+    spreadAway?.point ??
+    extractPointFromOutcomes(odds, "spreads");
+  const totalPoint =
+    totalOver?.point ??
+    totalUnder?.point ??
+    extractPointFromOutcomes(odds, "totals");
 
-  const root = JSON.parse(await readFile(timelinePath, "utf8")) as {
-    meta?: { sportKey?: string };
-    games?: unknown[];
-  };
-  const map = new Map<string, TimelineGame>();
-
-  for (const raw of root.games ?? []) {
-    const row = asRecord(raw);
-    if (!row) continue;
-    const gameId = asString(row.gameId);
-    if (!gameId) continue;
-
-    const snapshotsRaw = Array.isArray(row.snapshots) ? row.snapshots : [];
-    const snapshots = snapshotsRaw
-      .map((snap) => {
-        const s = asRecord(snap);
-        if (!s) return null;
-        const capturedAt = asString(s.capturedAt);
-        const oddsEventId = asString(s.oddsEventId);
-        if (!capturedAt || !oddsEventId) return null;
-        return {
-          capturedAt,
-          oddsEventId,
-          pickOdds: roundOdds(asNumber(s.pickOdds)),
-          marketProbability: asNumber(s.marketProbability),
-          bookmakerCount: asNumber(s.bookmakerCount) ?? 0,
-        };
-      })
-      .filter((s): s is NonNullable<typeof s> => s != null);
-
-    map.set(gameId, {
-      gameId,
-      oddsEventId: asString(row.oddsEventId),
-      matchStatus: asString(row.matchStatus),
-      snapshots,
-    });
-  }
-
-  return { map, sportKey: asString(root.meta?.sportKey) };
+  return [
+    mk(
+      "moneyline",
+      "home",
+      homeMl,
+      null,
+      homeMl != null ? "AGGREGATE_BEST" : null,
+      homeMl != null,
+      homeMl != null ? null : "Moneyline home price not available.",
+    ),
+    mk(
+      "moneyline",
+      "away",
+      awayMl,
+      null,
+      awayMl != null ? "AGGREGATE_BEST" : null,
+      awayMl != null,
+      awayMl != null ? null : "Moneyline away price not available.",
+    ),
+    mk(
+      "run_line",
+      "home",
+      spreadHome ? roundOdds(spreadHome.price) : null,
+      spreadPoint,
+      spreadHome?.bookmaker ?? null,
+      spreadHome != null,
+      spreadHome != null ? null : "Run line market not available from provider.",
+    ),
+    mk(
+      "run_line",
+      "away",
+      spreadAway ? roundOdds(spreadAway.price) : null,
+      spreadPoint != null ? -spreadPoint : null,
+      spreadAway?.bookmaker ?? null,
+      spreadAway != null,
+      spreadAway != null ? null : "Run line market not available from provider.",
+    ),
+    mk(
+      "total",
+      "over",
+      totalOver ? roundOdds(totalOver.price) : null,
+      totalPoint,
+      totalOver?.bookmaker ?? null,
+      totalOver != null,
+      totalOver != null ? null : "Total market not available from provider.",
+    ),
+    mk(
+      "total",
+      "under",
+      totalUnder ? roundOdds(totalUnder.price) : null,
+      totalPoint,
+      totalUnder?.bookmaker ?? null,
+      totalUnder != null,
+      totalUnder != null ? null : "Total market not available from provider.",
+    ),
+  ];
 }
 
 function computeMovement(
   opening: number | null,
   latest: number | null,
+  hasPreviousSnapshot: boolean,
 ): OddsHistoryMovement {
+  if (!hasPreviousSnapshot) return "NOT_COLLECTED";
   if (opening == null || latest == null) return "NOT_COLLECTED";
   const delta = latest - opening;
   if (Math.abs(delta) <= ODDS_MOVEMENT_EPS) return "UNCHANGED";
   return delta > 0 ? "UP" : "DOWN";
 }
 
-async function fetchOddsApiEventsForDate(
+async function loadPreviousOddsRows(
   dateKst: string,
-  sportKey: string | null,
-  usage: CacheUsageStats,
-): Promise<{
+): Promise<Map<string, OddsHistoryDatasetRow>> {
+  const prevPath = path.join(
+    process.cwd(),
+    "data/research/mlb",
+    `${dateKst}-odds-history-dataset-v1.json`,
+  );
+  if (!(await fileExists(prevPath))) return new Map();
+  try {
+    const root = JSON.parse(await readFile(prevPath, "utf8")) as {
+      rows?: OddsHistoryDatasetRow[];
+    };
+    const map = new Map<string, OddsHistoryDatasetRow>();
+    for (const row of root.rows ?? []) {
+      if (row.gameId) map.set(row.gameId, row);
+    }
+    return map;
+  } catch {
+    return new Map();
+  }
+}
+
+type ProviderFetchResult = {
   sportKey: string | null;
   events: OddsData[];
   fetched: boolean;
-}> {
+  error: string | null;
+};
+
+async function fetchOddsApiEventsForDate(
+  dateKst: string,
+  usage: CacheUsageStats,
+): Promise<ProviderFetchResult> {
   const apiKey = (process.env.ODDS_API_KEY ?? "").trim();
   const baseUrl =
     (process.env.ODDS_API_BASE_URL ?? "").trim() ||
     "https://api.the-odds-api.com/v4";
 
   if (!apiKey) {
-    return { sportKey, events: [], fetched: false };
+    return {
+      sportKey: null,
+      events: [],
+      fetched: false,
+      error: "ODDS_API_KEY is not configured.",
+    };
   }
 
-  let resolvedSportKey = sportKey;
-  if (!resolvedSportKey) {
+  try {
+    let resolvedSportKey: string | null = null;
     const sportsBody = (await getRawOddsJson(
       "sports_list",
       async () => {
         const url = new URL(`${baseUrl}/sports`);
         url.searchParams.set("apiKey", apiKey);
         const res = await fetch(url.toString(), { cache: "no-store" });
-        if (!res.ok) {
-          throw new Error(`Odds API /sports HTTP ${res.status}`);
-        }
+        if (!res.ok) throw new Error(`Odds API /sports HTTP ${res.status}`);
         return res.json();
       },
       usage,
@@ -448,48 +571,59 @@ async function fetchOddsApiEventsForDate(
         break;
       }
     }
+
+    if (!resolvedSportKey) {
+      return {
+        sportKey: null,
+        events: [],
+        fetched: false,
+        error: "MLB sport key not found in Odds API /sports.",
+      };
+    }
+
+    const dayStart = new Date(`${dateKst}T00:00:00+09:00`);
+    const dayEnd = new Date(`${dateKst}T24:00:00+09:00`);
+    const params = {
+      sportKey: resolvedSportKey,
+      regions: "eu",
+      markets: "h2h,spreads,totals",
+      commenceTimeFrom: dayStart.toISOString().replace(".000Z", "Z"),
+      commenceTimeTo: dayEnd.toISOString().replace(".000Z", "Z"),
+    };
+
+    const body = await getRawOddsJson(
+      oddsCacheFileKey(params),
+      async () => {
+        const url = new URL(
+          `${baseUrl}/sports/${encodeURIComponent(resolvedSportKey!)}/odds`,
+        );
+        url.searchParams.set("apiKey", apiKey);
+        url.searchParams.set("regions", params.regions);
+        url.searchParams.set("markets", params.markets);
+        url.searchParams.set("commenceTimeFrom", params.commenceTimeFrom);
+        url.searchParams.set("commenceTimeTo", params.commenceTimeTo);
+        url.searchParams.set("oddsFormat", "decimal");
+        const res = await fetch(url.toString(), { cache: "no-store" });
+        if (!res.ok) throw new Error(`Odds API odds HTTP ${res.status}`);
+        return res.json();
+      },
+      usage,
+    );
+
+    return {
+      sportKey: resolvedSportKey,
+      events: parseTheOddsApiEvents(body, resolvedSportKey),
+      fetched: true,
+      error: null,
+    };
+  } catch (e) {
+    return {
+      sportKey: null,
+      events: [],
+      fetched: false,
+      error: e instanceof Error ? e.message : String(e),
+    };
   }
-
-  if (!resolvedSportKey) {
-    return { sportKey: null, events: [], fetched: false };
-  }
-
-  const dayStart = new Date(`${dateKst}T00:00:00+09:00`);
-  const dayEnd = new Date(`${dateKst}T24:00:00+09:00`);
-  const params = {
-    sportKey: resolvedSportKey,
-    regions: "eu",
-    markets: "h2h",
-    commenceTimeFrom: dayStart.toISOString().replace(".000Z", "Z"),
-    commenceTimeTo: dayEnd.toISOString().replace(".000Z", "Z"),
-  };
-
-  const body = await getRawOddsJson(
-    oddsCacheFileKey(params),
-    async () => {
-      const url = new URL(
-        `${baseUrl}/sports/${encodeURIComponent(resolvedSportKey!)}/odds`,
-      );
-      url.searchParams.set("apiKey", apiKey);
-      url.searchParams.set("regions", params.regions);
-      url.searchParams.set("markets", params.markets);
-      url.searchParams.set("commenceTimeFrom", params.commenceTimeFrom);
-      url.searchParams.set("commenceTimeTo", params.commenceTimeTo);
-      url.searchParams.set("oddsFormat", "decimal");
-      const res = await fetch(url.toString(), { cache: "no-store" });
-      if (!res.ok) {
-        throw new Error(`Odds API odds HTTP ${res.status}`);
-      }
-      return res.json();
-    },
-    usage,
-  );
-
-  return {
-    sportKey: resolvedSportKey,
-    events: parseTheOddsApiEvents(body, resolvedSportKey),
-    fetched: true,
-  };
 }
 
 function hashableRowBody(row: OddsHistoryDatasetRow): Record<string, unknown> {
@@ -497,6 +631,8 @@ function hashableRowBody(row: OddsHistoryDatasetRow): Record<string, unknown> {
     gameId: row.gameId,
     gameDate: row.gameDate,
     collectionPhase: row.collectionPhase,
+    collectionStatus: row.collectionStatus ?? null,
+    reason: row.reason ?? null,
     joinQuality: row.joinQuality,
     openingOdds: row.openingOdds,
     latestOdds: row.latestOdds,
@@ -509,6 +645,7 @@ function hashableRowBody(row: OddsHistoryDatasetRow): Record<string, unknown> {
     oddsEventId: row.oddsEventId,
     bookmakerCount: row.bookmakerCount,
     cutoffTime: row.cutoffTime,
+    markets: row.markets ?? [],
     missing: row.missing,
     warnings: row.warnings,
   };
@@ -546,32 +683,21 @@ export async function buildOddsHistoryDatasetV1(input: {
   predictionRaw?: string | null;
 }): Promise<BuildOddsHistoryDatasetResult> {
   const usage = createCacheUsage();
+
+  // Schedule artifact is required — fail hard if missing (Scenario C).
+  const schedule = await loadMlbScheduleArtifact(input.dateKst);
+  const scheduleSource = `data/research/mlb/${input.dateKst}-schedule-v1.json`;
+
   const optionalPrediction: MlbOptionalPredictionSnapshot | null =
     input.predictionRaw != null && input.predictionRaw.trim() !== ""
       ? parseOptionalPredictionSnapshot(input.predictionRaw, input.dateKst)
       : null;
   const predictionHash = optionalPrediction?.hash ?? EMPTY_PREDICTION_HASH;
 
-  const scheduleAll = await fetchMlbScheduleForDateKst(input.dateKst, usage);
-  const scheduleTargets = buildMlbScheduleGameTargets(
-    input.dateKst,
-    scheduleAll,
-    optionalPrediction,
-  );
-  const targets = buildScheduleOddsTargets(
-    input.dateKst,
-    scheduleTargets,
-    optionalPrediction,
-  );
-  const { map: timelineMap, sportKey: timelineSportKey } =
-    await loadTimelineMap(input.dateKst);
+  const previousRows = await loadPreviousOddsRows(input.dateKst);
+  const hasPreviousSnapshot = previousRows.size > 0;
 
-  const oddsFetch = await fetchOddsApiEventsForDate(
-    input.dateKst,
-    timelineSportKey,
-    usage,
-  );
-
+  const oddsFetch = await fetchOddsApiEventsForDate(input.dateKst, usage);
   const generatedAt = new Date().toISOString();
   const rows: OddsHistoryDatasetRow[] = [];
 
@@ -586,155 +712,176 @@ export async function buildOddsHistoryDatasetV1(input: {
     UNCHANGED: 0,
     NOT_COLLECTED: 0,
   };
+  const statusCounts: Record<OddsCollectionStatus, number> = {
+    COLLECTED: 0,
+    PARTIAL: 0,
+    NOT_COLLECTED: 0,
+    PROVIDER_ERROR: 0,
+    MATCH_NOT_FOUND: 0,
+    INVALID_RESPONSE: 0,
+  };
 
   let openingCollected = 0;
   let latestCollected = 0;
   let marketProbabilityCollected = 0;
 
-  for (const target of targets) {
+  for (const game of schedule.games) {
     const missing: string[] = [];
     const warnings: string[] = ["INDEPENDENT_ODDS_INTAKE_V1"];
-    const timeline = timelineMap.get(target.gameId);
+
+    const predEntry =
+      optionalPrediction?.entries.find(
+        (e) =>
+          teamsMatchForOdds(e.homeTeam, game.homeTeam) &&
+          teamsMatchForOdds(e.awayTeam, game.awayTeam),
+      ) ?? null;
+    if (predEntry) {
+      warnings.push("PREDICTION_SUPPLEMENTAL_ONLY");
+    }
+
+    const baselinePick = predEntry?.baselinePick ?? null;
     const referenceTeam = pickReferenceTeam(
-      target.baselinePick,
-      target.homeTeam,
-      target.awayTeam,
+      baselinePick,
+      game.homeTeam,
+      game.awayTeam,
     );
 
-    const scheduleGame: GameData = {
-      id: target.gameId,
-      sport: "baseball",
-      league: "MLB",
-      homeTeam: target.homeTeam,
-      awayTeam: target.awayTeam,
-      startTime: target.startTimeKst ?? "TBD",
-      date: input.dateKst,
-      aiAnalysisAvailable: false,
-    };
+    let collectionStatus: OddsCollectionStatus;
+    let reason: string;
+    let providerOdds: OddsData | null = null;
+    let matchMethod: string | null = null;
 
-    const providerMatch = matchOddsToGame(scheduleGame, oddsFetch.events);
-    let providerMarket: ProviderH2HMarket | null = null;
-    if (providerMatch) {
-      providerMarket = providerMarketFromOdds(
-        providerMatch.odds,
-        referenceTeam,
-        target.homeTeam,
-        target.awayTeam,
-        providerMatch.odds.lastUpdated,
+    if (oddsFetch.error && !oddsFetch.fetched) {
+      collectionStatus = "PROVIDER_ERROR";
+      reason = oddsFetch.error;
+      warnings.push(`PROVIDER_ERROR=${oddsFetch.error}`);
+    } else if (oddsFetch.events.length === 0) {
+      collectionStatus = "NOT_COLLECTED";
+      reason =
+        "No authorized odds provider response was available for this game.";
+      warnings.push("NOT_COLLECTED_REASON=PROVIDER_EVENT_MISSING");
+    } else {
+      const match = matchProviderEvent(
+        input.dateKst,
+        game,
+        oddsFetch.events,
       );
-      warnings.push(formatH2HWarning(providerMarket));
-      warnings.push(`COLLECTED_AT=${providerMarket.collectedAt}`);
-      warnings.push(`PROVIDER_MATCH=${providerMatch.method}`);
+      if (match.kind === "MATCH_NOT_FOUND") {
+        collectionStatus = "MATCH_NOT_FOUND";
+        reason = "PROVIDER_EVENT_MISSING: no schedule-matched provider event.";
+        warnings.push("MATCH_NOT_FOUND");
+        warnings.push("NOT_COLLECTED_REASON=NO_PROVIDER_MATCH");
+      } else if (match.kind === "AMBIGUOUS_MATCH") {
+        collectionStatus = "MATCH_NOT_FOUND";
+        reason = `AMBIGUOUS_MATCH: ${match.count} provider events matched.`;
+        warnings.push(`AMBIGUOUS_MATCH=${match.count}`);
+      } else {
+        providerOdds = match.odds;
+        matchMethod = match.method;
+        warnings.push(`PROVIDER_MATCH=${match.method}`);
+        const homeOk = providerOdds.bestHomeOdds != null;
+        const awayOk = providerOdds.bestAwayOdds != null;
+        if (!homeOk && !awayOk) {
+          collectionStatus = "INVALID_RESPONSE";
+          reason = "Provider event matched but h2h prices were invalid.";
+          warnings.push("INVALID_RESPONSE");
+        } else if (!homeOk || !awayOk) {
+          collectionStatus = "PARTIAL";
+          reason = "Provider matched but moneyline is incomplete.";
+        } else {
+          collectionStatus = "COLLECTED";
+          reason = "Moneyline collected from authorized Odds Provider.";
+        }
+      }
     }
 
+    const capturedAt = providerOdds?.lastUpdated ?? null;
+    const markets = buildNormalizedMarkets(
+      providerOdds,
+      game.homeTeam,
+      game.awayTeam,
+      capturedAt,
+      reason,
+    );
+    warnings.push(
+      `H2H_HOME=${providerOdds?.bestHomeOdds ?? "NOT_COLLECTED"}|AWAY=${providerOdds?.bestAwayOdds ?? "NOT_COLLECTED"}|DRAW=${providerOdds?.bestDrawOdds ?? "NOT_COLLECTED"}`,
+    );
+    if (capturedAt) warnings.push(`COLLECTED_AT=${capturedAt}`);
+
+    const currentPrice = providerOdds
+      ? sideOddsFromProvider(
+          providerOdds,
+          referenceTeam,
+          game.homeTeam,
+          game.awayTeam,
+        )
+      : null;
+
+    const prev = previousRows.get(game.internalGameId) ?? null;
     let openingOdds: number | null = null;
     let latestOdds: number | null = null;
-    let marketProbability: number | null = null;
 
-    if (providerMarket?.referenceOdds != null) {
-      openingOdds = providerMarket.referenceOdds;
-      latestOdds = providerMarket.referenceOdds;
-      marketProbability = providerMarket.marketProbabilityPct;
-    }
-
-    const firstSnap = timeline?.snapshots[0] ?? null;
-    const lastSnap =
-      timeline && timeline.snapshots.length > 0
-        ? timeline.snapshots[timeline.snapshots.length - 1]!
-        : null;
-
-    if (firstSnap?.pickOdds != null) {
-      openingOdds = firstSnap.pickOdds;
-    }
-    if (lastSnap?.pickOdds != null) {
-      latestOdds = lastSnap.pickOdds;
-    }
-    if (lastSnap?.marketProbability != null) {
-      marketProbability = Math.round(lastSnap.marketProbability * 1000) / 10;
+    if (currentPrice != null) {
+      // Freeze opening from prior odds-history snapshot when present; never invent.
+      openingOdds =
+        prev?.openingOdds != null ? prev.openingOdds : currentPrice;
+      latestOdds = currentPrice;
     }
 
-    if (
-      openingOdds == null &&
-      target.predictionOpeningOdds != null &&
-      !providerMatch
-    ) {
-      openingOdds = target.predictionOpeningOdds;
-      warnings.push("PREDICTION_FALLBACK_OPENING");
-    }
-    if (
-      latestOdds == null &&
-      target.predictionLatestOdds != null &&
-      !providerMatch
-    ) {
-      latestOdds = target.predictionLatestOdds;
-      warnings.push("PREDICTION_FALLBACK_LATEST");
-    }
-    if (
-      marketProbability == null &&
-      target.predictionMarketProbability != null &&
-      !providerMatch
-    ) {
-      marketProbability = target.predictionMarketProbability;
-      warnings.push("PREDICTION_FALLBACK_MARKET_PROB");
-    }
+    const marketProbability = providerOdds
+      ? marketProbabilityPctFromProvider(
+          providerOdds,
+          referenceTeam,
+          game.homeTeam,
+          game.awayTeam,
+        )
+      : null;
 
     if (openingOdds == null) missing.push("openingOdds");
     if (latestOdds == null) missing.push("latestOdds");
     if (marketProbability == null) missing.push("marketProbability");
 
-    let joinQuality: OddsHistoryJoinQuality = "MISSING_ODDS";
-    if (providerMatch && openingOdds != null && latestOdds != null) {
-      joinQuality = "MATCHED";
-    } else if (
-      (openingOdds != null || latestOdds != null) &&
-      (timeline?.snapshots.length ?? 0) > 0
-    ) {
-      joinQuality = "TIMELINE_ONLY";
-    } else if (openingOdds != null || latestOdds != null) {
-      joinQuality = "TIMELINE_ONLY";
-      if (!providerMatch) {
-        warnings.push("PREDICTION_ODDS_ONLY");
-      }
-    }
-
-    if (!providerMatch) {
-      warnings.push("NOT_COLLECTED_REASON=NO_PROVIDER_MATCH");
-    } else if (providerMarket?.referenceOdds == null) {
-      warnings.push("NOT_COLLECTED_REASON=PROVIDER_H2H_INCOMPLETE");
-    }
-
+    const moneylineCollected = markets
+      .filter((m) => m.marketType === "moneyline")
+      .every((m) => m.status === "COLLECTED");
+    const anyMarketCollected = markets.some((m) => m.status === "COLLECTED");
     if (
-      providerMatch &&
-      openingOdds != null &&
-      latestOdds != null &&
-      openingOdds === latestOdds &&
-      !firstSnap &&
-      !lastSnap
+      collectionStatus === "COLLECTED" &&
+      !moneylineCollected &&
+      anyMarketCollected
     ) {
-      warnings.push("OPENING_EQUALS_LATEST_SINGLE_SNAPSHOT");
+      collectionStatus = "PARTIAL";
+      reason = "Some markets collected; moneyline incomplete.";
+    }
+
+    let joinQuality: OddsHistoryJoinQuality = "MISSING_ODDS";
+    if (collectionStatus === "COLLECTED") joinQuality = "MATCHED";
+    else if (collectionStatus === "PARTIAL" && openingOdds != null) {
+      joinQuality = "MATCHED";
     }
 
     if (openingOdds != null) openingCollected += 1;
     if (latestOdds != null) latestCollected += 1;
     if (marketProbability != null) marketProbabilityCollected += 1;
 
-    const movement = computeMovement(openingOdds, latestOdds);
+    const movement = computeMovement(
+      openingOdds,
+      latestOdds,
+      hasPreviousSnapshot,
+    );
+    if (!hasPreviousSnapshot) {
+      warnings.push("MOVEMENT_NOT_COLLECTED_NO_PREVIOUS_ODDS_SNAPSHOT");
+    }
+
     movementCounts[movement] += 1;
     joinQualityCounts[joinQuality] += 1;
+    statusCounts[collectionStatus] += 1;
 
-    const capturedAt =
-      lastSnap?.capturedAt ??
-      providerMarket?.collectedAt ??
-      target.cutoffTime;
-    if (!capturedAt) missing.push("capturedAt");
-    if (!target.cutoffTime) missing.push("cutoffTime");
-
-    const resolvedSportKey = oddsFetch.sportKey ?? timelineSportKey;
-    const provider: OddsHistoryProviderSnapshot = resolvedSportKey
+    const provider: OddsHistoryProviderSnapshot = oddsFetch.sportKey
       ? {
           id: ODDS_HISTORY_PROVIDER_ID,
           displayName: "The Odds API",
-          sportKey: resolvedSportKey,
+          sportKey: oddsFetch.sportKey,
         }
       : {
           id: "NOT_COLLECTED",
@@ -744,7 +891,6 @@ export async function buildOddsHistoryDatasetV1(input: {
 
     if (provider.id === "NOT_COLLECTED") {
       missing.push("provider");
-      warnings.push("ODDS_API_UNAVAILABLE");
     }
 
     const bookmaker =
@@ -752,33 +898,19 @@ export async function buildOddsHistoryDatasetV1(input: {
         ? ("AGGREGATE_BEST" as const)
         : null;
 
-    if (
-      timeline &&
-      timeline.matchStatus === "ambiguous" &&
-      timeline.snapshots.length === 0
-    ) {
-      warnings.push("TIMELINE_MATCH_AMBIGUOUS");
-    }
-
-    if (
-      firstSnap &&
-      openingOdds != null &&
-      firstSnap.pickOdds != null &&
-      Math.abs(firstSnap.pickOdds - openingOdds) > 0.05
-    ) {
-      warnings.push("OPENING_ODDS_TIMELINE_DIVERGENCE");
-    }
+    if (!capturedAt) missing.push("capturedAt");
 
     const rowInputHash = sha256(
       stableStringify({
-        gameId: target.gameId,
+        gameId: game.internalGameId,
+        scheduleSource,
         predictionHash,
-        providerEventId: providerMarket?.oddsEventId ?? null,
+        providerEventId: providerOdds?.externalEventId ?? null,
+        matchMethod,
         openingOdds,
         latestOdds,
         marketProbability,
-        timelineFirstCapturedAt: firstSnap?.capturedAt ?? null,
-        timelineLastCapturedAt: lastSnap?.capturedAt ?? null,
+        collectionStatus,
         sportKey: provider.sportKey,
       }),
     );
@@ -788,16 +920,20 @@ export async function buildOddsHistoryDatasetV1(input: {
       builderVersion: ODDS_HISTORY_BUILDER_VERSION,
       generatedAt,
       gameDate: input.dateKst,
-      gameId: target.gameId,
-      homeTeam: target.homeTeam,
-      awayTeam: target.awayTeam,
-      baselinePick: target.baselinePick,
+      gameId: game.internalGameId,
+      internalGameId: game.internalGameId,
+      homeTeam: game.homeTeam,
+      awayTeam: game.awayTeam,
+      startTimeKst: game.startTimeKst,
+      baselinePick,
       collectionPhase: ODDS_HISTORY_COLLECTION_PHASE,
-      cutoffTime: target.cutoffTime,
+      cutoffTime: game.commenceTimeUtc,
       researchOnly: true,
       legalStatus: "REFERENCE_ODDS_RESEARCH_ONLY",
       engineUseAllowed: false,
       joinQuality,
+      collectionStatus,
+      reason,
       openingOdds,
       latestOdds,
       marketProbability,
@@ -806,16 +942,9 @@ export async function buildOddsHistoryDatasetV1(input: {
       marketType: "h2h",
       movement,
       capturedAt,
-      oddsEventId:
-        providerMarket?.oddsEventId ??
-        timeline?.oddsEventId ??
-        lastSnap?.oddsEventId ??
-        null,
-      bookmakerCount:
-        providerMarket?.bookmakerCount ??
-        lastSnap?.bookmakerCount ??
-        firstSnap?.bookmakerCount ??
-        null,
+      oddsEventId: providerOdds?.externalEventId ?? null,
+      bookmakerCount: providerOdds?.bookmakers.length ?? null,
+      markets,
       missing: [...new Set(missing)].sort(),
       warnings: [...new Set(warnings)].sort(),
     };
@@ -831,11 +960,15 @@ export async function buildOddsHistoryDatasetV1(input: {
     });
   }
 
+  rows.sort((a, b) => a.gameId.localeCompare(b.gameId));
+
   const inputHashSha256 = sha256(
     stableStringify({
       dateKst: input.dateKst,
+      scheduleSource,
       predictionHash,
-      sportKey: oddsFetch.sportKey ?? timelineSportKey,
+      sportKey: oddsFetch.sportKey,
+      hasPreviousSnapshot,
       rowInputs: rows.map((r) => r.inputHash).sort(),
     }),
   );
@@ -859,6 +992,10 @@ export async function buildOddsHistoryDatasetV1(input: {
       predictionUnchanged: true,
       inputHashSha256,
       resultHashSha256,
+      scheduleSource,
+      provider: oddsFetch.sportKey
+        ? "The Odds API"
+        : "NOT_COLLECTED",
       legal: {
         oddsSource: "REFERENCE_ODDS_PROVIDER",
         publicRuntimeUseAllowed: false,
@@ -869,10 +1006,10 @@ export async function buildOddsHistoryDatasetV1(input: {
       },
       notes: [
         "PRE_GAME_MARKET only — no closing or post-game odds.",
-        "Schedule-first independent intake; primary odds from The Odds API h2h.",
-        "Optional prediction snapshot enriches baselinePick / gap-fill only.",
-        "movement is numeric decimal-odds delta only (UP/DOWN/UNCHANGED).",
-        "Provider schema is swappable (future proto/other lawful sources).",
+        "Schedule-artifact-first independent intake.",
+        "Primary odds from authorized The Odds API (h2h/spreads/totals).",
+        "Prediction Snapshot is optional supplemental metadata only.",
+        "Movement compares only previous odds-history artifact (same date).",
         "Engine admission PROHIBITED.",
       ],
     },
@@ -888,8 +1025,16 @@ export async function buildOddsHistoryDatasetV1(input: {
       openingCollected,
       latestCollected,
       marketProbabilityCollected,
+      collectedGames: statusCounts.COLLECTED,
+      partialGames: statusCounts.PARTIAL,
+      notCollectedGames:
+        statusCounts.NOT_COLLECTED +
+        statusCounts.MATCH_NOT_FOUND +
+        statusCounts.PROVIDER_ERROR +
+        statusCounts.INVALID_RESPONSE,
       movement: movementCounts,
       joinQuality: joinQualityCounts,
+      collectionStatus: statusCounts,
     },
     rows,
   };
