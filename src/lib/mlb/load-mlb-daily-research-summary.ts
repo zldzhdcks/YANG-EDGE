@@ -10,6 +10,8 @@ import {
   type MlbDailyStepRun,
 } from "./mlb-daily-research-summary-types";
 
+type BreakdownRule = "FULL" | "HALF_FLOOR" | "ZERO";
+
 export function mlbDailyResearchSummaryRel(dateKst: string): string {
   return `data/research/mlb/${dateKst}-daily-research-summary-v1.json`;
 }
@@ -127,8 +129,43 @@ function parseDocument(
       artifact: asString(r.artifact),
     };
   });
+  const breakdownRaw = Array.isArray(readyRoot.breakdown)
+    ? readyRoot.breakdown
+    : [];
+  const breakdown = breakdownRaw.map((item) => {
+    const r = asRecord(item) ?? {};
+    const rawRuleApplied = asString(r.ruleApplied);
+    const ruleApplied: BreakdownRule =
+      rawRuleApplied === "FULL" ||
+      rawRuleApplied === "HALF_FLOOR" ||
+      rawRuleApplied === "ZERO"
+        ? rawRuleApplied
+        : "ZERO";
+    return {
+      dataset: asString(r.dataset) ?? "Unknown",
+      status: parseStatus(r.status),
+      weight: asNumber(r.weight) ?? 0,
+      awardedPoints: asNumber(r.awardedPoints) ?? 0,
+      maxPoints: asNumber(r.maxPoints) ?? 0,
+      ruleApplied,
+      detail: asString(r.detail) ?? "",
+      artifact: asString(r.artifact),
+    };
+  });
 
   const countsRoot = asRecord(root.counts) ?? {};
+  const sourceArtifactsRaw = Array.isArray(root.sourceArtifacts)
+    ? root.sourceArtifacts
+    : [];
+  const sourceArtifacts = sourceArtifactsRaw.map((item) => {
+    const r = asRecord(item) ?? {};
+    return {
+      dataset: asString(r.dataset) ?? "Unknown",
+      status: parseStatus(r.status),
+      produced: r.produced === true,
+      artifact: asString(r.artifact),
+    };
+  });
 
   const document: MlbDailyResearchSummaryDocument = {
     schemaVersion,
@@ -142,6 +179,7 @@ function parseDocument(
       percent,
       missing: asStringArray(readyRoot.missing),
       datasets,
+      breakdown,
     },
     counts: {
       scheduleGames: asNumber(countsRoot.scheduleGames),
@@ -149,6 +187,7 @@ function parseDocument(
       oddsCollected: asString(countsRoot.oddsCollected),
       lineupConfirmed: asString(countsRoot.lineupConfirmed),
     },
+    sourceArtifacts,
     assistantSummary,
     notes: asStringArray(root.notes),
     pipelineVersion: asString(root.pipelineVersion),

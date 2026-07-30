@@ -16,6 +16,10 @@ import { getKstToday } from "../src/lib/datetime/kst";
 import { spawnLocalTsxScript } from "./lib/spawn-local-tsx";
 
 const DATE = process.argv[2]?.trim() || getKstToday();
+const SUMMARY_SCHEMA_VERSION = "mlb-daily-research-summary-v1";
+const PIPELINE_VERSION = "mlb-daily-research-v1.1";
+const ROUNDING_POLICY =
+  "Per dataset: READY=weight, PARTIAL=floor(weight/2), FAILED/SKIP=0; percent=score because max=100.";
 
 type StepStatus = "READY" | "PARTIAL" | "FAILED" | "SKIP";
 type RunOutcome = "SUCCESS" | "FAIL";
@@ -279,9 +283,20 @@ function computeResearchReady(): {
   max: number;
   percent: number;
   missing: string[];
+  roundingPolicy: string;
   datasets: Array<{
     dataset: string;
     status: StepStatus;
+    detail: string;
+    artifact: string | null;
+  }>;
+  breakdown: Array<{
+    dataset: string;
+    status: StepStatus;
+    weight: number;
+    awardedPoints: number;
+    maxPoints: number;
+    ruleApplied: "FULL" | "HALF_FLOOR" | "ZERO";
     detail: string;
     artifact: string | null;
   }>;
@@ -300,6 +315,16 @@ function computeResearchReady(): {
     detail: string;
     artifact: string | null;
   }> = [];
+  const breakdown: Array<{
+    dataset: string;
+    status: StepStatus;
+    weight: number;
+    awardedPoints: number;
+    maxPoints: number;
+    ruleApplied: "FULL" | "HALF_FLOOR" | "ZERO";
+    detail: string;
+    artifact: string | null;
+  }> = [];
 
   for (const step of ["Schedule", "Starter", "Odds", "Lineup"]) {
     const r = results.find((x) => x.step === step);
@@ -311,14 +336,29 @@ function computeResearchReady(): {
       detail: r?.detail ?? "not run",
       artifact: r?.artifact ?? null,
     });
+    let awardedPoints = 0;
+    let ruleApplied: "FULL" | "HALF_FLOOR" | "ZERO" = "ZERO";
     if (status === "READY") {
-      score += weight;
+      awardedPoints = weight;
+      ruleApplied = "FULL";
     } else if (status === "PARTIAL") {
-      score += Math.floor(weight / 2);
+      awardedPoints = Math.floor(weight / 2);
+      ruleApplied = "HALF_FLOOR";
       missing.push(step);
     } else {
       missing.push(step);
     }
+    score += awardedPoints;
+    breakdown.push({
+      dataset: step,
+      status,
+      weight,
+      awardedPoints,
+      maxPoints: weight,
+      ruleApplied,
+      detail: r?.detail ?? "not run",
+      artifact: r?.artifact ?? null,
+    });
   }
 
   return {
@@ -327,6 +367,8 @@ function computeResearchReady(): {
     percent: score,
     missing,
     datasets,
+    roundingPolicy: ROUNDING_POLICY,
+    breakdown,
   };
 }
 
@@ -449,9 +491,11 @@ async function main() {
     artifactPaths(DATE).summary,
   );
   const summary = {
-    schemaVersion: "mlb-daily-research-summary-v1",
+    schemaVersion: SUMMARY_SCHEMA_VERSION,
     dateKst: DATE,
     generatedAt: new Date().toISOString(),
+    pipelineVersion: PIPELINE_VERSION,
+    roundingPolicy: ready.roundingPolicy,
     pipeline: ["Schedule", "Starter", "Odds", "Lineup"],
     steps: results.map((r) => ({
       step: r.step,
@@ -467,7 +511,14 @@ async function main() {
       percent: ready.percent,
       missing: ready.missing,
       datasets: ready.datasets,
+      breakdown: ready.breakdown,
     },
+    sourceArtifacts: results.map((r) => ({
+      dataset: r.step,
+      status: r.status,
+      produced: r.artifact != null,
+      artifact: r.artifact,
+    })),
     counts,
     assistantSummary: assistantLines.join("\n"),
     notes: [

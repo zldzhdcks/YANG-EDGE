@@ -42,6 +42,16 @@ export type MlbDailyResearchSummaryDocument = {
     percent: number;
     missing: string[];
     datasets: MlbDailyResearchSummaryDataset[];
+    breakdown?: Array<{
+      dataset: string;
+      status: MlbDailyDatasetStatus;
+      weight: number;
+      awardedPoints: number;
+      maxPoints: number;
+      ruleApplied: "FULL" | "HALF_FLOOR" | "ZERO";
+      detail: string;
+      artifact: string | null;
+    }>;
   };
   counts: {
     scheduleGames: number | null;
@@ -49,9 +59,15 @@ export type MlbDailyResearchSummaryDocument = {
     oddsCollected: string | null;
     lineupConfirmed: string | null;
   };
+  sourceArtifacts?: Array<{
+    dataset: string;
+    status: MlbDailyDatasetStatus;
+    produced: boolean;
+    artifact: string | null;
+  }>;
   assistantSummary: string;
   notes: string[];
-  /** Optional fields — displayed when present; never invented. */
+  /** Optional for backward compatibility with older artifacts. */
   pipelineVersion?: string | null;
   roundingPolicy?: string | null;
 };

@@ -109,9 +109,12 @@ function SummaryBody({
           artifact: s.artifact,
         }));
 
-  const sourceNames = datasets
-    .filter((d) => d.artifact != null)
-    .map((d) => d.dataset);
+  const sourceNames =
+    doc.sourceArtifacts && doc.sourceArtifacts.length > 0
+      ? doc.sourceArtifacts
+          .filter((item) => item.produced)
+          .map((item) => item.dataset)
+      : datasets.filter((d) => d.artifact != null).map((d) => d.dataset);
 
   return (
     <section className="space-y-4">
@@ -142,6 +145,19 @@ function SummaryBody({
             ? ` · gaps: ${doc.researchReady.missing.join(", ")}`
             : ""}
         </div>
+        {doc.researchReady.breakdown && doc.researchReady.breakdown.length > 0 && (
+          <div className="mt-3 space-y-1 text-xs text-zinc-400">
+            {doc.researchReady.breakdown.map((item) => (
+              <div key={item.dataset} className="flex flex-wrap gap-x-2 gap-y-1">
+                <span className="font-medium text-zinc-300">{item.dataset}</span>
+                <span>
+                  {item.awardedPoints}/{item.maxPoints}
+                </span>
+                <span className="text-zinc-500">{item.ruleApplied}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Pipeline Status */}
