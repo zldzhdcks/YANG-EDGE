@@ -2,6 +2,8 @@ import "server-only";
 import { readFile } from "node:fs/promises";
 import { stat } from "node:fs/promises";
 import path from "node:path";
+import { loadMlbDailyResearchSummary } from "@/lib/mlb/load-mlb-daily-research-summary";
+import type { MlbDailyResearchSummaryLoad } from "@/lib/mlb/mlb-daily-research-summary-types";
 
 // ---------------------------------------------------------------------------
 // Safe JSON reader
@@ -164,6 +166,8 @@ export type ResearchLabData = {
     bettingLinePipeline: KboPipelineStageStatus[];
     bugBoardItems: KboBugBoardItem[];
   };
+  /** MLB Daily Builder summary — source of truth for Lab Ready UI. */
+  mlbDailyResearchSummary: MlbDailyResearchSummaryLoad;
   commands: { label: string; command: string | null }[];
   sourceArtifacts: { name: string; path: string; status: string }[];
   errors: string[];
@@ -664,8 +668,12 @@ export async function loadResearchLabData(
     { name: "KBO Lineup Confirmation", result: kboLineup },
   ];
 
+  // ---- MLB Daily Research Summary (Lab SoT — no dataset recalculation) ----
+  const mlbDailyResearchSummary = await loadMlbDailyResearchSummary(dateKst);
+
   // ---- Commands ----
   const commands: { label: string; command: string | null }[] = [
+    { label: "MLB Daily Research Builder", command: `npm run research:mlb-daily -- ${dateKst}` },
     { label: "Postgame Pipeline (결과+채점+리뷰)", command: `npm run research:postgame -- ${dateKst}` },
     { label: "Starter Dataset 수집", command: `npm run research:starter -- ${dateKst}` },
     { label: "Bullpen Dataset 수집", command: `npm run research:bullpen -- ${dateKst}` },
@@ -694,6 +702,19 @@ export async function loadResearchLabData(
     path: path.relative(cwd, a.result.path),
     status: a.result.ok ? "OK" : a.result.error,
   }));
+  sourceArtifacts.unshift({
+    name: "MLB Daily Research Summary",
+    path: `data/research/mlb/${dateKst}-daily-research-summary-v1.json`,
+    status:
+      mlbDailyResearchSummary.kind === "ok" ||
+      mlbDailyResearchSummary.kind === "pipeline_failed"
+        ? "OK"
+        : mlbDailyResearchSummary.kind === "missing"
+          ? "FILE_NOT_FOUND"
+          : mlbDailyResearchSummary.kind === "unsupported"
+            ? "UNSUPPORTED_VERSION"
+            : "INVALID",
+  });
 
   return {
     dateKst,
@@ -736,6 +757,7 @@ export async function loadResearchLabData(
       warningCodes: starterWarnings,
     },
     kboReadiness,
+    mlbDailyResearchSummary,
     tasks,
     missedItems,
     reviewQueue: {

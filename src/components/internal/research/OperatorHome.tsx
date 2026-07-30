@@ -2,6 +2,7 @@ import type { ResearchLabData } from "@/lib/internal/research-lab-reader";
 import type { OperatorPresentation } from "@/lib/internal/research-lab-presenter";
 import OperatorTaskList from "./OperatorTaskList";
 import EdgeAssistantCard from "./EdgeAssistantCard";
+import MlbDailyResearchSummaryPanel from "./MlbDailyResearchSummaryPanel";
 
 type Props = {
   data: ResearchLabData;
@@ -62,6 +63,12 @@ export default function OperatorHome({ data, op, dateKst }: Props) {
           <p className="text-sm text-zinc-500">요약을 생성할 수 있는 데이터가 없습니다.</p>
         )}
       </section>
+
+      {/* MLB Daily Research Summary (Builder artifact SoT) */}
+      <MlbDailyResearchSummaryPanel
+        load={data.mlbDailyResearchSummary}
+        dateKst={dateKst}
+      />
 
       {/* EDGE Assistant */}
       <EdgeAssistantCard data={data} op={op} dateKst={dateKst} />
