@@ -1,0 +1,1461 @@
+{
+  "schemaVersion": "npb-prediction-snapshot-v1",
+  "sport": "baseball",
+  "league": "NPB",
+  "date": "2026-07-31",
+  "runId": "2026-07-31T08-52-19-032Z",
+  "predictedAt": "2026-07-31T08:52:21.172Z",
+  "enginePolicy": "NO_OFFICIAL_ENGINE_PICKS_IN_THIS_MISSION",
+  "summary": {
+    "total": 12,
+    "ELIGIBLE": 0,
+    "PASS": 12,
+    "BLOCKED": 0,
+    "alreadyStarted": 0,
+    "postponedOrCancelled": 0
+  },
+  "games": [
+    {
+      "sport": "baseball",
+      "league": "NPB",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-19-032Z",
+      "gameId": "npb-hiroshima-toyo-carp-chunichi-dragons",
+      "matchup": "Chunichi Dragons @ Hiroshima Toyo Carp",
+      "home": "Hiroshima Toyo Carp",
+      "away": "Chunichi Dragons",
+      "scheduledStartTime": "2026-07-31T09:00:00.000Z",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": 0.484536,
+      "valueEdge": null,
+      "passReasons": [
+        "STARTER_MISSING",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:21.172Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "npb-hiroshima-toyo-carp-chunichi-dragons",
+        "status": "COLLECTED",
+        "reasons": [],
+        "providerEventId": "898e6fe516ec1e0e7d17101bf23e11d4",
+        "sportKey": "baseball_npb",
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": "decimal",
+        "formatValidationStatus": "FORMAT_CONFIRMED_DECIMAL",
+        "homeOdds": 2,
+        "awayOdds": 1.88,
+        "bookmaker": "William Hill",
+        "marketTimestamp": "2026-07-31T08:52:21.170Z",
+        "fetchedAt": "2026-07-31T08:52:21.170Z",
+        "commenceTime": "2026-07-31T09:00:00Z",
+        "homeTeam": "Hiroshima Toyo Carp",
+        "awayTeam": "Chunichi Dragons"
+      },
+      "lineup": {
+        "home": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "away": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": true,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    },
+    {
+      "sport": "baseball",
+      "league": "NPB",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-19-032Z",
+      "gameId": "npb-hokkaido-nippon-ham-fighters-chiba-lotte-marines",
+      "matchup": "Chiba Lotte Marines @ Hokkaido Nippon-Ham Fighters",
+      "home": "Hokkaido Nippon-Ham Fighters",
+      "away": "Chiba Lotte Marines",
+      "scheduledStartTime": "2026-07-31T09:00:00.000Z",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": 0.658199,
+      "valueEdge": null,
+      "passReasons": [
+        "STARTER_MISSING",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:21.172Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "npb-hokkaido-nippon-ham-fighters-chiba-lotte-marines",
+        "status": "COLLECTED",
+        "reasons": [],
+        "providerEventId": "2a9b4dc9c9db11fe8681355234bde3b4",
+        "sportKey": "baseball_npb",
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": "decimal",
+        "formatValidationStatus": "FORMAT_CONFIRMED_DECIMAL",
+        "homeOdds": 1.48,
+        "awayOdds": 2.85,
+        "bookmaker": "William Hill",
+        "marketTimestamp": "2026-07-31T08:52:21.170Z",
+        "fetchedAt": "2026-07-31T08:52:21.170Z",
+        "commenceTime": "2026-07-31T09:00:00Z",
+        "homeTeam": "Hokkaido Nippon-Ham Fighters",
+        "awayTeam": "Chiba Lotte Marines"
+      },
+      "lineup": {
+        "home": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "away": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": true,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    },
+    {
+      "sport": "baseball",
+      "league": "NPB",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-19-032Z",
+      "gameId": "npb-tohoku-rakuten-golden-eagles-fukuoka-softbank-hawks",
+      "matchup": "Fukuoka SoftBank Hawks @ Tohoku Rakuten Golden Eagles",
+      "home": "Tohoku Rakuten Golden Eagles",
+      "away": "Fukuoka SoftBank Hawks",
+      "scheduledStartTime": "2026-07-31T09:00:00.000Z",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": 0.455013,
+      "valueEdge": null,
+      "passReasons": [
+        "STARTER_MISSING",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:21.172Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "npb-tohoku-rakuten-golden-eagles-fukuoka-softbank-hawks",
+        "status": "COLLECTED",
+        "reasons": [],
+        "providerEventId": "c7bd68e337a03e4c8d3e16905b5f2110",
+        "sportKey": "baseball_npb",
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": "decimal",
+        "formatValidationStatus": "FORMAT_CONFIRMED_DECIMAL",
+        "homeOdds": 2.12,
+        "awayOdds": 1.77,
+        "bookmaker": "William Hill",
+        "marketTimestamp": "2026-07-31T08:52:21.170Z",
+        "fetchedAt": "2026-07-31T08:52:21.170Z",
+        "commenceTime": "2026-07-31T09:00:00Z",
+        "homeTeam": "Tohoku Rakuten Golden Eagles",
+        "awayTeam": "Fukuoka SoftBank Hawks"
+      },
+      "lineup": {
+        "home": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "away": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": true,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    },
+    {
+      "sport": "baseball",
+      "league": "NPB",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-19-032Z",
+      "gameId": "npb-hiroshima-carp-chunichi-dragons",
+      "matchup": "Chunichi Dragons @ Hiroshima Carp",
+      "home": "Hiroshima Carp",
+      "away": "Chunichi Dragons",
+      "scheduledStartTime": "2026-07-31T09:00:00+00:00",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": 0.484536,
+      "valueEdge": null,
+      "passReasons": [
+        "STARTER_MISSING",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:21.172Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "npb-hiroshima-carp-chunichi-dragons",
+        "status": "COLLECTED",
+        "reasons": [],
+        "providerEventId": "898e6fe516ec1e0e7d17101bf23e11d4",
+        "sportKey": "baseball_npb",
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": "decimal",
+        "formatValidationStatus": "FORMAT_CONFIRMED_DECIMAL",
+        "homeOdds": 2,
+        "awayOdds": 1.88,
+        "bookmaker": "William Hill",
+        "marketTimestamp": "2026-07-31T08:52:21.170Z",
+        "fetchedAt": "2026-07-31T08:52:21.170Z",
+        "commenceTime": "2026-07-31T09:00:00Z",
+        "homeTeam": "Hiroshima Toyo Carp",
+        "awayTeam": "Chunichi Dragons"
+      },
+      "lineup": {
+        "home": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "away": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": true,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    },
+    {
+      "sport": "baseball",
+      "league": "NPB",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-19-032Z",
+      "gameId": "npb-nippon-ham-fighters-chiba-lotte-marines",
+      "matchup": "Chiba Lotte Marines @ Nippon Ham Fighters",
+      "home": "Nippon Ham Fighters",
+      "away": "Chiba Lotte Marines",
+      "scheduledStartTime": "2026-07-31T09:00:00+00:00",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": 0.658199,
+      "valueEdge": null,
+      "passReasons": [
+        "STARTER_MISSING",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:21.172Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "npb-nippon-ham-fighters-chiba-lotte-marines",
+        "status": "COLLECTED",
+        "reasons": [],
+        "providerEventId": "2a9b4dc9c9db11fe8681355234bde3b4",
+        "sportKey": "baseball_npb",
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": "decimal",
+        "formatValidationStatus": "FORMAT_CONFIRMED_DECIMAL",
+        "homeOdds": 1.48,
+        "awayOdds": 2.85,
+        "bookmaker": "William Hill",
+        "marketTimestamp": "2026-07-31T08:52:21.170Z",
+        "fetchedAt": "2026-07-31T08:52:21.170Z",
+        "commenceTime": "2026-07-31T09:00:00Z",
+        "homeTeam": "Hokkaido Nippon-Ham Fighters",
+        "awayTeam": "Chiba Lotte Marines"
+      },
+      "lineup": {
+        "home": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "away": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": true,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    },
+    {
+      "sport": "baseball",
+      "league": "NPB",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-19-032Z",
+      "gameId": "npb-rakuten-gold-eagles-fukuoka-s-hawks",
+      "matchup": "Fukuoka S. Hawks @ Rakuten Gold. Eagles",
+      "home": "Rakuten Gold. Eagles",
+      "away": "Fukuoka S. Hawks",
+      "scheduledStartTime": "2026-07-31T09:00:00+00:00",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": 0.455013,
+      "valueEdge": null,
+      "passReasons": [
+        "STARTER_MISSING",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:21.172Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "npb-rakuten-gold-eagles-fukuoka-s-hawks",
+        "status": "COLLECTED",
+        "reasons": [],
+        "providerEventId": "c7bd68e337a03e4c8d3e16905b5f2110",
+        "sportKey": "baseball_npb",
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": "decimal",
+        "formatValidationStatus": "FORMAT_CONFIRMED_DECIMAL",
+        "homeOdds": 2.12,
+        "awayOdds": 1.77,
+        "bookmaker": "William Hill",
+        "marketTimestamp": "2026-07-31T08:52:21.170Z",
+        "fetchedAt": "2026-07-31T08:52:21.170Z",
+        "commenceTime": "2026-07-31T09:00:00Z",
+        "homeTeam": "Tohoku Rakuten Golden Eagles",
+        "awayTeam": "Fukuoka SoftBank Hawks"
+      },
+      "lineup": {
+        "home": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "away": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": true,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    },
+    {
+      "sport": "baseball",
+      "league": "NPB",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-19-032Z",
+      "gameId": "npb-seibu-lions-orix-buffaloes",
+      "matchup": "Orix Buffaloes @ Seibu Lions",
+      "home": "Seibu Lions",
+      "away": "Orix Buffaloes",
+      "scheduledStartTime": "2026-07-31T09:00:00+00:00",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": 0.606796,
+      "valueEdge": null,
+      "passReasons": [
+        "STARTER_MISSING",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:21.172Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "npb-seibu-lions-orix-buffaloes",
+        "status": "COLLECTED",
+        "reasons": [],
+        "providerEventId": "c873de2bc8557418ad57c775ac430b30",
+        "sportKey": "baseball_npb",
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": "decimal",
+        "formatValidationStatus": "FORMAT_CONFIRMED_DECIMAL",
+        "homeOdds": 1.62,
+        "awayOdds": 2.5,
+        "bookmaker": "William Hill",
+        "marketTimestamp": "2026-07-31T08:52:21.170Z",
+        "fetchedAt": "2026-07-31T08:52:21.170Z",
+        "commenceTime": "2026-07-31T09:00:00Z",
+        "homeTeam": "Saitama Seibu Lions",
+        "awayTeam": "Orix Buffaloes"
+      },
+      "lineup": {
+        "home": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "away": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": true,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    },
+    {
+      "sport": "baseball",
+      "league": "NPB",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-19-032Z",
+      "gameId": "npb-yakult-swallows-hanshin-tigers",
+      "matchup": "Hanshin Tigers @ Yakult Swallows",
+      "home": "Yakult Swallows",
+      "away": "Hanshin Tigers",
+      "scheduledStartTime": "2026-07-31T09:00:00+00:00",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": 0.342529,
+      "valueEdge": null,
+      "passReasons": [
+        "STARTER_MISSING",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:21.172Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "npb-yakult-swallows-hanshin-tigers",
+        "status": "COLLECTED",
+        "reasons": [],
+        "providerEventId": "c32f059540a262b371201ba46be9a63d",
+        "sportKey": "baseball_npb",
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": "decimal",
+        "formatValidationStatus": "FORMAT_CONFIRMED_DECIMAL",
+        "homeOdds": 2.86,
+        "awayOdds": 1.49,
+        "bookmaker": "William Hill",
+        "marketTimestamp": "2026-07-31T08:52:21.170Z",
+        "fetchedAt": "2026-07-31T08:52:21.170Z",
+        "commenceTime": "2026-07-31T09:00:00Z",
+        "homeTeam": "Tokyo Yakult Swallows",
+        "awayTeam": "Hanshin Tigers"
+      },
+      "lineup": {
+        "home": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "away": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": true,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    },
+    {
+      "sport": "baseball",
+      "league": "NPB",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-19-032Z",
+      "gameId": "npb-yomiuri-giants-yokohama-baystars",
+      "matchup": "Yokohama BayStars @ Yomiuri Giants",
+      "home": "Yomiuri Giants",
+      "away": "Yokohama BayStars",
+      "scheduledStartTime": "2026-07-31T09:00:00+00:00",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": 0.49354,
+      "valueEdge": null,
+      "passReasons": [
+        "STARTER_MISSING",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:21.172Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "npb-yomiuri-giants-yokohama-baystars",
+        "status": "COLLECTED",
+        "reasons": [],
+        "providerEventId": "0b19fdde172d48c474650c0433ae5f4d",
+        "sportKey": "baseball_npb",
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": "decimal",
+        "formatValidationStatus": "FORMAT_CONFIRMED_DECIMAL",
+        "homeOdds": 1.96,
+        "awayOdds": 1.91,
+        "bookmaker": "William Hill",
+        "marketTimestamp": "2026-07-31T08:52:21.170Z",
+        "fetchedAt": "2026-07-31T08:52:21.170Z",
+        "commenceTime": "2026-07-31T09:00:00Z",
+        "homeTeam": "Yomiuri Giants",
+        "awayTeam": "Yokohama DeNA BayStars"
+      },
+      "lineup": {
+        "home": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "away": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": true,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    },
+    {
+      "sport": "baseball",
+      "league": "NPB",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-19-032Z",
+      "gameId": "npb-tokyo-yakult-swallows-hanshin-tigers",
+      "matchup": "Hanshin Tigers @ Tokyo Yakult Swallows",
+      "home": "Tokyo Yakult Swallows",
+      "away": "Hanshin Tigers",
+      "scheduledStartTime": "2026-07-31T09:00:00Z",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": 0.342529,
+      "valueEdge": null,
+      "passReasons": [
+        "STARTER_MISSING",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:21.172Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "npb-tokyo-yakult-swallows-hanshin-tigers",
+        "status": "COLLECTED",
+        "reasons": [],
+        "providerEventId": "c32f059540a262b371201ba46be9a63d",
+        "sportKey": "baseball_npb",
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": "decimal",
+        "formatValidationStatus": "FORMAT_CONFIRMED_DECIMAL",
+        "homeOdds": 2.86,
+        "awayOdds": 1.49,
+        "bookmaker": "William Hill",
+        "marketTimestamp": "2026-07-31T08:52:21.170Z",
+        "fetchedAt": "2026-07-31T08:52:21.170Z",
+        "commenceTime": "2026-07-31T09:00:00Z",
+        "homeTeam": "Tokyo Yakult Swallows",
+        "awayTeam": "Hanshin Tigers"
+      },
+      "lineup": {
+        "home": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "away": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": true,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    },
+    {
+      "sport": "baseball",
+      "league": "NPB",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-19-032Z",
+      "gameId": "npb-saitama-seibu-lions-orix-buffaloes",
+      "matchup": "Orix Buffaloes @ Saitama Seibu Lions",
+      "home": "Saitama Seibu Lions",
+      "away": "Orix Buffaloes",
+      "scheduledStartTime": "2026-07-31T09:00:00Z",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": 0.606796,
+      "valueEdge": null,
+      "passReasons": [
+        "STARTER_MISSING",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:21.172Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "npb-saitama-seibu-lions-orix-buffaloes",
+        "status": "COLLECTED",
+        "reasons": [],
+        "providerEventId": "c873de2bc8557418ad57c775ac430b30",
+        "sportKey": "baseball_npb",
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": "decimal",
+        "formatValidationStatus": "FORMAT_CONFIRMED_DECIMAL",
+        "homeOdds": 1.62,
+        "awayOdds": 2.5,
+        "bookmaker": "William Hill",
+        "marketTimestamp": "2026-07-31T08:52:21.170Z",
+        "fetchedAt": "2026-07-31T08:52:21.170Z",
+        "commenceTime": "2026-07-31T09:00:00Z",
+        "homeTeam": "Saitama Seibu Lions",
+        "awayTeam": "Orix Buffaloes"
+      },
+      "lineup": {
+        "home": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "away": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": true,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    },
+    {
+      "sport": "baseball",
+      "league": "NPB",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-19-032Z",
+      "gameId": "npb-yomiuri-giants-yokohama-dena-baystars",
+      "matchup": "Yokohama DeNA BayStars @ Yomiuri Giants",
+      "home": "Yomiuri Giants",
+      "away": "Yokohama DeNA BayStars",
+      "scheduledStartTime": "2026-07-31T09:00:00Z",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": 0.49354,
+      "valueEdge": null,
+      "passReasons": [
+        "STARTER_MISSING",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:21.172Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:21.172Z",
+          "missingFeatures": [
+            "API_BASEBALL_STARTER_NOT_IN_PAYLOAD"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "npb-yomiuri-giants-yokohama-dena-baystars",
+        "status": "COLLECTED",
+        "reasons": [],
+        "providerEventId": "0b19fdde172d48c474650c0433ae5f4d",
+        "sportKey": "baseball_npb",
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": "decimal",
+        "formatValidationStatus": "FORMAT_CONFIRMED_DECIMAL",
+        "homeOdds": 1.96,
+        "awayOdds": 1.91,
+        "bookmaker": "William Hill",
+        "marketTimestamp": "2026-07-31T08:52:21.170Z",
+        "fetchedAt": "2026-07-31T08:52:21.170Z",
+        "commenceTime": "2026-07-31T09:00:00Z",
+        "homeTeam": "Yomiuri Giants",
+        "awayTeam": "Yokohama DeNA BayStars"
+      },
+      "lineup": {
+        "home": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "away": {
+          "status": "SOURCE_NOT_SUPPORTED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:21.172Z",
+          "confirmedAt": null,
+          "reasons": [
+            "NPB_CONFIRMED_LINEUP_PROVIDER_NOT_WIRED"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": true,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    }
+  ],
+  "predictionHashSha256": "8f57317926f4f137c9bde1971806338e504b444936c1ee54f9ff5aa99c72b443",
+  "correctionNote": "Fixed false ALREADY_STARTED from statusDetailed Not Started matching /STARTED/; no new provider fetch; timestamps preserved."
+}

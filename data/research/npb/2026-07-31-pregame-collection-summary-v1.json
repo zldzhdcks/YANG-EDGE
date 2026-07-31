@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "npb-pregame-collection-summary-v1",
+  "sport": "baseball",
+  "league": "NPB",
+  "date": "2026-07-31",
+  "runId": "2026-07-31T08-52-19-032Z",
+  "generatedAt": "2026-07-31T08:52:21.173Z",
+  "summary": {
+    "total": 12,
+    "ELIGIBLE": 0,
+    "PASS": 12,
+    "BLOCKED": 0,
+    "alreadyStarted": 0,
+    "postponedOrCancelled": 0
+  },
+  "timing": {
+    "scheduleTheSportsDbMs": 163,
+    "scheduleApiBaseballMs": 305,
+    "scheduleMs": 1325,
+    "oddsMs": 814,
+    "starterMs": 0,
+    "lineupMs": 0,
+    "predictionMs": 1,
+    "totalMs": 2608
+  },
+  "providerProblems": [
+    "NPB API-BASEBALL quota remaining=7494/7500"
+  ],
+  "conclusion": "NPB_PASS_RECORDED",
+  "correctionNote": "Fixed false ALREADY_STARTED from statusDetailed Not Started matching /STARTED/; no new provider fetch; timestamps preserved."
+}

@@ -1,0 +1,659 @@
+{
+  "schemaVersion": "kbo-prediction-snapshot-v1",
+  "sport": "baseball",
+  "league": "KBO",
+  "date": "2026-07-31",
+  "runId": "2026-07-31T08-52-40-877Z",
+  "predictedAt": "2026-07-31T08:52:42.165Z",
+  "enginePolicy": "NO_OFFICIAL_ENGINE_PICKS_IN_THIS_MISSION",
+  "summary": {
+    "total": 5,
+    "ELIGIBLE": 0,
+    "PASS": 5,
+    "BLOCKED": 0,
+    "alreadyStarted": 0,
+    "postponedOrCancelled": 0
+  },
+  "games": [
+    {
+      "sport": "baseball",
+      "league": "KBO",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-40-877Z",
+      "gameId": "kbo-181917",
+      "matchup": "LG @ 두산",
+      "home": "두산",
+      "away": "LG",
+      "scheduledStartTime": "2026-07-31T18:30:00+09:00",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": null,
+      "valueEdge": null,
+      "passReasons": [
+        "KBO_PREDICTION_PIPELINE_NOT_IMPLEMENTED",
+        "STARTER_MISSING",
+        "ODDS_NOT_COLLECTED",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "ODDS_H2H",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:42.165Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:40.903Z",
+          "missingFeatures": [
+            "OPERATOR_STARTER_NOT_ENTERED"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:40.903Z",
+          "missingFeatures": [
+            "OPERATOR_STARTER_NOT_ENTERED"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "kbo-181917",
+        "status": "NOT_COLLECTED",
+        "reasons": [
+          "NO_MATCHING_ODDS_EVENT",
+          "DOMESTIC_PROTO_NOT_COLLECTED",
+          "OVERSEAS_UNMATCHED_OR_EMPTY"
+        ],
+        "providerEventId": null,
+        "sportKey": null,
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": null,
+        "formatValidationStatus": null,
+        "homeOdds": null,
+        "awayOdds": null,
+        "bookmaker": null,
+        "marketTimestamp": null,
+        "fetchedAt": null,
+        "commenceTime": null,
+        "homeTeam": null,
+        "awayTeam": null
+      },
+      "lineup": {
+        "home": {
+          "status": "NOT_RELEASED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:42.162Z",
+          "confirmedAt": null,
+          "reasons": [
+            "OPERATOR_LINEUP_NOT_ENTERED",
+            "RETRY_T45_OR_T30"
+          ]
+        },
+        "away": {
+          "status": "NOT_RELEASED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:42.162Z",
+          "confirmedAt": null,
+          "reasons": [
+            "OPERATOR_LINEUP_NOT_ENTERED",
+            "RETRY_T45_OR_T30"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": null,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,ODDS_H2H,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    },
+    {
+      "sport": "baseball",
+      "league": "KBO",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-40-877Z",
+      "gameId": "kbo-181918",
+      "matchup": "KIA @ NC",
+      "home": "NC",
+      "away": "KIA",
+      "scheduledStartTime": "2026-07-31T18:30:00+09:00",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": 0.429648,
+      "valueEdge": null,
+      "passReasons": [
+        "KBO_PREDICTION_PIPELINE_NOT_IMPLEMENTED",
+        "STARTER_MISSING",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:42.165Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:40.903Z",
+          "missingFeatures": [
+            "OPERATOR_STARTER_NOT_ENTERED"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:40.903Z",
+          "missingFeatures": [
+            "OPERATOR_STARTER_NOT_ENTERED"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "kbo-181918",
+        "status": "COLLECTED",
+        "reasons": [],
+        "providerEventId": "098c7a00053c43662fe0d30d9e556a41",
+        "sportKey": "baseball_kbo",
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": "decimal",
+        "formatValidationStatus": "FORMAT_CONFIRMED_DECIMAL",
+        "homeOdds": 2.27,
+        "awayOdds": 1.71,
+        "bookmaker": "1xBet",
+        "marketTimestamp": "2026-07-31T08:52:41.546Z",
+        "fetchedAt": "2026-07-31T08:52:41.546Z",
+        "commenceTime": "2026-07-31T09:30:00Z",
+        "homeTeam": "NC Dinos",
+        "awayTeam": "Kia Tigers"
+      },
+      "lineup": {
+        "home": {
+          "status": "NOT_RELEASED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:42.162Z",
+          "confirmedAt": null,
+          "reasons": [
+            "OPERATOR_LINEUP_NOT_ENTERED",
+            "RETRY_T45_OR_T30"
+          ]
+        },
+        "away": {
+          "status": "NOT_RELEASED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:42.162Z",
+          "confirmedAt": null,
+          "reasons": [
+            "OPERATOR_LINEUP_NOT_ENTERED",
+            "RETRY_T45_OR_T30"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": true,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    },
+    {
+      "sport": "baseball",
+      "league": "KBO",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-40-877Z",
+      "gameId": "kbo-181919",
+      "matchup": "SSG @ 키움",
+      "home": "키움",
+      "away": "SSG",
+      "scheduledStartTime": "2026-07-31T18:30:00+09:00",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": null,
+      "valueEdge": null,
+      "passReasons": [
+        "KBO_PREDICTION_PIPELINE_NOT_IMPLEMENTED",
+        "STARTER_MISSING",
+        "ODDS_NOT_COLLECTED",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "ODDS_H2H",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:42.165Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:40.903Z",
+          "missingFeatures": [
+            "OPERATOR_STARTER_NOT_ENTERED"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:40.903Z",
+          "missingFeatures": [
+            "OPERATOR_STARTER_NOT_ENTERED"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "kbo-181919",
+        "status": "NOT_COLLECTED",
+        "reasons": [
+          "NO_MATCHING_ODDS_EVENT",
+          "DOMESTIC_PROTO_NOT_COLLECTED",
+          "OVERSEAS_UNMATCHED_OR_EMPTY"
+        ],
+        "providerEventId": null,
+        "sportKey": null,
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": null,
+        "formatValidationStatus": null,
+        "homeOdds": null,
+        "awayOdds": null,
+        "bookmaker": null,
+        "marketTimestamp": null,
+        "fetchedAt": null,
+        "commenceTime": null,
+        "homeTeam": null,
+        "awayTeam": null
+      },
+      "lineup": {
+        "home": {
+          "status": "NOT_RELEASED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:42.162Z",
+          "confirmedAt": null,
+          "reasons": [
+            "OPERATOR_LINEUP_NOT_ENTERED",
+            "RETRY_T45_OR_T30"
+          ]
+        },
+        "away": {
+          "status": "NOT_RELEASED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:42.162Z",
+          "confirmedAt": null,
+          "reasons": [
+            "OPERATOR_LINEUP_NOT_ENTERED",
+            "RETRY_T45_OR_T30"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": null,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,ODDS_H2H,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    },
+    {
+      "sport": "baseball",
+      "league": "KBO",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-40-877Z",
+      "gameId": "kbo-181920",
+      "matchup": "삼성 @ 롯데",
+      "home": "롯데",
+      "away": "삼성",
+      "scheduledStartTime": "2026-07-31T18:30:00+09:00",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": null,
+      "valueEdge": null,
+      "passReasons": [
+        "KBO_PREDICTION_PIPELINE_NOT_IMPLEMENTED",
+        "STARTER_MISSING",
+        "ODDS_NOT_COLLECTED",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "ODDS_H2H",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:42.165Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:40.903Z",
+          "missingFeatures": [
+            "OPERATOR_STARTER_NOT_ENTERED"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:40.903Z",
+          "missingFeatures": [
+            "OPERATOR_STARTER_NOT_ENTERED"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "kbo-181920",
+        "status": "NOT_COLLECTED",
+        "reasons": [
+          "NO_MATCHING_ODDS_EVENT",
+          "DOMESTIC_PROTO_NOT_COLLECTED",
+          "OVERSEAS_UNMATCHED_OR_EMPTY"
+        ],
+        "providerEventId": null,
+        "sportKey": null,
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": null,
+        "formatValidationStatus": null,
+        "homeOdds": null,
+        "awayOdds": null,
+        "bookmaker": null,
+        "marketTimestamp": null,
+        "fetchedAt": null,
+        "commenceTime": null,
+        "homeTeam": null,
+        "awayTeam": null
+      },
+      "lineup": {
+        "home": {
+          "status": "NOT_RELEASED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:42.162Z",
+          "confirmedAt": null,
+          "reasons": [
+            "OPERATOR_LINEUP_NOT_ENTERED",
+            "RETRY_T45_OR_T30"
+          ]
+        },
+        "away": {
+          "status": "NOT_RELEASED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:42.162Z",
+          "confirmedAt": null,
+          "reasons": [
+            "OPERATOR_LINEUP_NOT_ENTERED",
+            "RETRY_T45_OR_T30"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": null,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,ODDS_H2H,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    },
+    {
+      "sport": "baseball",
+      "league": "KBO",
+      "date": "2026-07-31",
+      "runId": "2026-07-31T08-52-40-877Z",
+      "gameId": "kbo-181921",
+      "matchup": "한화 @ KT",
+      "home": "KT",
+      "away": "한화",
+      "scheduledStartTime": "2026-07-31T18:30:00+09:00",
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "confidence": null,
+      "modelProbability": null,
+      "marketProbability": null,
+      "valueEdge": null,
+      "passReasons": [
+        "KBO_PREDICTION_PIPELINE_NOT_IMPLEMENTED",
+        "STARTER_MISSING",
+        "ODDS_NOT_COLLECTED",
+        "LINEUP_NOT_CONFIRMED",
+        "ENGINE_PIPELINE_NOT_AVAILABLE"
+      ],
+      "blockReasons": [],
+      "missingInputs": [
+        "HOME_STARTER",
+        "AWAY_STARTER",
+        "ODDS_H2H",
+        "LINEUP",
+        "ENGINE_MIN_INPUT"
+      ],
+      "inputWarnings": [],
+      "predictedAt": "2026-07-31T08:52:42.165Z",
+      "engineVersion": null,
+      "researchBaseline": null,
+      "starter": {
+        "home": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:40.903Z",
+          "missingFeatures": [
+            "OPERATOR_STARTER_NOT_ENTERED"
+          ]
+        },
+        "away": {
+          "pitcherId": null,
+          "name": null,
+          "throwingHand": null,
+          "status": "SOURCE_UNAVAILABLE",
+          "source": null,
+          "fetchedAt": null,
+          "statsAsOf": null,
+          "artifactGeneratedAt": "2026-07-31T08:52:40.903Z",
+          "missingFeatures": [
+            "OPERATOR_STARTER_NOT_ENTERED"
+          ]
+        }
+      },
+      "odds": {
+        "gameId": "kbo-181921",
+        "status": "NOT_COLLECTED",
+        "reasons": [
+          "NO_MATCHING_ODDS_EVENT",
+          "DOMESTIC_PROTO_NOT_COLLECTED",
+          "OVERSEAS_UNMATCHED_OR_EMPTY"
+        ],
+        "providerEventId": null,
+        "sportKey": null,
+        "oddsFormat": "DECIMAL",
+        "declaredFormat": null,
+        "formatValidationStatus": null,
+        "homeOdds": null,
+        "awayOdds": null,
+        "bookmaker": null,
+        "marketTimestamp": null,
+        "fetchedAt": null,
+        "commenceTime": null,
+        "homeTeam": null,
+        "awayTeam": null
+      },
+      "lineup": {
+        "home": {
+          "status": "NOT_RELEASED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:42.162Z",
+          "confirmedAt": null,
+          "reasons": [
+            "OPERATOR_LINEUP_NOT_ENTERED",
+            "RETRY_T45_OR_T30"
+          ]
+        },
+        "away": {
+          "status": "NOT_RELEASED",
+          "confirmed": false,
+          "battingOrder": [],
+          "source": null,
+          "fetchedAt": "2026-07-31T08:52:42.162Z",
+          "confirmedAt": null,
+          "reasons": [
+            "OPERATOR_LINEUP_NOT_ENTERED",
+            "RETRY_T45_OR_T30"
+          ]
+        },
+        "retrySuggested": true
+      },
+      "cutoff": {
+        "hardCutoffPassed": false,
+        "scheduleBeforeStart": true,
+        "starterBeforeStart": null,
+        "oddsBeforeStart": null,
+        "lineupBeforeStart": null,
+        "predictedBeforeStart": true
+      },
+      "audit": {
+        "cutoff": "PASS",
+        "leakage": "PASS",
+        "mapping": "PASS",
+        "detail": [
+          "MISSING:HOME_STARTER,AWAY_STARTER,ODDS_H2H,LINEUP,ENGINE_MIN_INPUT"
+        ]
+      }
+    }
+  ],
+  "predictionHashSha256": "2583b1e9c530ab62a244585ae82b5ae24409d04a1432b9d7de196fc3c102c6bd"
+}
