@@ -62,7 +62,7 @@ function OddsRow({ odds }: { odds: OddsData }) {
   return (
     <div className="mt-2">
       <p className="text-[11px] font-medium tracking-wide text-zinc-500">
-        시장 최고 배당
+        현재 시장 최고 배당
       </p>
       <p className="mt-0.5 text-sm tabular-nums text-zinc-300">
         <span>홈 {formatOdds(odds.bestHomeOdds)}</span>
@@ -93,8 +93,12 @@ function reviewStatusLabel(reviewStatus: "DRAFT" | "VERIFIED" | "REJECTED"): str
 
 function KboOddsComparisonRow({
   oddsComparison,
+  homeTeam,
+  awayTeam,
 }: {
   oddsComparison: NonNullable<GameCardProps["oddsComparison"]>;
+  homeTeam: string;
+  awayTeam: string;
 }) {
   const domestic = oddsComparison.domestic;
   const overseas = oddsComparison.overseas;
@@ -103,15 +107,17 @@ function KboOddsComparisonRow({
     <div className="mt-3 space-y-3">
       <div>
         <p className="text-[11px] font-medium tracking-wide text-zinc-500">
-          국내 프로토
+          {domestic?.sourceLabel ?? "연구 Snapshot 배당 · 국내 프로토"}
         </p>
         <p className="mt-0.5 text-sm tabular-nums text-zinc-300">
           <span>
-            홈 {domestic?.homeOdds != null ? formatOdds(domestic.homeOdds) : "—"}
+            {homeTeam}{" "}
+            {domestic?.homeOdds != null ? formatOdds(domestic.homeOdds) : "—"}
           </span>
           <span className="mx-1.5 text-zinc-600">·</span>
           <span>
-            원정 {domestic?.awayOdds != null ? formatOdds(domestic.awayOdds) : "—"}
+            {awayTeam}{" "}
+            {domestic?.awayOdds != null ? formatOdds(domestic.awayOdds) : "—"}
           </span>
         </p>
         <p className="mt-0.5 text-xs text-amber-300">
@@ -121,19 +127,18 @@ function KboOddsComparisonRow({
 
       <div>
         <p className="text-[11px] font-medium tracking-wide text-zinc-500">
-          해외 시장
+          {overseas?.providerLabel ?? "해외 시장 · API"}
         </p>
         <p className="mt-0.5 text-sm tabular-nums text-zinc-300">
           <span>
-            홈 {overseas?.homeOdds != null ? formatOdds(overseas.homeOdds) : "—"}
+            {homeTeam}{" "}
+            {overseas?.homeOdds != null ? formatOdds(overseas.homeOdds) : "—"}
           </span>
           <span className="mx-1.5 text-zinc-600">·</span>
           <span>
-            원정 {overseas?.awayOdds != null ? formatOdds(overseas.awayOdds) : "—"}
+            {awayTeam}{" "}
+            {overseas?.awayOdds != null ? formatOdds(overseas.awayOdds) : "—"}
           </span>
-        </p>
-        <p className="mt-0.5 text-xs text-zinc-500">
-          {overseas?.providerLabel ?? "해외 배당 미수집"}
         </p>
       </div>
 
@@ -252,7 +257,11 @@ function GameCardBody({
             league={game.league}
           />
         ) : game.league === "KBO" && oddsComparison ? (
-          <KboOddsComparisonRow oddsComparison={oddsComparison} />
+          <KboOddsComparisonRow
+            oddsComparison={oddsComparison}
+            homeTeam={game.homeTeam}
+            awayTeam={game.awayTeam}
+          />
         ) : oddsAvailability === "available" && odds ? (
           <OddsRow odds={odds} />
         ) : (

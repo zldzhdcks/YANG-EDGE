@@ -9,10 +9,21 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { buildGameId } from "@/lib/game-id";
 import {
+  kboOddsDebugPass,
+  loadKboOddsComparisonViewModel,
+} from "@/lib/kbo/odds-ui/load-kbo-odds-ui-view";
+import {
   mapReviewHypothesesDisplay,
   mapStatusCodeKo,
   predictionMissingStarterMetrics,
 } from "@/lib/research/research-analysis-display-map";
+import { resolveResearchPrediction } from "@/lib/research/load-research-prediction";
+import {
+  buildResearchPredictionView,
+  emptyResearchPredictionView,
+  researchPredictionScore,
+  type ResearchPredictionView,
+} from "@/lib/research/research-prediction-view";
 import type {
   ActualLineupBatter,
   ActualLineupSide,
@@ -175,9 +186,29 @@ async function findPrediction(
   pred: Record<string, unknown>;
   meta: Record<string, unknown>;
   pathRel: string;
+  researchPrediction: ResearchPredictionView;
 } | null> {
+  // KBO: league-explicit primary path (data/predictions/kbo/{date}.json)
+  if (gameId.startsWith("kbo-")) {
+    const resolved = await resolveResearchPrediction({
+      gameId,
+      predictionHashFn: immutablePredictionHash,
+    });
+    if (!resolved || resolved.loadReason !== "OK") {
+      return null;
+    }
+    return {
+      pred: resolved.pred,
+      meta: resolved.meta,
+      pathRel: resolved.pathRel,
+      researchPrediction: resolved.view,
+    };
+  }
+
   const mlbFiles = await listJsonFiles("data/predictions/mlb");
-  const candidates = mlbFiles.filter(isDailyPredictionFile);
+  const candidates = mlbFiles.filter(
+    (p) => isDailyPredictionFile(p) && !p.includes(".rev-"),
+  );
 
   for (const rel of candidates.sort().reverse()) {
     const doc = asRecord(await readJson(rel));
@@ -186,24 +217,48 @@ async function findPrediction(
     for (const raw of preds) {
       const pred = asRecord(raw);
       if (!pred || !matchesGameId(pred, gameId)) continue;
-      return { pred, meta: asRecord(doc.meta) ?? {}, pathRel: rel };
+      const meta = asRecord(doc.meta) ?? {};
+      return {
+        pred,
+        meta,
+        pathRel: rel,
+        researchPrediction: buildResearchPredictionView({
+          pred,
+          pathRel: rel,
+          runId: asString(meta.runId) ?? asString(doc.runId),
+          predictionHash: immutablePredictionHash(pred),
+        }),
+      };
     }
   }
 
   const rootFiles = await listJsonFiles("data/predictions");
   for (const rel of rootFiles.filter(isDailyPredictionFile).sort().reverse()) {
+    if (rel.includes(".rev-")) continue;
     const doc = asRecord(await readJson(rel));
     if (!doc) continue;
     const preds = Array.isArray(doc.predictions) ? doc.predictions : [];
     for (const raw of preds) {
       const pred = asRecord(raw);
       if (!pred || !matchesGameId(pred, gameId)) continue;
-      return { pred, meta: asRecord(doc.meta) ?? {}, pathRel: rel };
+      const meta = asRecord(doc.meta) ?? {};
+      return {
+        pred,
+        meta,
+        pathRel: rel,
+        researchPrediction: buildResearchPredictionView({
+          pred,
+          pathRel: rel,
+          runId: asString(meta.runId) ?? asString(doc.runId),
+          predictionHash: immutablePredictionHash(pred),
+        }),
+      };
     }
   }
 
   return null;
 }
+
 
 async function findStarterRows(
   gameId: string,
@@ -499,60 +554,69 @@ function computeResearchStatus(args: {
   };
 }
 
-async function findKboOddsForGame(
-  gameId: string,
-  resolvedInternalId: string | null,
-): Promise<{
-  domestic: { home: number | null; away: number | null } | null;
-  overseas: { home: number | null; away: number | null } | null;
+async function findKboOddsForGame(args: {
+  gameId: string;
+  dateKst: string | null;
+  homeTeam: string | null;
+  awayTeam: string | null;
+  scheduledStartTime: string | null;
+}): Promise<{
+  domestic: {
+    home: number | null;
+    away: number | null;
+    availability: string;
+    sourceLabel: string;
+  } | null;
+  overseas: {
+    home: number | null;
+    away: number | null;
+    availability: string;
+    sourceLabel: string;
+  } | null;
   homeTeam: string | null;
   awayTeam: string | null;
   dateKst: string | null;
   startTimeKst: string | null;
   pathRel: string | null;
+  domesticPass: boolean;
+  overseasPass: boolean;
 } | null> {
-  const files = await listJsonFiles("data/research/kbo");
-  const oddsFiles = files.filter((p) => p.includes("odds-comparison-v1.json"));
-  for (const rel of oddsFiles.sort().reverse()) {
-    const doc = asRecord(await readJson(rel));
-    if (!doc) continue;
-    const rows = Array.isArray(doc.rows) ? doc.rows : [];
-    for (const raw of rows) {
-      const r = asRecord(raw);
-      if (!r) continue;
-      const rid = asString(r.gameId) ?? "";
-      const home = asString(r.homeTeam);
-      const away = asString(r.awayTeam);
-      const directMatch = rid === gameId || (resolvedInternalId && rid === resolvedInternalId);
-      const slugMatch = home && away && buildGameId("KBO", home, away) === gameId;
-      if (directMatch || slugMatch) {
-        const dom = asRecord(r.domestic);
-        const ovs = asRecord(r.overseas);
-        const domSel = dom ? (Array.isArray(dom.selections) ? dom.selections : []) : [];
-        const ovsSel = ovs ? (Array.isArray(ovs.selections) ? ovs.selections : []) : [];
-        const domHome = domSel.find((s: unknown) => asRecord(s) && asString((asRecord(s) as Record<string, unknown>).selectionCode) === "HOME");
-        const domAway = domSel.find((s: unknown) => asRecord(s) && asString((asRecord(s) as Record<string, unknown>).selectionCode) === "AWAY");
-        const ovsHome = ovsSel.find((s: unknown) => asRecord(s) && asString((asRecord(s) as Record<string, unknown>).selectionCode) === "HOME");
-        const ovsAway = ovsSel.find((s: unknown) => asRecord(s) && asString((asRecord(s) as Record<string, unknown>).selectionCode) === "AWAY");
-        return {
-          domestic: dom ? {
-            home: domHome ? asNumber((asRecord(domHome) as Record<string, unknown>).odds) : null,
-            away: domAway ? asNumber((asRecord(domAway) as Record<string, unknown>).odds) : null,
-          } : null,
-          overseas: ovs ? {
-            home: ovsHome ? asNumber((asRecord(ovsHome) as Record<string, unknown>).odds) : null,
-            away: ovsAway ? asNumber((asRecord(ovsAway) as Record<string, unknown>).odds) : null,
-          } : null,
-          homeTeam: asString(r.homeTeam),
-          awayTeam: asString(r.awayTeam),
-          dateKst: asString(r.dateKst),
-          startTimeKst: asString(r.startTimeKst),
-          pathRel: rel,
-        };
-      }
-    }
-  }
-  return null;
+  if (!args.dateKst || !args.homeTeam || !args.awayTeam) return null;
+  const vm = await loadKboOddsComparisonViewModel({
+    dateKst: args.dateKst,
+    gameId: args.gameId,
+    homeTeam: args.homeTeam,
+    awayTeam: args.awayTeam,
+    scheduledStartTime: args.scheduledStartTime,
+  });
+  const domesticAvailable = vm.domestic.availability !== "MISSING";
+  const overseasAvailable = vm.overseas.availability !== "MISSING";
+  if (!domesticAvailable && !overseasAvailable) return null;
+  return {
+    domestic: domesticAvailable
+      ? {
+          home: vm.domestic.homePrice,
+          away: vm.domestic.awayPrice,
+          availability: vm.domestic.availability,
+          sourceLabel: vm.domestic.sourceLabel,
+        }
+      : null,
+    overseas: overseasAvailable
+      ? {
+          home: vm.overseas.homePrice,
+          away: vm.overseas.awayPrice,
+          availability: vm.overseas.availability,
+          sourceLabel: vm.overseas.sourceLabel,
+        }
+      : null,
+    homeTeam: vm.homeTeam,
+    awayTeam: vm.awayTeam,
+    dateKst: vm.dateKst,
+    startTimeKst: vm.scheduledStartTime,
+    pathRel: vm.pathRel.domestic ?? vm.pathRel.overseas,
+    domesticPass: kboOddsDebugPass(vm.domestic),
+    overseasPass: kboOddsDebugPass(vm.overseas),
+  };
 }
 
 async function findKboStarterForGame(
@@ -635,7 +699,12 @@ async function findKboScheduleGameInfo(
   pathRel: string;
 } | null> {
   const files = await listJsonFiles("data/research/kbo");
-  const schedFiles = files.filter((p) => p.includes("schedule-result-identity"));
+  const schedFiles = files.filter(
+    (p) =>
+      p.includes("schedule-result-identity") &&
+      !p.includes(".rev-") &&
+      p.endsWith(".json"),
+  );
   for (const rel of schedFiles.sort().reverse()) {
     const doc = asRecord(await readJson(rel));
     if (!doc) continue;
@@ -680,8 +749,23 @@ export async function loadResearchAnalysisView(
   const normalized = (gameId ?? "").trim();
   const isKbo = normalized.startsWith("kbo-");
   const found = await findPrediction(normalized);
+  const kboPredictionMiss =
+    isKbo && !found
+      ? await resolveResearchPrediction({
+          gameId: normalized,
+          predictionHashFn: immutablePredictionHash,
+        })
+      : null;
+  const researchPrediction: ResearchPredictionView =
+    found?.researchPrediction ??
+    kboPredictionMiss?.view ??
+    emptyResearchPredictionView(
+      isKbo ? "PREDICTION_FILE_NOT_FOUND" : "PREDICTION_FILE_NOT_FOUND",
+    );
 
-  const dateKst = found ? asString(found.pred.dateKst) : null;
+  const dateKst = found
+    ? (asString(found.pred.dateKst) ?? asString(found.pred.date))
+    : null;
   const researchGameId =
     (found ? asString(found.pred.gameId) : null) ?? normalized;
 
@@ -701,32 +785,49 @@ export async function loadResearchAnalysisView(
   // KBO-specific artifact lookups — resolve schedule first to get internalGameId
   const kboScheduleInfo = isKbo ? await findKboScheduleGameInfo(normalized) : null;
   const resolvedKboId = kboScheduleInfo?.internalGameId ?? null;
-  const kboOdds = isKbo ? await findKboOddsForGame(normalized, resolvedKboId) : null;
   const kboStarter = isKbo ? await findKboStarterForGame(normalized, resolvedKboId) : null;
   const kboLineup = isKbo ? await findKboLineupForGame(resolvedKboId) : null;
 
-  let homeTeam = found ? asString(found.pred.homeTeam) : null;
-  let awayTeam = found ? asString(found.pred.awayTeam) : null;
+  let homeTeam = found
+    ? (asString(found.pred.homeTeam) ??
+      (typeof found.pred.home === "string" ? found.pred.home : null))
+    : null;
+  let awayTeam = found
+    ? (asString(found.pred.awayTeam) ??
+      (typeof found.pred.away === "string" ? found.pred.away : null))
+    : null;
   let league = found ? asString(found.pred.league) : null;
-  let startTimeKst = found ? asString(found.pred.startTimeKst) : null;
+  let startTimeKst = found
+    ? (asString(found.pred.startTimeKst) ??
+      asString(found.pred.scheduledStartTime))
+    : null;
   let gameDateKst = dateKst;
 
-  // Fill from KBO artifacts if prediction is missing
-  if (!found && isKbo) {
-    if (kboScheduleInfo) {
-      homeTeam = homeTeam ?? kboScheduleInfo.homeTeamKo ?? kboScheduleInfo.homeTeam;
-      awayTeam = awayTeam ?? kboScheduleInfo.awayTeamKo ?? kboScheduleInfo.awayTeam;
-      gameDateKst = gameDateKst ?? kboScheduleInfo.dateKst;
-      startTimeKst = startTimeKst ?? kboScheduleInfo.startTimeKst;
-      league = "KBO";
-    }
-    if (kboOdds) {
-      homeTeam = homeTeam ?? kboOdds.homeTeam;
-      awayTeam = awayTeam ?? kboOdds.awayTeam;
-      gameDateKst = gameDateKst ?? kboOdds.dateKst;
-      startTimeKst = startTimeKst ?? kboOdds.startTimeKst;
-      league = "KBO";
-    }
+  // Fill from KBO schedule before odds (odds matching needs canonical teams + date)
+  if (isKbo && kboScheduleInfo) {
+    homeTeam = homeTeam ?? kboScheduleInfo.homeTeamKo ?? kboScheduleInfo.homeTeam;
+    awayTeam = awayTeam ?? kboScheduleInfo.awayTeamKo ?? kboScheduleInfo.awayTeam;
+    gameDateKst = gameDateKst ?? kboScheduleInfo.dateKst;
+    startTimeKst = startTimeKst ?? kboScheduleInfo.startTimeKst;
+    league = "KBO";
+  }
+
+  const kboOdds = isKbo
+    ? await findKboOddsForGame({
+        gameId: resolvedKboId ?? normalized,
+        dateKst: gameDateKst,
+        homeTeam,
+        awayTeam,
+        scheduledStartTime: startTimeKst,
+      })
+    : null;
+
+  if (!found && isKbo && kboOdds) {
+    homeTeam = homeTeam ?? kboOdds.homeTeam;
+    awayTeam = awayTeam ?? kboOdds.awayTeam;
+    gameDateKst = gameDateKst ?? kboOdds.dateKst;
+    startTimeKst = startTimeKst ?? kboOdds.startTimeKst;
+    league = "KBO";
   }
 
   const matchLabel =
@@ -761,7 +862,14 @@ export async function loadResearchAnalysisView(
   const starterMetrics = starterMetricsFromPrediction(found?.pred ?? null);
 
   const prediction = found
-    ? collected(asString(found.pred.baselinePick) ?? "—", "Prediction")
+    ? collected(
+        researchPrediction.officialPick != null
+          ? researchPrediction.officialPick
+          : researchPrediction.officialStatus === "PASS"
+            ? "공식 Pick 없음"
+            : (asString(found.pred.baselinePick) ?? "—"),
+        "Prediction",
+      )
     : awaiting<string>("Prediction");
 
   let startingPitchers: ResearchAnalysisView["startingPitchers"];
@@ -904,8 +1012,21 @@ export async function loadResearchAnalysisView(
 
   let marketOdds: ResearchAnalysisView["marketOdds"];
   if (found) {
-    const openingOdds = asNumber(found.pred.openingOdds);
-    const latestOdds = asNumber(found.pred.latestOdds);
+    const openingOdds =
+      asNumber(found.pred.openingOdds) ??
+      (() => {
+        const odds = asRecord(found.pred.odds);
+        const dom = odds ? asRecord(odds.domesticProto) : null;
+        const home = dom ? asRecord(dom.home) : null;
+        return home ? asNumber(home.odds) : null;
+      })();
+    const latestOdds =
+      asNumber(found.pred.latestOdds) ??
+      (() => {
+        const odds = asRecord(found.pred.odds);
+        const ovs = odds ? asRecord(odds.overseas) : null;
+        return ovs ? asNumber(ovs.homeOdds) : null;
+      })();
     const oddsMovement = asString(found.pred.oddsMovement);
     const marketProbability = asNumber(found.pred.marketProbability);
     const any =
@@ -918,7 +1039,17 @@ export async function loadResearchAnalysisView(
           { openingOdds, latestOdds, oddsMovement, marketProbability },
           "Market Odds",
         )
-      : notCollected("Market Odds");
+      : kboOdds
+        ? collected(
+            {
+              openingOdds: kboOdds.domestic?.home ?? null,
+              latestOdds: kboOdds.overseas?.home ?? null,
+              oddsMovement: null,
+              marketProbability: null,
+            },
+            "Market Odds",
+          )
+        : notCollected("Market Odds");
   } else if (kboOdds) {
     marketOdds = collected(
       {
@@ -942,9 +1073,12 @@ export async function loadResearchAnalysisView(
       )
     : awaiting<string>("Snapshot 생성 시각");
 
-  /** Display-only integrity hash of immutable prediction fields (does not mutate snapshot). */
   const predictionHash = found
-    ? collected(immutablePredictionHash(found.pred), "Prediction Hash")
+    ? collected(
+        researchPrediction.predictionHash ??
+          immutablePredictionHash(found.pred),
+        "Prediction Hash",
+      )
     : awaiting<string>("Prediction Hash");
 
   let successReview: ResearchField<SuccessReviewValue> | null = null;
@@ -1120,18 +1254,32 @@ export async function loadResearchAnalysisView(
   });
 
   // ---- Research Score ----
-  const scoreItems: { label: string; score: number; max: number; status: "OK" | "MISSING" }[] = [];
-  const hasDomesticOdds = kboOdds?.domestic != null || (found && asNumber(found.pred.openingOdds) != null);
-  const hasOverseasOdds = kboOdds?.overseas != null || (found && asNumber(found.pred.latestOdds) != null);
+  const scoreItems: {
+    label: string;
+    score: number;
+    max: number;
+    status: "OK" | "MISSING" | "PASS_RECORDED" | "BLOCKED" | "NOT_ELIGIBLE";
+  }[] = [];
+  const hasDomesticOdds =
+    kboOdds?.domesticPass === true ||
+    (found && asNumber(found.pred.openingOdds) != null);
+  const hasOverseasOdds =
+    kboOdds?.overseasPass === true ||
+    (found && asNumber(found.pred.latestOdds) != null);
   const hasStarterData = !!starter || !!kboStarter;
   const hasLineupData = !!lineup || !!kboLineup;
-  const hasPrediction = !!found;
+  const predictionScore = researchPredictionScore(researchPrediction);
 
   scoreItems.push({ label: "국내 배당", score: hasDomesticOdds ? 20 : 0, max: 20, status: hasDomesticOdds ? "OK" : "MISSING" });
   scoreItems.push({ label: "해외 배당", score: hasOverseasOdds ? 20 : 0, max: 20, status: hasOverseasOdds ? "OK" : "MISSING" });
   scoreItems.push({ label: "선발", score: hasStarterData ? 20 : 0, max: 20, status: hasStarterData ? "OK" : "MISSING" });
   scoreItems.push({ label: "라인업", score: hasLineupData ? 20 : 0, max: 20, status: hasLineupData ? "OK" : "MISSING" });
-  scoreItems.push({ label: "Prediction", score: hasPrediction ? 20 : 0, max: 20, status: hasPrediction ? "OK" : "MISSING" });
+  scoreItems.push({
+    label: "Prediction",
+    score: predictionScore.score,
+    max: 20,
+    status: predictionScore.status,
+  });
 
   const totalScore = scoreItems.reduce((s, i) => s + i.score, 0);
   const scoreLabel = totalScore === 100 ? "READY" as const
@@ -1145,13 +1293,20 @@ export async function loadResearchAnalysisView(
   const oh = kboOdds?.overseas?.home ?? (found ? asNumber(found.pred.latestOdds) : null);
   const oa = kboOdds?.overseas?.away ?? null;
   const oddsComparison = {
-    available: dh != null || oh != null,
+    available: dh != null || oh != null || !!kboOdds,
     domesticHome: dh,
     domesticAway: da,
     overseasHome: oh,
     overseasAway: oa,
     diffHome: dh != null && oh != null ? Math.round((dh - oh) * 100) / 100 : null,
     diffAway: da != null && oa != null ? Math.round((da - oa) * 100) / 100 : null,
+    homeTeamName: kboOdds?.homeTeam ?? homeTeam,
+    awayTeamName: kboOdds?.awayTeam ?? awayTeam,
+    domesticSourceLabel: kboOdds?.domestic?.sourceLabel ?? null,
+    overseasSourceLabel: kboOdds?.overseas?.sourceLabel ?? null,
+    domesticPass: kboOdds?.domesticPass ?? false,
+    overseasPass: kboOdds?.overseasPass ?? false,
+    frozenLabel: "연구 Snapshot 배당",
   };
 
   // ---- Data Freshness ----
@@ -1187,6 +1342,7 @@ export async function loadResearchAnalysisView(
     isFinishedGame,
     gameInfo,
     prediction,
+    researchPrediction,
     pitchingSnapshot,
     probability,
     confidence,

@@ -91,6 +91,33 @@ export type ResearchAnalysisView = {
     matchLabel: string;
   };
   prediction: ResearchField<string>;
+  /**
+   * Official Prediction Snapshot view model (PASS / ELIGIBLE / BLOCKED).
+   * Separate from Engine live recompute and researchBaseline observation.
+   */
+  researchPrediction: {
+    artifactAvailable: boolean;
+    loadReason: string;
+    debugStatus: "PASS" | "AVAILABLE" | "BLOCKED" | "FAIL";
+    debugLabel: string;
+    officialStatus: "ELIGIBLE" | "PASS" | "BLOCKED" | "UNKNOWN";
+    officialPick: "HOME" | "AWAY" | "DRAW" | null;
+    passReasons: string[];
+    missingInputs: string[];
+    inputWarnings: string[];
+    predictedAt: string | null;
+    lockedAt: string | null;
+    engineVersion: string | null;
+    predictionHash: string | null;
+    pathRel: string | null;
+    runId: string | null;
+    researchBaseline: {
+      available: boolean;
+      researchOnly: boolean;
+      pick: string | null;
+      confidence: number | null;
+    } | null;
+  };
   /** Read-only summary of existing Starter + Bullpen artifact fields (no new scores). */
   pitchingSnapshot: ResearchField<{
     starterStatus: string | null;
@@ -139,7 +166,12 @@ export type ResearchAnalysisView = {
   researchScore: {
     total: number;
     max: number;
-    items: { label: string; score: number; max: number; status: "OK" | "MISSING" }[];
+    items: {
+      label: string;
+      score: number;
+      max: number;
+      status: "OK" | "MISSING" | "PASS_RECORDED" | "BLOCKED" | "NOT_ELIGIBLE";
+    }[];
     overallLabel: "READY" | "PARTIAL" | "BLOCKED" | "UNKNOWN";
   };
   oddsComparison: {
@@ -150,6 +182,13 @@ export type ResearchAnalysisView = {
     overseasAway: number | null;
     diffHome: number | null;
     diffAway: number | null;
+    homeTeamName: string | null;
+    awayTeamName: string | null;
+    domesticSourceLabel: string | null;
+    overseasSourceLabel: string | null;
+    domesticPass: boolean;
+    overseasPass: boolean;
+    frozenLabel: string;
   };
   dataFreshness: { label: string; updatedAt: string | null }[];
   timeline: { time: string; event: string }[];

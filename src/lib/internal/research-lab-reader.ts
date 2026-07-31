@@ -510,11 +510,27 @@ export async function loadResearchLabData(
 
   // ---- KBO Readiness ----
   const kboOddsPath = path.join(cwd, "data", "research", "kbo", `${dateKst}-odds-comparison-v1.json`);
+  const kboDomesticProtoPath = path.join(
+    cwd,
+    "data",
+    "research",
+    "kbo",
+    `${dateKst}-domestic-proto-snapshot-v1.json`,
+  );
+  const kboOddsHistoryPath = path.join(
+    cwd,
+    "data",
+    "research",
+    "kbo",
+    `${dateKst}-odds-history-dataset-v1.json`,
+  );
   const kboSchedulePath = path.join(cwd, "data", "research", "kbo", `${dateKst}-schedule-result-identity-v1-api-baseball.json`);
   const kboStarterPath = path.join(cwd, "data", "operator-input", "kbo", `${dateKst}-starter-confirmation-v1.json`);
   const kboLineupPath = path.join(cwd, "data", "operator-input", "kbo", `${dateKst}-lineup-confirmation-v1.json`);
 
   const kboOdds = await readJsonFile<Record<string, unknown>>(kboOddsPath);
+  const kboDomesticProto = await readJsonFile<Record<string, unknown>>(kboDomesticProtoPath);
+  const kboOddsHistory = await readJsonFile<Record<string, unknown>>(kboOddsHistoryPath);
   const kboSchedule = await readJsonFile<Record<string, unknown>>(kboSchedulePath);
   const kboStarter = await readJsonFile<Record<string, unknown>>(kboStarterPath);
   const kboLineup = await readJsonFile<Record<string, unknown>>(kboLineupPath);
@@ -525,13 +541,53 @@ export async function loadResearchLabData(
   const kboLineupGames = kboLineup.ok ? arr((kboLineup.data as Record<string, unknown>).games) : [];
 
   const kboScheduleGames = num(kboScheduleSummary.datasetGamesCreated);
-  const kboDomesticGames = num(kboOddsSummary.domesticGames);
-  const kboDomesticTotal = num(kboOddsSummary.identityGames);
-  const kboOverseasGames = num(kboOddsSummary.overseasGamesMatched);
-  const kboOverseasTotal = num(kboOddsSummary.identityGames);
+  const protoGames = kboDomesticProto.ok
+    ? arr((kboDomesticProto.data as Record<string, unknown>).games)
+    : [];
+  const histGames = kboOddsHistory.ok
+    ? arr((kboOddsHistory.data as Record<string, unknown>).games)
+    : [];
+  const domesticFromProto = protoGames.filter((raw) => {
+    const g = rec(raw);
+    const status = g ? str(g.status) : null;
+    return (
+      status === "MANUAL_COLLECTED" ||
+      status === "ADMIN_VERIFIED" ||
+      status === "COLLECTED"
+    );
+  }).length;
+  const overseasFromHistory = histGames.filter((raw) => {
+    const g = rec(raw);
+    return g && str(g.status) === "COLLECTED";
+  }).length;
+  const kboDomesticGames =
+    domesticFromProto > 0
+      ? domesticFromProto
+      : num(kboOddsSummary.domesticGames);
+  const kboDomesticTotal =
+    kboScheduleGames ??
+    (domesticFromProto > 0 ? domesticFromProto : num(kboOddsSummary.identityGames));
+  const kboOverseasGames =
+    overseasFromHistory > 0
+      ? overseasFromHistory
+      : num(kboOddsSummary.overseasGamesMatched);
+  const kboOverseasTotal =
+    kboScheduleGames ??
+    (overseasFromHistory > 0
+      ? overseasFromHistory
+      : num(kboOddsSummary.identityGames));
   const kboStarterCount = kboStarterGames.length > 0 ? kboStarterGames.length : null;
   const kboStarterTotal = kboScheduleGames;
   const lineupReviewStatus = kboLineup.ok ? str((kboLineup.data as Record<string, unknown>).reviewStatus) : null;
+  const kboOddsArtifactReady =
+    kboOdds.ok || kboDomesticProto.ok || kboOddsHistory.ok;
+  const kboOddsArtifactUpdatedAt = kboDomesticProto.ok
+    ? kboDomesticProto.updatedAt
+    : kboOddsHistory.ok
+      ? kboOddsHistory.updatedAt
+      : kboOdds.ok
+        ? kboOdds.updatedAt
+        : null;
 
   function kboArtifactStatus(result: ReadResult<unknown>): KboArtifactStatus {
     if (!result.ok) return result.error === "FILE_NOT_FOUND" ? "MISSING" : "UNKNOWN";
@@ -552,32 +608,41 @@ export async function loadResearchLabData(
   });
   kboPipelineStages.push({
     stage: "Artifact",
-    status: kboOdds.ok ? "PASS" : "FAIL",
-    detail: kboOdds.ok ? "파일 존재" : (kboOdds as { error: string }).error,
+    status: kboOddsArtifactReady ? "PASS" : "FAIL",
+    detail: kboOddsArtifactReady
+      ? kboDomesticProto.ok
+        ? "domestic-proto / odds-history"
+        : "파일 존재"
+      : "FILE_NOT_FOUND",
   });
   kboPipelineStages.push({
     stage: "Reader",
-    status: kboOdds.ok ? "PASS" : "FAIL",
-    detail: kboOdds.ok ? "로드 성공" : "로드 실패",
+    status: kboOddsArtifactReady ? "PASS" : "FAIL",
+    detail: kboOddsArtifactReady ? "로드 성공" : "로드 실패",
   });
   kboPipelineStages.push({
     stage: "Presenter",
-    status: kboOdds.ok ? "PASS" : "FAIL",
-    detail: kboOdds.ok ? "데이터 전달 가능" : "데이터 없음",
+    status: kboOddsArtifactReady ? "PASS" : "FAIL",
+    detail: kboOddsArtifactReady ? "데이터 전달 가능" : "데이터 없음",
   });
   kboPipelineStages.push({
     stage: "UI",
-    status: kboOdds.ok ? "PASS" : "FAIL",
-    detail: kboOdds.ok ? "표시 가능" : "표시 불가",
+    status: kboOddsArtifactReady ? "PASS" : "FAIL",
+    detail: kboOddsArtifactReady ? "표시 가능" : "표시 불가",
   });
 
   // Bug board
   const bugBoard: KboBugBoardItem[] = [];
-  if (!kboOdds.ok || (kboDomesticGames != null && kboDomesticTotal != null && kboDomesticGames < kboDomesticTotal)) {
+  if (
+    !kboOddsArtifactReady ||
+    (kboDomesticGames != null &&
+      kboDomesticTotal != null &&
+      kboDomesticGames < kboDomesticTotal)
+  ) {
     bugBoard.push({
       id: "domestic-odds-missing",
       label: "Domestic Odds Missing",
-      severity: !kboOdds.ok ? "RED" : "YELLOW",
+      severity: !kboOddsArtifactReady ? "RED" : "YELLOW",
       resolved: false,
     });
   } else if (kboDomesticGames != null && kboDomesticGames > 0) {
@@ -608,7 +673,7 @@ export async function loadResearchLabData(
 
   // Prediction lock
   const lockReasons: string[] = [];
-  if (!kboOdds.ok || kboDomesticGames === 0) lockReasons.push("Domestic Odds Missing");
+  if (!kboOddsArtifactReady || kboDomesticGames === 0) lockReasons.push("Domestic Odds Missing");
   if (!kboStarter.ok || kboStarterCount === 0) lockReasons.push("Starter Missing");
   if (!kboSchedule.ok || kboScheduleGames === 0) lockReasons.push("Game Identity Missing");
   if (errors.length > 0) lockReasons.push("Reader Error");
@@ -616,7 +681,7 @@ export async function loadResearchLabData(
   // Overall readiness
   type KboOverall = "READY" | "PARTIAL" | "BLOCKED" | "UNKNOWN";
   let kboOverall: KboOverall = "UNKNOWN";
-  if (kboSchedule.ok && kboOdds.ok && kboStarter.ok) {
+  if (kboSchedule.ok && kboOddsArtifactReady && kboStarter.ok) {
     const domesticOk = kboDomesticGames != null && kboDomesticTotal != null && kboDomesticGames >= kboDomesticTotal;
     const overseasOk = kboOverseasGames != null && kboOverseasTotal != null && kboOverseasGames >= kboOverseasTotal;
     const starterOk = kboStarterCount != null && kboStarterTotal != null && kboStarterCount >= kboStarterTotal;
@@ -651,7 +716,7 @@ export async function loadResearchLabData(
     lineupStatus: kboLineupStatus,
     bullpenStatus: "UNKNOWN" as KboArtifactStatus,
     predictionStatus: "UNKNOWN" as KboArtifactStatus,
-    oddsArtifactUpdatedAt: kboOdds.ok ? kboOdds.updatedAt : null,
+    oddsArtifactUpdatedAt: kboOddsArtifactUpdatedAt,
     scheduleArtifactUpdatedAt: kboSchedule.ok ? kboSchedule.updatedAt : null,
     starterArtifactUpdatedAt: kboStarter.ok ? kboStarter.updatedAt : null,
     overallStatus: kboOverall,
@@ -662,6 +727,8 @@ export async function loadResearchLabData(
 
   // Add KBO source artifacts
   const kboArtifactList = [
+    { name: "KBO Domestic Proto", result: kboDomesticProto },
+    { name: "KBO Odds History", result: kboOddsHistory },
     { name: "KBO Odds Comparison", result: kboOdds },
     { name: "KBO Schedule Identity", result: kboSchedule },
     { name: "KBO Starter Confirmation", result: kboStarter },
