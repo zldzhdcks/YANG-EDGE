@@ -53,6 +53,18 @@ Historical Odds 사전 감사: **[MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDIT_V1.
 | Pre-game lineup availability probe | Manual `research:lineup-probe` only; no scheduler; append-only observations |
 | Official lineup announcement timestamp | Absent from Stats API — only `fetchedAt` / `probedAt` / research `cutoffTime` recordable |
 | Probe uses schedule `hydrate=lineups` only | Post-game boxscore never used as pre-game; started/Final games excluded from lineup probe |
+| Official lineup near first pitch (2026-07-31) | Open — see below |
+
+### MLB official lineup availability near first pitch
+
+| 항목 | 값 |
+|------|-----|
+| Observed | 2026-07-31 09:53 KST (`runId` `2026-07-31T00-53-46-838Z`) |
+| Window | ~47–77 minutes before eligible first pitches |
+| Eligible games | 3/3 `NOT_RELEASED` |
+| Prediction | `inputStatus=LIMITED_INPUT`; official eligible prediction **0**; PASS **3** |
+| Current handling | Persist `NOT_RELEASED`; no forced official prediction; no post-start lineup backfill as pre-game |
+| Future research | Mean official lineup release time; safe final re-collect window; provider timing differences |
 
 ## Pre-game Lineup Availability Probe v1
 

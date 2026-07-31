@@ -10,12 +10,12 @@
 
 | 항목 | 값 |
 |------|-----|
-| dateKst | 2026-07-27 |
-| COLLECTING datasets | 3 |
-| NOT_STARTED datasets | 2 |
-| artifacts present | 3 |
-| Framework registry entries | 5 |
-| graded games (asOf slate) | 15 |
+| dateKst | 2026-07-29 |
+| COLLECTING datasets | 7 |
+| NOT_STARTED datasets | 0 |
+| artifacts present | 7 |
+| Framework registry entries | 7 |
+| graded games (asOf slate) | 16 |
 | sample target | 100 |
 | below minimum sample | yes |
 | lineup registry gap | no |
@@ -29,11 +29,13 @@
 
 | datasetId | status | games | rows | % of 100 | in registry | Engine |
 |-----------|--------|------:|-----:|---------:|:-----------:|--------|
-| mlb-bullpen-role | COLLECTING | 15 | 563 | 15% | yes | PROHIBITED |
-| mlb-starter | COLLECTING | 15 | 30 | 15% | yes | PROHIBITED |
-| mlb-lineup | COLLECTING | 15 | 30 | 15% | yes | PROHIBITED |
-| mlb-weather | NOT_STARTED | — | — | — | yes | PROHIBITED |
-| mlb-travel | NOT_STARTED | — | — | — | yes | PROHIBITED |
+| mlb-bullpen-role | COLLECTING | 15 | 546 | 15% | yes | PROHIBITED |
+| mlb-starter | COLLECTING | 16 | 32 | 16% | yes | PROHIBITED |
+| mlb-lineup | COLLECTING | — | — | — | yes | PROHIBITED |
+| mlb-weather | COLLECTING | — | — | — | yes | PROHIBITED |
+| mlb-travel | COLLECTING | — | — | — | yes | PROHIBITED |
+| mlb-odds-history | COLLECTING | — | — | — | yes | PROHIBITED |
+| mlb-injury | COLLECTING | — | — | — | yes | PROHIBITED |
 
 ---
 
@@ -77,3 +79,36 @@ Evidence ledger totals: hypotheses=14 · supporting=16 · contradicting=7
 
 - Sample 15 games ≪ 100 target — do not claim PROMISING
 - Dashboard is descriptive coverage only — not an Engine input
+
+---
+
+## Supplemental run — 2026-07-31 MLB Remaining Pregame Accumulation
+
+**Do not add this run as incremental sample games onto the coverage table above.**  
+Same-date revision / supplemental run keyed by `runId` + `gamePk` (not a new 100-sample increment).
+
+| 항목 | 값 | 검증 |
+|------|-----|------|
+| runId | `2026-07-31T00-53-46-838Z` | VERIFIED |
+| collectionStartedAt | `2026-07-31T00:53:46.838Z` (KST 09:53) | VERIFIED |
+| Schedule slate | 10 | VERIFIED |
+| PREGAME_ELIGIBLE | 3 (gamePk 824974, 823271, 823921) | VERIFIED |
+| EXCLUDED_ALREADY_STARTED | 7 | VERIFIED |
+| Starter | 10 games / 20 rows · probable 16 · missing/partial 4 | VERIFIED |
+| Odds | COLLECTED 6 / NOT_COLLECTED 4 · Eligible collected **3/3** | VERIFIED |
+| Lineup | NOT_RELEASED 10/10 · Eligible NOT_RELEASED **3/3** | VERIFIED |
+| Prediction snapshot rows | 10 | VERIFIED |
+| Official eligible prediction (`inputStatus=ELIGIBLE`) | **0** | VERIFIED |
+| Official `BASELINE_CANDIDATE` | **0** | VERIFIED |
+| Eligible PASS (remaining-pregame finalStatus) | **3** | VERIFIED |
+| Research Ready | 61% | VERIFIED |
+| Cutoff failures | 0 | VERIFIED |
+| Leakage failures | 0 | VERIFIED |
+| Engine changes | 0 | VERIFIED |
+| Auto promotion | NONE | VERIFIED |
+
+**PASS / baseline policy:** PASS is an official analysis state, not a missing run. Snapshot baseline pick strings are research observation only — **not** official predictions; do not include in official hit-rate; do not rewrite PASS → ELIGIBLE after results.
+
+**Artifacts:** `…-remaining-pregame-v1.json`, starter/odds/lineup/daily summary, `data/predictions/mlb/2026-07-31.json`, `…-pregame-cutoff-audit-v1.json`, `…-pregame-collection-summary-v1.json`, schedule/lineup `.rev-2026-07-31T00-53-46-838Z`.
+
+**공식 결론:** `DATA_ACCUMULATION_CONTINUES`

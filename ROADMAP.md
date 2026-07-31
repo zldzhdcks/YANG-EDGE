@@ -114,9 +114,14 @@ Market Intelligence Hypothesis Registry 사전 설계: [MARKET_INTELLIGENCE_HYPO
 | `research:bullpen-validate` | Bullpen validation (superset 또는 skip-postgame) |
 | `research:bullpen` | Bullpen dataset v1.1 builder only |
 | `research:lineup` | Lineup dataset (full slate graded only) |
+| `research:mlb-daily` | Schedule → Starter → Odds → Lineup → Research Ready summary |
+| `research:mlb-remaining-pregame` | Remaining pre-first-pitch eligibility + collectors + cutoff audit + collection summary (**완료**, 2026-07-31) |
+| `predict:mlb` | Prediction consumer from daily research artifacts |
 | `research:ops` | Research ops chain (5 steps) |
 | `research:dashboard` | Coverage dashboard only |
 | `research:starter-summary` | Starter summary only |
+
+Daily ops note: **Safe pre-first-pitch rerun window** for confirmed lineup re-collect — **미완료 / 연구 필요** (2026-07-31 eligible 3/3 still `NOT_RELEASED` ~47–77분 전).
 
 `research:ops` 순서: correlation audit → contradiction ledger → severity → dashboard → starter summary.
 
@@ -201,6 +206,20 @@ Doc: [BETMAN_DAILY_FULL_SLATE_COVERAGE_V1.md](./BETMAN_DAILY_FULL_SLATE_COVERAGE
 - 보안 및 접근통제
 - 세무·사업자 검토
 - 전체 API 비용과 호출량 검증
+
+## Internal Tools
+
+- **Research Lab v1** (`/internal/research`): Operator Home (운영 홈) + System Detail (시스템 상세). See `docs/RESEARCH_LAB_OPERATOR_HOME_V1.md`.
+  - v0 system detail preserved as `view=system` tab
+  - POSTPONED/CANCELLED game status handling
+  - **Task State Persistence v1**: localStorage 기반 업무 상태 관리. See `docs/RESEARCH_LAB_TASK_STATE_V1.md`.
+    - userStatus (TODO/IN_PROGRESS/ACKNOWLEDGED/DEFERRED/COMPLETED) + systemStatus 분리
+    - 필터, 진행 요약, 메모, 날짜별 분리, 초기화
+  - **EDGE Assistant v0**: 규칙 기반 운영 안내. See `docs/EDGE_ASSISTANT_V0.md`.
+    - 6개 정해진 질문, 외부 LLM 없음, Artifact 상태 기반 결정론적 답변
+    - Task State 연동, KBO UNKNOWN 정직 처리
+  - **KBO Research Readiness v1**: KBO 분석 준비 상태 체크리스트, Betting Line Integrity, Prediction Lock, Bug Board. See `docs/KBO_RESEARCH_READINESS_V1.md`.
+  - Next: authentication, review detail, pipeline buttons, multi-sport, LLM assistant
 
 ## 관련 코드 앵커
 
