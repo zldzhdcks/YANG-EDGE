@@ -19,6 +19,7 @@ import {
 } from "@/lib/research/load-mlb-game-research-outcomes";
 import { attachKboOddsComparisonToGames } from "@/lib/games/attach-kbo-odds-comparison";
 import { dedupeGameWithOddsItems } from "@/lib/games/unique-games";
+import { loadFrozenBaseballSlate } from "@/lib/baseball/load-frozen-baseball-slate";
 import { toBareGameWithOdds, type GameWithOdds } from "@/types/game-with-odds";
 import type { GameData } from "@/types/game";
 import { getKstToday } from "@/lib/datetime/kst";
@@ -26,21 +27,34 @@ import { getKstToday } from "@/lib/datetime/kst";
 /**
  * GET /api/games?date=YYYY-MM-DD&sport=&league=
  *
- * 두 Provider를 **병렬** 조회해 하나의 목록으로 병합한다.
- * - 야구 등: SportsProvider (TheSportsDB 등 — Dummy 자동 폴백 없음)
- * - 축구:    FootballProvider (API-Football, 관심 리그만)
+ * 우선순위:
+ * 1) primary research schedule freeze (KBO/NPB) — TheSportsDB 3건 제한 우회
+ * 2) live SportsProvider / MLB API-Baseball / Football
+ * 3) Odds complement — freeze 없는 리그만
  *
- * 오류 격리: 한쪽 실패해도 다른 쪽 일정은 표시 (status=partial).
- * 둘 다 실패하면 status=error + 502.
- *
- * 응답: { games, meta } — meta 에 provider별 source/usage 포함.
- * API 키는 서버에서만 사용하며 로그·응답에 넣지 않는다.
+ * File-system freeze artifact를 읽으므로 static 고정 응답 금지.
  */
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 type ProviderMeta = {
   ok: boolean;
   count: number;
   error?: string;
+};
+
+type SlateDebugCounts = {
+  frozenKbo: number;
+  frozenNpbRaw: number;
+  frozenNpbUnique: number;
+  liveSportsAfterFilter: number;
+  beforeLeagueFilter: number;
+  afterLeagueFilter: number;
+  finalKbo: number;
+  finalNpb: number;
+  usedFrozenKbo: boolean;
+  usedFrozenNpb: boolean;
+  skippedLiveTheSportsDb: boolean;
 };
 
 export async function GET(request: Request) {
@@ -55,21 +69,68 @@ export async function GET(request: Request) {
   const validDate = !date || /^\d{4}-\d{2}-\d{2}$/.test(date);
   const dateKst = date && validDate ? date : getKstToday();
   const wantBaseball = sport === "all" || sport === "baseball";
+  const wantedLeague = league?.trim().toUpperCase() ?? null;
   const canQueryMlb =
     validDate &&
     wantBaseball &&
-    (!league || league.trim().toUpperCase() === "MLB");
+    (!wantedLeague || wantedLeague === "MLB");
 
-  // 축구는 날짜가 있어야 조회 가능 (API-Football date 필수)
   const canQueryFootball =
     !!date &&
     /^\d{4}-\d{2}-\d{2}$/.test(date) &&
     sport !== "baseball" &&
     sport !== "basketball";
 
+  // Frozen research slate first (no Provider / Odds API)
+  let frozenMeta: Awaited<ReturnType<typeof loadFrozenBaseballSlate>>["meta"] | null =
+    null;
+  let frozenGames: GameData[] = [];
+  let usedFrozenKbo = false;
+  let usedFrozenNpb = false;
+  if (wantBaseball && validDate) {
+    try {
+      const frozen = await loadFrozenBaseballSlate({
+        dateKst,
+        league: wantedLeague,
+      });
+      frozenMeta = frozen.meta;
+      frozenGames = frozen.games;
+      usedFrozenKbo = frozen.meta.usedFrozenKbo;
+      usedFrozenNpb = frozen.meta.usedFrozenNpb;
+    } catch {
+      frozenMeta = null;
+      frozenGames = [];
+    }
+  }
+
+  // Skip TheSportsDB when freeze covers all requested KBO/NPB
+  const needLiveKbo =
+    wantBaseball &&
+    (!wantedLeague || wantedLeague === "KBO") &&
+    !usedFrozenKbo;
+  const needLiveNpb =
+    wantBaseball &&
+    (!wantedLeague || wantedLeague === "NPB") &&
+    !usedFrozenNpb;
+  const needLiveTheSportsDb = needLiveKbo || needLiveNpb;
+  const liveSportsLeague =
+    needLiveKbo && needLiveNpb
+      ? undefined
+      : needLiveKbo
+        ? "KBO"
+        : needLiveNpb
+          ? "NPB"
+          : undefined;
+
   const [sportsSettled, mlbSettled, footballSettled] =
     await Promise.allSettled([
-      getSportsProvider().getGames({ date, sport, league }),
+      needLiveTheSportsDb
+        ? getSportsProvider().getGames({
+            date,
+            sport: "baseball",
+            league: liveSportsLeague ?? league,
+          })
+        : Promise.resolve([] as GameData[]),
       canQueryMlb ? getMlbGamesForDate(dateKst) : Promise.resolve(null),
       canQueryFootball
         ? getFootballGamesForDate(date)
@@ -79,8 +140,16 @@ export async function GET(request: Request) {
   const sportsMeta: ProviderMeta = { ok: false, count: 0 };
   let sportsGames: GameData[] = [];
 
-  if (sportsSettled.status === "fulfilled") {
-    sportsGames = sportsSettled.value;
+  if (!needLiveTheSportsDb) {
+    sportsMeta.ok = true;
+    sportsMeta.count = 0;
+  } else if (sportsSettled.status === "fulfilled") {
+    sportsGames = sportsSettled.value.filter((g) => {
+      const lg = g.league.toUpperCase();
+      if (lg === "KBO" && usedFrozenKbo) return false;
+      if (lg === "NPB" && usedFrozenNpb) return false;
+      return true;
+    });
     sportsMeta.ok = true;
     sportsMeta.count = sportsGames.length;
   } else {
@@ -143,12 +212,13 @@ export async function GET(request: Request) {
     footballMeta.error = toSafeMessage(footballSettled.reason);
   }
 
+  const frozenOk = frozenGames.length > 0;
   const anySourceSucceeded =
     sportsMeta.ok ||
+    frozenOk ||
     (!mlbMeta.skipped && mlbMeta.ok) ||
     (!footballMeta.skipped && footballMeta.ok);
 
-  // 실제로 시도한 모든 일정 source가 실패한 경우만 error.
   if (!anySourceSucceeded) {
     return NextResponse.json(
       {
@@ -160,6 +230,7 @@ export async function GET(request: Request) {
             sports: sportsMeta,
             apiBaseballMlb: mlbMeta,
             football: footballMeta,
+            frozenBaseballSlate: frozenMeta,
           },
         },
         message: "경기 일정을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
@@ -168,48 +239,60 @@ export async function GET(request: Request) {
     );
   }
 
-  // 야구 일정 보완: Provider 기준 일정에 없는 KBO/NPB/MLB Odds 이벤트만 추가
-  // (동일 getOdds 호출은 Provider 캐시로 attachOddsToGames 와 공유)
   let baseballComplementMeta: Awaited<
     ReturnType<typeof complementBaseballScheduleWithOdds>
   >["meta"] | null = null;
 
-  let combinedSportsGames = [...sportsGames, ...mlbGames];
-  if (wantBaseball && (sportsMeta.ok || mlbMeta.ok)) {
+  let combinedSportsGames = [
+    ...frozenGames,
+    ...sportsGames,
+    ...mlbGames,
+  ];
+
+  if (wantBaseball && (sportsMeta.ok || mlbMeta.ok || frozenOk)) {
     const baseballPrimary = combinedSportsGames.filter(
       (g) => g.sport === "baseball",
     );
     const nonBaseballSports = combinedSportsGames.filter(
       (g) => g.sport !== "baseball",
     );
-    const wantedLeague = league?.trim().toUpperCase();
     const complementLeagues: Array<"KBO" | "NPB" | "MLB"> = [];
-    if (sportsMeta.ok && (!wantedLeague || wantedLeague === "KBO")) {
+    // Freeze가 있으면 Odds complement(API) 스킵 — artifact 전체 slate 유지
+    if (
+      !usedFrozenKbo &&
+      sportsMeta.ok &&
+      (!wantedLeague || wantedLeague === "KBO")
+    ) {
       complementLeagues.push("KBO");
     }
-    if (sportsMeta.ok && (!wantedLeague || wantedLeague === "NPB")) {
+    if (
+      !usedFrozenNpb &&
+      sportsMeta.ok &&
+      (!wantedLeague || wantedLeague === "NPB")
+    ) {
       complementLeagues.push("NPB");
     }
     if (mlbMeta.ok && (!wantedLeague || wantedLeague === "MLB")) {
       complementLeagues.push("MLB");
     }
-    try {
-      const complemented = await complementBaseballScheduleWithOdds(
-        baseballPrimary,
-        dateKst,
-        complementLeagues,
-      );
-      baseballComplementMeta = complemented.meta;
-      combinedSportsGames = [...nonBaseballSports, ...complemented.games];
-    } catch {
-      // 보완 실패 시 Provider 기준 일정만 유지
-      baseballComplementMeta = null;
+    if (complementLeagues.length > 0) {
+      try {
+        const complemented = await complementBaseballScheduleWithOdds(
+          baseballPrimary,
+          dateKst,
+          complementLeagues,
+        );
+        baseballComplementMeta = complemented.meta;
+        combinedSportsGames = [...nonBaseballSports, ...complemented.games];
+      } catch {
+        baseballComplementMeta = null;
+      }
     }
   }
 
   let games = mergeGames(combinedSportsGames, footballGames);
+  const beforeLeagueFilter = games.length;
 
-  // 병합 후에도 요청 필터를 일관 적용 (축구는 Provider 단계 필터가 없음)
   if (sport !== "all") {
     games = games.filter((g) => g.sport === sport);
   }
@@ -218,29 +301,46 @@ export async function GET(request: Request) {
     games = games.filter((g) => g.league.toLowerCase() === wanted);
   }
   games = sortGames(games);
+  const afterLeagueFilter = games.length;
 
-  // 배당 연결 — 일정 Provider 실패 처리와 완전 분리.
-  // Odds 실패 시에도 일정은 HTTP 200 으로 정상 반환한다.
-  let items: GameWithOdds[] = games.map(toBareGameWithOdds);
+  // Live Odds API: skip frozen KBO/NPB (research comparison attaches separately)
+  const skipLiveOdds = (g: GameData) => {
+    const lg = g.league.toUpperCase();
+    return (lg === "KBO" && usedFrozenKbo) || (lg === "NPB" && usedFrozenNpb);
+  };
+  const liveOddsGames = games.filter((g) => !skipLiveOdds(g));
+  const frozenOddsGames = games.filter((g) => skipLiveOdds(g));
+
+  let items: GameWithOdds[] = [];
   let oddsMeta: OddsEnrichmentMeta;
   try {
-    const enriched = await attachOddsToGames(games);
-    items = enriched.items;
-    oddsMeta = enriched.meta;
+    if (liveOddsGames.length > 0) {
+      const enriched = await attachOddsToGames(liveOddsGames);
+      items = [
+        ...enriched.items,
+        ...frozenOddsGames.map(toBareGameWithOdds),
+      ];
+      oddsMeta = enriched.meta;
+    } else {
+      items = games.map(toBareGameWithOdds);
+      oddsMeta = buildProviderErrorOddsResult([]).meta;
+      oddsMeta = {
+        ...oddsMeta,
+        // mark as skipped for frozen-only days
+      };
+    }
   } catch {
     const fallback = buildProviderErrorOddsResult(games);
     items = fallback.items;
     oddsMeta = fallback.meta;
   }
 
-  // 추천 등급 — Odds와 분리. 실패해도 일정·배당 표시는 유지.
   try {
     items = await attachRecommendationGrades(items);
   } catch {
-    // 등급 enrichment 실패 시 recommendation=null 유지
+    // keep null recommendations
   }
 
-  // Graded research outcomes — read-only snapshot. Fail soft.
   if (date) {
     try {
       const outcomes = await loadMlbResearchOutcomesByDate(date);
@@ -262,7 +362,7 @@ export async function GET(request: Request) {
         });
       }
     } catch {
-      // research outcome enrichment 실패 시 카드는 기존대로
+      // soft fail
     }
   }
 
@@ -270,16 +370,43 @@ export async function GET(request: Request) {
     try {
       items = await attachKboOddsComparisonToGames(items, date);
     } catch {
-      // comparison artifact enrichment 실패 시 기존 카드 유지
+      // soft fail
     }
   }
 
   items = dedupeGameWithOddsItems(items);
+  {
+    const order = new Map(
+      sortGames(items.map((i) => i.game)).map((g, idx) => [g.id, idx]),
+    );
+    items = [...items].sort(
+      (a, b) => (order.get(a.game.id) ?? 0) - (order.get(b.game.id) ?? 0),
+    );
+  }
 
   const partial =
-    !sportsMeta.ok ||
+    (needLiveTheSportsDb && !sportsMeta.ok) ||
     (!mlbMeta.skipped && !mlbMeta.ok) ||
     (!footballMeta.skipped && !footballMeta.ok);
+
+  const finalKbo = items.filter((i) => i.game.league.toUpperCase() === "KBO")
+    .length;
+  const finalNpb = items.filter((i) => i.game.league.toUpperCase() === "NPB")
+    .length;
+
+  const slateDebug: SlateDebugCounts = {
+    frozenKbo: frozenMeta?.kboUniqueCount ?? 0,
+    frozenNpbRaw: frozenMeta?.npbRawCount ?? 0,
+    frozenNpbUnique: frozenMeta?.npbUniqueCount ?? 0,
+    liveSportsAfterFilter: sportsMeta.count,
+    beforeLeagueFilter,
+    afterLeagueFilter,
+    finalKbo,
+    finalNpb,
+    usedFrozenKbo,
+    usedFrozenNpb,
+    skippedLiveTheSportsDb: !needLiveTheSportsDb,
+  };
 
   return NextResponse.json(
     {
@@ -287,20 +414,29 @@ export async function GET(request: Request) {
       meta: {
         status: partial ? "partial" : "success",
         date: date ?? null,
+        dateKstResolved: dateKst,
         sources: {
           sports: sportsMeta,
           apiBaseballMlb: mlbMeta,
           football: footballMeta,
+          frozenBaseballSlate: frozenMeta,
         },
         baseballScheduleComplement: baseballComplementMeta,
         odds: oddsMeta,
+        ...(process.env.NODE_ENV === "development"
+          ? { slateDebug }
+          : {}),
       },
     },
-    { status: 200 },
+    {
+      status: 200,
+      headers: {
+        "Cache-Control": "no-store, max-age=0",
+      },
+    },
   );
 }
 
-/** 오류 메시지에서 키 흔적 제거 */
 function toSafeMessage(reason: unknown): string {
   const raw =
     reason instanceof Error

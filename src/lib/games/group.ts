@@ -4,6 +4,12 @@ import { getFootballLeaguePriorityByName } from "@/constants/football-leagues";
 /** 야구 리그 우선순위 (축구 관심 리그보다 앞) */
 const BASEBALL_LEAGUE_ORDER = ["NPB", "KBO", "MLB"];
 
+/**
+ * 일일 full slate 리그 — 초기 노출 truncate 금지.
+ * (TheSportsDB eventsday 3건 상한과 UI "더 보기"가 겹치면 3장만 보이는 착시 방지)
+ */
+export const FULL_SLATE_LEAGUES = new Set(["NPB", "KBO"]);
+
 /** 리그당 초기 노출 경기 수 — "더 보기" 확장 대비 */
 export const LEAGUE_INITIAL_VISIBLE = 10;
 
@@ -58,7 +64,9 @@ export function groupGamesByLeague(items: GameWithOdds[]): LeagueGroup[] {
       const sorted = [...leagueItems].sort((a, b) =>
         timeKey(a.game.startTime).localeCompare(timeKey(b.game.startTime)),
       );
-      const visibleGames = sorted.slice(0, LEAGUE_INITIAL_VISIBLE);
+      const visibleGames = FULL_SLATE_LEAGUES.has(league)
+        ? sorted
+        : sorted.slice(0, LEAGUE_INITIAL_VISIBLE);
 
       return {
         league,

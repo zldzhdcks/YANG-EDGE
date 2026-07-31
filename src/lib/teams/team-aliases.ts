@@ -106,6 +106,7 @@ export const TEAM_ALIASES: TeamAliasEntry[] = [
     originalNames: [
       "Tohoku Rakuten Golden Eagles",
       "Rakuten Golden Eagles",
+      "Rakuten Gold. Eagles",
       "라쿠텐",
     ],
     league: "NPB",
@@ -128,6 +129,7 @@ export const TEAM_ALIASES: TeamAliasEntry[] = [
     originalNames: [
       "Fukuoka SoftBank Hawks",
       "SoftBank Hawks",
+      "Fukuoka S. Hawks",
       "소프트뱅크",
       "소프트뱅크 호크스",
     ],

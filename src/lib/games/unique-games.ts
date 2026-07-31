@@ -43,9 +43,17 @@ export function dedupeGameWithOddsItems(items: GameWithOdds[]): GameWithOdds[] {
   return [...byIdentity.values()];
 }
 
+/**
+ * /games 카드 React key — exact gameId 우선.
+ * externalProvider만 있고 externalId가 비어 있으면(provider: "")로
+ * 리그 전체가 동일 key가 되어 row가 사라질 수 있다.
+ */
 export function getStableGameRenderKey(game: GameData): string {
+  if (game.id && game.id.trim() !== "") {
+    return game.id;
+  }
   if (game.externalProvider && game.externalId) {
     return `${game.league}|${game.externalProvider}|${game.externalId}`;
   }
-  return `${game.id}|${game.date}|${game.startTime}`;
+  return `${game.league}|${normalizeToken(game.homeTeam)}|${normalizeToken(game.awayTeam)}|${game.date}|${game.startTime}`;
 }

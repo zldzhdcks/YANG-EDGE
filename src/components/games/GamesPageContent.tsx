@@ -10,6 +10,7 @@ import {
   parseGamesDateParam,
 } from "@/lib/datetime/games-date";
 import { buildGamesFilterSummary } from "@/lib/games/filter-summary";
+import { groupGamesByLeague } from "@/lib/games/group";
 import {
   DEFAULT_RECOMMENDATION_FILTER,
   countRecommendationFilters,
@@ -31,15 +32,67 @@ type GamesApiResponse = {
   games: GameWithOdds[];
   meta?: {
     status?: "success" | "partial" | "error";
-    sources?: Record<string, { ok: boolean; count: number; error?: string }>;
+    sources?: Record<string, unknown>;
+    slateDebug?: {
+      finalKbo?: number;
+      finalNpb?: number;
+      usedFrozenKbo?: boolean;
+      usedFrozenNpb?: boolean;
+    };
   };
 };
+
+type FrozenSlateMeta = {
+  kboUniqueCount?: number;
+  npbUniqueCount?: number;
+  usedFrozenKbo?: boolean;
+  usedFrozenNpb?: boolean;
+};
+
+function readFrozenSlateMeta(
+  meta: GamesApiResponse["meta"],
+): FrozenSlateMeta | null {
+  const raw = meta?.sources?.frozenBaseballSlate;
+  if (!raw || typeof raw !== "object") return null;
+  return raw as FrozenSlateMeta;
+}
 
 type LoadedGames = {
   date: string;
   items: GameWithOdds[];
   ok: boolean;
+  usedFrozenSlate?: boolean;
 };
+
+function countLeague(items: GameWithOdds[], league: string): number {
+  return items.filter((item) => item.game.league === league).length;
+}
+
+/**
+ * Freeze-backed fuller slate 가 이미 있으면, 같은 date의 더 얇은 응답으로
+ * KBO/NPB 목록을 덮어쓰지 않는다 (live 3건 overwrite 방지).
+ */
+export function shouldKeepPreviousGamesLoad(
+  prev: LoadedGames | null,
+  nextDate: string,
+  nextItems: GameWithOdds[],
+  usedFrozenSlate: boolean,
+): boolean {
+  if (!prev || !prev.ok || prev.date !== nextDate) return false;
+  if (!prev.usedFrozenSlate && !usedFrozenSlate) return false;
+
+  const prevKbo = countLeague(prev.items, "KBO");
+  const prevNpb = countLeague(prev.items, "NPB");
+  const nextKbo = countLeague(nextItems, "KBO");
+  const nextNpb = countLeague(nextItems, "NPB");
+
+  const shrinksKbo = nextKbo < prevKbo;
+  const shrinksNpb = nextNpb < prevNpb;
+  if (!shrinksKbo && !shrinksNpb) return false;
+
+  // Only block shrink when previous load already had a meaningful full slate.
+  return prevKbo >= 5 || prevNpb >= 6 || Boolean(prev.usedFrozenSlate);
+}
 
 const RECOMMENDATION_FILTER_EVENT = "yang-edge:recommendation-filter";
 
@@ -96,15 +149,41 @@ export default function GamesPageContent() {
         const body = (await res.json()) as GamesApiResponse;
         // 두 일정 Provider 모두 실패한 경우만 오류 (partial 은 표시)
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return Array.isArray(body.games) ? body.games : [];
+        const games = Array.isArray(body.games) ? body.games : [];
+        const frozen = readFrozenSlateMeta(body.meta);
+        const slate = body.meta?.slateDebug;
+        const usedFrozenSlate = Boolean(
+          frozen?.usedFrozenKbo ||
+            frozen?.usedFrozenNpb ||
+            slate?.usedFrozenKbo ||
+            slate?.usedFrozenNpb,
+        );
+        return { games, usedFrozenSlate };
       })
-      .then((data) => {
+      .then((payload) => {
         if (cancelled) return;
-        setLoaded({ date, items: data, ok: true });
+        setLoaded((prev) => {
+          if (
+            shouldKeepPreviousGamesLoad(
+              prev,
+              date,
+              payload.games,
+              payload.usedFrozenSlate,
+            )
+          ) {
+            return prev;
+          }
+          return {
+            date,
+            items: payload.games,
+            ok: true,
+            usedFrozenSlate: payload.usedFrozenSlate,
+          };
+        });
       })
       .catch(() => {
         if (cancelled) return;
-        setLoaded({ date, items: [], ok: false });
+        setLoaded({ date, items: [], ok: false, usedFrozenSlate: false });
       });
 
     return () => {
@@ -163,6 +242,39 @@ export default function GamesPageContent() {
     [date, sport, recommendation, search, resultCount],
   );
 
+  const pipelineDebug = useMemo(() => {
+    const stateKbo = countLeague(items, "KBO");
+    const stateNpb = countLeague(items, "NPB");
+    const filteredKbo = countLeague(filteredItems, "KBO");
+    const filteredNpb = countLeague(filteredItems, "NPB");
+    const groups = groupGamesByLeague(filteredItems);
+    const kboGroup = groups.find((g) => g.league === "KBO");
+    const npbGroup = groups.find((g) => g.league === "NPB");
+    return {
+      date,
+      apiFetchUrl: `/api/games?date=${encodeURIComponent(date)}`,
+      state: { total: items.length, kbo: stateKbo, npb: stateNpb },
+      filtered: {
+        total: filteredItems.length,
+        kbo: filteredKbo,
+        npb: filteredNpb,
+      },
+      grouped: {
+        kbo: kboGroup?.totalCount ?? 0,
+        npb: npbGroup?.totalCount ?? 0,
+        kboVisible: kboGroup?.visibleGames.length ?? 0,
+        npbVisible: npbGroup?.visibleGames.length ?? 0,
+      },
+      usedFrozenSlate: loaded?.usedFrozenSlate ?? false,
+    };
+  }, [date, items, filteredItems, loaded?.usedFrozenSlate]);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === "production") return;
+    (window as unknown as { __YANG_EDGE_GAMES_DEBUG__?: unknown }).__YANG_EDGE_GAMES_DEBUG__ =
+      pipelineDebug;
+  }, [pipelineDebug]);
+
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
       <div className="mb-8">
@@ -173,6 +285,19 @@ export default function GamesPageContent() {
           경기를 선택하면 EDGE Detail로 이동합니다.
         </p>
       </div>
+
+      {process.env.NODE_ENV !== "production" && state === "success" && (
+        <pre
+          data-testid="games-pipeline-debug"
+          className="mb-4 overflow-x-auto rounded-lg border border-amber-500/40 bg-amber-500/10 p-3 text-[11px] leading-relaxed text-amber-100"
+        >
+          {`[games pipeline]
+1 API fetch → state: KBO ${pipelineDebug.state.kbo} / NPB ${pipelineDebug.state.npb} (total ${pipelineDebug.state.total}) url=${pipelineDebug.apiFetchUrl} frozen=${pipelineDebug.usedFrozenSlate}
+2 filtered: KBO ${pipelineDebug.filtered.kbo} / NPB ${pipelineDebug.filtered.npb}
+3 grouped: KBO ${pipelineDebug.grouped.kbo} (visible ${pipelineDebug.grouped.kboVisible}) / NPB ${pipelineDebug.grouped.npb} (visible ${pipelineDebug.grouped.npbVisible})
+4 rendered: see section data-visible-count (must match grouped visible)`}
+        </pre>
+      )}
 
       <div className="space-y-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">

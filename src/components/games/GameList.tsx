@@ -3,7 +3,11 @@
 import { useState } from "react";
 import type { GameWithOdds } from "@/types/game-with-odds";
 import Card from "@/components/ui/Card";
-import { groupGamesByLeague, type LeagueGroup } from "@/lib/games/group";
+import {
+  FULL_SLATE_LEAGUES,
+  groupGamesByLeague,
+  type LeagueGroup,
+} from "@/lib/games/group";
 import { getStableGameRenderKey } from "@/lib/games/unique-games";
 import GameCard from "./GameCard";
 
@@ -46,10 +50,16 @@ function LeagueSection({
   listDate?: string;
 }) {
   const [expanded, setExpanded] = useState(false);
-  const shown = expanded ? group.games : group.visibleGames;
+  const fullSlate = FULL_SLATE_LEAGUES.has(group.league);
+  const shown = fullSlate || expanded ? group.games : group.visibleGames;
 
   return (
-    <section>
+    <section
+      data-league={group.league}
+      data-total-count={group.totalCount}
+      data-visible-count={shown.length}
+      data-rendered-count={shown.length}
+    >
       <div className="mb-3 flex items-baseline justify-between gap-3">
         <h2 className="text-sm font-semibold tracking-wide text-white">
           {group.league}
@@ -60,7 +70,7 @@ function LeagueSection({
       <Card padding="none" className="rounded-xl px-4 sm:px-6">
         {shown.map((item) => (
           <GameCard
-            key={getStableGameRenderKey(item.game)}
+            key={item.game.id || getStableGameRenderKey(item.game)}
             game={item.game}
             odds={item.oddsMatch.matched ? item.odds : null}
             oddsComparison={item.oddsComparison ?? null}
@@ -74,7 +84,7 @@ function LeagueSection({
         ))}
       </Card>
 
-      {group.hasMore && !expanded && (
+      {!fullSlate && group.hasMore && !expanded && (
         <button
           type="button"
           onClick={() => setExpanded(true)}
