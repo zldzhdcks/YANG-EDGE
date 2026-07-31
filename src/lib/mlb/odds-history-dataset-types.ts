@@ -37,7 +37,11 @@ export type OddsCollectionStatus =
   | "NOT_COLLECTED"
   | "PROVIDER_ERROR"
   | "MATCH_NOT_FOUND"
-  | "INVALID_RESPONSE";
+  | "INVALID_RESPONSE"
+  | "FORMAT_MISMATCH"
+  | "ODDS_AFTER_CUTOFF"
+  | "TEAM_MAPPING_FAILED"
+  | "MARKET_NOT_AVAILABLE";
 
 export type OddsNormalizedMarketType =
   | "moneyline"
@@ -84,6 +88,15 @@ export type OddsHistoryDatasetRow = {
   collectionStatus?: OddsCollectionStatus;
   /** Human-readable reason / notes for collectionStatus. */
   reason?: string | null;
+  /** Structured partial / format reasons (additive). */
+  partialReasons?: string[];
+  oddsFormatDeclared?: string | null;
+  oddsFormatEffective?: string | null;
+  formatValidationStatus?: string | null;
+  /** Timestamp contract (additive). sourceTimestamp deprecated alias of capturedAt. */
+  fetchedAt?: string | null;
+  marketLastUpdate?: string | null;
+  artifactGeneratedAt?: string | null;
   openingOdds: number | null;
   latestOdds: number | null;
   marketProbability: number | null;

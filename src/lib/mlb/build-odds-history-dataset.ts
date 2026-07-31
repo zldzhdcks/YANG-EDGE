@@ -15,7 +15,9 @@ import {
   normalizeTeamNameForOdds,
 } from "../odds/match-odds-to-game";
 import { buildOddsData } from "../odds/odds-provider";
+import { marketProbabilityFromDecimalPair } from "../odds/normalize-odds-price";
 import type { OddsBookmaker, OddsData } from "../odds/types";
+import type { OddsPriceFormat } from "../odds/normalize-odds-price";
 import { loadMlbScheduleArtifact } from "./build-mlb-schedule-artifact";
 import {
   EMPTY_PREDICTION_HASH,
@@ -181,6 +183,20 @@ function marketProbabilityPctFromProvider(
   homeTeam: string,
   awayTeam: string,
 ): number | null {
+  // Guard: both decimal moneyline prices required; never one-sided / American raw.
+  const pair = marketProbabilityFromDecimalPair(
+    odds.bestHomeOdds,
+    odds.bestAwayOdds,
+  );
+  if (!pair.usable) return null;
+  if (
+    odds.formatValidationStatus &&
+    odds.formatValidationStatus !== "FORMAT_CONFIRMED_DECIMAL" &&
+    odds.formatValidationStatus !== "FORMAT_CONVERTED_FROM_AMERICAN"
+  ) {
+    return null;
+  }
+
   const margin = removeBookmakerMargin({
     home: odds.impliedHomeProbability,
     away: odds.impliedAwayProbability,
@@ -196,7 +212,11 @@ function marketProbabilityPctFromProvider(
   return Math.round(prob * 1000) / 10;
 }
 
-function parseTheOddsApiEvents(body: unknown, sportKey: string): OddsData[] {
+function parseTheOddsApiEvents(
+  body: unknown,
+  sportKey: string,
+  sourceFormat: OddsPriceFormat = "decimal",
+): OddsData[] {
   const rawEvents = Array.isArray(body) ? body : [];
   const out: OddsData[] = [];
   for (const raw of rawEvents) {
@@ -256,6 +276,7 @@ function parseTheOddsApiEvents(body: unknown, sportKey: string): OddsData[] {
         bookmakers,
         lastUpdated,
         source: "the-odds-api",
+        sourceFormat,
       }),
     );
   }
@@ -589,6 +610,7 @@ async function fetchOddsApiEventsForDate(
       markets: "h2h,spreads,totals",
       commenceTimeFrom: dayStart.toISOString().replace(".000Z", "Z"),
       commenceTimeTo: dayEnd.toISOString().replace(".000Z", "Z"),
+      oddsFormat: "decimal",
     };
 
     const body = await getRawOddsJson(
@@ -612,7 +634,7 @@ async function fetchOddsApiEventsForDate(
 
     return {
       sportKey: resolvedSportKey,
-      events: parseTheOddsApiEvents(body, resolvedSportKey),
+      events: parseTheOddsApiEvents(body, resolvedSportKey, "decimal"),
       fetched: true,
       error: null,
     };
@@ -719,6 +741,10 @@ export async function buildOddsHistoryDatasetV1(input: {
     PROVIDER_ERROR: 0,
     MATCH_NOT_FOUND: 0,
     INVALID_RESPONSE: 0,
+    FORMAT_MISMATCH: 0,
+    ODDS_AFTER_CUTOFF: 0,
+    TEAM_MAPPING_FAILED: 0,
+    MARKET_NOT_AVAILABLE: 0,
   };
 
   let openingCollected = 0;
@@ -779,23 +805,55 @@ export async function buildOddsHistoryDatasetV1(input: {
         providerOdds = match.odds;
         matchMethod = match.method;
         warnings.push(`PROVIDER_MATCH=${match.method}`);
-        const homeOk = providerOdds.bestHomeOdds != null;
-        const awayOk = providerOdds.bestAwayOdds != null;
-        if (!homeOk && !awayOk) {
-          collectionStatus = "INVALID_RESPONSE";
-          reason = "Provider event matched but h2h prices were invalid.";
-          warnings.push("INVALID_RESPONSE");
-        } else if (!homeOk || !awayOk) {
-          collectionStatus = "PARTIAL";
-          reason = "Provider matched but moneyline is incomplete.";
+
+        const formatStatus = providerOdds.formatValidationStatus;
+        if (
+          formatStatus === "FORMAT_MISMATCH" ||
+          formatStatus === "FORMAT_UNKNOWN"
+        ) {
+          collectionStatus = "FORMAT_MISMATCH";
+          reason =
+            formatStatus === "FORMAT_MISMATCH"
+              ? "ODDS_FORMAT_MISMATCH: provider payload is not safe decimal."
+              : "ODDS_FORMAT_UNKNOWN: cannot safely normalize moneyline prices.";
+          warnings.push(formatStatus);
+          warnings.push(
+            ...(providerOdds.formatPartialReasons ?? []).map(
+              (r) => `PARTIAL_REASON=${r}`,
+            ),
+          );
         } else {
-          collectionStatus = "COLLECTED";
-          reason = "Moneyline collected from authorized Odds Provider.";
+          const homeOk = providerOdds.bestHomeOdds != null;
+          const awayOk = providerOdds.bestAwayOdds != null;
+          if (!homeOk && !awayOk) {
+            collectionStatus = "INVALID_RESPONSE";
+            reason = "Provider event matched but h2h prices were invalid.";
+            warnings.push("INVALID_RESPONSE");
+          } else if (!homeOk || !awayOk) {
+            collectionStatus = "PARTIAL";
+            reason = "Provider matched but moneyline is incomplete.";
+            if (!homeOk) warnings.push("PARTIAL_REASON=HOME_OUTCOME_MISSING");
+            if (!awayOk) warnings.push("PARTIAL_REASON=AWAY_OUTCOME_MISSING");
+          } else {
+            collectionStatus = "COLLECTED";
+            reason = "Moneyline collected from authorized Odds Provider.";
+          }
         }
       }
     }
 
     const capturedAt = providerOdds?.lastUpdated ?? null;
+    if (
+      capturedAt &&
+      game.commenceTimeUtc &&
+      Date.parse(capturedAt) >= Date.parse(game.commenceTimeUtc) &&
+      (collectionStatus === "COLLECTED" || collectionStatus === "PARTIAL")
+    ) {
+      collectionStatus = "ODDS_AFTER_CUTOFF";
+      reason = "ODDS_AFTER_CUTOFF: capturedAt >= scheduledStartTime.";
+      warnings.push("ODDS_AFTER_CUTOFF");
+    }
+
     const markets = buildNormalizedMarkets(
       providerOdds,
       game.homeTeam,
@@ -934,9 +992,27 @@ export async function buildOddsHistoryDatasetV1(input: {
       joinQuality,
       collectionStatus,
       reason,
+      partialReasons: [
+        ...new Set([
+          ...(providerOdds?.formatPartialReasons ?? []),
+          ...warnings
+            .filter((w) => w.startsWith("PARTIAL_REASON="))
+            .map((w) => w.replace("PARTIAL_REASON=", "")),
+          ...(collectionStatus === "FORMAT_MISMATCH"
+            ? ["FORMAT_MISMATCH"]
+            : []),
+        ]),
+      ],
+      oddsFormatDeclared: providerOdds?.oddsFormatDeclared ?? null,
+      oddsFormatEffective: providerOdds?.oddsFormatEffective ?? null,
+      formatValidationStatus: providerOdds?.formatValidationStatus ?? null,
+      fetchedAt: generatedAt,
+      marketLastUpdate: capturedAt,
+      artifactGeneratedAt: generatedAt,
       openingOdds,
       latestOdds,
-      marketProbability,
+      marketProbability:
+        collectionStatus === "COLLECTED" ? marketProbability : null,
       provider,
       bookmaker,
       marketType: "h2h",

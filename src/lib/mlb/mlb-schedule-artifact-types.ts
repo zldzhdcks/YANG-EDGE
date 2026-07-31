@@ -15,8 +15,16 @@ export type MlbScheduleArtifactGame = {
   awayTeamId: number | null;
   startTimeKst: string | null;
   commenceTimeUtc: string;
+  /** Alias of commenceTimeUtc for timestamp contract clarity. */
+  scheduledStartTime?: string;
   officialDate: string;
   statusAbstract: string;
+  /** MLB Stats API status.detailedState (Warmup, Pre-Game, In Progress, …). */
+  statusDetailed: string | null;
+  /** MLB Stats API status.codedGameState when present. */
+  codedGameState: string | null;
+  collectedAt?: string;
+  source?: "mlb-stats-api";
   league: "MLB";
 };
 

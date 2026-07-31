@@ -256,6 +256,7 @@ function mapEvent(raw: RawEvent, fallbackSportKey: string) {
     bookmakers,
     lastUpdated,
     source: "the-odds-api",
+    sourceFormat: "decimal",
   });
 }
 

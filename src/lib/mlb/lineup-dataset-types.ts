@@ -70,6 +70,11 @@ export type LineupDatasetRow = {
   /** mlb-statsapi-boxscore | mlb-statsapi-schedule-lineups | null */
   lineupSource?: string | null;
   sourceTimestamp: string | null;
+  /** When lineup provider payload was read. */
+  fetchedAt?: string | null;
+  artifactGeneratedAt?: string | null;
+  /** When confirmed lineup became official (if known). */
+  lineupConfirmedAt?: string | null;
   cutoffTime: string | null;
   lineupStatus: LineupStatus;
   battingOrder: LineupBatterRow[];

@@ -9,11 +9,12 @@
  *
  *   npx tsx --env-file=.env.local scripts/run-mlb-remaining-pregame-accumulation-v1.ts [YYYY-MM-DD]
  */
-import { access, copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
+import { access, copyFile, mkdir, readFile, unlink } from "node:fs/promises";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { instantToKst } from "../src/lib/datetime/kst";
 import { writeJsonAtomic } from "../src/lib/mlb/build-mlb-schedule-artifact";
+import { classifyPregameGame } from "../src/lib/mlb/pregame-eligibility";
 import { spawnLocalTsxScript } from "./lib/spawn-local-tsx";
 
 const DATE =
@@ -106,50 +107,112 @@ async function preserveIfExists(rel: string, runId: string): Promise<string | nu
 function classifyGame(
   commenceTimeUtc: string | null,
   statusAbstract: string | null,
+  statusDetailed: string | null,
   nowMs: number,
+  codedGameState: string | null = null,
 ): { status: EligibilityStatus; exclusionReason: string | null; pregameEligible: boolean } {
-  const abstract = (statusAbstract ?? "").toLowerCase();
-  if (/postpon/.test(abstract)) {
-    return {
-      status: "POSTPONED",
-      exclusionReason: "schedule statusAbstract postponed",
-      pregameEligible: false,
-    };
+  return classifyPregameGame({
+    commenceTimeUtc,
+    statusAbstract,
+    statusDetailed,
+    codedGameState,
+    nowMs,
+  });
+}
+
+/** After revision copy, allow immutable builders to rewrite primary artifact. */
+async function forceRefreshPrimary(rel: string): Promise<void> {
+  const abs = path.join(process.cwd(), rel);
+  if (!(await exists(abs))) return;
+  await unlink(abs);
+}
+
+/**
+ * Keep already-started / graded predictions from the pre-run revision.
+ * Only remaining-eligible gameIds may adopt the freshly built prediction rows.
+ */
+async function mergePredictionProtectingPrior(
+  predictionRel: string,
+  revisionRel: string | null,
+  eligibleInternalIds: Set<string>,
+): Promise<{ restored: number; updatedEligible: number }> {
+  if (!revisionRel) return { restored: 0, updatedEligible: 0 };
+  const current = asRecord(await readJson(predictionRel));
+  const prior = asRecord(await readJson(revisionRel));
+  if (!current || !prior) return { restored: 0, updatedEligible: 0 };
+
+  const currentRows = Array.isArray(current.predictions)
+    ? (current.predictions as unknown[])
+    : [];
+  const priorRows = Array.isArray(prior.predictions)
+    ? (prior.predictions as unknown[])
+    : [];
+  const currentById = new Map<string, Record<string, unknown>>();
+  for (const raw of currentRows) {
+    const row = asRecord(raw);
+    const id = asString(row?.gameId);
+    if (id && row) currentById.set(id, row);
   }
-  if (/cancel/.test(abstract)) {
-    return {
-      status: "CANCELLED",
-      exclusionReason: "schedule statusAbstract cancelled",
-      pregameEligible: false,
-    };
+  const priorById = new Map<string, Record<string, unknown>>();
+  for (const raw of priorRows) {
+    const row = asRecord(raw);
+    const id = asString(row?.gameId);
+    if (id && row) priorById.set(id, row);
   }
-  if (!commenceTimeUtc) {
-    return {
-      status: "PASS_START_TIME_UNKNOWN",
-      exclusionReason: "commenceTimeUtc missing",
-      pregameEligible: false,
-    };
+
+  let restored = 0;
+  let updatedEligible = 0;
+  const merged: Record<string, unknown>[] = [];
+  const allIds = new Set([...priorById.keys(), ...currentById.keys()]);
+  for (const id of [...allIds].sort()) {
+    const priorRow = priorById.get(id);
+    const nextRow = currentById.get(id);
+    const graded =
+      priorRow &&
+      asString(priorRow.resultStatus) != null &&
+      asString(priorRow.resultStatus) !== "pending";
+    if (eligibleInternalIds.has(id) && nextRow && !graded) {
+      merged.push(nextRow);
+      updatedEligible += 1;
+      continue;
+    }
+    if (priorRow) {
+      merged.push(priorRow);
+      if (nextRow && nextRow !== priorRow) restored += 1;
+      continue;
+    }
+    if (nextRow) merged.push(nextRow);
   }
-  const startMs = Date.parse(commenceTimeUtc);
-  if (!Number.isFinite(startMs)) {
-    return {
-      status: "PASS_START_TIME_UNKNOWN",
-      exclusionReason: "commenceTimeUtc unparseable",
-      pregameEligible: false,
-    };
-  }
-  if (startMs <= nowMs) {
-    return {
-      status: "EXCLUDED_ALREADY_STARTED",
-      exclusionReason: `commenceTimeUtc ${commenceTimeUtc} <= collectionStartedAt`,
-      pregameEligible: false,
-    };
-  }
-  return {
-    status: "PREGAME_ELIGIBLE",
-    exclusionReason: null,
-    pregameEligible: true,
+
+  const metaBase = asRecord(current.meta) ?? {};
+  const immutableKeys = Array.isArray(metaBase.immutablePredictionFields)
+    ? (metaBase.immutablePredictionFields as string[])
+    : [];
+  const fingerprintList = merged.map((row) => {
+    const payload: Record<string, unknown> = {};
+    for (const key of immutableKeys) payload[key] = row[key];
+    return JSON.stringify(payload);
+  });
+  const predictionHashSha256 = sha256Text(JSON.stringify(fingerprintList));
+
+  const out = {
+    ...current,
+    meta: {
+      ...metaBase,
+      immediateRunProtectedPriorPredictions: true,
+      immediateRunUpdatedEligibleCount: updatedEligible,
+      immediateRunRestoredPriorCount: restored,
+      immediateRunPriorRevision: revisionRel,
+      predictionHashSha256,
+    },
+    predictions: merged,
+    summary: {
+      ...(asRecord(current.summary) ?? {}),
+      total: merged.length,
+    },
   };
+  await writeJsonAtomic(path.join(process.cwd(), predictionRel), out);
+  return { restored, updatedEligible };
 }
 
 async function runStep(
@@ -229,8 +292,16 @@ async function main() {
     starter: await preserveIfExists(paths.starter, RUN_ID),
     odds: await preserveIfExists(paths.odds, RUN_ID),
     prediction: await preserveIfExists(paths.prediction, RUN_ID),
+    remaining: await preserveIfExists(paths.remaining, RUN_ID),
+    cutoffAudit: await preserveIfExists(paths.cutoffAudit, RUN_ID),
+    collectionSummary: await preserveIfExists(paths.collectionSummary, RUN_ID),
+    daily: await preserveIfExists(paths.daily, RUN_ID),
   };
   console.log("revisions:", revisions);
+
+  // Starter builder is immutable-if-exists; revision copy already preserved prior.
+  await forceRefreshPrimary(paths.starter);
+  console.log("starter primary cleared for refresh (revision retained)");
 
   const steps: StepRun[] = [];
 
@@ -253,7 +324,16 @@ async function main() {
     const g = asRecord(raw) ?? {};
     const commenceTimeUtc = asString(g.commenceTimeUtc);
     const statusAbstract = asString(g.statusAbstract);
-    const classified = classifyGame(commenceTimeUtc, statusAbstract, nowMs);
+    const statusDetailed =
+      asString(g.statusDetailed) ?? asString(g.detailedState);
+    const codedGameState = asString(g.codedGameState);
+    const classified = classifyGame(
+      commenceTimeUtc,
+      statusAbstract,
+      statusDetailed,
+      nowMs,
+      codedGameState,
+    );
     const kst = commenceTimeUtc ? instantToKst(commenceTimeUtc) : null;
     return {
       gamePk: asNumber(g.gamePk),
@@ -267,6 +347,8 @@ async function main() {
       collectionStartedAt: COLLECTION_STARTED_AT,
       scheduleAsOf: asString(asRecord(scheduleDoc?.meta)?.generatedAt),
       statusAbstract,
+      statusDetailed,
+      codedGameState,
       eligibilityStatus: classified.status,
       pregameEligible: classified.pregameEligible,
       exclusionReason: classified.exclusionReason,
@@ -344,6 +426,22 @@ async function main() {
     ),
   );
 
+  const eligibleIds = new Set(
+    eligibilityGames
+      .filter((g) => g.pregameEligible)
+      .map((g) => g.internalGameId)
+      .filter((x): x is string => !!x),
+  );
+
+  const protect = await mergePredictionProtectingPrior(
+    paths.prediction,
+    revisions.prediction,
+    eligibleIds,
+  );
+  console.log(
+    `prediction protect: updatedEligible=${protect.updatedEligible} restoredPrior=${protect.restored}`,
+  );
+
   // Load outputs for audit
   const starterDoc = asRecord(await readJson(paths.starter));
   const oddsDoc = asRecord(await readJson(paths.odds));
@@ -368,13 +466,6 @@ async function main() {
     const id = asString(p?.gameId);
     if (id && p) predById.set(id, p);
   }
-
-  const eligibleIds = new Set(
-    eligibilityGames
-      .filter((g) => g.pregameEligible)
-      .map((g) => g.internalGameId)
-      .filter((x): x is string => !!x),
-  );
 
   type AuditGame = {
     gamePk: number | null;
@@ -573,9 +664,17 @@ async function main() {
     } else if (inputStatus === "BLOCKED") {
       predictionStatus = "PASS";
       passReason = `inputStatus=BLOCKED; ${(Array.isArray(pred.inputWarnings) ? pred.inputWarnings : []).join(",")}`;
+    } else if (oddsStatus === "FORMAT_MISMATCH") {
+      predictionStatus = "PASS";
+      passReason = "ODDS_FORMAT_MISMATCH";
     } else if (baselineStatus === "PASS" || baselineStatus === "INSUFFICIENT") {
       predictionStatus = "PASS";
       passReason = `baselineStatus=${baselineStatus}`;
+    } else if (asString(pred?.officialStatus) === "PASS") {
+      predictionStatus = "PASS";
+      passReason = Array.isArray(pred?.passReasons)
+        ? (pred.passReasons as string[]).join(",")
+        : "officialStatus=PASS";
     } else if (baselineStatus === "BASELINE_CANDIDATE") {
       predictionStatus = "PREDICTED";
       passReason = null;

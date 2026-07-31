@@ -91,6 +91,7 @@ export async function buildMlbScheduleArtifactV1(input: {
   const games: MlbScheduleArtifactGame[] = scheduleAll
     .map((g) => {
       const kst = instantToKst(g.commenceTimeUtc);
+      const collectedAt = new Date().toISOString();
       return {
         internalGameId: buildGameId("MLB", g.homeTeam, g.awayTeam),
         gamePk: g.gamePk,
@@ -100,8 +101,13 @@ export async function buildMlbScheduleArtifactV1(input: {
         awayTeamId: g.awayTeamId,
         startTimeKst: kst?.time?.slice(0, 5) ?? null,
         commenceTimeUtc: g.commenceTimeUtc,
+        scheduledStartTime: g.commenceTimeUtc,
         officialDate: g.officialDate,
         statusAbstract: g.statusAbstract,
+        statusDetailed: g.statusDetailed ?? null,
+        codedGameState: g.codedGameState ?? null,
+        collectedAt,
+        source: "mlb-stats-api" as const,
         league: "MLB" as const,
       };
     })

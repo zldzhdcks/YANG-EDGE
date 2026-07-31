@@ -63,6 +63,12 @@ export type OddsData = {
   impliedAwayProbability: number | null;
   lastUpdated: string;
   source: OddsSource;
+  /** Additive: declared provider format for this payload. */
+  oddsFormatDeclared?: import("./normalize-odds-price").OddsPriceFormat;
+  oddsFormatEffective?: import("./normalize-odds-price").OddsPriceFormat;
+  formatValidationStatus?: import("./normalize-odds-price").OddsFormatValidationStatus;
+  formatPartialReasons?: string[];
+  formatWarnings?: string[];
 };
 
 /** The Odds API 사용량 헤더 메타 (키 값 포함 금지) */

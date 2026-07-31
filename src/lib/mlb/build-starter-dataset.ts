@@ -86,6 +86,8 @@ export type ScheduleProbableGame = {
   gameDate: string;
   officialDate: string;
   statusAbstract: string;
+  statusDetailed: string | null;
+  codedGameState: string | null;
   homeTeamId: number;
   awayTeamId: number;
   homeTeam: string;
@@ -113,6 +115,10 @@ export function extractScheduleWithProbables(
       const officialDate = asString(row.officialDate) ?? gameDate?.slice(0, 10);
       const statusAbstract =
         asString(asRecord(row.status)?.abstractGameState) ?? "";
+      const statusDetailed =
+        asString(asRecord(row.status)?.detailedState) ?? null;
+      const codedGameState =
+        asString(asRecord(row.status)?.codedGameState) ?? null;
       const teams = asRecord(row.teams);
       const home = asRecord(teams?.home);
       const away = asRecord(teams?.away);
@@ -138,6 +144,8 @@ export function extractScheduleWithProbables(
         gameDate,
         officialDate,
         statusAbstract,
+        statusDetailed,
+        codedGameState,
         homeTeamId,
         awayTeamId,
         homeTeam,
@@ -486,7 +494,7 @@ export async function resolveStarterPostGameReview(input: {
     const firstId = asNumber(pitchers[0]);
     const players = asRecord(sideBox?.players) ?? {};
     let actualName: string | null = null;
-    let actualId: number | null = firstId;
+    const actualId: number | null = firstId;
     if (firstId != null) {
       const p = asRecord(players[`ID${firstId}`]);
       actualName =
@@ -588,7 +596,8 @@ export async function buildStarterDatasetV1(input: {
       ? parseOptionalPredictionSnapshot(input.predictionRaw, input.dateKst)
       : null;
   const predictionHash = optionalPrediction?.hash ?? EMPTY_PREDICTION_HASH;
-  const predictedAt = optionalPrediction?.predictedAt ?? null;
+  const documentGeneratedAt = new Date().toISOString();
+  const scheduleFetchedAt = documentGeneratedAt;
 
   const scheduleAll = await fetchMlbScheduleForDateKst(input.dateKst, usage);
   const scheduleTargets = buildMlbScheduleGameTargets(
@@ -637,7 +646,11 @@ export async function buildStarterDatasetV1(input: {
         "PROBABLE_NOT_CONFIRMED",
       ];
       const cutoffTime = game.commenceTimeUtc;
-      const sourceTimestamp = predictedAt ?? cutoffTime;
+      // Timestamp contract: do not copy prediction snapshot time into sourceTimestamp.
+      const artifactGeneratedAt = documentGeneratedAt;
+      const fetchedAt = scheduleFetchedAt ?? artifactGeneratedAt;
+      const sourceTimestamp = fetchedAt; // deprecated alias → fetchedAt
+      const statsAsOf = cutoffTime;
       let seasonStats: StarterSeasonStats | null = null;
       let recentStarts: StarterRecentStart[] = [];
       let sampleSize: number | null = null;
@@ -723,6 +736,9 @@ export async function buildStarterDatasetV1(input: {
         throws,
         probableStatus,
         sourceTimestamp,
+        fetchedAt,
+        artifactGeneratedAt,
+        statsAsOf,
         cutoffTime,
         seasonStats,
         recentStarts,
@@ -815,7 +831,7 @@ export async function buildStarterDatasetV1(input: {
       engineUseAllowed: false,
       researchOnly: true,
       dateKst: input.dateKst,
-      generatedAt: new Date().toISOString(),
+      generatedAt: documentGeneratedAt,
       predictionHashSha256: predictionHash,
       predictionUnchanged: true,
       inputHashSha256,

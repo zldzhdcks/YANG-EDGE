@@ -65,6 +65,8 @@ type BaselineStatus =
   | "MARKET_CONFLICT"
   | "INSUFFICIENT";
 
+type OfficialStatus = "ELIGIBLE" | "PASS" | "BLOCKED";
+
 type SnapshotIntegrity = "VERIFIED" | "UNVERIFIED";
 
 type MlbResearchPrediction = {
@@ -101,6 +103,17 @@ type MlbResearchPrediction = {
   integrityWarnings: string[];
   inputStatus: PredictionInputStatus;
   inputWarnings: string[];
+  /** Additive official analysis status (aligned with cutoff audit). */
+  officialStatus?: OfficialStatus;
+  officialPick?: "HOME" | "AWAY" | "DRAW" | null;
+  passReasons?: string[];
+  missingInputs?: string[];
+  researchBaseline?: {
+    pick: string | null;
+    confidence: number | null;
+    modelProbability: number | null;
+    researchOnly: true;
+  };
   resultStatus: "pending" | "graded" | string;
   homeScore: number | null;
   awayScore: number | null;
@@ -109,6 +122,68 @@ type MlbResearchPrediction = {
   gradedAt: string | null;
   feedbackClassification: string | null;
 };
+
+function deriveOfficialFields(item: MlbResearchPrediction): Pick<
+  MlbResearchPrediction,
+  | "officialStatus"
+  | "officialPick"
+  | "passReasons"
+  | "missingInputs"
+  | "researchBaseline"
+> {
+  const warnings = item.inputWarnings ?? [];
+  const missingInputs = [
+    ...new Set([...(item.missingFactors ?? []), ...warnings]),
+  ];
+  const researchBaseline = {
+    pick: item.baselinePick,
+    confidence: item.confidence,
+    modelProbability: item.modelProbability,
+    researchOnly: true as const,
+  };
+
+  if (item.inputStatus === "BLOCKED") {
+    return {
+      officialStatus: "BLOCKED",
+      officialPick: null,
+      passReasons: warnings.length ? warnings : ["INPUT_BLOCKED"],
+      missingInputs,
+      researchBaseline,
+    };
+  }
+
+  if (
+    item.inputStatus === "ELIGIBLE" &&
+    item.baselineStatus === "BASELINE_CANDIDATE" &&
+    item.baselinePick
+  ) {
+    let officialPick: "HOME" | "AWAY" | "DRAW" | null = null;
+    if (item.baselinePick === item.homeTeam) officialPick = "HOME";
+    else if (item.baselinePick === item.awayTeam) officialPick = "AWAY";
+    return {
+      officialStatus: "ELIGIBLE",
+      officialPick,
+      passReasons: [],
+      missingInputs: [],
+      researchBaseline,
+    };
+  }
+
+  const passReasons = [
+    ...warnings,
+    ...(item.baselineStatus === "INSUFFICIENT"
+      ? ["BASELINE_INSUFFICIENT"]
+      : []),
+    ...(item.inputStatus === "LIMITED_INPUT" ? ["LIMITED_INPUT"] : []),
+  ];
+  return {
+    officialStatus: "PASS",
+    officialPick: null,
+    passReasons: [...new Set(passReasons)],
+    missingInputs,
+    researchBaseline,
+  };
+}
 
 function asRecord(v: unknown): Record<string, unknown> | null {
   return typeof v === "object" && v !== null && !Array.isArray(v)
@@ -342,6 +417,10 @@ async function main() {
   }
 
   merged.sort((a, b) => a.gameId.localeCompare(b.gameId));
+  // Additive official status — does not rewrite immutable research fingerprint fields.
+  for (let i = 0; i < merged.length; i += 1) {
+    merged[i] = { ...merged[i], ...deriveOfficialFields(merged[i]) };
+  }
   const fingerprintList = merged.map((item) => predictionFingerprint(item));
   const predictionHashSha256 = createHash("sha256")
     .update(JSON.stringify(fingerprintList), "utf8")
@@ -351,6 +430,8 @@ async function main() {
     JSON.stringify(existingPredictions.map((item) => predictionFingerprint(item))) ===
       JSON.stringify(fingerprintList);
 
+  const countOfficial = (status: OfficialStatus) =>
+    merged.filter((item) => item.officialStatus === status).length;
   const countStatus = (status: BaselineStatus) =>
     merged.filter((item) => item.baselineStatus === status).length;
   const verified = merged.filter(
@@ -400,9 +481,16 @@ async function main() {
     summary: {
       total: merged.length,
       BASELINE_CANDIDATE: countStatus("BASELINE_CANDIDATE"),
-      PASS: countStatus("PASS"),
+      PASS: countOfficial("PASS"),
+      researchBaselinePass: countStatus("PASS"),
+      researchBaselineInsufficient: countStatus("INSUFFICIENT"),
       MARKET_CONFLICT: 0,
       INSUFFICIENT: countStatus("INSUFFICIENT"),
+      officialStatus: {
+        ELIGIBLE: countOfficial("ELIGIBLE"),
+        PASS: countOfficial("PASS"),
+        BLOCKED: countOfficial("BLOCKED"),
+      },
       purchaseEligible: 0,
       researchOnly: merged.length,
       snapshotIntegrityVerified: verified,

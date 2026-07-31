@@ -6,9 +6,17 @@ import type {
   OddsOutcome,
   OddsUsageMeta,
 } from "./types";
+import {
+  computeBestH2hOddsWithFormat,
+  type ComputeBestH2hOddsOptions,
+} from "./compute-best-h2h-odds";
+import { classifyH2hOutcome } from "./odds-provider-classify";
+import type { OddsPriceFormat } from "./normalize-odds-price";
 
 export type OddsProvider = import("./types").OddsProvider;
 export type OddsProviderKind = import("./types").OddsProviderKind;
+
+export { classifyH2hOutcome };
 
 /**
  * 소수 배당 → 단순 내재 확률.
@@ -25,66 +33,31 @@ export function impliedProbabilityFromDecimal(
   return 1 / decimalOdds;
 }
 
-/** h2h outcome 이름 정규화 → home | away | draw | unknown */
-export function classifyH2hOutcome(
-  outcomeName: string,
-  homeTeam: string,
-  awayTeam: string,
-): "home" | "away" | "draw" | "unknown" {
-  const n = outcomeName.trim().toLowerCase();
-  if (n === "draw" || n === "tie" || n === "x") return "draw";
-  const home = homeTeam.trim().toLowerCase();
-  const away = awayTeam.trim().toLowerCase();
-  if (n === home) return "home";
-  if (n === away) return "away";
-  return "unknown";
-}
-
 /**
  * 여러 북메이커 h2h 시장에서 홈/무/원정 최고 배당을 고른다.
- * (최고 배당 = 베터에게 유리한 큰 소수 배당)
+ * Internal standard: DECIMAL. Pass sourceFormat when provider used american.
  */
 export function computeBestH2hOdds(
   bookmakers: OddsBookmaker[],
   homeTeam: string,
   awayTeam: string,
+  options: ComputeBestH2hOddsOptions = {},
 ): {
   bestHomeOdds: number | null;
   bestDrawOdds: number | null;
   bestAwayOdds: number | null;
 } {
-  let bestHomeOdds: number | null = null;
-  let bestDrawOdds: number | null = null;
-  let bestAwayOdds: number | null = null;
-
-  for (const bm of bookmakers) {
-    const h2h = bm.markets.find((m) => m.key === "h2h");
-    if (!h2h) continue;
-
-    for (const outcome of h2h.outcomes) {
-      const side = classifyH2hOutcome(outcome.name, homeTeam, awayTeam);
-      if (side === "unknown" || !(outcome.price > 1)) continue;
-
-      if (side === "home") {
-        bestHomeOdds =
-          bestHomeOdds == null
-            ? outcome.price
-            : Math.max(bestHomeOdds, outcome.price);
-      } else if (side === "away") {
-        bestAwayOdds =
-          bestAwayOdds == null
-            ? outcome.price
-            : Math.max(bestAwayOdds, outcome.price);
-      } else {
-        bestDrawOdds =
-          bestDrawOdds == null
-            ? outcome.price
-            : Math.max(bestDrawOdds, outcome.price);
-      }
-    }
-  }
-
-  return { bestHomeOdds, bestDrawOdds, bestAwayOdds };
+  const r = computeBestH2hOddsWithFormat(
+    bookmakers,
+    homeTeam,
+    awayTeam,
+    options,
+  );
+  return {
+    bestHomeOdds: r.bestHomeOdds,
+    bestDrawOdds: r.bestDrawOdds,
+    bestAwayOdds: r.bestAwayOdds,
+  };
 }
 
 export function buildOddsData(input: {
@@ -96,12 +69,19 @@ export function buildOddsData(input: {
   bookmakers: OddsBookmaker[];
   lastUpdated: string;
   source: OddsData["source"];
+  /** Declared provider odds format (request). Default decimal. */
+  sourceFormat?: OddsPriceFormat;
 }): OddsData {
-  const best = computeBestH2hOdds(
+  const best = computeBestH2hOddsWithFormat(
     input.bookmakers,
     input.homeTeam,
     input.awayTeam,
+    { sourceFormat: input.sourceFormat ?? "decimal" },
   );
+
+  const formatOk =
+    best.formatValidationStatus === "FORMAT_CONFIRMED_DECIMAL" ||
+    best.formatValidationStatus === "FORMAT_CONVERTED_FROM_AMERICAN";
 
   return {
     externalEventId: input.externalEventId,
@@ -110,14 +90,25 @@ export function buildOddsData(input: {
     awayTeam: input.awayTeam,
     commenceTime: input.commenceTime,
     bookmakers: input.bookmakers,
-    bestHomeOdds: best.bestHomeOdds,
-    bestDrawOdds: best.bestDrawOdds,
-    bestAwayOdds: best.bestAwayOdds,
-    impliedHomeProbability: impliedProbabilityFromDecimal(best.bestHomeOdds),
-    impliedDrawProbability: impliedProbabilityFromDecimal(best.bestDrawOdds),
-    impliedAwayProbability: impliedProbabilityFromDecimal(best.bestAwayOdds),
+    bestHomeOdds: formatOk ? best.bestHomeOdds : null,
+    bestDrawOdds: formatOk ? best.bestDrawOdds : null,
+    bestAwayOdds: formatOk ? best.bestAwayOdds : null,
+    impliedHomeProbability: formatOk
+      ? impliedProbabilityFromDecimal(best.bestHomeOdds)
+      : null,
+    impliedDrawProbability: formatOk
+      ? impliedProbabilityFromDecimal(best.bestDrawOdds)
+      : null,
+    impliedAwayProbability: formatOk
+      ? impliedProbabilityFromDecimal(best.bestAwayOdds)
+      : null,
     lastUpdated: input.lastUpdated,
     source: input.source,
+    oddsFormatDeclared: best.declaredFormat,
+    oddsFormatEffective: best.effectiveFormat,
+    formatValidationStatus: best.formatValidationStatus,
+    formatPartialReasons: best.partialReasons,
+    formatWarnings: best.warnings,
   };
 }
 

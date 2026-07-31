@@ -33,6 +33,12 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# Research raw provider caches (regenerable; do not commit)
+# Tracked caches under data/cache/mlb-game-results/ are NOT covered here.
+/data/cache/research/mlb/raw/
+/data/cache/research/kbo/raw/
+/data/cache/research/mlb/derived/
+
 # vercel
 .vercel
 

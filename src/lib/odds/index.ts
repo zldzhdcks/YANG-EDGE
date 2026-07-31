@@ -20,6 +20,22 @@ export {
   oddsCacheKey,
   parseUsageHeaders,
 } from "./odds-provider";
+export {
+  computeBestH2hOddsWithFormat,
+  type ComputeBestH2hOddsResult,
+  type ComputeBestH2hOddsOptions,
+} from "./compute-best-h2h-odds";
+export {
+  normalizeOddsPrice,
+  americanToDecimal,
+  inspectBookmakersFormat,
+  marketProbabilityFromDecimalPair,
+  looksLikeAmericanOdds,
+  type OddsPriceFormat,
+  type OddsPriceConversionStatus,
+  type OddsFormatValidationStatus,
+  type NormalizeOddsPriceResult,
+} from "./normalize-odds-price";
 
 export { DummyOddsProvider } from "./dummy-odds-provider";
 export {

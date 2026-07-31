@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "mlb-odds-format-integrity-audit-v1",
+  "auditedRunId": "2026-07-31T01-28-11-004Z",
+  "dateKst": "2026-07-31",
+  "generatedAt": "2026-07-31T01:40:00.000Z",
+  "auditor": "mlb-pregame-input-integrity-guards-v1",
+  "evidenceArtifacts": [
+    "data/research/mlb/2026-07-31-odds-history-dataset-v1.json",
+    "data/research/mlb/2026-07-31-odds-history-dataset-v1.rev-2026-07-31T01-28-11-004Z.json",
+    "data/cache/research/mlb/raw/the-odds-api/commenceTimeFrom_2026-07-30T15-00-00Z__commenceTimeTo_2026-07-31T15-00-00Z__markets_h2h,spreads,totals__regions_eu__sportKey_baseball_mlb.json",
+    "data/research/mlb/2026-07-31-pregame-cutoff-audit-v1.json",
+    "data/predictions/mlb/2026-07-31.json"
+  ],
+  "affectedGamePks": [824974, 823271, 823921],
+  "rawFormat": "american",
+  "expectedFormat": "decimal",
+  "finding": "ODDS_FORMAT_MISMATCH",
+  "findingDetail": "Immediate Run refreshed The Odds API disk cache with oddsFormat=american while the odds-history builder assumed decimal (price>1). Favorites with negative American prices were dropped; underdogs passed as pseudo-decimals (e.g. 172). Official audit already recorded PASS for all three games (LINEUP_NOT_CONFIRMED / MARKET_NOT_AVAILABLE / INSUFFICIENT).",
+  "perGame": [
+    {
+      "gamePk": 824974,
+      "matchup": "Boston Red Sox @ Athletics",
+      "artifactCollectionStatus": "PARTIAL",
+      "trueClassification": "FORMAT_MISMATCH",
+      "officialPredictionImpact": "NONE_PASS_ALREADY_RECORDED"
+    },
+    {
+      "gamePk": 823271,
+      "matchup": "San Francisco Giants @ San Diego Padres",
+      "artifactCollectionStatus": "PARTIAL",
+      "trueClassification": "FORMAT_MISMATCH",
+      "officialPredictionImpact": "NONE_PASS_ALREADY_RECORDED"
+    },
+    {
+      "gamePk": 823921,
+      "matchup": "Seattle Mariners @ Los Angeles Dodgers",
+      "artifactCollectionStatus": "PARTIAL",
+      "trueClassification": "FORMAT_MISMATCH",
+      "officialPredictionImpact": "NONE_PASS_ALREADY_RECORDED"
+    }
+  ],
+  "officialPredictionImpact": "NONE_PASS_ALREADY_RECORDED",
+  "leakageImpact": "NONE",
+  "historicalArtifactRewritten": false,
+  "remediationStatus": "CODE_GUARD_ADDED",
+  "remediationNotes": [
+    "normalizeOddsPrice + inspectBookmakersFormat added",
+    "odds cache key now includes oddsFormat=decimal",
+    "FORMAT_MISMATCH collection status + marketProbability guard",
+    "01:28 prediction values / predictedAt / hashes not mutated by this audit"
+  ]
+}

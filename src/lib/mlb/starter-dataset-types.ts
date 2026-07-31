@@ -64,7 +64,15 @@ export type StarterDatasetRow = {
   probablePitcherName: string | null;
   throws: "L" | "R" | null;
   probableStatus: StarterProbableStatus;
+  /**
+   * @deprecated Prefer fetchedAt. Kept as alias for cutoff consumers.
+   */
   sourceTimestamp: string | null;
+  /** When Stats schedule/person payloads were read for this build. */
+  fetchedAt?: string | null;
+  artifactGeneratedAt?: string | null;
+  /** Season/recent-starts cutoff as-of (usually commenceTimeUtc). */
+  statsAsOf?: string | null;
   cutoffTime: string | null;
   seasonStats: StarterSeasonStats | null;
   recentStarts: StarterRecentStart[];
