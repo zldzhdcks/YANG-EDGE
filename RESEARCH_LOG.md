@@ -35,6 +35,79 @@ PROHIBITED
 
 ---
 
+## 2026-07-31 — Pregame Input Integrity Guards v1
+
+### Purpose
+Add odds format contract, schedule detailedState, timestamp separation, officialStatus schema, regression tests. Do not rewrite 01:28 Pregame artifacts.
+
+### Scope
+- Allowed: code guards, tests, historical format audit annotation, .gitignore for regenerable research raw/derived cache, docs
+- Forbidden: Engine/weight/threshold, 01:28 snapshot regeneration, PASS→Pick, git commit/push
+
+### Results (summary)
+- `normalizeOddsPrice` / `inspectBookmakersFormat` / `FORMAT_MISMATCH` collection status
+- Schedule stores `statusDetailed` + `codedGameState`
+- Starter/lineup/odds additive timestamp fields; starter no longer copies prediction time into `sourceTimestamp`
+- Prediction additive `officialStatus` / `officialPick` / `passReasons` / `researchBaseline`; summary.PASS uses officialStatus
+- Historical audit: `data/audits/2026-07-31-odds-format-integrity-audit-v1.json`
+- Tests: `npm run test:odds-format`, `npm run test:pregame-eligibility` PASS
+
+### Official conclusion
+CODE_GUARD_ADDED · historical official PASS unchanged · Leakage NONE
+
+### Engine connection
+PROHIBITED
+
+### Follow-ups
+- Remaining-pregame scheduler still deferred
+- Full Prediction artifact backfill of officialStatus not required
+- Tracked `mlb-game-results` cache policy still open
+
+---
+
+## 2026-07-31 — Remaining 3 Pregame Analysis Immediate Run v1
+
+### Purpose
+Re-collect Schedule → Starter → Odds → Lineup → Prediction → Pregame Audit for remaining gamePk 824974 / 823271 / 823921 before first pitch.
+
+### Scope
+- Allowed: remaining-pregame refresh, revision copies, cache content refresh (schedule/odds overwrite in place), PASS recording
+- Forbidden: Engine/weight/threshold change, Dataset/Hypothesis promotion, postgame grade, git commit/push, full cache wipe, prediction backfill after start
+
+### Inputs
+- Live status at collection: Warmup (824974, 823271) / Pre-Game (823921); all `now < commenceTimeUtc`
+- runId (canonical): `2026-07-31T01-28-11-004Z` · collectionStartedAt `2026-07-31T01:28:11.004Z` (KST 10:28)
+- Prior morning run preserved under `*.rev-2026-07-31T00-53-46-838Z` and intermediate `*.rev-2026-07-31T01-24-23-520Z`
+
+### Outputs
+- `data/research/mlb/2026-07-31-remaining-pregame-v1.json`
+- schedule / starter / odds / lineup / daily-research (+ revisions)
+- `data/predictions/mlb/2026-07-31.json` (eligible 3 updated; prior 7 restored)
+- cutoff audit + collection summary
+
+### Results (summary)
+- Slate: PREGAME_ELIGIBLE 3 / EXCLUDED_ALREADY_STARTED 7
+- Starter: 6/6 probable for remaining 3 (Sonny Gray / Mason Barnett; Robbie Ray / JP Sears; Bryan Woo / Roki Sasaki) — PROBABLE_ONLY
+- Odds independent refresh: PARTIAL (moneyline incomplete near start) for all 3 — morning COLLECTED retained only in revision
+- Lineup: NOT_RELEASED / not confirmed for all 3
+- Official analysis: **PASS × 3** (no officialPick) · reasons include LINEUP_NOT_CONFIRMED, MARKET_NOT_AVAILABLE, baselineStatus=INSUFFICIENT
+- Observation baselinePick present but **not** official
+- Cutoff/Leakage audit on remaining sample: PASS · leakageFailures=0
+- Engine unchanged
+
+### Official conclusion
+PASS_RECORDED · PARTIAL_COLLECTION (odds PARTIAL; lineup NOT_RELEASED)
+
+### Engine connection
+PROHIBITED
+
+### Follow-ups
+- After FINAL: `npm run review:mlb-daily -- 2026-07-31` (postgame only)
+- Remaining-pregame automation design (T-90/T-60/T-45/T-30) — design only this mission
+- Stats/Odds research cache TTL / force-refresh for near-first-pitch runs
+
+---
+
 ## 2026-07-28 — Market Intelligence Hypothesis Registry v1 Pre-design
 
 ### Purpose
@@ -851,6 +924,190 @@ PROHIBITED
 
 ---
 
+## 2026-07-29 — KBO Research Readiness & Betting Line Integrity v1
+
+### Purpose
+KBO 경기 전 분석 준비 상태 확인. Domestic Odds 파이프라인 감사 및 Research Lab 연동.
+
+### Scope
+- Allowed: Reader KBO artifact 로드, Presenter KBO readiness, Assistant KBO 답변 개선, Bug Board, Prediction Lock, System Detail KBO pipeline
+- Forbidden: Engine, Prediction, Review, MLB artifact 변경
+
+### Outputs
+- `docs/KBO_RESEARCH_READINESS_V1.md` — specification
+- Reader에 KBO odds/schedule/starter artifact 로드 추가
+- Presenter에 kboReadiness 필드 추가
+- OperatorHome에 KBO Ready, Bug Board, Prediction Lock UI
+- SystemDetail에 KBO Betting Line Pipeline 섹션
+- Assistant KBO readiness 답변이 실제 artifact 기반으로 동작
+
+### Results
+- Root cause: Reader에 KBO 로드 없었음. 해결 완료.
+- 2026-07-29: Schedule 5경기, Starter 5경기, Odds Comparison 미생성 → PARTIAL
+- Prediction Lock: Domestic Odds Missing
+- Bug Board: domestic-odds-missing (RED for 07-29), doubleheader-lifecycle, mlb-review, starter-pipeline
+- Doubleheader lifecycle: POSTPONED 상태 표시, 자동 RESCHEDULED 감지는 향후
+
+### Conclusion
+KBO Research Readiness v1 구현 완료. Build PASS. Engine/Prediction/Grade/Review/Dataset 변경 없음.
+
+---
+
+## 2026-07-29 — EDGE Assistant v0
+
+### Purpose
+규칙 기반 Research Operations Assistant. 현재 Artifact 상태와 Task 상태로 운영자에게 안내.
+
+### Scope
+- Allowed: Rule-based presenter, client-side question UI, Artifact/Task state reading
+- Forbidden: External LLM, free-text input, Pipeline execution, Artifact modification
+
+### Outputs
+- `src/lib/internal/edge-assistant-presenter.ts` — Brief + 6 question answer builders
+- `src/components/internal/research/EdgeAssistantCard.tsx` — Client UI
+- `docs/EDGE_ASSISTANT_V0.md` — specification
+
+### Results
+- 6 supported questions with deterministic answers
+- Task state integration (IN_PROGRESS priority boost, OPEN+COMPLETED warning)
+- KBO readiness: UNKNOWN (Reader는 MLB만 지원)
+- Change detection: Snapshot 비교 없어 diff 불가, 현재 상태만 표시
+- Glossary for developer terms
+
+### Conclusion
+EDGE Assistant v0 구현 완료. Build PASS. Engine/Prediction/Grade/Review/Dataset 변경 없음.
+
+---
+
+## 2026-07-29 — Research Lab Task State Persistence v1
+
+### Purpose
+운영 홈 Task에 사용자 상태 관리 기능 추가 (localStorage 전용).
+
+### Scope
+- Allowed: localStorage persistence, client-side state, UI controls, filters, memos
+- Forbidden: Server storage, DB, API routes, Engine/Prediction changes
+
+### Outputs
+- `src/lib/internal/research-task-state.ts` — localStorage CRUD
+- `src/hooks/useResearchTaskState.ts` — React hook (useSyncExternalStore)
+- `src/components/internal/research/OperatorTaskList.tsx` — Task list with filters, controls, memos
+- `docs/RESEARCH_LAB_TASK_STATE_V1.md` — specification
+
+### Results
+- Storage key: `yang-edge:research-lab-task-state:v1`
+- Task key: `targetDate:taskType:relatedEntityId`
+- userStatus: TODO / IN_PROGRESS / ACKNOWLEDGED / DEFERRED / COMPLETED
+- systemStatus: OPEN / RESOLVED / STALE / UNKNOWN (from artifacts)
+- Filters: 전체 / 해야 할 일 / 진행 중 / 보류 / 완료 / 자동 해결
+- Progress summary with completion rate
+- Memo support (300 chars)
+- Date separation, reset per date, corrupted storage fallback
+
+### Conclusion
+Task state persistence 구현 완료. Build PASS. Artifact reader/presenter 미변경 (taskKey 필드만 추가). Engine/Prediction/Grade/Review 영향 없음.
+
+---
+
+## 2026-07-29 — Research Lab Operator Home v1 + Postponed Game Audit
+
+### Purpose
+1. Add operator-friendly home view to Research Lab (운영 홈 / 시스템 상세 tabs)
+2. Audit and fix mlb-179616 (Braves @ Mets) postponed status
+
+### Scope
+- Allowed: new operator view, component refactoring, postponed status update for mlb-179616
+- Forbidden: Engine changes, prediction immutable field changes, Value Edge formula changes
+
+### Outputs
+- `src/app/internal/research/page.tsx` (rewritten with view tabs)
+- `src/components/internal/research/OperatorHome.tsx`
+- `src/components/internal/research/SystemDetail.tsx`
+- `src/lib/internal/research-lab-presenter.ts`
+- `src/lib/internal/research-lab-reader.ts` (updated: POSTPONED/CANCELLED counting, task rules)
+- `data/predictions/mlb/2026-07-29.json` (mlb-179616: pending → postponed)
+- `docs/RESEARCH_LAB_OPERATOR_HOME_V1.md`
+
+### Results
+- Operator home with 6 sections in Korean
+- System detail preserves all v0 information
+- mlb-179616: resultStatus=postponed, postponementReason=WEATHER_POSTPONEMENT
+- 15 existing grades unchanged, prediction hash preserved
+- Task generation: POSTPONED → "재편성 확인" (not "재채점")
+- Build: PASS
+
+### Official conclusion
+RESEARCH_LAB_OPERATOR_HOME_V1_COMPLETE
+
+### Engine connection
+PROHIBITED
+
+---
+
+## 2026-07-29 — YANG EDGE Research Lab Dashboard v0
+
+### Purpose
+Internal read-only dashboard for monitoring research pipeline status at `/internal/research`.
+
+### Scope
+- Allowed: new internal route, artifact reader, summary display
+- Forbidden: data modification, pipeline execution, authentication, public navigation changes
+
+### Outputs
+- `src/app/internal/research/page.tsx`
+- `src/lib/internal/research-lab-reader.ts`
+- `docs/RESEARCH_LAB_DASHBOARD_V0.md`
+
+### Results
+- 10 sections: header, date, summary, pipeline, tasks, missed items, starter health, review queue, commands, artifacts
+- Auto-generated tasks from artifact state
+- Read-only confirmed, no public navigation impact
+- Build: PASS
+
+### Official conclusion
+RESEARCH_LAB_DASHBOARD_V0_COMPLETE
+
+### Engine connection
+PROHIBITED
+
+---
+
+## 2026-07-29 — MLB Automatic Postgame Result and Grading
+
+### Purpose
+Collect Provider results for 2026-07-29 KST MLB 16-game slate, join with existing Prediction Snapshot, and produce deterministic grades (HIT/MISS/PENDING/INCONCLUSIVE).
+
+### Scope
+- Allowed: existing `research:postgame` pipeline (grade + failure flow + success flow + feedback/learning refresh)
+- Forbidden: new Prediction, Engine weight changes, automatic failure cause confirmation
+
+### Outputs
+- `data/predictions/mlb/2026-07-29.json` (graded in-place)
+- `data/predictions/mlb/2026-07-29-review.json`
+- `data/predictions/mlb/2026-07-29-failure-flow-review.json`
+- `data/predictions/mlb/2026-07-29-success-flow-review.json`
+- `data/predictions/2026-07-29-mlb-review.json` (feedback mirror)
+- `data/learning/dashboard.json`
+
+### Results
+- games: 16, graded: 15, pending: 1 (Mets @ Braves)
+- hits: 7, misses: 8, accuracy: 46.7%
+- BASELINE_CANDIDATE: 2 (Reds HIT, Red Sox MISS)
+- MARKET_CONFLICT: 2 (Padres HIT, Dodgers MISS)
+- strict EDGE PICK: 0, research candidates: 0 (no TODAY EDGE PICK for this date)
+- value edge source: 12/16 games have `openingOdds: null` → `VALUE_EDGE_SOURCE_UNVERIFIED` for those
+- prediction hash preserved: yes (`5eeffd78…`)
+- result source: API-BASEBALL (2 calls, cache reuse)
+- immutable field verification: passed
+
+### Official conclusion
+MLB_2026_07_29_AUTOMATIC_POSTGAME_GRADED
+
+### Engine connection
+PROHIBITED
+
+---
+
 ## 2026-07-29 — Betman Daily Full-Slate Coverage and Minimum Analysis v1
 
 ### Purpose
@@ -998,3 +1255,139 @@ KBO_FULL_SLATE_IDENTITY_COVERAGE_AUDITED
 
 ### Engine connection
 PROHIBITED
+
+---
+
+## 2026-07-31 — MLB Remaining Pregame Accumulation
+
+### Purpose
+- Capture remaining pre-first-pitch MLB research inputs for KST 2026-07-31 before games start
+- Preserve Schedule → Starter → Odds → Lineup → Prediction artifacts without Engine changes
+
+### Scope
+- Allowed: existing collectors; remaining-pregame eligibility; cutoff audit; collection summary; revision preservation
+- Forbidden: Engine/weight changes; auto hypothesis promotion; post-start lineup backfill as pre-game; forcing official predictions when inputs incomplete
+
+### Inputs
+- collectionStartedAt: `2026-07-31T00:53:46.838Z` (KST 2026-07-31 09:53)
+- runId: `2026-07-31T00-53-46-838Z`
+- CLI: `npm run research:mlb-remaining-pregame -- 2026-07-31`
+
+### Outputs
+- `data/research/mlb/2026-07-31-remaining-pregame-v1.json`
+- `data/research/mlb/2026-07-31-schedule-v1.json` (+ schedule/lineup `.rev-2026-07-31T00-53-46-838Z` preserved)
+- `data/research/mlb/2026-07-31-starter-dataset-v1.json`
+- `data/research/mlb/2026-07-31-odds-history-dataset-v1.json`
+- `data/research/mlb/2026-07-31-lineup-dataset-v1.json`
+- `data/research/mlb/2026-07-31-daily-research-summary-v1.json`
+- `data/predictions/mlb/2026-07-31.json`
+- `data/research/mlb/2026-07-31-pregame-cutoff-audit-v1.json`
+- `data/research/mlb/2026-07-31-pregame-collection-summary-v1.json`
+
+### Results (summary) — VERIFIED from artifacts
+- Slate: 10 · PREGAME_ELIGIBLE: 3 · EXCLUDED_ALREADY_STARTED: 7
+- Eligible gamePk: 824974 (BOS @ Athletics), 823271 (SF @ Padres), 823921 (SEA @ Dodgers)
+- Starter: 10 games / 20 rows · probable 16 · missing/partial 4
+- Odds: 6 COLLECTED / 4 NOT_COLLECTED · Eligible odds 3/3 COLLECTED
+- Lineup: 10/10 NOT_RELEASED · Eligible lineup 3/3 NOT_RELEASED
+- Prediction snapshot rows: 10 · official `inputStatus=ELIGIBLE`: 0 · `BASELINE_CANDIDATE`: 0
+- Remaining-pregame audit finalStatus PASS: 3 (not official eligible predictions)
+- Research Ready: 61%
+- Cutoff failures: 0 · Leakage failures: 0 · Engine changes: 0 · auto promotion: NONE
+
+### PASS / baseline pick policy
+- PASS is an official analysis state (insufficient confirmed inputs), not a missing run
+- Snapshot may still store a baseline pick string for research observation only
+- baseline pick is **not** an official prediction and must not enter official hit-rate
+- Do not rewrite PASS → ELIGIBLE after results are known
+
+Eligible observation picks (research only):
+- 824974 → Athletics (lineup unconfirmed + starter partial)
+- 823921 → Seattle Mariners (lineup unconfirmed)
+- 823271 → San Diego Padres (lineup unconfirmed + starter partial)
+
+### Official conclusion
+DATA_ACCUMULATION_CONTINUES
+
+### Engine connection
+PROHIBITED
+
+### Follow-ups
+- Postgame: Official Result → Grade → Success/Failure Review (official eligible prediction remains 0)
+- Optional research-only baseline observation compare — never official accuracy
+- Safe final re-collect window for confirmed lineups (still pre-start only)
+
+---
+
+## 2026-07-31 — MLB Postgame Grade & Research Review (partial)
+
+### Purpose
+- Collect official finals for 2026-07-31 slate and run Grade → Success/Failure → Leakage → Daily Review
+- Validate Remaining Pregame snapshot without Engine / weight / threshold / promotion changes
+
+### Scope
+- Allowed: `result:mlb` / `grade:mlb` / `review:mlb` artifacts; Result Collector score-source fix (schedule scores vs stale empty boxscore cache)
+- Forbidden: Engine weights; Dataset/Hypothesis promotion; rewriting PASS → ELIGIBLE; treating LIMITED_INPUT hits as official accuracy
+
+### Timing
+- Review run ~2026-07-31 10:13 KST (`2026-07-31T01:13Z`)
+- Remaining Pregame games (824974, 823271, 823921) still NOT_FINAL at review time
+
+### Official Result — VERIFIED
+- Artifact: `data/research/mlb/2026-07-31-official-results-v1.json`
+- FINAL 4 / NOT_FINAL 6
+- FINAL scores (schedule gamePk source after collector fix):
+  - 822946 TEX 2 @ TB 3 (HOME)
+  - 823023 CHC 4 @ STL 2 (AWAY)
+  - 823674 KC 3 @ MIN 4 (HOME)
+  - 824568 NYY 1 @ CWS 2 (HOME)
+- HIGH finding: stale boxscore cache had batting.runs=0; collector now prefers schedule scores for FINAL
+
+### Grade — VERIFIED
+- Artifact: `…-graded-predictions-v1.json`
+- Official `inputStatus=ELIGIBLE`: **0** → official accuracy **N/A** (`NO_GRADED_SAMPLE` for eligible)
+- Snapshot PASS/INSUFFICIENT baseline is **not** official prediction
+- LIMITED_INPUT observation grades (already-started-at-collection games; **not official hit-rate**): graded 4 · correct 3 · incorrect 1 · 75%
+- BLOCKED 3 · PENDING 3 (remaining pregame) · VOID 0 after score fix
+- Remaining Pregame three: all PENDING / RESULT_NOT_FINAL
+
+### Success Review — VERIFIED
+- Artifact: `…-success-review-v1.json` · games: 3 (LIMITED_INPUT observation only)
+- Factors: INPUT_QUALITY CONFOUNDED; MODEL_PROBABILITY INSUFFICIENT_EVIDENCE; STARTER_SIGNAL POSSIBLE_SUPPORT only
+- No variable verified / no Engine recommendation
+
+### Failure Review — VERIFIED
+- Artifact: `…-failure-review-v1.json` · games: 1 (823023 STL pick, CHC won)
+- possibleCauses: DATA_QUALITY POSSIBLE; BULLPEN POSSIBLE
+- conclusion: INVESTIGATE_MORE · Devil’s Advocate / alternative hypothesis recorded
+
+### Input Audit — VERIFIED
+- Pregame remaining 3: LIMITED_INPUT · LINEUP_NOT_CONFIRMED (+ starter partial on 2)
+- BLOCKED 3: ODDS_AFTER_CUTOFF (started before collection)
+- FINAL 4 observation rows: LINEUP_NOT_CONFIRMED · MARKET_NOT_AVAILABLE (collection-time already started / odds gaps)
+- predictedAt `2026-07-31T00:54:00.284Z` before remaining first pitches
+
+### Leakage Audit — VERIFIED
+- Status: **WARN** (not FAIL)
+- prediction hash: PASS · predicted vs slate cutoff: PASS
+- WARN: input manifest blocked/post-game style warnings (ODDS_AFTER_CUTOFF on blocked games)
+- No evidence FINAL lineup/odds/stats were used as pregame features for remaining-pregame sample
+- reviewStatus: **PARTIAL_REVIEW**
+
+### Daily Review Summary — VERIFIED
+- Artifact: `…-daily-review-summary-v1.json`
+- Eligible: 0 · PASS/INSUFFICIENT official eligible: 0 · Graded observation: 4 · Correct 3 · Incorrect 1
+- Official accuracy: null · Conclusion: **DATA_ACCUMULATION_CONTINUES**
+- Engine changed: false · no auto promotion
+
+### Official conclusion
+DATA_ACCUMULATION_CONTINUES · PARTIAL_REVIEW
+
+### Engine connection
+PROHIBITED
+
+### Follow-ups
+- Re-run `review:mlb-daily -- 2026-07-31` after remaining 3 games FINAL
+- Align grader messaging: official accuracy uses ELIGIBLE only; LIMITED_INPUT stays observation
+- Research Log Backfill still pending for mixed 07-29 entries
+- Result boxscore cache freshness / schedule-score primary path keep

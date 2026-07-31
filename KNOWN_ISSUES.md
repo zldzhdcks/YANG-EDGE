@@ -55,6 +55,17 @@ Historical Odds 사전 감사: **[MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDIT_V1.
 | Probe uses schedule `hydrate=lineups` only | Post-game boxscore never used as pre-game; started/Final games excluded from lineup probe |
 | Official lineup near first pitch (2026-07-31) | Open — see below |
 
+### Odds format mismatch (Immediate Run 01:28)
+
+| 항목 | 값 |
+|------|-----|
+| Finding | Odds cache overwritten with `oddsFormat=american` while builder assumed decimal |
+| Impact | Moneyline PARTIAL mis-label; favorite prices dropped; underdogs treated as pseudo-decimal |
+| Official impact | None — remaining 3 already **PASS** (no officialPick) |
+| Leakage | None |
+| Historical rewrite | Forbidden — annotated in `data/audits/2026-07-31-odds-format-integrity-audit-v1.json` |
+| Remediation | Format contract + conversion + `FORMAT_MISMATCH` status + regression tests + decimal cache key |
+
 ### MLB official lineup availability near first pitch
 
 | 항목 | 값 |
@@ -65,6 +76,15 @@ Historical Odds 사전 감사: **[MULTI_SPORT_HISTORICAL_ODDS_COVERAGE_AUDIT_V1.
 | Prediction | `inputStatus=LIMITED_INPUT`; official eligible prediction **0**; PASS **3** |
 | Current handling | Persist `NOT_RELEASED`; no forced official prediction; no post-start lineup backfill as pre-game |
 | Future research | Mean official lineup release time; safe final re-collect window; provider timing differences |
+
+### Official Result score source (2026-07-31)
+
+| 항목 | 값 |
+|------|-----|
+| Finding | Stale StatsAPI boxscore cache returned batting.runs=0 while schedule `gamePk` had real scores |
+| Impact | First postgame pass incorrectly VOID/DRAW’d 4 FINAL games |
+| Mitigation | Result Collector prefers schedule `teams.*.score` for FINAL; boxscore fallback only if schedule empty |
+| Status | Mitigated in collector · cache freshness policy still open |
 
 ## Pre-game Lineup Availability Probe v1
 

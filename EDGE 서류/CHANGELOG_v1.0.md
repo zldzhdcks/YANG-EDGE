@@ -22,6 +22,21 @@ YANG EDGE 프로젝트의 버전별 변경 이력을 관리하는 공식 문서�
 
 # v1.0.0
 
+## ADDED (2026-07-31 Pregame Input Integrity Guards v1)
+
+- Odds price format contract (`normalizeOddsPrice`, DECIMAL internal standard)
+- `FORMAT_MISMATCH` odds collection status + market probability guard
+- Schedule `statusDetailed` / `codedGameState`
+- Prediction additive `officialStatus` / `officialPick` / `passReasons` / `researchBaseline`
+- Historical audit `2026-07-31-odds-format-integrity-audit-v1.json`
+- Tests: `test:odds-format`, `test:pregame-eligibility`
+- `.gitignore` for regenerable research raw/derived caches
+
+## FIXED (2026-07-31)
+
+- Starter `sourceTimestamp` no longer copies prediction snapshot time
+- American odds no longer treated as decimal via `price > 1` alone
+
 ## ADDED
 
 - YANG_EDGE_HANDOVER 문서
@@ -76,6 +91,22 @@ YANG EDGE 프로젝트의 버전별 변경 이력을 관리하는 공식 문서�
 - Official eligible prediction: 0 · Eligible PASS: 3 · baseline pick ≠ official prediction
 - Cutoff / leakage failures: 0 · Engine unchanged · conclusion: DATA_ACCUMULATION_CONTINUES
 - Related mission: YANG EDGE Documentation Sync — MLB Remaining Pregame Accumulation 2026-07-31
+
+---
+
+# 2026-07-31 — MLB Postgame Grade & Research Review (partial)
+
+## CHANGED
+
+- Official Result Collector prefers schedule `teams.*.score` for FINAL (stale boxscore batting.runs=0 cache)
+- Daily review artifacts for 2026-07-31 generated (`official-results`, `graded-predictions`, success/failure reviews, daily-review-summary)
+
+## Notes
+
+- Official eligible prediction still 0 → official accuracy N/A
+- LIMITED_INPUT observation 3/4 correct is **not** official hit-rate and must not promote Engine/Dataset/Hypothesis
+- reviewStatus PARTIAL_REVIEW · leakage WARN · remaining 3 games PENDING
+- Related mission: MLB 2026-07-31 Postgame Grade & Research Review v1
 
 ---
 

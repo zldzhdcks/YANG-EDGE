@@ -112,3 +112,37 @@ Same-date revision / supplemental run keyed by `runId` + `gamePk` (not a new 100
 **Artifacts:** `…-remaining-pregame-v1.json`, starter/odds/lineup/daily summary, `data/predictions/mlb/2026-07-31.json`, `…-pregame-cutoff-audit-v1.json`, `…-pregame-collection-summary-v1.json`, schedule/lineup `.rev-2026-07-31T00-53-46-838Z`.
 
 **공식 결론:** `DATA_ACCUMULATION_CONTINUES`
+
+---
+
+## Supplemental — Pregame Input Integrity Guards v1 (2026-07-31)
+
+| 항목 | 값 |
+|------|-----|
+| Odds format contract | DECIMAL internal · American conversion · FORMAT_MISMATCH |
+| 01:28 historical rewrite | **No** — audit annotation only |
+| Official Pick impact | None (PASS already recorded) |
+| Leakage | NONE |
+| Tests | `test:odds-format` · `test:pregame-eligibility` |
+| Engine | unchanged |
+
+---
+
+## Supplemental run — 2026-07-31 Postgame Grade & Review (partial)
+
+**Not an official accuracy sample.** Official eligible predictions remain **0**.
+
+| 항목 | 값 | 검증 |
+|------|-----|------|
+| review command | `npm run review:mlb-daily -- 2026-07-31` | VERIFIED |
+| Official Result | FINAL 4 / NOT_FINAL 6 | VERIFIED |
+| Remaining Pregame PENDING | gamePk 824974, 823271, 823921 | VERIFIED |
+| Official eligible graded | 0 · accuracy null | VERIFIED |
+| LIMITED_INPUT observation grades | 4 graded · 3 correct · 1 incorrect · 75% (**not official**) | VERIFIED |
+| Success / Failure reviews | 3 / 1 (observation only) | VERIFIED |
+| Leakage | WARN | VERIFIED |
+| reviewStatus | PARTIAL_REVIEW | VERIFIED |
+| Engine changes | 0 | VERIFIED |
+| Result collector note | schedule scores preferred over stale empty boxscore runs | VERIFIED |
+
+**Artifacts:** `…-official-results-v1.json`, `…-graded-predictions-v1.json`, `…-success-review-v1.json`, `…-failure-review-v1.json`, `…-daily-review-summary-v1.json`

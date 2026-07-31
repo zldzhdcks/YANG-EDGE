@@ -60,11 +60,28 @@ PROJECT_STATE가 '현재 상태'라면 PROJECT_PROGRESS는 '변화의 기록'이
 - Conclusion: DATA_ACCUMULATION_CONTINUES
 - Docs sync: RESEARCH_LOG, coverage dashboard supplemental, ROADMAP, KNOWN_ISSUES, NEXT_SESSION, CHANGELOG
 
+## Session 007 — 2026-07-31 Pregame Input Integrity Guards v1
+- Odds format contract (DECIMAL internal) + American conversion + FORMAT_MISMATCH
+- Schedule detailedState/codedGameState · timestamp contract · officialStatus schema
+- Historical 01:28 format audit annotation (no artifact rewrite)
+- Regression tests PASS · research raw/derived cache gitignore
+- Engine unchanged · no 01:28 regeneration
+
+## Session 006 — 2026-07-31 Postgame Review (partial)
+- `npm run review:mlb-daily -- 2026-07-31`
+- FINAL 4 / NOT_FINAL 6 · remaining pregame 3 still PENDING
+- Official eligible 0 → official accuracy N/A
+- LIMITED_INPUT observation only: 3 correct / 1 incorrect (not official hit-rate)
+- Leakage WARN · reviewStatus PARTIAL_REVIEW
+- Result Collector: prefer schedule scores (stale boxscore runs=0 finding)
+- Engine unchanged · no promotion · DATA_ACCUMULATION_CONTINUES
+
 ---
 
 # 현재 진행 중
 
-- 2026-07-31 Postgame Grade and Review (다음 세션)
+- 2026-07-31 remaining 3 FINAL 후 review 재실행
+- Research Log Backfill
 - Dataset 품질 향상
 - Odds Intake 개선
 - 문서 표준화
