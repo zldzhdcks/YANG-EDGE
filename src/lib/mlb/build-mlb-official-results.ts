@@ -31,10 +31,17 @@ function mapAbstractState(state: string | null): OfficialResultStatus {
   return "UNKNOWN";
 }
 
-async function getGameAbstractState(
+type ScheduleGameSnapshot = {
+  abstractGameState: string | null;
+  detailedState: string | null;
+  homeScore: number | null;
+  awayScore: number | null;
+};
+
+async function getScheduleGameSnapshot(
   gamePk: number,
   usage: CacheUsageStats,
-): Promise<string | null> {
+): Promise<ScheduleGameSnapshot> {
   const body = await getRawStatsJson(
     `/api/v1/schedule?sportId=1&gamePk=${gamePk}`,
     usage,
@@ -48,10 +55,24 @@ async function getGameAbstractState(
     for (const raw of games) {
       const row = asRecord(raw);
       if (asNumber(row?.gamePk) !== gamePk) continue;
-      return asString(asRecord(row?.status)?.abstractGameState);
+      const status = asRecord(row?.status);
+      const teams = asRecord(row?.teams);
+      const home = asRecord(teams?.home);
+      const away = asRecord(teams?.away);
+      return {
+        abstractGameState: asString(status?.abstractGameState),
+        detailedState: asString(status?.detailedState),
+        homeScore: asNumber(home?.score),
+        awayScore: asNumber(away?.score),
+      };
     }
   }
-  return null;
+  return {
+    abstractGameState: null,
+    detailedState: null,
+    homeScore: null,
+    awayScore: null,
+  };
 }
 
 function extractScoresFromBoxscore(body: unknown): {
@@ -68,6 +89,17 @@ function extractScoresFromBoxscore(body: unknown): {
     homeScore: asNumber(homeBatting?.runs),
     awayScore: asNumber(awayBatting?.runs),
   };
+}
+
+function scoresLookEmpty(
+  homeScore: number | null,
+  awayScore: number | null,
+): boolean {
+  return (
+    homeScore == null ||
+    awayScore == null ||
+    (homeScore === 0 && awayScore === 0)
+  );
 }
 
 function resolveWinner(
@@ -98,21 +130,30 @@ export async function buildMlbOfficialResultsV1(input: {
   const games: MlbOfficialResultGame[] = [];
 
   for (const row of schedule.games) {
-    const abstractState = await getGameAbstractState(row.gamePk, usage);
-    const status = mapAbstractState(abstractState);
+    const snap = await getScheduleGameSnapshot(row.gamePk, usage);
+    const status = mapAbstractState(snap.abstractGameState);
 
     let homeScore: number | null = null;
     let awayScore: number | null = null;
     let resultTimestamp: string | null = null;
 
     if (status === "FINAL") {
-      const box = await getRawStatsJson(
-        `/api/v1/game/${row.gamePk}/boxscore`,
-        usage,
-      );
-      const scores = extractScoresFromBoxscore(box);
-      homeScore = scores.homeScore;
-      awayScore = scores.awayScore;
+      // Prefer live schedule scores — boxscore disk cache may be a pre-game empty shell.
+      homeScore = snap.homeScore;
+      awayScore = snap.awayScore;
+
+      if (scoresLookEmpty(homeScore, awayScore)) {
+        const box = await getRawStatsJson(
+          `/api/v1/game/${row.gamePk}/boxscore`,
+          usage,
+        );
+        const boxScores = extractScoresFromBoxscore(box);
+        if (!scoresLookEmpty(boxScores.homeScore, boxScores.awayScore)) {
+          homeScore = boxScores.homeScore;
+          awayScore = boxScores.awayScore;
+        }
+      }
+
       resultTimestamp = collectedAt;
     }
 
