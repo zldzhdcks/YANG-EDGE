@@ -22,6 +22,16 @@ YANG EDGE 프로젝트의 버전별 변경 이력을 관리하는 공식 문서�
 
 # v1.0.0
 
+## ADDED (2026-08-01 KBO Screenshot Clipboard Intake v1)
+
+- Common clipboard intake: types, paste extract, client preflight, `useClipboardImageIntake`, DropZone, PreviewList
+- Focus-scoped Ctrl+V (paste mode / zone focus); no global paste handler; no `navigator.clipboard.read()`
+- Wired into existing Proto OCR Assist on `/internal/kbo/personnel` (additive; file select + paste text retained)
+- Cancellation/postponement/void-1.00 draft suspects; unsupported markets (핸디캡/U-O/SUM/…) blocked from save
+- Approve audit: intakeRunId, intakeItemIds, imageFingerprints, inputKind, extractionMethod (OCR_ASSISTED | MANUAL_VISUAL_CONFIRMATION)
+- Tests: `test:kbo-clipboard-intake`, `test:kbo-clipboard-proto-integration`, `verify:kbo-clipboard-runtime`, `verify:kbo-clipboard-historical`
+- OCR engine still not configured; T45/T30 auto-run absent; INTERNAL_ONLY
+
 ## ADDED (2026-08-01 KBO Domestic Proto OCR-Assisted Admin Workflow v1)
 
 - Gate: `OCR_ENGINE_NOT_CONFIGURED` (no OCR/sharp dependency; fixture + paste-text fallback)

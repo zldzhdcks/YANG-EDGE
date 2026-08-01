@@ -193,10 +193,15 @@ Admin UI: `/internal/kbo/personnel` (INTERNAL / noindex; auth 미완전 — prod
 Domestic Proto OCR assist (same page):
 - OCR/paste → draft → admin review → approve merges Domestic Proto only
 - Gate: `OCR_ENGINE_NOT_CONFIGURED` → paste-text fallback (fixture adapter for tests)
+- Clipboard Intake: focus-scoped Ctrl+V / drag-drop / file select (no `navigator.clipboard.read()`)
+- Object URL preview (revoke on remove/unmount); ephemeral server processing; originals not persisted
+- Material type selector: KBO Domestic Proto ACTIVE; Lineup/Starter COMING_SOON
+- Cancellation/void (1.00/1.00) = draft suspect only; Schedule not auto-updated; MONEYLINE_2WAY save only
 - APIs: `/api/internal/kbo/proto-ocr/extract|validate|approve`
 - OCR = Draft Generator; SoT = admin-approved Operator Input; confidence never auto-approves
 - Images ephemeral; no permanent originals; default no external image transfer
 - T45/T30 auto-run absent on OCR approve
+- Screenshot is not Schedule Source of Truth
 
 API (내부):
 - `GET /api/internal/kbo/t45-personnel/load`

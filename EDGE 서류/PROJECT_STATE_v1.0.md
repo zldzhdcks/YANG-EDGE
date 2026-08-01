@@ -111,6 +111,7 @@ Engine 반영은 아직 연구 단계.
 - KBO T45 Personnel Workflow v1 (input schema / validator / snapshots; Scheduler conditional spawn)
 - KBO T45 Admin Input UI/API v1 (`/internal/kbo/personnel` + internal APIs)
 - KBO Domestic Proto OCR assist v1 (fixture/paste; OCR engine not configured)
+- KBO Screenshot Clipboard Intake v1 (Ctrl+V drop zone → Proto review; Lineup/Starter not yet)
 
 ---
 
@@ -126,6 +127,7 @@ Engine 반영은 아직 연구 단계.
 - KBO T-30 runner hardcoded PREV_RUN / date — **resolved** via CLI parameterization (2026-08-01)
 - KBO Admin Personnel (T45) — **workflow implemented**; input 없으면 MANUAL_INPUT_REQUIRED
 - KBO Proto OCR — engine not configured; paste-text fallback; accuracy sample insufficient
+- KBO Clipboard Intake — browser/mobile clipboard variance; layout OCR variation; Lineup screenshot not wired
 - NPB postgame runner missing
 - KBO Prediction Pipeline — NOT_IMPLEMENTED (의도적)
 ---

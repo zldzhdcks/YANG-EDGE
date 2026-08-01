@@ -178,6 +178,9 @@ Engine 변경은 연구 완료 후만 가능하다.
 - Prediction Engine / 공식 Pick 생성은 T45 범위 밖.
 - Admin UI: `/internal/kbo/personnel` — Validate와 Save 분리, Save와 Run 분리.
 - Domestic Proto OCR assist: OCR/붙여넣기는 Draft만 생성. 관리자 명시 승인 후에만 operator input 병합.
+- Clipboard Intake: Win+Shift+S → 영역 클릭 → Ctrl+V. 파일 저장 불필요. paste 이벤트 기반(권한 API 불필요).
 - OCR confidence로 자동 승인 금지. Approve는 T45/T30을 자동 실행하지 않음.
-- 원본 스크린샷은 ephemeral 처리(기본 영구 저장 금지). INTERNAL_ONLY.
+- 원본 스크린샷은 ephemeral 처리(기본 영구 저장 금지). Object URL은 remove/unmount 시 revoke.
+- 스크린샷은 Schedule primary를 대체·생성하지 않음. 취소 의심은 Draft 후 별도 Schedule Status Revision.
+- MONEYLINE_2WAY만 저장 지원. INTERNAL_ONLY.
 - Historical 07-31 read-only. production 공개 전 `INTERNAL_ADMIN_TOKEN` 필수.

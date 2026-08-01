@@ -9,41 +9,41 @@ Version: 1.0.0
 
 # 현재 Active Mission
 
-## KBO Domestic Proto OCR-Assisted Admin Workflow v1 — implemented (uncommitted)
+## KBO Lineup Screenshot Intake v1
 
-상태: Fixture adapter + paste fallback + Admin review/approve 완료. OCR 엔진 미연결.
-git add/commit/push 금지(미션).
+상태: Clipboard foundation + Proto 연결 완료(미커밋). 다음으로 라인업 스크린샷 Intake.
 
-### Verified
+선행 완료(미푸시 가능):
+- Proto OCR 5커밋 (local ahead)
+- Clipboard Intake 변경(워킹트리, 미커밋)
 
-- `npm run test:kbo-proto-ocr`
-- `npm run test:kbo-proto-ocr-admin`
-- `npm run verify:kbo-proto-ocr-historical`
-- `npm run verify:kbo-proto-ocr-runtime`
-- `npm run test:kbo-t45-admin-api`
-- `npm run test:kbo-t45-personnel`
-- `npm run test:scheduler-integration`
-- `npx tsc --noEmit`
+### Clipboard Verified (temp / unit)
 
-### 다음 실행 후보
+- `npm run test:kbo-clipboard-intake`
+- `npm run test:kbo-clipboard-proto-integration`
+- `npm run verify:kbo-clipboard-runtime`
+- `npm run verify:kbo-clipboard-historical`
 
-1. KBO Lineup Bulk Paste v1
-2. 운영 표본으로 Proto OCR Accuracy Scorecard 측정
-3. 승인 후 Local/External OCR 엔진 연결 (별도 약관·비용 승인)
-4. Proto OCR 커밋 분리 (contract → API → UI → tests → docs)
+### 수동 브라우저 QA (운영자)
+
+1. Win + Shift + S
+2. 붙여넣기 영역 클릭
+3. Ctrl + V
+4. preview / 제거 / 여러 장
+5. OCR 미연결 안내 + Paste Text fallback
 
 ### 필수 주의
 
-- OCR은 Draft Generator; SoT = 관리자 승인 Operator Input
-- 원본 이미지 영구 저장 금지 (ephemeral)
-- 2026-07-31 read-only
-- T45/T30 자동 실행 없음
-- git push는 명시 승인 후만
+- Clipboard 이미지는 SoT 아님; Schedule이 경기 identity SoT
+- 자동 승인·T45/T30 자동 실행 금지
+- git add/commit/push는 명시 요청 후만
+- 기존 Proto OCR 5커밋 amend/squash/rebase 금지
 
 ---
 
 # 세션 시작 체크리스트
 
+- [ ] `npm run test:kbo-clipboard-intake`
 - [ ] `npm run test:kbo-proto-ocr`
-- [ ] `npm run verify:kbo-proto-ocr-historical`
-- [ ] `/internal/kbo/personnel` paste-text 확인
+- [ ] `npm run verify:kbo-clipboard-historical`
+- [ ] `/internal/kbo/personnel` Ctrl+V preview 확인
