@@ -7,6 +7,7 @@ import { resolveKboTeamIdentity } from "../resolve-kbo-team-identity";
 import { TEAM_ALIASES } from "../../teams/team-aliases";
 import type { ProtoOcrCandidate, ProtoOcrRawResult } from "./types";
 import { PROTO_OCR_PARSER_VERSION } from "./types";
+import { analyzeCancellationAndMarket } from "./cancellation-market";
 
 export { PROTO_OCR_PARSER_VERSION };
 
@@ -140,11 +141,19 @@ export function parseProtoCandidatesFromText(input: {
     const teams = findTeamsInLine(line);
     const prices = findPricesInLine(line);
     const parserWarnings: string[] = [];
+    const signals = analyzeCancellationAndMarket(line);
+    parserWarnings.push(...signals.warnings);
 
     if (AMERICAN_RE.test(line)) parserWarnings.push("AMERICAN_ODDS_REJECTED");
 
-    if (teams.length < 2 && prices.length < 2) {
+    // Cancellation / void lines may lack valid odds (>1) — still emit draft
+    const cancelDraft = signals.cancellationStatus !== "NONE";
+    if (teams.length < 2 && prices.length < 2 && !cancelDraft) {
       continue;
+    }
+    if (teams.length < 2 && cancelDraft) {
+      // need teams for schedule mapping; skip orphan cancel text
+      if (teams.length === 0) continue;
     }
 
     const firstTeam = teams[0] ?? null;
@@ -196,6 +205,19 @@ export function parseProtoCandidatesFromText(input: {
       .filter((b) => line.includes(b.text) || b.text.includes(line.slice(0, 12)))
       .map((b) => b.blockId);
 
+    // Never treat void 1.00 as storable moneyline prices
+    if (cancelDraft) {
+      awayPriceCandidate = null;
+      homePriceCandidate = null;
+      parserStatus = parserStatus === "PARSED" ? "PARTIAL" : parserStatus;
+      parserWarnings.push("VOID_OR_CANCEL_PRICES_CLEARED");
+    }
+    if (!signals.saveAllowed && signals.warnings.includes("DETECTED_UNSUPPORTED_MARKET")) {
+      awayPriceCandidate = null;
+      homePriceCandidate = null;
+      parserStatus = "AMBIGUOUS";
+    }
+
     candidates.push({
       candidateId: `cand-${randomUUID()}`,
       sourceImageId: input.sourceImageId,
@@ -210,12 +232,13 @@ export function parseProtoCandidatesFromText(input: {
       homePriceText,
       awayPriceCandidate,
       homePriceCandidate,
-      marketLabel: /머니|승패|프로토|ML|moneyline/i.test(line)
-        ? "MONEYLINE_2WAY"
-        : null,
+      marketLabel: signals.marketKind,
       parserStatus,
       parserWarnings: [...new Set([...parserWarnings, ...warningsGlobal])],
       rawSnippet: line.slice(0, 200),
+      cancellationSuspect: signals.cancellationStatus,
+      detectedMarket: signals.marketKind,
+      saveAllowed: signals.saveAllowed,
     });
   }
 

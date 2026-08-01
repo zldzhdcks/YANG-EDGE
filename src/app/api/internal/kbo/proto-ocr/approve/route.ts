@@ -22,6 +22,11 @@ export async function POST(request: NextRequest) {
     screenshotObservedAt?: string;
     explicitConfirmation?: boolean;
     approveAll?: boolean;
+    intakeRunId?: string | null;
+    intakeItemIds?: string[];
+    imageFingerprints?: string[];
+    inputKind?: string | null;
+    extractionMethod?: "OCR_ASSISTED" | "MANUAL_VISUAL_CONFIRMATION" | "MANUAL";
   };
 
   const dateCheck = assertSafeDateKst(body.dateKst ?? "");
@@ -53,6 +58,11 @@ export async function POST(request: NextRequest) {
     screenshotObservedAt: body.screenshotObservedAt,
     explicitConfirmation: Boolean(body.explicitConfirmation),
     approveAll: Boolean(body.approveAll),
+    intakeRunId: body.intakeRunId ?? null,
+    intakeItemIds: body.intakeItemIds,
+    imageFingerprints: body.imageFingerprints,
+    inputKind: body.inputKind ?? null,
+    extractionMethod: body.extractionMethod,
   });
 
   return NextResponse.json(result, { status: result.ok ? 200 : 400 });

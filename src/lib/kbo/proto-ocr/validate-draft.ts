@@ -84,6 +84,34 @@ export async function validateProtoOcrDraft(options: {
             marketType: "MONEYLINE_2WAY" as const,
           }
         : null;
+
+    if (row.detectedMarket && row.detectedMarket !== "MONEYLINE_2WAY") {
+      next.errors.push("DETECTED_UNSUPPORTED_MARKET");
+      next.saveAllowed = false;
+    }
+
+    if (row.cancellationSuspect && row.cancellationSuspect !== "NONE") {
+      next.warnings.push("SCHEDULE_STATUS_NOT_AUTO_UPDATED");
+      if (row.adminCancellationDecision === "PENDING") {
+        next.errors.push("CANCELLATION_DECISION_REQUIRED");
+        next.saveAllowed = false;
+      } else if (
+        row.adminCancellationDecision === "CONFIRM_CANCEL" ||
+        row.adminCancellationDecision === "CONFIRM_POSTPONE"
+      ) {
+        // Proto approve must not save void odds; Schedule revision is separate.
+        next.errors.push("CANCEL_ROW_NOT_PROTO_SAVEABLE");
+        next.saveAllowed = false;
+        next.warnings.push("USE_SCHEDULE_STATUS_REVISION_WORKFLOW");
+      } else if (
+        row.adminCancellationDecision === "OCR_ERROR" ||
+        row.adminCancellationDecision === "IGNORE"
+      ) {
+        next.saveAllowed = row.detectedMarket === "MONEYLINE_2WAY";
+        next.warnings.push("CANCEL_SUSPECT_CLEARED_BY_ADMIN");
+      }
+    }
+
     const pv = validateProto(proto, g.home, g.away);
     if (!pv.ok) {
       next.errors.push(...pv.errors);

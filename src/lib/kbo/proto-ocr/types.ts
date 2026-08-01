@@ -79,6 +79,34 @@ export type ProtoOcrRawResult = {
   errorCode?: string;
 };
 
+export type ProtoOcrAdminDecision =
+  | "PENDING"
+  | "APPROVED"
+  | "CORRECTED"
+  | "REJECTED";
+
+export type ProtoOcrCancellationSuspect =
+  | "NONE"
+  | "CANCELLATION_SUSPECTED"
+  | "POSTPONEMENT_SUSPECTED"
+  | "VOID_DISPLAY_VALUE_SUSPECTED";
+
+export type ProtoOcrDetectedMarket =
+  | "MONEYLINE_2WAY"
+  | "WIN_DRAW_WIN"
+  | "HANDICAP"
+  | "UNDER_OVER"
+  | "SUM"
+  | "FIRST_HALF"
+  | "UNKNOWN";
+
+export type ProtoOcrAdminCancellationDecision =
+  | "PENDING"
+  | "CONFIRM_CANCEL"
+  | "CONFIRM_POSTPONE"
+  | "OCR_ERROR"
+  | "IGNORE";
+
 export type ProtoOcrCandidate = {
   candidateId: string;
   sourceImageId: string;
@@ -97,6 +125,9 @@ export type ProtoOcrCandidate = {
   parserStatus: ProtoOcrParserStatus;
   parserWarnings: string[];
   rawSnippet: string;
+  cancellationSuspect?: ProtoOcrCancellationSuspect;
+  detectedMarket?: ProtoOcrDetectedMarket;
+  saveAllowed?: boolean;
 };
 
 export type ProtoOcrCorrection = {
@@ -107,12 +138,6 @@ export type ProtoOcrCorrection = {
   correctionReason: string;
   gameId: string | null;
 };
-
-export type ProtoOcrAdminDecision =
-  | "PENDING"
-  | "APPROVED"
-  | "CORRECTED"
-  | "REJECTED";
 
 export type KboProtoOcrDraftRow = {
   draftRowId: string;
@@ -137,6 +162,12 @@ export type KboProtoOcrDraftRow = {
   adminDecision: ProtoOcrAdminDecision;
   adminCorrections: ProtoOcrCorrection[];
   displayOrder: "SCREENSHOT" | "CANONICAL";
+  /** Draft only — never auto-updates Schedule. */
+  cancellationSuspect: ProtoOcrCancellationSuspect;
+  detectedMarket: ProtoOcrDetectedMarket;
+  /** false when unsupported market or cancel/void suspected until admin resolves. */
+  saveAllowed: boolean;
+  adminCancellationDecision: ProtoOcrAdminCancellationDecision;
 };
 
 export type ProtoOcrExtractResponse = {

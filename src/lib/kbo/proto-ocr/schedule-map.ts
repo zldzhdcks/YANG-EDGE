@@ -161,6 +161,10 @@ export function mapCandidateToSchedule(
     adminDecision: "PENDING",
     adminCorrections: [],
     displayOrder: "CANONICAL",
+    cancellationSuspect: candidate.cancellationSuspect ?? "NONE",
+    detectedMarket: candidate.detectedMarket ?? "MONEYLINE_2WAY",
+    saveAllowed: candidate.saveAllowed ?? true,
+    adminCancellationDecision: "PENDING",
   };
 }
 

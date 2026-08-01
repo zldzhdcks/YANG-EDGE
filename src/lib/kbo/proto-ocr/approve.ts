@@ -80,6 +80,16 @@ export async function approveProtoOcrDraft(options: {
   approveAll?: boolean;
   cwd?: string;
   now?: Date;
+  /** Clipboard intake audit metadata (additive). */
+  intakeRunId?: string | null;
+  intakeItemIds?: string[];
+  imageFingerprints?: string[];
+  inputKind?: string | null;
+  /**
+   * OCR_ASSISTED only when engine produced candidates.
+   * MANUAL_VISUAL_CONFIRMATION when admin typed from screenshot without OCR candidates.
+   */
+  extractionMethod?: "OCR_ASSISTED" | "MANUAL_VISUAL_CONFIRMATION" | "MANUAL";
 }): Promise<ProtoOcrApproveResponse> {
   const cwd = options.cwd ?? process.cwd();
   const now = options.now ?? new Date();
@@ -182,7 +192,9 @@ export async function approveProtoOcrDraft(options: {
       r.errors.length === 0 &&
       r.gameId &&
       r.homePrice != null &&
-      r.awayPrice != null,
+      r.awayPrice != null &&
+      (r.detectedMarket ?? "MONEYLINE_2WAY") === "MONEYLINE_2WAY" &&
+      r.saveAllowed !== false,
   );
   if (passRows.length === 0) {
     return {
@@ -244,6 +256,13 @@ export async function approveProtoOcrDraft(options: {
     }
   }
 
+  const extractionMethod =
+    options.extractionMethod === "MANUAL_VISUAL_CONFIRMATION"
+      ? "MANUAL_VISUAL_CONFIRMATION"
+      : options.extractionMethod === "MANUAL"
+        ? "MANUAL"
+        : "OCR_ASSISTED";
+
   const changedFields: string[] = [];
   const corrections: ProtoOcrCorrection[] = [];
   for (const row of passRows) {
@@ -270,7 +289,12 @@ export async function approveProtoOcrDraft(options: {
       awayPrice: row.awayPrice!,
       format: "DECIMAL",
       marketType: "MONEYLINE_2WAY",
-      extractionMethod: "OCR_ASSISTED",
+      extractionMethod:
+        extractionMethod === "MANUAL_VISUAL_CONFIRMATION"
+          ? "MANUAL"
+          : extractionMethod === "MANUAL"
+            ? "MANUAL"
+            : "OCR_ASSISTED",
       ocrRunId: options.ocrRunId,
       parserVersion: PROTO_OCR_PARSER_VERSION,
       correctedByAdmin: row.adminDecision === "CORRECTED",
@@ -318,7 +342,7 @@ export async function approveProtoOcrDraft(options: {
     commercialUseStatus: "INTERNAL_ONLY",
     games: orderedGames,
     version,
-    extractionMethod: "OCR_ASSISTED",
+    extractionMethod,
     ocrRunId: options.ocrRunId,
   };
 
@@ -337,8 +361,15 @@ export async function approveProtoOcrDraft(options: {
     dateKst: options.dateKst,
     parserVersion: PROTO_OCR_PARSER_VERSION,
     ocrProvider: "NONE_OR_FIXTURE",
-    imageCount: 0,
-    imageFingerprints: [],
+    imageCount: options.imageFingerprints?.length ?? 0,
+    imageFingerprints: options.imageFingerprints ?? [],
+    intakeRunId: options.intakeRunId ?? null,
+    intakeItemIds: options.intakeItemIds ?? [],
+    inputKind: options.inputKind ?? null,
+    sourceType: "ADMIN_MANUAL_SCREENSHOT",
+    extractionMethod,
+    confirmationMethod: "ADMIN_VERIFIED",
+    commercialUseStatus: "INTERNAL_ONLY",
     extractedRows: options.approvedRows.length,
     matchedRows: passRows.filter((r) => r.gameId).length,
     ambiguousRows: options.approvedRows.filter((r) => r.mappingStatus === "AMBIGUOUS")
@@ -357,7 +388,6 @@ export async function approveProtoOcrDraft(options: {
     warnings: validation.globalErrors,
     t45AutoRun: false,
     t30AutoRun: false,
-    commercialUseStatus: "INTERNAL_ONLY",
   };
   await writeJsonAtomic(auditPath, audit);
 

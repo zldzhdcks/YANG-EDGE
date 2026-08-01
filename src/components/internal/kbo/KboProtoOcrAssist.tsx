@@ -1,7 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type { KboProtoOcrDraftRow } from "@/lib/kbo/proto-ocr/types";
+import {
+  CLIPBOARD_MATERIAL_OPTIONS,
+  type ClipboardIntakeMaterialType,
+} from "@/lib/clipboard-intake";
+import { useClipboardImageIntake } from "@/hooks/useClipboardImageIntake";
+import ClipboardImageDropZone from "@/components/clipboard-intake/ClipboardImageDropZone";
+import ClipboardImagePreviewList from "@/components/clipboard-intake/ClipboardImagePreviewList";
 
 type ExtractResponse = {
   ok: boolean;
@@ -14,6 +21,7 @@ type ExtractResponse = {
   warnings: string[];
   durationMs: number;
   mutationPerformed: boolean;
+  imageFingerprints?: string[];
   errorCode?: string;
   message?: string;
 };
@@ -29,8 +37,18 @@ type ApproveResponse = {
 };
 
 function escapeHint(s: string): string {
-  // React text nodes escape HTML; still strip control chars for display safety
   return s.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "");
+}
+
+function normalizeDraftRow(r: KboProtoOcrDraftRow): KboProtoOcrDraftRow {
+  return {
+    ...r,
+    adminDecision: r.adminDecision ?? "PENDING",
+    cancellationSuspect: r.cancellationSuspect ?? "NONE",
+    detectedMarket: r.detectedMarket ?? "MONEYLINE_2WAY",
+    saveAllowed: r.saveAllowed ?? true,
+    adminCancellationDecision: r.adminCancellationDecision ?? "PENDING",
+  };
 }
 
 export default function KboProtoOcrAssist({
@@ -42,13 +60,24 @@ export default function KboProtoOcrAssist({
   historicalReadOnly: boolean;
   onApproved?: () => void;
 }) {
-  const [files, setFiles] = useState<File[]>([]);
+  const [pasteMode, setPasteMode] = useState(false);
+  const [materialType, setMaterialType] =
+    useState<ClipboardIntakeMaterialType>("KBO_DOMESTIC_PROTO");
   const [pasteText, setPasteText] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
   const [extract, setExtract] = useState<ExtractResponse | null>(null);
   const [rows, setRows] = useState<KboProtoOcrDraftRow[]>([]);
   const [confirmed, setConfirmed] = useState(false);
   const [approveMsg, setApproveMsg] = useState<string | null>(null);
+
+  const onPastedText = useCallback((text: string) => {
+    setPasteText((prev) => (prev.trim() ? `${prev.trim()}\n${text}` : text));
+  }, []);
+
+  const intake = useClipboardImageIntake({
+    pasteEnabled: pasteMode && !historicalReadOnly,
+    onPastedText,
+  });
 
   const summary = useMemo(() => {
     const matched = rows.filter((r) =>
@@ -64,7 +93,22 @@ export default function KboProtoOcrAssist({
       (r) => r.adminDecision === "APPROVED" || r.adminDecision === "CORRECTED",
     ).length;
     const rejected = rows.filter((r) => r.adminDecision === "REJECTED").length;
-    return { matched, ambiguous, unknown, approved, rejected, total: rows.length };
+    const cancelSuspect = rows.filter(
+      (r) => r.cancellationSuspect && r.cancellationSuspect !== "NONE",
+    ).length;
+    const unsupported = rows.filter(
+      (r) => r.detectedMarket && r.detectedMarket !== "MONEYLINE_2WAY",
+    ).length;
+    return {
+      matched,
+      ambiguous,
+      unknown,
+      approved,
+      rejected,
+      cancelSuspect,
+      unsupported,
+      total: rows.length,
+    };
   }, [rows]);
 
   const patchRow = (id: string, patch: Partial<KboProtoOcrDraftRow>) => {
@@ -73,7 +117,10 @@ export default function KboProtoOcrAssist({
     );
   };
 
+  const materialActive = materialType === "KBO_DOMESTIC_PROTO";
+
   const runPasteExtract = async () => {
+    if (!materialActive) return;
     setBusy("extract");
     setApproveMsg(null);
     try {
@@ -84,12 +131,7 @@ export default function KboProtoOcrAssist({
       });
       const json = (await res.json()) as ExtractResponse;
       setExtract(json);
-      setRows(
-        (json.rows ?? []).map((r) => ({
-          ...r,
-          adminDecision: "PENDING",
-        })),
-      );
+      setRows((json.rows ?? []).map(normalizeDraftRow));
       setConfirmed(false);
     } finally {
       setBusy(null);
@@ -97,6 +139,8 @@ export default function KboProtoOcrAssist({
   };
 
   const runImageExtract = async () => {
+    if (!materialActive) return;
+    const files = intake.getUploadFiles();
     if (files.length === 0) return;
     setBusy("extract");
     setApproveMsg(null);
@@ -110,7 +154,7 @@ export default function KboProtoOcrAssist({
       });
       const json = (await res.json()) as ExtractResponse;
       setExtract(json);
-      setRows((json.rows ?? []).map((r) => ({ ...r, adminDecision: "PENDING" })));
+      setRows((json.rows ?? []).map(normalizeDraftRow));
       setConfirmed(false);
     } finally {
       setBusy(null);
@@ -126,10 +170,30 @@ export default function KboProtoOcrAssist({
         body: JSON.stringify({ dateKst, rows }),
       });
       const json = await res.json();
-      if (Array.isArray(json.rows)) setRows(json.rows);
+      if (Array.isArray(json.rows)) {
+        setRows(json.rows.map(normalizeDraftRow));
+      }
     } finally {
       setBusy(null);
     }
+  };
+
+  const resolveExtractionMethod = ():
+    | "OCR_ASSISTED"
+    | "MANUAL_VISUAL_CONFIRMATION" => {
+    if (
+      extract?.engineStatus === "OCR_ENGINE_NOT_CONFIGURED" ||
+      (extract?.rows?.length === 0 && intake.items.length > 0)
+    ) {
+      return "MANUAL_VISUAL_CONFIRMATION";
+    }
+    if (extract?.engineStatus === "FIXTURE" && pasteText.trim() && intake.items.length === 0) {
+      return "OCR_ASSISTED";
+    }
+    if (extract?.engineStatus === "READY" || extract?.engineStatus === "FIXTURE") {
+      return "OCR_ASSISTED";
+    }
+    return "MANUAL_VISUAL_CONFIRMATION";
   };
 
   const runApprove = async (approveAll: boolean) => {
@@ -144,6 +208,14 @@ export default function KboProtoOcrAssist({
     setBusy("approve");
     setApproveMsg(null);
     try {
+      const inputKind =
+        intake.items.some((i) => i.inputKind === "CLIPBOARD_IMAGE")
+          ? "CLIPBOARD_IMAGE"
+          : intake.items.length > 0
+            ? "FILE_IMAGE"
+            : pasteText.trim()
+              ? "PASTED_TEXT"
+              : null;
       const res = await fetch("/api/internal/kbo/proto-ocr/approve", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -152,9 +224,16 @@ export default function KboProtoOcrAssist({
           ocrRunId: extract.ocrRunId,
           approvedRows: rows,
           adminId: "admin-ui",
-          sourceReference: "PROTO_OCR_ASSIST",
+          sourceReference: "PROTO_OCR_CLIPBOARD_ASSIST",
           explicitConfirmation: confirmed,
           approveAll,
+          intakeRunId: intake.intakeRunId,
+          intakeItemIds: intake.items.map((i) => i.intakeItemId),
+          imageFingerprints:
+            extract.imageFingerprints ??
+            intake.items.map((i) => i.imageSha256).filter(Boolean),
+          inputKind,
+          extractionMethod: resolveExtractionMethod(),
         }),
       });
       const json = (await res.json()) as ApproveResponse;
@@ -174,8 +253,12 @@ export default function KboProtoOcrAssist({
         r.errors.length === 0 &&
         r.homePrice != null &&
         r.awayPrice != null &&
-        r.gameId,
+        r.gameId &&
+        r.detectedMarket === "MONEYLINE_2WAY" &&
+        r.saveAllowed !== false,
     );
+
+  const disabled = historicalReadOnly || busy != null;
 
   return (
     <section className="space-y-4 rounded border border-amber-900/50 bg-zinc-950/40 p-4">
@@ -186,68 +269,86 @@ export default function KboProtoOcrAssist({
         <p className="mt-1 text-xs text-zinc-500">
           OCR/붙여넣기 결과는 Source of Truth가 아닙니다. 관리자 검토·승인 후에만
           Operator Input으로 저장됩니다. INTERNAL_ONLY · T45 자동 실행 없음 ·
-          원본 이미지는 임시 처리 후 삭제 · 자동 사이트 수집 아님.
+          원본 이미지는 임시 처리 후 삭제 · 자동 사이트 수집 아님 · 스크린샷은
+          Schedule을 대체하지 않습니다.
         </p>
+      </div>
+
+      <div className="space-y-2">
+        <label className="block text-xs text-zinc-400">자료 유형 (분석 전 선택)</label>
+        <select
+          className="rounded border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white"
+          disabled={disabled}
+          value={materialType}
+          onChange={(e) =>
+            setMaterialType(e.target.value as ClipboardIntakeMaterialType)
+          }
+        >
+          {CLIPBOARD_MATERIAL_OPTIONS.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+              {opt.availability !== "ACTIVE" ? ` (${opt.availability})` : ""}
+            </option>
+          ))}
+        </select>
+        {!materialActive && (
+          <div className="text-xs text-amber-500">
+            이번 v1은 KBO 국내 프로토만 연결됩니다. Lineup/Starter Screenshot Intake는
+            후속 미션입니다.
+          </div>
+        )}
       </div>
 
       {extract?.engineStatus === "OCR_ENGINE_NOT_CONFIGURED" && (
         <div className="rounded border border-amber-800 bg-amber-950/40 px-3 py-2 text-sm text-amber-200">
-          OCR 엔진 연결 필요 (OCR_ENGINE_NOT_CONFIGURED). 아래 텍스트 붙여넣기
-          fallback을 사용하세요. 외부 이미지 전송:{" "}
-          {extract.externalImageTransfer ? "YES" : "NO"}
+          이미지 수신·검증 성공 가능. OCR 엔진 연결 필요 (OCR_ENGINE_NOT_CONFIGURED).
+          자동 후보 없음 — 텍스트 붙여넣기 fallback 또는 화면을 보고 직접 입력하세요.
+          외부 이미지 전송: {extract.externalImageTransfer ? "YES" : "NO"}
         </div>
       )}
 
-      <div className="grid gap-3 lg:grid-cols-2">
-        <div className="space-y-2">
-          <label className="block text-xs text-zinc-400">이미지 업로드 (PNG/JPEG/WEBP)</label>
-          <input
-            type="file"
-            accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp"
-            multiple
-            disabled={historicalReadOnly || busy != null}
-            onChange={(e) => setFiles(Array.from(e.target.files ?? []).slice(0, 10))}
-            className="block w-full text-sm text-zinc-300"
-          />
-          {files.length > 0 && (
-            <ul className="text-xs text-zinc-500">
-              {files.map((f) => (
-                <li key={f.name}>
-                  {escapeHint(f.name)} ({Math.round(f.size / 1024)} KB)
-                </li>
-              ))}
-            </ul>
-          )}
-          <button
-            type="button"
-            disabled={historicalReadOnly || busy != null || files.length === 0}
-            onClick={() => void runImageExtract()}
-            className="rounded bg-zinc-800 px-3 py-2 text-sm text-white disabled:opacity-50"
-          >
-            {busy === "extract" ? "처리 중…" : "이미지 OCR 추출"}
-          </button>
-        </div>
+      <ClipboardImageDropZone
+        intake={intake}
+        pasteEnabled={pasteMode && !historicalReadOnly}
+        onPasteModeChange={setPasteMode}
+        disabled={disabled || !materialActive}
+      />
 
-        <div className="space-y-2">
-          <label className="block text-xs text-zinc-400">
-            텍스트 붙여넣기 fallback (동일 파서)
-          </label>
-          <textarea
-            className="h-28 w-full rounded border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white"
-            disabled={historicalReadOnly || busy != null}
-            value={pasteText}
-            onChange={(e) => setPasteText(e.target.value)}
-            placeholder={"예:\nLG 1.75 두산 1.77\n키움 1.90 SSG 1.65"}
-          />
-          <button
-            type="button"
-            disabled={historicalReadOnly || busy != null || !pasteText.trim()}
-            onClick={() => void runPasteExtract()}
-            className="rounded bg-zinc-800 px-3 py-2 text-sm text-white disabled:opacity-50"
-          >
-            붙여넣기 파싱
-          </button>
-        </div>
+      <ClipboardImagePreviewList
+        intake={intake}
+        disabled={disabled}
+      />
+
+      <div className="flex flex-wrap gap-2">
+        <button
+          type="button"
+          disabled={disabled || !materialActive || intake.items.length === 0}
+          onClick={() => void runImageExtract()}
+          className="rounded bg-zinc-800 px-3 py-2 text-sm text-white disabled:opacity-50"
+        >
+          {busy === "extract" ? "처리 중…" : "분석하기 (이미지)"}
+        </button>
+      </div>
+
+      <div className="space-y-2">
+        <label className="block text-xs text-zinc-400">
+          텍스트 붙여넣기 fallback (동일 파서)
+        </label>
+        <textarea
+          className="h-28 w-full rounded border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white"
+          disabled={disabled || !materialActive}
+          value={pasteText}
+          onChange={(e) => setPasteText(e.target.value)}
+          placeholder={"예:\nLG 1.75 두산 1.77\n키움 1.90 SSG 1.65"}
+        />
+        <button
+          type="button"
+          disabled={disabled || !materialActive || !pasteText.trim()}
+          onClick={() => void runPasteExtract()}
+          className="rounded bg-zinc-800 px-3 py-2 text-sm text-white disabled:opacity-50"
+        >
+          붙여넣기 파싱
+        </button>
       </div>
 
       {extract && (
@@ -257,13 +358,14 @@ export default function KboProtoOcrAssist({
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-2 text-xs text-zinc-400 sm:grid-cols-5">
+      <div className="grid grid-cols-2 gap-2 text-xs text-zinc-400 sm:grid-cols-6">
         <div>rows {summary.total}</div>
         <div>matched {summary.matched}</div>
         <div>ambiguous {summary.ambiguous}</div>
         <div>unknown {summary.unknown}</div>
+        <div>cancel? {summary.cancelSuspect}</div>
         <div>
-          approved {summary.approved} / rejected {summary.rejected}
+          approved {summary.approved} / unsupported {summary.unsupported}
         </div>
       </div>
 
@@ -274,89 +376,142 @@ export default function KboProtoOcrAssist({
               <tr>
                 <th className="p-2">Schedule</th>
                 <th className="p-2">OCR 원문</th>
+                <th className="p-2">시장/취소</th>
                 <th className="p-2">원정/홈 배당</th>
                 <th className="p-2">confidence</th>
                 <th className="p-2">decision</th>
               </tr>
             </thead>
             <tbody>
-              {rows.map((r) => (
-                <tr key={r.draftRowId} className="border-b border-zinc-900 align-top">
-                  <td className="p-2">
-                    <div>{r.gameId ?? "—"}</div>
-                    <div>
-                      {r.resolvedAwayTeam ?? "?"} @ {r.resolvedHomeTeam ?? "?"}
-                    </div>
-                    <div className="text-zinc-550 text-zinc-500">{r.mappingStatus}</div>
-                    {r.errors.length > 0 && (
-                      <div className="text-red-400">{r.errors.join(", ")}</div>
-                    )}
-                    {r.warnings.length > 0 && (
-                      <div className="text-amber-500">{r.warnings.slice(0, 3).join(", ")}</div>
-                    )}
-                  </td>
-                  <td className="p-2">
-                    <div>{escapeHint(r.rawTeamTexts.join(" / "))}</div>
-                    <div>{escapeHint(r.rawPriceTexts.join(" / "))}</div>
-                  </td>
-                  <td className="p-2 space-y-1">
-                    <label className="block">
-                      away
-                      <input
-                        type="number"
-                        step="0.01"
-                        className="mt-0.5 w-24 rounded border border-zinc-700 bg-zinc-950 px-2 py-1"
-                        disabled={historicalReadOnly}
-                        value={r.awayPrice ?? ""}
+              {rows.map((r) => {
+                const unsupported = r.detectedMarket !== "MONEYLINE_2WAY";
+                const saveBlocked = unsupported || r.saveAllowed === false;
+                return (
+                  <tr key={r.draftRowId} className="border-b border-zinc-900 align-top">
+                    <td className="p-2">
+                      <div>{r.gameId ?? "—"}</div>
+                      <div>
+                        {r.resolvedAwayTeam ?? "?"} @ {r.resolvedHomeTeam ?? "?"}
+                      </div>
+                      <div className="text-zinc-500">{r.mappingStatus}</div>
+                      <div className="text-zinc-600">
+                        img {(r.sourceImageIds ?? []).join(", ") || "—"}
+                      </div>
+                      {r.errors.length > 0 && (
+                        <div className="text-red-400">{r.errors.join(", ")}</div>
+                      )}
+                      {r.warnings.length > 0 && (
+                        <div className="text-amber-500">
+                          {r.warnings.slice(0, 4).join(", ")}
+                        </div>
+                      )}
+                    </td>
+                    <td className="p-2">
+                      <div>{escapeHint(r.rawTeamTexts.join(" / "))}</div>
+                      <div>{escapeHint(r.rawPriceTexts.join(" / "))}</div>
+                    </td>
+                    <td className="p-2 space-y-1">
+                      <div>{r.detectedMarket}</div>
+                      {unsupported && (
+                        <div className="text-red-400">
+                          DETECTED_UNSUPPORTED_MARKET (저장 불가)
+                        </div>
+                      )}
+                      {r.cancellationSuspect !== "NONE" && (
+                        <>
+                          <div className="text-amber-400">{r.cancellationSuspect}</div>
+                          <select
+                            className="rounded border border-zinc-700 bg-zinc-950 px-2 py-1"
+                            disabled={historicalReadOnly}
+                            value={r.adminCancellationDecision}
+                            onChange={(e) =>
+                              patchRow(r.draftRowId, {
+                                adminCancellationDecision: e.target
+                                  .value as KboProtoOcrDraftRow["adminCancellationDecision"],
+                                saveAllowed:
+                                  e.target.value === "OCR_ERROR" ||
+                                  e.target.value === "IGNORE"
+                                    ? !unsupported
+                                    : false,
+                              })
+                            }
+                          >
+                            <option value="PENDING">결정 대기</option>
+                            <option value="CONFIRM_CANCEL">실제 취소</option>
+                            <option value="CONFIRM_POSTPONE">실제 연기</option>
+                            <option value="OCR_ERROR">단순 OCR 오류</option>
+                            <option value="IGNORE">무시</option>
+                          </select>
+                          <div className="text-[10px] text-zinc-500">
+                            Schedule 자동 변경 없음 · 취소는 별도 Status Revision
+                          </div>
+                        </>
+                      )}
+                    </td>
+                    <td className="p-2 space-y-1">
+                      <label className="block">
+                        away
+                        <input
+                          type="number"
+                          step="0.01"
+                          className="mt-0.5 w-24 rounded border border-zinc-700 bg-zinc-950 px-2 py-1 disabled:opacity-40"
+                          disabled={historicalReadOnly || saveBlocked}
+                          value={r.awayPrice ?? ""}
+                          onChange={(e) =>
+                            patchRow(r.draftRowId, {
+                              awayPrice: e.target.value
+                                ? Number(e.target.value)
+                                : null,
+                              adminDecision: "CORRECTED",
+                            })
+                          }
+                        />
+                      </label>
+                      <label className="block">
+                        home
+                        <input
+                          type="number"
+                          step="0.01"
+                          className="mt-0.5 w-24 rounded border border-zinc-700 bg-zinc-950 px-2 py-1 disabled:opacity-40"
+                          disabled={historicalReadOnly || saveBlocked}
+                          value={r.homePrice ?? ""}
+                          onChange={(e) =>
+                            patchRow(r.draftRowId, {
+                              homePrice: e.target.value
+                                ? Number(e.target.value)
+                                : null,
+                              adminDecision: "CORRECTED",
+                            })
+                          }
+                        />
+                      </label>
+                    </td>
+                    <td className="p-2">
+                      <div>{r.confidence.grade}</div>
+                      <div>{r.confidence.overallConfidence ?? "—"}</div>
+                      <div className="text-amber-400">review required</div>
+                    </td>
+                    <td className="p-2 space-y-1">
+                      <select
+                        className="rounded border border-zinc-700 bg-zinc-950 px-2 py-1"
+                        disabled={historicalReadOnly || unsupported}
+                        value={r.adminDecision}
                         onChange={(e) =>
                           patchRow(r.draftRowId, {
-                            awayPrice: e.target.value ? Number(e.target.value) : null,
-                            adminDecision: "CORRECTED",
+                            adminDecision: e.target
+                              .value as KboProtoOcrDraftRow["adminDecision"],
                           })
                         }
-                      />
-                    </label>
-                    <label className="block">
-                      home
-                      <input
-                        type="number"
-                        step="0.01"
-                        className="mt-0.5 w-24 rounded border border-zinc-700 bg-zinc-950 px-2 py-1"
-                        disabled={historicalReadOnly}
-                        value={r.homePrice ?? ""}
-                        onChange={(e) =>
-                          patchRow(r.draftRowId, {
-                            homePrice: e.target.value ? Number(e.target.value) : null,
-                            adminDecision: "CORRECTED",
-                          })
-                        }
-                      />
-                    </label>
-                  </td>
-                  <td className="p-2">
-                    <div>{r.confidence.grade}</div>
-                    <div>{r.confidence.overallConfidence ?? "—"}</div>
-                    <div className="text-amber-400">review required</div>
-                  </td>
-                  <td className="p-2 space-y-1">
-                    <select
-                      className="rounded border border-zinc-700 bg-zinc-950 px-2 py-1"
-                      disabled={historicalReadOnly}
-                      value={r.adminDecision}
-                      onChange={(e) =>
-                        patchRow(r.draftRowId, {
-                          adminDecision: e.target.value as KboProtoOcrDraftRow["adminDecision"],
-                        })
-                      }
-                    >
-                      <option value="PENDING">PENDING</option>
-                      <option value="APPROVED">APPROVED</option>
-                      <option value="CORRECTED">CORRECTED</option>
-                      <option value="REJECTED">REJECTED</option>
-                    </select>
-                  </td>
-                </tr>
-              ))}
+                      >
+                        <option value="PENDING">PENDING</option>
+                        <option value="APPROVED">APPROVED</option>
+                        <option value="CORRECTED">CORRECTED</option>
+                        <option value="REJECTED">REJECTED</option>
+                      </select>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -371,8 +526,8 @@ export default function KboProtoOcrAssist({
           className="mt-1"
         />
         <span>
-          스크린샷과 경기·홈/원정·배당을 직접 확인했습니다. (OCR 결과는 자동
-          승인되지 않습니다)
+          스크린샷과 날짜·경기·홈/원정·시장·배당을 직접 확인했습니다. (OCR 결과는
+          자동 승인되지 않습니다)
         </span>
       </label>
 
