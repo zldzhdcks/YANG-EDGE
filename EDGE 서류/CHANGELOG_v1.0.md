@@ -22,6 +22,16 @@ YANG EDGE 프로젝트의 버전별 변경 이력을 관리하는 공식 문서�
 
 # v1.0.0
 
+## ADDED (2026-08-01 KBO Domestic Proto OCR-Assisted Admin Workflow v1)
+
+- Gate: `OCR_ENGINE_NOT_CONFIGURED` (no OCR/sharp dependency; fixture + paste-text fallback)
+- Adapter contract + image validation (magic bytes, ephemeral temp cleanup)
+- Candidate parser + schedule-first mapping + confidence breakdown + multi-image merge
+- APIs: `/api/internal/kbo/proto-ocr/{extract,validate,approve}`
+- Admin UI assist on `/internal/kbo/personnel` (OCR is Draft Generator; admin approve = SoT)
+- Approve merges Domestic Proto only; preserves starter/lineup; no T45/T30 auto-run
+- Tests: `test:kbo-proto-ocr`, `test:kbo-proto-ocr-admin`, `verify:kbo-proto-ocr-historical`, `verify:kbo-proto-ocr-runtime`
+
 ## ADDED (2026-08-01 KBO T45 Admin Input UI/API v1)
 
 - Page: `/internal/kbo/personnel` (INTERNAL / noindex; auth incomplete)

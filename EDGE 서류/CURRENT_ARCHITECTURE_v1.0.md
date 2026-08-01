@@ -190,6 +190,14 @@ CLI: `npm run research:kbo-t45-personnel -- --date YYYY-MM-DD --input <personnel
 
 Admin UI: `/internal/kbo/personnel` (INTERNAL / noindex; auth 미완전 — production은 `INTERNAL_ADMIN_TOKEN` 필수)
 
+Domestic Proto OCR assist (same page):
+- OCR/paste → draft → admin review → approve merges Domestic Proto only
+- Gate: `OCR_ENGINE_NOT_CONFIGURED` → paste-text fallback (fixture adapter for tests)
+- APIs: `/api/internal/kbo/proto-ocr/extract|validate|approve`
+- OCR = Draft Generator; SoT = admin-approved Operator Input; confidence never auto-approves
+- Images ephemeral; no permanent originals; default no external image transfer
+- T45/T30 auto-run absent on OCR approve
+
 API (내부):
 - `GET /api/internal/kbo/t45-personnel/load`
 - `POST /api/internal/kbo/t45-personnel/validate` (mutation 0)
