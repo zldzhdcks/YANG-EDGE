@@ -183,4 +183,6 @@ Engine 변경은 연구 완료 후만 가능하다.
 - 원본 스크린샷은 ephemeral 처리(기본 영구 저장 금지). Object URL은 remove/unmount 시 revoke.
 - 스크린샷은 Schedule primary를 대체·생성하지 않음. 취소 의심은 Draft 후 별도 Schedule Status Revision.
 - MONEYLINE_2WAY만 저장 지원. INTERNAL_ONLY.
+- PARTIAL operator input(null starter/lineup)은 정상. T45 Dry-run은 TypeError 없이 PARTIAL 결과를 반환한다.
+- CANCELLED/POSTPONED 경기는 personnel/proto 요구 NOT_APPLICABLE. missing 분모에서 제외한다.
 - Historical 07-31 read-only. production 공개 전 `INTERNAL_ADMIN_TOKEN` 필수.

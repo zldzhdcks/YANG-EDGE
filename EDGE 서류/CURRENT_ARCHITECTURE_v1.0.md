@@ -221,6 +221,10 @@ API (내부):
 - `ADMIN_VERIFIED` ≠ 공식 리그 데이터 ≠ Provider Confirmed ≠ Engine 승인
 - 외부 표시: 관리자 확인 완료 / 예상 구성 (금지: 공식 라인업·선발·배당)
 - `commercialUseStatus` UNKNOWN/INTERNAL_ONLY → 공개 재배포 자동 승격 금지
+- PARTIAL operator input(null starter/lineup)은 정상 상태 — TypeError 없이 Dry-run 가능
+- CANCELLED/POSTPONED 경기는 personnel/proto 요구 `NOT_APPLICABLE` (missing 분모 제외)
+- completeness 분모 = active pregame only; cancelled는 Schedule에서 삭제하지 않음
+- `Not Started` ≠ STARTED (부분 문자열 매칭 금지)
 
 Scheduler T45:
 - 입력 파일 READY → `RUN_KBO_T45_PERSONNEL_WORKFLOW`

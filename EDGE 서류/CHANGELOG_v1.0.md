@@ -22,6 +22,15 @@ YANG EDGE 프로젝트의 버전별 변경 이력을 관리하는 공식 문서�
 
 # v1.0.0
 
+## FIXED (2026-08-01 KBO T45 Readiness Blockers)
+
+- Null starter/lineup no longer TypeError in T45 workflow snapshot build
+- CANCELLED/POSTPONED games → `NOT_APPLICABLE` (not missing input)
+- Completeness denominator = active pregame only
+- Operating status resolver avoids `/STARTED/` matching `Not Started`
+- Dry-run returns `readinessSummary`; writesSkipped; providerCalls=0
+- Test: `npm run test:kbo-t45-readiness`
+
 ## ADDED (2026-08-01 KBO Screenshot Clipboard Intake v1)
 
 - Common clipboard intake: types, paste extract, client preflight, `useClipboardImageIntake`, DropZone, PreviewList

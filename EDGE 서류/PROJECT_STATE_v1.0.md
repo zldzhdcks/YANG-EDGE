@@ -112,6 +112,7 @@ Engine 반영은 아직 연구 단계.
 - KBO T45 Admin Input UI/API v1 (`/internal/kbo/personnel` + internal APIs)
 - KBO Domestic Proto OCR assist v1 (fixture/paste; OCR engine not configured)
 - KBO Screenshot Clipboard Intake v1 (Ctrl+V drop zone → Proto review; Lineup/Starter not yet)
+- KBO T45 readiness: null starter guard + cancelled NOT_APPLICABLE (local uncommitted)
 
 ---
 
