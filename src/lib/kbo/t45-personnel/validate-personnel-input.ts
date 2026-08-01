@@ -13,7 +13,13 @@ import type {
   PersonnelCompleteness,
   PredictionUsability,
   PersonnelWorkflowStatus,
+  T45ReadinessSummary,
 } from "./types";
+import {
+  personnelRequirementsApplicable,
+  resolveKboGameOperatingStatus,
+  type KboGameOperatingStatus,
+} from "./resolve-game-operating-status";
 
 export type ParseInputOutcome =
   | { ok: true; input: KboT45PersonnelInputV1 }
@@ -225,6 +231,10 @@ export type CutoffContext = {
   nowMs: number;
   lockedPredictionExists?: boolean;
   statusAbstract?: string | null;
+  statusDetailed?: string | null;
+  codedGameState?: string | null;
+  clockState?: string | null;
+  cancellationStatus?: string | null;
   actualStartTime?: string | null;
 };
 
@@ -237,8 +247,13 @@ export function checkHardCutoff(
   }
   const startMs = Date.parse(game.scheduledStartTime);
   const observedMs = Date.parse(game.observedAt);
-  const blob = `${ctx.statusAbstract ?? ""}`.toUpperCase();
-  if (/FINAL|\bFT\b|IN[_\s-]?PROGRESS|\bLIVE\b/.test(blob)) {
+  const blob = `${ctx.statusAbstract ?? ""} ${ctx.statusDetailed ?? ""} ${ctx.clockState ?? ""}`
+    .toUpperCase()
+    .replace(/[_-]+/g, " ");
+  // Avoid /STARTED/ matching "Not Started"
+  if (/\bNOT\s+STARTED\b/.test(blob)) {
+    // still pregame — fall through to time checks
+  } else if (/\bFINAL\b|\bFT\b|\bFINISHED\b|\bIN\s*PROGRESS\b|\bLIVE\b|(^|\s)STARTED(\s|$)/.test(blob)) {
     return { blocked: true, code: "BLOCKED_AFTER_START" };
   }
   if (ctx.actualStartTime && Date.parse(ctx.actualStartTime) <= ctx.nowMs) {
@@ -251,6 +266,22 @@ export function checkHardCutoff(
     return { blocked: true, code: "AFTER_CUTOFF" };
   }
   return { blocked: false, code: null };
+}
+
+function resolveOperatingForGame(
+  game: KboT45GameInput,
+  ctx: CutoffContext,
+): KboGameOperatingStatus {
+  return resolveKboGameOperatingStatus({
+    statusAbstract: ctx.statusAbstract,
+    statusDetailed: ctx.statusDetailed,
+    codedGameState: ctx.codedGameState,
+    clockState: ctx.clockState,
+    cancellationStatus:
+      ctx.cancellationStatus ?? game.cancellationStatus ?? null,
+    scheduledStartTime: game.scheduledStartTime,
+    nowMs: ctx.nowMs,
+  });
 }
 
 function completenessOf(input: {
@@ -313,7 +344,60 @@ export function validateGame(
       batterCount: 0,
       errors: ["GAME_ID_MISSING"],
       warnings,
+      operatingStatus: "UNKNOWN",
+      requirementsApplicable: true,
     };
+  }
+
+  const operatingStatus = resolveOperatingForGame(game, ctx);
+
+  if (operatingStatus === "CANCELLED" || operatingStatus === "POSTPONED") {
+    const warningsNa = [
+      operatingStatus === "CANCELLED"
+        ? "GAME_CANCELLED_PERSONNEL_NOT_APPLICABLE"
+        : "GAME_POSTPONED_PERSONNEL_NOT_APPLICABLE",
+      "CANCELLED_MARKET_NOT_SAVED",
+    ];
+    if (game.protoMarketStatus === "CANCELLED_MARKET_NOT_SAVED") {
+      warningsNa.push("PROTO_NOT_APPLICABLE_CANCELLED");
+    }
+    return {
+      gameId: game.gameId,
+      status: "NOT_APPLICABLE",
+      completeness: "INSUFFICIENT",
+      predictionUsability: "UNUSABLE",
+      starterOk: false,
+      lineupOk: false,
+      lineupPartial: false,
+      protoOk: false,
+      batterCount: 0,
+      errors: [],
+      warnings: [...new Set(warningsNa)],
+      operatingStatus,
+      requirementsApplicable: false,
+    };
+  }
+
+  if (operatingStatus === "STARTED" || operatingStatus === "FINAL") {
+    return {
+      gameId: game.gameId,
+      status: "BLOCKED_AFTER_START",
+      completeness: "INSUFFICIENT",
+      predictionUsability: "UNUSABLE",
+      starterOk: false,
+      lineupOk: false,
+      lineupPartial: false,
+      protoOk: false,
+      batterCount: 0,
+      errors: ["BLOCKED_AFTER_START"],
+      warnings,
+      operatingStatus,
+      requirementsApplicable: false,
+    };
+  }
+
+  if (operatingStatus === "UNKNOWN") {
+    warnings.push("OPERATING_STATUS_REVIEW_REQUIRED");
   }
 
   const cutoff = checkHardCutoff(game, ctx);
@@ -330,6 +414,8 @@ export function validateGame(
       batterCount: 0,
       errors: [cutoff.code],
       warnings,
+      operatingStatus,
+      requirementsApplicable: personnelRequirementsApplicable(operatingStatus),
     };
   }
 
@@ -385,6 +471,69 @@ export function validateGame(
     batterCount: lh.batterCount + la.batterCount,
     errors: [...new Set(errors)],
     warnings: [...new Set(warnings)],
+    operatingStatus,
+    requirementsApplicable: true,
+  };
+}
+
+export function summarizeT45Readiness(
+  results: GameValidationResult[],
+): T45ReadinessSummary {
+  const cancelledGames = results.filter((r) => r.operatingStatus === "CANCELLED").length;
+  const postponedGames = results.filter((r) => r.operatingStatus === "POSTPONED").length;
+  const notApplicableGames = results.filter(
+    (r) => r.requirementsApplicable === false || r.status === "NOT_APPLICABLE",
+  ).length;
+  const required = results.filter((r) => r.requirementsApplicable !== false);
+  const activePregameGames = results.filter(
+    (r) =>
+      r.operatingStatus === "ACTIVE_PREGAME" ||
+      (r.requirementsApplicable !== false &&
+        r.operatingStatus !== "CANCELLED" &&
+        r.operatingStatus !== "POSTPONED" &&
+        r.operatingStatus !== "STARTED" &&
+        r.operatingStatus !== "FINAL"),
+  ).length;
+
+  const starterEntered = required.filter((r) => r.starterOk).length;
+  const lineupEntered = required.filter((r) => r.lineupOk).length;
+  const protoEntered = required.filter((r) => r.protoOk).length;
+
+  let overallCompleteness: T45ReadinessSummary["overallCompleteness"] = "EMPTY";
+  if (required.length === 0) {
+    overallCompleteness = "EMPTY";
+  } else if (
+    required.every((r) => r.completeness === "COMPLETE" && r.status === "ADMIN_VERIFIED")
+  ) {
+    overallCompleteness = "COMPLETE";
+  } else if (
+    required.some(
+      (r) =>
+        r.completeness === "PARTIAL" ||
+        r.completeness === "COMPLETE" ||
+        r.protoOk ||
+        r.starterOk ||
+        r.lineupOk ||
+        r.lineupPartial,
+    )
+  ) {
+    overallCompleteness = "PARTIAL";
+  } else {
+    overallCompleteness = "INSUFFICIENT";
+  }
+
+  return {
+    totalGames: results.length,
+    activePregameGames,
+    cancelledGames,
+    postponedGames,
+    notApplicableGames,
+    personnelRequiredGames: required.length,
+    protoRequiredGames: required.length,
+    starterEntered,
+    lineupEntered,
+    protoEntered,
+    overallCompleteness,
   };
 }
 

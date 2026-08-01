@@ -10,7 +10,8 @@ export type PersonnelWorkflowStatus =
   | "ADMIN_VERIFIED"
   | "PROVIDER_CONFIRMED"
   | "LOCKED"
-  | "VOID";
+  | "VOID"
+  | "NOT_APPLICABLE";
 
 export type PersonnelCompleteness = "COMPLETE" | "PARTIAL" | "INSUFFICIENT";
 
@@ -53,6 +54,12 @@ export type KboT45GameInput = {
   home: KboT45SideInput;
   away: KboT45SideInput;
   domesticProto?: KboT45ProtoInput | null;
+  /** Additive cancel metadata from admin schedule revision (optional). */
+  cancellationStatus?: "CANCELLED" | "POSTPONED" | string | null;
+  cancellationReason?: string | null;
+  protoMarketStatus?: string | null;
+  voidDisplayValues?: string | null;
+  voidDisplayNote?: string | null;
 };
 
 export type KboT45SideInput = {
@@ -99,7 +106,8 @@ export type GameValidationResult = {
     | "FAILED"
     | "AFTER_CUTOFF"
     | "ALREADY_LOCKED"
-    | "BLOCKED_AFTER_START";
+    | "BLOCKED_AFTER_START"
+    | "NOT_APPLICABLE";
   completeness: PersonnelCompleteness;
   predictionUsability: PredictionUsability;
   starterOk: boolean;
@@ -109,6 +117,30 @@ export type GameValidationResult = {
   batterCount: number;
   errors: string[];
   warnings: string[];
+  /** Operating status used for requirement applicability. */
+  operatingStatus?:
+    | "ACTIVE_PREGAME"
+    | "CANCELLED"
+    | "POSTPONED"
+    | "STARTED"
+    | "FINAL"
+    | "UNKNOWN";
+  /** false for CANCELLED/POSTPONED — excluded from missing denominator. */
+  requirementsApplicable?: boolean;
+};
+
+export type T45ReadinessSummary = {
+  totalGames: number;
+  activePregameGames: number;
+  cancelledGames: number;
+  postponedGames: number;
+  notApplicableGames: number;
+  personnelRequiredGames: number;
+  protoRequiredGames: number;
+  starterEntered: number;
+  lineupEntered: number;
+  protoEntered: number;
+  overallCompleteness: PersonnelCompleteness | "EMPTY";
 };
 
 export type T45WorkflowResult = {
@@ -128,4 +160,5 @@ export type T45WorkflowResult = {
   auditPath: string | null;
   personnelHash: string | null;
   domesticProtoHash: string | null;
+  readinessSummary?: T45ReadinessSummary;
 };

@@ -24,6 +24,7 @@ import type {
 import {
   defaultCommercialUse,
   parsePersonnelInputJson,
+  summarizeT45Readiness,
   tempPlayerKey,
   validateGame,
 } from "./validate-personnel-input";
@@ -392,13 +393,15 @@ export async function runKboT45PersonnelWorkflow(
     const result = validateGame(game, {
       nowMs: now.getTime(),
       lockedPredictionExists: lockedSet.has(game.gameId),
+      cancellationStatus: game.cancellationStatus ?? null,
     });
     gameResults.push(result);
     if (
       result.status === "AFTER_CUTOFF" ||
       result.status === "ALREADY_LOCKED" ||
       result.status === "FAILED" ||
-      result.status === "BLOCKED_AFTER_START"
+      result.status === "BLOCKED_AFTER_START" ||
+      result.status === "NOT_APPLICABLE"
     ) {
       continue;
     }
@@ -438,23 +441,27 @@ export async function runKboT45PersonnelWorkflow(
       enteredBy: adminId,
     });
 
-    const homeStarterId =
-      g.home.starter?.playerId?.trim() &&
-      !g.home.starter.playerId.startsWith("tmp-")
+    const homeStarterId = g.home.starter
+      ? g.home.starter.playerId?.trim() &&
+        !g.home.starter.playerId.startsWith("tmp-")
         ? g.home.starter.playerId.trim()
-        : tempPlayerKey(g.homeTeam, g.home.starter!.playerName);
-    const awayStarterId =
-      g.away.starter?.playerId?.trim() &&
-      !g.away.starter.playerId.startsWith("tmp-")
+        : tempPlayerKey(g.homeTeam, g.home.starter.playerName)
+      : null;
+    const awayStarterId = g.away.starter
+      ? g.away.starter.playerId?.trim() &&
+        !g.away.starter.playerId.startsWith("tmp-")
         ? g.away.starter.playerId.trim()
-        : tempPlayerKey(g.awayTeam, g.away.starter!.playerName);
+        : tempPlayerKey(g.awayTeam, g.away.starter.playerName)
+      : null;
 
-    const homeStarter = g.home.starter
-      ? buildStarterSide(g.homeTeam, g.home.starter, meta, homeStarterId)
-      : null;
-    const awayStarter = g.away.starter
-      ? buildStarterSide(g.awayTeam, g.away.starter, meta, awayStarterId)
-      : null;
+    const homeStarter =
+      g.home.starter && homeStarterId
+        ? buildStarterSide(g.homeTeam, g.home.starter, meta, homeStarterId)
+        : null;
+    const awayStarter =
+      g.away.starter && awayStarterId
+        ? buildStarterSide(g.awayTeam, g.away.starter, meta, awayStarterId)
+        : null;
     const homeLineup =
       g.home.lineup && vr.lineupOk
         ? buildLineupSide(g.homeTeam, "HOME", g.home.lineup, meta)
@@ -959,6 +966,8 @@ export async function runKboT45PersonnelWorkflow(
 
   void providerCalls;
 
+  const readinessSummary = summarizeT45Readiness(gameResults);
+
   return {
     schemaVersion: "kbo-t45-personnel-workflow-result-v1",
     dryRun,
@@ -978,5 +987,6 @@ export async function runKboT45PersonnelWorkflow(
       : path.relative(cwd, paths.workflowAudit).replace(/\\/g, "/"),
     personnelHash: writesSkipped ? personnelHash : personnelHash,
     domesticProtoHash: writesSkipped ? domesticProtoHash : domesticProtoHash,
+    readinessSummary,
   };
 }
