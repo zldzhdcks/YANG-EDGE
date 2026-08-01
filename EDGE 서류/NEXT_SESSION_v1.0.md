@@ -9,40 +9,37 @@ Version: 1.0.0
 
 # 현재 Active Mission
 
-## KBO T30 Runner Parameterization — in progress / verify
+## KBO T45 Personnel Workflow v1 — implemented (uncommitted)
 
-상태: Scheduler v1은 origin/main. T30 CLI 파라미터화 작업 중.
+상태: 코드/테스트 완료. git add/commit/push는 미션에서 금지 — 승인 후 커밋 분리.
 
-### Verified (Scheduler)
+### Verified (이 세션)
 
-- origin/main @ scheduler commits
-- dry-run providerCalls=0
+- `npm run test:kbo-t45-personnel`
+- `npm run test:scheduler-integration`
+- `npm run verify:kbo-t45-historical`
+- `npx tsc --noEmit` (실행 후 확인)
 
 ### 다음 실행 후보
 
-1. 검증: `npm run test:kbo-t30-cli` + `research:kbo-t30-lock -- --date 2026-07-31 --dry-run`
-2. Commit KBO T30 parameterization (승인 후)
+1. 승인 후 Commit 분리 (schema/workflow → scheduler/T30 → tests → docs)
+2. 당일 `personnel-input-v1.json` 작성 → `research:kbo-t45-personnel -- --dry-run`
 3. Optional: OS cron wrapper
 4. NPB postgame identity runner
-5. KBO Admin Personnel (T45)는 계속 MANUAL_REQUIRED
+5. KBO Prediction Engine — 범위 밖 (미구현 유지)
 
 ### 필수 주의
 
-- 2026-07-31 기존 artifact 재생성 금지 (dry-run만)
+- 2026-07-31 기존 artifact 재생성/변경 금지
+- ADMIN_VERIFIED ≠ 공식/Provider/Engine
 - Engine / Prediction 계산 변경 금지
-- Provider Odds API 추가 호출 금지
 - git push는 명시 승인 후만
 
 ---
 
 # 세션 시작 체크리스트
 
-- [ ] `npm run test:kbo-t30-cli`
-- [ ] `npm run research:kbo-t30-lock -- --date 2026-07-31 --dry-run`
-- [ ] prediction tip runId auto-resolve 확인
-
----
-
-# Blocker
-
-없음 (T30 파라미터화로 Scheduler auto-spawn 가능). T45 admin은 MANUAL.
+- [ ] `npm run test:kbo-t45-personnel`
+- [ ] `npm run verify:kbo-t45-historical`
+- [ ] `npm run test:scheduler-integration`
+- [ ] 당일 T45 input 존재 여부 확인

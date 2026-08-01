@@ -166,3 +166,13 @@ git add . 사용은 지양한다.
 현재 미션 범위를 임의로 확대하지 않는다.
 
 Engine 변경은 연구 완료 후만 가능하다.
+
+---
+
+# 11. KBO Admin Verified (T45)
+
+- 관리자 입력은 공식 Provider 데이터와 동일하지 않다.
+- 표시: 관리자 확인 완료 / 예상 구성. 금지: 공식 라인업·선발·배당.
+- T45 input 없음 → Scheduler `MANUAL_INPUT_REQUIRED` (추정 생성 금지).
+- T45 실패/미입력이어도 T30은 PASS Snapshot 저장 가능.
+- Prediction Engine / 공식 Pick 생성은 T45 범위 밖.

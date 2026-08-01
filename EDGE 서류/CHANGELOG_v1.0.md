@@ -22,6 +22,15 @@ YANG EDGE 프로젝트의 버전별 변경 이력을 관리하는 공식 문서�
 
 # v1.0.0
 
+## ADDED (2026-08-01 KBO T45 Personnel Workflow v1)
+
+- Unified admin input schema `kbo-t45-personnel-input-v1` + per-game validators
+- CLI: `npm run research:kbo-t45-personnel` (`--date`, `--input`, `--dry-run`, `--validate-only`, `--game-id`, …)
+- Personnel / Domestic Proto snapshots + version/hash/audit (no Engine / no official picks)
+- Scheduler KBO T45: READY → spawn workflow; missing → MANUAL_INPUT_REQUIRED; invalid → INPUT_VALIDATION_FAILED
+- T30 consumes personnel/proto snapshots for lineage + passReasons (PASS + officialPick=null 유지)
+- Tests: `test:kbo-t45-personnel`, `verify:kbo-t45-historical`
+
 ## ADDED (2026-08-01 KBO T30 Runner Parameterization)
 
 - CLI: `--date`, `--prior-run-id`, `--game-id`, `--dry-run`, `--json` (+ positional date compat)

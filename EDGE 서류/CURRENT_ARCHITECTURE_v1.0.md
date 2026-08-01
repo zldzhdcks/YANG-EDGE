@@ -182,7 +182,35 @@ State / Lock / Audit:
 
 ---
 
-# 11. 향후 확장
+# 11. KBO T45 Personnel Workflow v1
+
+역할: 관리자 확인 선발/타순/국내 프로토를 검증·버전·감사 후 Research Snapshot으로 저장한다.
+
+CLI: `npm run research:kbo-t45-personnel -- --date YYYY-MM-DD --input <personnel-input-v1.json>`
+
+입력: `data/operator-input/kbo/{date}-personnel-input-v1.json`
+
+출력:
+- `data/research/kbo/{date}-personnel-snapshot-v1.json`
+- `data/research/kbo/{date}-domestic-proto-snapshot-v1.json`
+- bridge operator files (starter/lineup/markets)
+- `data/audits/{date}-kbo-t45-personnel-workflow-v1.json`
+
+의미 구분:
+- `ADMIN_VERIFIED` ≠ 공식 리그 데이터 ≠ Provider Confirmed ≠ Engine 승인
+- 외부 표시: 관리자 확인 완료 / 예상 구성 (금지: 공식 라인업·선발·배당)
+- `commercialUseStatus` UNKNOWN/INTERNAL_ONLY → 공개 재배포 자동 승격 금지
+
+Scheduler T45:
+- 입력 파일 READY → `RUN_KBO_T45_PERSONNEL_WORKFLOW`
+- 없음 → `MANUAL_INPUT_REQUIRED`
+- 스키마 실패 → `INPUT_VALIDATION_FAILED`
+
+T30 연결: personnel/proto snapshot을 lineage·passReasons에 반영. `KBO_PREDICTION_PIPELINE_NOT_IMPLEMENTED` 및 `officialPick=null` 유지. Engine 미구현.
+
+---
+
+# 12. 향후 확장
 
 - Weather
 - Travel
