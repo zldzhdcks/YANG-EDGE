@@ -1,0 +1,236 @@
+{
+  "schemaVersion": "mlb-graded-predictions-v1",
+  "dateKst": "2026-07-31",
+  "predictionArtifact": "2026-07-31.json",
+  "predictionHash": "7e5ed4244c5837253fef2eb4ee2540f1a7176ea2a425177a00558c9f9ea0e559",
+  "resultArtifact": "2026-07-31-official-results-v1.json",
+  "resultHash": "995c59fd7410f519eb451d0a1bc82adc9a1bad829519e15d2e6e1875905685c0",
+  "gradingPolicyVersion": "mlb-grading-v1",
+  "summary": {
+    "totalGames": 10,
+    "eligiblePredictions": 0,
+    "limitedInputPredictions": 7,
+    "blocked": 3,
+    "noPick": 0,
+    "graded": 7,
+    "correct": 5,
+    "incorrect": 2,
+    "pending": 0,
+    "void": 0,
+    "matchErrors": 0,
+    "accuracy": {
+      "numerator": 5,
+      "denominator": 7,
+      "percent": 71.4,
+      "status": "OK",
+      "exclusionPolicy": "correct / (correct + incorrect); excludes PENDING, VOID, BLOCKED, NO_PICK, MATCH_ERROR"
+    },
+    "eligibleAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "NO_GRADED_SAMPLE"
+    },
+    "limitedInputAccuracy": {
+      "numerator": 5,
+      "denominator": 7,
+      "percent": 71.4,
+      "status": "OK"
+    }
+  },
+  "games": [
+    {
+      "gamePk": 824974,
+      "gameId": "mlb-athletics-boston-red-sox",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "AWAY",
+      "pickTeam": "Boston Red Sox",
+      "actualWinner": "AWAY",
+      "homeScore": 4,
+      "awayScore": 5,
+      "grade": "CORRECT",
+      "predictionProbability": 0.54,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_NOT_AVAILABLE"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 824894,
+      "gameId": "mlb-atlanta-braves-washington-nationals",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "ODDS_AFTER_CUTOFF"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 824568,
+      "gameId": "mlb-chicago-white-sox-new-york-yankees",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Chicago White Sox",
+      "actualWinner": "HOME",
+      "homeScore": 2,
+      "awayScore": 1,
+      "grade": "CORRECT",
+      "predictionProbability": 0.52,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_NOT_AVAILABLE"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 824488,
+      "gameId": "mlb-cincinnati-reds-pittsburgh-pirates",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "ODDS_AFTER_CUTOFF"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 823921,
+      "gameId": "mlb-los-angeles-dodgers-seattle-mariners",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "AWAY",
+      "pickTeam": "Seattle Mariners",
+      "actualWinner": "HOME",
+      "homeScore": 6,
+      "awayScore": 2,
+      "grade": "INCORRECT",
+      "predictionProbability": 0.51,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_NOT_AVAILABLE"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 823674,
+      "gameId": "mlb-minnesota-twins-kansas-city-royals",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Minnesota Twins",
+      "actualWinner": "HOME",
+      "homeScore": 4,
+      "awayScore": 3,
+      "grade": "CORRECT",
+      "predictionProbability": 0.5,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_NOT_AVAILABLE",
+        "STARTER_IDENTITY_PARTIAL"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 823595,
+      "gameId": "mlb-new-york-mets-miami-marlins",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "ODDS_AFTER_CUTOFF"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 823271,
+      "gameId": "mlb-san-diego-padres-san-francisco-giants",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "AWAY",
+      "pickTeam": "San Francisco Giants",
+      "actualWinner": "AWAY",
+      "homeScore": 1,
+      "awayScore": 4,
+      "grade": "CORRECT",
+      "predictionProbability": 0.51,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_NOT_AVAILABLE"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 823023,
+      "gameId": "mlb-st-louis-cardinals-chicago-cubs",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "St. Louis Cardinals",
+      "actualWinner": "AWAY",
+      "homeScore": 2,
+      "awayScore": 4,
+      "grade": "INCORRECT",
+      "predictionProbability": 0.5,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_NOT_AVAILABLE"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 822946,
+      "gameId": "mlb-tampa-bay-rays-texas-rangers",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Tampa Bay Rays",
+      "actualWinner": "HOME",
+      "homeScore": 3,
+      "awayScore": 2,
+      "grade": "CORRECT",
+      "predictionProbability": 0.5,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_NOT_AVAILABLE",
+        "STARTER_IDENTITY_PARTIAL"
+      ],
+      "warnings": []
+    }
+  ],
+  "generatedAt": "2026-08-01T00:31:44.178Z"
+}

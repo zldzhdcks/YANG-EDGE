@@ -1,0 +1,202 @@
+{
+  "schemaVersion": "mlb-success-review-v1",
+  "dateKst": "2026-07-31",
+  "gradedArtifact": "2026-07-31-graded-predictions-v1.json",
+  "gradedHash": "457b28fdf3c9405ead40b47a567c7e70b802160ec0c99dd9450b0091c35dc372",
+  "games": [
+    {
+      "gamePk": 824974,
+      "gameId": "mlb-athletics-boston-red-sox",
+      "pick": "Boston Red Sox",
+      "pickSide": "AWAY",
+      "actualWinner": "AWAY",
+      "homeScore": 4,
+      "awayScore": 5,
+      "predictionProbability": 0.54,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "INSUFFICIENT",
+      "starterStatus": "READY",
+      "oddsStatus": "PARTIAL",
+      "lineupStatus": "PARTIAL",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_NOT_AVAILABLE"
+      ],
+      "possibleFactors": [
+        {
+          "factor": "MODEL_PROBABILITY",
+          "assessment": "INSUFFICIENT_EVIDENCE",
+          "evidence": "probability was not strongly directional"
+        },
+        {
+          "factor": "INPUT_QUALITY",
+          "assessment": "CONFOUNDED",
+          "evidence": "input warnings present: LINEUP_NOT_CONFIRMED, MARKET_NOT_AVAILABLE"
+        },
+        {
+          "factor": "STARTER_SIGNAL",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=AWAY_EDGE"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW"
+    },
+    {
+      "gamePk": 824568,
+      "gameId": "mlb-chicago-white-sox-new-york-yankees",
+      "pick": "Chicago White Sox",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 2,
+      "awayScore": 1,
+      "predictionProbability": 0.52,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "INSUFFICIENT",
+      "starterStatus": "READY",
+      "oddsStatus": "PARTIAL",
+      "lineupStatus": "PARTIAL",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_NOT_AVAILABLE"
+      ],
+      "possibleFactors": [
+        {
+          "factor": "MODEL_PROBABILITY",
+          "assessment": "INSUFFICIENT_EVIDENCE",
+          "evidence": "probability was not strongly directional"
+        },
+        {
+          "factor": "INPUT_QUALITY",
+          "assessment": "CONFOUNDED",
+          "evidence": "input warnings present: LINEUP_NOT_CONFIRMED, MARKET_NOT_AVAILABLE"
+        },
+        {
+          "factor": "STARTER_SIGNAL",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=HOME_EDGE"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW"
+    },
+    {
+      "gamePk": 823674,
+      "gameId": "mlb-minnesota-twins-kansas-city-royals",
+      "pick": "Minnesota Twins",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 4,
+      "awayScore": 3,
+      "predictionProbability": 0.5,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "INSUFFICIENT",
+      "starterStatus": "READY",
+      "oddsStatus": "PARTIAL",
+      "lineupStatus": "PARTIAL",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_NOT_AVAILABLE",
+        "STARTER_IDENTITY_PARTIAL"
+      ],
+      "possibleFactors": [
+        {
+          "factor": "MODEL_PROBABILITY",
+          "assessment": "INSUFFICIENT_EVIDENCE",
+          "evidence": "probability was not strongly directional"
+        },
+        {
+          "factor": "INPUT_QUALITY",
+          "assessment": "CONFOUNDED",
+          "evidence": "input warnings present: LINEUP_NOT_CONFIRMED, MARKET_NOT_AVAILABLE, STARTER_IDENTITY_PARTIAL"
+        },
+        {
+          "factor": "STARTER_SIGNAL",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=NEUTRAL"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW"
+    },
+    {
+      "gamePk": 823271,
+      "gameId": "mlb-san-diego-padres-san-francisco-giants",
+      "pick": "San Francisco Giants",
+      "pickSide": "AWAY",
+      "actualWinner": "AWAY",
+      "homeScore": 1,
+      "awayScore": 4,
+      "predictionProbability": 0.51,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "INSUFFICIENT",
+      "starterStatus": "READY",
+      "oddsStatus": "PARTIAL",
+      "lineupStatus": "PARTIAL",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_NOT_AVAILABLE"
+      ],
+      "possibleFactors": [
+        {
+          "factor": "MODEL_PROBABILITY",
+          "assessment": "INSUFFICIENT_EVIDENCE",
+          "evidence": "probability was not strongly directional"
+        },
+        {
+          "factor": "INPUT_QUALITY",
+          "assessment": "CONFOUNDED",
+          "evidence": "input warnings present: LINEUP_NOT_CONFIRMED, MARKET_NOT_AVAILABLE"
+        },
+        {
+          "factor": "STARTER_SIGNAL",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=AWAY_EDGE"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW"
+    },
+    {
+      "gamePk": 822946,
+      "gameId": "mlb-tampa-bay-rays-texas-rangers",
+      "pick": "Tampa Bay Rays",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 3,
+      "awayScore": 2,
+      "predictionProbability": 0.5,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "INSUFFICIENT",
+      "starterStatus": "READY",
+      "oddsStatus": "PARTIAL",
+      "lineupStatus": "PARTIAL",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_NOT_AVAILABLE",
+        "STARTER_IDENTITY_PARTIAL"
+      ],
+      "possibleFactors": [
+        {
+          "factor": "MODEL_PROBABILITY",
+          "assessment": "INSUFFICIENT_EVIDENCE",
+          "evidence": "probability was not strongly directional"
+        },
+        {
+          "factor": "INPUT_QUALITY",
+          "assessment": "CONFOUNDED",
+          "evidence": "input warnings present: LINEUP_NOT_CONFIRMED, MARKET_NOT_AVAILABLE, STARTER_IDENTITY_PARTIAL"
+        },
+        {
+          "factor": "STARTER_SIGNAL",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=NEUTRAL"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW"
+    }
+  ],
+  "generatedAt": "2026-08-01T00:31:44.183Z",
+  "reviewHash": "f32998808a5d235ec1b806e4bfef8ce3ecea66f5b689d1f4827954a6838ae394"
+}

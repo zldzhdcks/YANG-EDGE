@@ -1391,3 +1391,46 @@ PROHIBITED
 - Align grader messaging: official accuracy uses ELIGIBLE only; LIMITED_INPUT stays observation
 - Research Log Backfill still pending for mixed 07-29 entries
 - Result boxscore cache freshness / schedule-score primary path keep
+
+---
+
+## 2026-08-01 — MLB 2026-07-31 Complete Postgame Research Closeout
+
+### Purpose
+- Close 2026-07-31 MLB research cycle after Remaining Games FINAL: Official Result → Grade → Success/Failure → Daily Summary → Input/Leakage Audit → VALID_REVIEW
+
+### Scope
+- Allowed: `npm run review:mlb-daily -- 2026-07-31` research artifacts only
+- Forbidden: Engine/weights/thresholds; Prediction Snapshot mutation; Pregame Snapshot mutation; PASS→Pick rewrite; git add/commit/push
+
+### Inputs
+- `data/predictions/mlb/2026-07-31.json` (working-tree freeze; SHA256 unchanged by this run)
+- Schedule / Remaining Pregame freeze (hashes unchanged)
+
+### Outputs
+- `data/research/mlb/2026-07-31-official-results-v1.json`
+- `data/research/mlb/2026-07-31-graded-predictions-v1.json`
+- `data/research/mlb/2026-07-31-success-review-v1.json`
+- `data/research/mlb/2026-07-31-failure-review-v1.json`
+- `data/research/mlb/2026-07-31-daily-review-summary-v1.json`
+
+### Results (summary)
+- Official Result: **FINAL 10/10**
+- Grade: ELIGIBLE 0 · LIMITED_INPUT 7 · BLOCKED 3 · graded 7 · correct 5 · incorrect 2 · pending 0
+- Official eligible accuracy: **N/A** (`NO_GRADED_SAMPLE`)
+- LIMITED_INPUT observation accuracy 71.4% (**not official hit-rate**)
+- Success Review: 5 games · Failure Review: 2 games (823921, 823023)
+- Leakage: **WARN** (input_manifest_warnings; prediction_hash PASS; predicted_before_slate_cutoff PASS)
+- reviewStatus: **VALID_REVIEW**
+- Conclusion: DATA_ACCUMULATION_CONTINUES
+
+### Official conclusion
+VALID_REVIEW · DATA_ACCUMULATION_CONTINUES · official eligible accuracy N/A
+
+### Engine connection
+PROHIBITED
+
+### Follow-ups
+- Optional separate commit of 07-31 review artifacts (no push without approval)
+- Research Log Backfill for mixed 07-29 entries still pending
+- Pregame scheduler implementation (T-90/T-60/T-45/T-30) remains next product work

@@ -128,21 +128,24 @@ Same-date revision / supplemental run keyed by `runId` + `gamePk` (not a new 100
 
 ---
 
-## Supplemental run — 2026-07-31 Postgame Grade & Review (partial)
+## Supplemental run — 2026-07-31 Postgame Grade & Review (partial → closed)
+
+Earlier partial pass (FINAL 4 / NOT_FINAL 6 · PARTIAL_REVIEW) is superseded by complete closeout below.
+
+## Closeout — 2026-07-31 Complete Postgame Research (VALID_REVIEW)
 
 **Not an official accuracy sample.** Official eligible predictions remain **0**.
 
 | 항목 | 값 | 검증 |
 |------|-----|------|
-| review command | `npm run review:mlb-daily -- 2026-07-31` | VERIFIED |
-| Official Result | FINAL 4 / NOT_FINAL 6 | VERIFIED |
-| Remaining Pregame PENDING | gamePk 824974, 823271, 823921 | VERIFIED |
-| Official eligible graded | 0 · accuracy null | VERIFIED |
-| LIMITED_INPUT observation grades | 4 graded · 3 correct · 1 incorrect · 75% (**not official**) | VERIFIED |
-| Success / Failure reviews | 3 / 1 (observation only) | VERIFIED |
+| review command | `npm run review:mlb-daily -- 2026-07-31` (2026-08-01 re-run) | VERIFIED |
+| Official Result | **FINAL 10/10** | VERIFIED |
+| Official eligible graded | 0 · accuracy null (`NO_GRADED_SAMPLE`) | VERIFIED |
+| LIMITED_INPUT observation grades | 7 graded · 5 correct · 2 incorrect · 71.4% (**not official**) | VERIFIED |
+| BLOCKED | 3 (ODDS_AFTER_CUTOFF) | VERIFIED |
+| Success / Failure reviews | 5 / 2 (observation only) | VERIFIED |
 | Leakage | WARN | VERIFIED |
-| reviewStatus | PARTIAL_REVIEW | VERIFIED |
-| Engine changes | 0 | VERIFIED |
-| Result collector note | schedule scores preferred over stale empty boxscore runs | VERIFIED |
+| reviewStatus | **VALID_REVIEW** | VERIFIED |
+| Engine / Prediction / Pregame Snapshot | unchanged by closeout run | VERIFIED |
 
 **Artifacts:** `…-official-results-v1.json`, `…-graded-predictions-v1.json`, `…-success-review-v1.json`, `…-failure-review-v1.json`, `…-daily-review-summary-v1.json`
