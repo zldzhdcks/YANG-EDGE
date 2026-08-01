@@ -62,7 +62,8 @@
     "verify:kbo-clipboard-runtime": "tsx scripts/verify-kbo-clipboard-runtime-v1.ts",
     "verify:kbo-clipboard-historical": "tsx scripts/verify-kbo-clipboard-historical-v1.ts",
     "predict:mlb-v0": "tsx --env-file=.env.local scripts/run-mlb-prediction-v0.ts",
-    "daily:mlb-pregame-v0": "tsx --env-file=.env.local scripts/run-mlb-daily-pregame-v0.ts"
+    "daily:mlb-pregame-v0": "tsx --env-file=.env.local scripts/run-mlb-daily-pregame-v0.ts",
+    "scorecard:mlb-v0": "tsx --env-file=.env.local scripts/run-mlb-scorecard-v0.ts"
   },
   "dependencies": {
     "next": "16.2.10",
