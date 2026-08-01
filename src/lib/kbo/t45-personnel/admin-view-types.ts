@@ -23,7 +23,7 @@ export type KboT45GameAdminView = {
   homeTeam: string;
   awayTeam: string;
   currentStatus: PersonnelWorkflowStatus | string;
-  completeness: PersonnelCompleteness | "NOT_ENTERED";
+  completeness: PersonnelCompleteness | "NOT_ENTERED" | "NOT_APPLICABLE";
   predictionUsability: PredictionUsability | "UNUSABLE";
   locked: boolean;
   afterCutoff: boolean;

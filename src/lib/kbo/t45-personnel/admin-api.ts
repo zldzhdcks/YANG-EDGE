@@ -246,6 +246,11 @@ export async function loadKboT45AdminView(options: {
     home?: string;
     away?: string;
     scheduledStartTime?: string;
+    statusAbstract?: string | null;
+    statusDetailed?: string | null;
+    codedGameState?: string | null;
+    clockState?: string | null;
+    cancellationStatus?: string | null;
   };
   let scheduleGames: SchedGame[] = [];
   if (scheduleExists) {
@@ -284,6 +289,12 @@ export async function loadKboT45AdminView(options: {
       const vr = validateGame(draft, {
         nowMs: now.getTime(),
         lockedPredictionExists: locked,
+        statusAbstract: g.statusAbstract ?? null,
+        statusDetailed: g.statusDetailed ?? null,
+        codedGameState: g.codedGameState ?? null,
+        clockState: g.clockState ?? null,
+        cancellationStatus:
+          g.cancellationStatus ?? draft.cancellationStatus ?? null,
       });
 
       const starterErrors = vr.errors.filter((e) =>
@@ -306,7 +317,8 @@ export async function loadKboT45AdminView(options: {
       );
 
       let currentStatus: string = "NOT_ENTERED";
-      if (locked) currentStatus = "ALREADY_LOCKED";
+      if (vr.status === "NOT_APPLICABLE") currentStatus = "NOT_APPLICABLE";
+      else if (locked) currentStatus = "ALREADY_LOCKED";
       else if (afterCutoff) currentStatus = "AFTER_CUTOFF";
       else if (vr.status === "FAILED") currentStatus = "VALIDATION_FAILED";
       else if (vr.status === "ADMIN_VERIFIED") currentStatus = "ADMIN_VERIFIED";
@@ -320,27 +332,34 @@ export async function loadKboT45AdminView(options: {
         homeTeam,
         awayTeam,
         currentStatus,
-        completeness: byId.has(gameId)
-          ? vr.completeness
-          : ("NOT_ENTERED" as const),
+        completeness:
+          vr.status === "NOT_APPLICABLE"
+            ? ("NOT_APPLICABLE" as const)
+            : byId.has(gameId)
+              ? vr.completeness
+              : ("NOT_ENTERED" as const),
         predictionUsability: vr.predictionUsability,
         locked,
         afterCutoff,
-        readOnly: locked || afterCutoff || historicalReadOnly,
+        readOnly:
+          locked ||
+          afterCutoff ||
+          historicalReadOnly ||
+          vr.status === "NOT_APPLICABLE",
         secondsUntilStart,
         windowLabel: windowLabel(secondsUntilStart, locked, afterCutoff),
         starterValidation: {
-          ok: vr.starterOk,
+          ok: vr.status === "NOT_APPLICABLE" ? true : vr.starterOk,
           errors: starterErrors,
           warnings: vr.warnings.filter((w) => w.includes("PLAYER_ID")),
         },
         lineupValidation: {
-          ok: vr.lineupOk,
+          ok: vr.status === "NOT_APPLICABLE" ? true : vr.lineupOk,
           errors: lineupErrors,
           warnings: [],
         },
         protoValidation: {
-          ok: vr.protoOk,
+          ok: vr.status === "NOT_APPLICABLE" ? true : vr.protoOk,
           errors: protoErrors,
           warnings: [],
         },
@@ -398,20 +417,24 @@ export function validateKboT45AdminPayload(options: {
     validateGame(g, {
       nowMs: now.getTime(),
       lockedPredictionExists: locked.has(g.gameId),
+      cancellationStatus: g.cancellationStatus ?? null,
     }),
   );
 
-  const blocked = games.some(
+  const required = games.filter((g) => g.requirementsApplicable !== false);
+  const blocked = required.some(
     (g) =>
       g.status === "AFTER_CUTOFF" ||
       g.status === "ALREADY_LOCKED" ||
       g.status === "BLOCKED_AFTER_START",
   );
-  const failed = games.some((g) => g.status === "FAILED");
+  const failed = required.some((g) => g.status === "FAILED");
   const allVerified =
-    games.length > 0 &&
-    games.every((g) => g.status === "ADMIN_VERIFIED" && g.completeness === "COMPLETE");
-  const anyPartial = games.some(
+    required.length > 0 &&
+    required.every(
+      (g) => g.status === "ADMIN_VERIFIED" && g.completeness === "COMPLETE",
+    );
+  const anyPartial = required.some(
     (g) => g.completeness === "PARTIAL" || g.status === "DRAFT",
   );
 
@@ -419,7 +442,9 @@ export function validateKboT45AdminPayload(options: {
   if (blocked) status = "BLOCKED";
   else if (failed) status = "INVALID";
   else if (allVerified) status = "VALID";
-  else if (anyPartial) status = "PARTIAL";
+  else if (anyPartial || required.some((g) => g.protoOk || g.starterOk || g.lineupOk))
+    status = "PARTIAL";
+  else if (required.length === 0 && games.length > 0) status = "VALID";
   else status = "INVALID";
 
   const cwd = options.cwd ?? process.cwd();
