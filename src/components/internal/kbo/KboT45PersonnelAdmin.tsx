@@ -10,6 +10,7 @@ import type {
   KboT45GameInput,
   KboT45PersonnelInputV1,
 } from "@/lib/kbo/t45-personnel/types";
+import KboProtoOcrAssist from "@/components/internal/kbo/KboProtoOcrAssist";
 
 type ValidateResponse = {
   status: string;
@@ -340,6 +341,12 @@ export default function KboT45PersonnelAdmin({
           ))}
         </ul>
       </section>
+
+      <KboProtoOcrAssist
+        dateKst={data.dateKst}
+        historicalReadOnly={data.historicalReadOnly}
+        onApproved={() => router.refresh()}
+      />
 
       <div className="grid gap-6 lg:grid-cols-[240px_1fr]">
         <aside className="space-y-2">
