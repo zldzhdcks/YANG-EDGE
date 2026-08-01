@@ -250,6 +250,40 @@ async function main() {
   const hasLineup = await exists(opLineupPath);
   const hasMarkets = await exists(opMarketsPath);
 
+  let personnelSnap: {
+    games?: Array<{
+      gameId?: string;
+      home?: { starter?: unknown; lineup?: unknown };
+      away?: { starter?: unknown; lineup?: unknown };
+      completeness?: string;
+      status?: string;
+      personnelHash?: string;
+    }>;
+    personnelHash?: string;
+    runId?: string;
+  } | null = null;
+  let protoSnap: {
+    games?: Array<{ gameId?: string }>;
+    domesticProtoHash?: string;
+    runId?: string;
+  } | null = null;
+  if (await exists(paths.personnelSnapshot)) {
+    personnelSnap = JSON.parse(await readFile(paths.personnelSnapshot, "utf8"));
+  }
+  if (await exists(paths.domesticProtoSnapshot)) {
+    protoSnap = JSON.parse(
+      await readFile(paths.domesticProtoSnapshot, "utf8"),
+    );
+  }
+  const hasPersonnelSnap = Boolean(personnelSnap?.games?.length);
+  const hasProtoSnap = Boolean(protoSnap?.games?.length);
+  const personnelById = new Map(
+    (personnelSnap?.games ?? []).map((g) => [String(g.gameId), g]),
+  );
+  const protoById = new Set(
+    (protoSnap?.games ?? []).map((g) => String(g.gameId)),
+  );
+
   type MapRow = {
     scheduleGameId: string;
     providerEventId: string;
@@ -407,16 +441,36 @@ async function main() {
 
   const artifactGeneratedAt = lockedAt;
   const lineupCheckedAt = lockedAt;
-  const starterGames = schedule.games.map((g: any) => ({
-    gameId: g.gameId,
-    home: emptyStarter(artifactGeneratedAt),
-    away: emptyStarter(artifactGeneratedAt),
-  }));
-  const lineupGames = schedule.games.map((g: any) => ({
-    gameId: g.gameId,
-    home: emptyLineup(lineupCheckedAt),
-    away: emptyLineup(lineupCheckedAt),
-  }));
+  const starterGames = schedule.games.map((g: any) => {
+    const pers = personnelById.get(String(g.gameId));
+    if (pers?.home?.starter && pers?.away?.starter) {
+      return {
+        gameId: g.gameId,
+        home: pers.home.starter,
+        away: pers.away.starter,
+      };
+    }
+    return {
+      gameId: g.gameId,
+      home: emptyStarter(artifactGeneratedAt),
+      away: emptyStarter(artifactGeneratedAt),
+    };
+  });
+  const lineupGames = schedule.games.map((g: any) => {
+    const pers = personnelById.get(String(g.gameId));
+    if (pers?.home?.lineup && pers?.away?.lineup) {
+      return {
+        gameId: g.gameId,
+        home: pers.home.lineup,
+        away: pers.away.lineup,
+      };
+    }
+    return {
+      gameId: g.gameId,
+      home: emptyLineup(lineupCheckedAt),
+      away: emptyLineup(lineupCheckedAt),
+    };
+  });
 
   for (const g of schedule.games) {
     const c = classifyClock(
@@ -463,11 +517,38 @@ async function main() {
     if (clock.clockState === "POSTPONED") blockReasons.push("POSTPONED");
     if (clock.clockState === "CANCELLED") blockReasons.push("CANCELLED");
 
-    passReasons.push("STARTER_NOT_ENTERED");
-    missingInputs.push("HOME_STARTER", "AWAY_STARTER");
-    passReasons.push("LINEUP_NOT_CONFIRMED");
-    missingInputs.push("LINEUP");
-    if (!hasMarkets) {
+    const pers = personnelById.get(String(g.gameId));
+    const personnelStatus =
+      pers == null
+        ? "PERSONNEL_NOT_AVAILABLE"
+        : pers.completeness === "COMPLETE" ||
+            pers.status === "CONFIRMED" ||
+            pers.status === "ADMIN_VERIFIED"
+          ? "PERSONNEL_VERIFIED"
+          : "PERSONNEL_PARTIAL";
+    const hasGameProto = protoById.has(String(g.gameId)) || hasMarkets;
+
+    if (personnelStatus === "PERSONNEL_NOT_AVAILABLE") {
+      passReasons.push("STARTER_NOT_ENTERED");
+      missingInputs.push("HOME_STARTER", "AWAY_STARTER");
+      passReasons.push("LINEUP_NOT_CONFIRMED");
+      missingInputs.push("LINEUP");
+    } else if (personnelStatus === "PERSONNEL_PARTIAL") {
+      passReasons.push("PERSONNEL_PARTIAL");
+      inputWarnings.push("PERSONNEL_PARTIAL");
+      if (!pers?.home?.starter || !pers?.away?.starter) {
+        passReasons.push("STARTER_NOT_ENTERED");
+        missingInputs.push("HOME_STARTER", "AWAY_STARTER");
+      }
+      if (!pers?.home?.lineup || !pers?.away?.lineup) {
+        passReasons.push("LINEUP_NOT_CONFIRMED");
+        missingInputs.push("LINEUP");
+      }
+    } else {
+      // PERSONNEL_VERIFIED — remove shortage reasons; still no Engine
+      inputWarnings.push("ADMIN_VERIFIED_NOT_OFFICIAL_LINEUP");
+    }
+    if (!hasGameProto) {
       passReasons.push("DOMESTIC_PROTO_NOT_COLLECTED");
       missingInputs.push("DOMESTIC_PROTO");
     }
@@ -554,6 +635,11 @@ async function main() {
         retrySuggested: false,
         t30CheckedAt: lineupCheckedAt,
       },
+      personnelStatus,
+      personnelHash: pers?.personnelHash ?? null,
+      domesticProtoHash: hasGameProto
+        ? (protoSnap?.domesticProtoHash ?? null)
+        : null,
       cutoff: {
         hardCutoffPassed: clock.hard,
         scheduleBeforeStart: beforeStart,
@@ -611,10 +697,17 @@ async function main() {
       remainingAfter: 12,
     },
     operatorInput: {
-      starter: hasStarter ? "ENTERED" : "NOT_ENTERED",
-      lineup: hasLineup ? "ENTERED" : "NOT_ENTERED",
-      domesticProto: hasMarkets ? "ENTERED" : "NOT_COLLECTED",
+      starter:
+        hasPersonnelSnap || hasStarter ? "ENTERED" : "NOT_ENTERED",
+      lineup: hasPersonnelSnap || hasLineup ? "ENTERED" : "NOT_ENTERED",
+      domesticProto:
+        hasProtoSnap || hasMarkets ? "ENTERED" : "NOT_COLLECTED",
+      personnelSnapshot: hasPersonnelSnap
+        ? "PERSONNEL_PRESENT"
+        : "PERSONNEL_NOT_AVAILABLE",
     },
+    personnelHash: personnelSnap?.personnelHash ?? null,
+    domesticProtoHash: protoSnap?.domesticProtoHash ?? null,
     oddsLinking: { linkedBefore, linkedAfter, apiCalls: 0 },
     summary,
     inputArtifactHashes,
@@ -655,6 +748,36 @@ async function main() {
           hash: inputArtifactHashes.lineup,
           generatedAt: lockedAt,
         },
+        ...(hasPersonnelSnap
+          ? [
+              {
+                artifactType: "personnel" as const,
+                path: path
+                  .relative(cli.cwd, paths.personnelSnapshot)
+                  .replace(/\\/g, "/"),
+                runId: personnelSnap?.runId ?? null,
+                hash:
+                  personnelSnap?.personnelHash ??
+                  sha256Json(personnelSnap?.games ?? []),
+                generatedAt: lockedAt,
+              },
+            ]
+          : []),
+        ...(hasProtoSnap
+          ? [
+              {
+                artifactType: "domestic_proto" as const,
+                path: path
+                  .relative(cli.cwd, paths.domesticProtoSnapshot)
+                  .replace(/\\/g, "/"),
+                runId: protoSnap?.runId ?? null,
+                hash:
+                  protoSnap?.domesticProtoHash ??
+                  sha256Json(protoSnap?.games ?? []),
+                generatedAt: lockedAt,
+              },
+            ]
+          : []),
       ],
     }),
     games,
@@ -710,7 +833,8 @@ async function main() {
     remappedAt: lockedAt,
     sportKey: oddsHist.sportKey,
     oddsFormat: "DECIMAL",
-    domesticProtoStatus: hasMarkets ? "ENTERED_FILE_PRESENT" : "NOT_COLLECTED",
+    domesticProtoStatus:
+      hasProtoSnap || hasMarkets ? "ENTERED_FILE_PRESENT" : "NOT_COLLECTED",
     apiCallsThisRun: 0,
     source: "REMAP_EXISTING_ARTIFACT",
     games: [...oddsByScheduleId.values()],
@@ -814,9 +938,11 @@ async function main() {
       remainingQuotaAssumed: 12,
     },
     operatorInput: {
-      starter: hasStarter ? "ENTERED" : "NOT_ENTERED",
-      lineup: hasLineup ? "ENTERED" : "NOT_ENTERED",
-      domesticProto: hasMarkets ? "ENTERED" : "NOT_COLLECTED",
+      starter:
+        hasPersonnelSnap || hasStarter ? "ENTERED" : "NOT_ENTERED",
+      lineup: hasPersonnelSnap || hasLineup ? "ENTERED" : "NOT_ENTERED",
+      domesticProto:
+        hasProtoSnap || hasMarkets ? "ENTERED" : "NOT_COLLECTED",
     },
     conclusion: "KBO_T30_FINAL_PREGAME_LOCKED_PASS_ONLY",
   };

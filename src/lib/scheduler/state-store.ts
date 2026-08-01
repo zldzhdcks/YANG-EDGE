@@ -121,7 +121,15 @@ function deriveOverall(
       ? "SUCCESS"
       : "SKIPPED";
   }
-  if (statuses.some((s) => s === "BLOCKED" || s === "NOT_IMPLEMENTED" || s === "MANUAL_REQUIRED")) {
+  if (
+    statuses.some(
+      (s) =>
+        s === "BLOCKED" ||
+        s === "NOT_IMPLEMENTED" ||
+        s === "MANUAL_REQUIRED" ||
+        s === "INPUT_VALIDATION_FAILED",
+    )
+  ) {
     return statuses.some((s) => s === "SUCCESS" || s === "PASS")
       ? "PARTIAL_SUCCESS"
       : statuses.find((s) => s === "BLOCKED") ?? "PENDING";

@@ -27,7 +27,8 @@ export type SchedulerExecutionStatus =
   | "FAILED"
   | "SKIPPED"
   | "NOT_IMPLEMENTED"
-  | "MANUAL_REQUIRED";
+  | "MANUAL_REQUIRED"
+  | "INPUT_VALIDATION_FAILED";
 
 export type SchedulerTriggerReason =
   | "TIME_WINDOW_ENTERED"
@@ -61,6 +62,7 @@ export type SchedulerErrorCode =
   | "GLOBAL_BLOCKER"
   | "NOT_IMPLEMENTED"
   | "MANUAL_REQUIRED"
+  | "INPUT_VALIDATION_FAILED"
   | "EXECUTION_FAILED_NO_SNAPSHOT"
   | "PASS_RECORDED"
   | "READY_FOR_POSTGAME";
@@ -86,7 +88,8 @@ export type RunnerActionKind =
   | "NPM_SCRIPT"
   | "NOOP_CHECK"
   | "NOT_IMPLEMENTED"
-  | "MANUAL_REQUIRED";
+  | "MANUAL_REQUIRED"
+  | "INPUT_VALIDATION_FAILED";
 
 export type RunnerAction = {
   kind: RunnerActionKind;

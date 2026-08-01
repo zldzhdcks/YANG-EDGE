@@ -61,6 +61,7 @@ export async function planGame(input: {
   noProvider: boolean;
   existingState?: import("./types").SchedulerStateArtifact | null;
   quotaRemaining?: number | null;
+  cwd?: string;
 }): Promise<SchedulerGamePlan> {
   const warnings: string[] = [];
   const resolved = resolveStage({
@@ -176,6 +177,7 @@ export async function planGame(input: {
     gameId: input.game.gameId,
     includePostgame: input.includePostgame,
     noProvider: input.noProvider,
+    cwd: input.cwd,
   });
 
   const quota = evaluateQuotaGate(input.quotaRemaining);
@@ -216,6 +218,9 @@ export async function planGame(input: {
   } else if (action.kind === "MANUAL_REQUIRED") {
     executionStatus = "MANUAL_REQUIRED";
     errorCode = "MANUAL_REQUIRED";
+  } else if (action.kind === "INPUT_VALIDATION_FAILED") {
+    executionStatus = "INPUT_VALIDATION_FAILED";
+    errorCode = "INPUT_VALIDATION_FAILED";
   } else if (
     action.actionId === "READY_FOR_POSTGAME" &&
     !input.includePostgame
@@ -316,6 +321,7 @@ export async function runPregameScheduler(
         noProvider: options.noProvider,
         existingState: state,
         quotaRemaining: options.quotaRemaining,
+        cwd,
       });
 
       stageCounts[plan.stage] = (stageCounts[plan.stage] ?? 0) + 1;
@@ -328,6 +334,7 @@ export async function runPregameScheduler(
         plan.executionStatus === "SKIPPED" ||
         plan.executionStatus === "NOT_IMPLEMENTED" ||
         plan.executionStatus === "MANUAL_REQUIRED" ||
+        plan.executionStatus === "INPUT_VALIDATION_FAILED" ||
         plan.executionStatus === "PENDING" ||
         !plan.action ||
         plan.action.kind === "NOOP_CHECK"

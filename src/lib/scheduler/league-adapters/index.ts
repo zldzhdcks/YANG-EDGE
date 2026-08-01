@@ -14,6 +14,7 @@ export function resolveLeagueAction(input: {
   gameId: string;
   includePostgame: boolean;
   noProvider: boolean;
+  cwd?: string;
 }): RunnerAction {
   switch (input.league) {
     case "MLB":

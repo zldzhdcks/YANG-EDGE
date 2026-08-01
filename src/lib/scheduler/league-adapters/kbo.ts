@@ -1,9 +1,13 @@
+import { existsSync, readFileSync } from "node:fs";
 import type { PregameSchedulerStage, RunnerAction } from "../types";
+import { defaultPersonnelInputPath } from "../../kbo/t45-personnel/paths";
+import { probePersonnelInputFile } from "../../kbo/t45-personnel/validate-personnel-input";
 
 /**
- * KBO T-30 final lock is parameterized via research:kbo-t30-lock
- * (date / prior-run-id / dry-run). Prior tip auto-resolves from prediction.runId.
- * T45 admin personnel remains MANUAL_REQUIRED.
+ * KBO T-30 final lock is parameterized via research:kbo-t30-lock.
+ * T45: spawn personnel workflow when validated input file exists;
+ * MANUAL_INPUT_REQUIRED when missing; INPUT_VALIDATION_FAILED when invalid.
+ * Scheduler never invents admin personnel/proto data.
  */
 export function kboAction(input: {
   stage: PregameSchedulerStage;
@@ -11,8 +15,10 @@ export function kboAction(input: {
   gameId: string;
   includePostgame: boolean;
   noProvider: boolean;
+  cwd?: string;
 }): RunnerAction {
   const { stage, dateKst, gameId, includePostgame, noProvider } = input;
+  const cwd = input.cwd ?? process.cwd();
   const immediate = {
     kind: "SPAWN_TSX" as const,
     scriptRel: "scripts/run-npb-kbo-immediate-pregame-accumulation-v1.ts",
@@ -35,14 +41,44 @@ export function kboAction(input: {
         actionId: "RUN_KBO_ODDS_REFRESH",
         description: "KBO overseas/domestic odds refresh via immediate runner",
       };
-    case "T45_LINEUP_CHECK":
+    case "T45_LINEUP_CHECK": {
+      const inputPath = defaultPersonnelInputPath(dateKst, cwd);
+      let raw: string | null = null;
+      if (existsSync(inputPath)) {
+        try {
+          raw = readFileSync(inputPath, "utf8");
+        } catch {
+          raw = null;
+        }
+      }
+      const probe = probePersonnelInputFile(raw);
+      if (probe.status === "MISSING") {
+        return {
+          kind: "MANUAL_REQUIRED",
+          actionId: "MANUAL_INPUT_REQUIRED",
+          description:
+            "KBO T45 personnel input file missing; admin must supply personnel-input-v1.json",
+          mayCallProvider: false,
+        };
+      }
+      if (probe.status === "INVALID") {
+        return {
+          kind: "INPUT_VALIDATION_FAILED",
+          actionId: "INPUT_VALIDATION_FAILED",
+          description: `KBO T45 personnel input failed probe: ${probe.reason}`,
+          mayCallProvider: false,
+        };
+      }
       return {
-        kind: "MANUAL_REQUIRED",
-        actionId: "KBO_ADMIN_PERSONNEL_REVISION",
+        kind: "SPAWN_TSX",
+        actionId: "RUN_KBO_T45_PERSONNEL_WORKFLOW",
         description:
-          "KBO admin personnel revision is operator-driven; Scheduler does not auto-apply",
+          "KBO T45 admin personnel / domestic proto workflow (no provider)",
+        scriptRel: "scripts/run-kbo-t45-personnel-workflow-v1.ts",
+        args: ["--date", dateKst, "--input", inputPath],
         mayCallProvider: false,
       };
+    }
     case "T30_FINAL_CHECK":
       // Date-level slate lock (same pattern as MLB remaining-pregame).
       // Do not pass --game-id here — filtering would overwrite the full prediction slate.
