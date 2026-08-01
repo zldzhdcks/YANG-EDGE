@@ -9,40 +9,40 @@ Version: 1.0.0
 
 # 현재 Active Mission
 
-## Pregame Scheduler v1 — implemented (no cron yet)
+## KBO T30 Runner Parameterization — in progress / verify
 
-상태: Scheduler core + MLB/KBO/NPB adapters + fixture tests + dry-run verified
+상태: Scheduler v1은 origin/main. T30 CLI 파라미터화 작업 중.
 
-### Verified
+### Verified (Scheduler)
 
-- `npm run test:scheduler-stage|lock|integration` OK
-- `npx tsc --noEmit` OK
-- `npm run scheduler:pregame -- --date 2026-07-31 --league MLB --dry-run` → providerCalls=0
+- origin/main @ scheduler commits
+- dry-run providerCalls=0
 
 ### 다음 실행 후보
 
-1. Commit Scheduler v1 (core / adapters / docs) when Chan-yang approves
-2. Parameterize KBO T-30 runner (remove hardcoded PREV_RUN) → enable auto stage
-3. Optional: OS Task Scheduler / cron wrapper (out of v1)
+1. 검증: `npm run test:kbo-t30-cli` + `research:kbo-t30-lock -- --date 2026-07-31 --dry-run`
+2. Commit KBO T30 parameterization (승인 후)
+3. Optional: OS cron wrapper
 4. NPB postgame identity runner
+5. KBO Admin Personnel (T45)는 계속 MANUAL_REQUIRED
 
 ### 필수 주의
 
-- Scheduler는 Orchestrator만 — Engine/Prediction 로직 금지
-- Dry-run 기본으로 판단 검증
-- `--force-stage`는 Hard Cutoff / Lock 우회 불가
-- git add/commit/push는 명시 승인 후만
+- 2026-07-31 기존 artifact 재생성 금지 (dry-run만)
+- Engine / Prediction 계산 변경 금지
+- Provider Odds API 추가 호출 금지
+- git push는 명시 승인 후만
 
 ---
 
 # 세션 시작 체크리스트
 
-- [ ] `npm run test:scheduler-stage`
-- [ ] `npm run scheduler:pregame -- --date <KST> --league MLB --dry-run`
-- [ ] Schedule artifact 존재 확인
+- [ ] `npm run test:kbo-t30-cli`
+- [ ] `npm run research:kbo-t30-lock -- --date 2026-07-31 --dry-run`
+- [ ] prediction tip runId auto-resolve 확인
 
 ---
 
 # Blocker
 
-KBO T-30 auto-lock: MANUAL_REQUIRED until runner is parameterized
+없음 (T30 파라미터화로 Scheduler auto-spawn 가능). T45 admin은 MANUAL.

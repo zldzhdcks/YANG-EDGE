@@ -22,6 +22,13 @@ YANG EDGE 프로젝트의 버전별 변경 이력을 관리하는 공식 문서�
 
 # v1.0.0
 
+## ADDED (2026-08-01 KBO T30 Runner Parameterization)
+
+- CLI: `--date`, `--prior-run-id`, `--game-id`, `--dry-run`, `--json` (+ positional date compat)
+- Prior tip auto-resolve from `prediction.runId` (no hardcoded PREV_RUN)
+- `npm run research:kbo-t30-lock` / `test:kbo-t30-cli`
+- Scheduler KBO T30 adapter → `RUN_KBO_T30_FINAL_LOCK` (mayCallProvider: false)
+
 ## ADDED (2026-08-01 Pregame Scheduler v1)
 
 - Scheduler core: windows, stage resolver, hard cutoff, lock TTL, idempotency, quota gate

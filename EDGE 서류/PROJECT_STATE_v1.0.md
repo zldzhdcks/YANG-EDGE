@@ -106,8 +106,8 @@ Engine 반영은 아직 연구 단계.
 - Dataset 확장
 - Documentation
 - Safe pre-first-pitch lineup re-collect window (연구 필요)
-- Pregame Scheduler v1 (core + adapters implemented; OS cron 미구현)
-- KBO T-30 auto-lock (Scheduler: MANUAL_REQUIRED — runner not CLI-ready)
+- Pregame Scheduler v1 (core + adapters on origin/main)
+- KBO T-30 parameterized lock CLI (Scheduler auto-spawn enabled; T45 still MANUAL_REQUIRED)
 
 ---
 
@@ -120,7 +120,8 @@ Engine 반영은 아직 연구 단계.
 - Weather 미구현
 - Travel 미구현
 - MLB official lineup near first pitch (2026-07-31 eligible 3/3 NOT_RELEASED)
-- KBO T-30 runner hardcoded PREV_RUN / date (not auto-spawned by Scheduler)
+- KBO T-30 runner hardcoded PREV_RUN / date — **resolved** via CLI parameterization (2026-08-01)
+- KBO Admin Personnel (T45) remains MANUAL_REQUIRED
 - NPB postgame runner missing
 
 ---
