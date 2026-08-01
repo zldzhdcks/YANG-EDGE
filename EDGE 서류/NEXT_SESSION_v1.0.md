@@ -9,37 +9,36 @@ Version: 1.0.0
 
 # 현재 Active Mission
 
-## KBO T45 Personnel Workflow v1 — implemented (uncommitted)
+## KBO T45 Admin Input UI/API v1 — implemented (uncommitted)
 
-상태: 코드/테스트 완료. git add/commit/push는 미션에서 금지 — 승인 후 커밋 분리.
+상태: Admin UI + load/validate/save/run API 완료. git add/commit/push 금지(미션).
 
 ### Verified (이 세션)
 
+- `npm run test:kbo-t45-admin-api`
 - `npm run test:kbo-t45-personnel`
-- `npm run test:scheduler-integration`
 - `npm run verify:kbo-t45-historical`
-- `npx tsc --noEmit` (실행 후 확인)
+- `npx tsc --noEmit`
 
 ### 다음 실행 후보
 
-1. 승인 후 Commit 분리 (schema/workflow → scheduler/T30 → tests → docs)
-2. 당일 `personnel-input-v1.json` 작성 → `research:kbo-t45-personnel -- --dry-run`
-3. Optional: OS cron wrapper
-4. NPB postgame identity runner
-5. KBO Prediction Engine — 범위 밖 (미구현 유지)
+1. 브라우저에서 `/internal/kbo/personnel?date=<fixture>` dry-run 확인
+2. 승인 후 Commit 분리 (API → UI → tests → docs)
+3. 실인증(Auth) 도입
+4. KBO Prediction Engine — 범위 밖
 
 ### 필수 주의
 
-- 2026-07-31 기존 artifact 재생성/변경 금지
+- 2026-07-31 read-only
 - ADMIN_VERIFIED ≠ 공식/Provider/Engine
-- Engine / Prediction 계산 변경 금지
+- production은 INTERNAL_ADMIN_TOKEN 없이 공개 금지
+- T30 자동 실행 없음
 - git push는 명시 승인 후만
 
 ---
 
 # 세션 시작 체크리스트
 
-- [ ] `npm run test:kbo-t45-personnel`
+- [ ] `npm run test:kbo-t45-admin-api`
 - [ ] `npm run verify:kbo-t45-historical`
-- [ ] `npm run test:scheduler-integration`
-- [ ] 당일 T45 input 존재 여부 확인
+- [ ] `/internal/kbo/personnel` 로컬 확인

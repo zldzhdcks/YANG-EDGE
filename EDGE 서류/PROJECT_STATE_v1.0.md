@@ -109,6 +109,7 @@ Engine 반영은 아직 연구 단계.
 - Pregame Scheduler v1 (core + adapters on origin/main)
 - KBO T-30 parameterized lock CLI (Scheduler auto-spawn enabled)
 - KBO T45 Personnel Workflow v1 (input schema / validator / snapshots; Scheduler conditional spawn)
+- KBO T45 Admin Input UI/API v1 (`/internal/kbo/personnel` + internal APIs)
 
 ---
 

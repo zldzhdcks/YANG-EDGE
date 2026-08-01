@@ -176,3 +176,5 @@ Engine 변경은 연구 완료 후만 가능하다.
 - T45 input 없음 → Scheduler `MANUAL_INPUT_REQUIRED` (추정 생성 금지).
 - T45 실패/미입력이어도 T30은 PASS Snapshot 저장 가능.
 - Prediction Engine / 공식 Pick 생성은 T45 범위 밖.
+- Admin UI: `/internal/kbo/personnel` — Validate와 Save 분리, Save와 Run 분리.
+- Historical 07-31 read-only. production 공개 전 `INTERNAL_ADMIN_TOKEN` 필수.

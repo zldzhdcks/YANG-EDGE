@@ -188,6 +188,14 @@ State / Lock / Audit:
 
 CLI: `npm run research:kbo-t45-personnel -- --date YYYY-MM-DD --input <personnel-input-v1.json>`
 
+Admin UI: `/internal/kbo/personnel` (INTERNAL / noindex; auth 미완전 — production은 `INTERNAL_ADMIN_TOKEN` 필수)
+
+API (내부):
+- `GET /api/internal/kbo/t45-personnel/load`
+- `POST /api/internal/kbo/t45-personnel/validate` (mutation 0)
+- `POST /api/internal/kbo/t45-personnel/save` (operator input만; 서버 재검증)
+- `POST /api/internal/kbo/t45-personnel/run` (dryRun 지원; T30 자동 실행 없음)
+
 입력: `data/operator-input/kbo/{date}-personnel-input-v1.json`
 
 출력:
@@ -207,6 +215,8 @@ Scheduler T45:
 - 스키마 실패 → `INPUT_VALIDATION_FAILED`
 
 T30 연결: personnel/proto snapshot을 lineage·passReasons에 반영. `KBO_PREDICTION_PIPELINE_NOT_IMPLEMENTED` 및 `officialPick=null` 유지. Engine 미구현.
+
+Historical 2026-07-31: Admin UI/API read-only (저장·실행 차단).
 
 ---
 

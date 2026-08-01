@@ -22,6 +22,15 @@ YANG EDGE 프로젝트의 버전별 변경 이력을 관리하는 공식 문서�
 
 # v1.0.0
 
+## ADDED (2026-08-01 KBO T45 Admin Input UI/API v1)
+
+- Page: `/internal/kbo/personnel` (INTERNAL / noindex; auth incomplete)
+- APIs: load / validate / save / run under `/api/internal/kbo/t45-personnel/*`
+- Reuses `src/lib/kbo/t45-personnel` validators (no duplicated rules)
+- Validate/Save/Run separated; T30 auto-run absent; 07-31 historical read-only
+- Soft gate: `INTERNAL_ADMIN_TOKEN` or non-production
+- Tests: `test:kbo-t45-admin-api`
+
 ## ADDED (2026-08-01 KBO T45 Personnel Workflow v1)
 
 - Unified admin input schema `kbo-t45-personnel-input-v1` + per-game validators
