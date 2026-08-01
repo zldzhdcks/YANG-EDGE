@@ -142,33 +142,33 @@ async function loadDomesticRows(
   const proto = asRecord(await readJsonFile(path.join(cwd, protoRel)));
   if (proto) {
     const games = Array.isArray(proto.games) ? proto.games : [];
-    return games
-      .map((raw) => {
-        const g = asRecord(raw);
-        if (!g) return null;
-        const home = asRecord(g.home);
-        const away = asRecord(g.away);
-        const status = asString(g.status);
-        if (
-          status &&
-          !["MANUAL_COLLECTED", "ADMIN_VERIFIED", "COLLECTED"].includes(status)
-        ) {
-          return null;
-        }
-        return {
-          gameId: asString(g.gameId) ?? "",
-          homeTeam: asString(home?.team) ?? "",
-          awayTeam: asString(away?.team) ?? "",
-          homePrice: asNumber(home?.odds),
-          awayPrice: asNumber(away?.odds),
-          status,
-          sourceType: asString(g.sourceType) ?? "ADMIN_MANUAL_SCREENSHOT",
-          capturedAt: asString(g.capturedAt) ?? asString(g.enteredAt),
-          commercialUseStatus: asString(g.commercialUseStatus),
-          pathRel: protoRel,
-        } satisfies DomesticRow;
-      })
-      .filter((x): x is DomesticRow => x != null && !!x.gameId);
+    const mapped: Array<DomesticRow | null> = games.map((raw) => {
+      const g = asRecord(raw);
+      if (!g) return null;
+      const home = asRecord(g.home);
+      const away = asRecord(g.away);
+      const status = asString(g.status);
+      if (
+        status &&
+        !["MANUAL_COLLECTED", "ADMIN_VERIFIED", "COLLECTED"].includes(status)
+      ) {
+        return null;
+      }
+      const row: DomesticRow = {
+        gameId: asString(g.gameId) ?? "",
+        homeTeam: asString(home?.team) ?? "",
+        awayTeam: asString(away?.team) ?? "",
+        homePrice: asNumber(home?.odds),
+        awayPrice: asNumber(away?.odds),
+        status,
+        sourceType: asString(g.sourceType) ?? "ADMIN_MANUAL_SCREENSHOT",
+        capturedAt: asString(g.capturedAt) ?? asString(g.enteredAt),
+        commercialUseStatus: asString(g.commercialUseStatus),
+        pathRel: protoRel,
+      };
+      return row;
+    });
+    return mapped.filter((x): x is DomesticRow => x != null && x.gameId !== "");
   }
 
   const opRel = `data/operator-input/kbo/${dateKst}-operator-markets-v2.json`;
@@ -222,68 +222,68 @@ async function loadOverseasRows(
   const hist = asRecord(await readJsonFile(path.join(cwd, histRel)));
   if (hist) {
     const games = Array.isArray(hist.games) ? hist.games : [];
-    return games
-      .map((raw) => {
-        const g = asRecord(raw);
-        if (!g) return null;
-        const mapping = asRecord(g.mapping);
-        const formatStatus = asString(g.formatValidationStatus);
-        const formatOk =
-          formatStatus == null ||
-          formatStatus === "FORMAT_CONFIRMED_DECIMAL" ||
-          formatStatus === "FORMAT_CONVERTED_FROM_AMERICAN";
-        return {
-          gameId: asString(g.gameId) ?? "",
-          homeTeam:
-            asString(g.homeTeam) ?? asString(mapping?.canonicalHomeTeam) ?? "",
-          awayTeam:
-            asString(g.awayTeam) ?? asString(mapping?.canonicalAwayTeam) ?? "",
-          homePrice: asNumber(g.homeOdds),
-          awayPrice: asNumber(g.awayOdds),
-          status: asString(g.status),
-          capturedAt:
-            asString(g.capturedAt) ??
-            asString(g.fetchedAt) ??
-            asString(g.marketTimestamp),
-          providerName: asString(g.bookmaker) ?? "The Odds API",
-          formatOk,
-          pathRel: histRel,
-        } satisfies OverseasRow;
-      })
-      .filter((x): x is OverseasRow => x != null && !!x.gameId);
+    const mapped: Array<OverseasRow | null> = games.map((raw) => {
+      const g = asRecord(raw);
+      if (!g) return null;
+      const mapping = asRecord(g.mapping);
+      const formatStatus = asString(g.formatValidationStatus);
+      const formatOk =
+        formatStatus == null ||
+        formatStatus === "FORMAT_CONFIRMED_DECIMAL" ||
+        formatStatus === "FORMAT_CONVERTED_FROM_AMERICAN";
+      const row: OverseasRow = {
+        gameId: asString(g.gameId) ?? "",
+        homeTeam:
+          asString(g.homeTeam) ?? asString(mapping?.canonicalHomeTeam) ?? "",
+        awayTeam:
+          asString(g.awayTeam) ?? asString(mapping?.canonicalAwayTeam) ?? "",
+        homePrice: asNumber(g.homeOdds),
+        awayPrice: asNumber(g.awayOdds),
+        status: asString(g.status),
+        capturedAt:
+          asString(g.capturedAt) ??
+          asString(g.fetchedAt) ??
+          asString(g.marketTimestamp),
+        providerName: asString(g.bookmaker) ?? "The Odds API",
+        formatOk,
+        pathRel: histRel,
+      };
+      return row;
+    });
+    return mapped.filter((x): x is OverseasRow => x != null && x.gameId !== "");
   }
 
   const cmpRel = `data/research/kbo/${dateKst}-odds-comparison-v1.json`;
   const cmp = asRecord(await readJsonFile(path.join(cwd, cmpRel)));
   if (!cmp) return [];
   const rows = Array.isArray(cmp.rows) ? cmp.rows : [];
-  return rows
-    .map((raw) => {
-      const r = asRecord(raw);
-      if (!r) return null;
-      const ovs = asRecord(r.overseas);
-      if (!ovs) return null;
-      const sels = Array.isArray(ovs.selections) ? ovs.selections : [];
-      const homeSel = sels
-        .map((s) => asRecord(s))
-        .find((s) => s && asString(s.selectionCode) === "HOME");
-      const awaySel = sels
-        .map((s) => asRecord(s))
-        .find((s) => s && asString(s.selectionCode) === "AWAY");
-      return {
-        gameId: asString(r.gameId) ?? "",
-        homeTeam: asString(r.homeTeam) ?? "",
-        awayTeam: asString(r.awayTeam) ?? "",
-        homePrice: homeSel ? asNumber(homeSel.odds) : null,
-        awayPrice: awaySel ? asNumber(awaySel.odds) : null,
-        status: "COLLECTED",
-        capturedAt: asString(r.capturedAt),
-        providerName: "The Odds API",
-        formatOk: true,
-        pathRel: cmpRel,
-      } satisfies OverseasRow;
-    })
-    .filter((x): x is OverseasRow => x != null && !!x.gameId);
+  const mapped: Array<OverseasRow | null> = rows.map((raw) => {
+    const r = asRecord(raw);
+    if (!r) return null;
+    const ovs = asRecord(r.overseas);
+    if (!ovs) return null;
+    const sels = Array.isArray(ovs.selections) ? ovs.selections : [];
+    const homeSel = sels
+      .map((s) => asRecord(s))
+      .find((s) => s && asString(s.selectionCode) === "HOME");
+    const awaySel = sels
+      .map((s) => asRecord(s))
+      .find((s) => s && asString(s.selectionCode) === "AWAY");
+    const row: OverseasRow = {
+      gameId: asString(r.gameId) ?? "",
+      homeTeam: asString(r.homeTeam) ?? "",
+      awayTeam: asString(r.awayTeam) ?? "",
+      homePrice: homeSel ? asNumber(homeSel.odds) : null,
+      awayPrice: awaySel ? asNumber(awaySel.odds) : null,
+      status: "COLLECTED",
+      capturedAt: asString(r.capturedAt),
+      providerName: "The Odds API",
+      formatOk: true,
+      pathRel: cmpRel,
+    };
+    return row;
+  });
+  return mapped.filter((x): x is OverseasRow => x != null && x.gameId !== "");
 }
 
 function findByGameOrCanon(

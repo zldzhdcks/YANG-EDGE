@@ -105,11 +105,12 @@ export async function resolveResearchPrediction(input: {
 }): Promise<LoadedPredictionArtifact | null> {
   const cwd = input.cwd ?? process.cwd();
   const gameId = input.gameId.trim();
-  const league = leagueFromGameId(gameId);
+  const resolvedLeague: "MLB" | "KBO" | "UNKNOWN" = leagueFromGameId(gameId);
 
-  if (league === "UNKNOWN") {
+  if (resolvedLeague === "UNKNOWN") {
     return null;
   }
+  const league: "MLB" | "KBO" = resolvedLeague;
 
   const dirRel =
     league === "KBO" ? "data/predictions/kbo" : "data/predictions/mlb";
@@ -151,7 +152,8 @@ export async function resolveResearchPrediction(input: {
     if (!doc) {
       continue;
     }
-    const docLeague = (asString(doc.league) ?? league).toUpperCase();
+    const rawDocLeague: string | null = asString(doc.league);
+    const docLeague: string = (rawDocLeague ?? league).toUpperCase();
     if (docLeague !== league) continue;
 
     const rows = gameRows(doc);

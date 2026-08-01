@@ -7,7 +7,7 @@ async function main() {
     Module as unknown as { _resolveFilename: (...a: unknown[]) => string }
   )._resolveFilename;
   (Module as unknown as { _resolveFilename: (...a: unknown[]) => string })._resolveFilename =
-    function (request: string, ...args: unknown[]) {
+    function (request: unknown, ...args: unknown[]) {
       if (request === "server-only") return stub;
       return original.call(this, request, ...args);
     };
