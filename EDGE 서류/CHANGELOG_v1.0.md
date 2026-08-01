@@ -22,6 +22,15 @@ YANG EDGE 프로젝트의 버전별 변경 이력을 관리하는 공식 문서�
 
 # v1.0.0
 
+## ADDED (2026-08-01 Pregame Scheduler v1)
+
+- Scheduler core: windows, stage resolver, hard cutoff, lock TTL, idempotency, quota gate
+- League adapters (MLB / KBO / NPB) reusing existing runners
+- CLI: `npm run scheduler:pregame` (`--dry-run`, `--force-stage`, `--include-postgame`, …)
+- Tests: `test:scheduler-stage`, `test:scheduler-lock`, `test:scheduler-integration`
+- State/lock/audit paths under `data/scheduler/` and `data/audits/*-pregame-scheduler-v1-audit.json`
+- KBO T-30 left as MANUAL_REQUIRED (hardcoded PREV_RUN); implicit-any type annotations only
+
 ## ADDED (2026-07-31 Pregame Input Integrity Guards v1)
 
 - Odds price format contract (`normalizeOddsPrice`, DECIMAL internal standard)

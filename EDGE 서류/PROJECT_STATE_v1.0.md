@@ -106,7 +106,8 @@ Engine 반영은 아직 연구 단계.
 - Dataset 확장
 - Documentation
 - Safe pre-first-pitch lineup re-collect window (연구 필요)
-- 2026-07-31 Postgame Grade and Review (다음 Active Mission)
+- Pregame Scheduler v1 (core + adapters implemented; OS cron 미구현)
+- KBO T-30 auto-lock (Scheduler: MANUAL_REQUIRED — runner not CLI-ready)
 
 ---
 
@@ -119,6 +120,8 @@ Engine 반영은 아직 연구 단계.
 - Weather 미구현
 - Travel 미구현
 - MLB official lineup near first pitch (2026-07-31 eligible 3/3 NOT_RELEASED)
+- KBO T-30 runner hardcoded PREV_RUN / date (not auto-spawned by Scheduler)
+- NPB postgame runner missing
 
 ---
 
