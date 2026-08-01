@@ -1,9 +1,9 @@
 import type { PregameSchedulerStage, RunnerAction } from "../types";
 
 /**
- * KBO T-30 uses Option B: MANUAL_REQUIRED.
- * scripts/run-kbo-t30-final-pregame-lock-v1.ts is not scheduler-ready
- * (hardcoded date / PREV_RUN; implicit any). Do not auto-spawn in v1.
+ * KBO T-30 final lock is parameterized via research:kbo-t30-lock
+ * (date / prior-run-id / dry-run). Prior tip auto-resolves from prediction.runId.
+ * T45 admin personnel remains MANUAL_REQUIRED.
  */
 export function kboAction(input: {
   stage: PregameSchedulerStage;
@@ -12,7 +12,7 @@ export function kboAction(input: {
   includePostgame: boolean;
   noProvider: boolean;
 }): RunnerAction {
-  const { stage, dateKst, includePostgame, noProvider } = input;
+  const { stage, dateKst, gameId, includePostgame, noProvider } = input;
   const immediate = {
     kind: "SPAWN_TSX" as const,
     scriptRel: "scripts/run-npb-kbo-immediate-pregame-accumulation-v1.ts",
@@ -44,11 +44,16 @@ export function kboAction(input: {
         mayCallProvider: false,
       };
     case "T30_FINAL_CHECK":
+      // Date-level slate lock (same pattern as MLB remaining-pregame).
+      // Do not pass --game-id here — filtering would overwrite the full prediction slate.
+      void gameId;
       return {
-        kind: "MANUAL_REQUIRED",
-        actionId: "KBO_T30_MANUAL_REQUIRED",
+        kind: "SPAWN_TSX",
+        actionId: "RUN_KBO_T30_FINAL_LOCK",
         description:
-          "KBO T-30 final lock runner is MANUAL_REQUIRED (hardcoded PREV_RUN); not auto-invoked in Scheduler v1",
+          "KBO T-30 final pregame lock (parameterized; no Odds API; PASS-only)",
+        scriptRel: "scripts/run-kbo-t30-final-pregame-lock-v1.ts",
+        args: ["--date", dateKst],
         mayCallProvider: false,
       };
     case "PREGAME_LOCK":
@@ -56,7 +61,7 @@ export function kboAction(input: {
         kind: "NOOP_CHECK",
         actionId: "KBO_PREGAME_LOCK_CHECK",
         description:
-          "Verify existing KBO prediction/PASS snapshot; no new lock builder in v1",
+          "Verify existing KBO prediction/PASS snapshot after T-30 lock",
         mayCallProvider: false,
       };
     case "WAITING_FOR_FINAL":
