@@ -3,7 +3,7 @@
  * Failure isolation + dry-run no provider/lock/artifact mutation.
  */
 import assert from "node:assert/strict";
-import { mkdirSync, mkdtempSync, readdirSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { runPregameScheduler } from "../src/lib/scheduler";
@@ -99,6 +99,62 @@ function main() {
     assert.equal(failResult.plans.filter((p) => p.executionStatus === "FAILED").length, 1);
     assert.equal(failResult.plans.filter((p) => p.executionStatus === "SUCCESS").length, 4);
     assert.equal(failResult.audit.overallStatus, "PARTIAL_SUCCESS");
+
+    // KBO T45: missing input → MANUAL_INPUT_REQUIRED; present → spawn workflow
+    const kboCwd = mkdtempSync(path.join(tmpdir(), "sch-kbo-t45-"));
+    mkdirSync(path.join(kboCwd, "data", "scheduler"), { recursive: true });
+    mkdirSync(path.join(kboCwd, "data", "operator-input", "kbo"), {
+      recursive: true,
+    });
+    const kboMissing = await runPregameScheduler({
+      dateKst: "2026-08-01",
+      league: "KBO",
+      dryRun: true,
+      noProvider: true,
+      includePostgame: false,
+      json: false,
+      now,
+      fixtureGames: [{ gameId: "K1", scheduledStartTime: start(45) }],
+      cwd: kboCwd,
+      persist: false,
+    });
+    assert.equal(kboMissing.plans[0]?.stage, "T45_LINEUP_CHECK");
+    assert.equal(kboMissing.plans[0]?.action?.actionId, "MANUAL_INPUT_REQUIRED");
+    assert.equal(kboMissing.plans[0]?.executionStatus, "MANUAL_REQUIRED");
+
+    writeFileSync(
+      path.join(
+        kboCwd,
+        "data",
+        "operator-input",
+        "kbo",
+        "2026-08-01-personnel-input-v1.json",
+      ),
+      JSON.stringify({
+        schemaVersion: "kbo-t45-personnel-input-v1",
+        league: "KBO",
+        dateKst: "2026-08-01",
+        createdAt: "2026-08-01T09:00:00.000Z",
+        createdBy: "test",
+        games: [],
+      }),
+    );
+    const kboReady = await runPregameScheduler({
+      dateKst: "2026-08-01",
+      league: "KBO",
+      dryRun: true,
+      noProvider: true,
+      includePostgame: false,
+      json: false,
+      now,
+      fixtureGames: [{ gameId: "K1", scheduledStartTime: start(45) }],
+      cwd: kboCwd,
+      persist: false,
+    });
+    assert.equal(
+      kboReady.plans[0]?.action?.actionId,
+      "RUN_KBO_T45_PERSONNEL_WORKFLOW",
+    );
 
     // Quota block
     const q = await runPregameScheduler({
