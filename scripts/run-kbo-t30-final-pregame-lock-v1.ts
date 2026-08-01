@@ -368,8 +368,8 @@ async function main() {
       g.statusDetailed,
     );
     const odds = oddsByScheduleId.get(g.gameId)!;
-    const st = starterGames.find((s) => s.gameId === g.gameId)!;
-    const lu = lineupGames.find((s) => s.gameId === g.gameId)!;
+    const st = starterGames.find((s: { gameId: string }) => s.gameId === g.gameId)!;
+    const lu = lineupGames.find((s: { gameId: string }) => s.gameId === g.gameId)!;
     const prev = (prevPred.games ?? []).find((p: any) => p.gameId === g.gameId);
 
     const passReasons: string[] = ["KBO_PREDICTION_PIPELINE_NOT_IMPLEMENTED"];
@@ -493,15 +493,15 @@ async function main() {
 
   const summary = {
     total: games.length,
-    ELIGIBLE: games.filter((g) => g.officialStatus === "ELIGIBLE").length,
-    PASS: games.filter((g) => g.officialStatus === "PASS").length,
-    BLOCKED: games.filter((g) => g.officialStatus === "BLOCKED").length,
+    ELIGIBLE: games.filter((g: { officialStatus: string }) => g.officialStatus === "ELIGIBLE").length,
+    PASS: games.filter((g: { officialStatus: string }) => g.officialStatus === "PASS").length,
+    BLOCKED: games.filter((g: { officialStatus: string }) => g.officialStatus === "BLOCKED").length,
     officialPickCount: 0,
-    alreadyStarted: games.filter((g) =>
+    alreadyStarted: games.filter((g: { blockReasons: string[] }) =>
       g.blockReasons.includes("FIRST_PITCH_CUTOFF"),
     ).length,
     postponedOrCancelled: games.filter(
-      (g) =>
+      (g: { blockReasons: string[] }) =>
         g.blockReasons.includes("POSTPONED") ||
         g.blockReasons.includes("CANCELLED"),
     ).length,
@@ -549,7 +549,15 @@ async function main() {
       date: DATE,
       runId,
       lockedAt,
-      games: games.map((g) => ({
+      games: games.map((g: {
+        gameId: string;
+        officialStatus: string;
+        officialPick: unknown;
+        passReasons: string[];
+        blockReasons: string[];
+        predictedAt: string;
+        lockedAt: string;
+      }) => ({
         gameId: g.gameId,
         officialStatus: g.officialStatus,
         officialPick: g.officialPick,
@@ -627,7 +635,14 @@ async function main() {
     date: DATE,
     runId,
     generatedAt: lockedAt,
-    games: games.map((p) => ({
+    games: games.map((p: {
+      gameId: string;
+      matchup: string;
+      scheduledStartTime: string;
+      clockState: string;
+      cutoff: unknown;
+      audit: { cutoff: unknown };
+    }) => ({
       gameId: p.gameId,
       matchup: p.matchup,
       scheduledStartTime: p.scheduledStartTime,
@@ -644,12 +659,15 @@ async function main() {
     date: DATE,
     runId,
     generatedAt: lockedAt,
-    overall: games.some((p) => p.audit.leakage === "FAIL")
+    overall: games.some((p: { audit: { leakage: string } }) => p.audit.leakage === "FAIL")
       ? "FAIL"
-      : games.some((p) => p.audit.leakage === "WARN")
+      : games.some((p: { audit: { leakage: string } }) => p.audit.leakage === "WARN")
         ? "WARN"
         : "PASS",
-    games: games.map((p) => ({
+    games: games.map((p: {
+      gameId: string;
+      audit: { leakage: string; mapping: unknown; detail: unknown };
+    }) => ({
       gameId: p.gameId,
       leakage: p.audit.leakage,
       mapping: p.audit.mapping,
@@ -733,7 +751,15 @@ async function main() {
           confidence: m.mappingConfidence,
           warnings: m.warnings,
         })),
-        games: games.map((g) => ({
+        games: games.map((g: {
+          matchup: string;
+          officialStatus: string;
+          odds: { status: string };
+          starter: { home: { confirmationStatus: string } };
+          lineup: { home: { status: string } };
+          passReasons: string[];
+          lockedAt: string;
+        }) => ({
           matchup: g.matchup,
           status: g.officialStatus,
           odds: g.odds.status,
