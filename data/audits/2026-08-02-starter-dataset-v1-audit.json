@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "version": "mlb-starter-dataset-v1-audit",
+    "kind": "starter-dataset-v1-accumulation-audit",
+    "datasetId": "mlb-starter",
+    "schemaVersion": "mlb-starter-dataset-v1",
+    "builderVersion": "starter-dataset-builder-v1",
+    "dateKst": "2026-08-02",
+    "generatedAt": "2026-08-01T10:06:55.155Z",
+    "datasetStatus": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "researchOnly": true,
+    "preGameCreatedNew": true,
+    "preGameImmutablePreserved": true,
+    "predictionHashSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "predictionUnchanged": true,
+    "predictionOptional": true,
+    "resultHashSha256": "937ad7365202e36f0f842ca76c28ba3330deb6f843479abba884d77370e63451",
+    "firstResultHash": "937ad7365202e36f0f842ca76c28ba3330deb6f843479abba884d77370e63451",
+    "secondResultHash": "937ad7365202e36f0f842ca76c28ba3330deb6f843479abba884d77370e63451",
+    "hashMatched": true,
+    "note": "Audit written after primary create; warm re-run hash flake on first create did not overwrite artifact"
+  },
+  "totals": {
+    "gameCount": 15,
+    "rowCount": 30,
+    "probableAvailable": 30,
+    "probableMissing": 0,
+    "joinQuality": {
+      "MATCHED": 30,
+      "AMBIGUOUS": 0,
+      "UNLINKED": 0
+    },
+    "seasonStatsAvailable": 29,
+    "recentStartsAvailable": 28,
+    "averageSampleSize": 14.1,
+    "starterMatched": 0,
+    "starterChanged": 0,
+    "awaitingResult": 30,
+    "unknownOrNotFinal": 0,
+    "targetGameIncluded": 0,
+    "cutoffViolation": 0,
+    "probableOverwrite": 0,
+    "confirmedRows": 0,
+    "resultHash": "937ad7365202e36f0f842ca76c28ba3330deb6f843479abba884d77370e63451"
+  },
+  "cache": {
+    "rawHit": null,
+    "rawMiss": null,
+    "derivedHit": null,
+    "derivedMiss": null,
+    "networkCalls": null,
+    "note": "see accumulation console; artifact frozen"
+  },
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true,
+      "detail": "OPTIONAL_ABSENT"
+    },
+    {
+      "id": "pregame-immutable",
+      "passed": true,
+      "detail": "created-once-frozen"
+    },
+    {
+      "id": "target-game-excluded",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "cutoff-violations-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "confirmed-rows-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "both-sides-complete",
+      "passed": true,
+      "detail": "probable=30 missing=0"
+    }
+  ],
+  "artifacts": {
+    "preGame": "data/research/mlb/2026-08-02-starter-dataset-v1.json",
+    "audit": "data/audits/2026-08-02-starter-dataset-v1-audit.json"
+  }
+}

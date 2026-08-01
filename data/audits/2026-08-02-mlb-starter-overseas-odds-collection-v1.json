@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "mlb-starter-overseas-odds-collection-audit-v1",
+  "dateKst": "2026-08-02",
+  "generatedAt": "2026-08-01T10:10:00.000Z",
+  "executionWindow": {
+    "startedAtApprox": "2026-08-01T10:03:00.000Z",
+    "earliestGameCommenceUtc": "2026-08-01T19:07:00Z",
+    "allGamesPregameAtCollection": true
+  },
+  "providerPreflight": {
+    "starter": {
+      "provider": "mlb-stats-api",
+      "credentialRequired": false,
+      "scheduleReused": true
+    },
+    "overseasOdds": {
+      "provider": "The Odds API",
+      "keyConfigured": true,
+      "quotaBeforeRemaining": 370,
+      "quotaAfterRemaining": 367,
+      "gate": "OK",
+      "expectedCalls": "sports+odds on cache miss"
+    }
+  },
+  "starter": {
+    "artifact": "data/research/mlb/2026-08-02-starter-dataset-v1.json",
+    "audit": "data/audits/2026-08-02-starter-dataset-v1-audit.json",
+    "totalGames": 15,
+    "totalRows": 30,
+    "bothSidesReady": 15,
+    "oneSideMissing": 0,
+    "bothMissing": 0,
+    "probableRows": 30,
+    "missingRows": 0,
+    "joinQualityMATCHED": 30,
+    "targetGameIncludedInStats": 0,
+    "cutoffViolations": 0,
+    "warmRerunHashFlakeOnCreate": true,
+    "artifactFrozenWithoutOverwrite": true
+  },
+  "overseasOdds": {
+    "artifact": "data/research/mlb/2026-08-02-odds-history-dataset-v1.json",
+    "audit": "data/audits/2026-08-02-odds-history-dataset-v1-audit.json",
+    "namespace": "OVERSEAS_PROVIDER_MARKET",
+    "collectedGames": 15,
+    "moneylineComplete": 15,
+    "mappingFailed": 0,
+    "afterCutoff": 0,
+    "quotaBlocked": 0,
+    "oddsFormat": "decimal",
+    "diskCacheRoot": "data/cache/research/mlb/raw/the-odds-api"
+  },
+  "domestic": {
+    "artifact": "data/operator-input/mlb/2026-08-02-domestic-markets-v1.json",
+    "namespace": "DOMESTIC_OPERATOR_COMPARISON",
+    "mappedGames": 14,
+    "missing": "Colorado Rockies @ Kansas City Royals 09:10",
+    "doesNotReplaceOverseasPrior": true
+  },
+  "lineup": {
+    "artifact": "data/research/mlb/2026-08-02-lineup-dataset-v1.json",
+    "status": "NOT_RELEASED_PLACEHOLDER",
+    "providerCalled": false,
+    "note": "Schedule-derived empty NOT_RELEASED rows only; no invented batting orders"
+  },
+  "dailySummary": {
+    "artifact": "data/research/mlb/2026-08-02-daily-research-summary-v1.json",
+    "researchReadyPercent": 87
+  },
+  "predictionSnapshotWritten": false,
+  "gitCommit": false
+}

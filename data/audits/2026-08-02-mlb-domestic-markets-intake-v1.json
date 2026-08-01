@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "mlb-domestic-markets-intake-audit-v1",
+  "dateKst": "2026-08-02",
+  "generatedAt": "2026-08-01T09:51:58.841Z",
+  "observedAt": "2026-08-01T09:37:00.000Z",
+  "scheduleArtifact": "data/research/mlb/2026-08-02-schedule-v1.json",
+  "scheduleHash": "9e9624567ebb74f23a51599a00ff9e9d60f65b40bb14b7c79eba774bd0808e71",
+  "operatorArtifact": "data/operator-input/mlb/2026-08-02-domestic-markets-v1.json",
+  "operatorRowsHash": "685c857f11e8e7cc5ee6a799130ac9918bb3a5bfec73c78184643a8f8d04bfaa",
+  "screenshotCount": 4,
+  "screenshotGames": 14,
+  "identityUnresolved": 0,
+  "scheduleWithoutDomesticMarket": 1,
+  "imagesPersisted": false,
+  "summary": {
+    "totalScheduleGames": 15,
+    "mappedGames": 14,
+    "unmappedScheduleGames": 1,
+    "moneylineComplete": 14,
+    "totalsComplete": 14,
+    "runLineComplete": 14,
+    "specialMarketsRawOnly": 31
+  },
+  "unresolved": [],
+  "unmappedSchedule": [
+    {
+      "gamePk": 824326,
+      "homeTeam": "Colorado Rockies",
+      "awayTeam": "Kansas City Royals",
+      "startTimeKst": "09:10",
+      "reason": "SCREENSHOT_ROW_NOT_PROVIDED",
+      "status": "NOT_ENTERED"
+    }
+  ],
+  "resolvedThisRun": [
+    {
+      "screen": "토론토블루:세인트카디 @04:07",
+      "gamePk": 822781,
+      "orientation": "left_home"
+    },
+    {
+      "screen": "샌디파드:샌프자이 @09:40",
+      "gamePk": 823269,
+      "orientation": "left_home"
+    }
+  ],
+  "cutoff": {
+    "capturedBeforeStart": true,
+    "earliestCommenceUtc": "2026-08-01T19:07:00Z",
+    "allMappedBeforeStart": true
+  },
+  "marketPolicy": {
+    "MONEYLINE_2WAY": "SUPPORTED_V0_COMPARISON_NAMESPACE",
+    "TOTALS": "STORED_NOT_USED_V0",
+    "RUN_LINE": "STORED_NOT_USED_V0",
+    "승①패": "DOMESTIC_THREE_WAY_SPECIAL_NOT_IMPLEMENTED",
+    "SUM": "UNSUPPORTED_OR_UNRESOLVED",
+    "FIRST_HALF": "NOT_IMPLEMENTED",
+    "overseasPriorReplacement": false
+  },
+  "contentHash": "a48ffaa2d075c34da0778512960e942dd8b6461f8d029738dfdd390f504ce200"
+}

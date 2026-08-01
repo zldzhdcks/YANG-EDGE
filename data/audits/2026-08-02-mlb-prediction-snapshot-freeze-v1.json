@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "mlb-prediction-snapshot-freeze-audit-v1",
+  "dateKst": "2026-08-02",
+  "frozenAt": "2026-08-01T10:19:03.733Z",
+  "predictedAt": "2026-08-01T10:18:33.165Z",
+  "snapshot": "data/predictions/mlb/2026-08-02.json",
+  "modelStatus": "RESEARCH_BASELINE_V0",
+  "observationOnly": true,
+  "providerCalls": 0,
+  "counts": {
+    "totalGames": 15,
+    "eligibleCount": 0,
+    "passCount": 13,
+    "blockedCount": 2,
+    "researchBaselineCount": 13,
+    "officialPickCount": 0
+  },
+  "hashes": {
+    "predictionHashSha256": "afee69629e97095306aff9abab61daadb0bf6374001828d9eabd87fc1fbed139",
+    "configHash": "baa93d0c4be1d41b01b54e0f3acadc006f1b5c37943156816a6d7b05e04258b3",
+    "inputManifestHash": "c68c943587076e868be27b9a3b6ecdb3e70347c452cd971bf145c467cf410fff"
+  },
+  "lineupRetry": {
+    "confirmedGames": 0,
+    "notReleasedGames": 15,
+    "afterCutoff": 0,
+    "revisionPreserved": "data/research/mlb/2026-08-02-lineup-dataset-v1.rev-2026-08-01T10-16-59-796Z.json"
+  },
+  "blockedAudit": [
+    {
+      "gameId": "mlb-cleveland-guardians-arizona-diamondbacks",
+      "reason": "STARTER_SAMPLE_INSUFFICIENT",
+      "detail": "Away Kohl Drake IP=9 (< minInningsForPartial=15)"
+    },
+    {
+      "gameId": "mlb-houston-astros-texas-rangers",
+      "reason": "STARTER_SAMPLE_INSUFFICIENT",
+      "detail": "Home Ronel Blanco IP=10 (< minInningsForPartial=15)"
+    }
+  ],
+  "verifyOk": true,
+  "determinismOk": true,
+  "configUnchanged": true,
+  "gitCommit": false
+}
