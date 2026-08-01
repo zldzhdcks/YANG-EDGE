@@ -82,6 +82,14 @@ export type KboT45ProtoInput = {
   awayPrice: number;
   format?: "DECIMAL";
   marketType?: "MONEYLINE_2WAY";
+  /** Additive OCR assist metadata — not a confirmation status. */
+  extractionMethod?: "OCR_ASSISTED" | "MANUAL";
+  ocrRunId?: string;
+  parserVersion?: string;
+  correctedByAdmin?: boolean;
+  observedAt?: string;
+  originalCandidateHash?: string;
+  approvedContentHash?: string;
 };
 
 export type GameValidationResult = {
