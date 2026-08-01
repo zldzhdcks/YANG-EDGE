@@ -1,16 +1,26 @@
 /**
  * KBO T-30 Final Pregame Lock — remap cached odds aliases, check operator inputs, lock.
- * No Odds API call unless remapping impossible (this run: 0 calls).
+ * No Odds API call (remap from existing odds artifact only).
  *
- *   npx tsx --env-file=.env.local scripts/run-kbo-t30-final-pregame-lock-v1.ts [YYYY-MM-DD]
+ *   npm run research:kbo-t30-lock -- --date YYYY-MM-DD [--prior-run-id ...] [--dry-run]
+ *   npx tsx --env-file=.env.local scripts/run-kbo-t30-final-pregame-lock-v1.ts YYYY-MM-DD
+ *
+ * Does not implement a KBO Prediction Engine. PASS-only when inputs incomplete.
  */
 import { createHash } from "node:crypto";
 import { access, copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import {
+  buildKboT30ArtifactPaths,
+  kboT30LockUsage,
+  kboT30RevisionTargets,
+  parseKboT30LockArgs,
+  resolveKboT30PriorRunId,
+  revisionFilename,
+  buildInputLineageManifest,
+  sha256Json,
+} from "../src/lib/kbo/kbo-t30-lock-cli";
 import { resolveKboTeamIdentity } from "../src/lib/kbo/resolve-kbo-team-identity";
-
-const DATE = process.argv[2]?.trim() || "2026-07-31";
-const PREV_RUN = "2026-07-31T08-52-40-877Z";
 
 function nowIso(): string {
   return new Date().toISOString();
@@ -26,9 +36,15 @@ async function exists(p: string): Promise<boolean> {
     return false;
   }
 }
-async function revise(fp: string, prevRun: string): Promise<string | null> {
+async function revise(
+  fp: string,
+  prevRun: string,
+  dryRun: boolean,
+): Promise<string | null> {
   if (!(await exists(fp))) return null;
-  const rev = fp.replace(/\.json$/i, `.rev-${prevRun}.json`);
+  if (prevRun === "NONE") return null;
+  const rev = revisionFilename(fp, prevRun);
+  if (dryRun) return rev;
   if (!(await exists(rev))) await copyFile(fp, rev);
   return rev;
 }
@@ -116,62 +132,120 @@ function emptyLineup(checkedAt: string) {
 }
 
 async function main() {
+  let cli;
+  try {
+    cli = parseKboT30LockArgs(process.argv.slice(2));
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    if (msg === "HELP") {
+      console.log(kboT30LockUsage());
+      process.exit(0);
+    }
+    console.error(msg);
+    console.error(kboT30LockUsage());
+    process.exit(2);
+  }
+
+  const DATE = cli.dateKst;
+  const paths = buildKboT30ArtifactPaths(DATE, cli.cwd);
+  const priorResolved = await resolveKboT30PriorRunId({
+    dateKst: DATE,
+    explicit: cli.priorRunId,
+    paths,
+    cwd: cli.cwd,
+  });
+
+  if (priorResolved.resolutionStatus === "FAILED") {
+    const failOut = {
+      dryRun: cli.dryRun,
+      dateKst: DATE,
+      priorSnapshotRunId: priorResolved.priorSnapshotRunId,
+      priorRunId: priorResolved.priorRunId,
+      priorRunSource: priorResolved.priorRunSource,
+      resolutionStatus: priorResolved.resolutionStatus,
+      lineageValidationStatus: priorResolved.lineageValidationStatus,
+      errorCode: priorResolved.errorCode,
+      artifacts: priorResolved.artifacts,
+      checkedPrimaryArtifacts: priorResolved.checkedPrimaryArtifacts.map((c) => ({
+        artifactType: c.artifactType,
+        path: c.relativePath,
+        primary: c.primary,
+        exists: c.exists,
+        dateKst: c.dateKst,
+        runId: c.runId,
+        schemaVersion: c.schemaVersion,
+        validationStatus: c.validationStatus,
+      })),
+      matchedRunIds: priorResolved.matchedRunIds,
+      mismatchedArtifacts: priorResolved.mismatchedArtifacts,
+      unprovenArtifacts: priorResolved.unprovenArtifacts,
+      revisionFilesIgnored: priorResolved.revisionFilesIgnored,
+      matchedPrimaryArtifacts: priorResolved.matchedPrimaryArtifacts,
+      writesSkipped: true,
+      apiCalls: 0,
+    };
+    console.log(JSON.stringify(failOut, null, 2));
+    console.error(
+      `${priorResolved.errorCode}: prior run / lineage could not be safely resolved`,
+    );
+    process.exit(1);
+  }
+
+  const PREV_RUN = priorResolved.priorRunId!;
+
+
   const lockedAt = nowIso();
   const runId = lockedAt.replace(/[:.]/g, "-");
-  const root = path.join(process.cwd(), "data", "research", "kbo");
-  const predRoot = path.join(process.cwd(), "data", "predictions", "kbo");
+  const root = paths.researchRoot;
+  const predRoot = paths.predictionsRoot;
   const nowMs = Date.now();
 
-  const files = [
-    path.join(root, `${DATE}-schedule-v1.json`),
-    path.join(root, `${DATE}-starter-dataset-v1.json`),
-    path.join(root, `${DATE}-odds-history-dataset-v1.json`),
-    path.join(root, `${DATE}-lineup-dataset-v1.json`),
-    path.join(root, `${DATE}-pregame-cutoff-audit-v1.json`),
-    path.join(root, `${DATE}-pregame-leakage-audit-v1.json`),
-    path.join(root, `${DATE}-pregame-collection-summary-v1.json`),
-    path.join(root, `${DATE}-daily-research-summary-v1.json`),
-    path.join(root, `${DATE}-schedule-result-identity-v1-api-baseball.json`),
-    path.join(predRoot, `${DATE}.json`),
-  ];
+  for (const required of [paths.schedule, paths.odds, paths.starter, paths.lineup]) {
+    if (!(await exists(required))) {
+      console.error(`INPUT_ARTIFACT_MISSING: ${path.relative(cli.cwd, required)}`);
+      process.exit(1);
+    }
+  }
+
+  const files = kboT30RevisionTargets(paths);
 
   const revised: string[] = [];
   for (const f of files) {
-    const r = await revise(f, PREV_RUN);
-    if (r) revised.push(path.relative(process.cwd(), r).replace(/\\/g, "/"));
+    const r = await revise(f, PREV_RUN, cli.dryRun);
+    if (r) revised.push(path.relative(cli.cwd, r).replace(/\\/g, "/"));
   }
 
-  const schedule = JSON.parse(
-    await readFile(path.join(root, `${DATE}-schedule-v1.json`), "utf8"),
-  );
-  const prevPred = JSON.parse(
-    await readFile(path.join(predRoot, `${DATE}.json`), "utf8"),
-  );
-  const oddsHist = JSON.parse(
-    await readFile(path.join(root, `${DATE}-odds-history-dataset-v1.json`), "utf8"),
-  );
-  const starterPrev = JSON.parse(
-    await readFile(path.join(root, `${DATE}-starter-dataset-v1.json`), "utf8"),
-  );
-  const lineupPrev = JSON.parse(
-    await readFile(path.join(root, `${DATE}-lineup-dataset-v1.json`), "utf8"),
-  );
+  const schedule = JSON.parse(await readFile(paths.schedule, "utf8"));
+  let prevPred: {
+    games?: Array<{ gameId?: string; odds?: { status?: string }; predictedAt?: string }>;
+    predictedAt?: string;
+  } = { games: [] };
+  if (await exists(paths.prediction)) {
+    prevPred = JSON.parse(await readFile(paths.prediction, "utf8"));
+  }
+  const oddsHist = JSON.parse(await readFile(paths.odds, "utf8"));
+  const starterPrev = JSON.parse(await readFile(paths.starter, "utf8"));
+  const lineupPrev = JSON.parse(await readFile(paths.lineup, "utf8"));
+  void starterPrev;
+  void lineupPrev;
 
-  const opStarterPath = path.join(
-    process.cwd(),
-    "data/operator-input/kbo",
-    `${DATE}-starter-confirmation-v1.json`,
-  );
-  const opLineupPath = path.join(
-    process.cwd(),
-    "data/operator-input/kbo",
-    `${DATE}-lineup-confirmation-v1.json`,
-  );
-  const opMarketsPath = path.join(
-    process.cwd(),
-    "data/operator-input/kbo",
-    `${DATE}-operator-markets-v2.json`,
-  );
+  if (cli.gameIds.length > 0) {
+    const allow = new Set(cli.gameIds);
+    const before = Array.isArray(schedule.games) ? schedule.games.length : 0;
+    schedule.games = (schedule.games ?? []).filter((g: { gameId?: string }) =>
+      allow.has(String(g.gameId ?? "")),
+    );
+    if (schedule.games.length === 0) {
+      console.error(
+        `GAME_ID_FILTER_EMPTY: none of [${cli.gameIds.join(", ")}] in schedule (${before} games)`,
+      );
+      process.exit(1);
+    }
+  }
+
+  const opStarterPath = paths.operatorStarter;
+  const opLineupPath = paths.operatorLineup;
+  const opMarketsPath = paths.operatorMarkets;
   const hasStarter = await exists(opStarterPath);
   const hasLineup = await exists(opLineupPath);
   const hasMarkets = await exists(opMarketsPath);
@@ -370,7 +444,9 @@ async function main() {
     const odds = oddsByScheduleId.get(g.gameId)!;
     const st = starterGames.find((s: { gameId: string }) => s.gameId === g.gameId)!;
     const lu = lineupGames.find((s: { gameId: string }) => s.gameId === g.gameId)!;
-    const prev = (prevPred.games ?? []).find((p: any) => p.gameId === g.gameId);
+    const prev = (prevPred.games ?? []).find(
+      (p: { gameId?: string; predictedAt?: string }) => p.gameId === g.gameId,
+    );
 
     const passReasons: string[] = ["KBO_PREDICTION_PIPELINE_NOT_IMPLEMENTED"];
     const blockReasons: string[] = [];
@@ -522,6 +598,7 @@ async function main() {
     date: DATE,
     runId,
     priorRunId: PREV_RUN,
+    priorSnapshotRunId: PREV_RUN,
     predictedAt: prevPred.predictedAt,
     lockedAt,
     lockPhase: "T30_FINAL_PREGAME_LOCK",
@@ -541,6 +618,45 @@ async function main() {
     oddsLinking: { linkedBefore, linkedAfter, apiCalls: 0 },
     summary,
     inputArtifactHashes,
+    inputLineageManifest: buildInputLineageManifest({
+      snapshotRunId: runId,
+      priorSnapshotRunId: PREV_RUN === "NONE" ? null : PREV_RUN,
+      createdAt: lockedAt,
+      lockedAt,
+      entries: [
+        {
+          artifactType: "schedule",
+          path: path.relative(cli.cwd, paths.schedule).replace(/\\/g, "/"),
+          runId: typeof schedule.runId === "string" ? schedule.runId : null,
+          hash: sha256Json(schedule.games ?? []),
+          generatedAt:
+            typeof schedule.collectedAt === "string"
+              ? schedule.collectedAt
+              : lockedAt,
+        },
+        {
+          artifactType: "starter",
+          path: path.relative(cli.cwd, paths.starter).replace(/\\/g, "/"),
+          runId: null,
+          hash: inputArtifactHashes.starter,
+          generatedAt: lockedAt,
+        },
+        {
+          artifactType: "odds",
+          path: path.relative(cli.cwd, paths.odds).replace(/\\/g, "/"),
+          runId: null,
+          hash: inputArtifactHashes.odds,
+          generatedAt: lockedAt,
+        },
+        {
+          artifactType: "lineup",
+          path: path.relative(cli.cwd, paths.lineup).replace(/\\/g, "/"),
+          runId: null,
+          hash: inputArtifactHashes.lineup,
+          generatedAt: lockedAt,
+        },
+      ],
+    }),
     games,
     predictionHashSha256: "",
   };
@@ -705,32 +821,62 @@ async function main() {
     conclusion: "KBO_T30_FINAL_PREGAME_LOCKED_PASS_ONLY",
   };
 
-  await mkdir(root, { recursive: true });
-  await mkdir(predRoot, { recursive: true });
-
   const outs: Array<[string, unknown]> = [
-    [path.join(root, `${DATE}-schedule-v1.json`), schedule],
-    [path.join(root, `${DATE}-starter-dataset-v1.json`), starterDoc],
-    [path.join(root, `${DATE}-odds-history-dataset-v1.json`), oddsDoc],
-    [path.join(root, `${DATE}-lineup-dataset-v1.json`), lineupDoc],
-    [path.join(root, `${DATE}-odds-alias-mapping-v1.json`), mappingDoc],
-    [path.join(root, `${DATE}-pregame-cutoff-audit-v1.json`), cutoffDoc],
-    [path.join(root, `${DATE}-pregame-leakage-audit-v1.json`), leakageDoc],
-    [path.join(root, `${DATE}-pregame-collection-summary-v1.json`), summaryDoc],
-    [path.join(root, `${DATE}-daily-research-summary-v1.json`), summaryDoc],
-    [path.join(predRoot, `${DATE}.json`), predictionDoc],
+    [paths.schedule, schedule],
+    [paths.starter, starterDoc],
+    [paths.odds, oddsDoc],
+    [paths.lineup, lineupDoc],
+    [paths.oddsAliasMapping, mappingDoc],
+    [paths.cutoffAudit, cutoffDoc],
+    [paths.leakageAudit, leakageDoc],
+    [paths.collectionSummary, summaryDoc],
+    [paths.dailySummary, summaryDoc],
+    [paths.prediction, predictionDoc],
   ];
 
-  for (const [fp, doc] of outs) {
-    await writeFile(fp, `${JSON.stringify(doc, null, 2)}\n`, "utf8");
+  if (!cli.dryRun) {
+    await mkdir(root, { recursive: true });
+    await mkdir(predRoot, { recursive: true });
+    for (const [fp, doc] of outs) {
+      await writeFile(fp, `${JSON.stringify(doc, null, 2)}\n`, "utf8");
+    }
   }
 
   console.log(
     JSON.stringify(
       {
+        dryRun: cli.dryRun,
+        dateKst: DATE,
         runId,
+        priorSnapshotRunId: priorResolved.priorSnapshotRunId,
+        priorRunId: PREV_RUN,
+        priorRunSource: priorResolved.priorRunSource,
+        resolutionStatus: priorResolved.resolutionStatus,
+        lineageValidationStatus: priorResolved.lineageValidationStatus,
+        artifacts: priorResolved.artifacts,
+        checkedPrimaryArtifacts: priorResolved.checkedPrimaryArtifacts.map(
+          (c) => ({
+            artifactType: c.artifactType,
+            path: c.relativePath,
+            primary: c.primary,
+            exists: c.exists,
+            dateKst: c.dateKst,
+            runId: c.runId,
+            schemaVersion: c.schemaVersion,
+            validationStatus: c.validationStatus,
+          }),
+        ),
+        matchedRunIds: priorResolved.matchedRunIds,
+        mismatchedArtifacts: priorResolved.mismatchedArtifacts,
+        unprovenArtifacts: priorResolved.unprovenArtifacts,
+        revisionFilesIgnored: priorResolved.revisionFilesIgnored,
+        matchedPrimaryArtifacts: priorResolved.matchedPrimaryArtifacts,
         lockedAt,
         revised,
+        writesSkipped: cli.dryRun,
+        outputPaths: outs.map(([fp]) =>
+          path.relative(cli.cwd, fp).replace(/\\/g, "/"),
+        ),
         clock: schedule.games.map((g: any) => ({
           id: g.gameId,
           matchup: `${g.away}@${g.home}`,
