@@ -4,7 +4,7 @@ export const MLB_SUCCESS_REVIEW_SCHEMA = "mlb-success-review-v1" as const;
 export const MLB_FAILURE_REVIEW_SCHEMA = "mlb-failure-review-v1" as const;
 export const MLB_DAILY_REVIEW_SUMMARY_SCHEMA =
   "mlb-daily-review-summary-v1" as const;
-export const MLB_GRADING_POLICY_VERSION = "mlb-grading-v1" as const;
+export const MLB_GRADING_POLICY_VERSION = "mlb-grading-v1.1-v0-compat" as const;
 
 export type OfficialResultStatus =
   | "FINAL"
@@ -70,6 +70,13 @@ export type MlbOfficialResultsDocument = {
   games: MlbOfficialResultGame[];
 };
 
+export type ResearchGradeResult =
+  | "CORRECT"
+  | "INCORRECT"
+  | "VOID"
+  | "PENDING"
+  | "NOT_GRADED";
+
 export type MlbGradedPredictionGame = {
   gamePk: number | null;
   gameId: string;
@@ -85,6 +92,34 @@ export type MlbGradedPredictionGame = {
   baselineStatus: string | null;
   inputWarnings: string[];
   warnings: string[];
+  /** Additive: snapshot contract for this slate */
+  predictionContract?: "LEGACY_V1" | "RESEARCH_BASELINE_V0" | "UNKNOWN";
+  /** Additive: official pick track */
+  officialGrade?: {
+    selection: "HOME" | "AWAY" | null;
+    result: PredictionGrade;
+    eligible: boolean;
+    graded: boolean;
+  };
+  /** Additive: research baseline track */
+  researchGrade?: {
+    marketType: "MONEYLINE_2WAY" | null;
+    selection: "HOME" | "AWAY" | null;
+    probability: number | null;
+    actualWinner: "HOME" | "AWAY" | "DRAW" | null;
+    result: ResearchGradeResult;
+    observationOnly: boolean;
+    brierScore: number | null;
+    logLoss: number | null;
+  };
+  /** Additive: BLOCKED counterfactual only */
+  blockedCounterfactual?: {
+    selection: "HOME" | "AWAY" | null;
+    probability: number | null;
+    actualWinner: "HOME" | "AWAY" | "DRAW" | null;
+    result: ResearchGradeResult;
+    denominatorIncluded: false;
+  };
 };
 
 export type MlbGradedPredictionsDocument = {
@@ -127,6 +162,32 @@ export type MlbGradedPredictionsDocument = {
       percent: number | null;
       status: "OK" | "NO_GRADED_SAMPLE";
     };
+    /** Additive research track */
+    researchCandidates?: number;
+    researchGraded?: number;
+    researchCorrect?: number;
+    researchIncorrect?: number;
+    researchAccuracy?: {
+      numerator: number;
+      denominator: number;
+      percent: number | null;
+      status: "OK" | "NO_GRADED_SAMPLE" | "N/A";
+    };
+    researchMeanBrier?: number | null;
+    researchMeanLogLoss?: number | null;
+    officialSampleCount?: number;
+    officialGraded?: number;
+    officialCorrect?: number;
+    officialIncorrect?: number;
+    officialAccuracy?: {
+      numerator: number;
+      denominator: number;
+      percent: number | null;
+      status: "OK" | "NO_GRADED_SAMPLE" | "N/A";
+    };
+    predictionContract?: "LEGACY_V1" | "RESEARCH_BASELINE_V0" | "UNKNOWN";
+    modelVersion?: string | null;
+    modelStatus?: string | null;
   };
   games: MlbGradedPredictionGame[];
 };

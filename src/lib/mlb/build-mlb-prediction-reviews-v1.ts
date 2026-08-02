@@ -19,7 +19,13 @@ import {
   mlbSuccessReviewRel,
 } from "./mlb-prediction-review-paths";
 import { sha256 } from "./mlb-review-hash";
-import { asRecord, asString, computePredictionContentHash } from "./mlb-review-utils";
+import { asRecord, asString } from "./mlb-review-utils";
+import {
+  auditV0MetaHashes,
+  detectPredictionContract,
+  verifyPredictionHash,
+  type HashValidationMethod,
+} from "./prediction-contract-v1";
 
 type PredictionRow = Record<string, unknown>;
 
@@ -45,6 +51,7 @@ export type MlbSuccessReviewGame = {
   }>;
   counterInterpretation: string;
   reviewConfidence: "LOW" | "MEDIUM" | "HIGH";
+  observationOnly?: boolean;
 };
 
 export type MlbSuccessReviewDocument = {
@@ -85,6 +92,7 @@ export type MlbFailureReviewGame = {
   devilsAdvocate: string;
   alternativeHypothesis: string;
   conclusion: ReviewAssessment;
+  observationOnly?: boolean;
 };
 
 export type MlbFailureReviewDocument = {
@@ -105,6 +113,8 @@ export type LeakageAuditResult = {
     detail: string;
   }>;
   predictionHashVerified: boolean;
+  hashValidationMethod?: HashValidationMethod;
+  predictionContract?: "LEGACY_V1" | "RESEARCH_BASELINE_V0" | "UNKNOWN";
   inputHash: string | null;
 };
 
@@ -129,6 +139,29 @@ export type MlbDailyReviewSummaryDocument = {
     failureReviewHash: string;
   };
   gradeCounts: MlbGradedPredictionsDocument["summary"];
+  officialPerformance?: {
+    eligiblePredictions: number;
+    officialSampleCount: number;
+    officialGraded: number;
+    officialCorrect: number;
+    officialIncorrect: number;
+    officialAccuracy: string | number | null;
+  };
+  researchPerformance?: {
+    researchCandidates: number;
+    researchGraded: number;
+    researchCorrect: number;
+    researchIncorrect: number;
+    researchAccuracy: string | number | null;
+    researchBrier: number | null;
+    researchLogLoss: number | null;
+    modelVersion: string | null;
+  };
+  blockedPolicy?: {
+    blockedGames: number;
+    blockedCounterfactualCorrect: number;
+    blockedCounterfactualIncorrect: number;
+  };
   leakageAudit: LeakageAuditResult;
   reviewStatus: DailyReviewStatus;
   successPatterns: string[];
@@ -211,6 +244,7 @@ function buildSuccessGame(
     counterInterpretation:
       "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
     reviewConfidence: inputWarnings.length === 0 ? "MEDIUM" : "LOW",
+    observationOnly: graded.researchGrade?.observationOnly === true,
   };
 }
 
@@ -287,6 +321,7 @@ function buildFailureGame(
     alternativeHypothesis:
       "Actual winner may have been driven by bullpen leverage or small-sample hitting noise rather than starter or odds signals.",
     conclusion: "INVESTIGATE_MORE",
+    observationOnly: graded.researchGrade?.observationOnly === true,
   };
 }
 
@@ -298,27 +333,55 @@ function runLeakageAudit(input: {
   const checks: LeakageAuditResult["checks"] = [];
   const meta = asRecord(input.prediction.meta);
   const manifest = asRecord(meta?.inputManifest);
-  const predictedAt = asString(meta?.predictedAt);
+  const predictedAt = asString(meta?.predictedAt) ?? asString(
+    (Array.isArray(input.prediction.predictions)
+      ? (input.prediction.predictions[0] as Record<string, unknown> | undefined)
+      : undefined)?.predictedAt,
+  );
   const cutoffTime = asString(manifest?.cutoffTime);
-  const storedHash = asString(meta?.predictionHashSha256);
-  const computedHash = computePredictionContentHash(input.prediction);
+  const contract = detectPredictionContract(input.prediction);
+  const hashVerify = verifyPredictionHash(input.prediction);
 
   let status: LeakageAuditStatus = "PASS";
-  const predictionHashVerified =
-    !storedHash || storedHash === computedHash;
 
-  if (!predictionHashVerified) {
+  if (contract === "UNKNOWN") {
+    checks.push({
+      id: "prediction_contract",
+      status: "FAIL",
+      detail: "UNSUPPORTED_PREDICTION_CONTRACT",
+    });
+    status = "FAIL";
+  } else if (!hashVerify.verified) {
     checks.push({
       id: "prediction_hash",
       status: "FAIL",
-      detail: "predictionHashSha256 does not match immutable-field fingerprint hash",
+      detail: hashVerify.detail,
     });
     status = "FAIL";
   } else {
     checks.push({
       id: "prediction_hash",
       status: "PASS",
-      detail: "prediction immutable-field fingerprint hash verified",
+      detail: `${hashVerify.method}: ${hashVerify.detail}`,
+    });
+  }
+
+  if (contract === "RESEARCH_BASELINE_V0") {
+    const metaAudit = auditV0MetaHashes(input.prediction);
+    for (const w of metaAudit.warnings) {
+      checks.push({
+        id: "v0_meta_hash_format",
+        status: "WARN",
+        detail: w,
+      });
+      if (status === "PASS") status = "WARN";
+    }
+    // Missing legacy inputManifest object is NOT a failure for v0
+    checks.push({
+      id: "input_manifest_object",
+      status: "PASS",
+      detail:
+        "v0 uses inputManifestHash; absence of legacy inputManifest object is not leakage",
     });
   }
 
@@ -329,6 +392,19 @@ function runLeakageAudit(input: {
       detail: `predictedAt (${predictedAt}) is after slate cutoffTime (${cutoffTime}); per-game ELIGIBLE inputs validated separately`,
     });
     if (status === "PASS") status = "WARN";
+  } else if (cutoffTime) {
+    checks.push({
+      id: "predicted_before_slate_cutoff",
+      status: "PASS",
+      detail: "predictedAt is on or before slate cutoff",
+    });
+  } else if (contract === "RESEARCH_BASELINE_V0") {
+    checks.push({
+      id: "predicted_before_slate_cutoff",
+      status: "PASS",
+      detail:
+        "legacy slate cutoffTime not present on v0 meta; commence-time leakage checked separately when available",
+    });
   } else {
     checks.push({
       id: "predicted_before_slate_cutoff",
@@ -358,11 +434,16 @@ function runLeakageAudit(input: {
     });
   }
 
-  if (input.resultGeneratedAt && predictedAt && input.resultGeneratedAt < predictedAt) {
+  if (
+    input.resultGeneratedAt &&
+    predictedAt &&
+    input.resultGeneratedAt < predictedAt
+  ) {
     checks.push({
       id: "result_before_prediction",
       status: "WARN",
-      detail: "result artifact timestamp predates prediction (clock skew or stale result file)",
+      detail:
+        "result artifact timestamp predates prediction (clock skew or stale result file)",
     });
     if (status === "PASS") status = "WARN";
   }
@@ -370,28 +451,33 @@ function runLeakageAudit(input: {
   return {
     status,
     checks,
-    predictionHashVerified,
-    inputHash: asString(manifest?.inputHash),
+    predictionHashVerified: hashVerify.verified,
+    hashValidationMethod: hashVerify.method,
+    predictionContract: contract,
+    inputHash:
+      asString(manifest?.inputHash) ?? asString(meta?.inputManifestHash),
   };
 }
 
 function resolveReviewStatus(input: {
   graded: MlbGradedPredictionsDocument;
   leakage: LeakageAuditStatus;
+  contract: ReturnType<typeof detectPredictionContract>;
 }): DailyReviewStatus {
+  if (input.contract === "UNKNOWN") return "RESEARCH_INVALID";
   if (input.leakage === "FAIL") return "RESEARCH_INVALID";
 
-  const eligibleGradable =
-    input.graded.summary.eligiblePredictions +
-    input.graded.summary.limitedInputPredictions;
-  const pending = input.graded.summary.pending;
+  const s = input.graded.summary;
+  const researchGradable =
+    (s.researchCandidates ?? 0) > 0
+      ? (s.researchCandidates ?? 0)
+      : s.eligiblePredictions + s.limitedInputPredictions;
+  const pending = s.pending;
 
-  if (eligibleGradable === 0) {
-    return input.graded.summary.blocked === input.graded.summary.totalGames
-      ? "PARTIAL_REVIEW"
-      : "AWAITING_RESULTS";
+  if (researchGradable === 0 && s.graded === 0) {
+    return s.blocked === s.totalGames ? "PARTIAL_REVIEW" : "AWAITING_RESULTS";
   }
-  if (pending >= eligibleGradable) return "AWAITING_RESULTS";
+  if (pending >= researchGradable && s.graded === 0) return "AWAITING_RESULTS";
   if (pending > 0) return "PARTIAL_REVIEW";
   return "VALID_REVIEW";
 }
@@ -402,11 +488,19 @@ function buildAssistantSummary(
   reviewStatus: DailyReviewStatus,
   failurePatterns: string[],
 ): string {
-  const acc = graded.summary.accuracy;
-  const accText =
-    acc.status === "OK" && acc.percent != null
-      ? `${acc.percent}%`
-      : "N/A (no graded sample)";
+  const s = graded.summary;
+  const officialAcc =
+    s.officialAccuracy?.status === "N/A" || s.officialSampleCount === 0
+      ? "N/A"
+      : s.officialAccuracy?.percent != null
+        ? `${s.officialAccuracy.percent}%`
+        : "N/A";
+  const researchAcc =
+    s.researchAccuracy?.status === "OK" && s.researchAccuracy.percent != null
+      ? `${s.researchAccuracy.percent}%`
+      : s.researchGraded && s.researchGraded > 0
+        ? `${(((s.researchCorrect ?? 0) / s.researchGraded) * 100).toFixed(1)}%`
+        : "N/A";
   const failureText =
     failurePatterns.length > 0
       ? failurePatterns.join(", ")
@@ -414,12 +508,17 @@ function buildAssistantSummary(
 
   return [
     `MLB Daily Review — ${dateKst}`,
-    `Eligible predictions: ${graded.summary.eligiblePredictions}`,
-    `Graded: ${graded.summary.graded}`,
-    `Correct: ${graded.summary.correct}`,
-    `Incorrect: ${graded.summary.incorrect}`,
-    `Accuracy: ${accText}`,
-    `Blocked games: ${graded.summary.blocked}`,
+    `Prediction contract: ${s.predictionContract ?? "UNKNOWN"}`,
+    `Eligible predictions (official): ${s.eligiblePredictions}`,
+    `Official sample: ${s.officialSampleCount ?? 0}`,
+    `Official Accuracy: ${officialAcc}`,
+    `Research candidates: ${s.researchCandidates ?? 0}`,
+    `Research graded: ${s.researchGraded ?? 0}`,
+    `Research correct/incorrect: ${s.researchCorrect ?? 0}/${s.researchIncorrect ?? 0}`,
+    `Research Accuracy: ${researchAcc}`,
+    `Research Brier: ${s.researchMeanBrier ?? "null"}`,
+    `Research LogLoss: ${s.researchMeanLogLoss ?? "null"}`,
+    `Blocked games: ${s.blocked}`,
     `Primary failure candidates: ${failureText}`,
     `Conclusion: ${reviewStatus === "RESEARCH_INVALID" ? "RESEARCH_INVALID" : "DATA_ACCUMULATION_CONTINUES"}`,
   ].join("\n");
@@ -540,7 +639,19 @@ export async function buildMlbPredictionReviewsV1(input: {
     resultGeneratedAt: asString(resultDoc.generatedAt),
   });
 
-  const reviewStatus = resolveReviewStatus({ graded, leakage: leakageAudit.status });
+  const reviewStatus = resolveReviewStatus({
+    graded,
+    leakage: leakageAudit.status,
+    contract: leakageAudit.predictionContract ?? detectPredictionContract(prediction),
+  });
+
+  const blockedCf = graded.games.filter((g) => g.blockedCounterfactual);
+  const blockedCorrect = blockedCf.filter(
+    (g) => g.blockedCounterfactual?.result === "CORRECT",
+  ).length;
+  const blockedIncorrect = blockedCf.filter(
+    (g) => g.blockedCounterfactual?.result === "INCORRECT",
+  ).length;
 
   const dailyHashBody = {
     schemaVersion: MLB_DAILY_REVIEW_SUMMARY_SCHEMA,
@@ -561,6 +672,37 @@ export async function buildMlbPredictionReviewsV1(input: {
       failureReviewHash: failure.reviewHash,
     },
     gradeCounts: graded.summary,
+    officialPerformance: {
+      eligiblePredictions: graded.summary.eligiblePredictions,
+      officialSampleCount: graded.summary.officialSampleCount ?? 0,
+      officialGraded: graded.summary.officialGraded ?? 0,
+      officialCorrect: graded.summary.officialCorrect ?? 0,
+      officialIncorrect: graded.summary.officialIncorrect ?? 0,
+      officialAccuracy:
+        graded.summary.officialAccuracy?.status === "N/A" ||
+        (graded.summary.officialSampleCount ?? 0) === 0
+          ? "N/A"
+          : (graded.summary.officialAccuracy?.percent ?? null),
+    },
+    researchPerformance: {
+      researchCandidates: graded.summary.researchCandidates ?? 0,
+      researchGraded: graded.summary.researchGraded ?? 0,
+      researchCorrect: graded.summary.researchCorrect ?? 0,
+      researchIncorrect: graded.summary.researchIncorrect ?? 0,
+      researchAccuracy:
+        graded.summary.researchAccuracy?.percent ??
+        (graded.summary.researchGraded
+          ? graded.summary.researchCorrect! / graded.summary.researchGraded
+          : null),
+      researchBrier: graded.summary.researchMeanBrier ?? null,
+      researchLogLoss: graded.summary.researchMeanLogLoss ?? null,
+      modelVersion: graded.summary.modelVersion ?? null,
+    },
+    blockedPolicy: {
+      blockedGames: graded.summary.blocked,
+      blockedCounterfactualCorrect: blockedCorrect,
+      blockedCounterfactualIncorrect: blockedIncorrect,
+    },
     leakageAudit,
     reviewStatus,
     successPatterns,

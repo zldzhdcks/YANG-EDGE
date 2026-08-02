@@ -10,3 +10,4 @@ export * from "./load-and-predict";
 export * from "./build-snapshot";
 export * from "./edge-semantics";
 export * from "./audit-frozen-identity";
+export * from "./verify-snapshot-hash";
