@@ -1,0 +1,1310 @@
+{
+  "meta": {
+    "schemaVersion": "mlb-prediction-scorecard-v0",
+    "dateKst": "2026-08-02",
+    "generatedAt": "2026-08-02T12:37:57.811Z",
+    "modelVersion": "mlb-baseline-prediction-v0.1.0",
+    "modelStatus": "RESEARCH_BASELINE_V0",
+    "gradeVersion": "mlb-scorecard-grade-v0",
+    "predictionHashSha256": "afee69629e97095306aff9abab61daadb0bf6374001828d9eabd87fc1fbed139",
+    "configHash": "baa93d0c4be1d41b01b54e0f3acadc006f1b5c37943156816a6d7b05e04258b3",
+    "inputManifestHash": "c68c943587076e868be27b9a3b6ecdb3e70347c452cd971bf145c467cf410fff",
+    "officialResultsHash": "5a00ed6abdf71380cbee3b9031e5c270fb6ed8a26f1f81be12a3777bb1dc6f6a",
+    "totalGames": 15,
+    "finalGames": 15,
+    "pendingGames": 0,
+    "voidGames": 0,
+    "officialSampleCount": 0,
+    "researchSampleCount": 13,
+    "blockedCount": 2,
+    "dryRun": false,
+    "allowPartialResults": false,
+    "conclusion": "OBSERVATIONAL_SCORECARD_READY",
+    "scorecardHash": "33f1ab8e32f911c57c2e5b2f1269740df1738a7be57c4290ecad58cb5c12c127"
+  },
+  "officialPerformance": {
+    "officialPickCount": 0,
+    "accuracy": {
+      "correct": 0,
+      "incorrect": 0,
+      "sampleCount": 0,
+      "accuracy": null,
+      "status": "N/A"
+    },
+    "note": "officialAccuracy N/A when officialPickCount is 0"
+  },
+  "researchBaselinePerformance": {
+    "correct": 8,
+    "incorrect": 5,
+    "sampleCount": 13,
+    "accuracy": 0.6153846153846154,
+    "status": "OK",
+    "meanSelectedProbability": 0.5253975384615385,
+    "meanBrierScore": 0.24361172511846158,
+    "meanLogLoss": 0.6803333269319545
+  },
+  "mostLikelyPerformance": {
+    "correct": 8,
+    "incorrect": 5,
+    "sampleCount": 13,
+    "accuracy": 0.6153846153846154,
+    "status": "OK",
+    "meanSelectedProbability": 0.5253975384615385,
+    "meanBrierScore": 0.24361172511846158,
+    "meanLogLoss": 0.6803333269319545
+  },
+  "valueSelectionPerformance": {
+    "correct": 3,
+    "incorrect": 10,
+    "sampleCount": 13,
+    "accuracy": 0.23076923076923078,
+    "status": "OK",
+    "valueSelectionCount": 13,
+    "averageValueEdge": 0.04248076923076923,
+    "negativeSelectedSideEdgeCount": 11,
+    "realizedReturn": null,
+    "note": "realizedReturn placeholder until settled market prices + settlement rules exist"
+  },
+  "selectedSideEdgeSplit": {
+    "positiveEdge": {
+      "correct": 0,
+      "incorrect": 2,
+      "sampleCount": 2,
+      "accuracy": 0,
+      "status": "OK"
+    },
+    "negativeOrZeroEdge": {
+      "correct": 8,
+      "incorrect": 3,
+      "sampleCount": 11,
+      "accuracy": 0.7272727272727273,
+      "status": "OK"
+    }
+  },
+  "probabilityMetrics": {
+    "meanBrierScore": 0.24361172511846158,
+    "meanLogLoss": 0.6803333269319545,
+    "sampleCount": 13
+  },
+  "calibrationBuckets": [
+    {
+      "bucket": "0.500-0.525",
+      "sampleCount": 7,
+      "predictedAverage": 0.5137394285714285,
+      "actualWinRate": 0.7142857142857143,
+      "calibrationGap": -0.2005462857142858,
+      "status": "OBSERVATION_ONLY"
+    },
+    {
+      "bucket": "0.525-0.550",
+      "sampleCount": 6,
+      "predictedAverage": 0.5389986666666667,
+      "actualWinRate": 0.5,
+      "calibrationGap": 0.03899866666666674,
+      "status": "OBSERVATION_ONLY"
+    },
+    {
+      "bucket": "0.550-0.575",
+      "sampleCount": 0,
+      "predictedAverage": null,
+      "actualWinRate": null,
+      "calibrationGap": null,
+      "status": "EMPTY"
+    },
+    {
+      "bucket": "0.575-0.600",
+      "sampleCount": 0,
+      "predictedAverage": null,
+      "actualWinRate": null,
+      "calibrationGap": null,
+      "status": "EMPTY"
+    },
+    {
+      "bucket": "0.600-0.650",
+      "sampleCount": 0,
+      "predictedAverage": null,
+      "actualWinRate": null,
+      "calibrationGap": null,
+      "status": "EMPTY"
+    }
+  ],
+  "confidenceBuckets": [
+    {
+      "bucket": "0-39",
+      "samples": 0,
+      "correct": 0,
+      "incorrect": 0,
+      "accuracy": null,
+      "meanBrier": null,
+      "meanLogLoss": null
+    },
+    {
+      "bucket": "40-49",
+      "samples": 1,
+      "correct": 1,
+      "incorrect": 0,
+      "accuracy": 1,
+      "meanBrier": 0.234383793424,
+      "meanLogLoss": 0.6619043601800334
+    },
+    {
+      "bucket": "50-59",
+      "samples": 0,
+      "correct": 0,
+      "incorrect": 0,
+      "accuracy": null,
+      "meanBrier": null,
+      "meanLogLoss": null
+    },
+    {
+      "bucket": "60-69",
+      "samples": 2,
+      "correct": 1,
+      "incorrect": 1,
+      "accuracy": 0.5,
+      "meanBrier": 0.24596907381,
+      "meanLogLoss": 0.6850258000392948
+    },
+    {
+      "bucket": "70-79",
+      "samples": 10,
+      "correct": 6,
+      "incorrect": 4,
+      "accuracy": 0.6,
+      "meanBrier": 0.24406304854959998,
+      "meanLogLoss": 0.6812377289856786
+    },
+    {
+      "bucket": "80-100",
+      "samples": 0,
+      "correct": 0,
+      "incorrect": 0,
+      "accuracy": null,
+      "meanBrier": null,
+      "meanLogLoss": null
+    }
+  ],
+  "marketAgreement": {
+    "MODEL_AND_MARKET_AGREE": {
+      "correct": 4,
+      "incorrect": 3,
+      "sampleCount": 7,
+      "accuracy": 0.5714285714285714,
+      "meanModelProbability": 0.5369445714285714,
+      "meanMarketProbability": 0.5823442857142858,
+      "meanSelectedSideEdge": -0.045399714285714286,
+      "status": "OBSERVATION_ONLY"
+    },
+    "MODEL_MARKET_DISAGREE": {
+      "correct": 0,
+      "incorrect": 0,
+      "sampleCount": 0,
+      "accuracy": null,
+      "meanModelProbability": null,
+      "meanMarketProbability": null,
+      "meanSelectedSideEdge": null,
+      "status": "EMPTY"
+    },
+    "NEAR_EVEN": {
+      "correct": 4,
+      "incorrect": 2,
+      "sampleCount": 6,
+      "accuracy": 0.6666666666666666,
+      "meanModelProbability": 0.511926,
+      "meanMarketProbability": 0.52571,
+      "meanSelectedSideEdge": -0.013784000000000003,
+      "status": "OBSERVATION_ONLY"
+    },
+    "MARKET_MISSING": {
+      "correct": 0,
+      "incorrect": 0,
+      "sampleCount": 0,
+      "accuracy": null,
+      "meanModelProbability": null,
+      "meanMarketProbability": null,
+      "meanSelectedSideEdge": null,
+      "status": "EMPTY"
+    }
+  },
+  "componentScorecards": [
+    {
+      "name": "starter",
+      "sampleCount": 13,
+      "directionalCorrect": 7,
+      "directionalIncorrect": 6,
+      "neutral": 0,
+      "disabled": 0,
+      "missing": 0,
+      "averageMagnitude": 0.06851292307692308,
+      "status": "DIRECTIONAL_ASSOCIATION_ONLY"
+    },
+    {
+      "name": "marketPrior",
+      "sampleCount": 13,
+      "directionalCorrect": 10,
+      "directionalIncorrect": 3,
+      "neutral": 0,
+      "disabled": 0,
+      "missing": 0,
+      "averageMagnitude": 0.06521084615384615,
+      "status": "DIRECTIONAL_ASSOCIATION_ONLY"
+    },
+    {
+      "name": "homeAdvantage",
+      "sampleCount": 13,
+      "directionalCorrect": 7,
+      "directionalIncorrect": 6,
+      "neutral": 0,
+      "disabled": 0,
+      "missing": 0,
+      "averageMagnitude": 0.07999999999999999,
+      "status": "DIRECTIONAL_ASSOCIATION_ONLY"
+    },
+    {
+      "name": "bullpen",
+      "sampleCount": 0,
+      "directionalCorrect": 0,
+      "directionalIncorrect": 0,
+      "neutral": 0,
+      "disabled": 15,
+      "missing": 0,
+      "averageMagnitude": null,
+      "status": "DISABLED"
+    },
+    {
+      "name": "lineup",
+      "sampleCount": 0,
+      "directionalCorrect": 0,
+      "directionalIncorrect": 0,
+      "neutral": 0,
+      "disabled": 15,
+      "missing": 0,
+      "averageMagnitude": null,
+      "status": "DISABLED"
+    }
+  ],
+  "blockedPolicyReview": [
+    {
+      "gamePk": 824405,
+      "gameId": "mlb-cleveland-guardians-arizona-diamondbacks",
+      "blockedReasons": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INSUFFICIENT_INPUT",
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_SAMPLE_INSUFFICIENT",
+        "MISSING:CONFIRMED_LINEUP"
+      ],
+      "hypotheticalSelection": "HOME",
+      "hypotheticalProbability": 0.521263,
+      "actualWinner": "AWAY",
+      "counterfactualGrade": "INCORRECT",
+      "includedInOfficialDenominator": false,
+      "includedInResearchDenominator": false
+    },
+    {
+      "gamePk": 824162,
+      "gameId": "mlb-houston-astros-texas-rangers",
+      "blockedReasons": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INSUFFICIENT_INPUT",
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_SAMPLE_INSUFFICIENT",
+        "MISSING:CONFIRMED_LINEUP"
+      ],
+      "hypotheticalSelection": "AWAY",
+      "hypotheticalProbability": 0.504093,
+      "actualWinner": "HOME",
+      "counterfactualGrade": "INCORRECT",
+      "includedInOfficialDenominator": false,
+      "includedInResearchDenominator": false
+    }
+  ],
+  "homeAway": {
+    "modelHomeSelections": 10,
+    "modelAwaySelections": 3,
+    "actualHomeWinners": 8,
+    "actualAwayWinners": 7,
+    "modelHomeSelectionAccuracy": {
+      "correct": 6,
+      "incorrect": 4,
+      "sampleCount": 10,
+      "accuracy": 0.6,
+      "status": "OK"
+    },
+    "modelAwaySelectionAccuracy": {
+      "correct": 2,
+      "incorrect": 1,
+      "sampleCount": 3,
+      "accuracy": 0.6666666666666666,
+      "status": "OK"
+    }
+  },
+  "gameGrades": [
+    {
+      "gamePk": 824972,
+      "gameId": "mlb-athletics-detroit-tigers",
+      "marketType": "MONEYLINE_2WAY",
+      "homeTeam": "Athletics",
+      "awayTeam": "Detroit Tigers",
+      "commenceTimeUtc": "2026-08-02T01:40:00Z",
+      "resultStatus": "FINAL",
+      "actualWinner": "AWAY",
+      "homeScore": 6,
+      "awayScore": 8,
+      "officialStatus": "PASS",
+      "inputQuality": "LIMITED_INPUT",
+      "blockedReasons": [],
+      "confidence": 73,
+      "modelHomeProbability": 0.488165,
+      "modelAwayProbability": 0.511835,
+      "selectedProbability": 0.511835,
+      "marketHomeProbability": 0.444444,
+      "marketAwayProbability": 0.555556,
+      "mostLikelySelection": "AWAY",
+      "selectedSideEdge": -0.043721,
+      "valueSelection": "HOME",
+      "valueEdge": 0.043721,
+      "researchGrade": "CORRECT",
+      "valueGrade": "INCORRECT",
+      "brierScore": 0.23830506722500003,
+      "logLoss": 0.6697529715063547,
+      "marketAgreement": "NEAR_EVEN",
+      "schemaSource": "V0_MARKET_PREDICTIONS",
+      "components": [
+        {
+          "name": "starter",
+          "value": -0.097075,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "marketPrior",
+          "value": -0.055786,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "homeAdvantage",
+          "value": 0.08,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "bullpen",
+          "value": 0,
+          "alignment": "DISABLED"
+        },
+        {
+          "name": "lineup",
+          "value": 0,
+          "alignment": "DISABLED"
+        }
+      ],
+      "counterfactualBlocked": {
+        "applicable": false,
+        "hypotheticalSelection": "AWAY",
+        "counterfactualGrade": null
+      }
+    },
+    {
+      "gamePk": 824890,
+      "gameId": "mlb-atlanta-braves-washington-nationals",
+      "marketType": "MONEYLINE_2WAY",
+      "homeTeam": "Atlanta Braves",
+      "awayTeam": "Washington Nationals",
+      "commenceTimeUtc": "2026-08-01T23:15:00Z",
+      "resultStatus": "FINAL",
+      "actualWinner": "HOME",
+      "homeScore": 8,
+      "awayScore": 3,
+      "officialStatus": "PASS",
+      "inputQuality": "LIMITED_INPUT",
+      "blockedReasons": [],
+      "confidence": 73,
+      "modelHomeProbability": 0.54815,
+      "modelAwayProbability": 0.45185,
+      "selectedProbability": 0.54815,
+      "marketHomeProbability": 0.633641,
+      "marketAwayProbability": 0.366359,
+      "mostLikelySelection": "HOME",
+      "selectedSideEdge": -0.085491,
+      "valueSelection": "AWAY",
+      "valueEdge": 0.085491,
+      "researchGrade": "CORRECT",
+      "valueGrade": "INCORRECT",
+      "brierScore": 0.20416842249999997,
+      "logLoss": 0.6012063068615879,
+      "marketAgreement": "MODEL_AND_MARKET_AGREE",
+      "schemaSource": "V0_MARKET_PREDICTIONS",
+      "components": [
+        {
+          "name": "starter",
+          "value": 0.081537,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "marketPrior",
+          "value": 0.136967,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "homeAdvantage",
+          "value": 0.08,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "bullpen",
+          "value": 0,
+          "alignment": "DISABLED"
+        },
+        {
+          "name": "lineup",
+          "value": 0,
+          "alignment": "DISABLED"
+        }
+      ],
+      "counterfactualBlocked": {
+        "applicable": false,
+        "hypotheticalSelection": "HOME",
+        "counterfactualGrade": null
+      }
+    },
+    {
+      "gamePk": 824808,
+      "gameId": "mlb-baltimore-orioles-philadelphia-phillies",
+      "marketType": "MONEYLINE_2WAY",
+      "homeTeam": "Baltimore Orioles",
+      "awayTeam": "Philadelphia Phillies",
+      "commenceTimeUtc": "2026-08-01T23:05:00Z",
+      "resultStatus": "FINAL",
+      "actualWinner": "AWAY",
+      "homeScore": 0,
+      "awayScore": 5,
+      "officialStatus": "PASS",
+      "inputQuality": "LIMITED_INPUT",
+      "blockedReasons": [],
+      "confidence": 73,
+      "modelHomeProbability": 0.490321,
+      "modelAwayProbability": 0.509679,
+      "selectedProbability": 0.509679,
+      "marketHomeProbability": 0.438423,
+      "marketAwayProbability": 0.561577,
+      "mostLikelySelection": "AWAY",
+      "selectedSideEdge": -0.051898,
+      "valueSelection": "HOME",
+      "valueEdge": 0.051898,
+      "researchGrade": "CORRECT",
+      "valueGrade": "INCORRECT",
+      "brierScore": 0.240414683041,
+      "logLoss": 0.6739741631912113,
+      "marketAgreement": "NEAR_EVEN",
+      "schemaSource": "V0_MARKET_PREDICTIONS",
+      "components": [
+        {
+          "name": "starter",
+          "value": -0.077688,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "marketPrior",
+          "value": -0.061891,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "homeAdvantage",
+          "value": 0.08,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "bullpen",
+          "value": 0,
+          "alignment": "DISABLED"
+        },
+        {
+          "name": "lineup",
+          "value": 0,
+          "alignment": "DISABLED"
+        }
+      ],
+      "counterfactualBlocked": {
+        "applicable": false,
+        "hypotheticalSelection": "AWAY",
+        "counterfactualGrade": null
+      }
+    },
+    {
+      "gamePk": 824649,
+      "gameId": "mlb-chicago-cubs-new-york-yankees",
+      "marketType": "MONEYLINE_2WAY",
+      "homeTeam": "Chicago Cubs",
+      "awayTeam": "New York Yankees",
+      "commenceTimeUtc": "2026-08-01T23:15:00Z",
+      "resultStatus": "FINAL",
+      "actualWinner": "HOME",
+      "homeScore": 5,
+      "awayScore": 2,
+      "officialStatus": "PASS",
+      "inputQuality": "LIMITED_INPUT",
+      "blockedReasons": [],
+      "confidence": 73,
+      "modelHomeProbability": 0.47449,
+      "modelAwayProbability": 0.52551,
+      "selectedProbability": 0.52551,
+      "marketHomeProbability": 0.468983,
+      "marketAwayProbability": 0.531017,
+      "mostLikelySelection": "AWAY",
+      "selectedSideEdge": -0.005507,
+      "valueSelection": "HOME",
+      "valueEdge": 0.005507,
+      "researchGrade": "INCORRECT",
+      "valueGrade": "CORRECT",
+      "brierScore": 0.2761607600999999,
+      "logLoss": 0.7455147359698269,
+      "marketAgreement": "MODEL_AND_MARKET_AGREE",
+      "schemaSource": "V0_MARKET_PREDICTIONS",
+      "components": [
+        {
+          "name": "starter",
+          "value": -0.20625,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "marketPrior",
+          "value": -0.031057,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "homeAdvantage",
+          "value": 0.08,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "bullpen",
+          "value": 0,
+          "alignment": "DISABLED"
+        },
+        {
+          "name": "lineup",
+          "value": 0,
+          "alignment": "DISABLED"
+        }
+      ],
+      "counterfactualBlocked": {
+        "applicable": false,
+        "hypotheticalSelection": "AWAY",
+        "counterfactualGrade": null
+      }
+    },
+    {
+      "gamePk": 824485,
+      "gameId": "mlb-cincinnati-reds-pittsburgh-pirates",
+      "marketType": "MONEYLINE_2WAY",
+      "homeTeam": "Cincinnati Reds",
+      "awayTeam": "Pittsburgh Pirates",
+      "commenceTimeUtc": "2026-08-01T22:40:00Z",
+      "resultStatus": "FINAL",
+      "actualWinner": "AWAY",
+      "homeScore": 1,
+      "awayScore": 4,
+      "officialStatus": "PASS",
+      "inputQuality": "LIMITED_INPUT",
+      "blockedReasons": [],
+      "confidence": 73,
+      "modelHomeProbability": 0.505814,
+      "modelAwayProbability": 0.494186,
+      "selectedProbability": 0.505814,
+      "marketHomeProbability": 0.473684,
+      "marketAwayProbability": 0.526316,
+      "mostLikelySelection": "HOME",
+      "selectedSideEdge": 0.03213,
+      "valueSelection": "HOME",
+      "valueEdge": 0.03213,
+      "researchGrade": "INCORRECT",
+      "valueGrade": "INCORRECT",
+      "brierScore": 0.255847802596,
+      "logLoss": 0.7048433144407881,
+      "marketAgreement": "NEAR_EVEN",
+      "schemaSource": "V0_MARKET_PREDICTIONS",
+      "components": [
+        {
+          "name": "starter",
+          "value": -0.017875,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "marketPrior",
+          "value": -0.02634,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "homeAdvantage",
+          "value": 0.08,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "bullpen",
+          "value": 0,
+          "alignment": "DISABLED"
+        },
+        {
+          "name": "lineup",
+          "value": 0,
+          "alignment": "DISABLED"
+        }
+      ],
+      "counterfactualBlocked": {
+        "applicable": false,
+        "hypotheticalSelection": "HOME",
+        "counterfactualGrade": null
+      }
+    },
+    {
+      "gamePk": 824405,
+      "gameId": "mlb-cleveland-guardians-arizona-diamondbacks",
+      "marketType": "MONEYLINE_2WAY",
+      "homeTeam": "Cleveland Guardians",
+      "awayTeam": "Arizona Diamondbacks",
+      "commenceTimeUtc": "2026-08-01T23:15:00Z",
+      "resultStatus": "FINAL",
+      "actualWinner": "AWAY",
+      "homeScore": 8,
+      "awayScore": 12,
+      "officialStatus": "BLOCKED",
+      "inputQuality": "INSUFFICIENT",
+      "blockedReasons": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INSUFFICIENT_INPUT",
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_SAMPLE_INSUFFICIENT",
+        "MISSING:CONFIRMED_LINEUP"
+      ],
+      "confidence": 34,
+      "modelHomeProbability": 0.521263,
+      "modelAwayProbability": 0.478737,
+      "selectedProbability": 0.521263,
+      "marketHomeProbability": 0.592233,
+      "marketAwayProbability": 0.407767,
+      "mostLikelySelection": "HOME",
+      "selectedSideEdge": -0.07097,
+      "valueSelection": "AWAY",
+      "valueEdge": 0.07097,
+      "researchGrade": "NOT_GRADED",
+      "valueGrade": "NOT_GRADED",
+      "brierScore": null,
+      "logLoss": null,
+      "marketAgreement": "MODEL_AND_MARKET_AGREE",
+      "schemaSource": "V0_MARKET_PREDICTIONS",
+      "components": [
+        {
+          "name": "starter",
+          "value": 0.112131,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "marketPrior",
+          "value": 0.093301,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "homeAdvantage",
+          "value": 0.08,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "bullpen",
+          "value": 0,
+          "alignment": "DISABLED"
+        },
+        {
+          "name": "lineup",
+          "value": 0,
+          "alignment": "DISABLED"
+        }
+      ],
+      "counterfactualBlocked": {
+        "applicable": true,
+        "hypotheticalSelection": "HOME",
+        "counterfactualGrade": "INCORRECT"
+      }
+    },
+    {
+      "gamePk": 824326,
+      "gameId": "mlb-colorado-rockies-kansas-city-royals",
+      "marketType": "MONEYLINE_2WAY",
+      "homeTeam": "Colorado Rockies",
+      "awayTeam": "Kansas City Royals",
+      "commenceTimeUtc": "2026-08-02T00:10:00Z",
+      "resultStatus": "FINAL",
+      "actualWinner": "HOME",
+      "homeScore": 12,
+      "awayScore": 6,
+      "officialStatus": "PASS",
+      "inputQuality": "LIMITED_INPUT",
+      "blockedReasons": [],
+      "confidence": 73,
+      "modelHomeProbability": 0.512116,
+      "modelAwayProbability": 0.487884,
+      "selectedProbability": 0.512116,
+      "marketHomeProbability": 0.517413,
+      "marketAwayProbability": 0.482587,
+      "mostLikelySelection": "HOME",
+      "selectedSideEdge": -0.005297,
+      "valueSelection": "AWAY",
+      "valueEdge": 0.005297,
+      "researchGrade": "CORRECT",
+      "valueGrade": "INCORRECT",
+      "brierScore": 0.23803079745599998,
+      "logLoss": 0.6692041171040366,
+      "marketAgreement": "NEAR_EVEN",
+      "schemaSource": "V0_MARKET_PREDICTIONS",
+      "components": [
+        {
+          "name": "starter",
+          "value": -0.022825,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "marketPrior",
+          "value": 0.01742,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "homeAdvantage",
+          "value": 0.08,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "bullpen",
+          "value": 0,
+          "alignment": "DISABLED"
+        },
+        {
+          "name": "lineup",
+          "value": 0,
+          "alignment": "DISABLED"
+        }
+      ],
+      "counterfactualBlocked": {
+        "applicable": false,
+        "hypotheticalSelection": "HOME",
+        "counterfactualGrade": null
+      }
+    },
+    {
+      "gamePk": 824162,
+      "gameId": "mlb-houston-astros-texas-rangers",
+      "marketType": "MONEYLINE_2WAY",
+      "homeTeam": "Houston Astros",
+      "awayTeam": "Texas Rangers",
+      "commenceTimeUtc": "2026-08-01T23:10:00Z",
+      "resultStatus": "FINAL",
+      "actualWinner": "HOME",
+      "homeScore": 5,
+      "awayScore": 4,
+      "officialStatus": "BLOCKED",
+      "inputQuality": "INSUFFICIENT",
+      "blockedReasons": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INSUFFICIENT_INPUT",
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_SAMPLE_INSUFFICIENT",
+        "MISSING:CONFIRMED_LINEUP"
+      ],
+      "confidence": 34,
+      "modelHomeProbability": 0.495907,
+      "modelAwayProbability": 0.504093,
+      "selectedProbability": 0.504093,
+      "marketHomeProbability": 0.452736,
+      "marketAwayProbability": 0.547264,
+      "mostLikelySelection": "AWAY",
+      "selectedSideEdge": -0.043171,
+      "valueSelection": "HOME",
+      "valueEdge": 0.043171,
+      "researchGrade": "NOT_GRADED",
+      "valueGrade": "NOT_GRADED",
+      "brierScore": null,
+      "logLoss": null,
+      "marketAgreement": "NEAR_EVEN",
+      "schemaSource": "V0_MARKET_PREDICTIONS",
+      "components": [
+        {
+          "name": "starter",
+          "value": -0.087175,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "marketPrior",
+          "value": -0.047406,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "homeAdvantage",
+          "value": 0.08,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "bullpen",
+          "value": 0,
+          "alignment": "DISABLED"
+        },
+        {
+          "name": "lineup",
+          "value": 0,
+          "alignment": "DISABLED"
+        }
+      ],
+      "counterfactualBlocked": {
+        "applicable": true,
+        "hypotheticalSelection": "AWAY",
+        "counterfactualGrade": "INCORRECT"
+      }
+    },
+    {
+      "gamePk": 824000,
+      "gameId": "mlb-los-angeles-angels-milwaukee-brewers",
+      "marketType": "MONEYLINE_2WAY",
+      "homeTeam": "Los Angeles Angels",
+      "awayTeam": "Milwaukee Brewers",
+      "commenceTimeUtc": "2026-08-02T01:38:00Z",
+      "resultStatus": "FINAL",
+      "actualWinner": "AWAY",
+      "homeScore": 1,
+      "awayScore": 3,
+      "officialStatus": "PASS",
+      "inputQuality": "LIMITED_INPUT",
+      "blockedReasons": [],
+      "confidence": 73,
+      "modelHomeProbability": 0.516244,
+      "modelAwayProbability": 0.483756,
+      "selectedProbability": 0.516244,
+      "marketHomeProbability": 0.4725,
+      "marketAwayProbability": 0.5275,
+      "mostLikelySelection": "HOME",
+      "selectedSideEdge": 0.043744,
+      "valueSelection": "HOME",
+      "valueEdge": 0.043744,
+      "researchGrade": "INCORRECT",
+      "valueGrade": "INCORRECT",
+      "brierScore": 0.26650786753600003,
+      "logLoss": 0.7261746316142881,
+      "marketAgreement": "NEAR_EVEN",
+      "schemaSource": "V0_MARKET_PREDICTIONS",
+      "components": [
+        {
+          "name": "starter",
+          "value": 0.047575,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "marketPrior",
+          "value": -0.027528,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "homeAdvantage",
+          "value": 0.08,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "bullpen",
+          "value": 0,
+          "alignment": "DISABLED"
+        },
+        {
+          "name": "lineup",
+          "value": 0,
+          "alignment": "DISABLED"
+        }
+      ],
+      "counterfactualBlocked": {
+        "applicable": false,
+        "hypotheticalSelection": "HOME",
+        "counterfactualGrade": null
+      }
+    },
+    {
+      "gamePk": 823920,
+      "gameId": "mlb-los-angeles-dodgers-boston-red-sox",
+      "marketType": "MONEYLINE_2WAY",
+      "homeTeam": "Los Angeles Dodgers",
+      "awayTeam": "Boston Red Sox",
+      "commenceTimeUtc": "2026-08-02T01:10:00Z",
+      "resultStatus": "FINAL",
+      "actualWinner": "AWAY",
+      "homeScore": 2,
+      "awayScore": 3,
+      "officialStatus": "PASS",
+      "inputQuality": "LIMITED_INPUT",
+      "blockedReasons": [],
+      "confidence": 73,
+      "modelHomeProbability": 0.536759,
+      "modelAwayProbability": 0.463241,
+      "selectedProbability": 0.536759,
+      "marketHomeProbability": 0.594203,
+      "marketAwayProbability": 0.405797,
+      "mostLikelySelection": "HOME",
+      "selectedSideEdge": -0.057444,
+      "valueSelection": "AWAY",
+      "valueEdge": 0.057444,
+      "researchGrade": "INCORRECT",
+      "valueGrade": "CORRECT",
+      "brierScore": 0.288110224081,
+      "logLoss": 0.7695078419600612,
+      "marketAgreement": "MODEL_AND_MARKET_AGREE",
+      "schemaSource": "V0_MARKET_PREDICTIONS",
+      "components": [
+        {
+          "name": "starter",
+          "value": 0.051837,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "marketPrior",
+          "value": 0.095342,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "homeAdvantage",
+          "value": 0.08,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "bullpen",
+          "value": 0,
+          "alignment": "DISABLED"
+        },
+        {
+          "name": "lineup",
+          "value": 0,
+          "alignment": "DISABLED"
+        }
+      ],
+      "counterfactualBlocked": {
+        "applicable": false,
+        "hypotheticalSelection": "HOME",
+        "counterfactualGrade": null
+      }
+    },
+    {
+      "gamePk": 823594,
+      "gameId": "mlb-new-york-mets-miami-marlins",
+      "marketType": "MONEYLINE_2WAY",
+      "homeTeam": "New York Mets",
+      "awayTeam": "Miami Marlins",
+      "commenceTimeUtc": "2026-08-01T20:10:00Z",
+      "resultStatus": "FINAL",
+      "actualWinner": "AWAY",
+      "homeScore": 2,
+      "awayScore": 6,
+      "officialStatus": "PASS",
+      "inputQuality": "LIMITED_INPUT",
+      "blockedReasons": [],
+      "confidence": 62,
+      "modelHomeProbability": 0.533718,
+      "modelAwayProbability": 0.466282,
+      "selectedProbability": 0.533718,
+      "marketHomeProbability": 0.544776,
+      "marketAwayProbability": 0.455224,
+      "mostLikelySelection": "HOME",
+      "selectedSideEdge": -0.011058,
+      "valueSelection": "AWAY",
+      "valueEdge": 0.011058,
+      "researchGrade": "INCORRECT",
+      "valueGrade": "CORRECT",
+      "brierScore": 0.284854903524,
+      "logLoss": 0.7629646776714536,
+      "marketAgreement": "MODEL_AND_MARKET_AGREE",
+      "schemaSource": "V0_MARKET_PREDICTIONS",
+      "components": [
+        {
+          "name": "starter",
+          "value": 0.083348,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "marketPrior",
+          "value": 0.044896,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "homeAdvantage",
+          "value": 0.08,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "bullpen",
+          "value": 0,
+          "alignment": "DISABLED"
+        },
+        {
+          "name": "lineup",
+          "value": 0,
+          "alignment": "DISABLED"
+        }
+      ],
+      "counterfactualBlocked": {
+        "applicable": false,
+        "hypotheticalSelection": "HOME",
+        "counterfactualGrade": null
+      }
+    },
+    {
+      "gamePk": 823269,
+      "gameId": "mlb-san-diego-padres-san-francisco-giants",
+      "marketType": "MONEYLINE_2WAY",
+      "homeTeam": "San Diego Padres",
+      "awayTeam": "San Francisco Giants",
+      "commenceTimeUtc": "2026-08-02T00:40:00Z",
+      "resultStatus": "FINAL",
+      "actualWinner": "HOME",
+      "homeScore": 6,
+      "awayScore": 5,
+      "officialStatus": "PASS",
+      "inputQuality": "LIMITED_INPUT",
+      "blockedReasons": [],
+      "confidence": 73,
+      "modelHomeProbability": 0.52462,
+      "modelAwayProbability": 0.47538,
+      "selectedProbability": 0.52462,
+      "marketHomeProbability": 0.558603,
+      "marketAwayProbability": 0.441397,
+      "mostLikelySelection": "HOME",
+      "selectedSideEdge": -0.033983,
+      "valueSelection": "AWAY",
+      "valueEdge": 0.033983,
+      "researchGrade": "CORRECT",
+      "valueGrade": "INCORRECT",
+      "brierScore": 0.22598614440000003,
+      "logLoss": 0.6450810879909062,
+      "marketAgreement": "MODEL_AND_MARKET_AGREE",
+      "schemaSource": "V0_MARKET_PREDICTIONS",
+      "components": [
+        {
+          "name": "starter",
+          "value": 0.012925,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "marketPrior",
+          "value": 0.058874,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "homeAdvantage",
+          "value": 0.08,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "bullpen",
+          "value": 0,
+          "alignment": "DISABLED"
+        },
+        {
+          "name": "lineup",
+          "value": 0,
+          "alignment": "DISABLED"
+        }
+      ],
+      "counterfactualBlocked": {
+        "applicable": false,
+        "hypotheticalSelection": "HOME",
+        "counterfactualGrade": null
+      }
+    },
+    {
+      "gamePk": 823109,
+      "gameId": "mlb-seattle-mariners-minnesota-twins",
+      "marketType": "MONEYLINE_2WAY",
+      "homeTeam": "Seattle Mariners",
+      "awayTeam": "Minnesota Twins",
+      "commenceTimeUtc": "2026-08-01T20:10:00Z",
+      "resultStatus": "FINAL",
+      "actualWinner": "HOME",
+      "homeScore": 4,
+      "awayScore": 3,
+      "officialStatus": "PASS",
+      "inputQuality": "LIMITED_INPUT",
+      "blockedReasons": [],
+      "confidence": 73,
+      "modelHomeProbability": 0.544919,
+      "modelAwayProbability": 0.455081,
+      "selectedProbability": 0.544919,
+      "marketHomeProbability": 0.600962,
+      "marketAwayProbability": 0.399038,
+      "mostLikelySelection": "HOME",
+      "selectedSideEdge": -0.056043,
+      "valueSelection": "AWAY",
+      "valueEdge": 0.056043,
+      "researchGrade": "CORRECT",
+      "valueGrade": "INCORRECT",
+      "brierScore": 0.20709871656099996,
+      "logLoss": 0.6071181192177232,
+      "marketAgreement": "MODEL_AND_MARKET_AGREE",
+      "schemaSource": "V0_MARKET_PREDICTIONS",
+      "components": [
+        {
+          "name": "starter",
+          "value": 0.095838,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "marketPrior",
+          "value": 0.102369,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "homeAdvantage",
+          "value": 0.08,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "bullpen",
+          "value": 0,
+          "alignment": "DISABLED"
+        },
+        {
+          "name": "lineup",
+          "value": 0,
+          "alignment": "DISABLED"
+        }
+      ],
+      "counterfactualBlocked": {
+        "applicable": false,
+        "hypotheticalSelection": "HOME",
+        "counterfactualGrade": null
+      }
+    },
+    {
+      "gamePk": 822944,
+      "gameId": "mlb-tampa-bay-rays-chicago-white-sox",
+      "marketType": "MONEYLINE_2WAY",
+      "homeTeam": "Tampa Bay Rays",
+      "awayTeam": "Chicago White Sox",
+      "commenceTimeUtc": "2026-08-01T20:10:00Z",
+      "resultStatus": "FINAL",
+      "actualWinner": "HOME",
+      "homeScore": 1,
+      "awayScore": 0,
+      "officialStatus": "PASS",
+      "inputQuality": "LIMITED_INPUT",
+      "blockedReasons": [],
+      "confidence": 62,
+      "modelHomeProbability": 0.544936,
+      "modelAwayProbability": 0.455064,
+      "selectedProbability": 0.544936,
+      "marketHomeProbability": 0.613208,
+      "marketAwayProbability": 0.386792,
+      "mostLikelySelection": "HOME",
+      "selectedSideEdge": -0.068272,
+      "valueSelection": "AWAY",
+      "valueEdge": 0.068272,
+      "researchGrade": "CORRECT",
+      "valueGrade": "INCORRECT",
+      "brierScore": 0.207083244096,
+      "logLoss": 0.6070869224071359,
+      "marketAgreement": "MODEL_AND_MARKET_AGREE",
+      "schemaSource": "V0_MARKET_PREDICTIONS",
+      "components": [
+        {
+          "name": "starter",
+          "value": 0.083107,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "marketPrior",
+          "value": 0.115204,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "homeAdvantage",
+          "value": 0.08,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "bullpen",
+          "value": 0,
+          "alignment": "DISABLED"
+        },
+        {
+          "name": "lineup",
+          "value": 0,
+          "alignment": "DISABLED"
+        }
+      ],
+      "counterfactualBlocked": {
+        "applicable": false,
+        "hypotheticalSelection": "HOME",
+        "counterfactualGrade": null
+      }
+    },
+    {
+      "gamePk": 822781,
+      "gameId": "mlb-toronto-blue-jays-st-louis-cardinals",
+      "marketType": "MONEYLINE_2WAY",
+      "homeTeam": "Toronto Blue Jays",
+      "awayTeam": "St. Louis Cardinals",
+      "commenceTimeUtc": "2026-08-01T19:07:00Z",
+      "resultStatus": "FINAL",
+      "actualWinner": "HOME",
+      "homeScore": 5,
+      "awayScore": 1,
+      "officialStatus": "PASS",
+      "inputQuality": "MARKET_ONLY",
+      "blockedReasons": [],
+      "confidence": 46,
+      "modelHomeProbability": 0.515868,
+      "modelAwayProbability": 0.484132,
+      "selectedProbability": 0.515868,
+      "marketHomeProbability": 0.57353,
+      "marketAwayProbability": 0.42647,
+      "mostLikelySelection": "HOME",
+      "selectedSideEdge": -0.057662,
+      "valueSelection": "AWAY",
+      "valueEdge": 0.057662,
+      "researchGrade": "CORRECT",
+      "valueGrade": "INCORRECT",
+      "brierScore": 0.234383793424,
+      "logLoss": 0.6619043601800334,
+      "marketAgreement": "NEAR_EVEN",
+      "schemaSource": "V0_MARKET_PREDICTIONS",
+      "components": [
+        {
+          "name": "starter",
+          "value": -0.012788,
+          "alignment": "ALIGNED_INCORRECT"
+        },
+        {
+          "name": "marketPrior",
+          "value": 0.074067,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "homeAdvantage",
+          "value": 0.08,
+          "alignment": "ALIGNED_CORRECT"
+        },
+        {
+          "name": "bullpen",
+          "value": 0,
+          "alignment": "DISABLED"
+        },
+        {
+          "name": "lineup",
+          "value": 0,
+          "alignment": "DISABLED"
+        }
+      ],
+      "counterfactualBlocked": {
+        "applicable": false,
+        "hypotheticalSelection": "HOME",
+        "counterfactualGrade": null
+      }
+    }
+  ],
+  "warnings": [],
+  "limitations": [
+    "Single-day scorecards are observational only; do not change weights from one date.",
+    "Component scorecards are DIRECTIONAL_ASSOCIATION_ONLY, not causal effects.",
+    "Value realizedReturn requires settled market prices; placeholder null in v0.",
+    "Unsupported markets excluded from denominators (TOTALS, RUN_LINE, FIRST_5, DOMESTIC_THREE_WAY_SPECIAL, SUM).",
+    "BLOCKED games excluded from researchBaseline accuracy; counterfactual is diagnostic only.",
+    "Confidence is not a win-rate calibration proxy; keep separate from probability buckets."
+  ]
+}

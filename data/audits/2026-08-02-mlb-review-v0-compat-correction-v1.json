@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "mlb-review-v0-compat-correction-audit-v1",
+  "dateKst": "2026-08-02",
+  "generatedAt": "2026-08-02T12:37:58.609Z",
+  "priorInvalidReason": "LEGACY_IMMUTABLE_FIELD_HASH_ON_V0_SNAPSHOT",
+  "priorLeakageFail": "prediction_hash mismatch empty fingerprint b415ccad vs afee6962",
+  "correction": "contract-aware hash verification + research baseline grading",
+  "reviewStatus": "VALID_REVIEW",
+  "leakage": "PASS",
+  "hashMethod": "VERIFIED_V0_PREDICTION_HASH",
+  "officialSample": 0,
+  "researchGraded": 13,
+  "researchCorrect": 8,
+  "researchIncorrect": 5,
+  "blocked": 2,
+  "scorecardResearchSample": 13,
+  "scorecardCorrect": 8,
+  "scorecardIncorrect": 5,
+  "predictionHash": "afee69629e97095306aff9abab61daadb0bf6374001828d9eabd87fc1fbed139",
+  "consistency": {
+    "researchCountMatch": true,
+    "correctMatch": true,
+    "incorrectMatch": true
+  }
+}

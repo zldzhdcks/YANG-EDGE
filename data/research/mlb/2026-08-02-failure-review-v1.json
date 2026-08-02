@@ -1,0 +1,206 @@
+{
+  "schemaVersion": "mlb-failure-review-v1",
+  "dateKst": "2026-08-02",
+  "gradedArtifact": "2026-08-02-graded-predictions-v1.json",
+  "gradedHash": "a27f3e0454b920f2678705805ce64c69925deaae018893d619d40c6ae655dd9f",
+  "games": [
+    {
+      "gamePk": 824649,
+      "gameId": "mlb-chicago-cubs-new-york-yankees",
+      "pick": "New York Yankees",
+      "pickSide": "AWAY",
+      "actualWinner": "HOME",
+      "homeScore": 5,
+      "awayScore": 2,
+      "predictionProbability": 0.52551,
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "LINEUP_NOT_CONFIRMED",
+        "OBSERVATION_ONLY"
+      ],
+      "starterCompleteness": "UNKNOWN",
+      "oddsAvailability": "UNKNOWN",
+      "lineupCutoffStatus": "UNKNOWN",
+      "unexpectedOutcome": "Pick AWAY lost; final 2-5 (away-home)",
+      "possibleCauses": [
+        {
+          "category": "DATA_QUALITY",
+          "assessment": "POSSIBLE",
+          "evidence": "BULLPEN_WEIGHT_DISABLED_V0; LINEUP_NOT_CONFIRMED; OBSERVATION_ONLY"
+        },
+        {
+          "category": "BULLPEN",
+          "assessment": "POSSIBLE",
+          "evidence": "bullpen usage and leverage not verified in this review pass"
+        }
+      ],
+      "dataQualityRisk": "Pre-game inputs carried warnings; failure may reflect data gaps.",
+      "modelJudgmentRisk": "Model side selection did not match final winner; review model features separately.",
+      "volatilityRisk": "Single-game MLB outcomes are high variance; one miss is not conclusive.",
+      "devilsAdvocate": "The pick may have been reasonable pre-game; late-inning bullpen or sequencing variance could explain the loss without invalidating the model.",
+      "alternativeHypothesis": "Actual winner may have been driven by bullpen leverage or small-sample hitting noise rather than starter or odds signals.",
+      "conclusion": "INVESTIGATE_MORE",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 824485,
+      "gameId": "mlb-cincinnati-reds-pittsburgh-pirates",
+      "pick": "Cincinnati Reds",
+      "pickSide": "HOME",
+      "actualWinner": "AWAY",
+      "homeScore": 1,
+      "awayScore": 4,
+      "predictionProbability": 0.505814,
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "LINEUP_NOT_CONFIRMED",
+        "OBSERVATION_ONLY"
+      ],
+      "starterCompleteness": "UNKNOWN",
+      "oddsAvailability": "UNKNOWN",
+      "lineupCutoffStatus": "UNKNOWN",
+      "unexpectedOutcome": "Pick HOME lost; final 4-1 (away-home)",
+      "possibleCauses": [
+        {
+          "category": "DATA_QUALITY",
+          "assessment": "POSSIBLE",
+          "evidence": "BULLPEN_WEIGHT_DISABLED_V0; LINEUP_NOT_CONFIRMED; OBSERVATION_ONLY"
+        },
+        {
+          "category": "BULLPEN",
+          "assessment": "POSSIBLE",
+          "evidence": "bullpen usage and leverage not verified in this review pass"
+        }
+      ],
+      "dataQualityRisk": "Pre-game inputs carried warnings; failure may reflect data gaps.",
+      "modelJudgmentRisk": "Model side selection did not match final winner; review model features separately.",
+      "volatilityRisk": "Single-game MLB outcomes are high variance; one miss is not conclusive.",
+      "devilsAdvocate": "The pick may have been reasonable pre-game; late-inning bullpen or sequencing variance could explain the loss without invalidating the model.",
+      "alternativeHypothesis": "Actual winner may have been driven by bullpen leverage or small-sample hitting noise rather than starter or odds signals.",
+      "conclusion": "INVESTIGATE_MORE",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 824000,
+      "gameId": "mlb-los-angeles-angels-milwaukee-brewers",
+      "pick": "Los Angeles Angels",
+      "pickSide": "HOME",
+      "actualWinner": "AWAY",
+      "homeScore": 1,
+      "awayScore": 3,
+      "predictionProbability": 0.516244,
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "LINEUP_NOT_CONFIRMED",
+        "OBSERVATION_ONLY"
+      ],
+      "starterCompleteness": "UNKNOWN",
+      "oddsAvailability": "UNKNOWN",
+      "lineupCutoffStatus": "UNKNOWN",
+      "unexpectedOutcome": "Pick HOME lost; final 3-1 (away-home)",
+      "possibleCauses": [
+        {
+          "category": "DATA_QUALITY",
+          "assessment": "POSSIBLE",
+          "evidence": "BULLPEN_WEIGHT_DISABLED_V0; LINEUP_NOT_CONFIRMED; OBSERVATION_ONLY"
+        },
+        {
+          "category": "BULLPEN",
+          "assessment": "POSSIBLE",
+          "evidence": "bullpen usage and leverage not verified in this review pass"
+        }
+      ],
+      "dataQualityRisk": "Pre-game inputs carried warnings; failure may reflect data gaps.",
+      "modelJudgmentRisk": "Model side selection did not match final winner; review model features separately.",
+      "volatilityRisk": "Single-game MLB outcomes are high variance; one miss is not conclusive.",
+      "devilsAdvocate": "The pick may have been reasonable pre-game; late-inning bullpen or sequencing variance could explain the loss without invalidating the model.",
+      "alternativeHypothesis": "Actual winner may have been driven by bullpen leverage or small-sample hitting noise rather than starter or odds signals.",
+      "conclusion": "INVESTIGATE_MORE",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 823920,
+      "gameId": "mlb-los-angeles-dodgers-boston-red-sox",
+      "pick": "Los Angeles Dodgers",
+      "pickSide": "HOME",
+      "actualWinner": "AWAY",
+      "homeScore": 2,
+      "awayScore": 3,
+      "predictionProbability": 0.536759,
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "LINEUP_NOT_CONFIRMED",
+        "OBSERVATION_ONLY"
+      ],
+      "starterCompleteness": "UNKNOWN",
+      "oddsAvailability": "UNKNOWN",
+      "lineupCutoffStatus": "UNKNOWN",
+      "unexpectedOutcome": "Pick HOME lost; final 3-2 (away-home)",
+      "possibleCauses": [
+        {
+          "category": "DATA_QUALITY",
+          "assessment": "POSSIBLE",
+          "evidence": "BULLPEN_WEIGHT_DISABLED_V0; LINEUP_NOT_CONFIRMED; OBSERVATION_ONLY"
+        },
+        {
+          "category": "BULLPEN",
+          "assessment": "POSSIBLE",
+          "evidence": "bullpen usage and leverage not verified in this review pass"
+        }
+      ],
+      "dataQualityRisk": "Pre-game inputs carried warnings; failure may reflect data gaps.",
+      "modelJudgmentRisk": "Model side selection did not match final winner; review model features separately.",
+      "volatilityRisk": "Single-game MLB outcomes are high variance; one miss is not conclusive.",
+      "devilsAdvocate": "The pick may have been reasonable pre-game; late-inning bullpen or sequencing variance could explain the loss without invalidating the model.",
+      "alternativeHypothesis": "Actual winner may have been driven by bullpen leverage or small-sample hitting noise rather than starter or odds signals.",
+      "conclusion": "INVESTIGATE_MORE",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 823594,
+      "gameId": "mlb-new-york-mets-miami-marlins",
+      "pick": "New York Mets",
+      "pickSide": "HOME",
+      "actualWinner": "AWAY",
+      "homeScore": 2,
+      "awayScore": 6,
+      "predictionProbability": 0.533718,
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "LINEUP_NOT_CONFIRMED",
+        "OBSERVATION_ONLY",
+        "STARTER_SAMPLE_PARTIAL"
+      ],
+      "starterCompleteness": "UNKNOWN",
+      "oddsAvailability": "UNKNOWN",
+      "lineupCutoffStatus": "UNKNOWN",
+      "unexpectedOutcome": "Pick HOME lost; final 6-2 (away-home)",
+      "possibleCauses": [
+        {
+          "category": "DATA_QUALITY",
+          "assessment": "POSSIBLE",
+          "evidence": "BULLPEN_WEIGHT_DISABLED_V0; LINEUP_NOT_CONFIRMED; OBSERVATION_ONLY; STARTER_SAMPLE_PARTIAL"
+        },
+        {
+          "category": "BULLPEN",
+          "assessment": "POSSIBLE",
+          "evidence": "bullpen usage and leverage not verified in this review pass"
+        }
+      ],
+      "dataQualityRisk": "Pre-game inputs carried warnings; failure may reflect data gaps.",
+      "modelJudgmentRisk": "Model side selection did not match final winner; review model features separately.",
+      "volatilityRisk": "Single-game MLB outcomes are high variance; one miss is not conclusive.",
+      "devilsAdvocate": "The pick may have been reasonable pre-game; late-inning bullpen or sequencing variance could explain the loss without invalidating the model.",
+      "alternativeHypothesis": "Actual winner may have been driven by bullpen leverage or small-sample hitting noise rather than starter or odds signals.",
+      "conclusion": "INVESTIGATE_MORE",
+      "observationOnly": true
+    }
+  ],
+  "generatedAt": "2026-08-02T12:37:57.045Z",
+  "reviewHash": "c166886e79bee6b5beaff02f006499d15d1027fea0f6cfaaa93fa43fd99e4fe6"
+}

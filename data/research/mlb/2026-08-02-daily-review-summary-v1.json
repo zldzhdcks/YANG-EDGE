@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "mlb-daily-review-summary-v1",
+  "dateKst": "2026-08-02",
+  "artifacts": {
+    "prediction": "data/predictions/mlb/2026-08-02.json",
+    "result": "data/research/mlb/2026-08-02-official-results-v1.json",
+    "graded": "data/research/mlb/2026-08-02-graded-predictions-v1.json",
+    "successReview": "data/research/mlb/2026-08-02-success-review-v1.json",
+    "failureReview": "data/research/mlb/2026-08-02-failure-review-v1.json"
+  },
+  "hashes": {
+    "predictionHash": "afee69629e97095306aff9abab61daadb0bf6374001828d9eabd87fc1fbed139",
+    "resultHash": "5a00ed6abdf71380cbee3b9031e5c270fb6ed8a26f1f81be12a3777bb1dc6f6a",
+    "gradedHash": "a27f3e0454b920f2678705805ce64c69925deaae018893d619d40c6ae655dd9f",
+    "inputHash": "c68c943587076e868be27b9a3b6ecdb3e70347c452cd971bf145c467cf410fff",
+    "successReviewHash": "eef6240b431b8a815181e45f2237cfa7ba891b32cb6710d65dec89028b5f2ea5",
+    "failureReviewHash": "c166886e79bee6b5beaff02f006499d15d1027fea0f6cfaaa93fa43fd99e4fe6"
+  },
+  "gradeCounts": {
+    "totalGames": 15,
+    "eligiblePredictions": 0,
+    "limitedInputPredictions": 13,
+    "blocked": 2,
+    "noPick": 0,
+    "graded": 13,
+    "correct": 8,
+    "incorrect": 5,
+    "pending": 0,
+    "void": 0,
+    "matchErrors": 0,
+    "accuracy": {
+      "numerator": 8,
+      "denominator": 13,
+      "percent": 61.5,
+      "status": "OK",
+      "exclusionPolicy": "correct / (correct + incorrect); excludes PENDING, VOID, BLOCKED, NO_PICK, MATCH_ERROR"
+    },
+    "eligibleAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "NO_GRADED_SAMPLE"
+    },
+    "limitedInputAccuracy": {
+      "numerator": 8,
+      "denominator": 13,
+      "percent": 61.5,
+      "status": "OK"
+    },
+    "researchCandidates": 13,
+    "researchGraded": 13,
+    "researchCorrect": 8,
+    "researchIncorrect": 5,
+    "researchAccuracy": {
+      "numerator": 8,
+      "denominator": 13,
+      "percent": 61.5,
+      "status": "OK"
+    },
+    "researchMeanBrier": 0.24361172511846158,
+    "researchMeanLogLoss": 0.6803333269319545,
+    "officialSampleCount": 0,
+    "officialGraded": 0,
+    "officialCorrect": 0,
+    "officialIncorrect": 0,
+    "officialAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "N/A"
+    },
+    "predictionContract": "RESEARCH_BASELINE_V0",
+    "modelVersion": "mlb-baseline-prediction-v0.1.0",
+    "modelStatus": "RESEARCH_BASELINE_V0"
+  },
+  "officialPerformance": {
+    "eligiblePredictions": 0,
+    "officialSampleCount": 0,
+    "officialGraded": 0,
+    "officialCorrect": 0,
+    "officialIncorrect": 0,
+    "officialAccuracy": "N/A"
+  },
+  "researchPerformance": {
+    "researchCandidates": 13,
+    "researchGraded": 13,
+    "researchCorrect": 8,
+    "researchIncorrect": 5,
+    "researchAccuracy": 61.5,
+    "researchBrier": 0.24361172511846158,
+    "researchLogLoss": 0.6803333269319545,
+    "modelVersion": "mlb-baseline-prediction-v0.1.0"
+  },
+  "blockedPolicy": {
+    "blockedGames": 2,
+    "blockedCounterfactualCorrect": 0,
+    "blockedCounterfactualIncorrect": 2
+  },
+  "leakageAudit": {
+    "status": "PASS",
+    "checks": [
+      {
+        "id": "prediction_hash",
+        "status": "PASS",
+        "detail": "VERIFIED_V0_PREDICTION_HASH: v0 predictionHashSha256 matches hashPredictions fingerprint"
+      },
+      {
+        "id": "input_manifest_object",
+        "status": "PASS",
+        "detail": "v0 uses inputManifestHash; absence of legacy inputManifest object is not leakage"
+      },
+      {
+        "id": "predicted_before_slate_cutoff",
+        "status": "PASS",
+        "detail": "legacy slate cutoffTime not present on v0 meta; commence-time leakage checked separately when available"
+      },
+      {
+        "id": "input_manifest_warnings",
+        "status": "PASS",
+        "detail": "no post-game leakage warnings in manifest"
+      }
+    ],
+    "predictionHashVerified": true,
+    "hashValidationMethod": "VERIFIED_V0_PREDICTION_HASH",
+    "predictionContract": "RESEARCH_BASELINE_V0",
+    "inputHash": "c68c943587076e868be27b9a3b6ecdb3e70347c452cd971bf145c467cf410fff"
+  },
+  "reviewStatus": "VALID_REVIEW",
+  "successPatterns": [
+    "input_quality"
+  ],
+  "failurePatterns": [
+    "data_quality",
+    "bullpen"
+  ],
+  "dataQualityWarnings": [
+    "BULLPEN_WEIGHT_DISABLED_V0",
+    "LINEUP_NOT_CONFIRMED",
+    "OBSERVATION_ONLY",
+    "INSUFFICIENT_INPUT",
+    "STARTER_SAMPLE_INSUFFICIENT",
+    "STARTER_SAMPLE_PARTIAL",
+    "STARTER_STATS_MISSING"
+  ],
+  "generatedAt": "2026-08-02T12:37:57.046Z",
+  "reviewHash": "02c9bb5c691996e75b3a41a8602ea273e415158da1e22aeb1b3965ab1452b495",
+  "assistantSummary": "MLB Daily Review — 2026-08-02\nPrediction contract: RESEARCH_BASELINE_V0\nEligible predictions (official): 0\nOfficial sample: 0\nOfficial Accuracy: N/A\nResearch candidates: 13\nResearch graded: 13\nResearch correct/incorrect: 8/5\nResearch Accuracy: 61.5%\nResearch Brier: 0.24361172511846158\nResearch LogLoss: 0.6803333269319545\nBlocked games: 2\nPrimary failure candidates: data_quality, bullpen\nConclusion: DATA_ACCUMULATION_CONTINUES"
+}
