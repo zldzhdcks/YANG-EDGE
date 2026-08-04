@@ -1,0 +1,184 @@
+{
+  "schemaVersion": "football-foundation-pre-design-audit-v0",
+  "generatedAt": "2026-08-04T00:00:00.000Z",
+  "conclusion": "FOOTBALL_FOUNDATION_AUDIT_COMPLETE",
+  "missionScope": {
+    "implementsPrediction": false,
+    "implementsEngine": false,
+    "implementsWeight": false,
+    "implementsModel": false,
+    "providerCalls": 0,
+    "datasetSchemaMutation": false,
+    "pipelineMutation": false
+  },
+  "purpose": "Prevent MLB operational failures from recurring in Football before any Engine work",
+  "architecture": {
+    "flow": [
+      "Schedule",
+      "Odds",
+      "Lineup",
+      "Prediction",
+      "Result",
+      "Review",
+      "Scorecard"
+    ],
+    "layers": {
+      "providerAdapter": "PARTIAL_UI_ONLY",
+      "researchDatasets": "NOT_STARTED",
+      "prediction": "NOT_IMPLEMENTED",
+      "engineWeight": "PROHIBITED",
+      "yangEdgeOs": "OFF_OR_PREPARING"
+    }
+  },
+  "leagueIdentity": {
+    "uiInterestListSource": "src/constants/football-leagues.ts",
+    "uiListIsNotBetmanResearchScope": true,
+    "leagues": [
+      { "shortName": "UCL", "providerLeagueId": 2, "duplicateRisk": "VERY_HIGH" },
+      { "shortName": "UEL", "providerLeagueId": 3, "duplicateRisk": "VERY_HIGH" },
+      { "shortName": "EPL", "providerLeagueId": 39, "duplicateRisk": "HIGH" },
+      { "shortName": "LaLiga", "providerLeagueId": 140, "duplicateRisk": "HIGH" },
+      { "shortName": "BUN", "providerLeagueId": 78, "duplicateRisk": "HIGH" },
+      { "shortName": "SerieA", "providerLeagueId": 135, "duplicateRisk": "HIGH" },
+      { "shortName": "L1", "providerLeagueId": 61, "duplicateRisk": "HIGH" },
+      { "shortName": "K1", "providerLeagueId": 292, "duplicateRisk": "MEDIUM" },
+      { "shortName": "J1", "providerLeagueId": 98, "duplicateRisk": "MEDIUM" },
+      { "shortName": "MLS", "providerLeagueId": 253, "duplicateRisk": "MEDIUM" }
+    ],
+    "rules": [
+      "competitionId+season+providerLeagueId are primary",
+      "string-only league attribution forbidden",
+      "same club in league and cup must not share matchId"
+    ]
+  },
+  "matchIdentity": {
+    "recommendedMatchId": "soccer-{provider}-{fixtureId}",
+    "requiredFields": [
+      "matchId",
+      "providerFixtureId",
+      "homeTeamId",
+      "awayTeamId",
+      "kickoffUtc",
+      "timezone",
+      "status",
+      "competitionId",
+      "season"
+    ],
+    "currentUiRisk": {
+      "path": "src/lib/football/map-fixture-to-game.ts",
+      "issue": "GameData.id uses buildGameId(league,home,away) name slug; externalId uses fixture id",
+      "severity": "Research matchId must be fixture-based; UI slug secondary"
+    },
+    "artifactExistsNeUsable": true
+  },
+  "oddsPolicy": {
+    "predictionTarget": ["1X2"],
+    "collectOnly": ["O/U", "AH", "BTTS", "DoubleChance"],
+    "usabilityStates": [
+      "DATA_COMPLETE",
+      "DATA_PARTIAL",
+      "DATA_MISSING",
+      "ARTIFACT_PRESENT_UNUSABLE",
+      "INTEGRITY_FAILED",
+      "CUTOFF_BLOCKED"
+    ]
+  },
+  "lineupPolicy": {
+    "states": ["NOT_RELEASED", "CONFIRMED", "AFTER_CUTOFF"],
+    "afterCutoffUsableForPrediction": false
+  },
+  "predictionGate": {
+    "required": true,
+    "conditions": [
+      "SCHEDULE_READY",
+      "ODDS_1X2_USABLE",
+      "BEFORE_KICKOFF",
+      "IDENTITY_VERIFIED",
+      "NO_RESULT_DEPENDENCY",
+      "NO_LEAKAGE"
+    ],
+    "invalidHandling": "INVALID_FOR_PREGAME_EXCLUDE_FROM_RESEARCH_DENOMINATOR"
+  },
+  "resultReviewScorecard": {
+    "resultSeparatedFromPrediction": true,
+    "reviewBeforeFinal": "PROHIBITED",
+    "researchVsOfficialMix": "PROHIBITED",
+    "scorecardEngineImpact": "NONE",
+    "soccerResultTaxonomyRequired": true
+  },
+  "operationOs": {
+    "levelsReusable": ["READY", "WARNING", "BLOCKED", "OFF"],
+    "footballCurrent": "OFF",
+    "fakeProgressForbidden": true
+  },
+  "reuseMatrix": {
+    "reusable": [
+      "pregame_usability_gates_pattern",
+      "prediction_validity_sidecar_pattern",
+      "research_vs_official_review_split",
+      "scorecard_observational_engine_none",
+      "os_ready_warning_blocked_off",
+      "operation_memory_decision_center"
+    ],
+    "adapt": ["daily_pregame_orchestrator_pattern", "frozen_identity_hash_idea"],
+    "notReusable": [
+      "mlb_starter_dataset",
+      "mlb_bullpen_dataset",
+      "mlb_batting_lineup_order",
+      "mlb_two_way_moneyline_grading"
+    ]
+  },
+  "risks": [
+    { "id": "R1", "title": "Artifact exists but unusable", "severity": "Usability enum before COMPLETE" },
+    { "id": "R2", "title": "Prediction after kickoff", "severity": "Cutoff + validity sidecar" },
+    { "id": "R3", "title": "Name-based match id collision", "severity": "fixtureId primary" },
+    { "id": "R4", "title": "Multi-competition club reuse", "severity": "competitionId on every row" },
+    { "id": "R5", "title": "Draw/ET/PEN taxonomy gap", "severity": "Soccer-specific result contract" },
+    { "id": "R6", "title": "Lineup post-kickoff leakage", "severity": "AFTER_CUTOFF exclude" },
+    { "id": "R7", "title": "Collect-only markets as model input", "severity": "1X2-only prediction target" },
+    { "id": "R8", "title": "Research metrics as product KPI", "severity": "Research Lab labeling" },
+    { "id": "R9", "title": "Engine change from thin sample", "severity": "Engine PROHIBITED" },
+    { "id": "R10", "title": "UI whitelist vs Betman scope", "severity": "Separate registries" },
+    { "id": "R11", "title": "Provider legal unclear", "severity": "Legal review before public" },
+    { "id": "R12", "title": "Odds/schedule identity drift", "severity": "Explicit map artifact" }
+  ],
+  "todo": [
+    "Schedule_Result_Identity_Dataset_design_lock",
+    "League_Team_registry",
+    "Odds_1X2_usability_gate",
+    "Lineup_phase_enum",
+    "Football_Prediction_Gate_module",
+    "Validity_sidecar",
+    "Result_FINAL_taxonomy",
+    "Research_Review_Scorecard",
+    "OS_Data_Center_wire",
+    "Legal_review",
+    "Betman_slate_fixture_map",
+    "Owner_approval_before_first_freeze"
+  ],
+  "priorDocs": [
+    "SOCCER_RESEARCH_PIPELINE_V1_DESIGN.md",
+    "MLB_KBO_SOCCER_COMMON_DIFFERENCE_AUDIT.md",
+    "MULTI_SPORT_RESEARCH_BOUNDARY.md",
+    "ROADMAP.md",
+    "FOOTBALL_FOUNDATION_PRE_DESIGN_AUDIT_V0.md"
+  ],
+  "mlbLessonsApplied": [
+    "ARTIFACT_EXISTS_NE_USABLE",
+    "INVALID_PREGAME_EXCLUDE_FROM_SAMPLE",
+    "NO_PREDICTION_AFTER_COMMENCE",
+    "RESEARCH_NE_OFFICIAL",
+    "ENGINE_NO_CHANGE_UNTIL_SAMPLE"
+  ],
+  "regression": {
+    "mlbPredictionChanged": false,
+    "mlbEngineChanged": false,
+    "mlbWeightChanged": false,
+    "mlbReviewFormulaChanged": false,
+    "mlbScorecardChanged": false,
+    "hashAlgorithmChanged": false,
+    "datasetSchemaChanged": false,
+    "pipelineChanged": false,
+    "providerCalled": false
+  }
+}
