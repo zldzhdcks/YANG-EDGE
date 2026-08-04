@@ -565,7 +565,14 @@ async function buildPostGameReview(input: {
 
 function hashableRows(rows: StarterDatasetRow[]): unknown {
   return rows.map((r) => {
-    const { postGameReview, ...pre } = r;
+    const {
+      postGameReview,
+      // Wall-clock / run metadata — must not enter deterministic resultHash
+      fetchedAt: _fetchedAt,
+      artifactGeneratedAt: _artifactGeneratedAt,
+      sourceTimestamp: _sourceTimestamp,
+      ...pre
+    } = r;
     return {
       ...pre,
       // postGameReview status/id/name only (exclude comparedAt wall-clock)

@@ -29,6 +29,10 @@ import {
   detectPredictionContract,
   verifyPredictionHash,
 } from "./prediction-contract-v1";
+import {
+  isInvalidForPregame,
+  loadPredictionValidityV0,
+} from "./prediction-validity-v0";
 import { brierHome, logLossHomeAway, mean } from "./scorecard-v0/metrics";
 
 type PredictionRow = Record<string, unknown>;
@@ -304,6 +308,11 @@ export async function gradeMlbPredictionsV1(input: {
   let officialIncorrect = 0;
 
   const isV0 = contract === "RESEARCH_BASELINE_V0";
+  const validity = await loadPredictionValidityV0({
+    dateKst: input.dateKst,
+    cwd,
+  });
+  const invalidPregame = isInvalidForPregame(validity);
 
   for (const pred of predictions) {
     const inputStatus = asString(pred.inputStatus) ?? "UNKNOWN";
@@ -405,7 +414,25 @@ export async function gradeMlbPredictionsV1(input: {
       if (pickSide === "HOME") pickTeam = homeTeam;
       else if (pickSide === "AWAY") pickTeam = awayTeam;
 
-      if (isBlocked) {
+      if (invalidPregame) {
+        // Late / integrity-invalid snapshots are operational records only.
+        grade = isBlocked ? "BLOCKED" : "NO_PICK";
+        researchResult = "NOT_GRADED";
+        if (isBlocked) {
+          const cf = gradePick(research.selection, result);
+          blockedCounterfactual = {
+            selection: research.selection,
+            probability: research.probability,
+            actualWinner,
+            result: toResearchResult(cf),
+            denominatorIncluded: false,
+          };
+        } else {
+          noPick += 1;
+        }
+        gameBrier = null;
+        gameLogLoss = null;
+      } else if (isBlocked) {
         grade = "BLOCKED";
         const cf = gradePick(research.selection, result);
         blockedCounterfactual = {

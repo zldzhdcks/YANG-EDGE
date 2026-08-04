@@ -42,6 +42,7 @@ export type ReviewAssessment =
 export type LeakageAuditStatus = "PASS" | "WARN" | "FAIL";
 
 export type DailyReviewStatus =
+  | "PREDICTION_INVALID_FOR_PREGAME"
   | "VALID_REVIEW"
   | "PARTIAL_REVIEW"
   | "AWAITING_RESULTS"

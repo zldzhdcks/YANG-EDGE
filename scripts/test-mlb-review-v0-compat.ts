@@ -175,6 +175,29 @@ async function main() {
   }
 
   assert.equal(sha256File(frozenPath), frozenBefore);
+
+  // Invalid late snapshot must not enter scorecard / research denominator
+  const invalidValidity = JSON.parse(
+    readFileSync(
+      "data/research/mlb/2026-08-03-prediction-validity-v0.json",
+      "utf8",
+    ),
+  );
+  assert.equal(invalidValidity.researchValidity, "INVALID_FOR_PREGAME");
+  assert.equal(
+    invalidValidity.predictionHashSha256,
+    JSON.parse(readFileSync("data/predictions/mlb/2026-08-03.json", "utf8"))
+      .meta.predictionHashSha256,
+  );
+  await assert.rejects(
+    () =>
+      buildMlbPredictionScorecardV0({
+        dateKst: "2026-08-03",
+        dryRun: true,
+      }),
+    /SCORECARD_BLOCKED_PREDICTION_INVALID_FOR_PREGAME/,
+  );
+
   console.log("test:mlb-review-v0-compat OK");
 }
 

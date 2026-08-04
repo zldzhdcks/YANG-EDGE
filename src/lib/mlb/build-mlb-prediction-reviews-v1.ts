@@ -26,6 +26,10 @@ import {
   verifyPredictionHash,
   type HashValidationMethod,
 } from "./prediction-contract-v1";
+import {
+  isInvalidForPregame,
+  loadPredictionValidityV0,
+} from "./prediction-validity-v0";
 
 type PredictionRow = Record<string, unknown>;
 
@@ -463,7 +467,9 @@ function resolveReviewStatus(input: {
   graded: MlbGradedPredictionsDocument;
   leakage: LeakageAuditStatus;
   contract: ReturnType<typeof detectPredictionContract>;
+  invalidForPregame?: boolean;
 }): DailyReviewStatus {
+  if (input.invalidForPregame) return "PREDICTION_INVALID_FOR_PREGAME";
   if (input.contract === "UNKNOWN") return "RESEARCH_INVALID";
   if (input.leakage === "FAIL") return "RESEARCH_INVALID";
 
@@ -639,10 +645,16 @@ export async function buildMlbPredictionReviewsV1(input: {
     resultGeneratedAt: asString(resultDoc.generatedAt),
   });
 
+  const validity = await loadPredictionValidityV0({
+    dateKst: input.dateKst,
+    cwd,
+  });
   const reviewStatus = resolveReviewStatus({
     graded,
     leakage: leakageAudit.status,
-    contract: leakageAudit.predictionContract ?? detectPredictionContract(prediction),
+    contract:
+      leakageAudit.predictionContract ?? detectPredictionContract(prediction),
+    invalidForPregame: isInvalidForPregame(validity),
   });
 
   const blockedCf = graded.games.filter((g) => g.blockedCounterfactual);

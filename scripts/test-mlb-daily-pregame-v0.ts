@@ -163,6 +163,61 @@ async function main() {
   const after = fingerprintTree(cwd, watch);
   assert.deepEqual(after, before, "dry-run mutated watched artifacts");
 
+  // --- Gate: after all commence + enforce → prediction blocked ---
+  const afterStart = await runMlbDailyPregameV0({
+    dateKst: dateHist,
+    dryRun: true,
+    noProvider: true,
+    enforcePregameGates: true,
+    asOf: "2099-01-01T00:00:00.000Z",
+  });
+  assert.equal(afterStart.overall, "BLOCKED_AFTER_START");
+  assert.equal(
+    afterStart.stages.find((s) => s.stage === "PREDICTION_V0")?.status,
+    "BLOCKED",
+  );
+  assert.ok(afterStart.blockingIssues.includes("BLOCKED_AFTER_START"));
+  assert.equal(afterStart.writesPerformed, 0);
+
+  // --- Gate: odds artifact exists but collected=0 → not ALREADY_COMPLETE ---
+  const date0803 = "2026-08-03";
+  if (existsSync(path.join(cwd, artifactPaths(date0803).odds))) {
+    const late = await runMlbDailyPregameV0({
+      dateKst: date0803,
+      dryRun: true,
+      noProvider: true,
+      enforcePregameGates: true,
+      asOf: "2026-08-03T12:48:36.000Z",
+      stopAfter: "INPUT_AUDIT",
+    });
+    const oddsStage = late.stages.find((s) => s.stage === "ODDS");
+    assert.notEqual(oddsStage?.status, "ALREADY_COMPLETE");
+    assert.ok(
+      oddsStage?.blockers.includes("ODDS_MISSING_ALL") ||
+        oddsStage?.warnings.includes("ODDS_MISSING_ALL"),
+    );
+    assert.ok(
+      late.overall === "BLOCKED_ODDS_MISSING" ||
+        late.overall === "BLOCKED_AFTER_START" ||
+        late.overall === "BLOCKED_STARTER_INTEGRITY" ||
+        late.overall === "BLOCKED_INPUT_AUDIT",
+    );
+    assert.notEqual(late.overall, "READY_FOR_PREGAME_RUN");
+    assert.equal(late.writesPerformed, 0);
+
+    const starterStage = late.stages.find((s) => s.stage === "STARTER");
+    assert.notEqual(starterStage?.status, "ALREADY_COMPLETE");
+  }
+
+  // --- Validity sidecar excludes review grade path (load) ---
+  const {
+    isInvalidForPregame,
+    loadPredictionValidityV0,
+  } = await import("../src/lib/mlb/prediction-validity-v0");
+  const validity = await loadPredictionValidityV0({ dateKst: date0803, cwd });
+  assert.equal(isInvalidForPregame(validity), true);
+  assert.equal(validity?.predictionHashSha256?.length, 64);
+
   // --- Temp cwd: missing schedule isolation + no repo write ---
   const tmp = mkdtempSync(path.join(tmpdir(), "mlb-daily-v0-"));
   const tmpReport = await runMlbDailyPregameV0({

@@ -28,6 +28,10 @@ import {
   mlbPredictionSnapshotRel,
   mlbScorecardV0Rel,
 } from "./paths";
+import {
+  isInvalidForPregame,
+  loadPredictionValidityV0,
+} from "../prediction-validity-v0";
 import type {
   CalibrationBucketRow,
   ComponentAlignment,
@@ -205,6 +209,13 @@ export async function buildMlbPredictionScorecardV0(input: {
   ) {
     throw new Error(
       `PREDICTION_HASH_MISMATCH: expected ${input.expectedPredictionHash} got ${predictionHash}`,
+    );
+  }
+
+  const validity = await loadPredictionValidityV0({ dateKst, cwd });
+  if (isInvalidForPregame(validity)) {
+    throw new Error(
+      "SCORECARD_BLOCKED_PREDICTION_INVALID_FOR_PREGAME: late/integrity-invalid snapshot excluded from scorecard",
     );
   }
 

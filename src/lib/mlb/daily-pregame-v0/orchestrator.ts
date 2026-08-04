@@ -21,6 +21,12 @@ import {
   auditStarter,
   auditSummary,
 } from "./audit-artifacts";
+import {
+  evaluateCutoffGate,
+  evaluateOddsUsability,
+  evaluateStarterUsability,
+  stageStatusForUsability,
+} from "./pregame-gates";
 import type {
   DailyOverallStatus,
   DailyPregameReport,
@@ -43,6 +49,13 @@ export type DailyPregameOptions = {
   cwd?: string;
   /** Persist prediction snapshot when not dry-run. Default true if unset. */
   writePrediction?: boolean;
+  /** ISO timestamp for cutoff checks (defaults to generatedAt). */
+  asOf?: string;
+  /**
+   * Enforce pregame freeze gates (cutoff / odds usable / starter integrity).
+   * Defaults to true when writing a real prediction; false for dry-run historical.
+   */
+  enforcePregameGates?: boolean;
 };
 
 export const MLB_DAILY_PREGAME_STAGE_ORDER: DailyStageName[] = [
@@ -146,6 +159,10 @@ export async function runMlbDailyPregameV0(
     (options.writePrediction !== false) && !dryRun;
   const dateKst = options.dateKst;
   const generatedAt = new Date().toISOString();
+  const asOfIso = options.asOf ?? generatedAt;
+  const enforcePregameGates =
+    options.enforcePregameGates ?? writePrediction;
+  const useMarketPrior = options.useMarketPrior !== false;
   const stages: DailyStageResult[] = [];
   const blockingIssues: string[] = [];
   const warnings: string[] = [];
@@ -271,6 +288,22 @@ export async function runMlbDailyPregameV0(
 
   // ---- STARTER ----
   let starter = await auditStarter(dateKst, cwd, filterIds);
+  let summaryEarly = await auditSummary(dateKst, cwd);
+  let summaryDoc: unknown = null;
+  if (summaryEarly.exists) {
+    try {
+      summaryDoc = JSON.parse(
+        await readFile(path.join(cwd, summaryEarly.path), "utf8"),
+      ) as unknown;
+    } catch {
+      summaryDoc = null;
+    }
+  }
+  let starterUsability = evaluateStarterUsability({
+    starter,
+    scheduleGameCount: filterIds.length,
+    dailySummary: summaryDoc,
+  });
   if (shouldRun("STARTER")) {
     const t0 = Date.now();
     if (!scheduleUsable) {
@@ -281,18 +314,36 @@ export async function runMlbDailyPregameV0(
         }),
       );
     } else if (starter.exists) {
+      const st = stageStatusForUsability(starterUsability.usability);
+      const stageStatus: DailyStageStatus =
+        st === "WOULD_RUN" ? "PARTIAL" : st;
       stages.push(
-        emptyStage("STARTER", "ALREADY_COMPLETE", {
+        emptyStage("STARTER", stageStatus, {
           outputPaths: [starter.path],
           rows: starter.rows,
           readyGames: Number(starter.detail.bothSidesReady ?? 0),
           activeGames: filterIds.length,
-          warnings: starter.warnings,
+          warnings: [
+            ...starter.warnings,
+            ...starterUsability.reasonCodes,
+          ],
+          blockers:
+            starterUsability.usability === "INTEGRITY_FAILED" ||
+            starterUsability.usability === "ARTIFACT_PRESENT_UNUSABLE"
+              ? starterUsability.reasonCodes
+              : [],
           durationMs: Date.now() - t0,
-          detail: starter.detail,
+          detail: {
+            ...starter.detail,
+            usability: starterUsability.usability,
+            builderExitCode: starterUsability.builderExitCode,
+          },
         }),
       );
-      warnings.push(...starter.warnings);
+      warnings.push(...starter.warnings, ...starterUsability.reasonCodes);
+      if (starterUsability.usability === "INTEGRITY_FAILED") {
+        blockingIssues.push("STARTER_INTEGRITY_FAILED");
+      }
     } else if (noProvider) {
       stages.push(
         emptyStage("STARTER", "WOULD_RUN", {
@@ -311,13 +362,54 @@ export async function runMlbDailyPregameV0(
       providerCalls += 1;
       writesPerformed += code === 0 ? 1 : 0;
       starter = await auditStarter(dateKst, cwd, filterIds);
+      summaryEarly = await auditSummary(dateKst, cwd);
+      if (summaryEarly.exists) {
+        try {
+          summaryDoc = JSON.parse(
+            await readFile(path.join(cwd, summaryEarly.path), "utf8"),
+          ) as unknown;
+        } catch {
+          summaryDoc = null;
+        }
+      }
+      starterUsability = evaluateStarterUsability({
+        starter,
+        scheduleGameCount: filterIds.length,
+        dailySummary: summaryDoc,
+      });
+      if (code !== 0) {
+        blockingIssues.push("STARTER_BUILDER_EXIT_NONZERO");
+        starterUsability = {
+          ...starterUsability,
+          usability: "INTEGRITY_FAILED",
+          reasonCodes: [
+            ...new Set([
+              ...starterUsability.reasonCodes,
+              "STARTER_BUILDER_EXIT_NONZERO",
+            ]),
+          ],
+          builderExitCode: code,
+        };
+      }
       stages.push(
-        emptyStage("STARTER", starter.exists ? "SUCCESS" : "FAILED", {
-          outputPaths: [starter.path],
-          providerCalls: 1,
-          rows: starter.rows,
-          durationMs: Date.now() - t0,
-        }),
+        emptyStage(
+          "STARTER",
+          code === 0 && starter.exists
+            ? stageStatusForUsability(starterUsability.usability) ===
+              "ALREADY_COMPLETE"
+              ? "SUCCESS"
+              : "PARTIAL"
+            : "FAILED",
+          {
+            outputPaths: [starter.path],
+            providerCalls: 1,
+            rows: starter.rows,
+            durationMs: Date.now() - t0,
+            detail: { usability: starterUsability.usability, exitCode: code },
+            blockers:
+              code !== 0 ? ["STARTER_BUILDER_EXIT_NONZERO"] : [],
+          },
+        ),
       );
     }
   } else {
@@ -326,6 +418,7 @@ export async function runMlbDailyPregameV0(
 
   // ---- ODDS ----
   let odds = await auditOdds(dateKst, cwd, filterIds);
+  let oddsUsability = evaluateOddsUsability(odds, filterIds.length);
   if (shouldRun("ODDS")) {
     const t0 = Date.now();
     if (!scheduleUsable) {
@@ -336,18 +429,30 @@ export async function runMlbDailyPregameV0(
         }),
       );
     } else if (odds.exists) {
+      const st = stageStatusForUsability(oddsUsability.usability);
       stages.push(
-        emptyStage("ODDS", "ALREADY_COMPLETE", {
+        emptyStage("ODDS", st === "WOULD_RUN" ? "PARTIAL" : st, {
           outputPaths: [odds.path],
           rows: odds.rows,
           readyGames: Number(odds.detail.moneylineCompleteGames ?? 0),
           activeGames: filterIds.length,
-          warnings: odds.warnings,
+          warnings: [...odds.warnings, ...oddsUsability.reasonCodes],
+          blockers:
+            oddsUsability.usability === "ARTIFACT_PRESENT_UNUSABLE"
+              ? oddsUsability.reasonCodes
+              : [],
           durationMs: Date.now() - t0,
-          detail: odds.detail,
+          detail: {
+            ...odds.detail,
+            usability: oddsUsability.usability,
+            collectedGames: oddsUsability.collectedGames,
+          },
         }),
       );
-      warnings.push(...odds.warnings);
+      warnings.push(...odds.warnings, ...oddsUsability.reasonCodes);
+      if (oddsUsability.usability === "ARTIFACT_PRESENT_UNUSABLE") {
+        blockingIssues.push("ODDS_MISSING_ALL");
+      }
     } else if (noProvider) {
       stages.push(
         emptyStage("ODDS", "WOULD_RUN", {
@@ -370,13 +475,30 @@ export async function runMlbDailyPregameV0(
       providerCalls += 1;
       writesPerformed += code === 0 ? 1 : 0;
       odds = await auditOdds(dateKst, cwd, filterIds);
+      oddsUsability = evaluateOddsUsability(odds, filterIds.length);
+      if (oddsUsability.usability === "ARTIFACT_PRESENT_UNUSABLE") {
+        blockingIssues.push("ODDS_MISSING_ALL");
+      }
       stages.push(
-        emptyStage("ODDS", odds.exists ? "SUCCESS" : "FAILED", {
-          outputPaths: [odds.path],
-          providerCalls: 1,
-          rows: odds.rows,
-          durationMs: Date.now() - t0,
-        }),
+        emptyStage(
+          "ODDS",
+          odds.exists
+            ? oddsUsability.usability === "DATA_COMPLETE"
+              ? "SUCCESS"
+              : "PARTIAL"
+            : "FAILED",
+          {
+            outputPaths: [odds.path],
+            providerCalls: 1,
+            rows: odds.rows,
+            durationMs: Date.now() - t0,
+            detail: { usability: oddsUsability.usability },
+            blockers:
+              oddsUsability.usability === "ARTIFACT_PRESENT_UNUSABLE"
+                ? oddsUsability.reasonCodes
+                : [],
+          },
+        ),
       );
     }
   } else {
@@ -449,6 +571,11 @@ export async function runMlbDailyPregameV0(
   let summary = await auditSummary(dateKst, cwd);
   const domestic = await auditDomesticMarkets(dateKst, cwd);
   let inputManifest: Record<string, unknown> | null = null;
+  const cutoffGate = evaluateCutoffGate({
+    schedule,
+    asOfIso,
+    gameIds: options.gameIds,
+  });
   if (shouldRun("INPUT_AUDIT")) {
     const t0 = Date.now();
     const blockers: string[] = [];
@@ -456,6 +583,20 @@ export async function runMlbDailyPregameV0(
     if (!summary.exists) blockers.push("DAILY_SUMMARY_MISSING");
     if (!starter.exists) blockers.push("STARTER_MISSING");
     if (!odds.exists) blockers.push("ODDS_MISSING");
+    if (oddsUsability.usability === "ARTIFACT_PRESENT_UNUSABLE") {
+      blockers.push("ODDS_MISSING_ALL");
+    }
+    if (starterUsability.usability === "INTEGRITY_FAILED") {
+      blockers.push("STARTER_INTEGRITY_FAILED");
+    }
+    if (enforcePregameGates && cutoffGate.blocked) {
+      blockers.push("BLOCKED_AFTER_START");
+    } else if (enforcePregameGates && cutoffGate.gamesAfterStart > 0) {
+      blockers.push("SOME_GAMES_AFTER_START");
+    }
+    if (useMarketPrior && oddsUsability.collectedGames === 0 && odds.exists) {
+      blockers.push("MARKET_PRIOR_REQUIRES_ODDS");
+    }
 
     // Ensure daily summary for prediction consumer
     if (!summary.exists && !noProvider && scheduleUsable) {
@@ -492,11 +633,19 @@ export async function runMlbDailyPregameV0(
       eligibleMarkets: ["MONEYLINE_2WAY"] as const,
       notImplementedMarkets: ["TOTALS", "RUN_LINE"] as const,
       gameIds: filterIds,
-      cutoffStatus: scheduleUsable ? "AUDIT_PER_GAME" : "UNKNOWN",
+      cutoffStatus: cutoffGate.blocked
+        ? "BLOCKED_AFTER_START"
+        : scheduleUsable
+          ? "AUDIT_PER_GAME"
+          : "UNKNOWN",
       leakageStatus: "GUARDS_ACTIVE",
       identityStatus: schedule.duplicateGameIds.length
         ? "DUPLICATE_IDS"
         : "OK",
+      starterUsability: starterUsability.usability,
+      oddsUsability: oddsUsability.usability,
+      enforcePregameGates,
+      asOf: asOfIso,
       missingInputs,
       warnings: [
         ...new Set([
@@ -505,6 +654,9 @@ export async function runMlbDailyPregameV0(
           ...odds.warnings,
           ...lineup.warnings,
           ...domestic.warnings,
+          ...starterUsability.reasonCodes,
+          ...oddsUsability.reasonCodes,
+          ...cutoffGate.reasonCodes,
         ]),
       ],
     };
@@ -513,8 +665,17 @@ export async function runMlbDailyPregameV0(
       inputManifestHash: sha256(manifestBody),
     };
 
+    const inputBlocked =
+      blockers.includes("SCHEDULE_MISSING") ||
+      blockers.includes("DAILY_SUMMARY_MISSING") ||
+      blockers.includes("DAILY_SUMMARY_REQUIRED_FOR_PREDICTION") ||
+      blockers.includes("ODDS_MISSING_ALL") ||
+      blockers.includes("STARTER_INTEGRITY_FAILED") ||
+      blockers.includes("BLOCKED_AFTER_START") ||
+      blockers.includes("MARKET_PRIOR_REQUIRES_ODDS");
+
     stages.push(
-      emptyStage("INPUT_AUDIT", blockers.length ? "BLOCKED" : "READY", {
+      emptyStage("INPUT_AUDIT", inputBlocked ? "BLOCKED" : "READY", {
         inputPaths: [
           schedule.path,
           starter.path,
@@ -536,6 +697,16 @@ export async function runMlbDailyPregameV0(
     ) {
       blockingIssues.push("DAILY_SUMMARY_MISSING");
     }
+    if (blockers.includes("ODDS_MISSING_ALL") || blockers.includes("MARKET_PRIOR_REQUIRES_ODDS")) {
+      blockingIssues.push("ODDS_MISSING_ALL");
+    }
+    if (blockers.includes("STARTER_INTEGRITY_FAILED")) {
+      blockingIssues.push("STARTER_INTEGRITY_FAILED");
+    }
+    if (blockers.includes("BLOCKED_AFTER_START")) {
+      blockingIssues.push("BLOCKED_AFTER_START");
+    }
+    if (inputBlocked) blockingIssues.push("INPUT_AUDIT_BLOCKED");
   } else {
     stages.push(emptyStage("INPUT_AUDIT", "SKIPPED"));
   }
@@ -546,7 +717,45 @@ export async function runMlbDailyPregameV0(
   if (shouldRun("PREDICTION_V0")) {
     const t0 = Date.now();
     const summaryNow = await auditSummary(dateKst, cwd);
-    if (!scheduleUsable) {
+    const freezeBlockers: string[] = [];
+    if (!scheduleUsable) freezeBlockers.push("SCHEDULE_REQUIRED");
+    if (!summaryNow.exists) freezeBlockers.push("DAILY_SUMMARY_MISSING");
+    if (enforcePregameGates && cutoffGate.blocked) {
+      freezeBlockers.push("BLOCKED_AFTER_START");
+    }
+    if (
+      enforcePregameGates &&
+      useMarketPrior &&
+      oddsUsability.usability === "ARTIFACT_PRESENT_UNUSABLE"
+    ) {
+      freezeBlockers.push("BLOCKED_ODDS_MISSING");
+    }
+    if (
+      enforcePregameGates &&
+      starterUsability.usability === "INTEGRITY_FAILED"
+    ) {
+      freezeBlockers.push("BLOCKED_STARTER_INTEGRITY");
+    }
+
+    if (freezeBlockers.length) {
+      for (const b of freezeBlockers) blockingIssues.push(b);
+      stages.push(
+        emptyStage("PREDICTION_V0", "BLOCKED", {
+          blockers: freezeBlockers,
+          errorCode: freezeBlockers[0],
+          message:
+            "Pregame freeze blocked by cutoff/odds/starter integrity gates",
+          durationMs: Date.now() - t0,
+          detail: {
+            enforcePregameGates,
+            cutoffGate,
+            oddsUsability,
+            starterUsability,
+            useMarketPrior,
+          },
+        }),
+      );
+    } else if (!scheduleUsable) {
       stages.push(
         emptyStage("PREDICTION_V0", "BLOCKED", {
           blockers: ["SCHEDULE_REQUIRED"],
@@ -576,7 +785,7 @@ export async function runMlbDailyPregameV0(
           cwd,
           gameIds: options.gameIds,
           observationOnly: options.observationOnly,
-          useMarketPrior: options.useMarketPrior !== false,
+          useMarketPrior,
         });
         if (load.kind === "blocked") {
           stages.push(
@@ -595,7 +804,7 @@ export async function runMlbDailyPregameV0(
             generatedAt,
             dryRun,
             observationOnly: Boolean(options.observationOnly),
-            useMarketPrior: options.useMarketPrior !== false,
+            useMarketPrior,
           });
           predictionDetail = {
             predictionHashSha256: snapshotDoc.meta.predictionHashSha256,
@@ -776,6 +985,25 @@ export async function runMlbDailyPregameV0(
   } else if (blockingIssues.includes("DAILY_SUMMARY_MISSING")) {
     overall = "BLOCKED_MISSING_SUMMARY";
     nextAction = "RUN_DAILY_SUMMARY";
+  } else if (blockingIssues.includes("BLOCKED_AFTER_START")) {
+    overall = "BLOCKED_AFTER_START";
+    nextAction = "WAIT_NEXT_SLATE_BEFORE_COMMENCE";
+  } else if (
+    blockingIssues.includes("ODDS_MISSING_ALL") ||
+    blockingIssues.includes("BLOCKED_ODDS_MISSING")
+  ) {
+    overall = "BLOCKED_ODDS_MISSING";
+    nextAction = "COLLECT_OVERSEAS_ODDS_BEFORE_FREEZE";
+  } else if (
+    blockingIssues.includes("STARTER_INTEGRITY_FAILED") ||
+    blockingIssues.includes("BLOCKED_STARTER_INTEGRITY") ||
+    blockingIssues.includes("STARTER_BUILDER_EXIT_NONZERO")
+  ) {
+    overall = "BLOCKED_STARTER_INTEGRITY";
+    nextAction = "FIX_STARTER_HASH_OR_RECOLLECT_PREGAME";
+  } else if (blockingIssues.includes("INPUT_AUDIT_BLOCKED")) {
+    overall = "BLOCKED_INPUT_AUDIT";
+    nextAction = "RESOLVE_INPUT_AUDIT_BLOCKERS";
   } else if (blockingIssues.includes("SNAPSHOT_VERIFY_FAILED")) {
     overall = "FAILED";
     nextAction = "FIX_SNAPSHOT_VERIFY";
@@ -783,12 +1011,22 @@ export async function runMlbDailyPregameV0(
     scheduleUsable &&
     starter.exists &&
     odds.exists &&
-    summaryFinal.exists
+    summaryFinal.exists &&
+    oddsUsability.usability !== "ARTIFACT_PRESENT_UNUSABLE" &&
+    starterUsability.usability !== "INTEGRITY_FAILED" &&
+    oddsUsability.collectedGames > 0
   ) {
     overall = "READY_FOR_PREGAME_RUN";
     nextAction = dryRun
       ? "APPROVE_REAL_PREGAME_RUN"
       : "AWAIT_POSTGAME_RESULT_GRADE";
+  } else if (
+    scheduleUsable &&
+    (oddsUsability.usability === "DATA_PARTIAL" ||
+      starterUsability.usability === "DATA_PARTIAL")
+  ) {
+    overall = "PARTIAL_OBSERVATION_ONLY";
+    nextAction = "COMPLETE_PARTIAL_INPUTS_OR_OBSERVE_ONLY";
   } else if (noProvider && (!starter.exists || !odds.exists)) {
     overall = "WOULD_COLLECT";
     nextAction = "RUN_WITH_PROVIDER_AFTER_APPROVAL";
