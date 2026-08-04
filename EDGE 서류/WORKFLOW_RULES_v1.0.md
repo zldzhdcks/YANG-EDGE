@@ -147,14 +147,16 @@ git add . 사용은 지양한다.
 
 기능 완료 후 필요 시
 
-- PROJECT_STATE
-- PROJECT_PROGRESS
+- PROJECT_STATUS
+- PROVIDER_POLICY (Provider 관련 시)
 - CHANGELOG
 - NEXT_SESSION
 - KNOWN_ISSUES
+- YANG_EDGE_INDEX (읽기 순서 변경 시)
 
 를 갱신한다.
 
+(구 PROJECT_STATE / PROJECT_PROGRESS는 PROJECT_STATUS로 통합)
 ---
 
 # 10. 운영 원칙

@@ -20,6 +20,20 @@ YANG EDGE 프로젝트의 버전별 변경 이력을 관리하는 공식 문서�
 
 ---
 
+# Documentation
+
+## CHANGED / ADDED / REMOVED (2026-08-04 YANG EDGE Documentation Refactoring v1)
+
+- ADDED: `YANG_EDGE_INDEX_v1.0.md` — 새 채팅 문서 읽기 순서
+- ADDED: `PROJECT_STATUS_v1.0.md` — PROJECT_STATE + PROJECT_PROGRESS 통합
+- ADDED: `PROVIDER_POLICY_v1.0.md` — Provider Registry·Legal·Approval·Engine 분리
+- CHANGED: `NEXT_SESSION_v1.0.md` — TRANSFER_NOTES 인수인계 내용 병합
+- CHANGED: `CHAT_BOOTSTRAP` · `WORKFLOW_RULES` · `RESEARCH_POLICY` — 참조를 STATUS/INDEX로 갱신
+- REMOVED: `PROJECT_PROGRESS_v1.0.md`, `PROJECT_STATE_v1.0.md`, `TRANSFER_NOTES_v1.0.md`
+- 범위: `EDGE 서류/` 문서만. Prediction/Engine/Dataset/Provider 코드·Artifact 변경 없음
+
+---
+
 # v1.0.0
 
 ## FIXED (2026-08-01 KBO T45 Readiness Blockers)
