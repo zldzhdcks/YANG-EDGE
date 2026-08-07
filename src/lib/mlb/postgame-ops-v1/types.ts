@@ -4,6 +4,8 @@
  */
 
 import type { SlateProvenanceBanner } from "@/lib/mlb/recommendation-provenance-v1";
+import type { MlbKoreanMarketBaselineV0 } from "./korean-market-baseline";
+import type { MlbPassTrackingV0 } from "./pass-tracking";
 
 export const MLB_POSTGAME_OPS_SCHEMA = "yang-edge-mlb-postgame-ops-v1" as const;
 
@@ -26,6 +28,8 @@ export type MlbPostgameStageName =
   | "DAILY_REVIEW"
   | "GOOD_PICK_FEEDBACK"
   | "LEARNING_TRACKER"
+  | "KOREAN_MARKET_BASELINE"
+  | "PASS_TRACKING"
   | "OPERATOR_SUMMARY";
 
 export type MlbPostgameFailure = {
@@ -81,6 +85,9 @@ export type MlbPostgameImmutableAudit = {
   predictionRel: string;
   predictionHashBefore: string | null;
   predictionHashAfter: string | null;
+  /** Prediction Snapshot meta.predictionHashSha256 (field). */
+  predictionFieldHashBefore: string | null;
+  predictionFieldHashAfter: string | null;
   predictionMtimeBefore: number | null;
   predictionMtimeAfter: number | null;
   predictionUnchanged: boolean;
@@ -90,13 +97,24 @@ export type MlbPostgameImmutableAudit = {
   recommendationMtimeBefore: number | null;
   recommendationMtimeAfter: number | null;
   recommendationUnchanged: boolean;
+  koreanMarketRel: string | null;
+  koreanMarketHashBefore: string | null;
+  koreanMarketHashAfter: string | null;
+  koreanMarketFieldHashBefore: string | null;
+  koreanMarketFieldHashAfter: string | null;
+  koreanMarketMtimeBefore: number | null;
+  koreanMarketMtimeAfter: number | null;
+  koreanMarketUnchanged: boolean;
 };
 
 export type MlbPostgameResultsStatus = {
   games: number;
   final: number;
   notFinal: number;
+  missing: number;
   allFinal: boolean;
+  /** Explicit readiness label for operators. */
+  postgameStatus: "AWAITING_RESULTS" | "PARTIAL_RESULTS" | "ALL_FINAL";
 };
 
 export type MlbPostgameReport = {
@@ -112,6 +130,8 @@ export type MlbPostgameReport = {
   resultsStatus: MlbPostgameResultsStatus | null;
   allResearch: AllResearchScorecard | null;
   engineGoodPicks: EngineGoodPickScorecard;
+  passTracking: MlbPassTrackingV0 | null;
+  koreanMarketBaseline: MlbKoreanMarketBaselineV0 | null;
   dailyLearningPlain: string | null;
   researchQuestions: string[];
   trackerLine: string | null;

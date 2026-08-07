@@ -64,23 +64,47 @@ async function main() {
   assert.match(r07.operatorSummaryText, /사후 Prediction 생성 금지/);
 
   // --- 08-08 assess: sealed record, awaiting results ---
+  const kor08 =
+    "data/operator-input/mlb/2026-08-08-korean-market-odds-observation-v0.json";
+  const beforeKor = sha256File(kor08);
+  const mtimeKor = statSync(kor08).mtimeMs;
+  const korHash = JSON.parse(readFileSync(kor08, "utf8"))
+    .koreanMarketOddsHash as string;
+
   const r08 = await runMlbPostgameOpsV1({
     dateKst: "2026-08-08",
     assessOnly: true,
   });
   assert.equal(r08.opsSuccess, true);
-  assert.ok(
-    r08.lifecycle === "AWAITING_RESULT" || r08.lifecycle === "PREGAME_READY",
-  );
+  assert.equal(r08.lifecycle, "AWAITING_RESULT");
+  assert.equal(r08.resultsStatus?.postgameStatus, "AWAITING_RESULTS");
+  assert.equal(r08.resultsStatus?.final, 0);
+  assert.equal(r08.resultsStatus?.games, 15);
   assert.equal(r08.provenance?.status, "PRE_GAME_SNAPSHOT_VERIFIED");
   assert.equal(r08.engineGoodPicks.recordStatus, "SEALED");
   assert.equal(r08.engineGoodPicks.total, 3);
+  assert.equal(r08.passTracking?.totalPass, 12);
+  assert.ok(r08.koreanMarketBaseline?.available);
+  assert.equal(r08.koreanMarketBaseline?.preGameObservations, 15);
+  assert.equal(r08.koreanMarketBaseline?.favoriteWon, 0);
+  assert.equal(r08.koreanMarketBaseline?.accuracyFinalized, false);
   assert.ok(r08.immutableAudit.predictionUnchanged);
   assert.ok(r08.immutableAudit.recommendationUnchanged);
+  assert.ok(r08.immutableAudit.koreanMarketUnchanged);
+  assert.ok(
+    r08.immutableAudit.predictionFieldHashBefore?.startsWith("809b3973"),
+  );
+  assert.match(r08.operatorSummaryText, /MLB POSTGAME OPS/);
+  assert.match(r08.operatorSummaryText, /AWAITING_RESULTS/);
+  assert.match(r08.operatorSummaryText, /RUN AFTER FINAL RESULTS/);
+  assert.match(r08.operatorSummaryText, /IMMUTABILITY AUDIT/);
+  assert.match(r08.operatorSummaryText, /Mutation: NONE/);
   assert.equal(sha256File(pred08), beforePred);
   assert.equal(sha256File(rec08), beforeRec);
+  assert.equal(sha256File(kor08), beforeKor);
   assert.equal(statSync(pred08).mtimeMs, mtimePred);
   assert.equal(statSync(rec08).mtimeMs, mtimeRec);
+  assert.equal(statSync(kor08).mtimeMs, mtimeKor);
 
   // --- Fixture: FINAL slate in temp cwd ---
   const finalCwd = mkdtempSync(path.join(tmpdir(), "mlb-postgame-final-"));
@@ -98,6 +122,7 @@ async function main() {
   const summaryRel = `data/research/mlb/${dateKst}-daily-research-summary-v1.json`;
   copyRel(root, finalCwd, pred08);
   copyRel(root, finalCwd, rec08);
+  copyRel(root, finalCwd, kor08);
   copyRel(root, finalCwd, scheduleRel);
   if (existsSync(path.join(root, summaryRel))) {
     copyRel(root, finalCwd, summaryRel);
@@ -203,6 +228,7 @@ async function main() {
 
   const predBeforeFinal = sha256File(path.join(finalCwd, pred08));
   const recBeforeFinal = sha256File(path.join(finalCwd, rec08));
+  const korBeforeFinal = sha256File(path.join(finalCwd, kor08));
 
   const graded = await gradeMlbPredictionsV1({
     dateKst,
@@ -245,10 +271,19 @@ async function main() {
   assert.ok((finalReport.allResearch?.graded ?? 0) >= 1);
   assert.ok(finalReport.immutableAudit.predictionUnchanged);
   assert.ok(finalReport.immutableAudit.recommendationUnchanged);
+  assert.ok(finalReport.immutableAudit.koreanMarketUnchanged);
+  assert.equal(finalReport.passTracking?.totalPass, 12);
+  assert.equal(finalReport.passTracking?.tracked, 12);
+  assert.ok(finalReport.koreanMarketBaseline?.available);
+  assert.equal(finalReport.koreanMarketBaseline?.accuracyFinalized, true);
+  assert.ok((finalReport.koreanMarketBaseline?.decided ?? 0) >= 1);
   assert.equal(sha256File(path.join(finalCwd, pred08)), predBeforeFinal);
   assert.equal(sha256File(path.join(finalCwd, rec08)), recBeforeFinal);
-  assert.match(finalReport.operatorSummaryText, /ALL RESEARCH PREDICTIONS/);
-  assert.match(finalReport.operatorSummaryText, /ENGINE GOOD PICKS/);
+  assert.equal(sha256File(path.join(finalCwd, kor08)), korBeforeFinal);
+  assert.match(finalReport.operatorSummaryText, /MLB POSTGAME COMPLETE/);
+  assert.match(finalReport.operatorSummaryText, /Good Picks/);
+  assert.match(finalReport.operatorSummaryText, /Korean Market/);
+  assert.match(finalReport.operatorSummaryText, /SUCCESS_FAILURE_REVIEW/);
   assert.match(finalReport.operatorSummaryText, /COMPLETED/);
 
   // Tracker line for sealed+graded day
@@ -259,6 +294,7 @@ async function main() {
   const partialCwd = mkdtempSync(path.join(tmpdir(), "mlb-postgame-partial-"));
   copyRel(root, partialCwd, pred08);
   copyRel(root, partialCwd, rec08);
+  copyRel(root, partialCwd, kor08);
   copyRel(root, partialCwd, scheduleRel);
   const partialResults = {
     ...resultsDoc,
@@ -299,9 +335,45 @@ async function main() {
   });
   assert.equal(partialReport.resultsStatus?.final, 13);
   assert.equal(partialReport.resultsStatus?.notFinal, 2);
+  assert.equal(partialReport.resultsStatus?.postgameStatus, "PARTIAL_RESULTS");
   assert.equal(partialReport.lifecycle, "AWAITING_RESULT");
   assert.ok(partialReport.immutableAudit.predictionUnchanged);
   assert.ok(partialReport.immutableAudit.recommendationUnchanged);
+  assert.ok(partialReport.immutableAudit.koreanMarketUnchanged);
+  assert.match(partialReport.operatorSummaryText, /AWAITING_RESULTS|PARTIAL/);
+
+  // Korean baseline join failure (gamePk mismatch) in isolation
+  const {
+    buildMlbKoreanMarketBaseline,
+  } = await import("../src/lib/mlb/postgame-ops-v1/korean-market-baseline");
+  const korDoc = JSON.parse(readFileSync(kor08, "utf8"));
+  const joinFail = buildMlbKoreanMarketBaseline({
+    dateKst,
+    observation: korDoc,
+    results: {
+      schemaVersion: "mlb-official-results-v1",
+      dateKst,
+      provider: "fixture",
+      scheduleArtifact: "x",
+      collectedAt: "2026-08-09T00:00:00.000Z",
+      games: [
+        {
+          gamePk: 999999999,
+          internalGameId: "mlb-unknown-unknown",
+          status: "FINAL",
+          awayTeam: "X",
+          homeTeam: "Y",
+          awayScore: 1,
+          homeScore: 2,
+          winner: "HOME",
+          resultTimestamp: "2026-08-09T00:00:00.000Z",
+        },
+      ],
+      resultHash: "",
+    } as never,
+  });
+  assert.ok(joinFail.rows.every((r) => r.joinStatus === "MARKET_JOIN_FAILED"));
+  assert.equal(joinFail.favoriteWon, 0);
 
   // Preflight helper
   const pf07 = await preflightMlbPostgameOps({ dateKst: "2026-08-07" });
@@ -314,8 +386,14 @@ async function main() {
   // Repo mutation audit
   assert.equal(sha256File(pred08), beforePred);
   assert.equal(sha256File(rec08), beforeRec);
+  assert.equal(sha256File(kor08), beforeKor);
   assert.equal(statSync(pred08).mtimeMs, mtimePred);
   assert.equal(statSync(rec08).mtimeMs, mtimeRec);
+  assert.equal(statSync(kor08).mtimeMs, mtimeKor);
+  assert.equal(
+    JSON.parse(readFileSync(kor08, "utf8")).koreanMarketOddsHash,
+    korHash,
+  );
 
   console.log("=== MLB POSTGAME OPS READY ===\n");
   console.log("Pregame command:");
@@ -328,6 +406,7 @@ async function main() {
   console.log(`Prediction: PRE_GAME_SNAPSHOT_VERIFIED · ${hash08.slice(0, 8)}…`);
   console.log("Recommendation Record: SEALED");
   console.log(`Postgame Status: ${r08.lifecycle}`);
+  console.log(`Korean Market: ${r08.koreanMarketBaseline?.display}`);
   console.log("");
   console.log("Fixture FINAL Engine Good Picks:");
   console.log(

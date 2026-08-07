@@ -124,6 +124,9 @@ async function main() {
     console.log(
       `  Recommendation Record unchanged: ${report.immutableAudit.recommendationUnchanged}`,
     );
+    console.log(
+      `  Korean Market Observation unchanged: ${report.immutableAudit.koreanMarketUnchanged}`,
+    );
     if (!report.opsSuccess && report.failure) {
       console.log("");
       console.log(formatMlbPostgameOpsFailureBlock(report.failure));

@@ -1,7 +1,8 @@
 /**
  * MLB Postgame Ops One-Command v1
- * Reuses official results → grade → review → feedback → learning tracker.
- * Never mutates Prediction Snapshot or Recommendation Record.
+ * Reuses official results → grade → review → feedback → learning tracker
+ * + Korean Market Baseline + PASS tracking.
+ * Never mutates Prediction Snapshot, Recommendation Record, or Korean Market Observation.
  */
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, statSync } from "node:fs";
@@ -11,12 +12,16 @@ import { buildMlbPredictionReviewsV1 } from "@/lib/mlb/build-mlb-prediction-revi
 import { gradeMlbPredictionsV1 } from "@/lib/mlb/grade-mlb-predictions-v1";
 import { loadGoodPickFeedbackV1 } from "@/lib/mlb/good-pick-feedback-v1";
 import { loadGoodPickLearningTrackerV1 } from "@/lib/mlb/good-pick-learning-tracker-v1";
+import { auditSchedule } from "@/lib/mlb/daily-pregame-v0/audit-artifacts";
 import {
   engineRecommendationRecordRel,
 } from "@/lib/mlb/recommendation-provenance-v1";
-import { asNumber, asRecord } from "@/lib/mlb/mlb-review-utils";
+import { asNumber, asRecord, asString } from "@/lib/mlb/mlb-review-utils";
 import { mlbOfficialResultsRel } from "@/lib/mlb/mlb-prediction-review-paths";
+import { mlbKoreanMarketOddsObservationRel } from "@/lib/mlb/korean-market-odds-observation-v0/paths";
 import { gradeEngineRecommendationRecord } from "./grade-engine-record";
+import { loadMlbKoreanMarketBaseline } from "./korean-market-baseline";
+import { loadMlbPassTracking } from "./pass-tracking";
 import { preflightMlbPostgameOps } from "./preflight";
 import { formatMlbPostgameOpsOperatorSummary } from "./operator-summary";
 import type {
@@ -56,6 +61,24 @@ function mtimeMs(abs: string): number | null {
   }
 }
 
+function readPredictionFieldHash(abs: string): string | null {
+  try {
+    const doc = asRecord(JSON.parse(readFileSync(abs, "utf8")));
+    return asString(asRecord(doc?.meta)?.predictionHashSha256);
+  } catch {
+    return null;
+  }
+}
+
+function readKoreanFieldHash(abs: string): string | null {
+  try {
+    const doc = asRecord(JSON.parse(readFileSync(abs, "utf8")));
+    return asString(doc?.koreanMarketOddsHash);
+  } catch {
+    return null;
+  }
+}
+
 function snapshotImmutableAudit(input: {
   dateKst: string;
   cwd: string;
@@ -65,14 +88,19 @@ function snapshotImmutableAudit(input: {
 } {
   const predRel = `data/predictions/mlb/${input.dateKst}.json`;
   const recRel = engineRecommendationRecordRel(input.dateKst);
+  const korRel = mlbKoreanMarketOddsObservationRel(input.dateKst);
   const predAbs = path.join(input.cwd, predRel);
   const recAbs = path.join(input.cwd, recRel);
+  const korAbs = path.join(input.cwd, korRel);
   const hasRec = existsSync(recAbs);
+  const hasKor = existsSync(korAbs);
 
   const before: MlbPostgameImmutableAudit = {
     predictionRel: predRel,
     predictionHashBefore: sha256File(predAbs),
     predictionHashAfter: null,
+    predictionFieldHashBefore: readPredictionFieldHash(predAbs),
+    predictionFieldHashAfter: null,
     predictionMtimeBefore: mtimeMs(predAbs),
     predictionMtimeAfter: null,
     predictionUnchanged: false,
@@ -82,6 +110,14 @@ function snapshotImmutableAudit(input: {
     recommendationMtimeBefore: hasRec ? mtimeMs(recAbs) : null,
     recommendationMtimeAfter: null,
     recommendationUnchanged: !hasRec,
+    koreanMarketRel: hasKor ? korRel : null,
+    koreanMarketHashBefore: hasKor ? sha256File(korAbs) : null,
+    koreanMarketHashAfter: null,
+    koreanMarketFieldHashBefore: hasKor ? readKoreanFieldHash(korAbs) : null,
+    koreanMarketFieldHashAfter: null,
+    koreanMarketMtimeBefore: hasKor ? mtimeMs(korAbs) : null,
+    koreanMarketMtimeAfter: null,
+    koreanMarketUnchanged: !hasKor,
   };
 
   return {
@@ -89,14 +125,22 @@ function snapshotImmutableAudit(input: {
     finish: () => {
       const predictionHashAfter = sha256File(predAbs);
       const predictionMtimeAfter = mtimeMs(predAbs);
+      const predictionFieldHashAfter = readPredictionFieldHash(predAbs);
       const recommendationHashAfter = hasRec ? sha256File(recAbs) : null;
       const recommendationMtimeAfter = hasRec ? mtimeMs(recAbs) : null;
+      const koreanMarketHashAfter = hasKor ? sha256File(korAbs) : null;
+      const koreanMarketMtimeAfter = hasKor ? mtimeMs(korAbs) : null;
+      const koreanMarketFieldHashAfter = hasKor
+        ? readKoreanFieldHash(korAbs)
+        : null;
       return {
         ...before,
         predictionHashAfter,
         predictionMtimeAfter,
+        predictionFieldHashAfter,
         predictionUnchanged:
           before.predictionHashBefore === predictionHashAfter &&
+          before.predictionFieldHashBefore === predictionFieldHashAfter &&
           before.predictionMtimeBefore === predictionMtimeAfter,
         recommendationHashAfter,
         recommendationMtimeAfter,
@@ -104,22 +148,50 @@ function snapshotImmutableAudit(input: {
           ? true
           : before.recommendationHashBefore === recommendationHashAfter &&
             before.recommendationMtimeBefore === recommendationMtimeAfter,
+        koreanMarketHashAfter,
+        koreanMarketMtimeAfter,
+        koreanMarketFieldHashAfter,
+        koreanMarketUnchanged: !hasKor
+          ? true
+          : before.koreanMarketHashBefore === koreanMarketHashAfter &&
+            before.koreanMarketFieldHashBefore === koreanMarketFieldHashAfter &&
+            before.koreanMarketMtimeBefore === koreanMarketMtimeAfter,
       };
     },
   };
 }
 
-function resultsStatusFromDoc(doc: {
-  games: Array<{ status: string }>;
-}): MlbPostgameResultsStatus {
-  const games = doc.games.length;
+function resultsStatusFromDoc(
+  doc: { games: Array<{ status: string }> },
+  scheduleGames: number,
+): MlbPostgameResultsStatus {
+  const games = Math.max(doc.games.length, scheduleGames);
   const final = doc.games.filter((g) => g.status === "FINAL").length;
-  const notFinal = games - final;
+  const notFinal = doc.games.filter((g) => g.status !== "FINAL").length;
+  const missing = Math.max(0, scheduleGames - doc.games.length);
+  const allFinal = games > 0 && final === games && missing === 0 && notFinal === 0;
+  let postgameStatus: MlbPostgameResultsStatus["postgameStatus"] =
+    "AWAITING_RESULTS";
+  if (allFinal) postgameStatus = "ALL_FINAL";
+  else if (final > 0) postgameStatus = "PARTIAL_RESULTS";
   return {
     games,
     final,
     notFinal,
-    allFinal: games > 0 && notFinal === 0,
+    missing,
+    allFinal,
+    postgameStatus,
+  };
+}
+
+function emptyResultsStatus(scheduleGames: number): MlbPostgameResultsStatus {
+  return {
+    games: scheduleGames,
+    final: 0,
+    notFinal: 0,
+    missing: scheduleGames,
+    allFinal: false,
+    postgameStatus: "AWAITING_RESULTS",
   };
 }
 
@@ -158,11 +230,8 @@ function resolveLifecycle(input: {
 }): MlbPostgameLifecycleStatus {
   if (input.noSnapshot) return "NO_PREGAME_SNAPSHOT";
   if (!input.preflightOk) return "OPS_FAILURE";
-  if (!input.results || input.results.games === 0) return "PREGAME_READY";
+  if (!input.results || input.results.games === 0) return "AWAITING_RESULT";
   if (!input.results.allFinal || input.enginePending > 0) {
-    if (input.researchGraded > 0 || input.engineGraded > 0) {
-      return "AWAITING_RESULT";
-    }
     return "AWAITING_RESULT";
   }
   if (input.engineGraded > 0 || input.researchGraded > 0) {
@@ -171,8 +240,27 @@ function resolveLifecycle(input: {
   return "REVIEW_READY";
 }
 
+function emptyEngineCard(
+  recordStatus: "SEALED" | "ABSENT" | "NOT_ELIGIBLE",
+  recordPath: string | null,
+): MlbPostgameReport["engineGoodPicks"] {
+  return {
+    recordStatus,
+    recordPath,
+    total: 0,
+    correct: 0,
+    incorrect: 0,
+    pending: 0,
+    accuracyPercent: null,
+    rows: [],
+    topSuccessCandidate: null,
+    topFailureCandidate: null,
+  };
+}
+
 /**
- * Close one MLB research day: Result → Grade → Review → Feedback → Tracker.
+ * Close one MLB research day: Result → Grade → Review → Feedback → Tracker
+ * + Korean Market Baseline + PASS tracking.
  */
 export async function runMlbPostgameOpsV1(
   options: MlbPostgameOpsOptions,
@@ -186,9 +274,20 @@ export async function runMlbPostgameOpsV1(
 
   const audit = snapshotImmutableAudit({ dateKst, cwd });
   const preflight = await preflightMlbPostgameOps({ dateKst, cwd });
+  const schedule = await auditSchedule(dateKst, cwd);
 
   if (!preflight.ok) {
     const immutableAudit = audit.finish();
+    const koreanMarketBaseline = await loadMlbKoreanMarketBaseline({
+      dateKst,
+      cwd,
+      results: null,
+    });
+    const passTracking = await loadMlbPassTracking({
+      dateKst,
+      cwd,
+      results: null,
+    });
     const reportBase = {
       schemaVersion: MLB_POSTGAME_OPS_SCHEMA,
       dateKst,
@@ -201,18 +300,12 @@ export async function runMlbPostgameOpsV1(
       provenance: preflight.provenance,
       resultsStatus: null,
       allResearch: null,
-      engineGoodPicks: {
-        recordStatus: preflight.recommendationRecord,
-        recordPath: preflight.recommendationRecordPath,
-        total: 0,
-        correct: 0,
-        incorrect: 0,
-        pending: 0,
-        accuracyPercent: null,
-        rows: [],
-        topSuccessCandidate: null,
-        topFailureCandidate: null,
-      },
+      engineGoodPicks: emptyEngineCard(
+        preflight.recommendationRecord,
+        preflight.recommendationRecordPath,
+      ),
+      passTracking,
+      koreanMarketBaseline,
       dailyLearningPlain: null,
       researchQuestions: [] as string[],
       trackerLine: null,
@@ -248,8 +341,22 @@ export async function runMlbPostgameOpsV1(
 
   stagesRun.push("FINAL_STATUS_VERIFY");
   const resultsStatus = resultsDoc
-    ? resultsStatusFromDoc(resultsDoc)
-    : null;
+    ? resultsStatusFromDoc(resultsDoc, schedule.totalGames)
+    : emptyResultsStatus(schedule.totalGames);
+
+  stagesRun.push("KOREAN_MARKET_BASELINE");
+  const koreanMarketBaseline = await loadMlbKoreanMarketBaseline({
+    dateKst,
+    cwd,
+    results: resultsDoc,
+  });
+
+  stagesRun.push("PASS_TRACKING");
+  const passTracking = await loadMlbPassTracking({
+    dateKst,
+    cwd,
+    results: resultsDoc,
+  });
 
   if (!resultsDoc) {
     const engineGoodPicks = await gradeEngineRecommendationRecord({
@@ -258,29 +365,59 @@ export async function runMlbPostgameOpsV1(
       generatedBeforeGame: preflight.provenance.generatedBeforeGame,
     });
     const immutableAudit = audit.finish();
-    const lifecycle: MlbPostgameLifecycleStatus = "AWAITING_RESULT";
+    let failure: MlbPostgameReport["failure"] = null;
+    let opsSuccess = true;
+    if (!immutableAudit.predictionUnchanged) {
+      opsSuccess = false;
+      failure = {
+        stage: "PREFLIGHT",
+        reason: "PREDICTION_MUTATION_DETECTED",
+        nextAction: "STOP — Prediction Snapshot must remain immutable",
+      };
+    } else if (!immutableAudit.recommendationUnchanged) {
+      opsSuccess = false;
+      failure = {
+        stage: "GRADE_ENGINE_RECORD",
+        reason: "RECOMMENDATION_RECORD_MUTATION_DETECTED",
+        nextAction: "STOP — Recommendation Record must remain immutable",
+      };
+    } else if (!immutableAudit.koreanMarketUnchanged) {
+      opsSuccess = false;
+      failure = {
+        stage: "KOREAN_MARKET_BASELINE",
+        reason: "KOREAN_MARKET_MUTATION_DETECTED",
+        nextAction: "STOP — Korean Market Observation must remain immutable",
+      };
+    }
+
     const reportBase = {
       schemaVersion: MLB_POSTGAME_OPS_SCHEMA,
       dateKst,
       dryRun,
       assessOnly,
       generatedAt: new Date().toISOString(),
-      opsSuccess: true,
-      lifecycle,
-      failure: null,
+      opsSuccess,
+      lifecycle: (opsSuccess
+        ? "AWAITING_RESULT"
+        : "OPS_FAILURE") as MlbPostgameLifecycleStatus,
+      failure,
       provenance: preflight.provenance,
-      resultsStatus: null,
+      resultsStatus,
       allResearch: null,
       engineGoodPicks,
+      passTracking,
+      koreanMarketBaseline,
       dailyLearningPlain:
-        "Official results artifact 없음 — AWAITING_RESULT. Prediction/Record 미수정.",
+        "Official results artifact 없음 — AWAITING_RESULTS. Prediction/Record/Korean Market 미수정.",
       researchQuestions: [
         "경기 종료 후 Official Result가 들어오면 Good Pick 표본을 닫을 수 있는가?",
       ],
       trackerLine: null,
       immutableAudit,
-      stagesRun,
-      nextAction: "AWAIT_OFFICIAL_RESULTS",
+      stagesRun: [...stagesRun, "OPERATOR_SUMMARY"] as MlbPostgameStageName[],
+      nextAction: opsSuccess
+        ? "AWAIT_OFFICIAL_RESULTS"
+        : failure?.nextAction ?? "STOP",
     };
     return {
       ...reportBase,
@@ -288,6 +425,7 @@ export async function runMlbPostgameOpsV1(
     };
   }
 
+  // Partial results: still allow grade of FINAL games, but do not pretend day is complete.
   let gradedDoc: Record<string, unknown> | null = null;
   if (!readOnly) {
     stagesRun.push("GRADE_RESEARCH");
@@ -370,9 +508,12 @@ export async function runMlbPostgameOpsV1(
 
   let nextAction = "REVIEW_WITH_OPERATOR";
   if (lifecycle === "AWAITING_RESULT") {
-    nextAction = "AWAIT_REMAINING_FINAL_RESULTS";
-  } else if (lifecycle === "COMPLETED") {
-    nextAction = "REVIEW_WITH_OPERATOR";
+    nextAction =
+      resultsStatus.final === 0
+        ? "AWAIT_OFFICIAL_RESULTS"
+        : "AWAIT_REMAINING_FINAL_RESULTS";
+  } else if (lifecycle === "COMPLETED" || lifecycle === "REVIEW_READY") {
+    nextAction = "SUCCESS_FAILURE_REVIEW";
   }
 
   stagesRun.push("OPERATOR_SUMMARY");
@@ -396,6 +537,8 @@ export async function runMlbPostgameOpsV1(
       resultsStatus,
       allResearch,
       engineGoodPicks,
+      passTracking,
+      koreanMarketBaseline,
       dailyLearningPlain: feedback.dailyLearning?.plain ?? null,
       researchQuestions: feedback.dailyLearning?.researchQuestions ?? [],
       trackerLine,
@@ -426,12 +569,46 @@ export async function runMlbPostgameOpsV1(
       resultsStatus,
       allResearch,
       engineGoodPicks,
+      passTracking,
+      koreanMarketBaseline,
       dailyLearningPlain: feedback.dailyLearning?.plain ?? null,
       researchQuestions: feedback.dailyLearning?.researchQuestions ?? [],
       trackerLine,
       immutableAudit,
       stagesRun,
       nextAction: "STOP — Recommendation Record must remain immutable",
+    };
+    return {
+      ...reportFail,
+      operatorSummaryText: formatMlbPostgameOpsOperatorSummary(reportFail),
+    };
+  }
+  if (!immutableAudit.koreanMarketUnchanged) {
+    const reportFail = {
+      schemaVersion: MLB_POSTGAME_OPS_SCHEMA,
+      dateKst,
+      dryRun,
+      assessOnly,
+      generatedAt: new Date().toISOString(),
+      opsSuccess: false,
+      lifecycle: "OPS_FAILURE" as const,
+      failure: {
+        stage: "KOREAN_MARKET_BASELINE" as const,
+        reason: "KOREAN_MARKET_MUTATION_DETECTED",
+        nextAction: "STOP — Korean Market Observation must remain immutable",
+      },
+      provenance: preflight.provenance,
+      resultsStatus,
+      allResearch,
+      engineGoodPicks,
+      passTracking,
+      koreanMarketBaseline,
+      dailyLearningPlain: feedback.dailyLearning?.plain ?? null,
+      researchQuestions: feedback.dailyLearning?.researchQuestions ?? [],
+      trackerLine,
+      immutableAudit,
+      stagesRun,
+      nextAction: "STOP — Korean Market Observation must remain immutable",
     };
     return {
       ...reportFail,
@@ -452,6 +629,8 @@ export async function runMlbPostgameOpsV1(
     resultsStatus,
     allResearch,
     engineGoodPicks,
+    passTracking,
+    koreanMarketBaseline,
     dailyLearningPlain: feedback.dailyLearning?.plain ?? null,
     researchQuestions: feedback.dailyLearning?.researchQuestions ?? [],
     trackerLine,
