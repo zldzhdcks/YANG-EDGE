@@ -94,18 +94,14 @@ export async function freezeNpbPregameEvidenceSnapshot(input: {
   const starterDoc = await loadNpbStarterConfirmation({ dateKst, cwd });
   const oddsDoc = await loadNpbMarketOddsConfirmation({ dateKst, cwd });
 
-  const errors: string[] = [];
+  // Schedule is required. Starter/Odds confirmation may be absent —
+  // freeze with null/missing sides (do not invent values; do not block forever).
   if (!schedule.exists || schedule.games.length === 0) {
-    errors.push("SCHEDULE_MISSING");
-  }
-  if (!starterDoc) errors.push("STARTER_CONFIRMATION_MISSING");
-  if (!oddsDoc) errors.push("MARKET_ODDS_CONFIRMATION_MISSING");
-  if (errors.length) {
     return {
       wrote: false,
       pathRel,
       document: null,
-      errors,
+      errors: ["SCHEDULE_MISSING"],
       snapshotStatus: "MISSING_INPUTS",
     };
   }
@@ -113,10 +109,10 @@ export async function freezeNpbPregameEvidenceSnapshot(input: {
   const snapshotCreatedAt = input.asOf ?? new Date().toISOString();
   const runId = snapshotCreatedAt.replace(/[:.]/g, "-");
   const starterById = new Map(
-    (starterDoc!.games ?? []).map((g) => [g.internalGameId, g] as const),
+    (starterDoc?.games ?? []).map((g) => [g.internalGameId, g] as const),
   );
   const oddsById = new Map(
-    (oddsDoc!.games ?? []).map((g) => [g.internalGameId, g] as const),
+    (oddsDoc?.games ?? []).map((g) => [g.internalGameId, g] as const),
   );
 
   const matched = schedule.games.filter((g) => g.joinStatus === "MATCHED");

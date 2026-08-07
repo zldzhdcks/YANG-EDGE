@@ -1,7 +1,9 @@
 import type { ResearchLabData } from "@/lib/internal/research-lab-reader";
 import type { YangEdgeOsPresentation } from "@/lib/internal/yang-edge-os-presenter";
 import MlbDailyResearchSummaryPanel from "@/components/internal/research/MlbDailyResearchSummaryPanel";
+import NpbDailyOpsPanel from "@/components/internal/research/NpbDailyOpsPanel";
 import NpbPregameEvidencePanel from "@/components/internal/research/NpbPregameEvidencePanel";
+import NpbOfficialResultPanel from "@/components/internal/research/NpbOfficialResultPanel";
 import { StatusPill, levelSurface } from "./StatusPill";
 import { AdvancedDisclosure } from "./OwnerMode";
 
@@ -123,7 +125,11 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
         </div>
       </section>
 
+      <NpbDailyOpsPanel dateKst={dateKst} />
+
       <NpbPregameEvidencePanel dateKst={dateKst} />
+
+      <NpbOfficialResultPanel dateKst={dateKst} />
 
       <p className="text-sm text-zinc-500">
         Research Lab은 연구만 담당합니다. Hash·Artifact·Runtime은{" "}
