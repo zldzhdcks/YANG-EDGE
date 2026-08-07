@@ -23,7 +23,11 @@ function statusColor(s: PipelineStatus): string {
     case "COMPLETE": return "text-green-400 bg-green-950/40 border-green-800";
     case "PARTIAL": return "text-amber-400 bg-amber-950/40 border-amber-800";
     case "WARNING": return "text-red-400 bg-red-950/40 border-red-800";
-    case "PENDING": return "text-blue-400 bg-blue-950/40 border-blue-800";
+    case "PENDING":
+    case "NOT_CREATED":
+    case "NOT_READY":
+    case "NOT_ENTERED":
+      return "text-blue-400 bg-blue-950/40 border-blue-800";
     case "FILE_NOT_FOUND": return "text-zinc-500 bg-zinc-900/40 border-zinc-700";
     default: return "text-zinc-500 bg-zinc-900/40 border-zinc-700";
   }
@@ -44,11 +48,11 @@ export default function SystemDetail({ data, dateKst }: Props) {
   return (
     <div className="space-y-8">
       <div className="rounded border border-zinc-700 bg-zinc-900/40 px-4 py-2 text-xs text-zinc-500">
-        개발 및 유지보수용 기술 화면 · 운영 판단에는{" "}
-        <a href={`/internal/research?date=${dateKst}&view=operator`} className="text-blue-400 hover:underline">
-          운영 홈
+        개발자 전용 기술 화면 · 일상 운영은{" "}
+        <a href={`/internal/dashboard?date=${dateKst}`} className="text-blue-400 hover:underline">
+          Dashboard
         </a>
-        을 먼저 확인하세요.
+        를 먼저 확인하세요. (이전 시스템 상세 탭은 Developer Console로 이동 · deprecated)
       </div>
 
       {/* Summary Cards */}

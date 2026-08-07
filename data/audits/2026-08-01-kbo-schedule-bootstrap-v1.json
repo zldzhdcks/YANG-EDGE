@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "kbo-schedule-bootstrap-v1",
+  "dateKst": "2026-08-01",
+  "generatedAt": "2026-08-01T06:14:28.201Z",
+  "provider": "API_BASEBALL",
+  "legalExistingConnection": true,
+  "theOddsApiUsed": false,
+  "networkCalls": 0,
+  "cache": {
+    "reused": true,
+    "rawHit": 1,
+    "rawMiss": 0,
+    "file": "data/cache/research/kbo/raw/api-baseball/games_league_5_season_2026.json"
+  },
+  "verdict": "READY",
+  "rawRows": 5,
+  "uniqueGames": 5,
+  "duplicates": [],
+  "mappingErrorCount": 0,
+  "dateMismatchCount": 0,
+  "sameTeamCount": 0,
+  "doubleheaders": [],
+  "cancelledOrPostponed": 0,
+  "started": 0,
+  "notStarted": 5,
+  "matchups": [
+    {
+      "gameId": "kbo-181922",
+      "home": "두산",
+      "away": "LG",
+      "scheduledStartTime": "2026-08-01T18:00:00+09:00",
+      "statusAbstract": "SCHEDULED"
+    },
+    {
+      "gameId": "kbo-181923",
+      "home": "키움",
+      "away": "SSG",
+      "scheduledStartTime": "2026-08-01T18:00:00+09:00",
+      "statusAbstract": "SCHEDULED"
+    },
+    {
+      "gameId": "kbo-181924",
+      "home": "KT",
+      "away": "한화",
+      "scheduledStartTime": "2026-08-01T18:00:00+09:00",
+      "statusAbstract": "SCHEDULED"
+    },
+    {
+      "gameId": "kbo-181925",
+      "home": "롯데",
+      "away": "삼성",
+      "scheduledStartTime": "2026-08-01T18:00:00+09:00",
+      "statusAbstract": "SCHEDULED"
+    },
+    {
+      "gameId": "kbo-181926",
+      "home": "NC",
+      "away": "KIA",
+      "scheduledStartTime": "2026-08-01T18:00:00+09:00",
+      "statusAbstract": "SCHEDULED"
+    }
+  ],
+  "writtenArtifacts": [
+    "data/research/kbo/2026-08-01-schedule-v1.json",
+    "data/audits/2026-08-01-kbo-schedule-bootstrap-v1.json"
+  ],
+  "identityArtifactWritten": false,
+  "oddsCollected": false,
+  "starterCollected": false,
+  "lineupCollected": false,
+  "predictionTouched": false,
+  "notes": "Schedule-only bootstrap from cached API-BASEBALL season games. Identity dataset not persisted."
+}

@@ -1,0 +1,315 @@
+{
+  "schemaVersion": "mlb-pregame-collection-summary-v1",
+  "dateKst": "2026-07-31",
+  "runId": "2026-07-31T01-24-23-520Z",
+  "generatedAt": "2026-07-31T01:24:27.777Z",
+  "collectionStartedAt": "2026-07-31T01:24:23.520Z",
+  "kstAtCollection": "2026-07-31 10:24",
+  "engineChanged": false,
+  "weightsChanged": false,
+  "researchPromotion": "NONE",
+  "revisions": {
+    "schedule": "data/research/mlb/2026-07-31-schedule-v1.rev-2026-07-31T01-24-23-520Z.json",
+    "lineup": "data/research/mlb/2026-07-31-lineup-dataset-v1.rev-2026-07-31T01-24-23-520Z.json",
+    "starter": "data/research/mlb/2026-07-31-starter-dataset-v1.rev-2026-07-31T01-24-23-520Z.json",
+    "odds": "data/research/mlb/2026-07-31-odds-history-dataset-v1.rev-2026-07-31T01-24-23-520Z.json",
+    "prediction": "data/predictions/mlb/2026-07-31.rev-2026-07-31T01-24-23-520Z.json",
+    "remaining": "data/research/mlb/2026-07-31-remaining-pregame-v1.rev-2026-07-31T01-24-23-520Z.json",
+    "cutoffAudit": "data/research/mlb/2026-07-31-pregame-cutoff-audit-v1.rev-2026-07-31T01-24-23-520Z.json",
+    "collectionSummary": "data/research/mlb/2026-07-31-pregame-collection-summary-v1.rev-2026-07-31T01-24-23-520Z.json",
+    "daily": "data/research/mlb/2026-07-31-daily-research-summary-v1.rev-2026-07-31T01-24-23-520Z.json"
+  },
+  "steps": [
+    {
+      "step": "schedule",
+      "exitCode": 0,
+      "status": "SUCCESS",
+      "detail": "ok",
+      "artifact": "data/research/mlb/2026-07-31-schedule-v1.json"
+    },
+    {
+      "step": "starter",
+      "exitCode": 0,
+      "status": "SUCCESS",
+      "detail": "ok",
+      "artifact": "data/research/mlb/2026-07-31-starter-dataset-v1.json"
+    },
+    {
+      "step": "odds",
+      "exitCode": 0,
+      "status": "SUCCESS",
+      "detail": "ok",
+      "artifact": "data/research/mlb/2026-07-31-odds-history-dataset-v1.json"
+    },
+    {
+      "step": "lineup",
+      "exitCode": 0,
+      "status": "SUCCESS",
+      "detail": "ok",
+      "artifact": "data/research/mlb/2026-07-31-lineup-dataset-v1.json"
+    },
+    {
+      "step": "daily-research",
+      "exitCode": 0,
+      "status": "SUCCESS",
+      "detail": "ok",
+      "artifact": "data/research/mlb/2026-07-31-daily-research-summary-v1.json"
+    },
+    {
+      "step": "prediction",
+      "exitCode": 0,
+      "status": "SUCCESS",
+      "detail": "ok",
+      "artifact": "data/predictions/mlb/2026-07-31.json"
+    }
+  ],
+  "artifacts": {
+    "schedule": "data/research/mlb/2026-07-31-schedule-v1.json",
+    "starter": "data/research/mlb/2026-07-31-starter-dataset-v1.json",
+    "odds": "data/research/mlb/2026-07-31-odds-history-dataset-v1.json",
+    "lineup": "data/research/mlb/2026-07-31-lineup-dataset-v1.json",
+    "daily": "data/research/mlb/2026-07-31-daily-research-summary-v1.json",
+    "prediction": "data/predictions/mlb/2026-07-31.json",
+    "remaining": "data/research/mlb/2026-07-31-remaining-pregame-v1.json",
+    "cutoffAudit": "data/research/mlb/2026-07-31-pregame-cutoff-audit-v1.json",
+    "collectionSummary": "data/research/mlb/2026-07-31-pregame-collection-summary-v1.json"
+  },
+  "counts": {
+    "totalSlateGames": 10,
+    "pregameEligibleAtStart": 3,
+    "alreadyStartedAtStart": 7,
+    "successfullyStoredEligible": 3,
+    "pass": 3,
+    "predicted": 0,
+    "notCollected": {
+      "starter": 0,
+      "odds": 0,
+      "lineup": 3
+    },
+    "cutoffFailures": 0,
+    "leakageFailures": 0
+  },
+  "games": [
+    {
+      "gamePk": 824974,
+      "internalGameId": "mlb-athletics-boston-red-sox",
+      "pregameEligible": true,
+      "scheduledStartUtc": "2026-07-31T01:40:00Z",
+      "starterStatus": "STARTER_PROBABLE_COLLECTED",
+      "oddsStatus": "COLLECTED",
+      "lineupStatus": "NOT_RELEASED",
+      "predictionStatus": "PASS",
+      "passReason": "baselineStatus=INSUFFICIENT",
+      "finalStatus": "PASS",
+      "leakageFailed": false,
+      "artifacts": {
+        "schedule": "data/research/mlb/2026-07-31-schedule-v1.json",
+        "starter": "data/research/mlb/2026-07-31-starter-dataset-v1.json",
+        "odds": "data/research/mlb/2026-07-31-odds-history-dataset-v1.json",
+        "lineup": "data/research/mlb/2026-07-31-lineup-dataset-v1.json",
+        "prediction": "data/predictions/mlb/2026-07-31.json",
+        "remaining": "data/research/mlb/2026-07-31-remaining-pregame-v1.json",
+        "cutoffAudit": "data/research/mlb/2026-07-31-pregame-cutoff-audit-v1.json"
+      }
+    },
+    {
+      "gamePk": 824894,
+      "internalGameId": "mlb-atlanta-braves-washington-nationals",
+      "pregameEligible": false,
+      "scheduledStartUtc": "2026-07-30T23:15:00Z",
+      "starterStatus": "SKIPPED",
+      "oddsStatus": "SKIPPED",
+      "lineupStatus": "SKIPPED",
+      "predictionStatus": "EXCLUDED",
+      "passReason": "commenceTimeUtc 2026-07-30T23:15:00Z <= collectionStartedAt",
+      "finalStatus": "EXCLUDED_ALREADY_STARTED",
+      "leakageFailed": false,
+      "artifacts": {
+        "schedule": "data/research/mlb/2026-07-31-schedule-v1.json",
+        "starter": "data/research/mlb/2026-07-31-starter-dataset-v1.json",
+        "odds": "data/research/mlb/2026-07-31-odds-history-dataset-v1.json",
+        "lineup": "data/research/mlb/2026-07-31-lineup-dataset-v1.json",
+        "prediction": "data/predictions/mlb/2026-07-31.json",
+        "remaining": "data/research/mlb/2026-07-31-remaining-pregame-v1.json",
+        "cutoffAudit": "data/research/mlb/2026-07-31-pregame-cutoff-audit-v1.json"
+      }
+    },
+    {
+      "gamePk": 824568,
+      "internalGameId": "mlb-chicago-white-sox-new-york-yankees",
+      "pregameEligible": false,
+      "scheduledStartUtc": "2026-07-30T18:10:00Z",
+      "starterStatus": "SKIPPED",
+      "oddsStatus": "SKIPPED",
+      "lineupStatus": "SKIPPED",
+      "predictionStatus": "EXCLUDED",
+      "passReason": "commenceTimeUtc 2026-07-30T18:10:00Z <= collectionStartedAt",
+      "finalStatus": "EXCLUDED_ALREADY_STARTED",
+      "leakageFailed": false,
+      "artifacts": {
+        "schedule": "data/research/mlb/2026-07-31-schedule-v1.json",
+        "starter": "data/research/mlb/2026-07-31-starter-dataset-v1.json",
+        "odds": "data/research/mlb/2026-07-31-odds-history-dataset-v1.json",
+        "lineup": "data/research/mlb/2026-07-31-lineup-dataset-v1.json",
+        "prediction": "data/predictions/mlb/2026-07-31.json",
+        "remaining": "data/research/mlb/2026-07-31-remaining-pregame-v1.json",
+        "cutoffAudit": "data/research/mlb/2026-07-31-pregame-cutoff-audit-v1.json"
+      }
+    },
+    {
+      "gamePk": 824488,
+      "internalGameId": "mlb-cincinnati-reds-pittsburgh-pirates",
+      "pregameEligible": false,
+      "scheduledStartUtc": "2026-07-30T23:10:00Z",
+      "starterStatus": "SKIPPED",
+      "oddsStatus": "SKIPPED",
+      "lineupStatus": "SKIPPED",
+      "predictionStatus": "EXCLUDED",
+      "passReason": "commenceTimeUtc 2026-07-30T23:10:00Z <= collectionStartedAt",
+      "finalStatus": "EXCLUDED_ALREADY_STARTED",
+      "leakageFailed": false,
+      "artifacts": {
+        "schedule": "data/research/mlb/2026-07-31-schedule-v1.json",
+        "starter": "data/research/mlb/2026-07-31-starter-dataset-v1.json",
+        "odds": "data/research/mlb/2026-07-31-odds-history-dataset-v1.json",
+        "lineup": "data/research/mlb/2026-07-31-lineup-dataset-v1.json",
+        "prediction": "data/predictions/mlb/2026-07-31.json",
+        "remaining": "data/research/mlb/2026-07-31-remaining-pregame-v1.json",
+        "cutoffAudit": "data/research/mlb/2026-07-31-pregame-cutoff-audit-v1.json"
+      }
+    },
+    {
+      "gamePk": 823921,
+      "internalGameId": "mlb-los-angeles-dodgers-seattle-mariners",
+      "pregameEligible": true,
+      "scheduledStartUtc": "2026-07-31T02:10:00Z",
+      "starterStatus": "STARTER_PROBABLE_COLLECTED",
+      "oddsStatus": "COLLECTED",
+      "lineupStatus": "NOT_RELEASED",
+      "predictionStatus": "PASS",
+      "passReason": "baselineStatus=INSUFFICIENT",
+      "finalStatus": "PASS",
+      "leakageFailed": false,
+      "artifacts": {
+        "schedule": "data/research/mlb/2026-07-31-schedule-v1.json",
+        "starter": "data/research/mlb/2026-07-31-starter-dataset-v1.json",
+        "odds": "data/research/mlb/2026-07-31-odds-history-dataset-v1.json",
+        "lineup": "data/research/mlb/2026-07-31-lineup-dataset-v1.json",
+        "prediction": "data/predictions/mlb/2026-07-31.json",
+        "remaining": "data/research/mlb/2026-07-31-remaining-pregame-v1.json",
+        "cutoffAudit": "data/research/mlb/2026-07-31-pregame-cutoff-audit-v1.json"
+      }
+    },
+    {
+      "gamePk": 823674,
+      "internalGameId": "mlb-minnesota-twins-kansas-city-royals",
+      "pregameEligible": false,
+      "scheduledStartUtc": "2026-07-30T17:40:00Z",
+      "starterStatus": "SKIPPED",
+      "oddsStatus": "SKIPPED",
+      "lineupStatus": "SKIPPED",
+      "predictionStatus": "EXCLUDED",
+      "passReason": "commenceTimeUtc 2026-07-30T17:40:00Z <= collectionStartedAt",
+      "finalStatus": "EXCLUDED_ALREADY_STARTED",
+      "leakageFailed": false,
+      "artifacts": {
+        "schedule": "data/research/mlb/2026-07-31-schedule-v1.json",
+        "starter": "data/research/mlb/2026-07-31-starter-dataset-v1.json",
+        "odds": "data/research/mlb/2026-07-31-odds-history-dataset-v1.json",
+        "lineup": "data/research/mlb/2026-07-31-lineup-dataset-v1.json",
+        "prediction": "data/predictions/mlb/2026-07-31.json",
+        "remaining": "data/research/mlb/2026-07-31-remaining-pregame-v1.json",
+        "cutoffAudit": "data/research/mlb/2026-07-31-pregame-cutoff-audit-v1.json"
+      }
+    },
+    {
+      "gamePk": 823595,
+      "internalGameId": "mlb-new-york-mets-miami-marlins",
+      "pregameEligible": false,
+      "scheduledStartUtc": "2026-07-30T23:10:00Z",
+      "starterStatus": "SKIPPED",
+      "oddsStatus": "SKIPPED",
+      "lineupStatus": "SKIPPED",
+      "predictionStatus": "EXCLUDED",
+      "passReason": "commenceTimeUtc 2026-07-30T23:10:00Z <= collectionStartedAt",
+      "finalStatus": "EXCLUDED_ALREADY_STARTED",
+      "leakageFailed": false,
+      "artifacts": {
+        "schedule": "data/research/mlb/2026-07-31-schedule-v1.json",
+        "starter": "data/research/mlb/2026-07-31-starter-dataset-v1.json",
+        "odds": "data/research/mlb/2026-07-31-odds-history-dataset-v1.json",
+        "lineup": "data/research/mlb/2026-07-31-lineup-dataset-v1.json",
+        "prediction": "data/predictions/mlb/2026-07-31.json",
+        "remaining": "data/research/mlb/2026-07-31-remaining-pregame-v1.json",
+        "cutoffAudit": "data/research/mlb/2026-07-31-pregame-cutoff-audit-v1.json"
+      }
+    },
+    {
+      "gamePk": 823271,
+      "internalGameId": "mlb-san-diego-padres-san-francisco-giants",
+      "pregameEligible": true,
+      "scheduledStartUtc": "2026-07-31T01:40:00Z",
+      "starterStatus": "STARTER_PROBABLE_COLLECTED",
+      "oddsStatus": "COLLECTED",
+      "lineupStatus": "NOT_RELEASED",
+      "predictionStatus": "PASS",
+      "passReason": "baselineStatus=INSUFFICIENT",
+      "finalStatus": "PASS",
+      "leakageFailed": false,
+      "artifacts": {
+        "schedule": "data/research/mlb/2026-07-31-schedule-v1.json",
+        "starter": "data/research/mlb/2026-07-31-starter-dataset-v1.json",
+        "odds": "data/research/mlb/2026-07-31-odds-history-dataset-v1.json",
+        "lineup": "data/research/mlb/2026-07-31-lineup-dataset-v1.json",
+        "prediction": "data/predictions/mlb/2026-07-31.json",
+        "remaining": "data/research/mlb/2026-07-31-remaining-pregame-v1.json",
+        "cutoffAudit": "data/research/mlb/2026-07-31-pregame-cutoff-audit-v1.json"
+      }
+    },
+    {
+      "gamePk": 823023,
+      "internalGameId": "mlb-st-louis-cardinals-chicago-cubs",
+      "pregameEligible": false,
+      "scheduledStartUtc": "2026-07-30T18:15:00Z",
+      "starterStatus": "SKIPPED",
+      "oddsStatus": "SKIPPED",
+      "lineupStatus": "SKIPPED",
+      "predictionStatus": "EXCLUDED",
+      "passReason": "commenceTimeUtc 2026-07-30T18:15:00Z <= collectionStartedAt",
+      "finalStatus": "EXCLUDED_ALREADY_STARTED",
+      "leakageFailed": false,
+      "artifacts": {
+        "schedule": "data/research/mlb/2026-07-31-schedule-v1.json",
+        "starter": "data/research/mlb/2026-07-31-starter-dataset-v1.json",
+        "odds": "data/research/mlb/2026-07-31-odds-history-dataset-v1.json",
+        "lineup": "data/research/mlb/2026-07-31-lineup-dataset-v1.json",
+        "prediction": "data/predictions/mlb/2026-07-31.json",
+        "remaining": "data/research/mlb/2026-07-31-remaining-pregame-v1.json",
+        "cutoffAudit": "data/research/mlb/2026-07-31-pregame-cutoff-audit-v1.json"
+      }
+    },
+    {
+      "gamePk": 822946,
+      "internalGameId": "mlb-tampa-bay-rays-texas-rangers",
+      "pregameEligible": false,
+      "scheduledStartUtc": "2026-07-30T16:10:00Z",
+      "starterStatus": "SKIPPED",
+      "oddsStatus": "SKIPPED",
+      "lineupStatus": "SKIPPED",
+      "predictionStatus": "EXCLUDED",
+      "passReason": "commenceTimeUtc 2026-07-30T16:10:00Z <= collectionStartedAt",
+      "finalStatus": "EXCLUDED_ALREADY_STARTED",
+      "leakageFailed": false,
+      "artifacts": {
+        "schedule": "data/research/mlb/2026-07-31-schedule-v1.json",
+        "starter": "data/research/mlb/2026-07-31-starter-dataset-v1.json",
+        "odds": "data/research/mlb/2026-07-31-odds-history-dataset-v1.json",
+        "lineup": "data/research/mlb/2026-07-31-lineup-dataset-v1.json",
+        "prediction": "data/predictions/mlb/2026-07-31.json",
+        "remaining": "data/research/mlb/2026-07-31-remaining-pregame-v1.json",
+        "cutoffAudit": "data/research/mlb/2026-07-31-pregame-cutoff-audit-v1.json"
+      }
+    }
+  ],
+  "assistantSummary": "MLB Remaining Pregame Accumulation — 2026-07-31\nCollection started: 2026-07-31T01:24:23.520Z\nSlate: 10\nPregame eligible: 3\nAlready started: 7\nPredicted: 0\nPASS: 3\nLeakage failures: 0\nEngine changed: false"
+}

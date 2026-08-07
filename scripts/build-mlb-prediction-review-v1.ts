@@ -32,7 +32,7 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`=== MLB Prediction Review v1 (${dateKst}) ===`);
+  console.log(`=== MLB Prediction Review v2 (${dateKst}) ===`);
   const { success, failure, daily, paths } =
     await buildMlbPredictionReviewsV1({ dateKst });
 
@@ -40,8 +40,28 @@ async function main() {
   console.log(`Wrote ${paths.failure} (${failure.games.length} failure)`);
   console.log(`Wrote ${paths.daily}`);
   console.log(`reviewStatus=${daily.reviewStatus}`);
+  console.log(`failureCategoryCount=${JSON.stringify(daily.failureCategoryCount)}`);
+  console.log(`successCategoryCount=${JSON.stringify(daily.successCategoryCount)}`);
+  console.log(
+    `confidenceHistogram.totalSamples=${daily.predictionConfidenceHistogram.totalSamples}`,
+  );
   console.log(`leakageAudit=${daily.leakageAudit.status}`);
   console.log(`reviewHash=${daily.reviewHash}`);
+  console.log("");
+  console.log("Acceptance");
+  console.log(
+    `- failure games differentiated: ${daily.failureCategoryTable.length} rows`,
+  );
+  console.log(
+    `- category stats: ${JSON.stringify(daily.failureCategoryCount)}`,
+  );
+  console.log(
+    `- prediction hash unchanged (review layer only): ${daily.hashes.predictionHash}`,
+  );
+  console.log("");
+  for (const row of daily.failureCategoryTable) {
+    console.log(row.line);
+  }
   console.log("");
   console.log(daily.assistantSummary);
 }

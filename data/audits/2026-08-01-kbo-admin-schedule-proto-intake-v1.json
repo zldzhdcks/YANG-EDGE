@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "kbo-admin-schedule-proto-intake-v1",
+  "dateKst": "2026-08-01",
+  "runId": "2026-08-01T06-50-48-568Z",
+  "enteredAt": "2026-08-01T06:50:48.568Z",
+  "observedAt": "2026-08-01T15:45:00+09:00",
+  "sourceType": "ADMIN_MANUAL_SCREENSHOT",
+  "extractionMethod": "MANUAL_VISUAL_CONFIRMATION",
+  "confirmationMethod": "ADMIN_VERIFIED",
+  "commercialUseStatus": "INTERNAL_ONLY",
+  "sourceReference": "USER_PROVIDED_KBO_PROTO_SCREENSHOT_2026-08-01",
+  "confirmationNote": "사용자가 스크린샷의 경기·팀 방향·배당과 폭염 취소 2경기를 직접 확인함",
+  "userVerified": true,
+  "scheduleGames": 5,
+  "activeGames": 3,
+  "cancelledGames": 2,
+  "cancelledGameIds": [
+    "kbo-181925",
+    "kbo-181926"
+  ],
+  "cancellationReason": "EXTREME_HEAT",
+  "protoMarketsSaved": 3,
+  "voidDisplayValuesIgnored": 2,
+  "homeAwayMappingErrors": 0,
+  "protoSaved": [
+    {
+      "gameId": "kbo-181922",
+      "home": "두산",
+      "away": "LG",
+      "homePrice": 1.75,
+      "awayPrice": 1.77
+    },
+    {
+      "gameId": "kbo-181924",
+      "home": "KT",
+      "away": "한화",
+      "homePrice": 1.73,
+      "awayPrice": 1.79
+    },
+    {
+      "gameId": "kbo-181923",
+      "home": "키움",
+      "away": "SSG",
+      "homePrice": 1.86,
+      "awayPrice": 1.67
+    }
+  ],
+  "cancelled": [
+    {
+      "gameId": "kbo-181925",
+      "home": "롯데",
+      "away": "삼성",
+      "reason": "EXTREME_HEAT",
+      "market": "CANCELLED_MARKET_NOT_SAVED",
+      "voidDisplay": "VOID_DISPLAY_VALUE"
+    },
+    {
+      "gameId": "kbo-181926",
+      "home": "NC",
+      "away": "KIA",
+      "reason": "EXTREME_HEAT",
+      "market": "CANCELLED_MARKET_NOT_SAVED",
+      "voidDisplay": "VOID_DISPLAY_VALUE"
+    }
+  ],
+  "validationStatus": "PARTIAL",
+  "validationErrors": [
+    "kbo-181922:STARTER_NOT_ENTERED_HOME",
+    "kbo-181922:STARTER_NOT_ENTERED_AWAY",
+    "kbo-181922:LINEUP_NOT_ENTERED_HOME",
+    "kbo-181922:LINEUP_NOT_ENTERED_AWAY",
+    "kbo-181923:STARTER_NOT_ENTERED_HOME",
+    "kbo-181923:STARTER_NOT_ENTERED_AWAY",
+    "kbo-181923:LINEUP_NOT_ENTERED_HOME",
+    "kbo-181923:LINEUP_NOT_ENTERED_AWAY",
+    "kbo-181924:STARTER_NOT_ENTERED_HOME",
+    "kbo-181924:STARTER_NOT_ENTERED_AWAY",
+    "kbo-181924:LINEUP_NOT_ENTERED_HOME",
+    "kbo-181924:LINEUP_NOT_ENTERED_AWAY",
+    "kbo-181925:STARTER_NOT_ENTERED_HOME",
+    "kbo-181925:STARTER_NOT_ENTERED_AWAY",
+    "kbo-181925:LINEUP_NOT_ENTERED_HOME",
+    "kbo-181925:LINEUP_NOT_ENTERED_AWAY",
+    "kbo-181925:DOMESTIC_PROTO_NOT_ENTERED",
+    "kbo-181926:STARTER_NOT_ENTERED_HOME",
+    "kbo-181926:STARTER_NOT_ENTERED_AWAY",
+    "kbo-181926:LINEUP_NOT_ENTERED_HOME",
+    "kbo-181926:LINEUP_NOT_ENTERED_AWAY",
+    "kbo-181926:DOMESTIC_PROTO_NOT_ENTERED"
+  ],
+  "warnings": [
+    "STARTER_LINEUP_NOT_ENTERED_PARTIAL",
+    "CANCELLED_GAMES_EXCLUDED_FROM_PROTO"
+  ],
+  "schedulePreviousHash": "b5a9c51c4d9dec850d5895cc032462fe51ab2d5690e61ab0d3241e2fa270532e",
+  "scheduleNextHash": "ef947497e24556f30e91245a14ba8f68a3b58b659e2b6b302eb33c8bf840a8f2",
+  "scheduleRevisionPath": "data/research/kbo/2026-08-01-schedule-v1.rev-2026-08-01T06-14-28-201Z.json",
+  "operatorPreviousHash": null,
+  "operatorNextHash": "980771c42481005815b01833a81ed23a7af4d7141505119cf3fec66b7b595a5f",
+  "changedFields": [
+    "schedule.status.cancelled:kbo-181925",
+    "schedule.status.cancelled:kbo-181926",
+    "operator.domesticProto:kbo-181922",
+    "operator.domesticProto:kbo-181923",
+    "operator.domesticProto:kbo-181924"
+  ],
+  "actor": "admin-intake",
+  "reason": "USER_VERIFIED_SCREENSHOT_PROTO_AND_HEAT_CANCELLATIONS",
+  "occurredAt": "2026-08-01T06:50:48.568Z",
+  "t45AutoRun": false,
+  "t30AutoRun": false,
+  "predictionChanged": false,
+  "engineChanged": false,
+  "imageArtifactStored": false
+}

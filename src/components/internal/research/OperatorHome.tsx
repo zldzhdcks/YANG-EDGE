@@ -43,8 +43,35 @@ function priorityColor(s: string): string {
   }
 }
 
+function readinessDot(val: string): string {
+  if (
+    val.includes("MISSING") ||
+    val.includes("BLOCKED") ||
+    val === "NOT_AVAILABLE"
+  ) {
+    return "bg-red-500";
+  }
+  if (
+    val.includes("NOT_ENTERED") ||
+    val.includes("NOT_CREATED") ||
+    val.includes("NOT_READY") ||
+    val.includes("WAITING") ||
+    val.includes("PARTIAL") ||
+    val === "UNKNOWN"
+  ) {
+    return "bg-amber-500";
+  }
+  if (val.includes("NOT_APPLICABLE")) return "bg-zinc-500";
+  return "bg-green-500";
+}
+
 export default function OperatorHome({ data, op, dateKst }: Props) {
   const rs = op.resultSummary;
+  const kboOps = op.kboDailyOps;
+  const showMlbSummary =
+    data.mlbDailyResearchSummary.kind === "ok" ||
+    data.mlbDailyResearchSummary.kind === "pipeline_failed";
+
   return (
     <div className="space-y-8">
       {/* C-1: 오늘의 한 줄 요약 */}
@@ -64,14 +91,67 @@ export default function OperatorHome({ data, op, dateKst }: Props) {
         )}
       </section>
 
-      {/* MLB Daily Research Summary (Builder artifact SoT) */}
-      <MlbDailyResearchSummaryPanel
-        load={data.mlbDailyResearchSummary}
-        dateKst={dateKst}
-      />
+      {/* KBO 운영 현황 — Prediction 없어도 표시 */}
+      {kboOps && (
+        <section className="rounded-lg border border-emerald-900/50 bg-emerald-950/20 px-5 py-4">
+          <h2 className="mb-3 text-lg font-semibold text-emerald-300">KBO 운영 현황</h2>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 text-sm">
+            {([
+              ["Schedule Games", String(kboOps.scheduleGames)],
+              ["Active Games", String(kboOps.activeGames)],
+              ["Cancelled", String(kboOps.cancelledGames)],
+              ["Proto Ready", kboOps.protoReady],
+              ["Starter Ready", kboOps.starterReady],
+              ["Lineup Ready", kboOps.lineupReady],
+              ["T45 Status", kboOps.t45Status],
+              ["Prediction", kboOps.prediction],
+              ["Review", kboOps.review],
+              ["Overall", kboOps.overall],
+            ] as [string, string][]).map(([label, val]) => (
+              <div key={label} className="rounded border border-emerald-900/40 px-3 py-2">
+                <div className="text-xs text-emerald-500/80">{label}</div>
+                <div className="mt-0.5 font-semibold text-emerald-100">{val}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* MLB Daily Research Summary — only when MLB artifact exists */}
+      {showMlbSummary ? (
+        <MlbDailyResearchSummaryPanel
+          load={data.mlbDailyResearchSummary}
+          dateKst={dateKst}
+        />
+      ) : (
+        <section className="rounded-lg border border-zinc-800 bg-zinc-900/40 px-4 py-3">
+          <h2 className="text-sm font-semibold text-zinc-400">MLB Daily Research Summary</h2>
+          <p className="mt-1 text-xs text-zinc-500">
+            이 날짜의 MLB summary는 아직 생성되지 않았습니다. KBO 운영 현황과 별도로 표시합니다.
+          </p>
+        </section>
+      )}
 
       {/* EDGE Assistant */}
       <EdgeAssistantCard data={data} op={op} dateKst={dateKst} />
+
+      {/* Completed KBO milestones */}
+      {op.completedKboItems.length > 0 && (
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-white">완료된 KBO 작업</h2>
+          <ul className="space-y-1 text-sm text-zinc-400">
+            {op.completedKboItems.map((item) => (
+              <li key={item.id} className="flex gap-2">
+                <span className="text-green-500">✓</span>
+                <span>
+                  <span className="text-zinc-200">{item.title}</span>
+                  <span className="text-zinc-600"> — {item.detail}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* C-2: 오늘 반드시 확인할 일 */}
       <section>
@@ -134,17 +214,22 @@ export default function OperatorHome({ data, op, dateKst }: Props) {
           <div className="mb-3 flex items-center gap-2">
             <span className={`rounded-full border px-3 py-0.5 text-sm font-semibold ${
               op.kboReadiness.overallStatus === "READY" ? "bg-green-950/40 text-green-400 border-green-800" :
-              op.kboReadiness.overallStatus === "PARTIAL" ? "bg-amber-950/40 text-amber-400 border-amber-800" :
+              op.kboReadiness.overallStatus === "PARTIAL_READY" || op.kboReadiness.overallStatus === "WAITING_FOR_LINEUP" || op.kboReadiness.overallStatus === "PARTIAL"
+                ? "bg-amber-950/40 text-amber-400 border-amber-800" :
               op.kboReadiness.overallStatus === "BLOCKED" ? "bg-red-950/40 text-red-400 border-red-800" :
               "bg-zinc-800 text-zinc-500 border-zinc-700"
             }`}>
               {op.kboReadiness.overallStatus}
             </span>
             {op.kboReadiness.predictionLocked && (
-              <span className="rounded-full border border-red-800 bg-red-950/40 px-2 py-0.5 text-xs text-red-400">
-                Prediction 시작 불가
+              <span className="rounded-full border border-amber-800 bg-amber-950/40 px-2 py-0.5 text-xs text-amber-400">
+                예측 입력 대기
               </span>
             )}
+          </div>
+
+          <div className="mb-3 text-xs text-zinc-400">
+            Schedule: {op.kboReadiness.schedule}
           </div>
 
           {/* Betting Line Status */}
@@ -152,14 +237,18 @@ export default function OperatorHome({ data, op, dateKst }: Props) {
             <p className="text-xs text-zinc-500 mb-1">Betting Line Status</p>
             <div className="grid grid-cols-2 gap-2">
               <div className="rounded border border-zinc-700 px-3 py-2">
-                <div className="text-xs text-zinc-500">국내</div>
-                <div className={`text-sm font-semibold ${op.kboReadiness.domesticOdds === "MISSING" ? "text-red-400" : "text-zinc-200"}`}>
+                <div className="text-xs text-zinc-500">국내 (Domestic)</div>
+                <div className={`text-sm font-semibold ${
+                  op.kboReadiness.domesticOdds.includes("MISSING") ? "text-red-400" : "text-zinc-200"
+                }`}>
                   {op.kboReadiness.domesticOdds}
                 </div>
               </div>
               <div className="rounded border border-zinc-700 px-3 py-2">
-                <div className="text-xs text-zinc-500">해외</div>
-                <div className={`text-sm font-semibold ${op.kboReadiness.overseasOdds === "MISSING" ? "text-red-400" : "text-zinc-200"}`}>
+                <div className="text-xs text-zinc-500">해외 (Overseas)</div>
+                <div className={`text-sm font-semibold ${
+                  op.kboReadiness.overseasOdds.includes("MISSING") ? "text-zinc-400" : "text-zinc-200"
+                }`}>
                   {op.kboReadiness.overseasOdds}
                 </div>
               </div>
@@ -169,33 +258,30 @@ export default function OperatorHome({ data, op, dateKst }: Props) {
           {/* Checklist */}
           <div className="grid grid-cols-2 gap-1 sm:grid-cols-3 text-xs">
             {([
+              ["Schedule", op.kboReadiness.schedule],
               ["국내 배당", op.kboReadiness.domesticOdds],
               ["해외 배당", op.kboReadiness.overseasOdds],
               ["선발", op.kboReadiness.starter],
               ["라인업", op.kboReadiness.lineup],
               ["불펜", op.kboReadiness.bullpen],
+              ["T45", op.kboReadiness.t45],
               ["Prediction", op.kboReadiness.prediction],
+              ["Review", op.kboReadiness.review],
             ] as [string, string][]).map(([label, val]) => (
               <div key={label} className="flex items-center gap-1.5">
-                <span className={`inline-block h-2 w-2 rounded-full ${
-                  val === "MISSING" || val === "NOT_AVAILABLE" ? "bg-red-500" :
-                  val === "UNKNOWN" ? "bg-zinc-500" :
-                  val === "PARTIAL" ? "bg-amber-500" :
-                  val.includes("/") && val.split("/")[0].trim() !== val.split("/")[1].trim() ? "bg-amber-500" :
-                  "bg-green-500"
-                }`} />
+                <span className={`inline-block h-2 w-2 rounded-full ${readinessDot(val)}`} />
                 <span className="text-zinc-400">{label}</span>
-                <span className="text-zinc-600">{val}</span>
+                <span className="text-zinc-600 truncate">{val}</span>
               </div>
             ))}
           </div>
 
-          {/* Prediction Lock reasons */}
+          {/* Prediction waiting reasons — amber, not red Reader Error */}
           {op.kboReadiness.predictionLocked && (
-            <div className="mt-3 rounded border border-red-800 bg-red-950/30 px-3 py-2">
-              <p className="text-xs text-red-400 font-semibold mb-1">Prediction Waiting</p>
+            <div className="mt-3 rounded border border-amber-800 bg-amber-950/30 px-3 py-2">
+              <p className="text-xs text-amber-400 font-semibold mb-1">예측 입력 대기</p>
               {op.kboReadiness.lockReasons.map((r, i) => (
-                <p key={i} className="text-xs text-red-300">Reason: {r}</p>
+                <p key={i} className="text-xs text-amber-200/80">Reason: {r}</p>
               ))}
             </div>
           )}
@@ -213,7 +299,7 @@ export default function OperatorHome({ data, op, dateKst }: Props) {
                 bug.severity === "YELLOW" ? "text-amber-400" :
                 "text-green-400"
               }`}>
-                {bug.severity === "RED" ? "🔴" : bug.severity === "YELLOW" ? "🟡" : "🟢"}
+                {bug.severity === "RED" ? "●" : bug.severity === "YELLOW" ? "●" : "●"}
               </span>
               <span className={`text-xs ${bug.resolved ? "text-zinc-600" : "text-zinc-300"}`}>
                 {bug.label}
@@ -224,9 +310,9 @@ export default function OperatorHome({ data, op, dateKst }: Props) {
         </div>
       </section>
 
-      {/* C-5: 오늘의 연구 결과 요약 */}
+      {/* C-5: 오늘의 MLB 연구 결과 요약 */}
       <section>
-        <h2 className="mb-3 text-lg font-semibold text-white">오늘의 연구 결과 요약</h2>
+        <h2 className="mb-3 text-lg font-semibold text-white">오늘의 MLB 연구 결과 요약</h2>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
           {([
             ["분석 경기", rs.totalGames],
@@ -256,13 +342,23 @@ export default function OperatorHome({ data, op, dateKst }: Props) {
         )}
       </section>
 
-      {/* C-6: 시스템 상세 링크 */}
+      {/* C-6: legacy system detail → Developer Console */}
       <section className="rounded-lg border border-zinc-700 bg-zinc-900/40 px-4 py-3 text-center">
+        <p className="mb-2 text-[10px] uppercase tracking-wide text-zinc-600">
+          deprecated · 운영 홈은 Dashboard로 이동
+        </p>
         <a
-          href={`/internal/research?date=${dateKst}&view=system`}
+          href={`/internal/developer?date=${dateKst}`}
           className="text-sm font-medium text-blue-400 hover:text-blue-300"
         >
-          시스템 상세 보기 →
+          Developer Console 보기 →
+        </a>
+        <span className="mx-2 text-zinc-600">·</span>
+        <a
+          href={`/internal/dashboard?date=${dateKst}`}
+          className="text-sm font-medium text-emerald-400 hover:text-emerald-300"
+        >
+          Dashboard →
         </a>
         <p className="mt-1 text-xs text-zinc-600">
           Pipeline별 기술 상태, Review Queue, 명령어, Artifact 정보

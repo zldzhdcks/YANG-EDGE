@@ -1,0 +1,1230 @@
+{
+  "meta": {
+    "version": "mlb-failure-flow-review-v1",
+    "dateKst": "2026-07-29",
+    "generatedAt": "2026-07-29T08:14:36.620Z",
+    "failedGames": 8,
+    "researchOnly": true,
+    "engineModified": false,
+    "weightsModified": false,
+    "predictionModified": false,
+    "predictionHashSha256": "aed0e8cb7786f54a78a0c04f7f533b5afafc9e6f6a5a8b95398554456ba2e19b",
+    "predictionUnchanged": true,
+    "legal": {
+      "apiBaseball": "primary commercial provider for scores/innings",
+      "mlbStatsApi": "internal research fallback only; commercial use unverified; not connected to public UI/runtime/paid service",
+      "rawResponsesStored": false,
+      "mlbComHtmlCrawling": false,
+      "sportsDataIoScrambled": false
+    },
+    "note": "사후 연구. 실패 원인을 단정하지 않으며 경기 흐름 분류만 수행. 8경기만으로 weights 변경을 권고하지 않는다.",
+    "deterministicFingerprint": "ed08179d5b88b0b66ed2527d9a7146c5946767f3436d572a7ba188bbdc7611d8"
+  },
+  "apiUsage": {
+    "apiBaseball": {
+      "calls": 1,
+      "remaining": 7487
+    },
+    "mlbStatsApi": {
+      "calls": 9,
+      "usedAsFallback": true
+    }
+  },
+  "summary": {
+    "STARTER_FAILURE": 1,
+    "BULLPEN_FAILURE": 1,
+    "OFFENSIVE_FAILURE": 0,
+    "OPPONENT_OFFENSE_SURGE": 0,
+    "CLOSE_GAME_VARIANCE": 1,
+    "UNEXPLAINED": 0,
+    "MULTIPLE_FACTORS": 5,
+    "preGameKnownRiskGames": 8,
+    "inGameOnlyStrongGames": 0,
+    "bullpenImpactGames": 3,
+    "offenseFailGames": 2,
+    "conclusion": "MULTI_FACTOR_RESEARCH",
+    "weightsChangeRecommended": false
+  },
+  "developmentPriority": [
+    {
+      "item": "불펜 최근 사용량·성적 추가",
+      "relatedFailures": 3,
+      "preGameCollectible": true,
+      "formalApiAvailable": "연구용 Stats API 가능, 상용 미확인",
+      "priority": 1,
+      "performanceGainUnverified": true
+    },
+    {
+      "item": "추가 데이터보다 표본 축적 우선",
+      "relatedFailures": 8,
+      "preGameCollectible": true,
+      "formalApiAvailable": true,
+      "priority": 1,
+      "performanceGainUnverified": true
+    },
+    {
+      "item": "선발투수 변수 보강",
+      "relatedFailures": 5,
+      "preGameCollectible": true,
+      "formalApiAvailable": "부분 (API-BASEBALL 제한적 / Stats API 연구용)",
+      "priority": 2,
+      "performanceGainUnverified": true
+    },
+    {
+      "item": "시장 이동 수집 강화",
+      "relatedFailures": 0,
+      "preGameCollectible": true,
+      "formalApiAvailable": true,
+      "priority": 3,
+      "performanceGainUnverified": true
+    },
+    {
+      "item": "확정 라인업 추가",
+      "relatedFailures": 0,
+      "preGameCollectible": true,
+      "formalApiAvailable": "부분",
+      "priority": 4,
+      "performanceGainUnverified": true
+    },
+    {
+      "item": "공격 세부 지표 추가",
+      "relatedFailures": 2,
+      "preGameCollectible": false,
+      "formalApiAvailable": "사후 boxscore 위주",
+      "priority": 5,
+      "performanceGainUnverified": true
+    }
+  ],
+  "importantFailures": [
+    {
+      "gameId": "mlb-179624",
+      "match": "Seattle Mariners @ Los Angeles Dodgers",
+      "primary": "MULTIPLE_FACTORS",
+      "secondary": [
+        "BULLPEN_FAILURE",
+        "OPPONENT_OFFENSE_SURGE"
+      ],
+      "starterVerdict": "STARTERS_EVEN",
+      "bullpenVerdict": "BULLPEN_COLLAPSE",
+      "offenseVerdict": "OPPONENT_OFFENSE_SURGED",
+      "flow": {
+        "pickFirstLeadInning": 1,
+        "maxPickLead": 1,
+        "opponentTookLeadInning": 8,
+        "tieCount": 3,
+        "scoreAfter6": {
+          "home": 5,
+          "away": 5
+        },
+        "runsAfter6": {
+          "pick": 1,
+          "opponent": 2
+        },
+        "finalScore": {
+          "home": 6,
+          "away": 7
+        },
+        "pickLedDuringGame": true
+      },
+      "specialQuestions": null,
+      "risks": [
+        {
+          "signal": "starting pitcher factor missing at prediction",
+          "timing": "PRE_GAME_KNOWN",
+          "note": "예측 시점 선발투수 팩터 미확보"
+        },
+        {
+          "signal": "bullpen collapse after starter exit",
+          "timing": "IN_GAME_ONLY",
+          "note": "선발 교체 이후 불펜 구간 실점·역전 흐름"
+        },
+        {
+          "signal": "fielding errors recorded",
+          "timing": "IN_GAME_ONLY",
+          "note": "errors home=0 away=2"
+        }
+      ]
+    },
+    {
+      "gameId": "mlb-179621",
+      "match": "Arizona Diamondbacks @ Pittsburgh Pirates",
+      "primary": "MULTIPLE_FACTORS",
+      "secondary": [
+        "STARTER_FAILURE",
+        "OPPONENT_OFFENSE_SURGE"
+      ],
+      "starterVerdict": "STARTER_DISADVANTAGE_REALIZED",
+      "bullpenVerdict": "NOT_BULLPEN_DRIVEN",
+      "offenseVerdict": "OPPONENT_OFFENSE_SURGED",
+      "flow": {
+        "pickFirstLeadInning": null,
+        "maxPickLead": 0,
+        "opponentTookLeadInning": 1,
+        "tieCount": 1,
+        "scoreAfter6": {
+          "home": 0,
+          "away": 6
+        },
+        "runsAfter6": {
+          "pick": 7,
+          "opponent": 2
+        },
+        "finalScore": {
+          "home": 7,
+          "away": 8
+        },
+        "pickLedDuringGame": false
+      },
+      "specialQuestions": null,
+      "risks": [
+        {
+          "signal": "starting pitcher factor missing at prediction",
+          "timing": "PRE_GAME_KNOWN",
+          "note": "예측 시점 선발투수 팩터 미확보"
+        },
+        {
+          "signal": "starter allowed more runs / shorter outing",
+          "timing": "IN_GAME_ONLY",
+          "note": "실제 선발 투구 결과 열세"
+        },
+        {
+          "signal": "fielding errors recorded",
+          "timing": "IN_GAME_ONLY",
+          "note": "errors home=3 away=1"
+        }
+      ]
+    },
+    {
+      "gameId": "mlb-179622",
+      "match": "Toronto Blue Jays @ Washington Nationals",
+      "primary": "MULTIPLE_FACTORS",
+      "secondary": [
+        "STARTER_FAILURE",
+        "OPPONENT_OFFENSE_SURGE"
+      ],
+      "starterVerdict": "STARTER_DISADVANTAGE_REALIZED",
+      "bullpenVerdict": "NOT_BULLPEN_DRIVEN",
+      "offenseVerdict": "OPPONENT_OFFENSE_SURGED",
+      "flow": {
+        "pickFirstLeadInning": null,
+        "maxPickLead": 0,
+        "opponentTookLeadInning": 1,
+        "tieCount": 0,
+        "scoreAfter6": {
+          "home": 8,
+          "away": 3
+        },
+        "runsAfter6": {
+          "pick": 3,
+          "opponent": 0
+        },
+        "finalScore": {
+          "home": 8,
+          "away": 6
+        },
+        "pickLedDuringGame": false
+      },
+      "specialQuestions": null,
+      "risks": [
+        {
+          "signal": "starting pitcher factor missing at prediction",
+          "timing": "PRE_GAME_KNOWN",
+          "note": "예측 시점 선발투수 팩터 미확보"
+        },
+        {
+          "signal": "starter allowed more runs / shorter outing",
+          "timing": "IN_GAME_ONLY",
+          "note": "실제 선발 투구 결과 열세"
+        },
+        {
+          "signal": "fielding errors recorded",
+          "timing": "IN_GAME_ONLY",
+          "note": "errors home=2 away=2"
+        }
+      ]
+    }
+  ],
+  "games": [
+    {
+      "gameId": "mlb-179612",
+      "match": "Cleveland Guardians @ Cincinnati Reds",
+      "baselinePick": "Cincinnati Reds",
+      "pickSide": "home",
+      "homeScore": 5,
+      "awayScore": 6,
+      "actualWinner": "Cleveland Guardians",
+      "edgeScore": 9.1,
+      "confidence": 41,
+      "valueEdge": 0,
+      "pitcherDirection": null,
+      "warnings": [
+        "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
+        "RESEARCH_ACCUMULATION_SNAPSHOT"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "sources": {
+        "apiBaseballGame": true,
+        "mlbStatsBoxscore": false,
+        "gamePk": null
+      },
+      "starters": {
+        "home": {
+          "probable": null,
+          "actual": null,
+          "status": "STARTER_UNKNOWN"
+        },
+        "away": {
+          "probable": null,
+          "actual": null,
+          "status": "STARTER_UNKNOWN"
+        },
+        "pickStarterStatus": "STARTER_UNKNOWN",
+        "starterVerdict": "INSUFFICIENT"
+      },
+      "bullpen": {
+        "pickReliefRuns": null,
+        "oppReliefRuns": null,
+        "verdict": "INSUFFICIENT"
+      },
+      "offense": {
+        "pickRuns": 5,
+        "oppRuns": 6,
+        "pickHits": 11,
+        "pickWalks": null,
+        "pickHomeRuns": null,
+        "pickLeftOnBase": null,
+        "verdict": "OFFENSE_NOT_PRIMARY"
+      },
+      "flow": {
+        "pickFirstLeadInning": 4,
+        "maxPickLead": 1,
+        "opponentTookLeadInning": 1,
+        "tieCount": 1,
+        "scoreAfter6": {
+          "home": 5,
+          "away": 5
+        },
+        "runsAfter6": {
+          "pick": 0,
+          "opponent": 1
+        },
+        "finalScore": {
+          "home": 5,
+          "away": 6
+        },
+        "pickLedDuringGame": true
+      },
+      "risks": [
+        {
+          "signal": "starting pitcher factor missing at prediction",
+          "timing": "PRE_GAME_KNOWN",
+          "note": "예측 시점 선발투수 팩터 미확보"
+        },
+        {
+          "signal": "fielding errors recorded",
+          "timing": "IN_GAME_ONLY",
+          "note": "errors home=1 away=0"
+        }
+      ],
+      "failureTypes": {
+        "primary": "CLOSE_GAME_VARIANCE",
+        "secondary": []
+      },
+      "specialQuestions": null,
+      "note": "불펜·선발 판정은 확정이 아니라 경기 결과와 연관된 흐름 분류이다."
+    },
+    {
+      "gameId": "mlb-179617",
+      "match": "Texas Rangers @ Tampa Bay Rays",
+      "baselinePick": "Tampa Bay Rays",
+      "pickSide": "home",
+      "homeScore": 1,
+      "awayScore": 4,
+      "actualWinner": "Texas Rangers",
+      "edgeScore": 6.8,
+      "confidence": 38,
+      "valueEdge": -5.5,
+      "pitcherDirection": null,
+      "warnings": [
+        "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
+        "RESEARCH_ACCUMULATION_SNAPSHOT"
+      ],
+      "missingFactors": [
+        "선발투수",
+        "맞대결"
+      ],
+      "sources": {
+        "apiBaseballGame": true,
+        "mlbStatsBoxscore": true,
+        "gamePk": 822949
+      },
+      "starters": {
+        "home": {
+          "probable": "Griffin Jax",
+          "actual": {
+            "side": "home",
+            "role": "starter",
+            "name": "Griffin Jax",
+            "playerId": 643377,
+            "inningsPitched": "5.2",
+            "outs": 17,
+            "runs": 2,
+            "earnedRuns": 1,
+            "hits": 5,
+            "walks": 3,
+            "strikeouts": 10,
+            "homeRuns": 0,
+            "pitches": 93,
+            "decision": "(L, 6-8)"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "away": {
+          "probable": "Cal Quantrill",
+          "actual": {
+            "side": "away",
+            "role": "starter",
+            "name": "Cal Quantrill",
+            "playerId": 615698,
+            "inningsPitched": "5.1",
+            "outs": 16,
+            "runs": 1,
+            "earnedRuns": 1,
+            "hits": 2,
+            "walks": 1,
+            "strikeouts": 7,
+            "homeRuns": 0,
+            "pitches": 69,
+            "decision": "(W, 4-3)"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "pickStarterStatus": "STARTER_MATCHED",
+        "starterVerdict": "STARTERS_EVEN"
+      },
+      "bullpen": {
+        "pickReliefRuns": 2,
+        "oppReliefRuns": 0,
+        "verdict": "BULLPEN_DISADVANTAGE"
+      },
+      "offense": {
+        "pickRuns": 1,
+        "oppRuns": 4,
+        "pickHits": 5,
+        "pickWalks": 1,
+        "pickHomeRuns": 0,
+        "pickLeftOnBase": 9,
+        "verdict": "OFFENSE_UNDERPERFORMED"
+      },
+      "flow": {
+        "pickFirstLeadInning": null,
+        "maxPickLead": 0,
+        "opponentTookLeadInning": 2,
+        "tieCount": 0,
+        "scoreAfter6": {
+          "home": 1,
+          "away": 2
+        },
+        "runsAfter6": {
+          "pick": 0,
+          "opponent": 2
+        },
+        "finalScore": {
+          "home": 1,
+          "away": 4
+        },
+        "pickLedDuringGame": false
+      },
+      "risks": [
+        {
+          "signal": "starting pitcher factor missing at prediction",
+          "timing": "PRE_GAME_KNOWN",
+          "note": "예측 시점 선발투수 팩터 미확보"
+        },
+        {
+          "signal": "fielding errors recorded",
+          "timing": "IN_GAME_ONLY",
+          "note": "errors home=1 away=1"
+        }
+      ],
+      "failureTypes": {
+        "primary": "BULLPEN_FAILURE",
+        "secondary": [
+          "OFFENSIVE_FAILURE"
+        ]
+      },
+      "specialQuestions": null,
+      "note": "불펜·선발 판정은 확정이 아니라 경기 결과와 연관된 흐름 분류이다."
+    },
+    {
+      "gameId": "mlb-179621",
+      "match": "Arizona Diamondbacks @ Pittsburgh Pirates",
+      "baselinePick": "Pittsburgh Pirates",
+      "pickSide": "home",
+      "homeScore": 7,
+      "awayScore": 8,
+      "actualWinner": "Arizona Diamondbacks",
+      "edgeScore": 0,
+      "confidence": 43,
+      "valueEdge": -1.9,
+      "pitcherDirection": null,
+      "warnings": [
+        "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
+        "RESEARCH_ACCUMULATION_SNAPSHOT"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "sources": {
+        "apiBaseballGame": true,
+        "mlbStatsBoxscore": true,
+        "gamePk": 823350
+      },
+      "starters": {
+        "home": {
+          "probable": "Bubba Chandler",
+          "actual": {
+            "side": "home",
+            "role": "starter",
+            "name": "Bubba Chandler",
+            "playerId": 696149,
+            "inningsPitched": "4.0",
+            "outs": 12,
+            "runs": 5,
+            "earnedRuns": 4,
+            "hits": 8,
+            "walks": 1,
+            "strikeouts": 3,
+            "homeRuns": 0,
+            "pitches": 91,
+            "decision": "ND"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "away": {
+          "probable": "Brandon Pfaadt",
+          "actual": {
+            "side": "away",
+            "role": "starter",
+            "name": "Brandon Pfaadt",
+            "playerId": 694297,
+            "inningsPitched": "7.0",
+            "outs": 21,
+            "runs": 0,
+            "earnedRuns": 0,
+            "hits": 6,
+            "walks": 1,
+            "strikeouts": 4,
+            "homeRuns": 0,
+            "pitches": 101,
+            "decision": "ND"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "pickStarterStatus": "STARTER_MATCHED",
+        "starterVerdict": "STARTER_DISADVANTAGE_REALIZED"
+      },
+      "bullpen": {
+        "pickReliefRuns": 3,
+        "oppReliefRuns": 7,
+        "verdict": "NOT_BULLPEN_DRIVEN"
+      },
+      "offense": {
+        "pickRuns": 7,
+        "oppRuns": 8,
+        "pickHits": 14,
+        "pickWalks": 3,
+        "pickHomeRuns": 2,
+        "pickLeftOnBase": 25,
+        "verdict": "OPPONENT_OFFENSE_SURGED"
+      },
+      "flow": {
+        "pickFirstLeadInning": null,
+        "maxPickLead": 0,
+        "opponentTookLeadInning": 1,
+        "tieCount": 1,
+        "scoreAfter6": {
+          "home": 0,
+          "away": 6
+        },
+        "runsAfter6": {
+          "pick": 7,
+          "opponent": 2
+        },
+        "finalScore": {
+          "home": 7,
+          "away": 8
+        },
+        "pickLedDuringGame": false
+      },
+      "risks": [
+        {
+          "signal": "starting pitcher factor missing at prediction",
+          "timing": "PRE_GAME_KNOWN",
+          "note": "예측 시점 선발투수 팩터 미확보"
+        },
+        {
+          "signal": "starter allowed more runs / shorter outing",
+          "timing": "IN_GAME_ONLY",
+          "note": "실제 선발 투구 결과 열세"
+        },
+        {
+          "signal": "fielding errors recorded",
+          "timing": "IN_GAME_ONLY",
+          "note": "errors home=3 away=1"
+        }
+      ],
+      "failureTypes": {
+        "primary": "MULTIPLE_FACTORS",
+        "secondary": [
+          "STARTER_FAILURE",
+          "OPPONENT_OFFENSE_SURGE"
+        ]
+      },
+      "specialQuestions": null,
+      "note": "불펜·선발 판정은 확정이 아니라 경기 결과와 연관된 흐름 분류이다."
+    },
+    {
+      "gameId": "mlb-179622",
+      "match": "Toronto Blue Jays @ Washington Nationals",
+      "baselinePick": "Toronto Blue Jays",
+      "pickSide": "away",
+      "homeScore": 8,
+      "awayScore": 6,
+      "actualWinner": "Washington Nationals",
+      "edgeScore": -0.2,
+      "confidence": 40,
+      "valueEdge": 6.3,
+      "pitcherDirection": null,
+      "warnings": [
+        "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
+        "RESEARCH_ACCUMULATION_SNAPSHOT"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "sources": {
+        "apiBaseballGame": true,
+        "mlbStatsBoxscore": true,
+        "gamePk": 822703
+      },
+      "starters": {
+        "home": {
+          "probable": "Cade Cavalli",
+          "actual": {
+            "side": "home",
+            "role": "starter",
+            "name": "Cade Cavalli",
+            "playerId": 676917,
+            "inningsPitched": "6.0",
+            "outs": 18,
+            "runs": 3,
+            "earnedRuns": 2,
+            "hits": 6,
+            "walks": 2,
+            "strikeouts": 3,
+            "homeRuns": 1,
+            "pitches": 98,
+            "decision": "(W, 8-4)"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "away": {
+          "probable": "Shane Bieber",
+          "actual": {
+            "side": "away",
+            "role": "starter",
+            "name": "Shane Bieber",
+            "playerId": 669456,
+            "inningsPitched": "0.2",
+            "outs": 2,
+            "runs": 4,
+            "earnedRuns": 4,
+            "hits": 1,
+            "walks": 6,
+            "strikeouts": 0,
+            "homeRuns": 0,
+            "pitches": 42,
+            "decision": "(L, 2-2)"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "pickStarterStatus": "STARTER_MATCHED",
+        "starterVerdict": "STARTER_DISADVANTAGE_REALIZED"
+      },
+      "bullpen": {
+        "pickReliefRuns": 4,
+        "oppReliefRuns": 3,
+        "verdict": "NOT_BULLPEN_DRIVEN"
+      },
+      "offense": {
+        "pickRuns": 6,
+        "oppRuns": 8,
+        "pickHits": 8,
+        "pickWalks": 2,
+        "pickHomeRuns": 2,
+        "pickLeftOnBase": 12,
+        "verdict": "OPPONENT_OFFENSE_SURGED"
+      },
+      "flow": {
+        "pickFirstLeadInning": null,
+        "maxPickLead": 0,
+        "opponentTookLeadInning": 1,
+        "tieCount": 0,
+        "scoreAfter6": {
+          "home": 8,
+          "away": 3
+        },
+        "runsAfter6": {
+          "pick": 3,
+          "opponent": 0
+        },
+        "finalScore": {
+          "home": 8,
+          "away": 6
+        },
+        "pickLedDuringGame": false
+      },
+      "risks": [
+        {
+          "signal": "starting pitcher factor missing at prediction",
+          "timing": "PRE_GAME_KNOWN",
+          "note": "예측 시점 선발투수 팩터 미확보"
+        },
+        {
+          "signal": "starter allowed more runs / shorter outing",
+          "timing": "IN_GAME_ONLY",
+          "note": "실제 선발 투구 결과 열세"
+        },
+        {
+          "signal": "fielding errors recorded",
+          "timing": "IN_GAME_ONLY",
+          "note": "errors home=2 away=2"
+        }
+      ],
+      "failureTypes": {
+        "primary": "MULTIPLE_FACTORS",
+        "secondary": [
+          "STARTER_FAILURE",
+          "OPPONENT_OFFENSE_SURGE"
+        ]
+      },
+      "specialQuestions": null,
+      "note": "불펜·선발 판정은 확정이 아니라 경기 결과와 연관된 흐름 분류이다."
+    },
+    {
+      "gameId": "mlb-179624",
+      "match": "Seattle Mariners @ Los Angeles Dodgers",
+      "baselinePick": "Los Angeles Dodgers",
+      "pickSide": "home",
+      "homeScore": 6,
+      "awayScore": 7,
+      "actualWinner": "Seattle Mariners",
+      "edgeScore": 11.5,
+      "confidence": 47,
+      "valueEdge": -1.4,
+      "pitcherDirection": null,
+      "warnings": [
+        "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
+        "RESEARCH_ACCUMULATION_SNAPSHOT"
+      ],
+      "missingFactors": [
+        "선발투수",
+        "맞대결"
+      ],
+      "sources": {
+        "apiBaseballGame": true,
+        "mlbStatsBoxscore": true,
+        "gamePk": 823923
+      },
+      "starters": {
+        "home": {
+          "probable": "Justin Wrobleski",
+          "actual": {
+            "side": "home",
+            "role": "starter",
+            "name": "Justin Wrobleski",
+            "playerId": 680736,
+            "inningsPitched": "6.0",
+            "outs": 18,
+            "runs": 5,
+            "earnedRuns": 5,
+            "hits": 7,
+            "walks": 0,
+            "strikeouts": 7,
+            "homeRuns": 4,
+            "pitches": 102,
+            "decision": "ND"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "away": {
+          "probable": "Luis Castillo",
+          "actual": {
+            "side": "away",
+            "role": "starter",
+            "name": "Luis Castillo",
+            "playerId": 622491,
+            "inningsPitched": "5.0",
+            "outs": 15,
+            "runs": 5,
+            "earnedRuns": 5,
+            "hits": 11,
+            "walks": 2,
+            "strikeouts": 2,
+            "homeRuns": 2,
+            "pitches": 90,
+            "decision": "ND"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "pickStarterStatus": "STARTER_MATCHED",
+        "starterVerdict": "STARTERS_EVEN"
+      },
+      "bullpen": {
+        "pickReliefRuns": 2,
+        "oppReliefRuns": 1,
+        "verdict": "BULLPEN_COLLAPSE"
+      },
+      "offense": {
+        "pickRuns": 6,
+        "oppRuns": 7,
+        "pickHits": 13,
+        "pickWalks": 3,
+        "pickHomeRuns": 2,
+        "pickLeftOnBase": 21,
+        "verdict": "OPPONENT_OFFENSE_SURGED"
+      },
+      "flow": {
+        "pickFirstLeadInning": 1,
+        "maxPickLead": 1,
+        "opponentTookLeadInning": 8,
+        "tieCount": 3,
+        "scoreAfter6": {
+          "home": 5,
+          "away": 5
+        },
+        "runsAfter6": {
+          "pick": 1,
+          "opponent": 2
+        },
+        "finalScore": {
+          "home": 6,
+          "away": 7
+        },
+        "pickLedDuringGame": true
+      },
+      "risks": [
+        {
+          "signal": "starting pitcher factor missing at prediction",
+          "timing": "PRE_GAME_KNOWN",
+          "note": "예측 시점 선발투수 팩터 미확보"
+        },
+        {
+          "signal": "bullpen collapse after starter exit",
+          "timing": "IN_GAME_ONLY",
+          "note": "선발 교체 이후 불펜 구간 실점·역전 흐름"
+        },
+        {
+          "signal": "fielding errors recorded",
+          "timing": "IN_GAME_ONLY",
+          "note": "errors home=0 away=2"
+        }
+      ],
+      "failureTypes": {
+        "primary": "MULTIPLE_FACTORS",
+        "secondary": [
+          "BULLPEN_FAILURE",
+          "OPPONENT_OFFENSE_SURGE"
+        ]
+      },
+      "specialQuestions": null,
+      "note": "불펜·선발 판정은 확정이 아니라 경기 결과와 연관된 흐름 분류이다."
+    },
+    {
+      "gameId": "mlb-179626",
+      "match": "Baltimore Orioles @ Detroit Tigers",
+      "baselinePick": "Baltimore Orioles",
+      "pickSide": "away",
+      "homeScore": 14,
+      "awayScore": 0,
+      "actualWinner": "Detroit Tigers",
+      "edgeScore": -5.9,
+      "confidence": 48,
+      "valueEdge": 12.5,
+      "pitcherDirection": null,
+      "warnings": [
+        "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
+        "RESEARCH_ACCUMULATION_SNAPSHOT"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "sources": {
+        "apiBaseballGame": true,
+        "mlbStatsBoxscore": true,
+        "gamePk": 824243
+      },
+      "starters": {
+        "home": {
+          "probable": "Troy Melton",
+          "actual": {
+            "side": "home",
+            "role": "starter",
+            "name": "Troy Melton",
+            "playerId": 675512,
+            "inningsPitched": "7.0",
+            "outs": 21,
+            "runs": 0,
+            "earnedRuns": 0,
+            "hits": 3,
+            "walks": 2,
+            "strikeouts": 5,
+            "homeRuns": 0,
+            "pitches": 92,
+            "decision": "(W, 6-1)"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "away": {
+          "probable": "Dean Kremer",
+          "actual": {
+            "side": "away",
+            "role": "starter",
+            "name": "Dean Kremer",
+            "playerId": 665152,
+            "inningsPitched": "4.0",
+            "outs": 12,
+            "runs": 8,
+            "earnedRuns": 8,
+            "hits": 8,
+            "walks": 3,
+            "strikeouts": 4,
+            "homeRuns": 2,
+            "pitches": 81,
+            "decision": "(L, 1-4)"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "pickStarterStatus": "STARTER_MATCHED",
+        "starterVerdict": "STARTER_DISADVANTAGE_REALIZED"
+      },
+      "bullpen": {
+        "pickReliefRuns": 6,
+        "oppReliefRuns": 0,
+        "verdict": "BULLPEN_DISADVANTAGE"
+      },
+      "offense": {
+        "pickRuns": 0,
+        "oppRuns": 14,
+        "pickHits": 3,
+        "pickWalks": 2,
+        "pickHomeRuns": 0,
+        "pickLeftOnBase": 10,
+        "verdict": "OPPONENT_OFFENSE_SURGED"
+      },
+      "flow": {
+        "pickFirstLeadInning": null,
+        "maxPickLead": 0,
+        "opponentTookLeadInning": 1,
+        "tieCount": 0,
+        "scoreAfter6": {
+          "home": 10,
+          "away": 0
+        },
+        "runsAfter6": {
+          "pick": 0,
+          "opponent": 4
+        },
+        "finalScore": {
+          "home": 14,
+          "away": 0
+        },
+        "pickLedDuringGame": false
+      },
+      "risks": [
+        {
+          "signal": "starting pitcher factor missing at prediction",
+          "timing": "PRE_GAME_KNOWN",
+          "note": "예측 시점 선발투수 팩터 미확보"
+        },
+        {
+          "signal": "starter allowed more runs / shorter outing",
+          "timing": "IN_GAME_ONLY",
+          "note": "실제 선발 투구 결과 열세"
+        },
+        {
+          "signal": "fielding errors recorded",
+          "timing": "IN_GAME_ONLY",
+          "note": "errors home=0 away=1"
+        }
+      ],
+      "failureTypes": {
+        "primary": "MULTIPLE_FACTORS",
+        "secondary": [
+          "STARTER_FAILURE",
+          "BULLPEN_FAILURE"
+        ]
+      },
+      "specialQuestions": null,
+      "note": "불펜·선발 판정은 확정이 아니라 경기 결과와 연관된 흐름 분류이다."
+    },
+    {
+      "gameId": "mlb-179629",
+      "match": "Boston Red Sox @ Athletics",
+      "baselinePick": "Boston Red Sox",
+      "pickSide": "away",
+      "homeScore": 4,
+      "awayScore": 3,
+      "actualWinner": "Athletics",
+      "edgeScore": -12.1,
+      "confidence": 57,
+      "valueEdge": 4.3,
+      "pitcherDirection": null,
+      "warnings": [
+        "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
+        "RESEARCH_ACCUMULATION_SNAPSHOT"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "sources": {
+        "apiBaseballGame": true,
+        "mlbStatsBoxscore": true,
+        "gamePk": 824976
+      },
+      "starters": {
+        "home": {
+          "probable": "Gage Jump",
+          "actual": {
+            "side": "home",
+            "role": "starter",
+            "name": "Gage Jump",
+            "playerId": 695611,
+            "inningsPitched": "6.0",
+            "outs": 18,
+            "runs": 0,
+            "earnedRuns": 0,
+            "hits": 3,
+            "walks": 4,
+            "strikeouts": 7,
+            "homeRuns": 0,
+            "pitches": 90,
+            "decision": "(W, 4-6)"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "away": {
+          "probable": "Jake Bennett",
+          "actual": {
+            "side": "away",
+            "role": "starter",
+            "name": "Jake Bennett",
+            "playerId": 687562,
+            "inningsPitched": "6.1",
+            "outs": 19,
+            "runs": 3,
+            "earnedRuns": 3,
+            "hits": 6,
+            "walks": 2,
+            "strikeouts": 4,
+            "homeRuns": 1,
+            "pitches": 88,
+            "decision": "(L, 6-4)"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "pickStarterStatus": "STARTER_MATCHED",
+        "starterVerdict": "STARTER_DISADVANTAGE_REALIZED"
+      },
+      "bullpen": {
+        "pickReliefRuns": 1,
+        "oppReliefRuns": 3,
+        "verdict": "NOT_BULLPEN_DRIVEN"
+      },
+      "offense": {
+        "pickRuns": 3,
+        "oppRuns": 4,
+        "pickHits": 8,
+        "pickWalks": 6,
+        "pickHomeRuns": 1,
+        "pickLeftOnBase": 15,
+        "verdict": "OFFENSE_NOT_PRIMARY"
+      },
+      "flow": {
+        "pickFirstLeadInning": null,
+        "maxPickLead": 0,
+        "opponentTookLeadInning": 2,
+        "tieCount": 0,
+        "scoreAfter6": {
+          "home": 1,
+          "away": 0
+        },
+        "runsAfter6": {
+          "pick": 3,
+          "opponent": 3
+        },
+        "finalScore": {
+          "home": 4,
+          "away": 3
+        },
+        "pickLedDuringGame": false
+      },
+      "risks": [
+        {
+          "signal": "starting pitcher factor missing at prediction",
+          "timing": "PRE_GAME_KNOWN",
+          "note": "예측 시점 선발투수 팩터 미확보"
+        },
+        {
+          "signal": "starter allowed more runs / shorter outing",
+          "timing": "IN_GAME_ONLY",
+          "note": "실제 선발 투구 결과 열세"
+        },
+        {
+          "signal": "fielding errors recorded",
+          "timing": "IN_GAME_ONLY",
+          "note": "errors home=0 away=1"
+        }
+      ],
+      "failureTypes": {
+        "primary": "STARTER_FAILURE",
+        "secondary": [
+          "CLOSE_GAME_VARIANCE"
+        ]
+      },
+      "specialQuestions": null,
+      "note": "불펜·선발 판정은 확정이 아니라 경기 결과와 연관된 흐름 분류이다."
+    },
+    {
+      "gameId": "mlb-179630",
+      "match": "Philadelphia Phillies @ Miami Marlins",
+      "baselinePick": "Philadelphia Phillies",
+      "pickSide": "away",
+      "homeScore": 1,
+      "awayScore": 0,
+      "actualWinner": "Miami Marlins",
+      "edgeScore": -2.7,
+      "confidence": 44,
+      "valueEdge": 3.4,
+      "pitcherDirection": null,
+      "warnings": [
+        "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
+        "RESEARCH_ACCUMULATION_SNAPSHOT"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "sources": {
+        "apiBaseballGame": true,
+        "mlbStatsBoxscore": true,
+        "gamePk": 823838
+      },
+      "starters": {
+        "home": {
+          "probable": "Sandy Alcantara",
+          "actual": {
+            "side": "home",
+            "role": "starter",
+            "name": "Sandy Alcantara",
+            "playerId": 645261,
+            "inningsPitched": "7.0",
+            "outs": 21,
+            "runs": 0,
+            "earnedRuns": 0,
+            "hits": 4,
+            "walks": 1,
+            "strikeouts": 5,
+            "homeRuns": 0,
+            "pitches": 97,
+            "decision": "(W, 11-6)"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "away": {
+          "probable": "Aaron Nola",
+          "actual": {
+            "side": "away",
+            "role": "starter",
+            "name": "Aaron Nola",
+            "playerId": 605400,
+            "inningsPitched": "5.2",
+            "outs": 17,
+            "runs": 1,
+            "earnedRuns": 1,
+            "hits": 5,
+            "walks": 3,
+            "strikeouts": 4,
+            "homeRuns": 1,
+            "pitches": 93,
+            "decision": "(L, 3-9)"
+          },
+          "status": "STARTER_MATCHED"
+        },
+        "pickStarterStatus": "STARTER_MATCHED",
+        "starterVerdict": "STARTER_DISADVANTAGE_REALIZED"
+      },
+      "bullpen": {
+        "pickReliefRuns": 0,
+        "oppReliefRuns": 0,
+        "verdict": "NOT_BULLPEN_DRIVEN"
+      },
+      "offense": {
+        "pickRuns": 0,
+        "oppRuns": 1,
+        "pickHits": 4,
+        "pickWalks": 1,
+        "pickHomeRuns": 0,
+        "pickLeftOnBase": 11,
+        "verdict": "OFFENSE_UNDERPERFORMED"
+      },
+      "flow": {
+        "pickFirstLeadInning": null,
+        "maxPickLead": 0,
+        "opponentTookLeadInning": 1,
+        "tieCount": 0,
+        "scoreAfter6": {
+          "home": 1,
+          "away": 0
+        },
+        "runsAfter6": {
+          "pick": 0,
+          "opponent": 0
+        },
+        "finalScore": {
+          "home": 1,
+          "away": 0
+        },
+        "pickLedDuringGame": false
+      },
+      "risks": [
+        {
+          "signal": "starting pitcher factor missing at prediction",
+          "timing": "PRE_GAME_KNOWN",
+          "note": "예측 시점 선발투수 팩터 미확보"
+        },
+        {
+          "signal": "starter allowed more runs / shorter outing",
+          "timing": "IN_GAME_ONLY",
+          "note": "실제 선발 투구 결과 열세"
+        },
+        {
+          "signal": "fielding errors recorded",
+          "timing": "IN_GAME_ONLY",
+          "note": "errors home=1 away=1"
+        }
+      ],
+      "failureTypes": {
+        "primary": "MULTIPLE_FACTORS",
+        "secondary": [
+          "STARTER_FAILURE",
+          "OFFENSIVE_FAILURE"
+        ]
+      },
+      "specialQuestions": null,
+      "note": "불펜·선발 판정은 확정이 아니라 경기 결과와 연관된 흐름 분류이다."
+    }
+  ]
+}

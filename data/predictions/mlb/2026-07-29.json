@@ -11,17 +11,31 @@
     "purchaseReason": "SALES_WINDOW_CLOSED",
     "bettingLine": false,
     "engineRerun": false,
-    "resultsFetched": false,
+    "resultsFetched": true,
     "note": "2026-07-29 KST pre-game research snapshot (baseline+filter).",
-    "predictionHashSha256": "5eeffd78908ac1115fe141d65b5702b2bf6b09b36d7888a81b2e80383cdd579c"
+    "predictionHashSha256": "5eeffd78908ac1115fe141d65b5702b2bf6b09b36d7888a81b2e80383cdd579c",
+    "lastGradedAt": "2026-07-29T08:14:33.121Z",
+    "resultSource": "api-baseball",
+    "mlbStatsApiUsed": false,
+    "gradingVersion": "mlb-research-grade-v1"
   },
   "summary": {
     "total": 16,
-    "pending": 16,
+    "pending": 0,
+    "postponed": 1,
     "BASELINE_CANDIDATE": 2,
     "PASS": 12,
     "MARKET_CONFLICT": 2,
-    "INSUFFICIENT": 0
+    "INSUFFICIENT": 0,
+    "graded": 15,
+    "hits": 7,
+    "fails": 8,
+    "inconclusive": 1,
+    "hitRate": 46.7,
+    "hitRateStatus": "OK",
+    "newlyGraded": 0,
+    "unchangedGraded": 15,
+    "resultCorrectionWarnings": []
   },
   "predictions": [
     {
@@ -78,13 +92,13 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 5,
+      "awayScore": 6,
+      "actualWinner": "away",
+      "predictionHit": false,
+      "gradedAt": "2026-07-29T07:48:16.850Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-29-mlb-179616",
@@ -140,13 +154,15 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
+      "resultStatus": "postponed",
       "homeScore": null,
       "awayScore": null,
       "actualWinner": null,
       "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "gradedAt": "2026-07-29T08:16:00.000Z",
+      "feedbackClassification": "INCONCLUSIVE",
+      "postponementReason": "WEATHER_POSTPONEMENT",
+      "postponementNote": "Provider(API-BASEBALL) 결과에서 externalId 179616이 미반환됨. 기상 악화로 연기 확인. 재편성 경기는 신규 gameId로 별도 등록 예정."
     },
     {
       "predictionId": "mlb-research-2026-07-29-mlb-179617",
@@ -202,13 +218,13 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 1,
+      "awayScore": 4,
+      "actualWinner": "away",
+      "predictionHit": false,
+      "gradedAt": "2026-07-29T07:48:16.850Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-29-mlb-179618",
@@ -264,13 +280,13 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 2,
+      "awayScore": 10,
+      "actualWinner": "away",
+      "predictionHit": true,
+      "gradedAt": "2026-07-29T07:48:16.850Z",
+      "feedbackClassification": "SIGNAL_WORKED"
     },
     {
       "predictionId": "mlb-research-2026-07-29-mlb-179619",
@@ -326,13 +342,13 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 2,
+      "awayScore": 8,
+      "actualWinner": "away",
+      "predictionHit": true,
+      "gradedAt": "2026-07-29T07:48:16.850Z",
+      "feedbackClassification": "SIGNAL_WORKED"
     },
     {
       "predictionId": "mlb-research-2026-07-29-mlb-179620",
@@ -388,13 +404,13 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 8,
+      "awayScore": 7,
+      "actualWinner": "home",
+      "predictionHit": true,
+      "gradedAt": "2026-07-29T07:48:16.850Z",
+      "feedbackClassification": "SIGNAL_WORKED"
     },
     {
       "predictionId": "mlb-research-2026-07-29-mlb-179621",
@@ -450,13 +466,13 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 7,
+      "awayScore": 8,
+      "actualWinner": "away",
+      "predictionHit": false,
+      "gradedAt": "2026-07-29T07:48:16.850Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-29-mlb-179622",
@@ -512,13 +528,13 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 8,
+      "awayScore": 6,
+      "actualWinner": "home",
+      "predictionHit": false,
+      "gradedAt": "2026-07-29T07:48:16.850Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-29-mlb-179623",
@@ -574,13 +590,13 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 3,
+      "awayScore": 2,
+      "actualWinner": "home",
+      "predictionHit": true,
+      "gradedAt": "2026-07-29T07:48:16.850Z",
+      "feedbackClassification": "SIGNAL_WORKED"
     },
     {
       "predictionId": "mlb-research-2026-07-29-mlb-179624",
@@ -636,13 +652,13 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 6,
+      "awayScore": 7,
+      "actualWinner": "away",
+      "predictionHit": false,
+      "gradedAt": "2026-07-29T07:48:16.850Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-29-mlb-179625",
@@ -698,13 +714,13 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 2,
+      "awayScore": 3,
+      "actualWinner": "away",
+      "predictionHit": true,
+      "gradedAt": "2026-07-29T07:48:16.850Z",
+      "feedbackClassification": "SIGNAL_WORKED"
     },
     {
       "predictionId": "mlb-research-2026-07-29-mlb-179626",
@@ -760,13 +776,13 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 14,
+      "awayScore": 0,
+      "actualWinner": "home",
+      "predictionHit": false,
+      "gradedAt": "2026-07-29T07:48:16.850Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-29-mlb-179627",
@@ -822,13 +838,13 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 2,
+      "awayScore": 0,
+      "actualWinner": "home",
+      "predictionHit": true,
+      "gradedAt": "2026-07-29T07:48:16.850Z",
+      "feedbackClassification": "SIGNAL_WORKED"
     },
     {
       "predictionId": "mlb-research-2026-07-29-mlb-179628",
@@ -884,13 +900,13 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 2,
+      "awayScore": 3,
+      "actualWinner": "away",
+      "predictionHit": true,
+      "gradedAt": "2026-07-29T07:48:16.850Z",
+      "feedbackClassification": "SIGNAL_WORKED"
     },
     {
       "predictionId": "mlb-research-2026-07-29-mlb-179629",
@@ -946,13 +962,13 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 4,
+      "awayScore": 3,
+      "actualWinner": "home",
+      "predictionHit": false,
+      "gradedAt": "2026-07-29T07:48:16.850Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     },
     {
       "predictionId": "mlb-research-2026-07-29-mlb-179630",
@@ -1008,13 +1024,13 @@
         "PRE_GAME_SNAPSHOT_PARTIAL:pitcher/recheck/purchase sources absent",
         "RESEARCH_ACCUMULATION_SNAPSHOT"
       ],
-      "resultStatus": "pending",
-      "homeScore": null,
-      "awayScore": null,
-      "actualWinner": null,
-      "predictionHit": null,
-      "gradedAt": null,
-      "feedbackClassification": null
+      "resultStatus": "graded",
+      "homeScore": 1,
+      "awayScore": 0,
+      "actualWinner": "home",
+      "predictionHit": false,
+      "gradedAt": "2026-07-29T07:48:16.850Z",
+      "feedbackClassification": "SIGNAL_FAILED"
     }
   ]
 }

@@ -1,0 +1,351 @@
+{
+  "schemaVersion": "mlb-pregame-cutoff-audit-v1",
+  "dateKst": "2026-07-31",
+  "runId": "2026-07-31T01-24-23-520Z",
+  "generatedAt": "2026-07-31T01:24:27.773Z",
+  "collectionStartedAt": "2026-07-31T01:24:23.520Z",
+  "summary": {
+    "eligibleGames": 3,
+    "leakageFailures": 0,
+    "invalidCutoff": 0,
+    "predicted": 0,
+    "pass": 3
+  },
+  "games": [
+    {
+      "gamePk": 824974,
+      "internalGameId": "mlb-athletics-boston-red-sox",
+      "pregameEligible": true,
+      "scheduledStartUtc": "2026-07-31T01:40:00Z",
+      "checks": [
+        {
+          "id": "collection_before_start",
+          "pass": true,
+          "detail": "collectionStartedAt=2026-07-31T01:24:23.520Z start=2026-07-31T01:40:00Z"
+        },
+        {
+          "id": "timestamp:starter.generatedAt",
+          "pass": true,
+          "detail": "starter.generatedAt=2026-07-31T01:24:24.218Z vs start=2026-07-31T01:40:00Z"
+        },
+        {
+          "id": "timestamp:odds.generatedAt",
+          "pass": true,
+          "detail": "odds.generatedAt=2026-07-31T01:24:26.967Z vs start=2026-07-31T01:40:00Z"
+        },
+        {
+          "id": "timestamp:lineup.generatedAt",
+          "pass": true,
+          "detail": "lineup.generatedAt=2026-07-31T01:24:27.341Z vs start=2026-07-31T01:40:00Z"
+        },
+        {
+          "id": "timestamp:prediction.predictedAt",
+          "pass": true,
+          "detail": "prediction.predictedAt=2026-07-31T01:24:27.427Z vs start=2026-07-31T01:40:00Z"
+        },
+        {
+          "id": "odds.capturedAt",
+          "pass": true,
+          "detail": "capturedAt=2026-07-31T00:53:12Z"
+        },
+        {
+          "id": "lineup.sourceTimestamp",
+          "pass": true,
+          "detail": "sourceTimestamp=2026-07-30T00:48:10.145Z"
+        },
+        {
+          "id": "lineup.sourceTimestamp",
+          "pass": true,
+          "detail": "sourceTimestamp=2026-07-30T00:48:10.145Z"
+        },
+        {
+          "id": "starter.recentStarts_excludes_target",
+          "pass": true,
+          "detail": "target gamePk not in recentStarts"
+        },
+        {
+          "id": "starter.recentStarts_excludes_target",
+          "pass": true,
+          "detail": "target gamePk not in recentStarts"
+        }
+      ],
+      "leakageFailed": false,
+      "predictionStatus": "PASS",
+      "passReason": "baselineStatus=INSUFFICIENT",
+      "starterStatus": "STARTER_PROBABLE_COLLECTED",
+      "oddsStatus": "COLLECTED",
+      "lineupStatus": "NOT_RELEASED",
+      "finalStatus": "PASS"
+    },
+    {
+      "gamePk": 824894,
+      "internalGameId": "mlb-atlanta-braves-washington-nationals",
+      "pregameEligible": false,
+      "scheduledStartUtc": "2026-07-30T23:15:00Z",
+      "checks": [
+        {
+          "id": "eligibility",
+          "pass": true,
+          "detail": "EXCLUDED_ALREADY_STARTED"
+        }
+      ],
+      "leakageFailed": false,
+      "predictionStatus": "EXCLUDED",
+      "passReason": "commenceTimeUtc 2026-07-30T23:15:00Z <= collectionStartedAt",
+      "starterStatus": "SKIPPED",
+      "oddsStatus": "SKIPPED",
+      "lineupStatus": "SKIPPED",
+      "finalStatus": "EXCLUDED_ALREADY_STARTED"
+    },
+    {
+      "gamePk": 824568,
+      "internalGameId": "mlb-chicago-white-sox-new-york-yankees",
+      "pregameEligible": false,
+      "scheduledStartUtc": "2026-07-30T18:10:00Z",
+      "checks": [
+        {
+          "id": "eligibility",
+          "pass": true,
+          "detail": "EXCLUDED_ALREADY_STARTED"
+        }
+      ],
+      "leakageFailed": false,
+      "predictionStatus": "EXCLUDED",
+      "passReason": "commenceTimeUtc 2026-07-30T18:10:00Z <= collectionStartedAt",
+      "starterStatus": "SKIPPED",
+      "oddsStatus": "SKIPPED",
+      "lineupStatus": "SKIPPED",
+      "finalStatus": "EXCLUDED_ALREADY_STARTED"
+    },
+    {
+      "gamePk": 824488,
+      "internalGameId": "mlb-cincinnati-reds-pittsburgh-pirates",
+      "pregameEligible": false,
+      "scheduledStartUtc": "2026-07-30T23:10:00Z",
+      "checks": [
+        {
+          "id": "eligibility",
+          "pass": true,
+          "detail": "EXCLUDED_ALREADY_STARTED"
+        }
+      ],
+      "leakageFailed": false,
+      "predictionStatus": "EXCLUDED",
+      "passReason": "commenceTimeUtc 2026-07-30T23:10:00Z <= collectionStartedAt",
+      "starterStatus": "SKIPPED",
+      "oddsStatus": "SKIPPED",
+      "lineupStatus": "SKIPPED",
+      "finalStatus": "EXCLUDED_ALREADY_STARTED"
+    },
+    {
+      "gamePk": 823921,
+      "internalGameId": "mlb-los-angeles-dodgers-seattle-mariners",
+      "pregameEligible": true,
+      "scheduledStartUtc": "2026-07-31T02:10:00Z",
+      "checks": [
+        {
+          "id": "collection_before_start",
+          "pass": true,
+          "detail": "collectionStartedAt=2026-07-31T01:24:23.520Z start=2026-07-31T02:10:00Z"
+        },
+        {
+          "id": "timestamp:starter.generatedAt",
+          "pass": true,
+          "detail": "starter.generatedAt=2026-07-31T01:24:24.218Z vs start=2026-07-31T02:10:00Z"
+        },
+        {
+          "id": "timestamp:odds.generatedAt",
+          "pass": true,
+          "detail": "odds.generatedAt=2026-07-31T01:24:26.967Z vs start=2026-07-31T02:10:00Z"
+        },
+        {
+          "id": "timestamp:lineup.generatedAt",
+          "pass": true,
+          "detail": "lineup.generatedAt=2026-07-31T01:24:27.341Z vs start=2026-07-31T02:10:00Z"
+        },
+        {
+          "id": "timestamp:prediction.predictedAt",
+          "pass": true,
+          "detail": "prediction.predictedAt=2026-07-31T01:24:27.427Z vs start=2026-07-31T02:10:00Z"
+        },
+        {
+          "id": "odds.capturedAt",
+          "pass": true,
+          "detail": "capturedAt=2026-07-31T00:53:12Z"
+        },
+        {
+          "id": "lineup.sourceTimestamp",
+          "pass": true,
+          "detail": "sourceTimestamp=2026-07-30T00:48:09.301Z"
+        },
+        {
+          "id": "lineup.sourceTimestamp",
+          "pass": true,
+          "detail": "sourceTimestamp=2026-07-30T00:48:09.301Z"
+        },
+        {
+          "id": "starter.recentStarts_excludes_target",
+          "pass": true,
+          "detail": "target gamePk not in recentStarts"
+        },
+        {
+          "id": "starter.recentStarts_excludes_target",
+          "pass": true,
+          "detail": "target gamePk not in recentStarts"
+        }
+      ],
+      "leakageFailed": false,
+      "predictionStatus": "PASS",
+      "passReason": "baselineStatus=INSUFFICIENT",
+      "starterStatus": "STARTER_PROBABLE_COLLECTED",
+      "oddsStatus": "COLLECTED",
+      "lineupStatus": "NOT_RELEASED",
+      "finalStatus": "PASS"
+    },
+    {
+      "gamePk": 823674,
+      "internalGameId": "mlb-minnesota-twins-kansas-city-royals",
+      "pregameEligible": false,
+      "scheduledStartUtc": "2026-07-30T17:40:00Z",
+      "checks": [
+        {
+          "id": "eligibility",
+          "pass": true,
+          "detail": "EXCLUDED_ALREADY_STARTED"
+        }
+      ],
+      "leakageFailed": false,
+      "predictionStatus": "EXCLUDED",
+      "passReason": "commenceTimeUtc 2026-07-30T17:40:00Z <= collectionStartedAt",
+      "starterStatus": "SKIPPED",
+      "oddsStatus": "SKIPPED",
+      "lineupStatus": "SKIPPED",
+      "finalStatus": "EXCLUDED_ALREADY_STARTED"
+    },
+    {
+      "gamePk": 823595,
+      "internalGameId": "mlb-new-york-mets-miami-marlins",
+      "pregameEligible": false,
+      "scheduledStartUtc": "2026-07-30T23:10:00Z",
+      "checks": [
+        {
+          "id": "eligibility",
+          "pass": true,
+          "detail": "EXCLUDED_ALREADY_STARTED"
+        }
+      ],
+      "leakageFailed": false,
+      "predictionStatus": "EXCLUDED",
+      "passReason": "commenceTimeUtc 2026-07-30T23:10:00Z <= collectionStartedAt",
+      "starterStatus": "SKIPPED",
+      "oddsStatus": "SKIPPED",
+      "lineupStatus": "SKIPPED",
+      "finalStatus": "EXCLUDED_ALREADY_STARTED"
+    },
+    {
+      "gamePk": 823271,
+      "internalGameId": "mlb-san-diego-padres-san-francisco-giants",
+      "pregameEligible": true,
+      "scheduledStartUtc": "2026-07-31T01:40:00Z",
+      "checks": [
+        {
+          "id": "collection_before_start",
+          "pass": true,
+          "detail": "collectionStartedAt=2026-07-31T01:24:23.520Z start=2026-07-31T01:40:00Z"
+        },
+        {
+          "id": "timestamp:starter.generatedAt",
+          "pass": true,
+          "detail": "starter.generatedAt=2026-07-31T01:24:24.218Z vs start=2026-07-31T01:40:00Z"
+        },
+        {
+          "id": "timestamp:odds.generatedAt",
+          "pass": true,
+          "detail": "odds.generatedAt=2026-07-31T01:24:26.967Z vs start=2026-07-31T01:40:00Z"
+        },
+        {
+          "id": "timestamp:lineup.generatedAt",
+          "pass": true,
+          "detail": "lineup.generatedAt=2026-07-31T01:24:27.341Z vs start=2026-07-31T01:40:00Z"
+        },
+        {
+          "id": "timestamp:prediction.predictedAt",
+          "pass": true,
+          "detail": "prediction.predictedAt=2026-07-31T01:24:27.427Z vs start=2026-07-31T01:40:00Z"
+        },
+        {
+          "id": "odds.capturedAt",
+          "pass": true,
+          "detail": "capturedAt=2026-07-31T00:53:12Z"
+        },
+        {
+          "id": "lineup.sourceTimestamp",
+          "pass": true,
+          "detail": "sourceTimestamp=2026-07-30T00:48:08.672Z"
+        },
+        {
+          "id": "lineup.sourceTimestamp",
+          "pass": true,
+          "detail": "sourceTimestamp=2026-07-30T00:48:08.672Z"
+        },
+        {
+          "id": "starter.recentStarts_excludes_target",
+          "pass": true,
+          "detail": "target gamePk not in recentStarts"
+        },
+        {
+          "id": "starter.recentStarts_excludes_target",
+          "pass": true,
+          "detail": "target gamePk not in recentStarts"
+        }
+      ],
+      "leakageFailed": false,
+      "predictionStatus": "PASS",
+      "passReason": "baselineStatus=INSUFFICIENT",
+      "starterStatus": "STARTER_PROBABLE_COLLECTED",
+      "oddsStatus": "COLLECTED",
+      "lineupStatus": "NOT_RELEASED",
+      "finalStatus": "PASS"
+    },
+    {
+      "gamePk": 823023,
+      "internalGameId": "mlb-st-louis-cardinals-chicago-cubs",
+      "pregameEligible": false,
+      "scheduledStartUtc": "2026-07-30T18:15:00Z",
+      "checks": [
+        {
+          "id": "eligibility",
+          "pass": true,
+          "detail": "EXCLUDED_ALREADY_STARTED"
+        }
+      ],
+      "leakageFailed": false,
+      "predictionStatus": "EXCLUDED",
+      "passReason": "commenceTimeUtc 2026-07-30T18:15:00Z <= collectionStartedAt",
+      "starterStatus": "SKIPPED",
+      "oddsStatus": "SKIPPED",
+      "lineupStatus": "SKIPPED",
+      "finalStatus": "EXCLUDED_ALREADY_STARTED"
+    },
+    {
+      "gamePk": 822946,
+      "internalGameId": "mlb-tampa-bay-rays-texas-rangers",
+      "pregameEligible": false,
+      "scheduledStartUtc": "2026-07-30T16:10:00Z",
+      "checks": [
+        {
+          "id": "eligibility",
+          "pass": true,
+          "detail": "EXCLUDED_ALREADY_STARTED"
+        }
+      ],
+      "leakageFailed": false,
+      "predictionStatus": "EXCLUDED",
+      "passReason": "commenceTimeUtc 2026-07-30T16:10:00Z <= collectionStartedAt",
+      "starterStatus": "SKIPPED",
+      "oddsStatus": "SKIPPED",
+      "lineupStatus": "SKIPPED",
+      "finalStatus": "EXCLUDED_ALREADY_STARTED"
+    }
+  ]
+}

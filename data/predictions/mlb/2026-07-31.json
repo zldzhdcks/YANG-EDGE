@@ -4,8 +4,8 @@
     "dateKst": "2026-07-31",
     "league": "MLB",
     "kind": "research-prediction-snapshot",
-    "generatedAt": "2026-07-31T00:54:00.610Z",
-    "predictedAt": "2026-07-31T00:54:00.284Z",
+    "generatedAt": "2026-07-31T01:28:14.966Z",
+    "predictedAt": "2026-07-31T01:28:14.668Z",
     "purchaseEligible": false,
     "researchOnly": true,
     "purchaseReason": "RESEARCH_DATASET_ONLY",
@@ -55,7 +55,7 @@
       "lineup": "2026-07-31-lineup-dataset-v1.json"
     },
     "sourceGeneratedAt": {
-      "dailySummary": "2026-07-31T00:54:00.284Z"
+      "dailySummary": "2026-07-31T01:28:14.668Z"
     },
     "sourceSnapshotVersions": {
       "dailySummary": "mlb-daily-research-summary-v1",
@@ -64,18 +64,18 @@
       "odds": "mlb-odds-history-dataset-v1",
       "lineup": "mlb-lineup-dataset-v1"
     },
-    "predictionHashSha256": "cef21c32518c803b010a5e9800c2be0e8ac4c5132263313d6f9af145fe2a1f92",
+    "predictionHashSha256": "7e5ed4244c5837253fef2eb4ee2540f1a7176ea2a425177a00558c9f9ea0e559",
     "deterministic": true,
     "duplicateSafe": true,
     "inputManifest": {
       "schemaVersion": "mlb-prediction-input-manifest-v1",
       "dateKst": "2026-07-31",
-      "createdAt": "2026-07-31T00:54:00.600Z",
+      "createdAt": "2026-07-31T01:28:14.955Z",
       "dailySummary": {
         "artifact": "2026-07-31-daily-research-summary-v1.json",
         "schemaVersion": "mlb-daily-research-summary-v1",
         "pipelineVersion": "mlb-daily-research-v1.1",
-        "researchReadyPercent": 61
+        "researchReadyPercent": 74
       },
       "inputs": {
         "schedule": {
@@ -84,7 +84,7 @@
         },
         "starter": {
           "artifact": "2026-07-31-starter-dataset-v1.json",
-          "status": "PARTIAL"
+          "status": "READY"
         },
         "odds": {
           "artifact": "2026-07-31-odds-history-dataset-v1.json",
@@ -97,11 +97,10 @@
       },
       "cutoffTime": "2026-07-31T02:10:00Z",
       "cutoffPolicy": "per-game commenceTimeUtc validation across Schedule/Starter/Odds/Lineup artifacts",
-      "inputHash": "bcf503228806f56c57a86cbc3539839f53f975d0e9987ebef9c1c5842775384e",
+      "inputHash": "32437d133292963fb472d7f1cdc4e4fddeca7a4bb7fd05122488c74ad25226d0",
       "warnings": [
         "LINEUP_DATASET_PARTIAL",
         "ODDS_DATASET_PARTIAL",
-        "STARTER_DATASET_PARTIAL",
         "mlb-athletics-boston-red-sox:LIMITED_INPUT",
         "mlb-atlanta-braves-washington-nationals:BLOCKED",
         "mlb-chicago-white-sox-new-york-yankees:LIMITED_INPUT",
@@ -114,7 +113,13 @@
         "mlb-tampa-bay-rays-texas-rangers:LIMITED_INPUT"
       ]
     },
-    "note": "Prediction consumer reads existing MLB research artifacts only. No provider calls, no builder execution, no Research Ready weighting in engine."
+    "note": "Prediction consumer reads existing MLB research artifacts only. No provider calls, no builder execution, no Research Ready weighting in engine.",
+    "immediateRunProtectedPriorPredictions": true,
+    "immediateRunUpdatedEligibleCount": 3,
+    "immediateRunRestoredPriorCount": 7,
+    "immediateRunPriorRevision": "data/predictions/mlb/2026-07-31.rev-2026-07-31T01-28-11-004Z.json",
+    "predictionHashRepairedAt": "2026-07-31T08:37:49.884Z",
+    "predictionHashRepairReason": "remaining-pregame protect merge left stale hash; fingerprint fields unchanged by repair"
   },
   "summary": {
     "total": 10,
@@ -127,7 +132,7 @@
     "snapshotIntegrityVerified": 0,
     "snapshotIntegrityUnverified": 10,
     "unchangedOnRerun": false,
-    "preservedExistingPredictions": 0,
+    "preservedExistingPredictions": 10,
     "preservedGradedResults": 0,
     "eligibleGames": 0,
     "limitedInputGames": 7,
@@ -143,26 +148,26 @@
       "league": "MLB",
       "homeTeam": "Athletics",
       "awayTeam": "Boston Red Sox",
-      "baselinePick": "Athletics",
-      "modelProbability": 50,
-      "edgeScore": 0,
-      "confidence": 24,
+      "baselinePick": "Boston Red Sox",
+      "modelProbability": 54,
+      "edgeScore": -4.4,
+      "confidence": 36,
       "recommendationGrade": "PASS",
       "baselineStatus": "INSUFFICIENT",
-      "marketProbability": 37,
-      "valueEdge": 13.4,
+      "marketProbability": null,
+      "valueEdge": null,
       "openingOdds": 2.72,
-      "latestOdds": 2.72,
-      "oddsMovement": "UNCHANGED",
-      "pitcherDirection": "NEUTRAL",
-      "pitcherReviewAvailable": false,
-      "dataAvailability": 0.2,
+      "latestOdds": 172,
+      "oddsMovement": "UP",
+      "pitcherDirection": "AWAY_EDGE",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.3,
       "usedFactors": [
+        "선발투수",
         "부상/전력",
         "연승/연패"
       ],
       "missingFactors": [
-        "선발투수",
         "최근 폼",
         "득점력",
         "실점 억제",
@@ -174,7 +179,7 @@
       "purchaseEligible": false,
       "researchOnly": true,
       "purchaseReason": "RESEARCH_DATASET_ONLY",
-      "predictedAt": "2026-07-31T00:54:00.284Z",
+      "predictedAt": "2026-07-31T01:28:14.668Z",
       "sourceSnapshotVersions": {
         "dailySummary": "mlb-daily-research-summary-v1",
         "schedule": "mlb-schedule-v1",
@@ -185,12 +190,12 @@
       "snapshotIntegrity": "UNVERIFIED",
       "integrityWarnings": [
         "LINEUP_NOT_CONFIRMED",
-        "STARTER_IDENTITY_PARTIAL"
+        "MARKET_NOT_AVAILABLE"
       ],
       "inputStatus": "LIMITED_INPUT",
       "inputWarnings": [
         "LINEUP_NOT_CONFIRMED",
-        "STARTER_IDENTITY_PARTIAL"
+        "MARKET_NOT_AVAILABLE"
       ],
       "resultStatus": "pending",
       "homeScore": null,
@@ -389,11 +394,11 @@
       "confidence": 34,
       "recommendationGrade": "PASS",
       "baselineStatus": "INSUFFICIENT",
-      "marketProbability": 42,
-      "valueEdge": 9.2,
+      "marketProbability": null,
+      "valueEdge": null,
       "openingOdds": 1.71,
-      "latestOdds": 1.71,
-      "oddsMovement": "UNCHANGED",
+      "latestOdds": 136,
+      "oddsMovement": "UP",
       "pitcherDirection": "AWAY_EDGE",
       "pitcherReviewAvailable": true,
       "dataAvailability": 0.3,
@@ -414,7 +419,7 @@
       "purchaseEligible": false,
       "researchOnly": true,
       "purchaseReason": "RESEARCH_DATASET_ONLY",
-      "predictedAt": "2026-07-31T00:54:00.284Z",
+      "predictedAt": "2026-07-31T01:28:14.668Z",
       "sourceSnapshotVersions": {
         "dailySummary": "mlb-daily-research-summary-v1",
         "schedule": "mlb-schedule-v1",
@@ -424,11 +429,13 @@
       },
       "snapshotIntegrity": "UNVERIFIED",
       "integrityWarnings": [
-        "LINEUP_NOT_CONFIRMED"
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_NOT_AVAILABLE"
       ],
       "inputStatus": "LIMITED_INPUT",
       "inputWarnings": [
-        "LINEUP_NOT_CONFIRMED"
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_NOT_AVAILABLE"
       ],
       "resultStatus": "pending",
       "homeScore": null,
@@ -569,26 +576,26 @@
       "league": "MLB",
       "homeTeam": "San Diego Padres",
       "awayTeam": "San Francisco Giants",
-      "baselinePick": "San Diego Padres",
-      "modelProbability": 50,
-      "edgeScore": 0,
-      "confidence": 24,
+      "baselinePick": "San Francisco Giants",
+      "modelProbability": 51,
+      "edgeScore": -1.1,
+      "confidence": 34,
       "recommendationGrade": "PASS",
       "baselineStatus": "INSUFFICIENT",
-      "marketProbability": 61,
-      "valueEdge": -10.6,
-      "openingOdds": 1.64,
-      "latestOdds": 1.64,
-      "oddsMovement": "UNCHANGED",
-      "pitcherDirection": "NEUTRAL",
-      "pitcherReviewAvailable": false,
-      "dataAvailability": 0.2,
+      "marketProbability": null,
+      "valueEdge": null,
+      "openingOdds": null,
+      "latestOdds": null,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": "AWAY_EDGE",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.3,
       "usedFactors": [
+        "선발투수",
         "부상/전력",
         "연승/연패"
       ],
       "missingFactors": [
-        "선발투수",
         "최근 폼",
         "득점력",
         "실점 억제",
@@ -600,7 +607,7 @@
       "purchaseEligible": false,
       "researchOnly": true,
       "purchaseReason": "RESEARCH_DATASET_ONLY",
-      "predictedAt": "2026-07-31T00:54:00.284Z",
+      "predictedAt": "2026-07-31T01:28:14.668Z",
       "sourceSnapshotVersions": {
         "dailySummary": "mlb-daily-research-summary-v1",
         "schedule": "mlb-schedule-v1",
@@ -611,12 +618,12 @@
       "snapshotIntegrity": "UNVERIFIED",
       "integrityWarnings": [
         "LINEUP_NOT_CONFIRMED",
-        "STARTER_IDENTITY_PARTIAL"
+        "MARKET_NOT_AVAILABLE"
       ],
       "inputStatus": "LIMITED_INPUT",
       "inputWarnings": [
         "LINEUP_NOT_CONFIRMED",
-        "STARTER_IDENTITY_PARTIAL"
+        "MARKET_NOT_AVAILABLE"
       ],
       "resultStatus": "pending",
       "homeScore": null,

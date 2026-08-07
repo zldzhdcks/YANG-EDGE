@@ -6,14 +6,14 @@
     "schemaVersion": "mlb-starter-dataset-v1",
     "builderVersion": "starter-dataset-builder-v1",
     "dateKst": "2026-07-29",
-    "generatedAt": "2026-07-28T14:00:39.183Z",
+    "generatedAt": "2026-07-29T08:37:46.698Z",
     "datasetStatus": "COLLECTING",
     "engineAdmission": "PROHIBITED",
     "engineConnected": false,
     "researchOnly": true,
-    "preGameCreatedNew": true,
-    "preGameImmutablePreserved": false,
-    "predictionHashSha256": "c13a4684969f2bdd4dcac2fe3299b0e3d0ba128e588c51ee4a8fa4b9b9785804",
+    "preGameCreatedNew": false,
+    "preGameImmutablePreserved": true,
+    "predictionHashSha256": "653426f6c8f8e0ed5514663e419bc035717099222192a715bda83e339cc997af",
     "predictionUnchanged": true,
     "resultHashSha256": "f618464e83cb774ed1ddfe33dae71cd8b74acd88aa769ade0daa8563ba899b9f",
     "firstResultHash": "f618464e83cb774ed1ddfe33dae71cd8b74acd88aa769ade0daa8563ba899b9f",
@@ -49,20 +49,20 @@
     "derivedHit": 28,
     "derivedMiss": 0,
     "networkCalls": 0,
-    "postGameRawHit": 17,
-    "postGameRawMiss": 15,
-    "postGameNetworkCalls": 15
+    "postGameRawHit": 32,
+    "postGameRawMiss": 0,
+    "postGameNetworkCalls": 0
   },
   "checks": [
     {
       "id": "prediction-hash-unchanged",
       "passed": true,
-      "detail": "c13a4684969f2bdd4dcac2fe3299b0e3d0ba128e588c51ee4a8fa4b9b9785804"
+      "detail": "653426f6c8f8e0ed5514663e419bc035717099222192a715bda83e339cc997af"
     },
     {
       "id": "pregame-immutable",
       "passed": true,
-      "detail": "created-once"
+      "detail": "skip-overwrite"
     },
     {
       "id": "result-hash-matched",

@@ -1,9 +1,9 @@
 {
   "schemaVersion": "mlb-pregame-cutoff-audit-v1",
   "dateKst": "2026-07-31",
-  "runId": "2026-07-31T00-53-46-838Z",
-  "generatedAt": "2026-07-31T00:54:00.630Z",
-  "collectionStartedAt": "2026-07-31T00:53:46.838Z",
+  "runId": "2026-07-31T01-28-11-004Z",
+  "generatedAt": "2026-07-31T01:28:14.994Z",
+  "collectionStartedAt": "2026-07-31T01:28:11.004Z",
   "summary": {
     "eligibleGames": 3,
     "leakageFailures": 0,
@@ -21,32 +21,32 @@
         {
           "id": "collection_before_start",
           "pass": true,
-          "detail": "collectionStartedAt=2026-07-31T00:53:46.838Z start=2026-07-31T01:40:00Z"
+          "detail": "collectionStartedAt=2026-07-31T01:28:11.004Z start=2026-07-31T01:40:00Z"
         },
         {
           "id": "timestamp:starter.generatedAt",
           "pass": true,
-          "detail": "starter.generatedAt=2026-07-31T00:53:54.470Z vs start=2026-07-31T01:40:00Z"
+          "detail": "starter.generatedAt=2026-07-31T01:28:11.625Z vs start=2026-07-31T01:40:00Z"
         },
         {
           "id": "timestamp:odds.generatedAt",
           "pass": true,
-          "detail": "odds.generatedAt=2026-07-31T00:53:59.900Z vs start=2026-07-31T01:40:00Z"
+          "detail": "odds.generatedAt=2026-07-31T01:28:14.224Z vs start=2026-07-31T01:40:00Z"
         },
         {
           "id": "timestamp:lineup.generatedAt",
           "pass": true,
-          "detail": "lineup.generatedAt=2026-07-31T00:54:00.194Z vs start=2026-07-31T01:40:00Z"
+          "detail": "lineup.generatedAt=2026-07-31T01:28:14.587Z vs start=2026-07-31T01:40:00Z"
         },
         {
           "id": "timestamp:prediction.predictedAt",
           "pass": true,
-          "detail": "prediction.predictedAt=2026-07-31T00:54:00.284Z vs start=2026-07-31T01:40:00Z"
+          "detail": "prediction.predictedAt=2026-07-31T01:28:14.668Z vs start=2026-07-31T01:40:00Z"
         },
         {
           "id": "odds.capturedAt",
           "pass": true,
-          "detail": "capturedAt=2026-07-31T00:53:12Z"
+          "detail": "capturedAt=2026-07-31T01:27:15Z"
         },
         {
           "id": "lineup.sourceTimestamp",
@@ -73,7 +73,7 @@
       "predictionStatus": "PASS",
       "passReason": "baselineStatus=INSUFFICIENT",
       "starterStatus": "STARTER_PROBABLE_COLLECTED",
-      "oddsStatus": "COLLECTED",
+      "oddsStatus": "PARTIAL",
       "lineupStatus": "NOT_RELEASED",
       "finalStatus": "PASS"
     },
@@ -111,7 +111,7 @@
       ],
       "leakageFailed": false,
       "predictionStatus": "EXCLUDED",
-      "passReason": "commenceTimeUtc 2026-07-30T18:10:00Z <= collectionStartedAt",
+      "passReason": "game finished (Final/null)",
       "starterStatus": "SKIPPED",
       "oddsStatus": "SKIPPED",
       "lineupStatus": "SKIPPED",
@@ -146,32 +146,32 @@
         {
           "id": "collection_before_start",
           "pass": true,
-          "detail": "collectionStartedAt=2026-07-31T00:53:46.838Z start=2026-07-31T02:10:00Z"
+          "detail": "collectionStartedAt=2026-07-31T01:28:11.004Z start=2026-07-31T02:10:00Z"
         },
         {
           "id": "timestamp:starter.generatedAt",
           "pass": true,
-          "detail": "starter.generatedAt=2026-07-31T00:53:54.470Z vs start=2026-07-31T02:10:00Z"
+          "detail": "starter.generatedAt=2026-07-31T01:28:11.625Z vs start=2026-07-31T02:10:00Z"
         },
         {
           "id": "timestamp:odds.generatedAt",
           "pass": true,
-          "detail": "odds.generatedAt=2026-07-31T00:53:59.900Z vs start=2026-07-31T02:10:00Z"
+          "detail": "odds.generatedAt=2026-07-31T01:28:14.224Z vs start=2026-07-31T02:10:00Z"
         },
         {
           "id": "timestamp:lineup.generatedAt",
           "pass": true,
-          "detail": "lineup.generatedAt=2026-07-31T00:54:00.194Z vs start=2026-07-31T02:10:00Z"
+          "detail": "lineup.generatedAt=2026-07-31T01:28:14.587Z vs start=2026-07-31T02:10:00Z"
         },
         {
           "id": "timestamp:prediction.predictedAt",
           "pass": true,
-          "detail": "prediction.predictedAt=2026-07-31T00:54:00.284Z vs start=2026-07-31T02:10:00Z"
+          "detail": "prediction.predictedAt=2026-07-31T01:28:14.668Z vs start=2026-07-31T02:10:00Z"
         },
         {
           "id": "odds.capturedAt",
           "pass": true,
-          "detail": "capturedAt=2026-07-31T00:53:12Z"
+          "detail": "capturedAt=2026-07-31T01:26:23Z"
         },
         {
           "id": "lineup.sourceTimestamp",
@@ -198,7 +198,7 @@
       "predictionStatus": "PASS",
       "passReason": "baselineStatus=INSUFFICIENT",
       "starterStatus": "STARTER_PROBABLE_COLLECTED",
-      "oddsStatus": "COLLECTED",
+      "oddsStatus": "PARTIAL",
       "lineupStatus": "NOT_RELEASED",
       "finalStatus": "PASS"
     },
@@ -216,7 +216,7 @@
       ],
       "leakageFailed": false,
       "predictionStatus": "EXCLUDED",
-      "passReason": "commenceTimeUtc 2026-07-30T17:40:00Z <= collectionStartedAt",
+      "passReason": "game finished (Final/null)",
       "starterStatus": "SKIPPED",
       "oddsStatus": "SKIPPED",
       "lineupStatus": "SKIPPED",
@@ -251,32 +251,32 @@
         {
           "id": "collection_before_start",
           "pass": true,
-          "detail": "collectionStartedAt=2026-07-31T00:53:46.838Z start=2026-07-31T01:40:00Z"
+          "detail": "collectionStartedAt=2026-07-31T01:28:11.004Z start=2026-07-31T01:40:00Z"
         },
         {
           "id": "timestamp:starter.generatedAt",
           "pass": true,
-          "detail": "starter.generatedAt=2026-07-31T00:53:54.470Z vs start=2026-07-31T01:40:00Z"
+          "detail": "starter.generatedAt=2026-07-31T01:28:11.625Z vs start=2026-07-31T01:40:00Z"
         },
         {
           "id": "timestamp:odds.generatedAt",
           "pass": true,
-          "detail": "odds.generatedAt=2026-07-31T00:53:59.900Z vs start=2026-07-31T01:40:00Z"
+          "detail": "odds.generatedAt=2026-07-31T01:28:14.224Z vs start=2026-07-31T01:40:00Z"
         },
         {
           "id": "timestamp:lineup.generatedAt",
           "pass": true,
-          "detail": "lineup.generatedAt=2026-07-31T00:54:00.194Z vs start=2026-07-31T01:40:00Z"
+          "detail": "lineup.generatedAt=2026-07-31T01:28:14.587Z vs start=2026-07-31T01:40:00Z"
         },
         {
           "id": "timestamp:prediction.predictedAt",
           "pass": true,
-          "detail": "prediction.predictedAt=2026-07-31T00:54:00.284Z vs start=2026-07-31T01:40:00Z"
+          "detail": "prediction.predictedAt=2026-07-31T01:28:14.668Z vs start=2026-07-31T01:40:00Z"
         },
         {
           "id": "odds.capturedAt",
           "pass": true,
-          "detail": "capturedAt=2026-07-31T00:53:12Z"
+          "detail": "capturedAt=2026-07-31T01:27:15Z"
         },
         {
           "id": "lineup.sourceTimestamp",
@@ -303,7 +303,7 @@
       "predictionStatus": "PASS",
       "passReason": "baselineStatus=INSUFFICIENT",
       "starterStatus": "STARTER_PROBABLE_COLLECTED",
-      "oddsStatus": "COLLECTED",
+      "oddsStatus": "PARTIAL",
       "lineupStatus": "NOT_RELEASED",
       "finalStatus": "PASS"
     },
@@ -321,7 +321,7 @@
       ],
       "leakageFailed": false,
       "predictionStatus": "EXCLUDED",
-      "passReason": "commenceTimeUtc 2026-07-30T18:15:00Z <= collectionStartedAt",
+      "passReason": "game finished (Final/null)",
       "starterStatus": "SKIPPED",
       "oddsStatus": "SKIPPED",
       "lineupStatus": "SKIPPED",
@@ -341,7 +341,7 @@
       ],
       "leakageFailed": false,
       "predictionStatus": "EXCLUDED",
-      "passReason": "commenceTimeUtc 2026-07-30T16:10:00Z <= collectionStartedAt",
+      "passReason": "game finished (Final/null)",
       "starterStatus": "SKIPPED",
       "oddsStatus": "SKIPPED",
       "lineupStatus": "SKIPPED",

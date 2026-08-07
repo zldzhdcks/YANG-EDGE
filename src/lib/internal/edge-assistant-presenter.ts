@@ -18,6 +18,9 @@ export type QuestionId =
   | "QUESTION_OPEN_PROBLEMS"
   | "QUESTION_MLB_STATUS"
   | "QUESTION_KBO_READINESS"
+  | "QUESTION_KBO_MISSING"
+  | "QUESTION_KBO_CANCELLED"
+  | "QUESTION_KBO_T45"
   | "QUESTION_WHY_PRIORITY"
   | "QUESTION_WHAT_CHANGED";
 
@@ -28,9 +31,12 @@ export type QuestionDef = {
 
 export const SUPPORTED_QUESTIONS: QuestionDef[] = [
   { id: "QUESTION_TODAY_PRIORITY", label: "오늘 뭐부터 해야 해?" },
+  { id: "QUESTION_KBO_READINESS", label: "KBO 준비 상태" },
+  { id: "QUESTION_KBO_MISSING", label: "아직 부족한 데이터" },
+  { id: "QUESTION_KBO_CANCELLED", label: "취소 경기 상태" },
+  { id: "QUESTION_KBO_T45", label: "T45 실행 가능 여부" },
   { id: "QUESTION_OPEN_PROBLEMS", label: "아직 해결하지 않은 문제는?" },
   { id: "QUESTION_MLB_STATUS", label: "MLB 상태는 어때?" },
-  { id: "QUESTION_KBO_READINESS", label: "KBO 분석 준비됐어?" },
   { id: "QUESTION_WHY_PRIORITY", label: "왜 이 작업이 우선이야?" },
   { id: "QUESTION_WHAT_CHANGED", label: "오늘 무엇이 바뀌었어?" },
 ];
@@ -147,9 +153,17 @@ export function buildAssistantBrief(
   if (inProgress) {
     primary = `이미 진행 중인 "${inProgress.title}" 작업을 먼저 마무리하는 것을 추천합니다.`;
     reason = inProgress.reason || inProgress.situation;
+  } else if (data.kboOps.assistantBrief && data.kboOps.schedule.totalGames > 0 && sorted.some((c) => c.taskType.startsWith("KBO_"))) {
+    primary = data.kboOps.assistantBrief;
+    reason = top
+      ? `우선 작업: ${top.title}`
+      : data.kboOps.summaryLines.join(" · ");
   } else if (top) {
     primary = `${top.title}을(를) 먼저 확인하세요.`;
     reason = top.reason || top.situation;
+  } else if (data.kboOps.assistantBrief && data.kboOps.schedule.totalGames > 0) {
+    primary = data.kboOps.assistantBrief;
+    reason = data.kboOps.summaryLines.join(" · ");
   } else {
     primary = "현재 확인이 필요한 긴급 작업이 없습니다.";
     reason = "모든 Task가 완료되었거나 시스템에서 자동 해결되었습니다.";
@@ -189,6 +203,12 @@ export function answerQuestion(
       return answerMlbStatus(data, op);
     case "QUESTION_KBO_READINESS":
       return answerKboReadiness(data);
+    case "QUESTION_KBO_MISSING":
+      return answerKboMissing(data);
+    case "QUESTION_KBO_CANCELLED":
+      return answerKboCancelled(data);
+    case "QUESTION_KBO_T45":
+      return answerKboT45(data);
     case "QUESTION_WHY_PRIORITY":
       return answerWhyPriority(data, op, taskStates);
     case "QUESTION_WHAT_CHANGED":
@@ -330,62 +350,106 @@ function answerMlbStatus(
 }
 
 function answerKboReadiness(data: ResearchLabData): AssistantAnswer {
-  const kr = data.kboReadiness;
-  const evidence: EvidenceItem[] = [];
-
-  function fmtCount(got: number | null, total: number | null): string {
-    if (got == null && total == null) return "MISSING";
-    return `${got ?? 0} / ${total ?? "?"}`;
-  }
-
-  evidence.push({ fact: `Schedule: ${kr.scheduleGames ?? "MISSING"}경기`, source: null });
-  evidence.push({ fact: `국내 배당: ${fmtCount(kr.domesticOddsGames, kr.domesticOddsTotal)}`, source: null });
-  evidence.push({ fact: `해외 배당: ${fmtCount(kr.overseasOddsGames, kr.overseasOddsTotal)}`, source: null });
-  evidence.push({ fact: `선발: ${fmtCount(kr.starterGames, kr.starterTotal)}`, source: null });
-  evidence.push({ fact: `라인업: ${kr.lineupStatus}`, source: null });
-  evidence.push({ fact: `불펜: ${kr.bullpenStatus}`, source: null });
-  evidence.push({ fact: `Prediction: ${kr.predictionStatus}`, source: null });
-
-  const unknowns: string[] = [];
-  if (kr.lineupStatus === "UNKNOWN") unknowns.push("KBO Lineup Artifact 반영 여부 확인 필요");
-  if (kr.bullpenStatus === "UNKNOWN") unknowns.push("KBO Bullpen Artifact 반영 여부 확인 필요");
-  if (kr.predictionStatus === "UNKNOWN") unknowns.push("KBO Prediction 생성 여부 확인 필요");
-  unknowns.push("라인업 이미지가 확인되었더라도 프로젝트 Artifact 반영은 별도 확인 필요");
-
-  let summary: string;
-  if (kr.overallStatus === "READY") {
-    summary = "KBO 분석 준비가 완료되었습니다.";
-  } else if (kr.overallStatus === "PARTIAL") {
-    summary = "KBO 분석 준비가 일부만 완료되었습니다.";
-  } else if (kr.overallStatus === "BLOCKED") {
-    summary = "KBO 분석을 시작할 수 없습니다. 필수 데이터가 없습니다.";
-  } else {
-    summary = "KBO 분석 준비 상태를 완전히 확인할 수 없습니다.";
-  }
-
-  if (kr.predictionLock.locked) {
-    summary += ` Prediction 시작 불가: ${kr.predictionLock.reasons.join(", ")}.`;
-  }
-
-  let nextAction: string;
-  if (kr.predictionLock.locked) {
-    nextAction = `다음 항목 해결 필요: ${kr.predictionLock.reasons.join(", ")}`;
-  } else if (kr.overallStatus === "READY") {
-    nextAction = "Prediction 실행 가능";
-  } else {
-    nextAction = "KBO Artifact 생성 또는 기존 Pipeline 상태 확인";
-  }
+  const ops = data.kboOps;
+  const evidence: EvidenceItem[] = ops.summaryLines.map((line) => ({
+    fact: line,
+    source: ops.schedule.sourcePath,
+  }));
 
   return {
-    answerTitle: "KBO 분석 준비 상태",
-    answerSummary: summary,
+    answerTitle: "KBO 준비 상태",
+    answerSummary: ops.assistantBrief,
     evidence,
-    unknowns,
-    nextAction,
+    unknowns:
+      ops.prediction.status === "NOT_CREATED"
+        ? ["KBO Prediction Pipeline 미구현"]
+        : [],
+    nextAction:
+      ops.starter.status === "NOT_ENTERED"
+        ? "활성 경기 선발·라인업 입력"
+        : ops.lineup.status === "NOT_ENTERED"
+          ? "활성 경기 라인업 입력"
+          : "T45 Validate 검토",
     relatedTaskKey: null,
     sourceArtifacts: data.sourceArtifacts
       .filter((a) => a.name.startsWith("KBO") && a.status === "OK")
       .map((a) => a.path),
+  };
+}
+
+function answerKboMissing(data: ResearchLabData): AssistantAnswer {
+  const ops = data.kboOps;
+  const evidence: EvidenceItem[] = ops.waitingStates.map((w) => ({
+    fact: w.message,
+    source: null,
+  }));
+  return {
+    answerTitle: "아직 부족한 데이터",
+    answerSummary:
+      evidence.length > 0
+        ? `${evidence.length}개 항목이 대기 상태입니다.`
+        : "필수 대기 항목이 없습니다.",
+    evidence,
+    unknowns: [],
+    nextAction:
+      ops.starter.status === "NOT_ENTERED" || ops.lineup.status === "NOT_ENTERED"
+        ? "Starter/Lineup Intake"
+        : "대기 항목 재확인",
+    relatedTaskKey: null,
+    sourceArtifacts: [],
+  };
+}
+
+function answerKboCancelled(data: ResearchLabData): AssistantAnswer {
+  const ops = data.kboOps;
+  return {
+    answerTitle: "취소 경기 상태",
+    answerSummary: `취소 ${ops.schedule.cancelledGames}경기 · 활성 ${ops.schedule.activeGames}경기. 취소 경기는 Starter/Lineup 입력 대상이 아닙니다.`,
+    evidence: [
+      {
+        fact: `Schedule ${ops.schedule.totalGames} · cancelled ${ops.schedule.cancelledGames} NOT_APPLICABLE`,
+        source: ops.schedule.sourcePath,
+      },
+    ],
+    unknowns: [],
+    nextAction: "활성 경기만 선발·라인업 입력",
+    relatedTaskKey: null,
+    sourceArtifacts: ops.schedule.sourcePath ? [ops.schedule.sourcePath] : [],
+  };
+}
+
+function answerKboT45(data: ResearchLabData): AssistantAnswer {
+  const ops = data.kboOps;
+  const canValidate =
+    ops.schedule.status === "READY" &&
+    (ops.domesticProto.status === "READY" ||
+      ops.domesticProto.status === "READY_ADMIN_VERIFIED");
+  const canRun =
+    canValidate &&
+    (ops.starter.status === "READY" ||
+      ops.starter.status === "READY_ADMIN_VERIFIED") &&
+    ops.lineup.status === "READY";
+
+  return {
+    answerTitle: "T45 실행 가능 여부",
+    answerSummary: canRun
+      ? "T45 Run 가능합니다."
+      : canValidate
+        ? "Schedule/Proto는 준비됐지만 선발·라인업이 부족해 T45는 PARTIAL 또는 Validate 대기입니다."
+        : "T45 실행 전 필수 데이터가 부족합니다.",
+    evidence: [
+      { fact: `T45: ${ops.t45.status} — ${ops.t45.reason}`, source: null },
+      {
+        fact: `Starter ${ops.starter.entered}/${ops.starter.required} · Lineup ${ops.lineup.entered}/${ops.lineup.required}`,
+        source: null,
+      },
+    ],
+    unknowns: [],
+    nextAction: canRun
+      ? "T45 Validate → Run 승인"
+      : "활성 경기 Starter/Lineup 입력",
+    relatedTaskKey: null,
+    sourceArtifacts: [],
   };
 }
 

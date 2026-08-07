@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "kbo-partial-lineup-intake-audit-v1",
+  "dateKst": "2026-08-01",
+  "enteredAt": "2026-08-01T08:22:37.112Z",
+  "observedAt": "2026-08-01T17:15:00+09:00",
+  "sourceType": "ADMIN_MANUAL_SCREENSHOT",
+  "confirmationMethod": "ADMIN_VERIFIED",
+  "commercialUseStatus": "INTERNAL_ONLY",
+  "extractionMethod": "MANUAL_VISUAL_CONFIRMATION",
+  "sourceReference": "USER_PROVIDED_KBO_LINEUP_SCREENSHOT_PARTIAL_2026-08-01",
+  "primaryPath": "data/operator-input/kbo/2026-08-01-personnel-input-v1.json",
+  "revisionPath": "data/operator-input/kbo/2026-08-01-personnel-input-v1.rev-2026-08-01T08-22-37-112Z.json",
+  "priorHash": "b49c4f883087d83d0889105cefd61f9941973f2cfead53c94823050e5bdc2184",
+  "afterHash": "c5f71115cbbb9b5de0a11fd629616d67c09738f8f2082d2dc95137ab2f1a6be7",
+  "lineupSides": [
+    {
+      "gameId": "kbo-181922",
+      "homeTeam": "두산",
+      "awayTeam": "LG",
+      "homeBatters": 9,
+      "awayBatters": 9
+    },
+    {
+      "gameId": "kbo-181924",
+      "homeTeam": "KT",
+      "awayTeam": "한화",
+      "homeBatters": 9,
+      "awayBatters": 9
+    }
+  ],
+  "batterCount": 36,
+  "starterCorrections": [
+    {
+      "gameId": "kbo-181924",
+      "side": "away",
+      "team": "한화",
+      "from": "짐맨",
+      "to": "짐머맨",
+      "reason": "SCREEN_TEXT_CLARIFIED_BY_LINEUP_IMAGE",
+      "previousTemporaryPlayerKey": "tmp-kbo-한화-짐맨",
+      "temporaryPlayerKey": "tmp-kbo-한화-짐머맨"
+    }
+  ],
+  "pendingLineupGames": [
+    "kbo-181923"
+  ],
+  "cancelledUntouched": [
+    "kbo-181925",
+    "kbo-181926"
+  ],
+  "validation": {
+    "activeGames": 3,
+    "starterEntered": 3,
+    "lineupEnteredGames": 2,
+    "lineupEnteredSides": 4,
+    "protoEntered": 3,
+    "cancelledNotApplicable": 2,
+    "cutoffBeforeFirstPitch": true,
+    "t30Unlocked": true
+  }
+}

@@ -271,14 +271,17 @@ export default function ResearchAnalysisViewer({ view, gamesBackHref }: Props) {
           </span>
           <span className={`text-lg font-bold tabular-nums ${
             view.researchScore.total === 100 ? "text-green-400" :
-            view.researchScore.total >= 40 ? "text-amber-400" :
+            view.researchScore.total > 0 ? "text-amber-400" :
             "text-red-400"
           }`}>
             {view.researchScore.total}%
           </span>
           <span className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold ${
             view.researchScore.overallLabel === "READY" ? "border-green-800 bg-green-950/40 text-green-400" :
-            view.researchScore.overallLabel === "PARTIAL" ? "border-amber-800 bg-amber-950/40 text-amber-400" :
+            view.researchScore.overallLabel === "PARTIAL" ||
+            view.researchScore.overallLabel === "PARTIAL_READY" ||
+            view.researchScore.overallLabel === "WAITING_FOR_PREDICTION" ||
+            view.researchScore.overallLabel === "WAITING_FOR_LINEUP" ? "border-amber-800 bg-amber-950/40 text-amber-400" :
             view.researchScore.overallLabel === "BLOCKED" ? "border-red-800 bg-red-950/40 text-red-400" :
             "border-zinc-700 bg-zinc-800 text-zinc-500"
           }`}>
@@ -300,35 +303,97 @@ export default function ResearchAnalysisViewer({ view, gamesBackHref }: Props) {
             Debug Info
           </p>
           <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-[11px] sm:grid-cols-3">
-            {([
-              ["Schedule", view.gameInfo.availability === "COLLECTED", view.gameInfo.availability === "COLLECTED" ? "PASS" : "FAIL"],
-              ["Domestic Odds", view.oddsComparison.domesticPass, view.oddsComparison.domesticPass ? "PASS" : "FAIL"],
-              ["Overseas Odds", view.oddsComparison.overseasPass, view.oddsComparison.overseasPass ? "PASS" : "FAIL"],
-              ["Starter", view.startingPitchers.availability === "COLLECTED", view.startingPitchers.availability === "COLLECTED" ? "PASS" : "FAIL"],
-              ["Lineup", view.sources.lineupPath != null, view.sources.lineupPath != null ? "PASS" : "FAIL"],
-              [
-                "Prediction",
-                view.researchPrediction.debugStatus === "PASS" ||
-                  view.researchPrediction.debugStatus === "AVAILABLE",
-                view.researchPrediction.debugStatus === "FAIL"
-                  ? "FAIL"
-                  : view.researchPrediction.debugStatus === "AVAILABLE"
-                    ? "AVAILABLE"
-                    : view.researchPrediction.debugStatus === "BLOCKED"
-                      ? "BLOCKED"
-                      : "PASS",
-              ],
-            ] as const).map(([label, ok, text]) => (
+            {(view.kboOperational
+              ? ([
+                  ["Schedule", view.kboOperational.schedule.status],
+                  ["Domestic Odds", view.kboOperational.domesticOdds.status],
+                  ["Overseas Odds", view.kboOperational.overseasOdds.status],
+                  ["Starter", view.kboOperational.starter.status],
+                  ["Lineup", view.kboOperational.lineup.status],
+                  ["Prediction", view.kboOperational.prediction.status],
+                  ["Review", view.kboOperational.review.status],
+                ] as const)
+              : ([
+                  [
+                    "Schedule",
+                    view.gameInfo.availability === "COLLECTED" ? "PASS" : "FAIL",
+                  ],
+                  [
+                    "Domestic Odds",
+                    view.oddsComparison.domesticPass ? "PASS" : "FAIL",
+                  ],
+                  [
+                    "Overseas Odds",
+                    view.oddsComparison.overseasPass ? "PASS" : "FAIL",
+                  ],
+                  [
+                    "Starter",
+                    view.startingPitchers.availability === "COLLECTED"
+                      ? "PASS"
+                      : "FAIL",
+                  ],
+                  [
+                    "Lineup",
+                    view.sources.lineupPath != null ? "PASS" : "FAIL",
+                  ],
+                  [
+                    "Prediction",
+                    view.researchPrediction.debugStatus === "NOT_CREATED" ||
+                    view.researchPrediction.debugStatus === "WAITING"
+                      ? "NOT_CREATED"
+                      : view.researchPrediction.debugStatus,
+                  ],
+                ] as const)
+            ).map(([label, text]) => {
+              const ready =
+                text === "READY" ||
+                text === "READY_ADMIN_VERIFIED" ||
+                text === "PASS" ||
+                text === "AVAILABLE";
+              const waiting =
+                text === "NOT_CREATED" ||
+                text === "NOT_ENTERED" ||
+                text === "NOT_READY" ||
+                text === "NOT_AVAILABLE" ||
+                text === "NOT_COLLECTED" ||
+                text === "WAITING" ||
+                text === "BLOCKED";
+              return (
               <div key={label} className="flex items-center gap-1.5">
-                <span className={`inline-block h-2 w-2 rounded-full ${ok ? "bg-green-500" : text === "BLOCKED" ? "bg-amber-500" : "bg-red-500"}`} />
+                <span className={`inline-block h-2 w-2 rounded-full ${ready ? "bg-green-500" : waiting ? "bg-amber-500" : "bg-red-500"}`} />
                 <span className="text-zinc-400">{label}</span>
-                <span className={`ml-auto font-mono ${ok ? "text-green-400" : text === "BLOCKED" ? "text-amber-400" : "text-red-400"}`}>
+                <span className={`ml-auto font-mono ${ready ? "text-green-400" : waiting ? "text-amber-400" : "text-red-400"}`}>
                   {text}
                 </span>
               </div>
-            ))}
+              );
+            })}
           </div>
-          {(view.sources.oddsPath || view.sources.predictionPath) && (
+          {view.kboOperational && (
+            <div className="mt-2 space-y-0.5 text-[10px] text-zinc-600">
+              {(
+                [
+                  ["Schedule", view.kboOperational.schedule],
+                  ["Domestic Odds", view.kboOperational.domesticOdds],
+                  ["Starter", view.kboOperational.starter],
+                  ["Lineup", view.kboOperational.lineup],
+                  ["Prediction", view.kboOperational.prediction],
+                ] as const
+              ).map(([label, src]) =>
+                src.sourcePath ? (
+                  <p key={label}>
+                    {label}: {abbreviatePath(src.sourcePath)}
+                    {src.sourceType !== "NONE" ? ` · ${src.sourceType}` : ""}
+                  </p>
+                ) : (
+                  <p key={label}>
+                    {label}: {src.status}
+                  </p>
+                ),
+              )}
+            </div>
+          )}
+          {!view.kboOperational && (view.sources.oddsPath || view.sources.predictionPath) && (
             <p className="mt-2 text-[10px] text-zinc-600">
               {view.sources.predictionPath
                 ? `Prediction Source: ${abbreviatePath(view.sources.predictionPath)}`

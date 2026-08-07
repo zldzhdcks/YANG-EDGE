@@ -6,7 +6,7 @@
     "schemaVersion": "mlb-odds-history-dataset-v1",
     "builderVersion": "odds-history-dataset-builder-v1",
     "dateKst": "2026-07-30",
-    "generatedAt": "2026-07-29T10:37:44.099Z",
+    "generatedAt": "2026-07-30T09:39:19.781Z",
     "datasetStatus": "COLLECTING",
     "engineAdmission": "PROHIBITED",
     "engineConnected": false,
@@ -15,37 +15,47 @@
     "predictionUnchanged": true,
     "predictionOptional": true,
     "intakeVersion": "mlb-independent-odds-v1",
-    "inputHashSha256": "972a9dd25c3ce8460a17cd28be00b8b4c94fd3eeb379133f9f3df009db34ee1a",
-    "resultHashSha256": "def349ebc05ebe0425ca11c3f692f846d8d3eff142d62e763e24ca02c0b6d0f3",
-    "firstResultHash": "def349ebc05ebe0425ca11c3f692f846d8d3eff142d62e763e24ca02c0b6d0f3",
-    "secondResultHash": "def349ebc05ebe0425ca11c3f692f846d8d3eff142d62e763e24ca02c0b6d0f3",
+    "scheduleSource": "data/research/mlb/2026-07-30-schedule-v1.json",
+    "inputHashSha256": "f442ec89911a17e6b82ffa0b86c6cf4a079a79598f2fbea7b5d7f1104ba8f1b6",
+    "resultHashSha256": "1e7b3ac665cd05766798faccae097be4616a355ae08160284b1bb39967086916",
+    "firstResultHash": "1e7b3ac665cd05766798faccae097be4616a355ae08160284b1bb39967086916",
+    "secondResultHash": "1e7b3ac665cd05766798faccae097be4616a355ae08160284b1bb39967086916",
     "hashMatched": true
   },
   "independentIntake": {
-    "provider": {
-      "id": "the-odds-api",
-      "displayName": "The Odds API",
-      "sportKey": "baseball_mlb"
+    "provider": "The Odds API",
+    "scheduleGames": 16,
+    "providerEvents": 9,
+    "gamesMatched": 9,
+    "collected": 9,
+    "partial": 0,
+    "notCollected": 7,
+    "collectionStatus": {
+      "COLLECTED": 9,
+      "PARTIAL": 0,
+      "NOT_COLLECTED": 0,
+      "PROVIDER_ERROR": 0,
+      "MATCH_NOT_FOUND": 7,
+      "INVALID_RESPONSE": 0
     },
-    "gamesScheduled": 16,
-    "gamesMatched": 16,
-    "marketsCollected": 16,
-    "missingMarkets": 0,
-    "missingReasons": []
+    "missingReasons": [
+      "Moneyline collected from authorized Odds Provider.",
+      "PROVIDER_EVENT_MISSING: no schedule-matched provider event."
+    ]
   },
   "games": 16,
-  "openingCollected": 16,
-  "latestCollected": 16,
-  "marketProbabilityCollected": 16,
+  "openingCollected": 9,
+  "latestCollected": 9,
+  "marketProbabilityCollected": 9,
   "movement": {
     "UP": 0,
     "DOWN": 0,
-    "UNCHANGED": 16,
-    "NOT_COLLECTED": 0
+    "UNCHANGED": 9,
+    "NOT_COLLECTED": 7
   },
   "joinQuality": {
-    "MATCHED": 16,
-    "MISSING_ODDS": 0,
+    "MATCHED": 9,
+    "MISSING_ODDS": 7,
     "TIMELINE_ONLY": 0
   },
   "provider": {
@@ -55,14 +65,14 @@
   },
   "cacheUsage": {
     "firstRun": {
-      "rawHit": 3,
+      "rawHit": 2,
       "rawMiss": 0,
       "derivedHit": 0,
       "derivedMiss": 0,
       "networkCalls": 0
     },
     "secondRunWarm": {
-      "rawHit": 3,
+      "rawHit": 2,
       "rawMiss": 0,
       "derivedHit": 0,
       "derivedMiss": 0,
@@ -78,7 +88,7 @@
       "prediction": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "starter": "07e8521dfcaf851c882f1efdd12dbdbe98a9cac95a5bf6b37c1291a4b353fe9a",
       "bullpen": null,
-      "lineup": null,
+      "lineup": "0f8784d06f8983448f492665d363e24394e0c5b28d0b715be62c1ba79147216c",
       "weather": null,
       "travel": null
     },
@@ -86,7 +96,7 @@
       "prediction": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "starter": "07e8521dfcaf851c882f1efdd12dbdbe98a9cac95a5bf6b37c1291a4b353fe9a",
       "bullpen": null,
-      "lineup": null,
+      "lineup": "0f8784d06f8983448f492665d363e24394e0c5b28d0b715be62c1ba79147216c",
       "weather": null,
       "travel": null
     },
@@ -99,9 +109,14 @@
       "detail": "OPTIONAL_ABSENT"
     },
     {
+      "id": "schedule-source-present",
+      "passed": true,
+      "detail": "data/research/mlb/2026-07-30-schedule-v1.json"
+    },
+    {
       "id": "result-hash-matched",
       "passed": true,
-      "detail": "def349ebc05ebe0425ca11c3f692f846d8d3eff142d62e763e24ca02c0b6d0f3 == def349ebc05ebe0425ca11c3f692f846d8d3eff142d62e763e24ca02c0b6d0f3"
+      "detail": "1e7b3ac665cd05766798faccae097be4616a355ae08160284b1bb39967086916 == 1e7b3ac665cd05766798faccae097be4616a355ae08160284b1bb39967086916"
     },
     {
       "id": "warm-network-zero",
@@ -132,6 +147,11 @@
       "id": "engine-prohibited",
       "passed": true,
       "detail": "PROHIBITED"
+    },
+    {
+      "id": "no-invented-odds",
+      "passed": true,
+      "detail": "COLLECTED rows must have opening+latest"
     }
   ],
   "legal": {
@@ -144,10 +164,14 @@
   },
   "notes": [
     "PRE_GAME_MARKET only — no closing or post-game odds.",
-    "Schedule-first independent intake; primary odds from The Odds API h2h.",
-    "Optional prediction snapshot enriches baselinePick / gap-fill only.",
-    "movement is numeric decimal-odds delta only (UP/DOWN/UNCHANGED).",
-    "Provider schema is swappable (future proto/other lawful sources).",
+    "Schedule-artifact-first independent intake.",
+    "Primary odds from authorized The Odds API (h2h/spreads/totals).",
+    "Prediction Snapshot is optional supplemental metadata only.",
+    "Movement compares only previous odds-history artifact (same date).",
     "Engine admission PROHIBITED."
-  ]
+  ],
+  "artifacts": {
+    "dataset": "data/research/mlb/2026-07-30-odds-history-dataset-v1.json",
+    "audit": "data/audits/2026-07-30-odds-history-dataset-v1-audit.json"
+  }
 }

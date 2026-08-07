@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "mlb-prediction-validity-v0",
+  "dateKst": "2026-08-03",
+  "generatedAt": "2026-08-03T12:58:55.217Z",
+  "predictionPath": "data/predictions/mlb/2026-08-03.json",
+  "predictionHashSha256": "ad25d64567be8ff98d1e38d0fa11af2fc9e4873e82cd841193afc7282deac0f3",
+  "researchValidity": "INVALID_FOR_PREGAME",
+  "reasonCodes": [
+    "LATE_OBSERVATION_INVALID_FOR_PREGAME",
+    "ODDS_MISSING_ALL",
+    "STARTER_INTEGRITY_FAILED",
+    "STARTER_BUILDER_EXIT_NONZERO",
+    "NON_DETERMINISTIC_HASH_INPUT",
+    "LINEUP_POST_GAME_CONFIRMED",
+    "PIPELINE_STATUS_CONTRADICTION"
+  ],
+  "cutoff": {
+    "predictedAt": "2026-08-03T12:48:36.869Z",
+    "earliestCommenceTimeUtc": "2026-08-02T17:35:00Z",
+    "latestCommenceTimeUtc": "2026-08-02T23:20:00Z",
+    "gamesPredictionAfterStart": 15,
+    "totalGames": 15
+  },
+  "odds": {
+    "collectedGames": 0,
+    "notCollectedGames": 15,
+    "status": "ODDS_MISSING_ALL"
+  },
+  "starter": {
+    "integrityVerdict": "NON_DETERMINISTIC_HASH_INPUT",
+    "builderExitCode": 1,
+    "probableRows": 30
+  },
+  "lineup": {
+    "confirmedGames": 15,
+    "postGameConfirmed": true
+  },
+  "resultDependency": 0,
+  "gradingPolicy": {
+    "researchGraded": "EXCLUDED",
+    "officialGraded": "EXCLUDED",
+    "scorecard": "BLOCKED",
+    "reviewStatus": "PREDICTION_INVALID_FOR_PREGAME"
+  },
+  "quarantineRevisionPath": "data/predictions/mlb/2026-08-03.rev-2026-08-03T12-48-34-943Z-INVALID_FOR_PREGAME.json",
+  "notes": [
+    "Snapshot SUCCESS log is not authoritative; cutoff and input usability are Source of Truth.",
+    "marketPrior contribution was 0 with useMarketPrior=true due to missing overseas odds (not domestic substitute).",
+    "Do not add this slate to research accumulation denominators."
+  ]
+}

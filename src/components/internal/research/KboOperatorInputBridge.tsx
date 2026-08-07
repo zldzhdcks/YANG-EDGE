@@ -207,10 +207,10 @@ export default function KboOperatorInputBridge({ initialData }: { initialData: B
             날짜 이동
           </button>
           <a
-            href={`/internal/research?date=${dateKst}&view=operator`}
+            href={`/internal/dashboard?date=${dateKst}`}
             className="rounded border border-zinc-700 px-3 py-2 text-sm text-zinc-400 hover:text-zinc-200"
           >
-            Research Lab으로 돌아가기
+            Dashboard로 돌아가기
           </a>
         </div>
         <div className="mt-4 grid gap-2 sm:grid-cols-3">

@@ -30,6 +30,22 @@ import {
   isInvalidForPregame,
   loadPredictionValidityV0,
 } from "./prediction-validity-v0";
+import {
+  buildFailureCausesV2,
+  buildFailureCategoryTable,
+  buildPredictionConfidenceHistogram,
+  buildWhyCorrect,
+  classifyFailureCategories,
+  classifySuccessCategories,
+  countCategories,
+  formatFailureCategoryTableText,
+  scoreDiffText,
+  type FailureCategoryTableRow,
+  type MlbReviewFailureCategory,
+  type MlbReviewSuccessCategory,
+  type PredictionConfidenceHistogram,
+  type WhyCorrectItem,
+} from "./review-classify-v2";
 
 type PredictionRow = Record<string, unknown>;
 
@@ -48,6 +64,9 @@ export type MlbSuccessReviewGame = {
   oddsStatus: string;
   lineupStatus: string;
   inputWarnings: string[];
+  successCategories: MlbReviewSuccessCategory[];
+  /** Review v2: why the pick appears correct (research-only) */
+  whyCorrect: WhyCorrectItem[];
   possibleFactors: Array<{
     factor: string;
     assessment: ReviewAssessment;
@@ -65,6 +84,7 @@ export type MlbSuccessReviewDocument = {
   gradedArtifact: string;
   gradedHash: string;
   reviewHash: string;
+  reviewLayerVersion: "mlb-research-review-v2";
   games: MlbSuccessReviewGame[];
 };
 
@@ -89,6 +109,8 @@ export type MlbFailureReviewGame = {
   oddsAvailability: string;
   lineupCutoffStatus: string;
   unexpectedOutcome: string;
+  /** Review v2 primary auto tags */
+  failureCategories: MlbReviewFailureCategory[];
   possibleCauses: MlbFailureCause[];
   dataQualityRisk: string;
   modelJudgmentRisk: string;
@@ -106,6 +128,7 @@ export type MlbFailureReviewDocument = {
   gradedArtifact: string;
   gradedHash: string;
   reviewHash: string;
+  reviewLayerVersion: "mlb-research-review-v2";
   games: MlbFailureReviewGame[];
 };
 
@@ -127,6 +150,7 @@ export type MlbDailyReviewSummaryDocument = {
   dateKst: string;
   generatedAt: string;
   reviewHash: string;
+  reviewLayerVersion: "mlb-research-review-v2";
   artifacts: {
     prediction: string;
     result: string;
@@ -166,6 +190,11 @@ export type MlbDailyReviewSummaryDocument = {
     blockedCounterfactualCorrect: number;
     blockedCounterfactualIncorrect: number;
   };
+  failureCategoryCount: Record<string, number>;
+  successCategoryCount: Record<string, number>;
+  /** Per-game Failure Category table (Acceptance appendix) */
+  failureCategoryTable: FailureCategoryTableRow[];
+  predictionConfidenceHistogram: PredictionConfidenceHistogram;
   leakageAudit: LeakageAuditResult;
   reviewStatus: DailyReviewStatus;
   successPatterns: string[];
@@ -190,44 +219,21 @@ function buildSuccessGame(
   manifest: Record<string, unknown> | null,
 ): MlbSuccessReviewGame {
   const inputWarnings = graded.inputWarnings;
-  const factors: MlbSuccessReviewGame["possibleFactors"] = [];
+  const successCategories = classifySuccessCategories(graded, pred);
+  const whyCorrect = buildWhyCorrect(graded, pred, successCategories);
 
-  if (graded.predictionProbability != null && graded.predictionProbability >= 0.55) {
-    factors.push({
-      factor: "MODEL_PROBABILITY",
-      assessment: "POSSIBLE_SUPPORT",
-      evidence: `model probability ${(graded.predictionProbability * 100).toFixed(1)}% aligned with pick`,
-    });
-  } else {
-    factors.push({
-      factor: "MODEL_PROBABILITY",
-      assessment: "INSUFFICIENT_EVIDENCE",
-      evidence: "probability was not strongly directional",
-    });
-  }
+  const factors: MlbSuccessReviewGame["possibleFactors"] = whyCorrect.map(
+    (w) => ({
+      factor: w.category,
+      assessment: w.assessment,
+      evidence: w.evidence,
+    }),
+  );
 
-  if (inputWarnings.length === 0) {
-    factors.push({
-      factor: "INPUT_QUALITY",
-      assessment: "CONSISTENT_WITH_HYPOTHESIS",
-      evidence: "no input warnings on this game",
-    });
-  } else {
-    factors.push({
-      factor: "INPUT_QUALITY",
-      assessment: "CONFOUNDED",
-      evidence: `input warnings present: ${inputWarnings.join(", ")}`,
-    });
-  }
-
-  const pitcherDirection = asString(pred?.pitcherDirection);
-  if (pitcherDirection) {
-    factors.push({
-      factor: "STARTER_SIGNAL",
-      assessment: "POSSIBLE_SUPPORT",
-      evidence: `pitcherDirection=${pitcherDirection}`,
-    });
-  }
+  const m =
+    graded.homeScore != null && graded.awayScore != null
+      ? Math.abs(graded.homeScore - graded.awayScore)
+      : null;
 
   return {
     gamePk: graded.gamePk,
@@ -244,10 +250,21 @@ function buildSuccessGame(
     oddsStatus: readInputManifestStatus(manifest, "odds"),
     lineupStatus: readInputManifestStatus(manifest, "lineup"),
     inputWarnings,
+    successCategories,
+    whyCorrect,
     possibleFactors: factors,
     counterInterpretation:
-      "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
-    reviewConfidence: inputWarnings.length === 0 ? "MEDIUM" : "LOW",
+      m === 1
+        ? "One-run win: correct side does not prove model skill; variance dominates."
+        : m != null && m >= 5
+          ? "Blowout win: stronger outcome signal, still not causal proof for any single feature."
+          : "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+    reviewConfidence:
+      successCategories.includes("MODEL_ALIGNMENT") &&
+      inputWarnings.filter((w) => !/^BULLPEN_WEIGHT_DISABLED/i.test(w)).length ===
+        0
+        ? "MEDIUM"
+        : "LOW",
     observationOnly: graded.researchGrade?.observationOnly === true,
   };
 }
@@ -257,44 +274,17 @@ function buildFailureGame(
   pred: PredictionRow | undefined,
   manifest: Record<string, unknown> | null,
 ): MlbFailureReviewGame {
-  const causes: MlbFailureCause[] = [];
   const inputWarnings = graded.inputWarnings;
-
-  if (inputWarnings.length > 0) {
-    causes.push({
-      category: "DATA_QUALITY",
-      assessment: "POSSIBLE",
-      evidence: inputWarnings.join("; "),
-    });
-  }
-
-  const pitcherDirection = asString(pred?.pitcherDirection);
-  if (pitcherDirection && pitcherDirection !== "NEUTRAL") {
-    causes.push({
-      category: "STARTER",
-      assessment: "WEAK_SUPPORT",
-      evidence: `pre-game pitcherDirection=${pitcherDirection} did not match outcome`,
-    });
-  }
-
-  causes.push({
-    category: "BULLPEN",
-    assessment: "POSSIBLE",
-    evidence: "bullpen usage and leverage not verified in this review pass",
-  });
-
-  if (graded.predictionProbability != null && graded.predictionProbability >= 0.6) {
-    causes.push({
-      category: "MODEL_OVERCONFIDENCE",
-      assessment: "POSSIBLE",
-      evidence: `model showed ${(graded.predictionProbability * 100).toFixed(1)}% on losing side`,
-    });
-  }
-
-  const scoreText =
+  const failureCategories = classifyFailureCategories(graded, pred);
+  const causes = buildFailureCausesV2(graded, pred, failureCategories);
+  const scoreText = scoreDiffText(graded.homeScore, graded.awayScore);
+  const m =
     graded.homeScore != null && graded.awayScore != null
-      ? `${graded.awayScore}-${graded.homeScore} (away-home)`
-      : "final score unavailable";
+      ? Math.abs(graded.homeScore - graded.awayScore)
+      : null;
+
+  const primary = failureCategories[0] ?? "UNKNOWN";
+  const categoryNarrative = failureCategories.join(", ");
 
   return {
     gamePk: graded.gamePk,
@@ -310,20 +300,40 @@ function buildFailureGame(
     starterCompleteness: readInputManifestStatus(manifest, "starter"),
     oddsAvailability: readInputManifestStatus(manifest, "odds"),
     lineupCutoffStatus: readInputManifestStatus(manifest, "lineup"),
-    unexpectedOutcome: `Pick ${graded.pick ?? "?"} lost; final ${scoreText}`,
+    unexpectedOutcome: `Pick ${graded.pick ?? "?"} lost; final ${scoreText}; tags=[${categoryNarrative}]`,
+    failureCategories,
     possibleCauses: causes,
-    dataQualityRisk:
-      inputWarnings.length > 0
-        ? "Pre-game inputs carried warnings; failure may reflect data gaps."
-        : "No major input warnings; data quality risk appears lower.",
+    dataQualityRisk: inputWarnings.some(
+      (w) => !/^BULLPEN_WEIGHT_DISABLED/i.test(w),
+    )
+      ? `Input gaps may have contributed (${inputWarnings.filter((w) => !/^BULLPEN_WEIGHT_DISABLED/i.test(w)).join(", ")}).`
+      : "No major non-bullpen input warnings; look at outcome shape and market/starter tags.",
     modelJudgmentRisk:
-      "Model side selection did not match final winner; review model features separately.",
+      graded.predictionProbability != null && graded.predictionProbability >= 0.58
+        ? `Higher pick-side probability (${(graded.predictionProbability * 100).toFixed(1)}%) still missed — review calibration.`
+        : "Pick-side probability was not strongly directional; miss is less informative for model judgment.",
     volatilityRisk:
-      "Single-game MLB outcomes are high variance; one miss is not conclusive.",
+      m === 1
+        ? "One-run final — treat as high-volatility miss."
+        : m != null && m >= 5
+          ? "Blowout miss — check market/starter misread rather than pure coin-flip."
+          : "Single-game MLB outcomes are high variance; one miss is not conclusive.",
     devilsAdvocate:
-      "The pick may have been reasonable pre-game; late-inning bullpen or sequencing variance could explain the loss without invalidating the model.",
+      primary === "ONE_RUN_GAME"
+        ? "A one-run loss can occur with a reasonable pre-game pick; do not overfit."
+        : primary === "BLOWOUT"
+          ? "A blowout may reflect unmodeled team/news factors rather than a stable feature failure."
+          : primary === "LINEUP"
+            ? "Missing lineup may have changed the true matchup; the model never saw confirmed bats."
+            : "The pick may have been reasonable pre-game; late leverage or sequencing could explain the loss.",
     alternativeHypothesis:
-      "Actual winner may have been driven by bullpen leverage or small-sample hitting noise rather than starter or odds signals.",
+      failureCategories.includes("MARKET")
+        ? "Market may have already priced the true favorite; model edge was noise."
+        : failureCategories.includes("STARTER")
+          ? "Starter signal may have been incomplete or wrong-sided versus actual outing."
+          : failureCategories.includes("BULLPEN")
+            ? "Late bullpen leverage / sequencing may dominate final winner more than starter/odds."
+            : "Actual winner may reflect small-sample offense or defensive variance.",
     conclusion: "INVESTIGATE_MORE",
     observationOnly: graded.researchGrade?.observationOnly === true,
   };
@@ -493,6 +503,9 @@ function buildAssistantSummary(
   graded: MlbGradedPredictionsDocument,
   reviewStatus: DailyReviewStatus,
   failurePatterns: string[],
+  failureCategoryCount: Record<string, number>,
+  successCategoryCount: Record<string, number>,
+  failureCategoryTable: FailureCategoryTableRow[],
 ): string {
   const s = graded.summary;
   const officialAcc =
@@ -511,9 +524,15 @@ function buildAssistantSummary(
     failurePatterns.length > 0
       ? failurePatterns.join(", ")
       : "none identified";
+  const failCountText = Object.entries(failureCategoryCount)
+    .map(([k, v]) => `${k}=${v}`)
+    .join(", ");
+  const successCountText = Object.entries(successCategoryCount)
+    .map(([k, v]) => `${k}=${v}`)
+    .join(", ");
 
   return [
-    `MLB Daily Review — ${dateKst}`,
+    `MLB Daily Review — ${dateKst} (research-review-v2)`,
     `Prediction contract: ${s.predictionContract ?? "UNKNOWN"}`,
     `Eligible predictions (official): ${s.eligiblePredictions}`,
     `Official sample: ${s.officialSampleCount ?? 0}`,
@@ -525,8 +544,12 @@ function buildAssistantSummary(
     `Research Brier: ${s.researchMeanBrier ?? "null"}`,
     `Research LogLoss: ${s.researchMeanLogLoss ?? "null"}`,
     `Blocked games: ${s.blocked}`,
+    `Failure categories: ${failCountText || "none"}`,
+    `Success categories: ${successCountText || "none"}`,
     `Primary failure candidates: ${failureText}`,
     `Conclusion: ${reviewStatus === "RESEARCH_INVALID" ? "RESEARCH_INVALID" : "DATA_ACCUMULATION_CONTINUES"}`,
+    "",
+    formatFailureCategoryTableText(failureCategoryTable),
   ].join("\n");
 }
 
@@ -579,59 +602,43 @@ export async function buildMlbPredictionReviewsV1(input: {
     .filter((g) => g.grade === "INCORRECT")
     .map((g) => buildFailureGame(g, predById.get(g.gameId), manifest));
 
-  const successHashBody = {
-    schemaVersion: MLB_SUCCESS_REVIEW_SCHEMA,
-    dateKst: input.dateKst,
-    gradedArtifact: `${input.dateKst}-graded-predictions-v1.json`,
-    gradedHash: sha256({
-      schemaVersion: graded.schemaVersion,
-      dateKst: graded.dateKst,
-      predictionHash: graded.predictionHash,
-      resultHash: graded.resultHash,
-      games: graded.games,
-    }),
-    games: successGames,
-  };
-
-  const failureHashBody = {
-    schemaVersion: MLB_FAILURE_REVIEW_SCHEMA,
-    dateKst: input.dateKst,
-    gradedArtifact: `${input.dateKst}-graded-predictions-v1.json`,
-    gradedHash: successHashBody.gradedHash,
-    games: failureGames,
-  };
-
-  const success: MlbSuccessReviewDocument = {
-    ...successHashBody,
-    generatedAt: new Date().toISOString(),
-    reviewHash: sha256(successHashBody),
-    games: successGames,
-  };
-
-  const failure: MlbFailureReviewDocument = {
-    ...failureHashBody,
-    generatedAt: new Date().toISOString(),
-    reviewHash: sha256(failureHashBody),
-    games: failureGames,
-  };
-
   const failurePatterns = [
-    ...new Set(
-      failureGames.flatMap((g) =>
-        g.possibleCauses.map((c) => c.category.toLowerCase()),
-      ),
-    ),
+    ...new Set(failureGames.flatMap((g) => g.failureCategories)),
   ];
 
   const successPatterns = [
-    ...new Set(
-      successGames.flatMap((g) =>
-        g.possibleFactors
-          .filter((f) => f.assessment !== "INSUFFICIENT_EVIDENCE")
-          .map((f) => f.factor.toLowerCase()),
-      ),
-    ),
+    ...new Set(successGames.flatMap((g) => g.successCategories)),
   ];
+
+  const failureCategoryCount = countCategories(
+    failureGames.map((g) => g.failureCategories),
+  );
+  const successCategoryCount = countCategories(
+    successGames.map((g) => g.successCategories),
+  );
+
+  const failureCategoryTable = buildFailureCategoryTable(
+    failureGames.map((g) => {
+      const pred = predById.get(g.gameId);
+      return {
+        gameId: g.gameId,
+        gamePk: g.gamePk,
+        homeTeam: asString(pred?.homeTeam),
+        awayTeam: asString(pred?.awayTeam),
+        failureCategories: g.failureCategories,
+      };
+    }),
+  );
+
+  const predictionConfidenceHistogram = buildPredictionConfidenceHistogram(
+    (Array.isArray(prediction.predictions) ? prediction.predictions : []).map(
+      (p) => {
+        const row = p as PredictionRow;
+        const c = row.confidence;
+        return typeof c === "number" ? c : null;
+      },
+    ),
+  );
 
   const dataQualityWarnings = [
     ...new Set(
@@ -665,9 +672,48 @@ export async function buildMlbPredictionReviewsV1(input: {
     (g) => g.blockedCounterfactual?.result === "INCORRECT",
   ).length;
 
+  const successHashBody = {
+    schemaVersion: MLB_SUCCESS_REVIEW_SCHEMA,
+    dateKst: input.dateKst,
+    gradedArtifact: `${input.dateKst}-graded-predictions-v1.json`,
+    gradedHash: sha256({
+      schemaVersion: graded.schemaVersion,
+      dateKst: graded.dateKst,
+      predictionHash: graded.predictionHash,
+      resultHash: graded.resultHash,
+      games: graded.games,
+    }),
+    reviewLayerVersion: "mlb-research-review-v2" as const,
+    games: successGames,
+  };
+
+  const failureHashBody = {
+    schemaVersion: MLB_FAILURE_REVIEW_SCHEMA,
+    dateKst: input.dateKst,
+    gradedArtifact: `${input.dateKst}-graded-predictions-v1.json`,
+    gradedHash: successHashBody.gradedHash,
+    reviewLayerVersion: "mlb-research-review-v2" as const,
+    games: failureGames,
+  };
+
+  const success: MlbSuccessReviewDocument = {
+    ...successHashBody,
+    generatedAt: new Date().toISOString(),
+    reviewHash: sha256(successHashBody),
+    games: successGames,
+  };
+
+  const failure: MlbFailureReviewDocument = {
+    ...failureHashBody,
+    generatedAt: new Date().toISOString(),
+    reviewHash: sha256(failureHashBody),
+    games: failureGames,
+  };
+
   const dailyHashBody = {
     schemaVersion: MLB_DAILY_REVIEW_SUMMARY_SCHEMA,
     dateKst: input.dateKst,
+    reviewLayerVersion: "mlb-research-review-v2" as const,
     artifacts: {
       prediction: predictionRel,
       result: resultRel,
@@ -715,6 +761,10 @@ export async function buildMlbPredictionReviewsV1(input: {
       blockedCounterfactualCorrect: blockedCorrect,
       blockedCounterfactualIncorrect: blockedIncorrect,
     },
+    failureCategoryCount,
+    successCategoryCount,
+    failureCategoryTable,
+    predictionConfidenceHistogram,
     leakageAudit,
     reviewStatus,
     successPatterns,
@@ -731,6 +781,9 @@ export async function buildMlbPredictionReviewsV1(input: {
       graded,
       reviewStatus,
       failurePatterns,
+      failureCategoryCount,
+      successCategoryCount,
+      failureCategoryTable,
     ),
   };
 

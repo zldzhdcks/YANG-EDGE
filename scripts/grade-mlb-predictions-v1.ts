@@ -28,7 +28,9 @@ async function main() {
   try {
     await readFile(absFromRel(mlbPredictionSnapshotRel(dateKst), cwd), "utf8");
   } catch {
-    console.error(`PREDICTION_SNAPSHOT_MISSING: ${mlbPredictionSnapshotRel(dateKst)}`);
+    console.error(
+      `NO_PREGAME_SNAPSHOT: ${mlbPredictionSnapshotRel(dateKst)} (DAILY_PREDICTION_SNAPSHOT_MISSING)`,
+    );
     process.exit(1);
   }
   try {

@@ -240,7 +240,14 @@ export async function gradeMlbPredictionsV1(input: {
   const cwd = input.cwd ?? process.cwd();
   const predictionRel = mlbPredictionSnapshotRel(input.dateKst);
   const predictionPath = absFromRel(predictionRel, cwd);
-  const predictionRaw = await readFile(predictionPath, "utf8");
+  let predictionRaw: string;
+  try {
+    predictionRaw = await readFile(predictionPath, "utf8");
+  } catch {
+    throw new Error(
+      `NO_PREGAME_SNAPSHOT: ${predictionRel} (DAILY_PREDICTION_SNAPSHOT_MISSING)`,
+    );
+  }
   const prediction = JSON.parse(predictionRaw) as Record<string, unknown>;
   const contract = detectPredictionContract(prediction);
   const hashVerify = verifyPredictionHash(prediction);
@@ -250,6 +257,12 @@ export async function gradeMlbPredictionsV1(input: {
   const predictions = (
     Array.isArray(prediction.predictions) ? prediction.predictions : []
   ) as PredictionRow[];
+
+  if (predictions.length === 0) {
+    throw new Error(
+      `NO_PREGAME_SNAPSHOT: ${predictionRel} has zero predictions`,
+    );
+  }
 
   const resultRel = mlbOfficialResultsRel(input.dateKst);
   let results = input.results;

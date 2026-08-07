@@ -1,7 +1,7 @@
 {
   "schemaVersion": "mlb-daily-research-summary-v1",
   "dateKst": "2026-07-31",
-  "generatedAt": "2026-07-31T00:54:00.284Z",
+  "generatedAt": "2026-07-31T01:28:14.668Z",
   "pipelineVersion": "mlb-daily-research-v1.1",
   "roundingPolicy": "Per dataset: READY=weight, PARTIAL=floor(weight/2), FAILED/SKIP=0; percent=score because max=100.",
   "pipeline": [
@@ -22,8 +22,8 @@
     {
       "step": "Starter",
       "run": "SUCCESS",
-      "status": "PARTIAL",
-      "detail": "10 games / probable=16 missing=4",
+      "status": "READY",
+      "detail": "10 games / 20 probable complete",
       "artifact": "data/research/mlb/2026-07-31-starter-dataset-v1.json",
       "exitCode": 0
     },
@@ -31,7 +31,7 @@
       "step": "Odds",
       "run": "SUCCESS",
       "status": "PARTIAL",
-      "detail": "6/10 collected (MATCHED=6)",
+      "detail": "1/10 collected (MATCHED=4)",
       "artifact": "data/research/mlb/2026-07-31-odds-history-dataset-v1.json",
       "exitCode": 0
     },
@@ -45,11 +45,10 @@
     }
   ],
   "researchReady": {
-    "score": 61,
+    "score": 74,
     "max": 100,
-    "percent": 61,
+    "percent": 74,
     "missing": [
-      "Starter",
       "Odds",
       "Lineup"
     ],
@@ -62,14 +61,14 @@
       },
       {
         "dataset": "Starter",
-        "status": "PARTIAL",
-        "detail": "10 games / probable=16 missing=4",
+        "status": "READY",
+        "detail": "10 games / 20 probable complete",
         "artifact": "data/research/mlb/2026-07-31-starter-dataset-v1.json"
       },
       {
         "dataset": "Odds",
         "status": "PARTIAL",
-        "detail": "6/10 collected (MATCHED=6)",
+        "detail": "1/10 collected (MATCHED=4)",
         "artifact": "data/research/mlb/2026-07-31-odds-history-dataset-v1.json"
       },
       {
@@ -92,12 +91,12 @@
       },
       {
         "dataset": "Starter",
-        "status": "PARTIAL",
+        "status": "READY",
         "weight": 25,
-        "awardedPoints": 12,
+        "awardedPoints": 25,
         "maxPoints": 25,
-        "ruleApplied": "HALF_FLOOR",
-        "detail": "10 games / probable=16 missing=4",
+        "ruleApplied": "FULL",
+        "detail": "10 games / 20 probable complete",
         "artifact": "data/research/mlb/2026-07-31-starter-dataset-v1.json"
       },
       {
@@ -107,7 +106,7 @@
         "awardedPoints": 12,
         "maxPoints": 25,
         "ruleApplied": "HALF_FLOOR",
-        "detail": "6/10 collected (MATCHED=6)",
+        "detail": "1/10 collected (MATCHED=4)",
         "artifact": "data/research/mlb/2026-07-31-odds-history-dataset-v1.json"
       },
       {
@@ -131,7 +130,7 @@
     },
     {
       "dataset": "Starter",
-      "status": "PARTIAL",
+      "status": "READY",
       "produced": true,
       "artifact": "data/research/mlb/2026-07-31-starter-dataset-v1.json"
     },
@@ -150,11 +149,11 @@
   ],
   "counts": {
     "scheduleGames": 10,
-    "starterComplete": "16/20 probable",
-    "oddsCollected": "6/10 collected",
+    "starterComplete": "20/20 probable",
+    "oddsCollected": "1/10 collected",
     "lineupConfirmed": "0/10 confirmed"
   },
-  "assistantSummary": "MLB Daily Research Assistant Summary (2026-07-31)\n\nSchedule: 10 games\nStarter: 16/20 probable\nOdds: 6/10 collected\nLineup: 0/10 confirmed\n\nResearch Ready: 61%\n  - Schedule: READY (10 games)\n  - Starter: PARTIAL (10 games / probable=16 missing=4)\n  - Odds: PARTIAL (6/10 collected (MATCHED=6))\n  - Lineup: PARTIAL (10/10 not released (artifact present))\n\nRemaining gaps:\n  - Starter\n  - Odds\n  - Lineup\n\nThis summary describes current data quality only. No predictions.",
+  "assistantSummary": "MLB Daily Research Assistant Summary (2026-07-31)\n\nSchedule: 10 games\nStarter: 20/20 probable\nOdds: 1/10 collected\nLineup: 0/10 confirmed\n\nResearch Ready: 74%\n  - Schedule: READY (10 games)\n  - Starter: READY (10 games / 20 probable complete)\n  - Odds: PARTIAL (1/10 collected (MATCHED=4))\n  - Lineup: PARTIAL (10/10 not released (artifact present))\n\nRemaining gaps:\n  - Odds\n  - Lineup\n\nThis summary describes current data quality only. No predictions.",
   "notes": [
     "Orchestrator only — dataset builders were invoked, not reimplemented.",
     "Research Ready is based on generated artifacts.",

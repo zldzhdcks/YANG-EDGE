@@ -98,7 +98,13 @@ export type ResearchAnalysisView = {
   researchPrediction: {
     artifactAvailable: boolean;
     loadReason: string;
-    debugStatus: "PASS" | "AVAILABLE" | "BLOCKED" | "FAIL";
+    debugStatus:
+      | "PASS"
+      | "AVAILABLE"
+      | "BLOCKED"
+      | "FAIL"
+      | "NOT_CREATED"
+      | "WAITING";
     debugLabel: string;
     officialStatus: "ELIGIBLE" | "PASS" | "BLOCKED" | "UNKNOWN";
     officialPick: "HOME" | "AWAY" | "DRAW" | null;
@@ -118,6 +124,30 @@ export type ResearchAnalysisView = {
       confidence: number | null;
     } | null;
   };
+  /** KBO Unified Operational State — shared with Research Lab (null for non-KBO). */
+  kboOperational: {
+    overallStatus: string;
+    readinessPercent: number;
+    schedule: { status: string; sourcePath: string | null; sourceType: string };
+    domesticOdds: {
+      status: string;
+      sourcePath: string | null;
+      sourceType: string;
+    };
+    overseasOdds: {
+      status: string;
+      sourcePath: string | null;
+      sourceType: string;
+    };
+    starter: { status: string; sourcePath: string | null; sourceType: string };
+    lineup: { status: string; sourcePath: string | null; sourceType: string };
+    prediction: {
+      status: string;
+      sourcePath: string | null;
+      sourceType: string;
+    };
+    review: { status: string; sourcePath: string | null; sourceType: string };
+  } | null;
   /** Read-only summary of existing Starter + Bullpen artifact fields (no new scores). */
   pitchingSnapshot: ResearchField<{
     starterStatus: string | null;
@@ -172,7 +202,15 @@ export type ResearchAnalysisView = {
       max: number;
       status: "OK" | "MISSING" | "PASS_RECORDED" | "BLOCKED" | "NOT_ELIGIBLE";
     }[];
-    overallLabel: "READY" | "PARTIAL" | "BLOCKED" | "UNKNOWN";
+    overallLabel:
+      | "READY"
+      | "PARTIAL"
+      | "BLOCKED"
+      | "UNKNOWN"
+      | "PARTIAL_READY"
+      | "WAITING_FOR_PREDICTION"
+      | "WAITING_FOR_LINEUP"
+      | "NOT_APPLICABLE";
   };
   oddsComparison: {
     available: boolean;

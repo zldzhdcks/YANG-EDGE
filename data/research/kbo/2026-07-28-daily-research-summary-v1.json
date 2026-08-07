@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "daily-research-summary-v1",
+  "dateKst": "2026-07-28",
+  "generatedAt": "2026-07-29T09:48:30.691Z",
+  "score": 80,
+  "max": 100,
+  "steps": [
+    {
+      "step": "Schedule",
+      "status": "PASS",
+      "detail": "Already exists: 2026-07-28-schedule-result-identity-v1-api-baseball.json"
+    },
+    {
+      "step": "Domestic Odds",
+      "status": "PASS",
+      "detail": "Already exists: 2026-07-28-odds-comparison-v1.json"
+    },
+    {
+      "step": "Overseas Odds",
+      "status": "PASS",
+      "detail": "Same artifact"
+    },
+    {
+      "step": "Starter",
+      "status": "PASS",
+      "detail": "5 games in 2026-07-28-starter-confirmation-v1.json"
+    },
+    {
+      "step": "Lineup",
+      "status": "SKIP",
+      "detail": "No lineup artifact (operator input not provided)"
+    },
+    {
+      "step": "Prediction",
+      "status": "SKIP",
+      "detail": "KBO prediction pipeline not yet implemented"
+    }
+  ],
+  "missing": [
+    "Lineup",
+    "Prediction"
+  ]
+}

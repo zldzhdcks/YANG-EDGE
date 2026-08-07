@@ -44,6 +44,7 @@ export type OperatorPresentation = {
   overallStatus: OverallStatus;
   summaryLines: OperatorSummaryLine[];
   actionCards: OperatorActionCard[];
+  completedKboItems: { id: string; title: string; detail: string }[];
   pipelineGroups: PipelineGroup[];
   missedExplanations: MissedExplanation[];
   resultSummary: {
@@ -57,17 +58,33 @@ export type OperatorPresentation = {
     postponedGames: number | null;
     reviewPending: number | null;
   };
+  kboDailyOps: {
+    scheduleGames: number;
+    activeGames: number;
+    cancelledGames: number;
+    protoReady: string;
+    starterReady: string;
+    lineupReady: string;
+    t45Status: string;
+    prediction: string;
+    review: string;
+    overall: string;
+  } | null;
   kboReadiness: {
-    overallStatus: "READY" | "PARTIAL" | "BLOCKED" | "UNKNOWN";
+    overallStatus: string;
+    schedule: string;
     domesticOdds: string;
     overseasOdds: string;
     starter: string;
     lineup: string;
     bullpen: string;
     prediction: string;
+    review: string;
+    t45: string;
     predictionLocked: boolean;
     lockReasons: string[];
     bugBoard: KboBugBoardItem[];
+    assistantBrief: string;
   };
 };
 
@@ -80,17 +97,12 @@ export function buildOperatorPresentation(
 ): OperatorPresentation {
   const s = data.summary;
 
-  // --- Overall status ---
-  let overallStatus: OverallStatus = "정상 진행";
-  const hasCriticalMissed = data.missedItems.some((m) => m.severity === "CRITICAL");
-  const hasHighMissed = data.missedItems.some((m) => m.severity === "HIGH");
-  if (hasCriticalMissed) overallStatus = "중요 문제 있음";
-  else if (hasHighMissed || data.tasks.some((t) => t.priority === "HIGH"))
-    overallStatus = "확인 필요";
-  else if (data.tasks.length > 0) overallStatus = "작업 필요";
-
   // --- Summary lines ---
   const lines: string[] = [];
+  const kbo = data.kboOps;
+  if (kbo && kbo.schedule.totalGames > 0) {
+    for (const line of kbo.summaryLines) lines.push(line);
+  }
   if (s.totalGames != null && s.gradedGames != null) {
     if (s.gradedGames === s.totalGames) {
       lines.push(`오늘 MLB ${s.totalGames}경기 연구가 모두 완료되었습니다.`);
@@ -122,6 +134,19 @@ export function buildOperatorPresentation(
     );
   }
 
+  // --- Overall status (include KBO open work) ---
+  let overallStatus: OverallStatus = "정상 진행";
+  const hasCriticalMissed = data.missedItems.some((m) => m.severity === "CRITICAL");
+  const hasHighMissed = data.missedItems.some((m) => m.severity === "HIGH");
+  const hasKboHigh = data.tasks.some(
+    (t) => t.taskId.startsWith("kbo-") && t.priority === "HIGH",
+  );
+  if (hasCriticalMissed || data.kboOps.overallStatus === "BLOCKED")
+    overallStatus = "중요 문제 있음";
+  else if (hasHighMissed || data.tasks.some((t) => t.priority === "HIGH") || hasKboHigh)
+    overallStatus = "확인 필요";
+  else if (data.tasks.length > 0) overallStatus = "작업 필요";
+
   // --- Action cards ---
   const actions: OperatorActionCard[] = [];
   const dateKst = data.dateKst;
@@ -133,6 +158,13 @@ export function buildOperatorPresentation(
     "review-pending": { type: "REVIEW_PENDING", entity: "mlb-review", title: "리뷰 검토 필요", reason: "채점 완료 경기의 성공/실패 원인 검수가 운영 판단에 도움됩니다.", next: "Review Queue에서 주요 경기 검수", game: null, sys: "OPEN" },
     "cancelled-game": { type: "CANCELLED_GAME", entity: "mlb-prediction", title: "취소 경기 채점 제외 확인", reason: "취소된 경기의 채점 제외 상태를 확인해야 합니다.", next: "채점 제외 확인", game: null, sys: "OPEN" },
     "value-edge-unverified": { type: "VALUE_EDGE_UNVERIFIED", entity: "mlb-prediction", title: "Value Edge 출처 확인 필요", reason: "배당 정보 없이 계산된 Value Edge가 있습니다.", next: "별도 감사 미션으로 출처 확인", game: null, sys: "OPEN" },
+    "kbo-starter-intake": { type: "KBO_STARTER_INTAKE", entity: "kbo-personnel", title: "활성 경기 Starter 확인", reason: "국내 프로토는 입력됐지만 선발이 아직 없습니다.", next: "KBO Personnel Admin에서 활성 경기 선발 입력", game: null, sys: "OPEN" },
+    "kbo-lineup-intake": { type: "KBO_LINEUP_INTAKE", entity: "kbo-personnel", title: "활성 경기 Lineup 입력", reason: "라인업이 없어 T45를 완료할 수 없습니다.", next: "KBO Personnel Admin에서 활성 경기 라인업 입력", game: null, sys: "OPEN" },
+    "kbo-t45-validate": { type: "KBO_T45_VALIDATE", entity: "kbo-t45", title: "T45 Validate", reason: "선발·라인업 입력 후 validate가 필요합니다.", next: "T45 validate-only 실행", game: null, sys: "OPEN" },
+    "kbo-t45-run": { type: "KBO_T45_RUN", entity: "kbo-t45", title: "T45 Run 승인", reason: "Validate 통과 후 snapshot 생성이 필요합니다.", next: "T45 Run 승인", game: null, sys: "OPEN" },
+    "kbo-t30-dry-run": { type: "KBO_T30_DRY_RUN", entity: "kbo-t30", title: "T30 Dry-run", reason: "T45 완료 후 Lock 전 검증이 필요합니다.", next: "T30 dry-run", game: null, sys: "OPEN" },
+    "kbo-t30-lock": { type: "KBO_T30_LOCK", entity: "kbo-t30", title: "T30 Lock 승인", reason: "Dry-run 확인 후 Lock 승인.", next: "T30 Lock 승인", game: null, sys: "OPEN" },
+    "kbo-schedule-missing": { type: "KBO_SCHEDULE_MISSING", entity: "kbo-schedule", title: "KBO Schedule 수집 필요", reason: "Schedule이 없어 운영을 시작할 수 없습니다.", next: "KBO Schedule bootstrap", game: null, sys: "OPEN" },
   };
 
   for (const t of data.tasks) {
@@ -177,10 +209,19 @@ export function buildOperatorPresentation(
     const cards = names.map((n) => pipelineMap.get(n)).filter(Boolean);
     if (cards.length === 0) return "정보 없음";
     if (cards.every((c) => c!.status === "COMPLETE")) return "완료";
-    if (cards.some((c) => c!.status === "WARNING" || c!.status === "FILE_NOT_FOUND"))
-      return "문제 있음";
+    if (cards.some((c) => c!.status === "WARNING")) return "문제 있음";
+    if (
+      cards.some(
+        (c) =>
+          c!.status === "NOT_CREATED" ||
+          c!.status === "NOT_READY" ||
+          c!.status === "NOT_ENTERED" ||
+          c!.status === "PENDING" ||
+          c!.status === "FILE_NOT_FOUND",
+      )
+    )
+      return "대기";
     if (cards.some((c) => c!.status === "PARTIAL")) return "일부 확인 필요";
-    if (cards.some((c) => c!.status === "PENDING")) return "대기";
     return "완료";
   }
 
@@ -279,17 +320,29 @@ export function buildOperatorPresentation(
 
   // --- KBO readiness for operator ---
   const kr = data.kboReadiness;
-  function fmtCount(got: number | null, total: number | null): string {
-    if (got == null && total == null) return "MISSING";
+  const ops = data.kboOps;
+  function fmtCount(got: number | null, total: number | null, status?: string): string {
+    if (status === "NOT_ENTERED") return `${got ?? 0} / ${total ?? "?"} NOT_ENTERED`;
+    if (status === "READY_ADMIN_VERIFIED")
+      return `${got ?? 0} / ${total ?? "?"} READY_ADMIN_VERIFIED`;
+    if (status === "NOT_CREATED") return "NOT_CREATED";
+    if (status === "NOT_READY") return "NOT_READY";
+    if (status === "NOT_APPLICABLE") return "NOT_APPLICABLE";
+    if (got == null && total == null) return status ?? "MISSING";
     if (got == null) return `0 / ${total ?? "?"}`;
     if (total == null) return `${got}`;
-    return `${got} / ${total}`;
+    return `${got} / ${total}${status ? ` ${status}` : ""}`;
   }
+
+  const completedKboItems = ops.tasks
+    .filter((t) => t.category === "DONE")
+    .map((t) => ({ id: t.taskId, title: t.title, detail: t.description }));
 
   return {
     overallStatus,
     summaryLines: lines,
     actionCards: actions,
+    completedKboItems,
     pipelineGroups,
     missedExplanations: explanations,
     resultSummary: {
@@ -303,17 +356,44 @@ export function buildOperatorPresentation(
       postponedGames: s.postponedGames ?? null,
       reviewPending: s.reviewPendingGames,
     },
+    kboDailyOps:
+      ops.schedule.totalGames > 0
+        ? {
+            scheduleGames: ops.schedule.totalGames,
+            activeGames: ops.schedule.activeGames,
+            cancelledGames: ops.schedule.cancelledGames,
+            protoReady: `${ops.domesticProto.entered}/${ops.domesticProto.required}`,
+            starterReady: `${ops.starter.entered}/${ops.starter.required}`,
+            lineupReady: `${ops.lineup.entered}/${ops.lineup.required}`,
+            t45Status: ops.t45.status,
+            prediction: ops.prediction.status,
+            review: ops.review.status,
+            overall: ops.overallStatus,
+          }
+        : null,
     kboReadiness: {
       overallStatus: kr.overallStatus,
-      domesticOdds: fmtCount(kr.domesticOddsGames, kr.domesticOddsTotal),
-      overseasOdds: fmtCount(kr.overseasOddsGames, kr.overseasOddsTotal),
-      starter: fmtCount(kr.starterGames, kr.starterTotal),
-      lineup: kr.lineupStatus,
-      bullpen: kr.bullpenStatus,
-      prediction: kr.predictionStatus,
+      schedule: `${ops.schedule.totalGames}경기 · active ${ops.schedule.activeGames} · cancelled ${ops.schedule.cancelledGames} · ${ops.schedule.status}`,
+      domesticOdds: fmtCount(
+        kr.domesticOddsGames,
+        kr.domesticOddsTotal,
+        kr.domesticOddsStatus,
+      ),
+      overseasOdds: fmtCount(
+        kr.overseasOddsGames,
+        kr.overseasOddsTotal,
+        kr.overseasOddsStatus,
+      ),
+      starter: fmtCount(kr.starterGames, kr.starterTotal, kr.starterStatus),
+      lineup: fmtCount(kr.lineupGames ?? null, kr.lineupTotal ?? null, String(kr.lineupStatus)),
+      bullpen: String(kr.bullpenStatus),
+      prediction: String(kr.predictionStatus),
+      review: kr.reviewStatus,
+      t45: kr.t45Status,
       predictionLocked: kr.predictionLock.locked,
       lockReasons: kr.predictionLock.reasons,
       bugBoard: kr.bugBoardItems,
+      assistantBrief: kr.assistantBrief,
     },
   };
 }

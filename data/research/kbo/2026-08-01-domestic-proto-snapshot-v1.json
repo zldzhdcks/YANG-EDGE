@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "kbo-domestic-proto-snapshot-v1",
+  "domesticProtoSnapshotId": "kbo-domestic-proto-2026-08-01-2026-08-01T08-52-40-821Z",
+  "sport": "baseball",
+  "league": "KBO",
+  "date": "2026-08-01",
+  "runId": "2026-08-01T08-52-40-821Z",
+  "priorSnapshotRunId": null,
+  "previousHash": null,
+  "nextHash": "ccd9c8076ea50d2b3019237f4aa2132a0bea6da691e0ce63d064bd352196582e",
+  "revisionReason": "ADMIN_VERIFIED_PROTO_CREATED",
+  "lockedAt": null,
+  "source": {
+    "sourceType": "ADMIN_MANUAL_SCREENSHOT",
+    "confirmationMethod": "ADMIN_VERIFIED",
+    "sourceReference": "USER_PROVIDED_KBO_LINEUP_SCREENSHOT_SSG_KIWOOM_2026-08-01",
+    "commercialUseStatus": "INTERNAL_ONLY",
+    "externalDisplayLabel": "관리자 확인 완료",
+    "forbiddenExternalLabel": "공식 라인업",
+    "screenshotObservedAt": "2026-08-01T17:15:00+09:00",
+    "enteredAt": "2026-08-01T08:52:40.821Z",
+    "enteredBy": "operator"
+  },
+  "marketNamespace": "DOMESTIC_PROTO",
+  "games": [
+    {
+      "gameId": "kbo-181922",
+      "matchup": "LG @ 두산",
+      "marketNamespace": "DOMESTIC_PROTO",
+      "marketType": "MONEYLINE_2WAY",
+      "status": "MANUAL_COLLECTED",
+      "format": "DECIMAL",
+      "sourceType": "ADMIN_MANUAL_SCREENSHOT",
+      "commercialUseStatus": "INTERNAL_ONLY",
+      "capturedBeforeStart": true,
+      "capturedAt": "2026-08-01T17:15:00+09:00",
+      "enteredAt": "2026-08-01T08:52:40.821Z",
+      "home": {
+        "team": "두산",
+        "odds": 1.75,
+        "selectionCode": "HOME"
+      },
+      "away": {
+        "team": "LG",
+        "odds": 1.77,
+        "selectionCode": "AWAY"
+      },
+      "mapping": {
+        "homeOk": true,
+        "awayOk": true,
+        "homeAwayOrderVerified": true,
+        "homeCanonicalTeamId": "kbo-두산",
+        "awayCanonicalTeamId": "kbo-lg"
+      }
+    },
+    {
+      "gameId": "kbo-181923",
+      "matchup": "SSG @ 키움",
+      "marketNamespace": "DOMESTIC_PROTO",
+      "marketType": "MONEYLINE_2WAY",
+      "status": "MANUAL_COLLECTED",
+      "format": "DECIMAL",
+      "sourceType": "ADMIN_MANUAL_SCREENSHOT",
+      "commercialUseStatus": "INTERNAL_ONLY",
+      "capturedBeforeStart": true,
+      "capturedAt": "2026-08-01T17:15:00+09:00",
+      "enteredAt": "2026-08-01T08:52:40.821Z",
+      "home": {
+        "team": "키움",
+        "odds": 1.86,
+        "selectionCode": "HOME"
+      },
+      "away": {
+        "team": "SSG",
+        "odds": 1.67,
+        "selectionCode": "AWAY"
+      },
+      "mapping": {
+        "homeOk": true,
+        "awayOk": true,
+        "homeAwayOrderVerified": true,
+        "homeCanonicalTeamId": "kbo-키움",
+        "awayCanonicalTeamId": "kbo-ssg"
+      }
+    },
+    {
+      "gameId": "kbo-181924",
+      "matchup": "한화 @ KT",
+      "marketNamespace": "DOMESTIC_PROTO",
+      "marketType": "MONEYLINE_2WAY",
+      "status": "MANUAL_COLLECTED",
+      "format": "DECIMAL",
+      "sourceType": "ADMIN_MANUAL_SCREENSHOT",
+      "commercialUseStatus": "INTERNAL_ONLY",
+      "capturedBeforeStart": true,
+      "capturedAt": "2026-08-01T17:15:00+09:00",
+      "enteredAt": "2026-08-01T08:52:40.821Z",
+      "home": {
+        "team": "KT",
+        "odds": 1.73,
+        "selectionCode": "HOME"
+      },
+      "away": {
+        "team": "한화",
+        "odds": 1.79,
+        "selectionCode": "AWAY"
+      },
+      "mapping": {
+        "homeOk": true,
+        "awayOk": true,
+        "homeAwayOrderVerified": true,
+        "homeCanonicalTeamId": "kbo-kt",
+        "awayCanonicalTeamId": "kbo-한화"
+      }
+    }
+  ],
+  "domesticProtoHash": "ccd9c8076ea50d2b3019237f4aa2132a0bea6da691e0ce63d064bd352196582e",
+  "commercialUseStatus": "INTERNAL_ONLY",
+  "summary": {
+    "moneylineGames": 3,
+    "decimalValidationPass": true
+  },
+  "note": "DOMESTIC_PROTO namespace separate from OVERSEAS_MARKET; not merged into a single odds field"
+}

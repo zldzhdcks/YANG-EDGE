@@ -14,11 +14,14 @@ export type ResearchPredictionDebugStatus =
   | "PASS"
   | "AVAILABLE"
   | "BLOCKED"
-  | "FAIL";
+  | "FAIL"
+  | "NOT_CREATED"
+  | "WAITING";
 
 export type ResearchPredictionLoadReason =
   | "OK"
   | "PREDICTION_FILE_NOT_FOUND"
+  | "PREDICTION_NOT_CREATED"
   | "GAME_ID_NOT_FOUND"
   | "LEAGUE_NOT_SUPPORTED"
   | "MALFORMED_PREDICTION"
@@ -51,11 +54,14 @@ export type ResearchPredictionView = {
 export function emptyResearchPredictionView(
   reason: ResearchPredictionLoadReason,
 ): ResearchPredictionView {
+  const waiting =
+    reason === "PREDICTION_FILE_NOT_FOUND" ||
+    reason === "PREDICTION_NOT_CREATED";
   return {
     artifactAvailable: false,
-    loadReason: reason,
-    debugStatus: "FAIL",
-    debugLabel: "Prediction FAIL",
+    loadReason: waiting ? "PREDICTION_NOT_CREATED" : reason,
+    debugStatus: waiting ? "NOT_CREATED" : "FAIL",
+    debugLabel: waiting ? "Prediction NOT_CREATED" : "Prediction FAIL",
     officialStatus: "UNKNOWN",
     officialPick: null,
     passReasons: [],
@@ -209,7 +215,11 @@ export function researchPredictionScore(view: ResearchPredictionView): {
   score: number;
   status: "OK" | "MISSING" | "PASS_RECORDED" | "BLOCKED" | "NOT_ELIGIBLE";
 } {
-  if (!view.artifactAvailable) {
+  if (
+    !view.artifactAvailable ||
+    view.debugStatus === "NOT_CREATED" ||
+    view.debugStatus === "WAITING"
+  ) {
     return { score: 0, status: "MISSING" };
   }
   if (view.debugStatus === "AVAILABLE") {

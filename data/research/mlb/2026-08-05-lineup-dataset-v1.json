@@ -1,0 +1,3990 @@
+{
+  "meta": {
+    "datasetId": "mlb-lineup",
+    "schemaVersion": "mlb-lineup-dataset-v1",
+    "builderVersion": "lineup-dataset-builder-v1",
+    "status": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "engineUseAllowed": false,
+    "researchOnly": true,
+    "dateKst": "2026-08-05",
+    "generatedAt": "2026-08-05T12:23:22.801Z",
+    "predictionHashSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "predictionUnchanged": true,
+    "inputHashSha256": "ccda85c983a0c22e9a3f66641fb93854b87a8a6405687387a0eb43f3e61d427e",
+    "resultHashSha256": "9ae7adab637ad8aafb763a488a9f4a31a354b80003fd6b2c473924254e3189c2",
+    "scheduleSource": "data/research/mlb/2026-08-05-schedule-v1.json",
+    "lineupSource": "mlb-statsapi",
+    "legal": {
+      "mlbStatsSource": "INTERNAL_RESEARCH_ONLY",
+      "publicRuntimeUseAllowed": false,
+      "commercialRuntimeUseAllowed": false,
+      "rawResponseInResearchCacheOnly": true,
+      "mlbHtmlCrawling": false,
+      "sportsDataIoScrambled": false
+    },
+    "notes": [
+      "Schedule-first independent lineup intake — Prediction Snapshot is not an input.",
+      "Official lineups only from MLB Stats API boxscore / schedule hydrate=lineups.",
+      "Projected lineups are never invented.",
+      "preGameStatus=NOT_COLLECTED — no separate pre-game snapshot field.",
+      "team.battingOrder not used for starters (*00 slot rule).",
+      "Engine admission PROHIBITED"
+    ]
+  },
+  "cacheUsage": {
+    "rawHit": 16,
+    "rawMiss": 0,
+    "derivedHit": 0,
+    "derivedMiss": 0,
+    "networkCalls": 0
+  },
+  "summary": {
+    "totalGames": 15,
+    "teamLineups": 30,
+    "completeLineups": 30,
+    "incompleteLineups": 0,
+    "totalStarters": 270,
+    "battingSlotDuplicates": 0,
+    "battingSlotMissing": 0,
+    "substitutesSeparated": 51,
+    "startersMarkedSubstitute": 0,
+    "preGameStatus": "NOT_COLLECTED",
+    "postGameStatuses": {
+      "COMPLETE": 30,
+      "INCOMPLETE": 0
+    },
+    "battingSideCollected": 0,
+    "peopleApiCalls": 0,
+    "confirmedGames": 15,
+    "partialGames": 0,
+    "notReleasedGames": 0,
+    "notCollectedGames": 0,
+    "collectionStatus": {
+      "CONFIRMED": 15,
+      "PARTIAL": 0,
+      "NOT_RELEASED": 0,
+      "NOT_COLLECTED": 0,
+      "PROVIDER_ERROR": 0,
+      "MATCH_NOT_FOUND": 0,
+      "INVALID_RESPONSE": 0
+    }
+  },
+  "rows": [
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-arizona-diamondbacks-san-diego-padres",
+      "internalGameId": "mlb-arizona-diamondbacks-san-diego-padres",
+      "gamePk": 825054,
+      "teamId": 135,
+      "teamName": "San Diego Padres",
+      "opponentTeamId": 109,
+      "opponentTeamName": "Arizona Diamondbacks",
+      "side": "away",
+      "startTimeKst": "10:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:11.660Z",
+      "fetchedAt": "2026-08-05T12:23:11.660Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:11.660Z",
+      "cutoffTime": "2026-08-05T01:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 665487,
+          "playerName": "Fernando Tatis Jr.",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 650859,
+          "playerName": "Luis Rengifo",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 592518,
+          "playerName": "Manny Machado",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 664034,
+          "playerName": "Ty France",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 701538,
+          "playerName": "Jackson Merrill",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 593428,
+          "playerName": "Xander Bogaerts",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 666023,
+          "playerName": "Freddy Fermin",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 630105,
+          "playerName": "Jake Cronenworth",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 687749,
+          "playerName": "Jase Bowen",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 1,
+          "playerId": 669398,
+          "playerName": "Gage Workman",
+          "defensivePosition": "LF",
+          "battingOrderCode": "101",
+          "isSubstitute": true
+        },
+        {
+          "slot": 6,
+          "playerId": 823550,
+          "playerName": "Sung-Mun Song",
+          "defensivePosition": "SS",
+          "battingOrderCode": "601",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "7b2f43cdef5701b64ac5a342d65634dbeacf2b0eea27565608a945676ac2c904",
+      "resultHash": "353dd3867f37e63dcf698012b5f1d5551e3df34aedc6792132ddc1a29ea68430"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-arizona-diamondbacks-san-diego-padres",
+      "internalGameId": "mlb-arizona-diamondbacks-san-diego-padres",
+      "gamePk": 825054,
+      "teamId": 109,
+      "teamName": "Arizona Diamondbacks",
+      "opponentTeamId": 135,
+      "opponentTeamName": "San Diego Padres",
+      "side": "home",
+      "startTimeKst": "10:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:11.660Z",
+      "fetchedAt": "2026-08-05T12:23:11.660Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:11.660Z",
+      "cutoffTime": "2026-08-05T01:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 682998,
+          "playerName": "Corbin Carroll",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 672695,
+          "playerName": "Geraldo Perdomo",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 596146,
+          "playerName": "Max Kepler",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 606466,
+          "playerName": "Ketel Marte",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 571448,
+          "playerName": "Nolan Arenado",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 663457,
+          "playerName": "Lars Nootbaar",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 694374,
+          "playerName": "Tim Tawa",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 543510,
+          "playerName": "James McCann",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 814439,
+          "playerName": "Ryan Waldschmidt",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 3,
+          "playerId": 678489,
+          "playerName": "Jorge Barrosa",
+          "defensivePosition": "CF",
+          "battingOrderCode": "301",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "8a70e9d443b81ecca6764bdc87e3f0d81c81e3cca9300dc98201e97c1c87768c",
+      "resultHash": "cc771aac7f5f34c01aca2d5ca34d4f084a027cc14be7459c87ac2363913cd0ca"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-atlanta-braves-miami-marlins",
+      "internalGameId": "mlb-atlanta-braves-miami-marlins",
+      "gamePk": 824888,
+      "teamId": 146,
+      "teamName": "Miami Marlins",
+      "opponentTeamId": 144,
+      "opponentTeamName": "Atlanta Braves",
+      "side": "away",
+      "startTimeKst": "08:15",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:12.107Z",
+      "fetchedAt": "2026-08-05T12:23:12.107Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:12.107Z",
+      "cutoffTime": "2026-08-04T23:15:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 669065,
+          "playerName": "Kyle Stowers",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 665052,
+          "playerName": "Griffin Conine",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 672640,
+          "playerName": "Otto Lopez",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 683357,
+          "playerName": "Owen Caissie",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 681715,
+          "playerName": "Heriberto Hernández",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 805300,
+          "playerName": "Jakob Marsee",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 677870,
+          "playerName": "Leo Jiménez",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 691788,
+          "playerName": "Joe Mack",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 691594,
+          "playerName": "Javier Sanoja",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 7,
+          "playerId": 669364,
+          "playerName": "Xavier Edwards",
+          "defensivePosition": "PR",
+          "battingOrderCode": "701",
+          "isSubstitute": true
+        },
+        {
+          "slot": 8,
+          "playerId": 682663,
+          "playerName": "Agustín Ramírez",
+          "defensivePosition": "C",
+          "battingOrderCode": "801",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "b7bac9c56ac93f1f9300eaf78ae1891260fb68308c718a65396718c5b678f8dc",
+      "resultHash": "2b207274566eb4071a56acdc5379ffb34580f63eb2ad5463310b7c8560cdea85"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-atlanta-braves-miami-marlins",
+      "internalGameId": "mlb-atlanta-braves-miami-marlins",
+      "gamePk": 824888,
+      "teamId": 144,
+      "teamName": "Atlanta Braves",
+      "opponentTeamId": 146,
+      "opponentTeamName": "Miami Marlins",
+      "side": "home",
+      "startTimeKst": "08:15",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:12.107Z",
+      "fetchedAt": "2026-08-05T12:23:12.107Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:12.107Z",
+      "cutoffTime": "2026-08-04T23:15:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 686948,
+          "playerName": "Drake Baldwin",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 660670,
+          "playerName": "Ronald Acuña Jr.",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 621566,
+          "playerName": "Matt Olson",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 671739,
+          "playerName": "Michael Harris II",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 645277,
+          "playerName": "Ozzie Albies",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 573262,
+          "playerName": "Mike Yastrzemski",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 642086,
+          "playerName": "Dominic Smith",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 663586,
+          "playerName": "Austin Riley",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 805347,
+          "playerName": "Jim Jarvis",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 6,
+          "playerId": 643289,
+          "playerName": "Mauricio Dubón",
+          "defensivePosition": "LF",
+          "battingOrderCode": "601",
+          "isSubstitute": true
+        },
+        {
+          "slot": 7,
+          "playerId": 657041,
+          "playerName": "Lane Thomas",
+          "defensivePosition": "DH",
+          "battingOrderCode": "701",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "56455abc54cc856725b74e978a67de7185e3af24c84b18b30bf911aaefcbcb75",
+      "resultHash": "e2d86a63ec20cc699f17cde65d2d714eb59dd038bbc6a3d41cbdb633bd26e5b0"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-baltimore-orioles-los-angeles-angels",
+      "internalGameId": "mlb-baltimore-orioles-los-angeles-angels",
+      "gamePk": 824805,
+      "teamId": 108,
+      "teamName": "Los Angeles Angels",
+      "opponentTeamId": 110,
+      "opponentTeamName": "Baltimore Orioles",
+      "side": "away",
+      "startTimeKst": "07:35",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:12.531Z",
+      "fetchedAt": "2026-08-05T12:23:12.531Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:12.531Z",
+      "cutoffTime": "2026-08-04T22:35:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 687263,
+          "playerName": "Zach Neto",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 545361,
+          "playerName": "Mike Trout",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 694384,
+          "playerName": "Nolan Schanuel",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 687093,
+          "playerName": "Vaughn Grissom",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 694203,
+          "playerName": "Denzer Guzman",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 694208,
+          "playerName": "Moisés Ballesteros",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 518595,
+          "playerName": "Travis d'Arnaud",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 642350,
+          "playerName": "Jose Siri",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 685133,
+          "playerName": "Wade Meckler",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 7,
+          "playerId": 666139,
+          "playerName": "Josh Lowe",
+          "defensivePosition": "RF",
+          "battingOrderCode": "701",
+          "isSubstitute": true
+        },
+        {
+          "slot": 8,
+          "playerId": 624428,
+          "playerName": "Adam Frazier",
+          "defensivePosition": "PH",
+          "battingOrderCode": "801",
+          "isSubstitute": true
+        },
+        {
+          "slot": 8,
+          "playerId": 623168,
+          "playerName": "Tyler Heineman",
+          "defensivePosition": "C",
+          "battingOrderCode": "802",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "f7078f0a3b8d475a6ef6a1ea68a1026609ab030ef0b81da2009a95f94ba1ecac",
+      "resultHash": "3935a6804476d784f54ce7a6cdf0b7d4ecc8e964ec6cf5681970737e87f35e85"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-baltimore-orioles-los-angeles-angels",
+      "internalGameId": "mlb-baltimore-orioles-los-angeles-angels",
+      "gamePk": 824805,
+      "teamId": 110,
+      "teamName": "Baltimore Orioles",
+      "opponentTeamId": 108,
+      "opponentTeamName": "Los Angeles Angels",
+      "side": "home",
+      "startTimeKst": "07:35",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:12.531Z",
+      "fetchedAt": "2026-08-05T12:23:12.531Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:12.531Z",
+      "cutoffTime": "2026-08-04T22:35:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 687637,
+          "playerName": "Dylan Beavers",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 624413,
+          "playerName": "Pete Alonso",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 683002,
+          "playerName": "Gunnar Henderson",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 687952,
+          "playerName": "Christian Encarnacion-Strand",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 702616,
+          "playerName": "Jackson Holliday",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 691723,
+          "playerName": "Coby Mayo",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 681047,
+          "playerName": "Christian Franklin",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 681297,
+          "playerName": "Colton Cowser",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 665966,
+          "playerName": "Carlos Narváez",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 1,
+          "playerId": 641933,
+          "playerName": "Tyler O'Neill",
+          "defensivePosition": "PH",
+          "battingOrderCode": "101",
+          "isSubstitute": true
+        },
+        {
+          "slot": 1,
+          "playerId": 665750,
+          "playerName": "Leody Taveras",
+          "defensivePosition": "RF",
+          "battingOrderCode": "102",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "69d2a91c33fd39780c633cefabfff321cd8f6b96bd0987016f834905394e80df",
+      "resultHash": "bc46270c2c41700e2c059d5a5ebc74c8653da79fee87d3f050eccdf51fedf020"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-boston-red-sox-chicago-white-sox",
+      "internalGameId": "mlb-boston-red-sox-chicago-white-sox",
+      "gamePk": 824731,
+      "teamId": 145,
+      "teamName": "Chicago White Sox",
+      "opponentTeamId": 111,
+      "opponentTeamName": "Boston Red Sox",
+      "side": "away",
+      "startTimeKst": "08:10",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:12.971Z",
+      "fetchedAt": "2026-08-05T12:23:12.971Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:12.971Z",
+      "cutoffTime": "2026-08-04T23:10:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 805367,
+          "playerName": "Chase Meidroth",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 808959,
+          "playerName": "Munetaka Murakami",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 678246,
+          "playerName": "Miguel Vargas",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 545341,
+          "playerName": "Randal Grichuk",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 695657,
+          "playerName": "Colson Montgomery",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 663698,
+          "playerName": "Joey Bart",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 686668,
+          "playerName": "Brenton Doyle",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 695731,
+          "playerName": "Braden Montgomery",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 682668,
+          "playerName": "Luisangel Acuña",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 7,
+          "playerId": 803011,
+          "playerName": "Sam Antonacci",
+          "defensivePosition": "2B",
+          "battingOrderCode": "701",
+          "isSubstitute": true
+        },
+        {
+          "slot": 9,
+          "playerId": 671976,
+          "playerName": "Tristan Peters",
+          "defensivePosition": "CF",
+          "battingOrderCode": "901",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "fbc7c95e90e6921144301e891f33ccb5ba951d8a98635e24ac09e49db289bdec",
+      "resultHash": "b909409b5609cefc604d5175e911aae9a140e6dbe3be7bda1ae7ca0eadf39826"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-boston-red-sox-chicago-white-sox",
+      "internalGameId": "mlb-boston-red-sox-chicago-white-sox",
+      "gamePk": 824731,
+      "teamId": 111,
+      "teamName": "Boston Red Sox",
+      "opponentTeamId": 145,
+      "opponentTeamName": "Chicago White Sox",
+      "side": "home",
+      "startTimeKst": "08:10",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:12.971Z",
+      "fetchedAt": "2026-08-05T12:23:12.971Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:12.971Z",
+      "cutoffTime": "2026-08-04T23:10:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 686765,
+          "playerName": "Nick Sogard",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 678882,
+          "playerName": "Ceddanne Rafaela",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 677800,
+          "playerName": "Wilyer Abreu",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 575929,
+          "playerName": "Willson Contreras",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 807799,
+          "playerName": "Masataka Yoshida",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 702332,
+          "playerName": "Caleb Durbin",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 680776,
+          "playerName": "Jarren Duran",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 655316,
+          "playerName": "Andruw Monasterio",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 657136,
+          "playerName": "Connor Wong",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 2,
+          "playerId": 642201,
+          "playerName": "Eli White",
+          "defensivePosition": "CF",
+          "battingOrderCode": "201",
+          "isSubstitute": true
+        },
+        {
+          "slot": 4,
+          "playerId": 678011,
+          "playerName": "Anthony Seigler",
+          "defensivePosition": "2B",
+          "battingOrderCode": "401",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "f3037f2b775fb4ac1bb5b785ffeb25ae906b8e4b2d8d76591ac1398d93e23fa0",
+      "resultHash": "63b04c1ac6715f9d898c348d6ff3ac2423f745e2d98ad2c1d9683077dc91c083"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-chicago-cubs-los-angeles-dodgers",
+      "internalGameId": "mlb-chicago-cubs-los-angeles-dodgers",
+      "gamePk": 824645,
+      "teamId": 119,
+      "teamName": "Los Angeles Dodgers",
+      "opponentTeamId": 112,
+      "opponentTeamName": "Chicago Cubs",
+      "side": "away",
+      "startTimeKst": "09:05",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:13.477Z",
+      "fetchedAt": "2026-08-05T12:23:13.477Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:13.477Z",
+      "cutoffTime": "2026-08-05T00:05:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 660271,
+          "playerName": "Shohei Ohtani",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 681624,
+          "playerName": "Andy Pages",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 518692,
+          "playerName": "Freddie Freeman",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 571970,
+          "playerName": "Max Muncy",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 605141,
+          "playerName": "Mookie Betts",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 663656,
+          "playerName": "Kyle Tucker",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 606192,
+          "playerName": "Teoscar Hernández",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 669242,
+          "playerName": "Tommy Edman",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 666163,
+          "playerName": "Ben Rortvedt",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 9,
+          "playerId": 669743,
+          "playerName": "Alex Call",
+          "defensivePosition": "PH",
+          "battingOrderCode": "901",
+          "isSubstitute": true
+        },
+        {
+          "slot": 9,
+          "playerId": 676439,
+          "playerName": "Hunter Feduccia",
+          "defensivePosition": "C",
+          "battingOrderCode": "902",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "453633fc969396e905755c2672c29041bd9e99f966765bc23a656e5ba8f61b9c",
+      "resultHash": "c2c7384d5ebde940ec220bb0a2d557b769a0374c01fec874cea12fb658e4d7e0"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-chicago-cubs-los-angeles-dodgers",
+      "internalGameId": "mlb-chicago-cubs-los-angeles-dodgers",
+      "gamePk": 824645,
+      "teamId": 112,
+      "teamName": "Chicago Cubs",
+      "opponentTeamId": 119,
+      "opponentTeamName": "Los Angeles Dodgers",
+      "side": "home",
+      "startTimeKst": "09:05",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:13.477Z",
+      "fetchedAt": "2026-08-05T12:23:13.477Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:13.477Z",
+      "cutoffTime": "2026-08-05T00:05:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 691718,
+          "playerName": "Pete Crow-Armstrong",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 673548,
+          "playerName": "Seiya Suzuki",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 608324,
+          "playerName": "Alex Bregman",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 683737,
+          "playerName": "Michael Busch",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 663538,
+          "playerName": "Nico Hoerner",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 621438,
+          "playerName": "Tyrone Taylor",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 621020,
+          "playerName": "Dansby Swanson",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 699393,
+          "playerName": "Pedro Ramírez",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 665804,
+          "playerName": "Miguel Amaya",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 6,
+          "playerId": 664023,
+          "playerName": "Ian Happ",
+          "defensivePosition": "LF",
+          "battingOrderCode": "601",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "c234703e7db1a1365104d5b6455e85e97e8ad1c3be5a0f9dae0fd9772290da7d",
+      "resultHash": "3ae25d99e188be4584d84203047c22d579237bb5bdc6c025a8c926890125a218"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-cincinnati-reds-athletics",
+      "internalGameId": "mlb-cincinnati-reds-athletics",
+      "gamePk": 824484,
+      "teamId": 133,
+      "teamName": "Athletics",
+      "opponentTeamId": 113,
+      "opponentTeamName": "Cincinnati Reds",
+      "side": "away",
+      "startTimeKst": "07:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:13.902Z",
+      "fetchedAt": "2026-08-05T12:23:13.902Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:13.902Z",
+      "cutoffTime": "2026-08-04T22:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 671732,
+          "playerName": "Lawrence Butler",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 805779,
+          "playerName": "Jacob Wilson",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 691016,
+          "playerName": "Tyler Soderstrom",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 641680,
+          "playerName": "Jonah Heim",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 643446,
+          "playerName": "Jeff McNeil",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 695720,
+          "playerName": "Tommy White",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 622268,
+          "playerName": "Donovan Walton",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 666126,
+          "playerName": "Carlos Cortes",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 703607,
+          "playerName": "Henry Bolte",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 7,
+          "playerId": 675961,
+          "playerName": "Alika Williams",
+          "defensivePosition": "2B",
+          "battingOrderCode": "701",
+          "isSubstitute": true
+        },
+        {
+          "slot": 8,
+          "playerId": 691777,
+          "playerName": "Max Muncy",
+          "defensivePosition": "DH",
+          "battingOrderCode": "801",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "1c4a72e76e1aa70d5014001b65e12079ec6263f5882b1850792b962ed6b1fd49",
+      "resultHash": "995c9e4dd35804ac4c87331a7dd23db5be94cd6c13da245c2dd1e573f537f93c"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-cincinnati-reds-athletics",
+      "internalGameId": "mlb-cincinnati-reds-athletics",
+      "gamePk": 824484,
+      "teamId": 113,
+      "teamName": "Cincinnati Reds",
+      "opponentTeamId": 133,
+      "opponentTeamName": "Athletics",
+      "side": "home",
+      "startTimeKst": "07:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:13.902Z",
+      "fetchedAt": "2026-08-05T12:23:13.902Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:13.902Z",
+      "cutoffTime": "2026-08-04T22:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 682829,
+          "playerName": "Elly De La Cruz",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 701398,
+          "playerName": "Sal Stewart",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 668709,
+          "playerName": "JJ Bleday",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 663886,
+          "playerName": "Tyler Stephenson",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 553993,
+          "playerName": "Eugenio Suárez",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 667472,
+          "playerName": "Dane Myers",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 699302,
+          "playerName": "Héctor Rodríguez",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 663647,
+          "playerName": "Ke'Bryan Hayes",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 680574,
+          "playerName": "Matt McLain",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 5,
+          "playerId": 671155,
+          "playerName": "Ivan Johnson",
+          "defensivePosition": "DH",
+          "battingOrderCode": "501",
+          "isSubstitute": true
+        },
+        {
+          "slot": 7,
+          "playerId": 670770,
+          "playerName": "TJ Friedl",
+          "defensivePosition": "LF",
+          "battingOrderCode": "701",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "af29987911aa957fd1ede1eb3e8826f828f363e18ab0802de9f847c2c2955400",
+      "resultHash": "8d1b977efffaf58c0b0b092a06239b14b99082463dfd2ffe741911d29645ddf1"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-cleveland-guardians-new-york-mets",
+      "internalGameId": "mlb-cleveland-guardians-new-york-mets",
+      "gamePk": 824403,
+      "teamId": 121,
+      "teamName": "New York Mets",
+      "opponentTeamId": 114,
+      "opponentTeamName": "Cleveland Guardians",
+      "side": "away",
+      "startTimeKst": "07:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:14.300Z",
+      "fetchedAt": "2026-08-05T12:23:14.300Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:14.300Z",
+      "cutoffTime": "2026-08-04T22:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 805999,
+          "playerName": "A.J. Ewing",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 596019,
+          "playerName": "Francisco Lindor",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 666182,
+          "playerName": "Bo Bichette",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 682626,
+          "playerName": "Francisco Alvarez",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 701807,
+          "playerName": "Carson Benge",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 673357,
+          "playerName": "Luis Robert Jr.",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 543760,
+          "playerName": "Marcus Semien",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 676724,
+          "playerName": "Jared Young",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 620443,
+          "playerName": "Luis Torrens",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "d3719d38c1126f817b421089768e81ae464a21d3c64e0d47cb0c996ca7a904f7",
+      "resultHash": "2ed1cd212d0da5422fc9a1563062c6dd72804958f583b3c2fa30d734e67f9688"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-cleveland-guardians-new-york-mets",
+      "internalGameId": "mlb-cleveland-guardians-new-york-mets",
+      "gamePk": 824403,
+      "teamId": 114,
+      "teamName": "Cleveland Guardians",
+      "opponentTeamId": 121,
+      "opponentTeamName": "New York Mets",
+      "side": "home",
+      "startTimeKst": "07:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:14.300Z",
+      "fetchedAt": "2026-08-05T12:23:14.300Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:14.300Z",
+      "cutoffTime": "2026-08-04T22:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 680757,
+          "playerName": "Steven Kwan",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 666176,
+          "playerName": "Jo Adell",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 800050,
+          "playerName": "Chase DeLauter",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 656555,
+          "playerName": "Rhys Hoskins",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 682657,
+          "playerName": "Angel Martínez",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 683953,
+          "playerName": "Travis Bazzana",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 672356,
+          "playerName": "Gabriel Arias",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 595978,
+          "playerName": "Austin Hedges",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 677587,
+          "playerName": "Brayan Rocchio",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 4,
+          "playerId": 663993,
+          "playerName": "Nathaniel Lowe",
+          "defensivePosition": "1B",
+          "battingOrderCode": "401",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "1471b00de296c06737aab508071d7de84cf56f62491b0ae3302ce2afc7c18b32",
+      "resultHash": "e5ea8f89d81963c096b81086ac3bef1e93c60479be8e0291836bba8c9bbb9379"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-colorado-rockies-tampa-bay-rays",
+      "internalGameId": "mlb-colorado-rockies-tampa-bay-rays",
+      "gamePk": 824321,
+      "teamId": 139,
+      "teamName": "Tampa Bay Rays",
+      "opponentTeamId": 115,
+      "opponentTeamName": "Colorado Rockies",
+      "side": "away",
+      "startTimeKst": "09:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:14.737Z",
+      "fetchedAt": "2026-08-05T12:23:14.737Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:14.737Z",
+      "cutoffTime": "2026-08-05T00:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 650490,
+          "playerName": "Yandy Díaz",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 666018,
+          "playerName": "Jonathan Aranda",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 691406,
+          "playerName": "Junior Caminero",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 689414,
+          "playerName": "Liam Hicks",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 683748,
+          "playerName": "Victor Mesa Jr.",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 802415,
+          "playerName": "Chandler Simpson",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 656775,
+          "playerName": "Cedric Mullins",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 680700,
+          "playerName": "Richie Palacios",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 670764,
+          "playerName": "Taylor Walls",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 5,
+          "playerId": 668723,
+          "playerName": "Ryan Vilade",
+          "defensivePosition": "RF",
+          "battingOrderCode": "501",
+          "isSubstitute": true
+        },
+        {
+          "slot": 7,
+          "playerId": 676356,
+          "playerName": "Jonny DeLuca",
+          "defensivePosition": "CF",
+          "battingOrderCode": "701",
+          "isSubstitute": true
+        },
+        {
+          "slot": 8,
+          "playerId": 810938,
+          "playerName": "Ben Williamson",
+          "defensivePosition": "2B",
+          "battingOrderCode": "801",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "64ce802a06f5984c12a425fdcf33ae5f5b61d567e721173ddcfeff3df6c23e78",
+      "resultHash": "8569b1b16db1722f7f758bd995bc2537f94dc39d4a884c2e6e37c23e482329fa"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-colorado-rockies-tampa-bay-rays",
+      "internalGameId": "mlb-colorado-rockies-tampa-bay-rays",
+      "gamePk": 824321,
+      "teamId": 115,
+      "teamName": "Colorado Rockies",
+      "opponentTeamId": 139,
+      "opponentTeamName": "Tampa Bay Rays",
+      "side": "home",
+      "startTimeKst": "09:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:14.737Z",
+      "fetchedAt": "2026-08-05T12:23:14.737Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:14.737Z",
+      "cutoffTime": "2026-08-05T00:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 664983,
+          "playerName": "Jake McCarthy",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 694249,
+          "playerName": "Cole Carrigg",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 666160,
+          "playerName": "Mickey Moniak",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 696100,
+          "playerName": "Hunter Goodman",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 681198,
+          "playerName": "TJ Rumfield",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 691720,
+          "playerName": "Kyle Karros",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 650489,
+          "playerName": "Willi Castro",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 687597,
+          "playerName": "Jordan Beck",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 678662,
+          "playerName": "Ezequiel Tovar",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 3,
+          "playerId": 671289,
+          "playerName": "Tyler Freeman",
+          "defensivePosition": "RF",
+          "battingOrderCode": "301",
+          "isSubstitute": true
+        },
+        {
+          "slot": 8,
+          "playerId": 687859,
+          "playerName": "Troy Johnston",
+          "defensivePosition": "LF",
+          "battingOrderCode": "801",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "78eedfcdfa2ca66f70fd61b63728cf704a0c1045da23f5cfe97c9e015b85f0cd",
+      "resultHash": "fbc41d1f433a61b21bc212e337567cd88c034d7d404603b48450edacb611dc1a"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-houston-astros-toronto-blue-jays",
+      "internalGameId": "mlb-houston-astros-toronto-blue-jays",
+      "gamePk": 824161,
+      "teamId": 141,
+      "teamName": "Toronto Blue Jays",
+      "opponentTeamId": 117,
+      "opponentTeamName": "Houston Astros",
+      "side": "away",
+      "startTimeKst": "09:10",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:15.208Z",
+      "fetchedAt": "2026-08-05T12:23:15.208Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:15.208Z",
+      "cutoffTime": "2026-08-05T00:10:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 664770,
+          "playerName": "Nathan Lukes",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 665489,
+          "playerName": "Vladimir Guerrero Jr.",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 672960,
+          "playerName": "Kazuma Okamoto",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 543807,
+          "playerName": "George Springer",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 672386,
+          "playerName": "Alejandro Kirk",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 660821,
+          "playerName": "Jesús Sánchez",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 676391,
+          "playerName": "Ernie Clement",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 665926,
+          "playerName": "Andrés Giménez",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 664702,
+          "playerName": "Myles Straw",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 6,
+          "playerId": 676914,
+          "playerName": "Davis Schneider",
+          "defensivePosition": "LF",
+          "battingOrderCode": "601",
+          "isSubstitute": true
+        },
+        {
+          "slot": 6,
+          "playerId": 669701,
+          "playerName": "Josh Smith",
+          "defensivePosition": "PH",
+          "battingOrderCode": "602",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "97690a13de42381ca8e079db8e50a54e7837dbbc5a38e65a9bf7ce6db857c2fc",
+      "resultHash": "ee798b8cab331c86280ba074cae5dce85718b2fe0c3ba01e730d4f74ac6badff"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-houston-astros-toronto-blue-jays",
+      "internalGameId": "mlb-houston-astros-toronto-blue-jays",
+      "gamePk": 824161,
+      "teamId": 117,
+      "teamName": "Houston Astros",
+      "opponentTeamId": 141,
+      "opponentTeamName": "Toronto Blue Jays",
+      "side": "home",
+      "startTimeKst": "09:10",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:15.208Z",
+      "fetchedAt": "2026-08-05T12:23:15.208Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:15.208Z",
+      "cutoffTime": "2026-08-05T00:10:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 665161,
+          "playerName": "Jeremy Peña",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 670541,
+          "playerName": "Yordan Alvarez",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 670623,
+          "playerName": "Isaac Paredes",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 662139,
+          "playerName": "Daulton Varsho",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 572233,
+          "playerName": "Christian Walker",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 514888,
+          "playerName": "Jose Altuve",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 666211,
+          "playerName": "Taylor Trammell",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 673237,
+          "playerName": "Yainer Diaz",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 701358,
+          "playerName": "Cam Smith",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 6,
+          "playerId": 669397,
+          "playerName": "Nick Allen",
+          "defensivePosition": "2B",
+          "battingOrderCode": "601",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "11992cd82db0f9c7a8634d4d03c46d9d07eb3822becf47c2d6739a092dd578f7",
+      "resultHash": "cfd4d6f22128f7fcb9f06b9052e28aa774fc74741cae42199ae3d414bf2a40ff"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-kansas-city-royals-minnesota-twins",
+      "internalGameId": "mlb-kansas-city-royals-minnesota-twins",
+      "gamePk": 824084,
+      "teamId": 142,
+      "teamName": "Minnesota Twins",
+      "opponentTeamId": 118,
+      "opponentTeamName": "Kansas City Royals",
+      "side": "away",
+      "startTimeKst": "08:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:15.646Z",
+      "fetchedAt": "2026-08-05T12:23:15.646Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:15.646Z",
+      "cutoffTime": "2026-08-04T23:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 663616,
+          "playerName": "Trevor Larnach",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 680777,
+          "playerName": "Ryan Jeffers",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 605137,
+          "playerName": "Josh Bell",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 665019,
+          "playerName": "Kody Clemens",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 668904,
+          "playerName": "Royce Lewis",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 686797,
+          "playerName": "Brooks Lee",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 702176,
+          "playerName": "Alan Roden",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 807712,
+          "playerName": "Luke Keaschall",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 668952,
+          "playerName": "Ryan Kreidler",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 7,
+          "playerId": 668885,
+          "playerName": "Austin Martin",
+          "defensivePosition": "RF",
+          "battingOrderCode": "701",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "881e67b39ace1f0493767b4d57144333d2bb5cdf7bd5ec0ff75dafdcad3f6081",
+      "resultHash": "049810d004589dea424067455d2b2deb9983d8a366c41914d90abee904fa8e94"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-kansas-city-royals-minnesota-twins",
+      "internalGameId": "mlb-kansas-city-royals-minnesota-twins",
+      "gamePk": 824084,
+      "teamId": 118,
+      "teamName": "Kansas City Royals",
+      "opponentTeamId": 142,
+      "opponentTeamName": "Minnesota Twins",
+      "side": "home",
+      "startTimeKst": "08:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:15.646Z",
+      "fetchedAt": "2026-08-05T12:23:15.646Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:15.646Z",
+      "cutoffTime": "2026-08-04T23:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 695600,
+          "playerName": "Carter Jensen",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 677951,
+          "playerName": "Bobby Witt Jr.",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 695506,
+          "playerName": "Jac Caglianone",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 521692,
+          "playerName": "Salvador Perez",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 686681,
+          "playerName": "Michael Massey",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 679845,
+          "playerName": "Nick Loftin",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 686555,
+          "playerName": "Isaac Collins",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 670231,
+          "playerName": "John Rave",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 664728,
+          "playerName": "Kyle Isbel",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 4,
+          "playerId": 686475,
+          "playerName": "Tyler Tolbert",
+          "defensivePosition": "RF",
+          "battingOrderCode": "401",
+          "isSubstitute": true
+        },
+        {
+          "slot": 8,
+          "playerId": 516782,
+          "playerName": "Starling Marte",
+          "defensivePosition": "PH",
+          "battingOrderCode": "801",
+          "isSubstitute": true
+        },
+        {
+          "slot": 8,
+          "playerId": 663878,
+          "playerName": "Nate Pearson",
+          "defensivePosition": "P",
+          "battingOrderCode": "802",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "018b50bc1890a69aa23aa176baeea0d4195676cba4ae842950491f0772f6cfef",
+      "resultHash": "908646346a4744c560226660f628e576414ec86dfc8e367414d79cfb6fd49e07"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-milwaukee-brewers-pittsburgh-pirates",
+      "internalGameId": "mlb-milwaukee-brewers-pittsburgh-pirates",
+      "gamePk": 823756,
+      "teamId": 134,
+      "teamName": "Pittsburgh Pirates",
+      "opponentTeamId": 158,
+      "opponentTeamName": "Milwaukee Brewers",
+      "side": "away",
+      "startTimeKst": "08:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:16.103Z",
+      "fetchedAt": "2026-08-05T12:23:16.103Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:16.103Z",
+      "cutoffTime": "2026-08-04T23:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 663968,
+          "playerName": "Jake Mangum",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 664040,
+          "playerName": "Brandon Lowe",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 668804,
+          "playerName": "Bryan Reynolds",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 699013,
+          "playerName": "Esmerlyn Valdez",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 687462,
+          "playerName": "Spencer Horwitz",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 693304,
+          "playerName": "Nick Gonzales",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 682848,
+          "playerName": "Endy Rodríguez",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 694378,
+          "playerName": "Jacob Gonzalez",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 669707,
+          "playerName": "Jared Triolo",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "41b85521ad30c0fa532b346c752e9b2792be2687970908439b2a200a20ffad8b",
+      "resultHash": "0120dc65c613521ced0517fb5be49ff99267ad895273585254f994ca6015f7d9"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-milwaukee-brewers-pittsburgh-pirates",
+      "internalGameId": "mlb-milwaukee-brewers-pittsburgh-pirates",
+      "gamePk": 823756,
+      "teamId": 158,
+      "teamName": "Milwaukee Brewers",
+      "opponentTeamId": 134,
+      "opponentTeamName": "Pittsburgh Pirates",
+      "side": "home",
+      "startTimeKst": "08:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:16.103Z",
+      "fetchedAt": "2026-08-05T12:23:16.103Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:16.103Z",
+      "cutoffTime": "2026-08-04T23:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 668930,
+          "playerName": "Brice Turang",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 694192,
+          "playerName": "Jackson Chourio",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 669003,
+          "playerName": "Garrett Mitchell",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 661388,
+          "playerName": "William Contreras",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 592885,
+          "playerName": "Christian Yelich",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 683734,
+          "playerName": "Andrew Vaughn",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 800325,
+          "playerName": "Luis Lara",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 806198,
+          "playerName": "Cooper Pratt",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 666152,
+          "playerName": "David Hamilton",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "de20e65242e9fb7cd439c8ca526418167200ec73ef3384eb61ee76b0c95daf6f",
+      "resultHash": "a316b156cf07f3a4f2d98fa9750fcbf2a2bf0facc44806dadcedbb96d1d96286"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-new-york-yankees-st-louis-cardinals",
+      "internalGameId": "mlb-new-york-yankees-st-louis-cardinals",
+      "gamePk": 823517,
+      "teamId": 138,
+      "teamName": "St. Louis Cardinals",
+      "opponentTeamId": 147,
+      "opponentTeamName": "New York Yankees",
+      "side": "away",
+      "startTimeKst": "08:05",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:16.483Z",
+      "fetchedAt": "2026-08-05T12:23:16.483Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:16.483Z",
+      "cutoffTime": "2026-08-04T23:05:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 802139,
+          "playerName": "JJ Wetherholt",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 671056,
+          "playerName": "Iván Herrera",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 665877,
+          "playerName": "José Fermín",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 676369,
+          "playerName": "Nelson Velázquez",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 691026,
+          "playerName": "Masyn Winn",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 691458,
+          "playerName": "Blaze Jordan",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 701675,
+          "playerName": "Nathan Church",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 686780,
+          "playerName": "Pedro Pagés",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 663494,
+          "playerName": "Bryan Torres",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 3,
+          "playerId": 676475,
+          "playerName": "Alec Burleson",
+          "defensivePosition": "1B",
+          "battingOrderCode": "301",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "c5230cb232accfe4a2b564d272549be0f235c9225fb22dd77885300f5e2f8fdf",
+      "resultHash": "a4920de650e55fd9fc2347dfba18e571a6778dd8845ef3a7c722ffe683e36257"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-new-york-yankees-st-louis-cardinals",
+      "internalGameId": "mlb-new-york-yankees-st-louis-cardinals",
+      "gamePk": 823517,
+      "teamId": 147,
+      "teamName": "New York Yankees",
+      "opponentTeamId": 138,
+      "opponentTeamName": "St. Louis Cardinals",
+      "side": "home",
+      "startTimeKst": "08:05",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:16.483Z",
+      "fetchedAt": "2026-08-05T12:23:16.483Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:16.483Z",
+      "cutoffTime": "2026-08-04T23:05:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 663757,
+          "playerName": "Trent Grisham",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 700250,
+          "playerName": "Ben Rice",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 671277,
+          "playerName": "Luis García Jr.",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 671218,
+          "playerName": "Heliot Ramos",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 682987,
+          "playerName": "Spencer Jones",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 665862,
+          "playerName": "Jazz Chisholm Jr.",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 641857,
+          "playerName": "Ryan McMahon",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 806146,
+          "playerName": "George Lombard Jr.",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 669224,
+          "playerName": "Austin Wells",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 9,
+          "playerId": 502671,
+          "playerName": "Paul Goldschmidt",
+          "defensivePosition": "PH",
+          "battingOrderCode": "901",
+          "isSubstitute": true
+        },
+        {
+          "slot": 9,
+          "playerId": 645305,
+          "playerName": "Ali Sánchez",
+          "defensivePosition": "C",
+          "battingOrderCode": "902",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "303cc169201e06434eae6ffeee381b8c972df7c9697684733bb90d7b31e0aeb7",
+      "resultHash": "448a6e991e6da51d0e95479e8fcbbf40f58043b00d779ab2e99c5e6a52c7fd2d"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-philadelphia-phillies-washington-nationals",
+      "internalGameId": "mlb-philadelphia-phillies-washington-nationals",
+      "gamePk": 823432,
+      "teamId": 120,
+      "teamName": "Washington Nationals",
+      "opponentTeamId": 143,
+      "opponentTeamName": "Philadelphia Phillies",
+      "side": "away",
+      "startTimeKst": "07:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:16.896Z",
+      "fetchedAt": "2026-08-05T12:23:16.896Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:16.896Z",
+      "cutoffTime": "2026-08-04T22:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 686611,
+          "playerName": "Dylan Crews",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 665953,
+          "playerName": "Andrés Chaparro",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 691781,
+          "playerName": "Brady House",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 682928,
+          "playerName": "CJ Abrams",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 695670,
+          "playerName": "Harry Ford",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 696285,
+          "playerName": "Jacob Young",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 695734,
+          "playerName": "Daylen Lile",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 683083,
+          "playerName": "Nasim Nuñez",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 678391,
+          "playerName": "Jorbit Vivas",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 3,
+          "playerId": 694673,
+          "playerName": "Abimelec Ortiz",
+          "defensivePosition": "PH",
+          "battingOrderCode": "301",
+          "isSubstitute": true
+        },
+        {
+          "slot": 6,
+          "playerId": 677588,
+          "playerName": "José Tena",
+          "defensivePosition": "PH",
+          "battingOrderCode": "601",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "9f4933ac42f0aecc3b0f5ebd77a7a6c9e4f1a6fa9cf607f30e29d63f1cd77ef6",
+      "resultHash": "d1f1ed29911f5d3c5d990b9cc42b1e8951432ce3be9591817b440fbe1a3a16f8"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-philadelphia-phillies-washington-nationals",
+      "internalGameId": "mlb-philadelphia-phillies-washington-nationals",
+      "gamePk": 823432,
+      "teamId": 143,
+      "teamName": "Philadelphia Phillies",
+      "opponentTeamId": 120,
+      "opponentTeamName": "Washington Nationals",
+      "side": "home",
+      "startTimeKst": "07:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:16.896Z",
+      "fetchedAt": "2026-08-05T12:23:16.896Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:16.896Z",
+      "cutoffTime": "2026-08-04T22:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 656941,
+          "playerName": "Kyle Schwarber",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 607208,
+          "playerName": "Trea Turner",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 547180,
+          "playerName": "Bryce Harper",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 650333,
+          "playerName": "Luis Arraez",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 664761,
+          "playerName": "Alec Bohm",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 592663,
+          "playerName": "J.T. Realmuto",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 669016,
+          "playerName": "Brandon Marsh",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 681082,
+          "playerName": "Bryson Stott",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 702222,
+          "playerName": "Justin Crawford",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 3,
+          "playerId": 656537,
+          "playerName": "Derek Hill",
+          "defensivePosition": "RF",
+          "battingOrderCode": "301",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "7257d37a613b06b280ed46dbc519a58f7e342324299eb1ee38951fe7e1e5cbd1",
+      "resultHash": "a672dadaf25dc21162e338540017f63930c22605a4231ace628a0111dbb55f66"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-seattle-mariners-detroit-tigers",
+      "internalGameId": "mlb-seattle-mariners-detroit-tigers",
+      "gamePk": 823108,
+      "teamId": 116,
+      "teamName": "Detroit Tigers",
+      "opponentTeamId": 136,
+      "opponentTeamName": "Seattle Mariners",
+      "side": "away",
+      "startTimeKst": "10:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:17.455Z",
+      "fetchedAt": "2026-08-05T12:23:17.455Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:17.455Z",
+      "cutoffTime": "2026-08-05T01:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 805808,
+          "playerName": "Kevin McGonigle",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 650402,
+          "playerName": "Gleyber Torres",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 693307,
+          "playerName": "Dillon Dingler",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 682985,
+          "playerName": "Riley Greene",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 690993,
+          "playerName": "Colt Keith",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 679529,
+          "playerName": "Spencer Torkelson",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 703601,
+          "playerName": "Max Clark",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 595879,
+          "playerName": "Javier Báez",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 656716,
+          "playerName": "Zach McKinstry",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 2,
+          "playerId": 681546,
+          "playerName": "James Outman",
+          "defensivePosition": "RF",
+          "battingOrderCode": "201",
+          "isSubstitute": true
+        },
+        {
+          "slot": 8,
+          "playerId": 701678,
+          "playerName": "Hao-Yu Lee",
+          "defensivePosition": "3B",
+          "battingOrderCode": "801",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "844524673a244b77c357514baad32dc371790a313b4b8bb5bc98ddbaedc0126c",
+      "resultHash": "bbc54e65370f262e568db6e0e19366444417b901c6467f67847b55b5ce985d2c"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-seattle-mariners-detroit-tigers",
+      "internalGameId": "mlb-seattle-mariners-detroit-tigers",
+      "gamePk": 823108,
+      "teamId": 136,
+      "teamName": "Seattle Mariners",
+      "opponentTeamId": 116,
+      "opponentTeamName": "Detroit Tigers",
+      "side": "home",
+      "startTimeKst": "10:40",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:17.455Z",
+      "fetchedAt": "2026-08-05T12:23:17.455Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:17.455Z",
+      "cutoffTime": "2026-08-05T01:40:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 702284,
+          "playerName": "Cole Young",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 668227,
+          "playerName": "Randy Arozarena",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 686527,
+          "playerName": "Dominic Canzone",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 677594,
+          "playerName": "Julio Rodríguez",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 647304,
+          "playerName": "Josh Naylor",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 663728,
+          "playerName": "Cal Raleigh",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 680977,
+          "playerName": "Brendan Donovan",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 621493,
+          "playerName": "Taylor Ward",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 806068,
+          "playerName": "Colt Emerson",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "f25520c75b011084b831c8416331e94d09010e5e0fbbf8174a43b8be364a8685",
+      "resultHash": "f42ded2a804af40c33a485179737baa1938bdf8901d61d079868c83517ef2689"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-texas-rangers-san-francisco-giants",
+      "internalGameId": "mlb-texas-rangers-san-francisco-giants",
+      "gamePk": 822865,
+      "teamId": 137,
+      "teamName": "San Francisco Giants",
+      "opponentTeamId": 140,
+      "opponentTeamName": "Texas Rangers",
+      "side": "away",
+      "startTimeKst": "09:05",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:17.919Z",
+      "fetchedAt": "2026-08-05T12:23:17.919Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:17.919Z",
+      "cutoffTime": "2026-08-05T00:05:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 678545,
+          "playerName": "Osleivis Basabe",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 808982,
+          "playerName": "Jung Hoo Lee",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 642715,
+          "playerName": "Willy Adames",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 646240,
+          "playerName": "Rafael Devers",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 691740,
+          "playerName": "Daniel Susac",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 671083,
+          "playerName": "Buddy Kennedy",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 678760,
+          "playerName": "Eddys Leonard",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 687529,
+          "playerName": "Grant McCray",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 683766,
+          "playerName": "Christian Koss",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 7,
+          "playerId": 687551,
+          "playerName": "Drew Gilbert",
+          "defensivePosition": "CF",
+          "battingOrderCode": "701",
+          "isSubstitute": true
+        },
+        {
+          "slot": 9,
+          "playerId": 801501,
+          "playerName": "Nate Furman",
+          "defensivePosition": "2B",
+          "battingOrderCode": "901",
+          "isSubstitute": true
+        },
+        {
+          "slot": 9,
+          "playerId": 805811,
+          "playerName": "Bryce Eldridge",
+          "defensivePosition": "PH",
+          "battingOrderCode": "902",
+          "isSubstitute": true
+        },
+        {
+          "slot": 9,
+          "playerId": 681916,
+          "playerName": "Dylan Smith",
+          "defensivePosition": "P",
+          "battingOrderCode": "903",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "42182ea9b68074247fc0164896d11c00b43f89eb52b9456f13d7f2228249c33b",
+      "resultHash": "e8cf688005ddcb15f30fc9356ccf32a692344a5e2155154e0b301fc0568dc000"
+    },
+    {
+      "schemaVersion": "mlb-lineup-dataset-v1",
+      "builderVersion": "lineup-dataset-builder-v1",
+      "generatedAt": "2026-08-05T12:23:22.801Z",
+      "gameDate": "2026-08-05",
+      "gameId": "mlb-texas-rangers-san-francisco-giants",
+      "internalGameId": "mlb-texas-rangers-san-francisco-giants",
+      "gamePk": 822865,
+      "teamId": 140,
+      "teamName": "Texas Rangers",
+      "opponentTeamId": 137,
+      "opponentTeamName": "San Francisco Giants",
+      "side": "home",
+      "startTimeKst": "09:05",
+      "lineupType": "ACTUAL_STARTING",
+      "collectionPhase": "POST_GAME",
+      "preGameStatus": "NOT_COLLECTED",
+      "collectionStatus": "CONFIRMED",
+      "reason": "Official starting lineups collected from MLB Stats API boxscore.",
+      "confirmed": true,
+      "lineupSource": "mlb-statsapi-boxscore",
+      "sourceTimestamp": "2026-08-05T12:23:17.919Z",
+      "fetchedAt": "2026-08-05T12:23:17.919Z",
+      "artifactGeneratedAt": "2026-08-05T12:23:22.801Z",
+      "lineupConfirmedAt": "2026-08-05T12:23:17.919Z",
+      "cutoffTime": "2026-08-05T00:05:00Z",
+      "lineupStatus": "COMPLETE",
+      "battingOrder": [
+        {
+          "slot": 1,
+          "playerId": 592626,
+          "playerName": "Joc Pederson",
+          "defensivePosition": "1B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 2,
+          "playerId": 694671,
+          "playerName": "Wyatt Langford",
+          "defensivePosition": "LF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 3,
+          "playerId": 608369,
+          "playerName": "Corey Seager",
+          "defensivePosition": "DH",
+          "isDh": true,
+          "isSubstitute": false
+        },
+        {
+          "slot": 4,
+          "playerId": 607043,
+          "playerName": "Brandon Nimmo",
+          "defensivePosition": "RF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 5,
+          "playerId": 677649,
+          "playerName": "Ezequiel Duran",
+          "defensivePosition": "3B",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 6,
+          "playerId": 694497,
+          "playerName": "Evan Carter",
+          "defensivePosition": "CF",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 7,
+          "playerId": 553869,
+          "playerName": "Elias Díaz",
+          "defensivePosition": "C",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 8,
+          "playerId": 670032,
+          "playerName": "Nicky Lopez",
+          "defensivePosition": "SS",
+          "isDh": false,
+          "isSubstitute": false
+        },
+        {
+          "slot": 9,
+          "playerId": 679822,
+          "playerName": "Justin Foscue",
+          "defensivePosition": "2B",
+          "isDh": false,
+          "isSubstitute": false
+        }
+      ],
+      "substitutes": [
+        {
+          "slot": 1,
+          "playerId": 669394,
+          "playerName": "Jake Burger",
+          "defensivePosition": "1B",
+          "battingOrderCode": "101",
+          "isSubstitute": true
+        },
+        {
+          "slot": 9,
+          "playerId": 696030,
+          "playerName": "Alejandro Osuna",
+          "defensivePosition": "PH",
+          "battingOrderCode": "901",
+          "isSubstitute": true
+        },
+        {
+          "slot": 9,
+          "playerId": 695508,
+          "playerName": "Cam Cauley",
+          "defensivePosition": "2B",
+          "battingOrderCode": "902",
+          "isSubstitute": true
+        }
+      ],
+      "missingFields": [
+        "battingSide",
+        "preGameLineupSnapshot"
+      ],
+      "warnings": [
+        "COLLECTION_STATUS=CONFIRMED",
+        "SCHEDULE_FIRST_LINEUP_INTAKE_V1"
+      ],
+      "researchOnly": true,
+      "legalStatus": "INTERNAL_RESEARCH_ONLY",
+      "engineUseAllowed": false,
+      "inputHash": "6790a0ee86e23e6830c1346e55bf746c9eaa0930f41bbcccf6d1b727c5a09dcd",
+      "resultHash": "bce70395f14339953c47a48b5eecd61a9b671f1e5ab511f5f0e7b56ecfe113a5"
+    }
+  ]
+}

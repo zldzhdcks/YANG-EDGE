@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "kbo-t45-personnel-workflow-audit-v1",
+  "dateKst": "2026-08-01",
+  "runId": "2026-08-01T08-52-40-821Z",
+  "dryRun": false,
+  "validateOnly": false,
+  "providerCalls": 0,
+  "games": [
+    {
+      "gameId": "kbo-181922",
+      "status": "ADMIN_VERIFIED",
+      "completeness": "COMPLETE",
+      "predictionUsability": "ELIGIBLE",
+      "starterOk": true,
+      "lineupOk": true,
+      "lineupPartial": false,
+      "protoOk": true,
+      "batterCount": 18,
+      "errors": [],
+      "warnings": [
+        "OPERATING_STATUS_REVIEW_REQUIRED",
+        "PLAYER_ID_UNRESOLVED"
+      ],
+      "operatingStatus": "UNKNOWN",
+      "requirementsApplicable": true
+    },
+    {
+      "gameId": "kbo-181923",
+      "status": "ADMIN_VERIFIED",
+      "completeness": "COMPLETE",
+      "predictionUsability": "ELIGIBLE",
+      "starterOk": true,
+      "lineupOk": true,
+      "lineupPartial": false,
+      "protoOk": true,
+      "batterCount": 18,
+      "errors": [],
+      "warnings": [
+        "OPERATING_STATUS_REVIEW_REQUIRED",
+        "PLAYER_ID_UNRESOLVED"
+      ],
+      "operatingStatus": "UNKNOWN",
+      "requirementsApplicable": true
+    },
+    {
+      "gameId": "kbo-181924",
+      "status": "ADMIN_VERIFIED",
+      "completeness": "COMPLETE",
+      "predictionUsability": "ELIGIBLE",
+      "starterOk": true,
+      "lineupOk": true,
+      "lineupPartial": false,
+      "protoOk": true,
+      "batterCount": 18,
+      "errors": [],
+      "warnings": [
+        "OPERATING_STATUS_REVIEW_REQUIRED",
+        "PLAYER_ID_UNRESOLVED"
+      ],
+      "operatingStatus": "UNKNOWN",
+      "requirementsApplicable": true
+    },
+    {
+      "gameId": "kbo-181925",
+      "status": "NOT_APPLICABLE",
+      "completeness": "INSUFFICIENT",
+      "predictionUsability": "UNUSABLE",
+      "starterOk": false,
+      "lineupOk": false,
+      "lineupPartial": false,
+      "protoOk": false,
+      "batterCount": 0,
+      "errors": [],
+      "warnings": [
+        "GAME_CANCELLED_PERSONNEL_NOT_APPLICABLE",
+        "CANCELLED_MARKET_NOT_SAVED",
+        "PROTO_NOT_APPLICABLE_CANCELLED"
+      ],
+      "operatingStatus": "CANCELLED",
+      "requirementsApplicable": false
+    },
+    {
+      "gameId": "kbo-181926",
+      "status": "NOT_APPLICABLE",
+      "completeness": "INSUFFICIENT",
+      "predictionUsability": "UNUSABLE",
+      "starterOk": false,
+      "lineupOk": false,
+      "lineupPartial": false,
+      "protoOk": false,
+      "batterCount": 0,
+      "errors": [],
+      "warnings": [
+        "GAME_CANCELLED_PERSONNEL_NOT_APPLICABLE",
+        "CANCELLED_MARKET_NOT_SAVED",
+        "PROTO_NOT_APPLICABLE_CANCELLED"
+      ],
+      "operatingStatus": "CANCELLED",
+      "requirementsApplicable": false
+    }
+  ],
+  "audit": [
+    {
+      "action": "CREATED",
+      "actor": "operator",
+      "occurredAt": "2026-08-01T08:52:40.821Z",
+      "previousVersionId": null,
+      "previousHash": null,
+      "nextHash": "33c275555a3e6c5fd17f1b6d8f0325fb25f689be8726d4ed786cc5450da8bca7",
+      "changedFields": [
+        "games"
+      ],
+      "reason": "ADMIN_VERIFIED_PERSONNEL_CREATED"
+    }
+  ],
+  "wouldCreateArtifacts": [
+    "data/research/kbo/2026-08-01-personnel-snapshot-v1.json",
+    "data/research/kbo/2026-08-01-domestic-proto-snapshot-v1.json",
+    "data/operator-input/kbo/2026-08-01-starter-confirmation-v1.json",
+    "data/operator-input/kbo/2026-08-01-lineup-confirmation-v1.json",
+    "data/operator-input/kbo/2026-08-01-operator-markets-v2.json",
+    "data/audits/2026-08-01-kbo-t45-personnel-workflow-v1.json"
+  ],
+  "writtenArtifacts": [
+    "data/research/kbo/2026-08-01-personnel-snapshot-v1.json",
+    "data/research/kbo/2026-08-01-domestic-proto-snapshot-v1.json",
+    "data/operator-input/kbo/2026-08-01-starter-confirmation-v1.json",
+    "data/operator-input/kbo/2026-08-01-lineup-confirmation-v1.json",
+    "data/operator-input/kbo/2026-08-01-operator-markets-v2.json",
+    "data/audits/2026-08-01-kbo-t45-personnel-workflow-v1.json"
+  ]
+}

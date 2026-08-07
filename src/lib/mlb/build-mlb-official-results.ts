@@ -41,10 +41,13 @@ type ScheduleGameSnapshot = {
 async function getScheduleGameSnapshot(
   gamePk: number,
   usage: CacheUsageStats,
+  cwd?: string,
 ): Promise<ScheduleGameSnapshot> {
+  // Official Result must never trust a pre-pitch schedule raw cache.
   const body = await getRawStatsJson(
     `/api/v1/schedule?sportId=1&gamePk=${gamePk}`,
     usage,
+    { cwd, forceRefresh: true },
   );
   const root = asRecord(body);
   const dates = Array.isArray(root?.dates) ? root!.dates : [];
@@ -130,7 +133,7 @@ export async function buildMlbOfficialResultsV1(input: {
   const games: MlbOfficialResultGame[] = [];
 
   for (const row of schedule.games) {
-    const snap = await getScheduleGameSnapshot(row.gamePk, usage);
+    const snap = await getScheduleGameSnapshot(row.gamePk, usage, cwd);
     const status = mapAbstractState(snap.abstractGameState);
 
     let homeScore: number | null = null;
@@ -146,6 +149,7 @@ export async function buildMlbOfficialResultsV1(input: {
         const box = await getRawStatsJson(
           `/api/v1/game/${row.gamePk}/boxscore`,
           usage,
+          { cwd, forceRefresh: true },
         );
         const boxScores = extractScoresFromBoxscore(box);
         if (!scoresLookEmpty(boxScores.homeScore, boxScores.awayScore)) {

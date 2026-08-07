@@ -1,19 +1,23 @@
 {
   "schemaVersion": "mlb-pregame-collection-summary-v1",
   "dateKst": "2026-07-31",
-  "runId": "2026-07-31T00-53-46-838Z",
-  "generatedAt": "2026-07-31T00:54:00.633Z",
-  "collectionStartedAt": "2026-07-31T00:53:46.838Z",
-  "kstAtCollection": "2026-07-31 09:53",
+  "runId": "2026-07-31T01-28-11-004Z",
+  "generatedAt": "2026-07-31T01:28:14.998Z",
+  "collectionStartedAt": "2026-07-31T01:28:11.004Z",
+  "kstAtCollection": "2026-07-31 10:28",
   "engineChanged": false,
   "weightsChanged": false,
   "researchPromotion": "NONE",
   "revisions": {
-    "schedule": "data/research/mlb/2026-07-31-schedule-v1.rev-2026-07-31T00-53-46-838Z.json",
-    "lineup": "data/research/mlb/2026-07-31-lineup-dataset-v1.rev-2026-07-31T00-53-46-838Z.json",
-    "starter": null,
-    "odds": null,
-    "prediction": null
+    "schedule": "data/research/mlb/2026-07-31-schedule-v1.rev-2026-07-31T01-28-11-004Z.json",
+    "lineup": "data/research/mlb/2026-07-31-lineup-dataset-v1.rev-2026-07-31T01-28-11-004Z.json",
+    "starter": "data/research/mlb/2026-07-31-starter-dataset-v1.rev-2026-07-31T01-28-11-004Z.json",
+    "odds": "data/research/mlb/2026-07-31-odds-history-dataset-v1.rev-2026-07-31T01-28-11-004Z.json",
+    "prediction": "data/predictions/mlb/2026-07-31.rev-2026-07-31T01-28-11-004Z.json",
+    "remaining": "data/research/mlb/2026-07-31-remaining-pregame-v1.rev-2026-07-31T01-28-11-004Z.json",
+    "cutoffAudit": "data/research/mlb/2026-07-31-pregame-cutoff-audit-v1.rev-2026-07-31T01-28-11-004Z.json",
+    "collectionSummary": "data/research/mlb/2026-07-31-pregame-collection-summary-v1.rev-2026-07-31T01-28-11-004Z.json",
+    "daily": "data/research/mlb/2026-07-31-daily-research-summary-v1.rev-2026-07-31T01-28-11-004Z.json"
   },
   "steps": [
     {
@@ -92,7 +96,7 @@
       "pregameEligible": true,
       "scheduledStartUtc": "2026-07-31T01:40:00Z",
       "starterStatus": "STARTER_PROBABLE_COLLECTED",
-      "oddsStatus": "COLLECTED",
+      "oddsStatus": "PARTIAL",
       "lineupStatus": "NOT_RELEASED",
       "predictionStatus": "PASS",
       "passReason": "baselineStatus=INSUFFICIENT",
@@ -139,7 +143,7 @@
       "oddsStatus": "SKIPPED",
       "lineupStatus": "SKIPPED",
       "predictionStatus": "EXCLUDED",
-      "passReason": "commenceTimeUtc 2026-07-30T18:10:00Z <= collectionStartedAt",
+      "passReason": "game finished (Final/null)",
       "finalStatus": "EXCLUDED_ALREADY_STARTED",
       "leakageFailed": false,
       "artifacts": {
@@ -180,7 +184,7 @@
       "pregameEligible": true,
       "scheduledStartUtc": "2026-07-31T02:10:00Z",
       "starterStatus": "STARTER_PROBABLE_COLLECTED",
-      "oddsStatus": "COLLECTED",
+      "oddsStatus": "PARTIAL",
       "lineupStatus": "NOT_RELEASED",
       "predictionStatus": "PASS",
       "passReason": "baselineStatus=INSUFFICIENT",
@@ -205,7 +209,7 @@
       "oddsStatus": "SKIPPED",
       "lineupStatus": "SKIPPED",
       "predictionStatus": "EXCLUDED",
-      "passReason": "commenceTimeUtc 2026-07-30T17:40:00Z <= collectionStartedAt",
+      "passReason": "game finished (Final/null)",
       "finalStatus": "EXCLUDED_ALREADY_STARTED",
       "leakageFailed": false,
       "artifacts": {
@@ -246,7 +250,7 @@
       "pregameEligible": true,
       "scheduledStartUtc": "2026-07-31T01:40:00Z",
       "starterStatus": "STARTER_PROBABLE_COLLECTED",
-      "oddsStatus": "COLLECTED",
+      "oddsStatus": "PARTIAL",
       "lineupStatus": "NOT_RELEASED",
       "predictionStatus": "PASS",
       "passReason": "baselineStatus=INSUFFICIENT",
@@ -271,7 +275,7 @@
       "oddsStatus": "SKIPPED",
       "lineupStatus": "SKIPPED",
       "predictionStatus": "EXCLUDED",
-      "passReason": "commenceTimeUtc 2026-07-30T18:15:00Z <= collectionStartedAt",
+      "passReason": "game finished (Final/null)",
       "finalStatus": "EXCLUDED_ALREADY_STARTED",
       "leakageFailed": false,
       "artifacts": {
@@ -293,7 +297,7 @@
       "oddsStatus": "SKIPPED",
       "lineupStatus": "SKIPPED",
       "predictionStatus": "EXCLUDED",
-      "passReason": "commenceTimeUtc 2026-07-30T16:10:00Z <= collectionStartedAt",
+      "passReason": "game finished (Final/null)",
       "finalStatus": "EXCLUDED_ALREADY_STARTED",
       "leakageFailed": false,
       "artifacts": {
@@ -307,5 +311,5 @@
       }
     }
   ],
-  "assistantSummary": "MLB Remaining Pregame Accumulation — 2026-07-31\nCollection started: 2026-07-31T00:53:46.838Z\nSlate: 10\nPregame eligible: 3\nAlready started: 7\nPredicted: 0\nPASS: 3\nLeakage failures: 0\nEngine changed: false"
+  "assistantSummary": "MLB Remaining Pregame Accumulation — 2026-07-31\nCollection started: 2026-07-31T01:28:11.004Z\nSlate: 10\nPregame eligible: 3\nAlready started: 7\nPredicted: 0\nPASS: 3\nLeakage failures: 0\nEngine changed: false"
 }

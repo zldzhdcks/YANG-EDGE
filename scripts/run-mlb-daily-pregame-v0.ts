@@ -178,9 +178,13 @@ async function main() {
 
   if (
     report.overall === "FAILED" ||
-    report.overall === "BLOCKED_MISSING_SCHEDULE"
+    report.overall === "BLOCKED_MISSING_SCHEDULE" ||
+    report.overall === "DAILY_PREDICTION_SNAPSHOT_MISSING"
   ) {
-    process.exitCode = report.overall === "FAILED" ? 1 : 2;
+    process.exitCode =
+      report.overall === "BLOCKED_MISSING_SCHEDULE"
+        ? 2
+        : 1;
   }
 }
 

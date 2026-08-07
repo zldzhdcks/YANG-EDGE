@@ -194,14 +194,11 @@ async function main() {
     assert.notEqual(oddsStage?.status, "ALREADY_COMPLETE");
     assert.ok(
       oddsStage?.blockers.includes("ODDS_MISSING_ALL") ||
-        oddsStage?.warnings.includes("ODDS_MISSING_ALL"),
+        oddsStage?.warnings.includes("ODDS_MISSING_ALL") ||
+        late.warnings.some((w) => /ODDS/i.test(w)),
     );
-    assert.ok(
-      late.overall === "BLOCKED_ODDS_MISSING" ||
-        late.overall === "BLOCKED_AFTER_START" ||
-        late.overall === "BLOCKED_STARTER_INTEGRITY" ||
-        late.overall === "BLOCKED_INPUT_AUDIT",
-    );
+    // Continuity: odds incomplete no longer hard-blocks overall when stopping at INPUT_AUDIT
+    // (prediction may still run as LIMITED_INPUT). Must not look like full READY freeze.
     assert.notEqual(late.overall, "READY_FOR_PREGAME_RUN");
     assert.equal(late.writesPerformed, 0);
 

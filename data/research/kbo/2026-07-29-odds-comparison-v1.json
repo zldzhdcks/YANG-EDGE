@@ -1,0 +1,260 @@
+{
+  "meta": {
+    "datasetId": "kbo-odds-comparison",
+    "schemaVersion": "kbo-odds-comparison-v1",
+    "builderVersion": "kbo-odds-comparison-builder-v1",
+    "dateKst": "2026-07-29",
+    "generatedAt": "2026-07-29T10:11:11.629Z",
+    "researchOnly": true,
+    "legalStatus": "INTERNAL_RESEARCH_ONLY",
+    "engineAdmission": "PROHIBITED",
+    "inputHashSha256": "7a45701d97e5e874b65f802ccaf8b3680ee929e4b11de55c6b7a4535376e3ae3",
+    "resultHashSha256": "8983deb730efd30874f5813af25b073d22048bf67ed5c7ed8325aadcbec978bc",
+    "notes": [
+      "Domestic proto odds and overseas provider odds are shown as raw decimal values only.",
+      "No implied probability, margin removal, value edge, prediction, or betting recommendation.",
+      "MONEYLINE_2WAY only in v1."
+    ]
+  },
+  "cacheUsage": {
+    "rawHit": 0,
+    "rawMiss": 2,
+    "networkCalls": 2
+  },
+  "warnings": [],
+  "missing": [],
+  "summary": {
+    "identityGames": 5,
+    "domesticGames": 1,
+    "domesticMarkets": 1,
+    "domesticReviewStatus": "VERIFIED",
+    "overseasGamesFetched": 5,
+    "overseasGamesMatched": 4,
+    "overseasGamesUnmatched": 1,
+    "comparableGames": 1,
+    "marketRuleUnverified": 0,
+    "domesticOnlyGames": 0,
+    "overseasOnlyGames": 1,
+    "invalidOdds": 0
+  },
+  "rows": [
+    {
+      "gameId": "kbo-181907",
+      "dateKst": "2026-07-29",
+      "startTimeKst": "2026-07-29T18:30:00+09:00",
+      "homeTeam": "한화",
+      "awayTeam": "롯데",
+      "marketType": "MONEYLINE_2WAY",
+      "period": "FULL_GAME",
+      "line": null,
+      "domestic": {
+        "sourceType": "DOMESTIC_PROTO_OPERATOR_INPUT",
+        "sourceLabel": "KOREAN_PROTO",
+        "capturedAt": "2026-07-29T19:09:37+09:00",
+        "reviewStatus": "VERIFIED",
+        "operatorMarketId": "kbo-181907-domestic-moneyline",
+        "selections": [
+          {
+            "selectionCode": "HOME",
+            "selectionLabel": "홈 승",
+            "odds": 1.87
+          },
+          {
+            "selectionCode": "AWAY",
+            "selectionLabel": "원정 승",
+            "odds": 2.1
+          }
+        ]
+      },
+      "overseas": {
+        "provider": "OPERATOR_MANUAL",
+        "sportKey": null,
+        "capturedAt": "2026-07-29T19:09:37+09:00",
+        "bookmakerPolicy": "MANUAL_INPUT",
+        "marketKey": "manual_h2h",
+        "selections": [
+          {
+            "selectionCode": "HOME",
+            "selectionLabel": "홈 승",
+            "odds": 1.82
+          },
+          {
+            "selectionCode": "AWAY",
+            "selectionLabel": "원정 승",
+            "odds": 2.15
+          }
+        ],
+        "legalStatus": "OPERATOR_CONFIRMED"
+      },
+      "comparison": {
+        "status": "COMPARABLE",
+        "homeDifference": -0.05,
+        "awayDifference": 0.05,
+        "higherHomeSource": "DOMESTIC",
+        "higherAwaySource": "OVERSEAS"
+      },
+      "generatedAt": "2026-07-29T10:11:11.629Z",
+      "warnings": [],
+      "missing": []
+    },
+    {
+      "gameId": "kbo-181908",
+      "dateKst": "2026-07-29",
+      "startTimeKst": "2026-07-29T18:30:00+09:00",
+      "homeTeam": "LG",
+      "awayTeam": "키움",
+      "marketType": "MONEYLINE_2WAY",
+      "period": "FULL_GAME",
+      "line": null,
+      "domestic": null,
+      "overseas": null,
+      "comparison": {
+        "status": "DOMESTIC_MISSING",
+        "homeDifference": null,
+        "awayDifference": null,
+        "higherHomeSource": "NONE",
+        "higherAwaySource": "NONE"
+      },
+      "generatedAt": "2026-07-29T10:11:11.629Z",
+      "warnings": [],
+      "missing": [
+        "DOMESTIC_MONEYLINE_2WAY_MISSING"
+      ]
+    },
+    {
+      "gameId": "kbo-181909",
+      "dateKst": "2026-07-29",
+      "startTimeKst": "2026-07-29T18:30:00+09:00",
+      "homeTeam": "NC",
+      "awayTeam": "KT",
+      "marketType": "MONEYLINE_2WAY",
+      "period": "FULL_GAME",
+      "line": null,
+      "domestic": null,
+      "overseas": {
+        "provider": "THE_ODDS_API",
+        "sportKey": "baseball_kbo",
+        "capturedAt": "2026-07-29T10:11:11.629Z",
+        "bookmakerPolicy": "AGGREGATE_BEST",
+        "marketKey": "h2h",
+        "selections": [
+          {
+            "selectionCode": "HOME",
+            "selectionLabel": "홈",
+            "odds": 3.15,
+            "bookmaker": "MyBookie.ag"
+          },
+          {
+            "selectionCode": "AWAY",
+            "selectionLabel": "원정",
+            "odds": 1.37,
+            "bookmaker": "Pinnacle"
+          }
+        ],
+        "legalStatus": "NEEDS_LEGAL_REVIEW"
+      },
+      "comparison": {
+        "status": "DOMESTIC_MISSING",
+        "homeDifference": null,
+        "awayDifference": null,
+        "higherHomeSource": "NONE",
+        "higherAwaySource": "NONE"
+      },
+      "generatedAt": "2026-07-29T10:11:11.629Z",
+      "warnings": [],
+      "missing": [
+        "DOMESTIC_MONEYLINE_2WAY_MISSING"
+      ]
+    },
+    {
+      "gameId": "kbo-181910",
+      "dateKst": "2026-07-29",
+      "startTimeKst": "2026-07-29T18:30:00+09:00",
+      "homeTeam": "삼성",
+      "awayTeam": "KIA",
+      "marketType": "MONEYLINE_2WAY",
+      "period": "FULL_GAME",
+      "line": null,
+      "domestic": null,
+      "overseas": {
+        "provider": "THE_ODDS_API",
+        "sportKey": "baseball_kbo",
+        "capturedAt": "2026-07-29T10:11:11.629Z",
+        "bookmakerPolicy": "AGGREGATE_BEST",
+        "marketKey": "h2h",
+        "selections": [
+          {
+            "selectionCode": "HOME",
+            "selectionLabel": "홈",
+            "odds": 7,
+            "bookmaker": "Tipico"
+          },
+          {
+            "selectionCode": "AWAY",
+            "selectionLabel": "원정",
+            "odds": 1.16,
+            "bookmaker": "Pinnacle"
+          }
+        ],
+        "legalStatus": "NEEDS_LEGAL_REVIEW"
+      },
+      "comparison": {
+        "status": "DOMESTIC_MISSING",
+        "homeDifference": null,
+        "awayDifference": null,
+        "higherHomeSource": "NONE",
+        "higherAwaySource": "NONE"
+      },
+      "generatedAt": "2026-07-29T10:11:11.629Z",
+      "warnings": [],
+      "missing": [
+        "DOMESTIC_MONEYLINE_2WAY_MISSING"
+      ]
+    },
+    {
+      "gameId": "kbo-181911",
+      "dateKst": "2026-07-29",
+      "startTimeKst": "2026-07-29T18:30:00+09:00",
+      "homeTeam": "SSG",
+      "awayTeam": "두산",
+      "marketType": "MONEYLINE_2WAY",
+      "period": "FULL_GAME",
+      "line": null,
+      "domestic": null,
+      "overseas": {
+        "provider": "THE_ODDS_API",
+        "sportKey": "baseball_kbo",
+        "capturedAt": "2026-07-29T10:11:11.629Z",
+        "bookmakerPolicy": "AGGREGATE_BEST",
+        "marketKey": "h2h",
+        "selections": [
+          {
+            "selectionCode": "HOME",
+            "selectionLabel": "홈",
+            "odds": 2.75,
+            "bookmaker": "MyBookie.ag"
+          },
+          {
+            "selectionCode": "AWAY",
+            "selectionLabel": "원정",
+            "odds": 1.52,
+            "bookmaker": "Nordic Bet"
+          }
+        ],
+        "legalStatus": "NEEDS_LEGAL_REVIEW"
+      },
+      "comparison": {
+        "status": "DOMESTIC_MISSING",
+        "homeDifference": null,
+        "awayDifference": null,
+        "higherHomeSource": "NONE",
+        "higherAwaySource": "NONE"
+      },
+      "generatedAt": "2026-07-29T10:11:11.629Z",
+      "warnings": [],
+      "missing": [
+        "DOMESTIC_MONEYLINE_2WAY_MISSING"
+      ]
+    }
+  ]
+}

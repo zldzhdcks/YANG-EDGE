@@ -1,0 +1,79 @@
+{
+  "dateKst": "2026-07-29",
+  "round": "",
+  "capturedAt": "2026-07-29T19:09:37+09:00",
+  "enteredAt": "2026-07-29T19:09:37+09:00",
+  "enteredBy": "operator",
+  "sourceLabel": "OPERATOR_INPUT_BRIDGE_TEST",
+  "inputMethod": "MANUAL",
+  "reviewStatus": "VERIFIED",
+  "games": [
+    {
+      "operatorGameId": "KBO-20260729-한화-롯데",
+      "internalGameId": "kbo-181907",
+      "providerGameId": "181907",
+      "homeTeamText": "한화",
+      "awayTeamText": "롯데",
+      "canonicalHomeTeamId": "kbo-한화",
+      "canonicalAwayTeamId": "kbo-롯데",
+      "startTimeKst": "2026-07-29T18:30:00+09:00",
+      "mappingStatus": "MATCHED",
+      "reviewStatus": "VERIFIED",
+      "blockingReasons": [],
+      "markets": [
+        {
+          "operatorMarketId": "kbo-181907-domestic-moneyline",
+          "marketType": "MONEYLINE_2WAY",
+          "period": "FULL_GAME",
+          "line": null,
+          "displayLabel": "승패",
+          "reviewStatus": "VERIFIED",
+          "selections": [
+            {
+              "selectionCode": "HOME",
+              "selectionLabel": "홈 승",
+              "odds": 1.87,
+              "reviewStatus": "VERIFIED"
+            },
+            {
+              "selectionCode": "AWAY",
+              "selectionLabel": "원정 승",
+              "odds": 2.1,
+              "reviewStatus": "VERIFIED"
+            }
+          ],
+          "notes": "manual bridge verification"
+        },
+        {
+          "operatorMarketId": "kbo-181907-overseas-moneyline",
+          "marketType": "OTHER",
+          "period": "FULL_GAME",
+          "line": null,
+          "displayLabel": "해외 승패",
+          "reviewStatus": "VERIFIED",
+          "selections": [
+            {
+              "selectionCode": "HOME",
+              "selectionLabel": "홈 승",
+              "odds": 1.82,
+              "reviewStatus": "VERIFIED"
+            },
+            {
+              "selectionCode": "AWAY",
+              "selectionLabel": "원정 승",
+              "odds": 2.15,
+              "reviewStatus": "VERIFIED"
+            }
+          ],
+          "notes": "MANUAL_OVERSEAS_INPUT"
+        }
+      ],
+      "notes": "manual bridge verification"
+    }
+  ],
+  "metadata": {
+    "sourceType": "SCREENSHOT_TRANSCRIPTION",
+    "screenshotCount": null,
+    "notes": "Saved from internal research operator input bridge."
+  }
+}

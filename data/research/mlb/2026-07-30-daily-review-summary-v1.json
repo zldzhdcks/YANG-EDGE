@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "mlb-daily-review-summary-v1",
+  "dateKst": "2026-07-30",
+  "artifacts": {
+    "prediction": "data/predictions/mlb/2026-07-30.json",
+    "result": "data/research/mlb/2026-07-30-official-results-v1.json",
+    "graded": "data/research/mlb/2026-07-30-graded-predictions-v1.json",
+    "successReview": "data/research/mlb/2026-07-30-success-review-v1.json",
+    "failureReview": "data/research/mlb/2026-07-30-failure-review-v1.json"
+  },
+  "hashes": {
+    "predictionHash": "539e1792c8dccb1fff4531a5d01c1fee41f81ff75892d04ecc22db5ad8e0f5ba",
+    "resultHash": "15ca6274dbef3c87fad46f21b7daff0629850202512992087b8018f0797e0e53",
+    "gradedHash": "0dd17ae2d3875b813e988de602983805f0333f0fa482d0ef32c33f35e8915d32",
+    "inputHash": "a913c527715df37902226bba1e349cf1a162beb57afe011987e87aa76efa4e47",
+    "successReviewHash": "f078cedf479c34e9069c4689c54f30a99ab398fb3fbd9e6ed78ce56253b8f619",
+    "failureReviewHash": "371d74f0998ce686616698ff5c7be61da47bd090de9207af49756ba497735587"
+  },
+  "gradeCounts": {
+    "totalGames": 16,
+    "eligiblePredictions": 3,
+    "limitedInputPredictions": 0,
+    "blocked": 13,
+    "noPick": 0,
+    "graded": 0,
+    "correct": 0,
+    "incorrect": 0,
+    "pending": 3,
+    "void": 0,
+    "matchErrors": 0,
+    "accuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "NO_GRADED_SAMPLE",
+      "exclusionPolicy": "correct / (correct + incorrect); excludes PENDING, VOID, BLOCKED, NO_PICK, MATCH_ERROR"
+    },
+    "eligibleAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "NO_GRADED_SAMPLE"
+    },
+    "limitedInputAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "NO_GRADED_SAMPLE"
+    }
+  },
+  "leakageAudit": {
+    "status": "WARN",
+    "checks": [
+      {
+        "id": "prediction_hash",
+        "status": "PASS",
+        "detail": "prediction immutable-field fingerprint hash verified"
+      },
+      {
+        "id": "predicted_after_slate_cutoff",
+        "status": "WARN",
+        "detail": "predictedAt (2026-07-30T09:39:20.297Z) is after slate cutoffTime (2026-07-30T02:10:00Z); per-game ELIGIBLE inputs validated separately"
+      },
+      {
+        "id": "input_manifest_warnings",
+        "status": "WARN",
+        "detail": "input manifest contains post-game or blocked warnings"
+      }
+    ],
+    "predictionHashVerified": true,
+    "inputHash": "a913c527715df37902226bba1e349cf1a162beb57afe011987e87aa76efa4e47"
+  },
+  "reviewStatus": "AWAITING_RESULTS",
+  "successPatterns": [],
+  "failurePatterns": [],
+  "dataQualityWarnings": [
+    "LINEUP_AFTER_CUTOFF",
+    "ODDS_AFTER_CUTOFF",
+    "MARKET_NOT_AVAILABLE",
+    "STARTER_IDENTITY_PARTIAL"
+  ],
+  "generatedAt": "2026-07-30T10:15:00.823Z",
+  "reviewHash": "15eedef834a5a6d619fb4d1205586c6d8d5cafcb4a1a4bfc2e76ee2f95784267",
+  "assistantSummary": "MLB Daily Review — 2026-07-30\nEligible predictions: 3\nGraded: 0\nCorrect: 0\nIncorrect: 0\nAccuracy: N/A (no graded sample)\nBlocked games: 13\nPrimary failure candidates: none identified\nConclusion: DATA_ACCUMULATION_CONTINUES"
+}

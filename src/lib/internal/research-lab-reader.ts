@@ -4,6 +4,11 @@ import { stat } from "node:fs/promises";
 import path from "node:path";
 import { loadMlbDailyResearchSummary } from "@/lib/mlb/load-mlb-daily-research-summary";
 import type { MlbDailyResearchSummaryLoad } from "@/lib/mlb/mlb-daily-research-summary-types";
+import {
+  loadKboResearchLabOpsState,
+  formatOpsStatusLabel,
+  type KboResearchLabOpsState,
+} from "@/lib/internal/load-kbo-research-lab-ops-state";
 
 // ---------------------------------------------------------------------------
 // Safe JSON reader
@@ -59,7 +64,10 @@ export type PipelineStatus =
   | "WARNING"
   | "PENDING"
   | "NOT_AVAILABLE"
-  | "FILE_NOT_FOUND";
+  | "FILE_NOT_FOUND"
+  | "NOT_CREATED"
+  | "NOT_READY"
+  | "NOT_ENTERED";
 
 export type Severity = "CRITICAL" | "HIGH" | "NORMAL" | "LOW";
 
@@ -149,31 +157,59 @@ export type ResearchLabData = {
   };
   kboReadiness: {
     scheduleGames: number | null;
+    scheduleActiveGames: number | null;
+    scheduleCancelledGames: number | null;
+    scheduleStatus: string;
     domesticOddsGames: number | null;
     domesticOddsTotal: number | null;
+    domesticOddsStatus: string;
     overseasOddsGames: number | null;
     overseasOddsTotal: number | null;
+    overseasOddsStatus: string;
     starterGames: number | null;
     starterTotal: number | null;
-    lineupStatus: KboArtifactStatus;
-    bullpenStatus: KboArtifactStatus;
-    predictionStatus: KboArtifactStatus;
+    starterStatus: string;
+    lineupGames: number | null;
+    lineupTotal: number | null;
+    lineupStatus: KboArtifactStatus | string;
+    bullpenStatus: KboArtifactStatus | string;
+    predictionStatus: KboArtifactStatus | string;
+    reviewStatus: string;
+    t45Status: string;
     oddsArtifactUpdatedAt: string | null;
     scheduleArtifactUpdatedAt: string | null;
     starterArtifactUpdatedAt: string | null;
-    overallStatus: "READY" | "PARTIAL" | "BLOCKED" | "UNKNOWN";
+    overallStatus: string;
     predictionLock: { locked: boolean; reasons: string[] };
     bettingLinePipeline: KboPipelineStageStatus[];
     bugBoardItems: KboBugBoardItem[];
+    summaryLines: string[];
+    waitingStates: { code: string; message: string }[];
+    readyStates: { code: string; message: string }[];
+    assistantBrief: string;
   };
+  /** Full KBO ops-state (schedule-v1 / personnel-input aware). */
+  kboOps: KboResearchLabOpsState;
   /** MLB Daily Builder summary — source of truth for Lab Ready UI. */
   mlbDailyResearchSummary: MlbDailyResearchSummaryLoad;
   commands: { label: string; command: string | null }[];
-  sourceArtifacts: { name: string; path: string; status: string }[];
+  sourceArtifacts: { name: string; path: string; status: string; displayStatus?: string }[];
   errors: string[];
+  /** Non-blocking workflow waits (not shown as red Load Errors). */
+  waitingStates: { code: string; message: string; league: "MLB" | "KBO" }[];
 };
 
-export type KboArtifactStatus = "READY" | "PARTIAL" | "MISSING" | "NOT_AVAILABLE" | "UNKNOWN";
+export type KboArtifactStatus =
+  | "READY"
+  | "PARTIAL"
+  | "MISSING"
+  | "NOT_AVAILABLE"
+  | "UNKNOWN"
+  | "NOT_ENTERED"
+  | "NOT_CREATED"
+  | "NOT_READY"
+  | "NOT_APPLICABLE"
+  | "READY_ADMIN_VERIFIED";
 
 export type KboPipelineStageStatus = {
   stage: string;
@@ -222,9 +258,28 @@ export async function loadResearchLabData(
   const weather = await readJsonFile<Record<string, unknown>>(weatherPath);
   const travel = await readJsonFile<Record<string, unknown>>(travelPath);
 
-  if (!pred.ok) errors.push(`Prediction: ${pred.error}`);
-  if (!review.ok) errors.push(`Review: ${review.error}`);
-  if (!starter.ok) errors.push(`Starter: ${starter.error}`);
+  const waitingStates: ResearchLabData["waitingStates"] = [];
+
+  function classifyMlbRead(
+    label: string,
+    r: ReadResult<unknown>,
+    waitingCode: string,
+  ) {
+    if (r.ok) return;
+    if (r.error === "FILE_NOT_FOUND") {
+      waitingStates.push({
+        code: waitingCode,
+        message: `${label}: ${formatOpsStatusLabel("FILE_NOT_FOUND")}`,
+        league: "MLB",
+      });
+      return;
+    }
+    errors.push(`${label}: ${r.error}`);
+  }
+
+  classifyMlbRead("Prediction", pred, "PREDICTION_NOT_CREATED");
+  classifyMlbRead("Review", review, "REVIEW_NOT_READY");
+  classifyMlbRead("Starter", starter, "STARTER_ARTIFACT_NOT_CREATED");
 
   // ---- Parse prediction snapshot ----
   type Pred = Record<string, unknown>;
@@ -295,8 +350,11 @@ export async function loadResearchLabData(
   }
 
   // ---- Pipeline cards ----
-  function fileStatus(r: ReadResult<unknown>): PipelineStatus {
-    if (!r.ok) return r.error === "FILE_NOT_FOUND" ? "FILE_NOT_FOUND" : "WARNING";
+  function fileStatus(r: ReadResult<unknown>, waitingStatus: PipelineStatus): PipelineStatus {
+    if (!r.ok) {
+      if (r.error === "FILE_NOT_FOUND") return waitingStatus;
+      return "WARNING";
+    }
     return "COMPLETE";
   }
   function makeCard(
@@ -305,25 +363,43 @@ export async function loadResearchLabData(
     completed: number | null,
     total: number | null,
     msg?: string,
+    waitingStatus: PipelineStatus = "NOT_CREATED",
   ): PipelineCard {
-    let s = fileStatus(r);
+    let s = fileStatus(r, waitingStatus);
     if (s === "COMPLETE" && completed != null && total != null && completed < total) {
       s = "PARTIAL";
     }
+    const waitingMsg =
+      !r.ok && r.error === "FILE_NOT_FOUND"
+        ? formatOpsStatusLabel(
+            waitingStatus === "NOT_READY"
+              ? "NOT_READY"
+              : waitingStatus === "NOT_ENTERED"
+                ? "NOT_ENTERED"
+                : "FILE_NOT_FOUND",
+          )
+        : null;
     return {
       pipelineName: name,
       status: s,
       completedCount: completed,
       totalCount: total,
-      message: !r.ok ? r.error : msg ?? "OK",
+      message: !r.ok ? waitingMsg ?? r.error : msg ?? "OK",
       sourceArtifact: r.path ? path.relative(cwd, r.path) : null,
       updatedAt: r.ok ? r.updatedAt : null,
     };
   }
 
   const pipelines: PipelineCard[] = [
-    makeCard("Schedule", baseline, null, null, str(predMeta.note) ?? ""),
-    makeCard("Starter", starter, num(starterSummary.probableRows), num(starterSummary.totalRows)),
+    makeCard("Schedule", baseline, null, null, str(predMeta.note) ?? "", "NOT_CREATED"),
+    makeCard(
+      "Starter",
+      starter,
+      num(starterSummary.probableRows),
+      num(starterSummary.totalRows),
+      undefined,
+      "NOT_ENTERED",
+    ),
     makeCard(
       "Bullpen",
       bullpen,
@@ -333,10 +409,31 @@ export async function loadResearchLabData(
     makeCard("Odds", odds, null, null),
     makeCard("Weather", weather, null, null),
     makeCard("Travel", travel, null, null),
-    makeCard("Prediction", pred, num(predSummary.total), num(predSummary.total)),
-    makeCard("Result", pred, gradedCount, totalGames, `graded=${gradedCount} pending=${pendingResultCount}`),
-    makeCard("Grade", review, num(reviewSummary.graded), num(reviewSummary.total)),
-    makeCard("Review", review, 0, num(reviewSummary.total), "All PENDING_REVIEW"),
+    makeCard(
+      "Prediction",
+      pred,
+      num(predSummary.total),
+      num(predSummary.total),
+      undefined,
+      "NOT_CREATED",
+    ),
+    makeCard(
+      "Result",
+      pred,
+      gradedCount,
+      totalGames,
+      `graded=${gradedCount} pending=${pendingResultCount}`,
+      "NOT_CREATED",
+    ),
+    makeCard(
+      "Grade",
+      review,
+      num(reviewSummary.graded),
+      num(reviewSummary.total),
+      undefined,
+      "NOT_READY",
+    ),
+    makeCard("Review", review, 0, num(reviewSummary.total), "All PENDING_REVIEW", "NOT_READY"),
   ];
 
   if (pendingResultCount > 0) {
@@ -508,232 +605,163 @@ export async function loadResearchLabData(
     }
   }
 
-  // ---- KBO Readiness ----
-  const kboOddsPath = path.join(cwd, "data", "research", "kbo", `${dateKst}-odds-comparison-v1.json`);
-  const kboDomesticProtoPath = path.join(
-    cwd,
-    "data",
-    "research",
-    "kbo",
-    `${dateKst}-domestic-proto-snapshot-v1.json`,
-  );
-  const kboOddsHistoryPath = path.join(
-    cwd,
-    "data",
-    "research",
-    "kbo",
-    `${dateKst}-odds-history-dataset-v1.json`,
-  );
-  const kboSchedulePath = path.join(cwd, "data", "research", "kbo", `${dateKst}-schedule-result-identity-v1-api-baseball.json`);
-  const kboStarterPath = path.join(cwd, "data", "operator-input", "kbo", `${dateKst}-starter-confirmation-v1.json`);
-  const kboLineupPath = path.join(cwd, "data", "operator-input", "kbo", `${dateKst}-lineup-confirmation-v1.json`);
+  // ---- KBO Ops State (schedule-v1 + personnel-input aware) ----
+  const kboOps = await loadKboResearchLabOpsState(dateKst, cwd);
 
-  const kboOdds = await readJsonFile<Record<string, unknown>>(kboOddsPath);
-  const kboDomesticProto = await readJsonFile<Record<string, unknown>>(kboDomesticProtoPath);
-  const kboOddsHistory = await readJsonFile<Record<string, unknown>>(kboOddsHistoryPath);
-  const kboSchedule = await readJsonFile<Record<string, unknown>>(kboSchedulePath);
-  const kboStarter = await readJsonFile<Record<string, unknown>>(kboStarterPath);
-  const kboLineup = await readJsonFile<Record<string, unknown>>(kboLineupPath);
-
-  const kboOddsSummary = kboOdds.ok ? rec((kboOdds.data as Record<string, unknown>).summary) ?? {} : {};
-  const kboScheduleSummary = kboSchedule.ok ? rec((kboSchedule.data as Record<string, unknown>).summary) ?? {} : {};
-  const kboStarterGames = kboStarter.ok ? arr((kboStarter.data as Record<string, unknown>).games) : [];
-  const kboLineupGames = kboLineup.ok ? arr((kboLineup.data as Record<string, unknown>).games) : [];
-
-  const kboScheduleGames = num(kboScheduleSummary.datasetGamesCreated);
-  const protoGames = kboDomesticProto.ok
-    ? arr((kboDomesticProto.data as Record<string, unknown>).games)
-    : [];
-  const histGames = kboOddsHistory.ok
-    ? arr((kboOddsHistory.data as Record<string, unknown>).games)
-    : [];
-  const domesticFromProto = protoGames.filter((raw) => {
-    const g = rec(raw);
-    const status = g ? str(g.status) : null;
-    return (
-      status === "MANUAL_COLLECTED" ||
-      status === "ADMIN_VERIFIED" ||
-      status === "COLLECTED"
-    );
-  }).length;
-  const overseasFromHistory = histGames.filter((raw) => {
-    const g = rec(raw);
-    return g && str(g.status) === "COLLECTED";
-  }).length;
-  const kboDomesticGames =
-    domesticFromProto > 0
-      ? domesticFromProto
-      : num(kboOddsSummary.domesticGames);
-  const kboDomesticTotal =
-    kboScheduleGames ??
-    (domesticFromProto > 0 ? domesticFromProto : num(kboOddsSummary.identityGames));
-  const kboOverseasGames =
-    overseasFromHistory > 0
-      ? overseasFromHistory
-      : num(kboOddsSummary.overseasGamesMatched);
-  const kboOverseasTotal =
-    kboScheduleGames ??
-    (overseasFromHistory > 0
-      ? overseasFromHistory
-      : num(kboOddsSummary.identityGames));
-  const kboStarterCount = kboStarterGames.length > 0 ? kboStarterGames.length : null;
-  const kboStarterTotal = kboScheduleGames;
-  const lineupReviewStatus = kboLineup.ok ? str((kboLineup.data as Record<string, unknown>).reviewStatus) : null;
-  const kboOddsArtifactReady =
-    kboOdds.ok || kboDomesticProto.ok || kboOddsHistory.ok;
-  const kboOddsArtifactUpdatedAt = kboDomesticProto.ok
-    ? kboDomesticProto.updatedAt
-    : kboOddsHistory.ok
-      ? kboOddsHistory.updatedAt
-      : kboOdds.ok
-        ? kboOdds.updatedAt
-        : null;
-
-  function kboArtifactStatus(result: ReadResult<unknown>): KboArtifactStatus {
-    if (!result.ok) return result.error === "FILE_NOT_FOUND" ? "MISSING" : "UNKNOWN";
-    return "READY";
+  for (const e of kboOps.hardErrors) {
+    errors.push(`KBO ${e.code}: ${e.message}`);
   }
-
-  const kboPipelineStages: KboPipelineStageStatus[] = [];
-  // OCR stage — we can't check directly, infer from domestic odds presence
-  kboPipelineStages.push({
-    stage: "OCR",
-    status: kboDomesticGames != null && kboDomesticGames > 0 ? "PASS" : "WARN",
-    detail: kboDomesticGames != null ? `${kboDomesticGames}경기` : "확인 불가",
-  });
-  kboPipelineStages.push({
-    stage: "Parser",
-    status: kboDomesticGames != null && kboDomesticGames > 0 ? "PASS" : "WARN",
-    detail: kboDomesticGames != null ? `${kboDomesticGames}경기 파싱` : "확인 불가",
-  });
-  kboPipelineStages.push({
-    stage: "Artifact",
-    status: kboOddsArtifactReady ? "PASS" : "FAIL",
-    detail: kboOddsArtifactReady
-      ? kboDomesticProto.ok
-        ? "domestic-proto / odds-history"
-        : "파일 존재"
-      : "FILE_NOT_FOUND",
-  });
-  kboPipelineStages.push({
-    stage: "Reader",
-    status: kboOddsArtifactReady ? "PASS" : "FAIL",
-    detail: kboOddsArtifactReady ? "로드 성공" : "로드 실패",
-  });
-  kboPipelineStages.push({
-    stage: "Presenter",
-    status: kboOddsArtifactReady ? "PASS" : "FAIL",
-    detail: kboOddsArtifactReady ? "데이터 전달 가능" : "데이터 없음",
-  });
-  kboPipelineStages.push({
-    stage: "UI",
-    status: kboOddsArtifactReady ? "PASS" : "FAIL",
-    detail: kboOddsArtifactReady ? "표시 가능" : "표시 불가",
-  });
-
-  // Bug board
-  const bugBoard: KboBugBoardItem[] = [];
-  if (
-    !kboOddsArtifactReady ||
-    (kboDomesticGames != null &&
-      kboDomesticTotal != null &&
-      kboDomesticGames < kboDomesticTotal)
-  ) {
-    bugBoard.push({
-      id: "domestic-odds-missing",
-      label: "Domestic Odds Missing",
-      severity: !kboOddsArtifactReady ? "RED" : "YELLOW",
-      resolved: false,
+  for (const w of kboOps.waitingStates) {
+    waitingStates.push({
+      code: w.code,
+      message: w.message,
+      league: "KBO",
     });
-  } else if (kboDomesticGames != null && kboDomesticGames > 0) {
-    bugBoard.push({ id: "domestic-odds-missing", label: "Domestic Odds", severity: "GREEN", resolved: true });
   }
 
-  const hasPostponed = postponedCount > 0;
-  bugBoard.push({
-    id: "doubleheader-lifecycle",
-    label: "Doubleheader Lifecycle",
-    severity: hasPostponed ? "YELLOW" : "GREEN",
-    resolved: !hasPostponed,
-  });
-
-  bugBoard.push({
-    id: "mlb-review",
-    label: "MLB Review",
-    severity: "GREEN",
-    resolved: true,
-  });
-
-  bugBoard.push({
-    id: "starter-pipeline",
-    label: "Starter Pipeline",
-    severity: (missingStarters != null && missingStarters > 0) ? "YELLOW" : "GREEN",
-    resolved: !(missingStarters != null && missingStarters > 0),
-  });
-
-  // Prediction lock
-  const lockReasons: string[] = [];
-  if (!kboOddsArtifactReady || kboDomesticGames === 0) lockReasons.push("Domestic Odds Missing");
-  if (!kboStarter.ok || kboStarterCount === 0) lockReasons.push("Starter Missing");
-  if (!kboSchedule.ok || kboScheduleGames === 0) lockReasons.push("Game Identity Missing");
-  if (errors.length > 0) lockReasons.push("Reader Error");
-
-  // Overall readiness
-  type KboOverall = "READY" | "PARTIAL" | "BLOCKED" | "UNKNOWN";
-  let kboOverall: KboOverall = "UNKNOWN";
-  if (kboSchedule.ok && kboOddsArtifactReady && kboStarter.ok) {
-    const domesticOk = kboDomesticGames != null && kboDomesticTotal != null && kboDomesticGames >= kboDomesticTotal;
-    const overseasOk = kboOverseasGames != null && kboOverseasTotal != null && kboOverseasGames >= kboOverseasTotal;
-    const starterOk = kboStarterCount != null && kboStarterTotal != null && kboStarterCount >= kboStarterTotal;
-    if (domesticOk && overseasOk && starterOk) kboOverall = "READY";
-    else kboOverall = "PARTIAL";
-  } else if (kboSchedule.ok) {
-    kboOverall = "PARTIAL";
-  } else {
-    kboOverall = "BLOCKED";
+  // Merge KBO open (TODO) tasks into today tasks
+  for (const t of kboOps.tasks) {
+    if (t.category !== "TODO") continue;
+    tasks.push({
+      taskId: t.taskId,
+      title: t.title,
+      description: t.description,
+      priority: t.priority,
+      status: "OPEN",
+      source: t.source,
+      recommendedCommand: t.recommendedCommand,
+      generatedAt: t.generatedAt,
+    });
   }
-  if (lockReasons.length > 0 && kboOverall === "READY") kboOverall = "PARTIAL";
 
-  const kboLineupStatus: KboArtifactStatus =
-    !kboLineup.ok
-      ? kboLineup.error === "FILE_NOT_FOUND"
-        ? "MISSING"
-        : "UNKNOWN"
-      : lineupReviewStatus === "CONFIRMED"
-        ? "READY"
-        : lineupReviewStatus === "PARTIAL"
-          ? "PARTIAL"
-          : "MISSING";
+  const kboPipelineStages: KboPipelineStageStatus[] = [
+    {
+      stage: "Schedule",
+      status: kboOps.schedule.status === "READY" ? "PASS" : "FAIL",
+      detail: `${kboOps.schedule.totalGames}경기 · active ${kboOps.schedule.activeGames} · cancelled ${kboOps.schedule.cancelledGames}`,
+    },
+    {
+      stage: "Domestic Proto",
+      status:
+        kboOps.domesticProto.status === "READY" ||
+        kboOps.domesticProto.status === "READY_ADMIN_VERIFIED"
+          ? "PASS"
+          : kboOps.domesticProto.status === "PARTIAL"
+            ? "WARN"
+            : "FAIL",
+      detail: `${kboOps.domesticProto.entered}/${kboOps.domesticProto.required} · ${kboOps.domesticProto.source}`,
+    },
+    {
+      stage: "Starter",
+      status:
+        kboOps.starter.status === "READY" ||
+        kboOps.starter.status === "READY_ADMIN_VERIFIED"
+          ? "PASS"
+          : kboOps.starter.status === "NOT_ENTERED"
+            ? "WARN"
+            : "WARN",
+      detail: `${kboOps.starter.entered}/${kboOps.starter.required} · ${kboOps.starter.reason}`,
+    },
+    {
+      stage: "Lineup",
+      status:
+        kboOps.lineup.status === "READY"
+          ? "PASS"
+          : kboOps.lineup.status === "NOT_ENTERED"
+            ? "WARN"
+            : "WARN",
+      detail: `${kboOps.lineup.entered}/${kboOps.lineup.required} · ${kboOps.lineup.reason}`,
+    },
+    {
+      stage: "Prediction",
+      status: kboOps.prediction.status === "READY" ? "PASS" : "WARN",
+      detail: kboOps.prediction.reason,
+    },
+  ];
 
-  const kboReadiness = {
-    scheduleGames: kboScheduleGames,
-    domesticOddsGames: kboDomesticGames,
-    domesticOddsTotal: kboDomesticTotal,
-    overseasOddsGames: kboOverseasGames,
-    overseasOddsTotal: kboOverseasTotal,
-    starterGames: kboStarterCount,
-    starterTotal: kboStarterTotal,
-    lineupStatus: kboLineupStatus,
-    bullpenStatus: "UNKNOWN" as KboArtifactStatus,
-    predictionStatus: "UNKNOWN" as KboArtifactStatus,
-    oddsArtifactUpdatedAt: kboOddsArtifactUpdatedAt,
-    scheduleArtifactUpdatedAt: kboSchedule.ok ? kboSchedule.updatedAt : null,
-    starterArtifactUpdatedAt: kboStarter.ok ? kboStarter.updatedAt : null,
-    overallStatus: kboOverall,
-    predictionLock: { locked: lockReasons.length > 0, reasons: lockReasons },
+  const bugBoard: KboBugBoardItem[] = [
+    {
+      id: "kbo-schedule",
+      label: "KBO Schedule",
+      severity: kboOps.schedule.status === "READY" ? "GREEN" : "RED",
+      resolved: kboOps.schedule.status === "READY",
+    },
+    {
+      id: "domestic-odds",
+      label: "Domestic Proto",
+      severity:
+        kboOps.domesticProto.status === "READY" ||
+        kboOps.domesticProto.status === "READY_ADMIN_VERIFIED"
+          ? "GREEN"
+          : kboOps.domesticProto.status === "PARTIAL"
+            ? "YELLOW"
+            : "RED",
+      resolved:
+        kboOps.domesticProto.status === "READY" ||
+        kboOps.domesticProto.status === "READY_ADMIN_VERIFIED",
+    },
+    {
+      id: "kbo-starter",
+      label: "Starter Intake",
+      severity:
+        kboOps.starter.status === "READY" ||
+        kboOps.starter.status === "READY_ADMIN_VERIFIED"
+          ? "GREEN"
+          : "YELLOW",
+      resolved:
+        kboOps.starter.status === "READY" ||
+        kboOps.starter.status === "READY_ADMIN_VERIFIED",
+    },
+    {
+      id: "kbo-lineup",
+      label: "Lineup Intake",
+      severity: kboOps.lineup.status === "READY" ? "GREEN" : "YELLOW",
+      resolved: kboOps.lineup.status === "READY",
+    },
+    {
+      id: "kbo-cancelled",
+      label: `Cancelled NOT_APPLICABLE (${kboOps.schedule.cancelledGames})`,
+      severity: "GREEN",
+      resolved: true,
+    },
+  ];
+
+  const kboReadiness: ResearchLabData["kboReadiness"] = {
+    scheduleGames: kboOps.schedule.totalGames,
+    scheduleActiveGames: kboOps.schedule.activeGames,
+    scheduleCancelledGames: kboOps.schedule.cancelledGames,
+    scheduleStatus: kboOps.schedule.status,
+    domesticOddsGames: kboOps.domesticProto.entered,
+    domesticOddsTotal: kboOps.domesticProto.required,
+    domesticOddsStatus: kboOps.domesticProto.status,
+    overseasOddsGames: kboOps.overseasOdds.entered,
+    overseasOddsTotal: kboOps.overseasOdds.required,
+    overseasOddsStatus: kboOps.overseasOdds.status,
+    starterGames: kboOps.starter.entered,
+    starterTotal: kboOps.starter.required,
+    starterStatus: kboOps.starter.status,
+    lineupGames: kboOps.lineup.entered,
+    lineupTotal: kboOps.lineup.required,
+    lineupStatus: kboOps.lineup.status,
+    bullpenStatus: kboOps.bullpen.status,
+    predictionStatus: kboOps.prediction.status,
+    reviewStatus: kboOps.review.status,
+    t45Status: kboOps.t45.status,
+    oddsArtifactUpdatedAt: null,
+    scheduleArtifactUpdatedAt: null,
+    starterArtifactUpdatedAt: null,
+    overallStatus: kboOps.overallStatus,
+    predictionLock: {
+      locked: kboOps.lockReasons.length > 0,
+      reasons: kboOps.lockReasons,
+    },
     bettingLinePipeline: kboPipelineStages,
     bugBoardItems: bugBoard,
+    summaryLines: kboOps.summaryLines,
+    waitingStates: kboOps.waitingStates,
+    readyStates: kboOps.readyStates,
+    assistantBrief: kboOps.assistantBrief,
   };
-
-  // Add KBO source artifacts
-  const kboArtifactList = [
-    { name: "KBO Domestic Proto", result: kboDomesticProto },
-    { name: "KBO Odds History", result: kboOddsHistory },
-    { name: "KBO Odds Comparison", result: kboOdds },
-    { name: "KBO Schedule Identity", result: kboSchedule },
-    { name: "KBO Starter Confirmation", result: kboStarter },
-    { name: "KBO Lineup Confirmation", result: kboLineup },
-  ];
 
   // ---- MLB Daily Research Summary (Lab SoT — no dataset recalculation) ----
   const mlbDailyResearchSummary = await loadMlbDailyResearchSummary(dateKst);
@@ -762,13 +790,29 @@ export async function loadResearchLabData(
     { name: "Travel/Rest", result: travel },
     { name: "Baseline Analysis", result: baseline },
     { name: "Betting Line Filter", result: bettingFilter },
-    ...kboArtifactList,
   ];
-  const sourceArtifacts = artifactList.map((a) => ({
+  const sourceArtifacts: ResearchLabData["sourceArtifacts"] = artifactList.map((a) => ({
     name: a.name,
-    path: path.relative(cwd, a.result.path),
-    status: a.result.ok ? "OK" : a.result.error,
+    path: path.relative(cwd, a.result.path).replace(/\\/g, "/"),
+    status: a.result.ok
+      ? "OK"
+      : a.result.error === "FILE_NOT_FOUND"
+        ? "NOT_CREATED"
+        : a.result.error,
+    displayStatus: a.result.ok
+      ? "사용 가능"
+      : a.result.error === "FILE_NOT_FOUND"
+        ? formatOpsStatusLabel("FILE_NOT_FOUND")
+        : a.result.error,
   }));
+  for (const a of kboOps.sourceArtifacts) {
+    sourceArtifacts.push({
+      name: a.name,
+      path: a.path,
+      status: a.status,
+      displayStatus: a.displayStatus,
+    });
+  }
   sourceArtifacts.unshift({
     name: "MLB Daily Research Summary",
     path: `data/research/mlb/${dateKst}-daily-research-summary-v1.json`,
@@ -777,10 +821,14 @@ export async function loadResearchLabData(
       mlbDailyResearchSummary.kind === "pipeline_failed"
         ? "OK"
         : mlbDailyResearchSummary.kind === "missing"
-          ? "FILE_NOT_FOUND"
+          ? "NOT_CREATED"
           : mlbDailyResearchSummary.kind === "unsupported"
             ? "UNSUPPORTED_VERSION"
             : "INVALID",
+    displayStatus:
+      mlbDailyResearchSummary.kind === "missing"
+        ? formatOpsStatusLabel("FILE_NOT_FOUND")
+        : undefined,
   });
 
   return {
@@ -809,7 +857,7 @@ export async function loadResearchLabData(
     starterHealth: {
       status: !starter.ok
         ? starter.error === "FILE_NOT_FOUND"
-          ? "FILE_NOT_FOUND"
+          ? "NOT_CREATED"
           : "WARNING"
         : missingStarters != null && missingStarters > 0
           ? "PARTIAL"
@@ -824,6 +872,7 @@ export async function loadResearchLabData(
       warningCodes: starterWarnings,
     },
     kboReadiness,
+    kboOps,
     mlbDailyResearchSummary,
     tasks,
     missedItems,
@@ -838,5 +887,6 @@ export async function loadResearchLabData(
     commands,
     sourceArtifacts,
     errors,
+    waitingStates,
   };
 }

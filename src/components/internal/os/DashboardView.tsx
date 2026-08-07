@@ -45,6 +45,172 @@ export default function DashboardView({
         </div>
       </section>
 
+      {os.mlbDailyOps ? (
+        <section
+          className={`rounded-xl border px-5 py-4 ${
+            os.mlbDailyOps.lifecycle === "NO_PREGAME_SNAPSHOT" ||
+            os.mlbDailyOps.lifecycle === "OPS_FAILURE"
+              ? "border-red-900/50 bg-red-950/20"
+              : os.mlbDailyOps.lifecycle === "AWAITING_RESULT" ||
+                  os.mlbDailyOps.lifecycle === "READY"
+                ? "border-emerald-900/40 bg-emerald-950/10"
+                : "border-zinc-800 bg-zinc-900/50"
+          }`}
+        >
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="text-lg font-semibold text-white">TODAY MLB OPS</h2>
+            <StatusPill
+              level={
+                os.mlbDailyOps.lifecycle === "NO_PREGAME_SNAPSHOT" ||
+                os.mlbDailyOps.lifecycle === "OPS_FAILURE"
+                  ? "BLOCKED"
+                  : os.mlbDailyOps.lifecycle === "NOT_STARTED" ||
+                      os.mlbDailyOps.lifecycle === "IN_PROGRESS"
+                    ? "WARNING"
+                    : "READY"
+              }
+              label={os.mlbDailyOps.lifecycle}
+            />
+          </div>
+          <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-2 lg:grid-cols-3">
+            <div>
+              <dt className="text-zinc-500">Schedule</dt>
+              <dd className="font-medium text-zinc-100">
+                {os.mlbDailyOps.schedule}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-zinc-500">Starter</dt>
+              <dd className="font-medium text-zinc-100">
+                {os.mlbDailyOps.starter}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-zinc-500">Odds</dt>
+              <dd className="font-medium text-zinc-100">{os.mlbDailyOps.odds}</dd>
+            </div>
+            <div>
+              <dt className="text-zinc-500">Lineup</dt>
+              <dd className="font-medium text-zinc-100">
+                {os.mlbDailyOps.lineup}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-zinc-500">Prediction</dt>
+              <dd className="font-medium text-zinc-100">
+                {os.mlbDailyOps.prediction}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-zinc-500">Recommendation Record</dt>
+              <dd className="font-medium text-zinc-100">
+                {os.mlbDailyOps.recommendationRecord}
+              </dd>
+            </div>
+          </dl>
+          <div className="mt-3 flex flex-wrap gap-3 text-xs text-zinc-400">
+            <span>
+              Hash {os.mlbDailyOps.predictionHashShort ?? "—"}
+            </span>
+            <span>
+              Strong {os.mlbDailyOps.strongPickCount} · Good{" "}
+              {os.mlbDailyOps.goodPickCount}
+            </span>
+            <span>
+              Research Ready{" "}
+              {os.mlbDailyOps.researchReadyPercent != null
+                ? `${os.mlbDailyOps.researchReadyPercent}%`
+                : "—"}
+            </span>
+          </div>
+          <p className="mt-2 text-xs text-zinc-500">
+            Next: {os.mlbDailyOps.nextAction}
+          </p>
+          {os.mlbDailyOps.recentDays.length > 0 ? (
+            <ul className="mt-3 space-y-1 border-t border-zinc-800 pt-3 text-xs text-zinc-400">
+              {os.mlbDailyOps.recentDays.map((d) => (
+                <li key={d.dateKst} className="flex flex-wrap gap-2">
+                  <span className="font-mono text-zinc-300">{d.dateKst}</span>
+                  <span
+                    className={
+                      d.lifecycle === "NO_PREGAME_SNAPSHOT" ||
+                      d.lifecycle === "OPS_FAILURE"
+                        ? "text-red-300"
+                        : "text-zinc-400"
+                    }
+                  >
+                    {d.lifecycle}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          <p className="mt-2 text-[11px] text-zinc-600">
+            npm run ops:mlb-daily — 사전 Snapshot Continuity 최우선
+          </p>
+        </section>
+      ) : null}
+
+      <section
+        className={`rounded-xl border px-5 py-4 ${
+          os.predictionContinuity.opsFailure
+            ? "border-red-900/50 bg-red-950/20"
+            : "border-zinc-800 bg-zinc-900/50"
+        }`}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h2 className="text-lg font-semibold text-white">
+            MLB Prediction Continuity
+          </h2>
+          <StatusPill
+            level={
+              os.predictionContinuity.opsFailure
+                ? "BLOCKED"
+                : os.predictionContinuity.snapshotExists
+                  ? "READY"
+                  : "WARNING"
+            }
+            label={os.predictionContinuity.status}
+          />
+        </div>
+        <p className="mt-2 text-sm text-zinc-300">
+          {os.predictionContinuity.plainLanguage}
+        </p>
+        <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <dt className="text-zinc-500">Snapshot 생성</dt>
+            <dd className="font-medium text-zinc-100">
+              {os.predictionContinuity.snapshotExists ? "YES" : "NO"}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-zinc-500">생성 시각</dt>
+            <dd className="font-mono text-xs text-zinc-200">
+              {os.predictionContinuity.generatedAt ?? "—"}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-zinc-500">경기 시작 전 생성</dt>
+            <dd className="font-medium text-zinc-100">
+              {os.predictionContinuity.createdBeforeFirstStart === true
+                ? "YES"
+                : os.predictionContinuity.createdBeforeFirstStart === false
+                  ? "NO"
+                  : "—"}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-zinc-500">Prediction Hash</dt>
+            <dd className="break-all font-mono text-[11px] text-zinc-300">
+              {os.predictionContinuity.predictionHashSha256 ?? "—"}
+            </dd>
+          </div>
+        </dl>
+        <p className="mt-3 text-xs text-zinc-500">
+          Continuity Guard · LIMITED_INPUT도 research prediction 저장 · 전날 Snapshot 대체 금지
+        </p>
+      </section>
+
       <section className="rounded-xl border border-zinc-800 bg-zinc-900/50 px-5 py-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="text-lg font-semibold text-white">Football</h2>

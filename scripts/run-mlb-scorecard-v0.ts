@@ -108,7 +108,9 @@ async function main() {
     const buf = await readFile(predAbs);
     predHashBefore = createHash("sha256").update(buf).digest("hex");
   } catch {
-    console.error(`PREDICTION_SNAPSHOT_MISSING: ${predRel}`);
+    console.error(
+      `NO_PREGAME_SNAPSHOT: ${predRel} (DAILY_PREDICTION_SNAPSHOT_MISSING)`,
+    );
     process.exit(1);
   }
 

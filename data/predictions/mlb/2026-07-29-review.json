@@ -1,0 +1,879 @@
+{
+  "meta": {
+    "version": "mlb-research-prediction-review-v1",
+    "dateKst": "2026-07-29",
+    "generatedAt": "2026-07-29T08:14:33.121Z",
+    "snapshot": "data/predictions/mlb/2026-07-29.json",
+    "resultSource": "api-baseball",
+    "mlbStatsApiUsed": false,
+    "researchOnly": true,
+    "purchaseEligible": false,
+    "note": "사후 피드백 리뷰. 실패 원인을 단정하지 않는다. 예측 당시 필드는 변경하지 않았다."
+  },
+  "apiUsage": {
+    "apiBaseball": {
+      "calls": 2,
+      "remaining": 7488,
+      "limit": 7500,
+      "datesQueried": [
+        "2026-07-29",
+        "2026-07-28"
+      ],
+      "cacheHits": 0
+    },
+    "mlbStatsApi": {
+      "calls": 0,
+      "used": false
+    },
+    "warnings": [
+      "API-BASEBALL에서 미조회 externalId 1건. MLB Stats API fallback 미사용."
+    ]
+  },
+  "summary": {
+    "total": 16,
+    "graded": 15,
+    "hits": 7,
+    "fails": 8,
+    "pending": 1,
+    "inconclusive": 0,
+    "overallHitRate": {
+      "hitRate": 46.7,
+      "status": "OK"
+    },
+    "baselineCandidate": {
+      "label": "BASELINE_CANDIDATE",
+      "n": 2,
+      "hits": 1,
+      "fails": 1,
+      "hitRate": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    },
+    "pass": {
+      "label": "PASS",
+      "n": 11,
+      "hits": 5,
+      "fails": 6,
+      "hitRate": 45.5,
+      "status": "OK"
+    },
+    "hold4": {
+      "label": "HOLD_4",
+      "n": 0,
+      "hits": 0,
+      "fails": 0,
+      "hitRate": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    },
+    "marketConflictBrewers": null,
+    "yankeesDrop": null,
+    "pitcherConflictWarningRole": "표본 없음",
+    "byPitcherDirection": [
+      {
+        "label": "SUPPORTS_BASELINE",
+        "n": 0,
+        "hits": 0,
+        "fails": 0,
+        "hitRate": null,
+        "status": "INSUFFICIENT_SAMPLE"
+      },
+      {
+        "label": "CONFLICTS_BASELINE",
+        "n": 0,
+        "hits": 0,
+        "fails": 0,
+        "hitRate": null,
+        "status": "INSUFFICIENT_SAMPLE"
+      },
+      {
+        "label": "MIXED",
+        "n": 0,
+        "hits": 0,
+        "fails": 0,
+        "hitRate": null,
+        "status": "INSUFFICIENT_SAMPLE"
+      },
+      {
+        "label": "NONE",
+        "n": 15,
+        "hits": 7,
+        "fails": 8,
+        "hitRate": 46.7,
+        "status": "OK"
+      }
+    ],
+    "byConfidence": [
+      {
+        "label": "confidence<50",
+        "n": 11,
+        "hits": 4,
+        "fails": 7,
+        "hitRate": 36.4,
+        "status": "OK"
+      },
+      {
+        "label": "confidence_50_59",
+        "n": 4,
+        "hits": 3,
+        "fails": 1,
+        "hitRate": null,
+        "status": "INSUFFICIENT_SAMPLE"
+      },
+      {
+        "label": "confidence>=60",
+        "n": 0,
+        "hits": 0,
+        "fails": 0,
+        "hitRate": null,
+        "status": "INSUFFICIENT_SAMPLE"
+      }
+    ],
+    "byValueEdge": [
+      {
+        "label": "valueEdge<=0",
+        "n": 8,
+        "hits": 4,
+        "fails": 4,
+        "hitRate": 50,
+        "status": "OK"
+      },
+      {
+        "label": "valueEdge_0_10",
+        "n": 5,
+        "hits": 2,
+        "fails": 3,
+        "hitRate": 40,
+        "status": "OK"
+      },
+      {
+        "label": "valueEdge>=10",
+        "n": 2,
+        "hits": 1,
+        "fails": 1,
+        "hitRate": null,
+        "status": "INSUFFICIENT_SAMPLE"
+      }
+    ],
+    "researchSnapshotUseful": "구매 마감 후 연구용 저장은 결과 축적·사후 비교에 유효하다. 과거 추천을 바꾸지 않는다.",
+    "resultCorrectionWarnings": [],
+    "immutableVerified": true
+  },
+  "importantComparisons": {
+    "candidate5HitRate": {
+      "label": "BASELINE_CANDIDATE",
+      "n": 2,
+      "hits": 1,
+      "fails": 1,
+      "hitRate": null,
+      "status": "INSUFFICIENT_SAMPLE"
+    },
+    "all15HitRate": {
+      "n": 15,
+      "hits": 7,
+      "fails": 8,
+      "hitRate": 46.7,
+      "status": "OK"
+    },
+    "yankeesDrop": null,
+    "marketConflictBrewers": null,
+    "pitcherConflictWarningRole": "표본 없음",
+    "hold4": {
+      "games": [],
+      "hitRate": {
+        "label": "HOLD_4",
+        "n": 0,
+        "hits": 0,
+        "fails": 0,
+        "hitRate": null,
+        "status": "INSUFFICIENT_SAMPLE"
+      }
+    },
+    "researchSnapshotValue": "구매 마감 후 연구용으로 저장한 판단은 결과 축적·사후 비교에 유효하다. 결과를 이용해 과거 추천을 바꾸지 않는다."
+  },
+  "games": [
+    {
+      "gameId": "mlb-179612",
+      "match": "Cleveland Guardians @ Cincinnati Reds",
+      "baselinePick": "Cincinnati Reds",
+      "homeScore": 5,
+      "awayScore": 6,
+      "actualWinner": "away",
+      "predictionHit": false,
+      "baselineStatus": "PASS",
+      "modelProbability": 59,
+      "marketProbability": 59,
+      "valueEdge": 0,
+      "edgeScore": 9.1,
+      "confidence": 41,
+      "pitcherDirection": null,
+      "dataAvailability": 0.9,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
+      "reviewNotes": [
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
+      ],
+      "hypotheses": [
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
+    },
+    {
+      "gameId": "mlb-179616",
+      "match": "Atlanta Braves @ New York Mets",
+      "baselinePick": "New York Mets",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "baselineStatus": "PASS",
+      "modelProbability": 54,
+      "marketProbability": 41,
+      "valueEdge": 13.4,
+      "edgeScore": 3.9,
+      "confidence": 37,
+      "pitcherDirection": null,
+      "dataAvailability": 0.9,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "feedbackClassification": null,
+      "resultStatus": "pending",
+      "reviewNotes": [
+        "경기가 아직 종료되지 않아 채점하지 않았습니다."
+      ],
+      "hypotheses": []
+    },
+    {
+      "gameId": "mlb-179617",
+      "match": "Texas Rangers @ Tampa Bay Rays",
+      "baselinePick": "Tampa Bay Rays",
+      "homeScore": 1,
+      "awayScore": 4,
+      "actualWinner": "away",
+      "predictionHit": false,
+      "baselineStatus": "PASS",
+      "modelProbability": 57,
+      "marketProbability": 62,
+      "valueEdge": -5.5,
+      "edgeScore": 6.8,
+      "confidence": 38,
+      "pitcherDirection": null,
+      "dataAvailability": 0.8,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수",
+        "맞대결"
+      ],
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
+      "reviewNotes": [
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
+      ],
+      "hypotheses": [
+        "시장과 모델 방향 충돌 (Value Edge < 0)",
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
+    },
+    {
+      "gameId": "mlb-179618",
+      "match": "Chicago Cubs @ St.Louis Cardinals",
+      "baselinePick": "Chicago Cubs",
+      "homeScore": 2,
+      "awayScore": 10,
+      "actualWinner": "away",
+      "predictionHit": true,
+      "baselineStatus": "PASS",
+      "modelProbability": 59,
+      "marketProbability": 51,
+      "valueEdge": 7.7,
+      "edgeScore": -9,
+      "confidence": 51,
+      "pitcherDirection": null,
+      "dataAvailability": 0.9,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "feedbackClassification": "SIGNAL_WORKED",
+      "resultStatus": "graded",
+      "reviewNotes": [
+        "추천 방향과 실제 결과가 일치했습니다.",
+        "한 경기로 신호 유효성을 확정할 수 없습니다."
+      ],
+      "hypotheses": [
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
+    },
+    {
+      "gameId": "mlb-179619",
+      "match": "Milwaukee Brewers @ San Francisco Giants",
+      "baselinePick": "Milwaukee Brewers",
+      "homeScore": 2,
+      "awayScore": 8,
+      "actualWinner": "away",
+      "predictionHit": true,
+      "baselineStatus": "PASS",
+      "modelProbability": 51,
+      "marketProbability": 58,
+      "valueEdge": -7.5,
+      "edgeScore": -1,
+      "confidence": 33,
+      "pitcherDirection": null,
+      "dataAvailability": 0.9,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "feedbackClassification": "SIGNAL_WORKED",
+      "resultStatus": "graded",
+      "reviewNotes": [
+        "추천 방향과 실제 결과가 일치했습니다.",
+        "한 경기로 신호 유효성을 확정할 수 없습니다."
+      ],
+      "hypotheses": [
+        "시장과 모델 방향 충돌 (Value Edge < 0)",
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
+    },
+    {
+      "gameId": "mlb-179620",
+      "match": "Colorado Rockies @ San Diego Padres",
+      "baselinePick": "San Diego Padres",
+      "homeScore": 8,
+      "awayScore": 7,
+      "actualWinner": "home",
+      "predictionHit": true,
+      "baselineStatus": "MARKET_CONFLICT",
+      "modelProbability": 62,
+      "marketProbability": 64,
+      "valueEdge": -2.3,
+      "edgeScore": 12.1,
+      "confidence": 57,
+      "pitcherDirection": null,
+      "dataAvailability": 0.9,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "feedbackClassification": "SIGNAL_WORKED",
+      "resultStatus": "graded",
+      "reviewNotes": [
+        "추천 방향과 실제 결과가 일치했습니다.",
+        "한 경기로 신호 유효성을 확정할 수 없습니다."
+      ],
+      "hypotheses": [
+        "시장과 모델 방향 충돌 (Value Edge < 0)",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
+    },
+    {
+      "gameId": "mlb-179621",
+      "match": "Arizona Diamondbacks @ Pittsburgh Pirates",
+      "baselinePick": "Pittsburgh Pirates",
+      "homeScore": 7,
+      "awayScore": 8,
+      "actualWinner": "away",
+      "predictionHit": false,
+      "baselineStatus": "PASS",
+      "modelProbability": 50,
+      "marketProbability": 52,
+      "valueEdge": -1.9,
+      "edgeScore": 0,
+      "confidence": 43,
+      "pitcherDirection": null,
+      "dataAvailability": 0.9,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
+      "reviewNotes": [
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
+      ],
+      "hypotheses": [
+        "시장과 모델 방향 충돌 (Value Edge < 0)",
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
+    },
+    {
+      "gameId": "mlb-179622",
+      "match": "Toronto Blue Jays @ Washington Nationals",
+      "baselinePick": "Toronto Blue Jays",
+      "homeScore": 8,
+      "awayScore": 6,
+      "actualWinner": "home",
+      "predictionHit": false,
+      "baselineStatus": "PASS",
+      "modelProbability": 50,
+      "marketProbability": 44,
+      "valueEdge": 6.3,
+      "edgeScore": -0.2,
+      "confidence": 40,
+      "pitcherDirection": null,
+      "dataAvailability": 0.9,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
+      "reviewNotes": [
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
+      ],
+      "hypotheses": [
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
+    },
+    {
+      "gameId": "mlb-179623",
+      "match": "Kansas City Royals @ Minnesota Twins",
+      "baselinePick": "Minnesota Twins",
+      "homeScore": 3,
+      "awayScore": 2,
+      "actualWinner": "home",
+      "predictionHit": true,
+      "baselineStatus": "PASS",
+      "modelProbability": 55,
+      "marketProbability": 59,
+      "valueEdge": -4.3,
+      "edgeScore": 5.1,
+      "confidence": 44,
+      "pitcherDirection": null,
+      "dataAvailability": 0.9,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "feedbackClassification": "SIGNAL_WORKED",
+      "resultStatus": "graded",
+      "reviewNotes": [
+        "추천 방향과 실제 결과가 일치했습니다.",
+        "한 경기로 신호 유효성을 확정할 수 없습니다."
+      ],
+      "hypotheses": [
+        "시장과 모델 방향 충돌 (Value Edge < 0)",
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
+    },
+    {
+      "gameId": "mlb-179624",
+      "match": "Seattle Mariners @ Los Angeles Dodgers",
+      "baselinePick": "Los Angeles Dodgers",
+      "homeScore": 6,
+      "awayScore": 7,
+      "actualWinner": "away",
+      "predictionHit": false,
+      "baselineStatus": "MARKET_CONFLICT",
+      "modelProbability": 62,
+      "marketProbability": 63,
+      "valueEdge": -1.4,
+      "edgeScore": 11.5,
+      "confidence": 47,
+      "pitcherDirection": null,
+      "dataAvailability": 0.8,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수",
+        "맞대결"
+      ],
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
+      "reviewNotes": [
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
+      ],
+      "hypotheses": [
+        "시장과 모델 방향 충돌 (Value Edge < 0)",
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
+    },
+    {
+      "gameId": "mlb-179625",
+      "match": "Houston Astros @ Los Angeles Angels",
+      "baselinePick": "Houston Astros",
+      "homeScore": 2,
+      "awayScore": 3,
+      "actualWinner": "away",
+      "predictionHit": true,
+      "baselineStatus": "PASS",
+      "modelProbability": 60,
+      "marketProbability": 50,
+      "valueEdge": 9.7,
+      "edgeScore": -9.7,
+      "confidence": 55,
+      "pitcherDirection": null,
+      "dataAvailability": 0.9,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "feedbackClassification": "SIGNAL_WORKED",
+      "resultStatus": "graded",
+      "reviewNotes": [
+        "추천 방향과 실제 결과가 일치했습니다.",
+        "한 경기로 신호 유효성을 확정할 수 없습니다."
+      ],
+      "hypotheses": [
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
+    },
+    {
+      "gameId": "mlb-179626",
+      "match": "Baltimore Orioles @ Detroit Tigers",
+      "baselinePick": "Baltimore Orioles",
+      "homeScore": 14,
+      "awayScore": 0,
+      "actualWinner": "home",
+      "predictionHit": false,
+      "baselineStatus": "PASS",
+      "modelProbability": 56,
+      "marketProbability": 43,
+      "valueEdge": 12.5,
+      "edgeScore": -5.9,
+      "confidence": 48,
+      "pitcherDirection": null,
+      "dataAvailability": 0.9,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
+      "reviewNotes": [
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
+      ],
+      "hypotheses": [
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
+    },
+    {
+      "gameId": "mlb-179627",
+      "match": "Cleveland Guardians @ Cincinnati Reds",
+      "baselinePick": "Cincinnati Reds",
+      "homeScore": 2,
+      "awayScore": 0,
+      "actualWinner": "home",
+      "predictionHit": true,
+      "baselineStatus": "BASELINE_CANDIDATE",
+      "modelProbability": 60,
+      "marketProbability": 46,
+      "valueEdge": 14.2,
+      "edgeScore": 10,
+      "confidence": 44,
+      "pitcherDirection": null,
+      "dataAvailability": 0.9,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "feedbackClassification": "SIGNAL_WORKED",
+      "resultStatus": "graded",
+      "reviewNotes": [
+        "추천 방향과 실제 결과가 일치했습니다.",
+        "한 경기로 신호 유효성을 확정할 수 없습니다."
+      ],
+      "hypotheses": [
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
+    },
+    {
+      "gameId": "mlb-179628",
+      "match": "New York Yankees @ Chicago White Sox",
+      "baselinePick": "New York Yankees",
+      "homeScore": 2,
+      "awayScore": 3,
+      "actualWinner": "away",
+      "predictionHit": true,
+      "baselineStatus": "PASS",
+      "modelProbability": 55,
+      "marketProbability": 55,
+      "valueEdge": -0.2,
+      "edgeScore": -5,
+      "confidence": 47,
+      "pitcherDirection": null,
+      "dataAvailability": 0.9,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "feedbackClassification": "SIGNAL_WORKED",
+      "resultStatus": "graded",
+      "reviewNotes": [
+        "추천 방향과 실제 결과가 일치했습니다.",
+        "한 경기로 신호 유효성을 확정할 수 없습니다."
+      ],
+      "hypotheses": [
+        "시장과 모델 방향 충돌 (Value Edge < 0)",
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
+    },
+    {
+      "gameId": "mlb-179629",
+      "match": "Boston Red Sox @ Athletics",
+      "baselinePick": "Boston Red Sox",
+      "homeScore": 4,
+      "awayScore": 3,
+      "actualWinner": "home",
+      "predictionHit": false,
+      "baselineStatus": "BASELINE_CANDIDATE",
+      "modelProbability": 62,
+      "marketProbability": 58,
+      "valueEdge": 4.3,
+      "edgeScore": -12.1,
+      "confidence": 57,
+      "pitcherDirection": null,
+      "dataAvailability": 0.9,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
+      "reviewNotes": [
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
+      ],
+      "hypotheses": [
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
+    },
+    {
+      "gameId": "mlb-179630",
+      "match": "Philadelphia Phillies @ Miami Marlins",
+      "baselinePick": "Philadelphia Phillies",
+      "homeScore": 1,
+      "awayScore": 0,
+      "actualWinner": "home",
+      "predictionHit": false,
+      "baselineStatus": "PASS",
+      "modelProbability": 53,
+      "marketProbability": 49,
+      "valueEdge": 3.4,
+      "edgeScore": -2.7,
+      "confidence": 44,
+      "pitcherDirection": null,
+      "dataAvailability": 0.9,
+      "usedFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수"
+      ],
+      "feedbackClassification": "SIGNAL_FAILED",
+      "resultStatus": "graded",
+      "reviewNotes": [
+        "추천 방향과 실제 결과가 일치하지 않았습니다.",
+        "실패 원인을 단정하지 않습니다."
+      ],
+      "hypotheses": [
+        "Confidence 50 미만",
+        "선발투수 누락",
+        "단일 경기 변동성",
+        "최근 경기 표본 제한 가능성"
+      ]
+    }
+  ]
+}

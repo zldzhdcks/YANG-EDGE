@@ -55,7 +55,8 @@ export type DailyOverallStatus =
   | "BLOCKED_STARTER_INTEGRITY"
   | "BLOCKED_INPUT_AUDIT"
   | "WOULD_COLLECT"
-  | "FAILED";
+  | "FAILED"
+  | "DAILY_PREDICTION_SNAPSHOT_MISSING";
 
 export type DailyPregameReport = {
   schemaVersion: "mlb-daily-pregame-line-v0";
@@ -71,6 +72,7 @@ export type DailyPregameReport = {
   lineup: Record<string, unknown> | null;
   domestic: Record<string, unknown> | null;
   prediction: Record<string, unknown> | null;
+  continuity: Record<string, unknown> | null;
   earliestStart: string | null;
   latestStart: string | null;
   recommendedNextRunAt: string | null;

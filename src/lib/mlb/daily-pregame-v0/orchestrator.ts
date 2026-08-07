@@ -22,6 +22,10 @@ import {
   auditSummary,
 } from "./audit-artifacts";
 import {
+  assessMlbPredictionContinuity,
+  DAILY_PREDICTION_SNAPSHOT_MISSING,
+} from "@/lib/mlb/prediction-continuity-guard-v1";
+import {
   evaluateCutoffGate,
   evaluateOddsUsability,
   evaluateStarterUsability,
@@ -665,14 +669,23 @@ export async function runMlbDailyPregameV0(
       inputManifestHash: sha256(manifestBody),
     };
 
+    // Continuity: LIMITED_INPUT (odds partial/missing-all) does NOT hard-block
+    // research baseline freeze. Only schedule/summary/starter integrity/after-start do.
     const inputBlocked =
       blockers.includes("SCHEDULE_MISSING") ||
       blockers.includes("DAILY_SUMMARY_MISSING") ||
       blockers.includes("DAILY_SUMMARY_REQUIRED_FOR_PREDICTION") ||
-      blockers.includes("ODDS_MISSING_ALL") ||
       blockers.includes("STARTER_INTEGRITY_FAILED") ||
-      blockers.includes("BLOCKED_AFTER_START") ||
-      blockers.includes("MARKET_PRIOR_REQUIRES_ODDS");
+      blockers.includes("BLOCKED_AFTER_START");
+
+    const limitedInputWarnings = [
+      ...(blockers.includes("ODDS_MISSING_ALL") ? ["ODDS_MISSING_ALL_LIMITED_INPUT_OK"] : []),
+      ...(blockers.includes("MARKET_PRIOR_REQUIRES_ODDS")
+        ? ["MARKET_PRIOR_PARTIAL_LIMITED_INPUT_OK"]
+        : []),
+      ...(blockers.includes("ODDS_MISSING") ? ["ODDS_ARTIFACT_MISSING_WARN"] : []),
+      ...(blockers.includes("STARTER_MISSING") ? ["STARTER_ARTIFACT_MISSING_WARN"] : []),
+    ];
 
     stages.push(
       emptyStage("INPUT_AUDIT", inputBlocked ? "BLOCKED" : "READY", {
@@ -684,8 +697,25 @@ export async function runMlbDailyPregameV0(
           summary.path,
           domestic.path,
         ].filter(Boolean),
-        blockers,
-        warnings: manifestBody.warnings,
+        blockers: inputBlocked
+          ? blockers
+          : blockers.filter(
+              (b) =>
+                b !== "ODDS_MISSING_ALL" &&
+                b !== "MARKET_PRIOR_REQUIRES_ODDS" &&
+                b !== "ODDS_MISSING" &&
+                b !== "STARTER_MISSING" &&
+                b !== "SOME_GAMES_AFTER_START",
+            ),
+        warnings: [
+          ...manifestBody.warnings,
+          ...limitedInputWarnings,
+          ...(!inputBlocked &&
+          (blockers.includes("ODDS_MISSING_ALL") ||
+            blockers.includes("MARKET_PRIOR_REQUIRES_ODDS"))
+            ? ["CONTINUITY_ALLOWS_LIMITED_INPUT_PREDICTION"]
+            : []),
+        ],
         durationMs: Date.now() - t0,
         detail: inputManifest,
         readyGames: filterIds.length,
@@ -698,7 +728,7 @@ export async function runMlbDailyPregameV0(
       blockingIssues.push("DAILY_SUMMARY_MISSING");
     }
     if (blockers.includes("ODDS_MISSING_ALL") || blockers.includes("MARKET_PRIOR_REQUIRES_ODDS")) {
-      blockingIssues.push("ODDS_MISSING_ALL");
+      warnings.push("ODDS_INCOMPLETE_LIMITED_INPUT_ALLOWED");
     }
     if (blockers.includes("STARTER_INTEGRITY_FAILED")) {
       blockingIssues.push("STARTER_INTEGRITY_FAILED");
@@ -723,12 +753,14 @@ export async function runMlbDailyPregameV0(
     if (enforcePregameGates && cutoffGate.blocked) {
       freezeBlockers.push("BLOCKED_AFTER_START");
     }
+    // Continuity Guard: odds incomplete → LIMITED_INPUT research prediction still allowed.
+    // Do NOT freeze on ODDS_MISSING / ARTIFACT_PRESENT_UNUSABLE.
     if (
       enforcePregameGates &&
       useMarketPrior &&
       oddsUsability.usability === "ARTIFACT_PRESENT_UNUSABLE"
     ) {
-      freezeBlockers.push("BLOCKED_ODDS_MISSING");
+      warnings.push("ODDS_UNUSABLE_LIMITED_INPUT_CONTINUITY");
     }
     if (
       enforcePregameGates &&
@@ -744,7 +776,7 @@ export async function runMlbDailyPregameV0(
           blockers: freezeBlockers,
           errorCode: freezeBlockers[0],
           message:
-            "Pregame freeze blocked by cutoff/odds/starter integrity gates",
+            "Pregame freeze blocked by cutoff/starter integrity gates (odds incomplete still allows LIMITED_INPUT when not listed)",
           durationMs: Date.now() - t0,
           detail: {
             enforcePregameGates,
@@ -752,6 +784,7 @@ export async function runMlbDailyPregameV0(
             oddsUsability,
             starterUsability,
             useMarketPrior,
+            continuityAllowsLimitedInput: true,
           },
         }),
       );
@@ -971,9 +1004,34 @@ export async function runMlbDailyPregameV0(
     stages.push(emptyStage("SNAPSHOT_VERIFY", "SKIPPED"));
   }
 
+  // ---- CONTINUITY GUARD (always assess; ops failure when required & missing) ----
+  const continuity = await assessMlbPredictionContinuity({
+    dateKst,
+    cwd,
+    asOf: asOfIso,
+  });
+  // Dry-run: in-memory snapshot counts as continuity satisfied for this run
+  const dryRunContinuityOk =
+    dryRun &&
+    snapshotDoc != null &&
+    !cutoffGate.blocked &&
+    scheduleUsable;
+  if (
+    continuity.opsFailure &&
+    !dryRunContinuityOk &&
+    !blockingIssues.includes("BLOCKED_AFTER_START")
+  ) {
+    blockingIssues.push(DAILY_PREDICTION_SNAPSHOT_MISSING);
+    warnings.push("OPERATIONS_FAILURE_NO_PREGAME_SNAPSHOT");
+  } else if (continuity.opsFailure && blockingIssues.includes("BLOCKED_AFTER_START")) {
+    warnings.push("CONTINUITY_MISSED_PREGAME_WINDOW_NO_SNAPSHOT");
+  } else if (dryRunContinuityOk && continuity.opsFailure) {
+    warnings.push("DRY_RUN_CONTINUITY_SATISFIED_IN_MEMORY");
+  }
+
   const summaryFinal = await auditSummary(dateKst, cwd);
 
-  // Overall
+  // Overall — Continuity Guard: never report success-like overall when snapshot missing
   let overall: DailyOverallStatus = "PARTIAL_READY";
   let nextAction: string | null = null;
   if (blockingIssues.includes("SCHEDULE_DATE_MISMATCH")) {
@@ -982,18 +1040,18 @@ export async function runMlbDailyPregameV0(
   } else if (!scheduleUsable) {
     overall = "BLOCKED_MISSING_SCHEDULE";
     nextAction = "RUN_SCHEDULE_COLLECTION";
-  } else if (blockingIssues.includes("DAILY_SUMMARY_MISSING")) {
-    overall = "BLOCKED_MISSING_SUMMARY";
-    nextAction = "RUN_DAILY_SUMMARY";
   } else if (blockingIssues.includes("BLOCKED_AFTER_START")) {
     overall = "BLOCKED_AFTER_START";
     nextAction = "WAIT_NEXT_SLATE_BEFORE_COMMENCE";
   } else if (
-    blockingIssues.includes("ODDS_MISSING_ALL") ||
-    blockingIssues.includes("BLOCKED_ODDS_MISSING")
+    blockingIssues.includes(DAILY_PREDICTION_SNAPSHOT_MISSING) ||
+    (continuity.opsFailure && !dryRunContinuityOk)
   ) {
-    overall = "BLOCKED_ODDS_MISSING";
-    nextAction = "COLLECT_OVERSEAS_ODDS_BEFORE_FREEZE";
+    overall = "DAILY_PREDICTION_SNAPSHOT_MISSING";
+    nextAction = "RUN_PREDICTION_V0_BEFORE_FIRST_PITCH";
+  } else if (blockingIssues.includes("DAILY_SUMMARY_MISSING")) {
+    overall = "BLOCKED_MISSING_SUMMARY";
+    nextAction = "RUN_DAILY_SUMMARY";
   } else if (
     blockingIssues.includes("STARTER_INTEGRITY_FAILED") ||
     blockingIssues.includes("BLOCKED_STARTER_INTEGRITY") ||
@@ -1008,18 +1066,20 @@ export async function runMlbDailyPregameV0(
     overall = "FAILED";
     nextAction = "FIX_SNAPSHOT_VERIFY";
   } else if (
+    (continuity.snapshotExists || dryRunContinuityOk) &&
     scheduleUsable &&
-    starter.exists &&
-    odds.exists &&
-    summaryFinal.exists &&
-    oddsUsability.usability !== "ARTIFACT_PRESENT_UNUSABLE" &&
-    starterUsability.usability !== "INTEGRITY_FAILED" &&
-    oddsUsability.collectedGames > 0
+    summaryFinal.exists
   ) {
     overall = "READY_FOR_PREGAME_RUN";
     nextAction = dryRun
       ? "APPROVE_REAL_PREGAME_RUN"
       : "AWAIT_POSTGAME_RESULT_GRADE";
+    if (
+      oddsUsability.usability === "ARTIFACT_PRESENT_UNUSABLE" ||
+      oddsUsability.collectedGames === 0
+    ) {
+      warnings.push("SNAPSHOT_PRESENT_WITH_LIMITED_ODDS");
+    }
   } else if (
     scheduleUsable &&
     (oddsUsability.usability === "DATA_PARTIAL" ||
@@ -1030,6 +1090,21 @@ export async function runMlbDailyPregameV0(
   } else if (noProvider && (!starter.exists || !odds.exists)) {
     overall = "WOULD_COLLECT";
     nextAction = "RUN_WITH_PROVIDER_AFTER_APPROVAL";
+  }
+
+  // Odds-incomplete alone must not override a successful continuity snapshot
+  if (
+    overall !== "DAILY_PREDICTION_SNAPSHOT_MISSING" &&
+    overall !== "BLOCKED_AFTER_START" &&
+    overall !== "FAILED" &&
+    !continuity.snapshotExists &&
+    !dryRunContinuityOk &&
+    (blockingIssues.includes("ODDS_MISSING_ALL") ||
+      blockingIssues.includes("BLOCKED_ODDS_MISSING"))
+  ) {
+    // Legacy: only if we somehow still lack a snapshot
+    overall = "DAILY_PREDICTION_SNAPSHOT_MISSING";
+    nextAction = "RUN_PREDICTION_V0_BEFORE_FIRST_PITCH";
   }
 
   const uniqueWarnings = [...new Set(warnings)];
@@ -1093,6 +1168,19 @@ export async function runMlbDailyPregameV0(
         }
       : null,
     prediction: predictionDetail,
+    continuity: {
+      status: dryRunContinuityOk ? "SNAPSHOT_PRESENT" : continuity.status,
+      snapshotExists: continuity.snapshotExists || dryRunContinuityOk,
+      generatedAt: continuity.generatedAt ?? (snapshotDoc?.meta.generatedAt ?? null),
+      createdBeforeFirstStart: continuity.createdBeforeFirstStart,
+      predictionHashSha256:
+        continuity.predictionHashSha256 ??
+        (snapshotDoc?.meta.predictionHashSha256 ?? null),
+      opsFailure: continuity.opsFailure && !dryRunContinuityOk,
+      plainLanguage: dryRunContinuityOk
+        ? "Dry-run: in-memory RESEARCH_BASELINE_V0 snapshot computed (file not written)."
+        : continuity.plainLanguage,
+    },
     earliestStart: schedule.earliestStart,
     latestStart: schedule.latestStart,
     recommendedNextRunAt: recommendedRunAt(schedule.earliestStart),

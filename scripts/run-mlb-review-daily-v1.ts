@@ -28,10 +28,25 @@ async function main() {
   console.log(`  ${resultPath} (FINAL=${results.games.filter((g) => g.status === "FINAL").length})\n`);
 
   console.log("Step 2/3: Grade predictions");
-  const { document: graded, pathRel: gradedPath } = await gradeMlbPredictionsV1({
-    dateKst,
-    results,
-  });
+  let graded;
+  let gradedPath: string;
+  try {
+    const out = await gradeMlbPredictionsV1({
+      dateKst,
+      results,
+    });
+    graded = out.document;
+    gradedPath = out.pathRel;
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    if (msg.includes("NO_PREGAME_SNAPSHOT") || msg.includes("ENOENT")) {
+      console.error(
+        `NO_PREGAME_SNAPSHOT: cannot grade ${dateKst} — pregame Prediction Snapshot missing.`,
+      );
+      process.exit(1);
+    }
+    throw e;
+  }
   console.log(
     `  ${gradedPath} (graded=${graded.summary.graded} correct=${graded.summary.correct} incorrect=${graded.summary.incorrect})\n`,
   );

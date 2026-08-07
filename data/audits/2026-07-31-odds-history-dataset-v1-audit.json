@@ -6,33 +6,33 @@
     "schemaVersion": "mlb-odds-history-dataset-v1",
     "builderVersion": "odds-history-dataset-builder-v1",
     "dateKst": "2026-07-31",
-    "generatedAt": "2026-07-31T00:53:59.913Z",
+    "generatedAt": "2026-07-31T01:28:14.238Z",
     "datasetStatus": "COLLECTING",
     "engineAdmission": "PROHIBITED",
     "engineConnected": false,
     "researchOnly": true,
-    "predictionHashSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "predictionHashSha256": "8c5da0dcea46bc963a0f5e9ce5fa49ad01b448c45fa42dd941cf6f84426ea98b",
     "predictionUnchanged": true,
-    "predictionOptional": true,
+    "predictionOptional": false,
     "intakeVersion": "mlb-independent-odds-v1",
     "scheduleSource": "data/research/mlb/2026-07-31-schedule-v1.json",
-    "inputHashSha256": "ebebcda849fff7cf8918ec7dcc22a6c2714875157bee4e9d4f7f858eb5f4e096",
-    "resultHashSha256": "b03818745c1de70b442995a78f781fb9f43cb7651bcddb1f59552fb918ac2273",
-    "firstResultHash": "b03818745c1de70b442995a78f781fb9f43cb7651bcddb1f59552fb918ac2273",
-    "secondResultHash": "b03818745c1de70b442995a78f781fb9f43cb7651bcddb1f59552fb918ac2273",
+    "inputHashSha256": "6f8be13ab89fcd98a30037c517236190b26a0ff1a674750fd245eec153e2e4d8",
+    "resultHashSha256": "5844b5407a0e9e2a531afddc547ae523a39b275ebb5cd9b0ecddb8d8406e0172",
+    "firstResultHash": "5844b5407a0e9e2a531afddc547ae523a39b275ebb5cd9b0ecddb8d8406e0172",
+    "secondResultHash": "5844b5407a0e9e2a531afddc547ae523a39b275ebb5cd9b0ecddb8d8406e0172",
     "hashMatched": true
   },
   "independentIntake": {
     "provider": "The Odds API",
     "scheduleGames": 10,
     "providerEvents": 6,
-    "gamesMatched": 6,
-    "collected": 6,
-    "partial": 0,
+    "gamesMatched": 4,
+    "collected": 1,
+    "partial": 5,
     "notCollected": 4,
     "collectionStatus": {
-      "COLLECTED": 6,
-      "PARTIAL": 0,
+      "COLLECTED": 1,
+      "PARTIAL": 5,
       "NOT_COLLECTED": 0,
       "PROVIDER_ERROR": 0,
       "MATCH_NOT_FOUND": 4,
@@ -40,22 +40,23 @@
     },
     "missingReasons": [
       "Moneyline collected from authorized Odds Provider.",
-      "PROVIDER_EVENT_MISSING: no schedule-matched provider event."
+      "PROVIDER_EVENT_MISSING: no schedule-matched provider event.",
+      "Provider matched but moneyline is incomplete."
     ]
   },
   "games": 10,
-  "openingCollected": 6,
-  "latestCollected": 6,
-  "marketProbabilityCollected": 6,
+  "openingCollected": 4,
+  "latestCollected": 4,
+  "marketProbabilityCollected": 4,
   "movement": {
-    "UP": 0,
+    "UP": 4,
     "DOWN": 0,
-    "UNCHANGED": 6,
-    "NOT_COLLECTED": 4
+    "UNCHANGED": 0,
+    "NOT_COLLECTED": 6
   },
   "joinQuality": {
-    "MATCHED": 6,
-    "MISSING_ODDS": 4,
+    "MATCHED": 4,
+    "MISSING_ODDS": 6,
     "TIMELINE_ONLY": 0
   },
   "provider": {
@@ -85,18 +86,18 @@
   },
   "regressionHashes": {
     "before": {
-      "prediction": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "starter": "111c459cefd897f8acbacd1cc9c569982aa417bd2ca71a0fe264a3e220f04bfb",
+      "prediction": "8c5da0dcea46bc963a0f5e9ce5fa49ad01b448c45fa42dd941cf6f84426ea98b",
+      "starter": "eb796975599e98f38de083f2e5aa04c59b6266e3d9f3bb42d3ffb225b834f498",
       "bullpen": null,
-      "lineup": "32fce728169d2d628485612fb7be5a3d8308b361a7aa7b0584bed8fa503dc9bf",
+      "lineup": "8a8b2fde3b33d6139949435da6dc132b08d1a3affab5f8e6c0f8689ffe90d99d",
       "weather": null,
       "travel": null
     },
     "after": {
-      "prediction": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "starter": "111c459cefd897f8acbacd1cc9c569982aa417bd2ca71a0fe264a3e220f04bfb",
+      "prediction": "8c5da0dcea46bc963a0f5e9ce5fa49ad01b448c45fa42dd941cf6f84426ea98b",
+      "starter": "eb796975599e98f38de083f2e5aa04c59b6266e3d9f3bb42d3ffb225b834f498",
       "bullpen": null,
-      "lineup": "32fce728169d2d628485612fb7be5a3d8308b361a7aa7b0584bed8fa503dc9bf",
+      "lineup": "8a8b2fde3b33d6139949435da6dc132b08d1a3affab5f8e6c0f8689ffe90d99d",
       "weather": null,
       "travel": null
     },
@@ -106,7 +107,7 @@
     {
       "id": "prediction-hash-unchanged",
       "passed": true,
-      "detail": "OPTIONAL_ABSENT"
+      "detail": "8c5da0dcea46bc963a0f5e9ce5fa49ad01b448c45fa42dd941cf6f84426ea98b"
     },
     {
       "id": "schedule-source-present",
@@ -116,7 +117,7 @@
     {
       "id": "result-hash-matched",
       "passed": true,
-      "detail": "b03818745c1de70b442995a78f781fb9f43cb7651bcddb1f59552fb918ac2273 == b03818745c1de70b442995a78f781fb9f43cb7651bcddb1f59552fb918ac2273"
+      "detail": "5844b5407a0e9e2a531afddc547ae523a39b275ebb5cd9b0ecddb8d8406e0172 == 5844b5407a0e9e2a531afddc547ae523a39b275ebb5cd9b0ecddb8d8406e0172"
     },
     {
       "id": "warm-network-zero",

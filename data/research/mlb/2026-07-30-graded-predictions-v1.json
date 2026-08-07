@@ -1,0 +1,340 @@
+{
+  "schemaVersion": "mlb-graded-predictions-v1",
+  "dateKst": "2026-07-30",
+  "predictionArtifact": "2026-07-30.json",
+  "predictionHash": "539e1792c8dccb1fff4531a5d01c1fee41f81ff75892d04ecc22db5ad8e0f5ba",
+  "resultArtifact": "2026-07-30-official-results-v1.json",
+  "resultHash": "15ca6274dbef3c87fad46f21b7daff0629850202512992087b8018f0797e0e53",
+  "gradingPolicyVersion": "mlb-grading-v1",
+  "summary": {
+    "totalGames": 16,
+    "eligiblePredictions": 3,
+    "limitedInputPredictions": 0,
+    "blocked": 13,
+    "noPick": 0,
+    "graded": 0,
+    "correct": 0,
+    "incorrect": 0,
+    "pending": 3,
+    "void": 0,
+    "matchErrors": 0,
+    "accuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "NO_GRADED_SAMPLE",
+      "exclusionPolicy": "correct / (correct + incorrect); excludes PENDING, VOID, BLOCKED, NO_PICK, MATCH_ERROR"
+    },
+    "eligibleAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "NO_GRADED_SAMPLE"
+    },
+    "limitedInputAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "NO_GRADED_SAMPLE"
+    }
+  },
+  "games": [
+    {
+      "gamePk": 824973,
+      "gameId": "mlb-athletics-boston-red-sox",
+      "matchStatus": "RESULT_NOT_FINAL",
+      "inputStatus": "ELIGIBLE",
+      "pick": "AWAY",
+      "pickTeam": "Boston Red Sox",
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "PENDING",
+      "predictionProbability": 0.56,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [],
+      "warnings": []
+    },
+    {
+      "gamePk": 824567,
+      "gameId": "mlb-chicago-white-sox-new-york-yankees",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_AFTER_CUTOFF",
+        "ODDS_AFTER_CUTOFF"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 824487,
+      "gameId": "mlb-cincinnati-reds-cleveland-guardians",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_AFTER_CUTOFF",
+        "ODDS_AFTER_CUTOFF"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 824242,
+      "gameId": "mlb-detroit-tigers-baltimore-orioles",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_AFTER_CUTOFF",
+        "MARKET_NOT_AVAILABLE"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 824002,
+      "gameId": "mlb-los-angeles-angels-houston-astros",
+      "matchStatus": "RESULT_NOT_FINAL",
+      "inputStatus": "ELIGIBLE",
+      "pick": "HOME",
+      "pickTeam": "Los Angeles Angels",
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "PENDING",
+      "predictionProbability": 0.5,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [],
+      "warnings": []
+    },
+    {
+      "gamePk": 823924,
+      "gameId": "mlb-los-angeles-dodgers-seattle-mariners",
+      "matchStatus": "RESULT_NOT_FINAL",
+      "inputStatus": "ELIGIBLE",
+      "pick": "AWAY",
+      "pickTeam": "Seattle Mariners",
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "PENDING",
+      "predictionProbability": 0.54,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [],
+      "warnings": []
+    },
+    {
+      "gamePk": 823837,
+      "gameId": "mlb-miami-marlins-philadelphia-phillies",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_AFTER_CUTOFF",
+        "MARKET_NOT_AVAILABLE"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 823677,
+      "gameId": "mlb-minnesota-twins-kansas-city-royals",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_AFTER_CUTOFF",
+        "ODDS_AFTER_CUTOFF"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 823598,
+      "gameId": "mlb-new-york-mets-atlanta-braves",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_AFTER_CUTOFF",
+        "ODDS_AFTER_CUTOFF"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 823598,
+      "gameId": "mlb-new-york-mets-atlanta-braves",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_AFTER_CUTOFF",
+        "ODDS_AFTER_CUTOFF"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 823351,
+      "gameId": "mlb-pittsburgh-pirates-arizona-diamondbacks",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_AFTER_CUTOFF",
+        "MARKET_NOT_AVAILABLE"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 823273,
+      "gameId": "mlb-san-diego-padres-colorado-rockies",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_AFTER_CUTOFF",
+        "MARKET_NOT_AVAILABLE",
+        "STARTER_IDENTITY_PARTIAL"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 823192,
+      "gameId": "mlb-san-francisco-giants-milwaukee-brewers",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_AFTER_CUTOFF",
+        "MARKET_NOT_AVAILABLE"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 823022,
+      "gameId": "mlb-st-louis-cardinals-chicago-cubs",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_AFTER_CUTOFF",
+        "ODDS_AFTER_CUTOFF"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 822947,
+      "gameId": "mlb-tampa-bay-rays-texas-rangers",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_AFTER_CUTOFF",
+        "ODDS_AFTER_CUTOFF"
+      ],
+      "warnings": []
+    },
+    {
+      "gamePk": 822702,
+      "gameId": "mlb-washington-nationals-toronto-blue-jays",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_AFTER_CUTOFF",
+        "MARKET_NOT_AVAILABLE"
+      ],
+      "warnings": []
+    }
+  ],
+  "generatedAt": "2026-07-30T10:16:14.601Z"
+}

@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": "learning-dashboard-v1",
-    "generatedAt": "2026-07-28T06:26:49.381Z",
+    "generatedAt": "2026-07-29T08:15:26.282Z",
     "source": "data/predictions/*-review.json (prediction-review-v1)",
     "engineRerun": false,
     "weightsChanged": false,
@@ -9,19 +9,19 @@
     "minSample": 10
   },
   "summary": {
-    "totalReviews": 30,
-    "graded": 29,
-    "signalWorked": 13,
-    "signalFailed": 16,
-    "inconclusive": 1,
+    "totalReviews": 46,
+    "graded": 44,
+    "signalWorked": 20,
+    "signalFailed": 24,
+    "inconclusive": 2,
     "overallHitRate": {
-      "n": 29,
-      "hits": 13,
-      "fails": 16,
-      "hitRate": 44.8,
+      "n": 44,
+      "hits": 20,
+      "fails": 24,
+      "hitRate": 45.5,
       "status": "OK"
     },
-    "dayCount": 3
+    "dayCount": 4
   },
   "byLeague": [
     {
@@ -34,10 +34,10 @@
     },
     {
       "label": "MLB",
-      "n": 26,
-      "hits": 11,
-      "fails": 15,
-      "hitRate": 42.3,
+      "n": 41,
+      "hits": 18,
+      "fails": 23,
+      "hitRate": 43.9,
       "status": "OK"
     },
     {
@@ -52,18 +52,18 @@
   "byConfidence": [
     {
       "label": "confidence<50",
-      "n": 14,
-      "hits": 4,
-      "fails": 10,
-      "hitRate": 28.6,
+      "n": 25,
+      "hits": 8,
+      "fails": 17,
+      "hitRate": 32,
       "status": "OK"
     },
     {
       "label": "confidence_50_59",
-      "n": 15,
-      "hits": 9,
-      "fails": 6,
-      "hitRate": 60,
+      "n": 19,
+      "hits": 12,
+      "fails": 7,
+      "hitRate": 63.2,
       "status": "OK"
     },
     {
@@ -78,56 +78,68 @@
   "byRecommendationGrade": [
     {
       "label": "EDGE PICK",
-      "n": 10,
-      "hits": 6,
-      "fails": 4,
-      "hitRate": 60,
+      "n": 14,
+      "hits": 8,
+      "fails": 6,
+      "hitRate": 57.1,
       "status": "OK"
     },
     {
       "label": "PASS",
-      "n": 9,
-      "hits": 3,
-      "fails": 6,
-      "hitRate": null,
-      "status": "INSUFFICIENT_SAMPLE"
+      "n": 13,
+      "hits": 4,
+      "fails": 9,
+      "hitRate": 30.8,
+      "status": "OK"
     },
     {
       "label": "WATCH",
-      "n": 10,
-      "hits": 4,
-      "fails": 6,
-      "hitRate": 40,
+      "n": 17,
+      "hits": 8,
+      "fails": 9,
+      "hitRate": 47.1,
       "status": "OK"
     }
   ],
   "byValueEdge": [
     {
       "label": "valueEdge<=0",
-      "n": 6,
-      "hits": 3,
-      "fails": 3,
-      "hitRate": null,
-      "status": "INSUFFICIENT_SAMPLE"
+      "n": 14,
+      "hits": 7,
+      "fails": 7,
+      "hitRate": 50,
+      "status": "OK"
     },
     {
       "label": "valueEdge_0_10",
+      "n": 12,
+      "hits": 5,
+      "fails": 7,
+      "hitRate": 41.7,
+      "status": "OK"
+    },
+    {
+      "label": "valueEdge>=10",
       "n": 7,
       "hits": 3,
       "fails": 4,
       "hitRate": null,
       "status": "INSUFFICIENT_SAMPLE"
-    },
-    {
-      "label": "valueEdge>=10",
-      "n": 5,
-      "hits": 2,
-      "fails": 3,
-      "hitRate": null,
-      "status": "INSUFFICIENT_SAMPLE"
     }
   ],
   "recentDays": [
+    {
+      "dateKst": "2026-07-29",
+      "source": "data/predictions/mlb/2026-07-29.json",
+      "gradedGames": 15,
+      "signalWorked": 7,
+      "signalFailed": 8,
+      "inconclusive": 1,
+      "liveAccuracyPercent": 46.67,
+      "leagues": [
+        "MLB"
+      ]
+    },
     {
       "dateKst": "2026-07-28",
       "source": "data/predictions/mlb/2026-07-28.json",

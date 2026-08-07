@@ -13,6 +13,11 @@ import {
   loadKboOddsComparisonViewModel,
 } from "@/lib/kbo/odds-ui/load-kbo-odds-ui-view";
 import {
+  loadKboOperationalGameState,
+  isReadyStatus,
+  type KboOperationalGameState,
+} from "@/lib/kbo/operational-state";
+import {
   mapReviewHypothesesDisplay,
   mapStatusCodeKo,
   predictionMissingStarterMetrics,
@@ -619,6 +624,7 @@ async function findKboOddsForGame(args: {
   };
 }
 
+/** @deprecated Prefer loadKboOperationalGameState — confirmation-only path. */
 async function findKboStarterForGame(
   gameId: string,
   resolvedInternalId: string | null,
@@ -655,6 +661,7 @@ async function findKboStarterForGame(
   return null;
 }
 
+/** @deprecated Prefer loadKboOperationalGameState — confirmation-only path. */
 async function findKboLineupForGame(
   resolvedInternalId: string | null,
 ): Promise<{
@@ -685,6 +692,10 @@ async function findKboLineupForGame(
   return null;
 }
 
+/**
+ * @deprecated Prefer loadKboOperationalGameState — schedule-result-identity only.
+ * Kept for MLB/legacy non-unified fallbacks; do not call from new KBO paths.
+ */
 async function findKboScheduleGameInfo(
   gameId: string,
 ): Promise<{
@@ -760,7 +771,7 @@ export async function loadResearchAnalysisView(
     found?.researchPrediction ??
     kboPredictionMiss?.view ??
     emptyResearchPredictionView(
-      isKbo ? "PREDICTION_FILE_NOT_FOUND" : "PREDICTION_FILE_NOT_FOUND",
+      isKbo ? "PREDICTION_NOT_CREATED" : "PREDICTION_FILE_NOT_FOUND",
     );
 
   const dateKst = found
@@ -782,11 +793,49 @@ export async function loadResearchAnalysisView(
     ? await findFlowGame("failure", researchGameId, dateKst)
     : null;
 
-  // KBO-specific artifact lookups — resolve schedule first to get internalGameId
-  const kboScheduleInfo = isKbo ? await findKboScheduleGameInfo(normalized) : null;
-  const resolvedKboId = kboScheduleInfo?.internalGameId ?? null;
-  const kboStarter = isKbo ? await findKboStarterForGame(normalized, resolvedKboId) : null;
-  const kboLineup = isKbo ? await findKboLineupForGame(resolvedKboId) : null;
+  // KBO — Unified Operational State Reader (single SoT)
+  const kboOps: KboOperationalGameState | null = isKbo
+    ? await loadKboOperationalGameState(normalized)
+    : null;
+
+  /** @deprecated legacy confirmation readers — kept for non-unified fallback only */
+  const kboScheduleInfo = kboOps
+    ? {
+        internalGameId: kboOps.gameId,
+        homeTeam: kboOps.homeTeam,
+        awayTeam: kboOps.awayTeam,
+        homeTeamKo: kboOps.homeTeam,
+        awayTeamKo: kboOps.awayTeam,
+        dateKst: kboOps.dateKst,
+        startTimeKst: kboOps.scheduledStartTime,
+        league: "KBO",
+        pathRel: kboOps.schedule.sourcePath,
+      }
+    : null;
+  const resolvedKboId = kboOps?.gameId ?? null;
+  const kboStarter =
+    kboOps && isReadyStatus(kboOps.starter.status)
+      ? {
+          home: {
+            name: (kboOps.starter.values?.home as string | null) ?? null,
+            status: kboOps.starter.status,
+          },
+          away: {
+            name: (kboOps.starter.values?.away as string | null) ?? null,
+            status: kboOps.starter.status,
+          },
+          pathRel: kboOps.starter.sourcePath ?? "",
+        }
+      : null;
+  const kboLineup =
+    kboOps && isReadyStatus(kboOps.lineup.status)
+      ? {
+          reviewStatus: kboOps.lineup.status,
+          home: { status: kboOps.lineup.status },
+          away: { status: kboOps.lineup.status },
+          pathRel: kboOps.lineup.sourcePath ?? "",
+        }
+      : null;
 
   let homeTeam = found
     ? (asString(found.pred.homeTeam) ??
@@ -803,24 +852,62 @@ export async function loadResearchAnalysisView(
     : null;
   let gameDateKst = dateKst;
 
-  // Fill from KBO schedule before odds (odds matching needs canonical teams + date)
-  if (isKbo && kboScheduleInfo) {
-    homeTeam = homeTeam ?? kboScheduleInfo.homeTeamKo ?? kboScheduleInfo.homeTeam;
-    awayTeam = awayTeam ?? kboScheduleInfo.awayTeamKo ?? kboScheduleInfo.awayTeam;
-    gameDateKst = gameDateKst ?? kboScheduleInfo.dateKst;
-    startTimeKst = startTimeKst ?? kboScheduleInfo.startTimeKst;
+  if (isKbo && kboOps) {
+    homeTeam = homeTeam ?? kboOps.homeTeam;
+    awayTeam = awayTeam ?? kboOps.awayTeam;
+    gameDateKst = gameDateKst ?? kboOps.dateKst;
+    startTimeKst = startTimeKst ?? kboOps.scheduledStartTime;
     league = "KBO";
   }
 
-  const kboOdds = isKbo
-    ? await findKboOddsForGame({
-        gameId: resolvedKboId ?? normalized,
-        dateKst: gameDateKst,
-        homeTeam,
-        awayTeam,
-        scheduledStartTime: startTimeKst,
-      })
-    : null;
+  const kboOddsFromOps =
+    kboOps &&
+    (isReadyStatus(kboOps.domesticOdds.status) ||
+      isReadyStatus(kboOps.overseasOdds.status) ||
+      kboOps.domesticOdds.values)
+      ? {
+          domestic: isReadyStatus(kboOps.domesticOdds.status)
+            ? {
+                home: (kboOps.domesticOdds.values?.homePrice as number | null) ?? null,
+                away: (kboOps.domesticOdds.values?.awayPrice as number | null) ?? null,
+                availability: "COLLECTED",
+                sourceLabel:
+                  kboOps.domesticOdds.sourceType === "PERSONNEL_INPUT"
+                    ? "ADMIN_VERIFIED · personnel-input"
+                    : "domestic-proto-snapshot",
+              }
+            : null,
+          overseas: isReadyStatus(kboOps.overseasOdds.status)
+            ? {
+                home: null as number | null,
+                away: null as number | null,
+                availability: "COLLECTED",
+                sourceLabel: "odds-history",
+              }
+            : null,
+          homeTeam: kboOps.homeTeam,
+          awayTeam: kboOps.awayTeam,
+          dateKst: kboOps.dateKst,
+          startTimeKst: kboOps.scheduledStartTime,
+          pathRel:
+            kboOps.domesticOdds.sourcePath ??
+            kboOps.overseasOdds.sourcePath,
+          domesticPass: isReadyStatus(kboOps.domesticOdds.status),
+          overseasPass: isReadyStatus(kboOps.overseasOdds.status),
+        }
+      : null;
+
+  const kboOdds =
+    kboOddsFromOps ??
+    (isKbo
+      ? await findKboOddsForGame({
+          gameId: resolvedKboId ?? normalized,
+          dateKst: gameDateKst,
+          homeTeam,
+          awayTeam,
+          scheduledStartTime: startTimeKst,
+        })
+      : null);
 
   if (!found && isKbo && kboOdds) {
     homeTeam = homeTeam ?? kboOdds.homeTeam;
@@ -828,6 +915,20 @@ export async function loadResearchAnalysisView(
     gameDateKst = gameDateKst ?? kboOdds.dateKst;
     startTimeKst = startTimeKst ?? kboOdds.startTimeKst;
     league = "KBO";
+  }
+
+  // Override KBO missing-prediction FAIL → NOT_CREATED waiting
+  let researchPredictionResolved = researchPrediction;
+  if (
+    isKbo &&
+    !found &&
+    (researchPrediction.loadReason === "PREDICTION_FILE_NOT_FOUND" ||
+      researchPrediction.debugStatus === "FAIL" ||
+      researchPrediction.debugStatus === "NOT_CREATED")
+  ) {
+    researchPredictionResolved = emptyResearchPredictionView(
+      "PREDICTION_NOT_CREATED",
+    );
   }
 
   const matchLabel =
@@ -863,9 +964,9 @@ export async function loadResearchAnalysisView(
 
   const prediction = found
     ? collected(
-        researchPrediction.officialPick != null
-          ? researchPrediction.officialPick
-          : researchPrediction.officialStatus === "PASS"
+        researchPredictionResolved.officialPick != null
+          ? researchPredictionResolved.officialPick
+          : researchPredictionResolved.officialStatus === "PASS"
             ? "공식 Pick 없음"
             : (asString(found.pred.baselinePick) ?? "—"),
         "Prediction",
@@ -1075,7 +1176,7 @@ export async function loadResearchAnalysisView(
 
   const predictionHash = found
     ? collected(
-        researchPrediction.predictionHash ??
+        researchPredictionResolved.predictionHash ??
           immutablePredictionHash(found.pred),
         "Prediction Hash",
       )
@@ -1253,39 +1354,136 @@ export async function loadResearchAnalysisView(
       : null,
   });
 
-  // ---- Research Score ----
+  // ---- Research Score (KBO: Unified Operational State weights) ----
   const scoreItems: {
     label: string;
     score: number;
     max: number;
     status: "OK" | "MISSING" | "PASS_RECORDED" | "BLOCKED" | "NOT_ELIGIBLE";
   }[] = [];
-  const hasDomesticOdds =
-    kboOdds?.domesticPass === true ||
-    (found && asNumber(found.pred.openingOdds) != null);
-  const hasOverseasOdds =
-    kboOdds?.overseasPass === true ||
-    (found && asNumber(found.pred.latestOdds) != null);
-  const hasStarterData = !!starter || !!kboStarter;
-  const hasLineupData = !!lineup || !!kboLineup;
-  const predictionScore = researchPredictionScore(researchPrediction);
 
-  scoreItems.push({ label: "국내 배당", score: hasDomesticOdds ? 20 : 0, max: 20, status: hasDomesticOdds ? "OK" : "MISSING" });
-  scoreItems.push({ label: "해외 배당", score: hasOverseasOdds ? 20 : 0, max: 20, status: hasOverseasOdds ? "OK" : "MISSING" });
-  scoreItems.push({ label: "선발", score: hasStarterData ? 20 : 0, max: 20, status: hasStarterData ? "OK" : "MISSING" });
-  scoreItems.push({ label: "라인업", score: hasLineupData ? 20 : 0, max: 20, status: hasLineupData ? "OK" : "MISSING" });
-  scoreItems.push({
-    label: "Prediction",
-    score: predictionScore.score,
-    max: 20,
-    status: predictionScore.status,
-  });
+  if (kboOps) {
+    const pushComp = (
+      label: string,
+      score: number,
+      max: number,
+      status: string,
+      applicable: boolean,
+    ) => {
+      if (!applicable || max === 0) return;
+      scoreItems.push({
+        label,
+        score,
+        max,
+        status: isReadyStatus(status as never)
+          ? "OK"
+          : status === "NOT_CREATED" || status === "NOT_ENTERED" || status === "NOT_READY"
+            ? "MISSING"
+            : status === "BLOCKED" || status === "ERROR"
+              ? "BLOCKED"
+              : "MISSING",
+      });
+    };
+    // Schedule is prerequisite but not in classic 5-bucket UI — fold into display via readiness
+    pushComp(
+      "국내 배당",
+      kboOps.domesticOdds.score,
+      kboOps.domesticOdds.maxScore,
+      kboOps.domesticOdds.status,
+      kboOps.domesticOdds.applicable,
+    );
+    pushComp(
+      "해외 배당",
+      kboOps.overseasOdds.score,
+      kboOps.overseasOdds.maxScore,
+      kboOps.overseasOdds.status,
+      kboOps.overseasOdds.applicable,
+    );
+    pushComp(
+      "선발",
+      kboOps.starter.score,
+      kboOps.starter.maxScore,
+      kboOps.starter.status,
+      kboOps.starter.applicable,
+    );
+    pushComp(
+      "라인업",
+      kboOps.lineup.score,
+      kboOps.lineup.maxScore,
+      kboOps.lineup.status,
+      kboOps.lineup.applicable,
+    );
+    // Prediction score follows official Snapshot semantics (PASS → PASS_RECORDED)
+    if (
+      researchPredictionResolved.artifactAvailable ||
+      researchPredictionResolved.debugStatus === "PASS" ||
+      researchPredictionResolved.debugStatus === "AVAILABLE" ||
+      researchPredictionResolved.debugStatus === "BLOCKED"
+    ) {
+      const predictionScore = researchPredictionScore(researchPredictionResolved);
+      scoreItems.push({
+        label: "Prediction",
+        score: predictionScore.score,
+        max: 20,
+        status: predictionScore.status,
+      });
+    } else {
+      pushComp(
+        "Prediction",
+        kboOps.prediction.score,
+        kboOps.prediction.maxScore,
+        kboOps.prediction.status,
+        kboOps.prediction.applicable,
+      );
+    }
+  } else {
+    const hasDomesticOdds =
+      kboOdds?.domesticPass === true ||
+      (found && asNumber(found.pred.openingOdds) != null);
+    const hasOverseasOdds =
+      kboOdds?.overseasPass === true ||
+      (found && asNumber(found.pred.latestOdds) != null);
+    const hasStarterData = !!starter || !!kboStarter;
+    const hasLineupData = !!lineup || !!kboLineup;
+    const predictionScore = researchPredictionScore(researchPredictionResolved);
 
-  const totalScore = scoreItems.reduce((s, i) => s + i.score, 0);
-  const scoreLabel = totalScore === 100 ? "READY" as const
-    : totalScore >= 40 ? "PARTIAL" as const
-    : totalScore > 0 ? "BLOCKED" as const
-    : "UNKNOWN" as const;
+    scoreItems.push({ label: "국내 배당", score: hasDomesticOdds ? 20 : 0, max: 20, status: hasDomesticOdds ? "OK" : "MISSING" });
+    scoreItems.push({ label: "해외 배당", score: hasOverseasOdds ? 20 : 0, max: 20, status: hasOverseasOdds ? "OK" : "MISSING" });
+    scoreItems.push({ label: "선발", score: hasStarterData ? 20 : 0, max: 20, status: hasStarterData ? "OK" : "MISSING" });
+    scoreItems.push({ label: "라인업", score: hasLineupData ? 20 : 0, max: 20, status: hasLineupData ? "OK" : "MISSING" });
+    scoreItems.push({
+      label: "Prediction",
+      score: predictionScore.score,
+      max: 20,
+      status: predictionScore.status,
+    });
+  }
+
+  const totalScore = kboOps
+    ? kboOps.readinessPercent
+    : scoreItems.reduce((s, i) => s + i.score, 0);
+  const scoreLabel = kboOps
+    ? kboOps.overallStatus === "READY"
+      ? ("READY" as const)
+      : kboOps.overallStatus === "BLOCKED"
+        ? ("BLOCKED" as const)
+        : kboOps.overallStatus === "WAITING_FOR_PREDICTION"
+          ? ("WAITING_FOR_PREDICTION" as const)
+          : kboOps.overallStatus === "WAITING_FOR_LINEUP"
+            ? ("WAITING_FOR_LINEUP" as const)
+            : kboOps.overallStatus === "NOT_APPLICABLE"
+              ? ("NOT_APPLICABLE" as const)
+              : kboOps.overallStatus === "PARTIAL_READY" ||
+                  kboOps.readinessPercent > 0
+                ? ("PARTIAL_READY" as const)
+                : ("UNKNOWN" as const)
+    : totalScore === 100
+      ? ("READY" as const)
+      : totalScore >= 40
+        ? ("PARTIAL" as const)
+        : totalScore > 0
+          ? ("BLOCKED" as const)
+          : ("UNKNOWN" as const);
 
   // ---- Odds Comparison ----
   const dh = kboOdds?.domestic?.home ?? (found ? asNumber(found.pred.openingOdds) : null);
@@ -1342,7 +1540,48 @@ export async function loadResearchAnalysisView(
     isFinishedGame,
     gameInfo,
     prediction,
-    researchPrediction,
+    researchPrediction: researchPredictionResolved,
+    kboOperational: kboOps
+      ? {
+          overallStatus: kboOps.overallStatus,
+          readinessPercent: kboOps.readinessPercent,
+          schedule: {
+            status: kboOps.schedule.status,
+            sourcePath: kboOps.schedule.sourcePath,
+            sourceType: kboOps.schedule.sourceType,
+          },
+          domesticOdds: {
+            status: kboOps.domesticOdds.status,
+            sourcePath: kboOps.domesticOdds.sourcePath,
+            sourceType: kboOps.domesticOdds.sourceType,
+          },
+          overseasOdds: {
+            status: kboOps.overseasOdds.status,
+            sourcePath: kboOps.overseasOdds.sourcePath,
+            sourceType: kboOps.overseasOdds.sourceType,
+          },
+          starter: {
+            status: kboOps.starter.status,
+            sourcePath: kboOps.starter.sourcePath,
+            sourceType: kboOps.starter.sourceType,
+          },
+          lineup: {
+            status: kboOps.lineup.status,
+            sourcePath: kboOps.lineup.sourcePath,
+            sourceType: kboOps.lineup.sourceType,
+          },
+          prediction: {
+            status: kboOps.prediction.status,
+            sourcePath: kboOps.prediction.sourcePath,
+            sourceType: kboOps.prediction.sourceType,
+          },
+          review: {
+            status: kboOps.review.status,
+            sourcePath: kboOps.review.sourcePath,
+            sourceType: kboOps.review.sourceType,
+          },
+        }
+      : null,
     pitchingSnapshot,
     probability,
     confidence,

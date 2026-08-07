@@ -70,50 +70,76 @@ function domainDerivedPath(
   return path.join(researchCacheRoot(cwd), "derived", domain, name);
 }
 
+export type GetRawStatsJsonOptions = {
+  cwd?: string;
+  /** When true: skip disk read, always hit StatsAPI, overwrite raw cache. */
+  forceRefresh?: boolean;
+};
+
+function resolveGetRawStatsOptions(
+  cwdOrOptions?: string | GetRawStatsJsonOptions,
+): GetRawStatsJsonOptions {
+  if (typeof cwdOrOptions === "string") return { cwd: cwdOrOptions };
+  return cwdOrOptions ?? {};
+}
+
+/**
+ * Raw StatsAPI cache helper.
+ * Default: reuse disk cache (Starter / Bullpen / Schedule Builder).
+ * Official Result must pass `{ forceRefresh: true }` so pre-pitch
+ * schedule snapshots cannot freeze status as NOT_FINAL forever.
+ */
 export async function getRawStatsJson(
   pathQuery: string,
   usage: CacheUsageStats,
-  cwd?: string,
+  cwdOrOptions?: string | GetRawStatsJsonOptions,
 ): Promise<unknown> {
+  const { cwd, forceRefresh = false } = resolveGetRawStatsOptions(cwdOrOptions);
   const key = pathQuery.replace(/^\//, "").replace(/[?&=]/g, "_");
   const file = rawPath(key, cwd);
-  try {
-    const raw = await readFile(file, "utf8");
-    usage.rawHit += 1;
-    const parsed = JSON.parse(raw) as { body?: unknown };
-    return parsed.body ?? parsed;
-  } catch {
-    usage.rawMiss += 1;
-    usage.networkCalls += 1;
-    const res = await fetch(`${STATS_API_BASE}${pathQuery}`, {
-      headers: { Accept: "application/json" },
-      cache: "no-store",
-    });
-    if (!res.ok) {
-      throw new Error(`StatsAPI ${res.status} ${pathQuery}`);
+
+  if (!forceRefresh) {
+    try {
+      const raw = await readFile(file, "utf8");
+      usage.rawHit += 1;
+      const parsed = JSON.parse(raw) as { body?: unknown };
+      return parsed.body ?? parsed;
+    } catch {
+      // miss → network
     }
-    const body = await res.json();
-    await mkdir(path.dirname(file), { recursive: true });
-    await writeFile(
-      file,
-      `${JSON.stringify(
-        {
-          meta: {
-            source: MLB_STATS_SOURCE_LABEL,
-            pathQuery,
-            fetchedAt: new Date().toISOString(),
-            publicRuntimeUseAllowed: false,
-            commercialRuntimeUseAllowed: false,
-          },
-          body,
-        },
-        null,
-        2,
-      )}\n`,
-      "utf8",
-    );
-    return body;
   }
+
+  usage.rawMiss += 1;
+  usage.networkCalls += 1;
+  const res = await fetch(`${STATS_API_BASE}${pathQuery}`, {
+    headers: { Accept: "application/json" },
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    throw new Error(`StatsAPI ${res.status} ${pathQuery}`);
+  }
+  const body = await res.json();
+  await mkdir(path.dirname(file), { recursive: true });
+  await writeFile(
+    file,
+    `${JSON.stringify(
+      {
+        meta: {
+          source: MLB_STATS_SOURCE_LABEL,
+          pathQuery,
+          fetchedAt: new Date().toISOString(),
+          publicRuntimeUseAllowed: false,
+          commercialRuntimeUseAllowed: false,
+          forceRefresh,
+        },
+        body,
+      },
+      null,
+      2,
+    )}\n`,
+    "utf8",
+  );
+  return body;
 }
 
 export async function readDerivedJson<T>(
