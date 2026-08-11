@@ -224,13 +224,16 @@ export async function assessMlbDailyOpsDay(input: {
     dateKst,
     cwd,
   });
-  const delivery = await loadEngineRecommendationRecord({ dateKst, cwd });
 
+  // Seal (optional) first, then read filesystem state — never report ABSENT
+  // for a record that loadDailyPicksV1 just sealed in this same assessment.
   const picks = await loadDailyPicksV1({
     dateKst,
     cwd,
     sealDeliveryRecord: input.sealDeliveryRecord === true,
   });
+
+  const delivery = await loadEngineRecommendationRecord({ dateKst, cwd });
 
   const engineCards = [...picks.strongPicks, ...picks.goodPicks].filter(
     (c) => c.provenance.sourceType === "ENGINE_SNAPSHOT",
