@@ -1,0 +1,656 @@
+{
+  "schemaVersion": "mlb-graded-predictions-v1",
+  "dateKst": "2026-08-08",
+  "generatedAt": "2026-08-11T09:58:18.590Z",
+  "predictionArtifact": "2026-08-08.json",
+  "predictionHash": "809b3973664661922db1653d3cab0e098145c5f0734fa95920229a5382f487bc",
+  "resultArtifact": "2026-08-08-official-results-v1.json",
+  "resultHash": "d43d1669f22d2705b34a9205d69ea1f083b5c6619e79b49548fbd220a11a2fce",
+  "gradingPolicyVersion": "mlb-grading-v1.1-v0-compat",
+  "summary": {
+    "totalGames": 15,
+    "eligiblePredictions": 0,
+    "limitedInputPredictions": 12,
+    "blocked": 3,
+    "noPick": 0,
+    "graded": 12,
+    "correct": 5,
+    "incorrect": 7,
+    "pending": 0,
+    "void": 0,
+    "matchErrors": 0,
+    "accuracy": {
+      "numerator": 5,
+      "denominator": 12,
+      "percent": 41.7,
+      "status": "OK",
+      "exclusionPolicy": "correct / (correct + incorrect); excludes PENDING, VOID, BLOCKED, NO_PICK, MATCH_ERROR"
+    },
+    "eligibleAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "NO_GRADED_SAMPLE"
+    },
+    "limitedInputAccuracy": {
+      "numerator": 5,
+      "denominator": 12,
+      "percent": 41.7,
+      "status": "OK"
+    },
+    "researchCandidates": 12,
+    "researchGraded": 12,
+    "researchCorrect": 5,
+    "researchIncorrect": 7,
+    "researchAccuracy": {
+      "numerator": 5,
+      "denominator": 12,
+      "percent": 41.7,
+      "status": "OK"
+    },
+    "researchMeanBrier": 0.24552391306975,
+    "researchMeanLogLoss": 0.6841109524731602,
+    "officialSampleCount": 0,
+    "officialGraded": 0,
+    "officialCorrect": 0,
+    "officialIncorrect": 0,
+    "officialAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "N/A"
+    },
+    "predictionContract": "RESEARCH_BASELINE_V0",
+    "modelVersion": "mlb-baseline-prediction-v0.1.0",
+    "modelStatus": "RESEARCH_BASELINE_V0"
+  },
+  "games": [
+    {
+      "gamePk": 825051,
+      "gameId": "mlb-arizona-diamondbacks-los-angeles-dodgers",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "AWAY",
+      "pickTeam": "Los Angeles Dodgers",
+      "actualWinner": "HOME",
+      "homeScore": 4,
+      "awayScore": 3,
+      "grade": "INCORRECT",
+      "predictionProbability": 0.51192,
+      "baselineStatus": "PASS",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "RESEARCH_BASELINE_V0",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      },
+      "researchGrade": {
+        "marketType": "MONEYLINE_2WAY",
+        "selection": "AWAY",
+        "probability": 0.51192,
+        "actualWinner": "HOME",
+        "result": "INCORRECT",
+        "observationOnly": true,
+        "brierScore": 0.26206208639999995,
+        "logLoss": 0.71727595213854
+      }
+    },
+    {
+      "gamePk": 824727,
+      "gameId": "mlb-boston-red-sox-athletics",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Boston Red Sox",
+      "actualWinner": "HOME",
+      "homeScore": 13,
+      "awayScore": 1,
+      "grade": "CORRECT",
+      "predictionProbability": 0.576226,
+      "baselineStatus": "PASS",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "RESEARCH_BASELINE_V0",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      },
+      "researchGrade": {
+        "marketType": "MONEYLINE_2WAY",
+        "selection": "HOME",
+        "probability": 0.576226,
+        "actualWinner": "HOME",
+        "result": "CORRECT",
+        "observationOnly": true,
+        "brierScore": 0.179584403076,
+        "logLoss": 0.551255334128627
+      }
+    },
+    {
+      "gamePk": 824566,
+      "gameId": "mlb-chicago-white-sox-cleveland-guardians",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "AWAY",
+      "pickTeam": "Cleveland Guardians",
+      "actualWinner": "AWAY",
+      "homeScore": 2,
+      "awayScore": 8,
+      "grade": "CORRECT",
+      "predictionProbability": 0.527835,
+      "baselineStatus": "PASS",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "RESEARCH_BASELINE_V0",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      },
+      "researchGrade": {
+        "marketType": "MONEYLINE_2WAY",
+        "selection": "AWAY",
+        "probability": 0.527835,
+        "actualWinner": "AWAY",
+        "result": "CORRECT",
+        "observationOnly": true,
+        "brierScore": 0.222939787225,
+        "logLoss": 0.6389715441141753
+      }
+    },
+    {
+      "gamePk": 824081,
+      "gameId": "mlb-kansas-city-royals-chicago-cubs",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Kansas City Royals",
+      "actualWinner": "AWAY",
+      "homeScore": 4,
+      "awayScore": 6,
+      "grade": "INCORRECT",
+      "predictionProbability": 0.514837,
+      "baselineStatus": "PASS",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_ONLY_NO_OFFICIAL",
+        "STARTER_IDENTITY_PARTIAL",
+        "STARTER_STATS_MISSING"
+      ],
+      "warnings": [],
+      "predictionContract": "RESEARCH_BASELINE_V0",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      },
+      "researchGrade": {
+        "marketType": "MONEYLINE_2WAY",
+        "selection": "HOME",
+        "probability": 0.514837,
+        "actualWinner": "AWAY",
+        "result": "INCORRECT",
+        "observationOnly": true,
+        "brierScore": 0.265057136569,
+        "logLoss": 0.7232703620334913
+      }
+    },
+    {
+      "gamePk": 823836,
+      "gameId": "mlb-miami-marlins-los-angeles-angels",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": "HOME",
+      "pickTeam": "Miami Marlins",
+      "actualWinner": "AWAY",
+      "homeScore": 3,
+      "awayScore": 4,
+      "grade": "BLOCKED",
+      "predictionProbability": 0.526307,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INSUFFICIENT_INPUT",
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_SAMPLE_INSUFFICIENT"
+      ],
+      "warnings": [],
+      "predictionContract": "RESEARCH_BASELINE_V0",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      },
+      "researchGrade": {
+        "marketType": "MONEYLINE_2WAY",
+        "selection": "HOME",
+        "probability": 0.526307,
+        "actualWinner": "AWAY",
+        "result": "NOT_GRADED",
+        "observationOnly": true,
+        "brierScore": null,
+        "logLoss": null
+      },
+      "blockedCounterfactual": {
+        "selection": "HOME",
+        "probability": 0.526307,
+        "actualWinner": "AWAY",
+        "result": "INCORRECT",
+        "denominatorIncluded": false
+      }
+    },
+    {
+      "gamePk": 823750,
+      "gameId": "mlb-milwaukee-brewers-minnesota-twins",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Milwaukee Brewers",
+      "actualWinner": "AWAY",
+      "homeScore": 6,
+      "awayScore": 8,
+      "grade": "INCORRECT",
+      "predictionProbability": 0.542239,
+      "baselineStatus": "PASS",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "RESEARCH_BASELINE_V0",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      },
+      "researchGrade": {
+        "marketType": "MONEYLINE_2WAY",
+        "selection": "HOME",
+        "probability": 0.542239,
+        "actualWinner": "AWAY",
+        "result": "INCORRECT",
+        "observationOnly": true,
+        "brierScore": 0.29402313312100004,
+        "logLoss": 0.7814080651318668
+      }
+    },
+    {
+      "gamePk": 823515,
+      "gameId": "mlb-new-york-yankees-atlanta-braves",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "New York Yankees",
+      "actualWinner": "HOME",
+      "homeScore": 3,
+      "awayScore": 2,
+      "grade": "CORRECT",
+      "predictionProbability": 0.55273,
+      "baselineStatus": "PASS",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "RESEARCH_BASELINE_V0",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      },
+      "researchGrade": {
+        "marketType": "MONEYLINE_2WAY",
+        "selection": "HOME",
+        "probability": 0.55273,
+        "actualWinner": "HOME",
+        "result": "CORRECT",
+        "observationOnly": true,
+        "brierScore": 0.20005045289999995,
+        "logLoss": 0.5928856426219417
+      }
+    },
+    {
+      "gamePk": 823428,
+      "gameId": "mlb-philadelphia-phillies-toronto-blue-jays",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Philadelphia Phillies",
+      "actualWinner": "AWAY",
+      "homeScore": 4,
+      "awayScore": 5,
+      "grade": "INCORRECT",
+      "predictionProbability": 0.555622,
+      "baselineStatus": "PASS",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "RESEARCH_BASELINE_V0",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      },
+      "researchGrade": {
+        "marketType": "MONEYLINE_2WAY",
+        "selection": "HOME",
+        "probability": 0.555622,
+        "actualWinner": "AWAY",
+        "result": "INCORRECT",
+        "observationOnly": true,
+        "brierScore": 0.30871580688399997,
+        "logLoss": 0.8110797273925677
+      }
+    },
+    {
+      "gamePk": 823349,
+      "gameId": "mlb-pittsburgh-pirates-new-york-mets",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Pittsburgh Pirates",
+      "actualWinner": "AWAY",
+      "homeScore": 4,
+      "awayScore": 6,
+      "grade": "INCORRECT",
+      "predictionProbability": 0.515048,
+      "baselineStatus": "PASS",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_SAMPLE_PARTIAL"
+      ],
+      "warnings": [],
+      "predictionContract": "RESEARCH_BASELINE_V0",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      },
+      "researchGrade": {
+        "marketType": "MONEYLINE_2WAY",
+        "selection": "HOME",
+        "probability": 0.515048,
+        "actualWinner": "AWAY",
+        "result": "INCORRECT",
+        "observationOnly": true,
+        "brierScore": 0.26527444230399994,
+        "logLoss": 0.7237053620145806
+      }
+    },
+    {
+      "gamePk": 823266,
+      "gameId": "mlb-san-diego-padres-houston-astros",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": "HOME",
+      "pickTeam": "San Diego Padres",
+      "actualWinner": "AWAY",
+      "homeScore": 3,
+      "awayScore": 6,
+      "grade": "BLOCKED",
+      "predictionProbability": 0.513678,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INSUFFICIENT_INPUT",
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_SAMPLE_INSUFFICIENT"
+      ],
+      "warnings": [],
+      "predictionContract": "RESEARCH_BASELINE_V0",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      },
+      "researchGrade": {
+        "marketType": "MONEYLINE_2WAY",
+        "selection": "HOME",
+        "probability": 0.513678,
+        "actualWinner": "AWAY",
+        "result": "NOT_GRADED",
+        "observationOnly": true,
+        "brierScore": null,
+        "logLoss": null
+      },
+      "blockedCounterfactual": {
+        "selection": "HOME",
+        "probability": 0.513678,
+        "actualWinner": "AWAY",
+        "result": "INCORRECT",
+        "denominatorIncluded": false
+      }
+    },
+    {
+      "gamePk": 823191,
+      "gameId": "mlb-san-francisco-giants-detroit-tigers",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "AWAY",
+      "pickTeam": "Detroit Tigers",
+      "actualWinner": "HOME",
+      "homeScore": 5,
+      "awayScore": 2,
+      "grade": "INCORRECT",
+      "predictionProbability": 0.504388,
+      "baselineStatus": "PASS",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_ONLY_NO_OFFICIAL",
+        "STARTER_IDENTITY_PARTIAL",
+        "STARTER_STATS_MISSING"
+      ],
+      "warnings": [],
+      "predictionContract": "RESEARCH_BASELINE_V0",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      },
+      "researchGrade": {
+        "marketType": "MONEYLINE_2WAY",
+        "selection": "AWAY",
+        "probability": 0.504388,
+        "actualWinner": "HOME",
+        "result": "INCORRECT",
+        "observationOnly": true,
+        "brierScore": 0.25440725454400004,
+        "logLoss": 0.7019619164452209
+      }
+    },
+    {
+      "gamePk": 823103,
+      "gameId": "mlb-seattle-mariners-tampa-bay-rays",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Seattle Mariners",
+      "actualWinner": "AWAY",
+      "homeScore": 1,
+      "awayScore": 2,
+      "grade": "INCORRECT",
+      "predictionProbability": 0.513103,
+      "baselineStatus": "PASS",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "RESEARCH_BASELINE_V0",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      },
+      "researchGrade": {
+        "marketType": "MONEYLINE_2WAY",
+        "selection": "HOME",
+        "probability": 0.513103,
+        "actualWinner": "AWAY",
+        "result": "INCORRECT",
+        "observationOnly": true,
+        "brierScore": 0.263274688609,
+        "logLoss": 0.7197026772419151
+      }
+    },
+    {
+      "gamePk": 823024,
+      "gameId": "mlb-st-louis-cardinals-colorado-rockies",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "St. Louis Cardinals",
+      "actualWinner": "HOME",
+      "homeScore": 3,
+      "awayScore": 2,
+      "grade": "CORRECT",
+      "predictionProbability": 0.544761,
+      "baselineStatus": "PASS",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "RESEARCH_BASELINE_V0",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      },
+      "researchGrade": {
+        "marketType": "MONEYLINE_2WAY",
+        "selection": "HOME",
+        "probability": 0.544761,
+        "actualWinner": "HOME",
+        "result": "CORRECT",
+        "observationOnly": true,
+        "brierScore": 0.20724254712099996,
+        "logLoss": 0.6074081126123111
+      }
+    },
+    {
+      "gamePk": 822863,
+      "gameId": "mlb-texas-rangers-baltimore-orioles",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Texas Rangers",
+      "actualWinner": "HOME",
+      "homeScore": 2,
+      "awayScore": 1,
+      "grade": "CORRECT",
+      "predictionProbability": 0.527078,
+      "baselineStatus": "PASS",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "RESEARCH_BASELINE_V0",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      },
+      "researchGrade": {
+        "marketType": "MONEYLINE_2WAY",
+        "selection": "HOME",
+        "probability": 0.527078,
+        "actualWinner": "HOME",
+        "result": "CORRECT",
+        "observationOnly": true,
+        "brierScore": 0.22365521808399996,
+        "logLoss": 0.6404067338026845
+      }
+    },
+    {
+      "gamePk": 822699,
+      "gameId": "mlb-washington-nationals-cincinnati-reds",
+      "matchStatus": "MATCHED",
+      "inputStatus": "BLOCKED",
+      "pick": "HOME",
+      "pickTeam": "Washington Nationals",
+      "actualWinner": "HOME",
+      "homeScore": 5,
+      "awayScore": 3,
+      "grade": "BLOCKED",
+      "predictionProbability": 0.507705,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INSUFFICIENT_INPUT",
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_NOT_AVAILABLE",
+        "MONEYLINE_INCOMPLETE",
+        "STARTER_IDENTITY_PARTIAL",
+        "STARTER_STATS_MISSING"
+      ],
+      "warnings": [],
+      "predictionContract": "RESEARCH_BASELINE_V0",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      },
+      "researchGrade": {
+        "marketType": "MONEYLINE_2WAY",
+        "selection": "HOME",
+        "probability": 0.507705,
+        "actualWinner": "HOME",
+        "result": "NOT_GRADED",
+        "observationOnly": true,
+        "brierScore": null,
+        "logLoss": null
+      },
+      "blockedCounterfactual": {
+        "selection": "HOME",
+        "probability": 0.507705,
+        "actualWinner": "HOME",
+        "result": "CORRECT",
+        "denominatorIncluded": false
+      }
+    }
+  ]
+}

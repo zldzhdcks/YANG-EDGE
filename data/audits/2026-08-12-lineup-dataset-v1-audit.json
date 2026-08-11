@@ -1,0 +1,189 @@
+{
+  "meta": {
+    "version": "mlb-lineup-dataset-v1-audit",
+    "kind": "lineup-dataset-v1-build-audit",
+    "datasetId": "mlb-lineup",
+    "schemaVersion": "mlb-lineup-dataset-v1",
+    "builderVersion": "lineup-dataset-builder-v1",
+    "dateKst": "2026-08-12",
+    "generatedAt": "2026-08-11T10:04:17.747Z",
+    "datasetStatus": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "researchOnly": true,
+    "intakeVersion": "mlb-schedule-first-lineup-v1",
+    "scheduleSource": "data/research/mlb/2026-08-12-schedule-v1.json",
+    "lineupSource": "mlb-statsapi",
+    "predictionRead": false,
+    "predictionHashSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "inputHashSha256": "1af98b4c4945e035dbaf459a95a4e76f9938f151f29a38cafff3668ac9e628f7",
+    "resultHashSha256": "fda79ff8a156bd6a665744faafa0ec32c6563f92e13ce5d10df4c9787f0238d2",
+    "firstResultHash": "fda79ff8a156bd6a665744faafa0ec32c6563f92e13ce5d10df4c9787f0238d2",
+    "secondResultHash": "fda79ff8a156bd6a665744faafa0ec32c6563f92e13ce5d10df4c9787f0238d2",
+    "hashMatched": true
+  },
+  "independentIntake": {
+    "scheduleGames": 15,
+    "providerGames": 15,
+    "matchedGames": 15,
+    "confirmed": 0,
+    "partial": 0,
+    "notReleased": 15,
+    "notCollected": 0,
+    "collectionStatus": {
+      "CONFIRMED": 0,
+      "PARTIAL": 0,
+      "NOT_RELEASED": 15,
+      "NOT_COLLECTED": 0,
+      "PROVIDER_ERROR": 0,
+      "MATCH_NOT_FOUND": 0,
+      "INVALID_RESPONSE": 0
+    },
+    "reasons": [
+      "Official starting lineup has not been released."
+    ]
+  },
+  "totals": {
+    "totalGames": 15,
+    "teamLineups": 30,
+    "completeLineups": 0,
+    "incompleteLineups": 30,
+    "totalStarters": 0,
+    "battingSlotDuplicates": 0,
+    "battingSlotMissing": 270,
+    "substitutesSeparated": 0,
+    "startersMarkedSubstitute": 0,
+    "preGameStatus": "NOT_COLLECTED",
+    "postGameStatuses": {
+      "COMPLETE": 0,
+      "INCOMPLETE": 30
+    },
+    "battingSideCollected": 0,
+    "peopleApiCalls": 0,
+    "confirmedGames": 0,
+    "partialGames": 0,
+    "notReleasedGames": 15,
+    "notCollectedGames": 0,
+    "collectionStatus": {
+      "CONFIRMED": 0,
+      "PARTIAL": 0,
+      "NOT_RELEASED": 15,
+      "NOT_COLLECTED": 0,
+      "PROVIDER_ERROR": 0,
+      "MATCH_NOT_FOUND": 0,
+      "INVALID_RESPONSE": 0
+    }
+  },
+  "cache": {
+    "firstRun": {
+      "rawHit": 16,
+      "rawMiss": 0,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 0
+    },
+    "secondRunWarm": {
+      "rawHit": 16,
+      "rawMiss": 0,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 0
+    }
+  },
+  "networkCalls": {
+    "firstRun": 0,
+    "secondRunWarm": 0
+  },
+  "regressionHashes": {
+    "before": {
+      "schedule": "ee05891a03717a651be1d56dbecbfa45a1f7c372e6f8babea2f3100ada0ccfc0",
+      "starter": "be12c842c70c9e3e713a6b9aa6e95fcd7755d158337c419131e5f7c8be931682",
+      "odds": "caf3e5e5332b0a05b4cf1a44dfd43c353d30b1f2d7d98d988538727c3bd48aa4",
+      "prediction": null
+    },
+    "after": {
+      "schedule": "ee05891a03717a651be1d56dbecbfa45a1f7c372e6f8babea2f3100ada0ccfc0",
+      "starter": "be12c842c70c9e3e713a6b9aa6e95fcd7755d158337c419131e5f7c8be931682",
+      "odds": "caf3e5e5332b0a05b4cf1a44dfd43c353d30b1f2d7d98d988538727c3bd48aa4",
+      "prediction": null
+    },
+    "unchanged": true
+  },
+  "checks": [
+    {
+      "id": "prediction-not-read",
+      "passed": true,
+      "detail": "collector does not open prediction snapshot"
+    },
+    {
+      "id": "schedule-source-present",
+      "passed": true,
+      "detail": "data/research/mlb/2026-08-12-schedule-v1.json"
+    },
+    {
+      "id": "result-hash-matched",
+      "passed": true,
+      "detail": "fda79ff8a156bd6a665744faafa0ec32c6563f92e13ce5d10df4c9787f0238d2 == fda79ff8a156bd6a665744faafa0ec32c6563f92e13ce5d10df4c9787f0238d2"
+    },
+    {
+      "id": "warm-network-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "people-api-calls-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "all-schedule-games-present",
+      "passed": true,
+      "detail": "games=15 rows=30"
+    },
+    {
+      "id": "complete-lineups-nine-starters",
+      "passed": true,
+      "detail": "complete=0"
+    },
+    {
+      "id": "confirmed-requires-complete",
+      "passed": true,
+      "detail": "confirmedGames=0"
+    },
+    {
+      "id": "no-invented-lineups",
+      "passed": true,
+      "detail": "NOT_RELEASED rows must have empty battingOrder"
+    },
+    {
+      "id": "regression-hashes-unchanged",
+      "passed": true,
+      "detail": "schedule/starter/odds/prediction"
+    },
+    {
+      "id": "engine-prohibited",
+      "passed": true,
+      "detail": "PROHIBITED"
+    }
+  ],
+  "legal": {
+    "mlbStatsSource": "INTERNAL_RESEARCH_ONLY",
+    "publicRuntimeUseAllowed": false,
+    "commercialRuntimeUseAllowed": false,
+    "rawResponseInResearchCacheOnly": true,
+    "mlbHtmlCrawling": false,
+    "sportsDataIoScrambled": false
+  },
+  "notes": [
+    "Schedule-first independent lineup intake — Prediction Snapshot is not an input.",
+    "Official lineups only from MLB Stats API boxscore / schedule hydrate=lineups.",
+    "Projected lineups are never invented.",
+    "preGameStatus=NOT_COLLECTED — no separate pre-game snapshot field.",
+    "team.battingOrder not used for starters (*00 slot rule).",
+    "Engine admission PROHIBITED"
+  ],
+  "artifacts": {
+    "dataset": "data/research/mlb/2026-08-12-lineup-dataset-v1.json",
+    "audit": "data/audits/2026-08-12-lineup-dataset-v1-audit.json"
+  }
+}
