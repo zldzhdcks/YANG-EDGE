@@ -23,6 +23,11 @@ export type MlbExpectedLineupCutoffLabel =
   | "LATE_OBSERVATION"
   | "UNKNOWN";
 
+/** Whether operator expected lineup content was captured for this schedule game. */
+export type MlbExpectedLineupGameObservationStatus =
+  | "OBSERVED"
+  | "NOT_OBSERVED";
+
 export type MlbExpectedBatterV0 = {
   battingOrder: number;
   displayName: string;
@@ -40,6 +45,12 @@ export type MlbExpectedLineupGameV0 = {
   firstPitchAt: string | null;
   joinStatus: MlbExpectedLineupJoinStatus;
   lineupStatus: "EXPECTED";
+  /**
+   * OBSERVED when operator draft exists with full away/home slots.
+   * NOT_OBSERVED when schedule game has no draft (partial slate).
+   * Omitted on legacy artifacts — infer on read.
+   */
+  observationStatus?: MlbExpectedLineupGameObservationStatus;
   awayLineup: MlbExpectedBatterV0[];
   homeLineup: MlbExpectedBatterV0[];
   observedAt: string | null;

@@ -8,6 +8,7 @@ import path from "node:path";
 import { loadMlbScheduleArtifact } from "@/lib/mlb/build-mlb-schedule-artifact";
 import { asNumber, asRecord, asString } from "@/lib/mlb/mlb-review-utils";
 import { mlbExpectedLineupObservationRel } from "./paths";
+import { inferExpectedLineupGameObservationStatus, normalizeExpectedLineupObservation } from "./normalize-game";
 import { validateNineSlotLineup } from "./parse-paste";
 import type {
   MlbExpectedBatterV0,
@@ -78,21 +79,23 @@ function summarize(
   for (const g of games) {
     if (g.joinStatus === "MATCHED") matchedGames++;
     else joinErrors++;
-    if (g.cutoffLabel === "PRE_GAME_OBSERVATION") preGameObservations++;
-    if (g.cutoffLabel === "LATE_OBSERVATION") lateObservations++;
 
-    const awayOk = g.awayLineup.length === 9;
-    const homeOk = g.homeLineup.length === 9;
-    if (awayOk) {
-      teamLineups++;
-      expectedBattingSlots += 9;
+    const observationStatus = inferExpectedLineupGameObservationStatus(g);
+    if (observationStatus === "OBSERVED") {
+      expectedGames++;
+      if (g.cutoffLabel === "PRE_GAME_OBSERVATION") preGameObservations++;
+      if (g.cutoffLabel === "LATE_OBSERVATION") lateObservations++;
+      if (g.awayLineup.length === 9) {
+        teamLineups++;
+        expectedBattingSlots += 9;
+      }
+      if (g.homeLineup.length === 9) {
+        teamLineups++;
+        expectedBattingSlots += 9;
+      }
+    } else {
+      missingGames++;
     }
-    if (homeOk) {
-      teamLineups++;
-      expectedBattingSlots += 9;
-    }
-    if (awayOk && homeOk) expectedGames++;
-    else missingGames++;
   }
 
   return {
@@ -117,6 +120,7 @@ export function computeExpectedLineupHash(
       games.map((g) => ({
         gamePk: g.gamePk,
         lineupStatus: g.lineupStatus,
+        observationStatus: g.observationStatus ?? inferExpectedLineupGameObservationStatus(g),
         awayLineup: g.awayLineup,
         homeLineup: g.homeLineup,
       })),
@@ -139,7 +143,7 @@ export async function loadMlbExpectedLineupObservation(input: {
     ) {
       return null;
     }
-    return raw as MlbExpectedLineupObservationV0;
+    return normalizeExpectedLineupObservation(raw as MlbExpectedLineupObservationV0);
   } catch {
     return null;
   }
@@ -164,10 +168,7 @@ export async function loadMlbExpectedLineupGameDetailPanel(input: {
   const game = await loadMlbExpectedLineupForGame(input);
   const provider =
     input.providerCollectionStatus?.trim() || "NOT RELEASED";
-  if (
-    !game ||
-    (game.awayLineup.length === 0 && game.homeLineup.length === 0)
-  ) {
+  if (!game) {
     return {
       available: false,
       lineupStatus: "NOT_AVAILABLE",
@@ -183,6 +184,25 @@ export async function loadMlbExpectedLineupGameDetailPanel(input: {
       homeLineup: [],
     };
   }
+
+  const observationStatus = inferExpectedLineupGameObservationStatus(game);
+  if (observationStatus === "NOT_OBSERVED") {
+    return {
+      available: false,
+      lineupStatus: "NOT_AVAILABLE",
+      providerLineupStatus: `Provider Lineup: ${provider}`,
+      operatorObservationStatus: "Operator Observation: NOT OBSERVED",
+      disclaimer: "예상 라인업 — 확정 아님",
+      observedAt: null,
+      isBeforeFirstPitch: null,
+      cutoffLabel: null,
+      awayTeam: game.awayTeam,
+      homeTeam: game.homeTeam,
+      awayLineup: [],
+      homeLineup: [],
+    };
+  }
+
   return {
     available: true,
     lineupStatus: "EXPECTED",
@@ -210,6 +230,8 @@ export async function saveMlbExpectedLineupObservation(input: {
   observedAt?: string;
   drafts: MlbExpectedLineupDraftGame[];
   allowLate?: boolean;
+  /** When true, schedule games without drafts are stored as NOT_OBSERVED (empty lineups). */
+  allowMissingDrafts?: boolean;
   note?: string;
 }): Promise<{
   ok: boolean;
@@ -246,6 +268,24 @@ export async function saveMlbExpectedLineupObservation(input: {
     const firstPitchAt =
       sched.commenceTimeUtc ?? sched.scheduledStartTime ?? null;
     if (!draft) {
+      if (input.allowMissingDrafts) {
+        games.push({
+          gamePk: sched.gamePk,
+          internalGameId: sched.internalGameId,
+          awayTeam: sched.awayTeam,
+          homeTeam: sched.homeTeam,
+          firstPitchAt,
+          joinStatus: "MATCHED",
+          lineupStatus: "EXPECTED",
+          observationStatus: "NOT_OBSERVED",
+          awayLineup: [],
+          homeLineup: [],
+          observedAt: null,
+          isBeforeFirstPitch: null,
+          cutoffLabel: null,
+        });
+        continue;
+      }
       errors.push(`MISSING_DRAFT:${sched.gamePk}`);
       continue;
     }
@@ -274,6 +314,7 @@ export async function saveMlbExpectedLineupObservation(input: {
       firstPitchAt,
       joinStatus: "MATCHED",
       lineupStatus: "EXPECTED",
+      observationStatus: "OBSERVED",
       awayLineup: draft.awayLineup
         .slice()
         .sort((a, b) => a.battingOrder - b.battingOrder)
@@ -341,6 +382,7 @@ export async function loadMlbExpectedLineupIntakeView(input: {
     homeTeam: string;
     firstPitchAt: string | null;
     joinStatus: string;
+    observationStatus: "OBSERVED" | "NOT_OBSERVED";
     awayLineup: MlbExpectedBatterV0[];
     homeLineup: MlbExpectedBatterV0[];
     cutoffLabel: string | null;
@@ -387,6 +429,9 @@ export async function loadMlbExpectedLineupIntakeView(input: {
         homeTeam: g.homeTeam,
         firstPitchAt: g.firstPitchAt,
         joinStatus: row?.joinStatus ?? "MATCHED",
+        observationStatus: row
+          ? inferExpectedLineupGameObservationStatus(row)
+          : "NOT_OBSERVED",
         awayLineup: row?.awayLineup ?? [],
         homeLineup: row?.homeLineup ?? [],
         cutoffLabel: row?.cutoffLabel ?? null,
