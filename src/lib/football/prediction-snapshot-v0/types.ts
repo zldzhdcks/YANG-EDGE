@@ -15,14 +15,27 @@ export const FOOTBALL_SNAPSHOT_SELECTION_POLICY =
 export type FootballSnapshotSelectionPolicy =
   typeof FOOTBALL_SNAPSHOT_SELECTION_POLICY;
 
+export const FOOTBALL_SNAPSHOT_MATCH_STATUSES = [
+  "FROZEN",
+  "NO_USABLE_ODDS_BEFORE_FREEZE",
+  "MISSED_SNAPSHOT_FREEZE_WINDOW",
+  "NOT_ELIGIBLE_FORMAT",
+  "COMPETITION_BLOCKED",
+  "IDENTITY_BLOCKED",
+  "UNKNOWN_ELIGIBILITY",
+] as const;
+
 export type FootballSnapshotMatchStatus =
-  | "FROZEN"
-  | "NO_USABLE_ODDS_BEFORE_FREEZE"
-  | "MISSED_SNAPSHOT_FREEZE_WINDOW"
-  | "NOT_ELIGIBLE_FORMAT"
-  | "COMPETITION_BLOCKED"
-  | "IDENTITY_BLOCKED"
-  | "UNKNOWN_ELIGIBILITY";
+  (typeof FOOTBALL_SNAPSHOT_MATCH_STATUSES)[number];
+
+export function isFootballSnapshotMatchStatus(
+  value: unknown,
+): value is FootballSnapshotMatchStatus {
+  return (
+    typeof value === "string" &&
+    (FOOTBALL_SNAPSHOT_MATCH_STATUSES as readonly string[]).includes(value)
+  );
+}
 
 export type FootballSnapshotMatchV0 = {
   matchId: string;
