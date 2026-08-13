@@ -95,6 +95,15 @@ export type GetOddsResult = {
   fetchedAt: string;
 };
 
+/** /sports/{sport}/events — odds 없이 event identity만. The Odds API 쿼터 미차감. */
+export type OddsEventListing = {
+  externalEventId: string;
+  sportKey: string;
+  homeTeam: string;
+  awayTeam: string;
+  commenceTime: string;
+};
+
 export interface OddsProvider {
   readonly kind: OddsProviderKind;
 
@@ -102,4 +111,10 @@ export interface OddsProvider {
 
   /** /sports 목록 — The Odds API는 쿼터 미차감. Dummy는 고정 목록. */
   listSports?(): Promise<{ sports: OddsSportInfo[]; usage: OddsUsageMeta }>;
+
+  /** /sports/{sport}/events — 쿼터 미차감. Dummy는 빈 목록. */
+  listEvents?(sportKey: string): Promise<{
+    events: OddsEventListing[];
+    usage: OddsUsageMeta;
+  }>;
 }

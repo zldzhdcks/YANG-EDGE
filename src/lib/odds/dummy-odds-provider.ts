@@ -7,6 +7,7 @@ import type {
   GetOddsParams,
   GetOddsResult,
   OddsBookmaker,
+  OddsEventListing,
   OddsSportInfo,
 } from "./types";
 
@@ -43,6 +44,12 @@ export class DummyOddsProvider implements OddsProvider {
       ],
       usage: emptyUsage(),
     };
+  }
+
+  async listEvents(
+    _sportKey: string,
+  ): Promise<{ events: OddsEventListing[]; usage: ReturnType<typeof emptyUsage> }> {
+    return { events: [], usage: emptyUsage() };
   }
 
   async getOdds(params: GetOddsParams): Promise<GetOddsResult> {

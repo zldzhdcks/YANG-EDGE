@@ -9,6 +9,7 @@ import type {
   GetOddsParams,
   GetOddsResult,
   OddsBookmaker,
+  OddsEventListing,
   OddsSportInfo,
   OddsUsageMeta,
 } from "./types";
@@ -86,6 +87,26 @@ export class TheOddsApiProvider implements OddsProvider {
       .filter((s): s is OddsSportInfo => s !== null);
 
     return { sports, usage };
+  }
+
+  /**
+   * GET /sports/{sport}/events — official docs: does not count against quota.
+   * Odds are not included. Use for identity discovery only.
+   */
+  async listEvents(
+    sportKey: string,
+  ): Promise<{ events: OddsEventListing[]; usage: OddsUsageMeta }> {
+    if (!sportKey?.trim()) {
+      throw new OddsApiError("sportKey is required", 400, "/events");
+    }
+    const path = `/sports/${encodeURIComponent(sportKey)}/events`;
+    const { json, usage } = await this.getJson<RawEvent[]>(path, {
+      dateFormat: "iso",
+    });
+    const events = (Array.isArray(json) ? json : [])
+      .map((raw) => mapEventListing(raw, sportKey))
+      .filter((e): e is OddsEventListing => e !== null);
+    return { events, usage };
   }
 
   /**
@@ -232,6 +253,20 @@ function mapSport(raw: RawSport): OddsSportInfo | null {
     description: raw.description ?? "",
     active: Boolean(raw.active),
     hasOutrights: Boolean(raw.has_outrights),
+  };
+}
+
+function mapEventListing(
+  raw: RawEvent,
+  fallbackSportKey: string,
+): OddsEventListing | null {
+  if (!raw.id || !raw.home_team || !raw.away_team) return null;
+  return {
+    externalEventId: raw.id,
+    sportKey: raw.sport_key || fallbackSportKey,
+    homeTeam: raw.home_team,
+    awayTeam: raw.away_team,
+    commenceTime: raw.commence_time || "",
   };
 }
 

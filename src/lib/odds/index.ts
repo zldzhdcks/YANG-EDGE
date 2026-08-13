@@ -10,6 +10,7 @@ export type {
   OddsSource,
   OddsSportInfo,
   OddsUsageMeta,
+  OddsEventListing,
 } from "./types";
 
 export {
