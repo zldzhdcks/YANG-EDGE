@@ -1,0 +1,262 @@
+{
+  "meta": {
+    "schemaVersion": "mlb-research-scorecard-v1-cumulative",
+    "builderVersion": "research-scorecard-builder-v1",
+    "dates": [
+      "2026-08-12",
+      "2026-08-13",
+      "2026-08-14"
+    ],
+    "generatedAt": "2026-08-13T12:19:15.119Z",
+    "researchOnly": true,
+    "engineAdmission": "PROHIBITED",
+    "autoApply": false,
+    "outcomeDenominatorExcludesAwaiting": true,
+    "scorecardHash": "86abc5bc0c614f2e51394d5eb8fb598579a473755b44af354605c3be8b19cb93"
+  },
+  "rowCount": 39,
+  "awaitingExcludedFromOutcomes": 9,
+  "calibration": {
+    "dimension": "CALIBRATION",
+    "gradedN": 27,
+    "correct": 15,
+    "incorrect": 12,
+    "accuracyPercent": 55.6,
+    "meanBrier": 0.2503718888888889,
+    "meanLogLoss": 0.6938951311960868,
+    "home": {
+      "n": 19,
+      "correct": 12,
+      "incorrect": 7,
+      "accuracyPercent": 63.2,
+      "sampleStatus": "EARLY_SAMPLE"
+    },
+    "away": {
+      "n": 8,
+      "correct": 3,
+      "incorrect": 5,
+      "accuracyPercent": 37.5,
+      "sampleStatus": "INSUFFICIENT_SAMPLE"
+    },
+    "probabilityBuckets": [
+      {
+        "bucket": "0.500-0.525",
+        "n": 23,
+        "predictedAverage": 0.5115652173913043,
+        "actualWinRate": 0.5652173913043478,
+        "status": "OK"
+      },
+      {
+        "bucket": "0.525-0.550",
+        "n": 4,
+        "predictedAverage": null,
+        "actualWinRate": null,
+        "status": "INSUFFICIENT_SAMPLE"
+      },
+      {
+        "bucket": "0.550-0.575",
+        "n": 0,
+        "predictedAverage": null,
+        "actualWinRate": null,
+        "status": "EMPTY"
+      },
+      {
+        "bucket": "0.575-0.600",
+        "n": 0,
+        "predictedAverage": null,
+        "actualWinRate": null,
+        "status": "EMPTY"
+      },
+      {
+        "bucket": "0.600-0.650",
+        "n": 0,
+        "predictedAverage": null,
+        "actualWinRate": null,
+        "status": "EMPTY"
+      }
+    ],
+    "sampleStatus": "EARLY_SAMPLE",
+    "note": "Graded research predictions only. BLOCKED and AWAITING excluded. Selected-pick probability via resolveSelectedPickProbability. No VERIFIED conclusion."
+  },
+  "recommendationSelection": {
+    "dimension": "RECOMMENDATION_SELECTION_VALUE",
+    "goodPick": {
+      "n": 4,
+      "correct": 2,
+      "incorrect": 2,
+      "accuracyPercent": 50,
+      "sampleStatus": "INSUFFICIENT_SAMPLE"
+    },
+    "nonGoodResearch": {
+      "n": 23,
+      "correct": 13,
+      "incorrect": 10,
+      "accuracyPercent": 56.5,
+      "sampleStatus": "EARLY_SAMPLE"
+    },
+    "note": "Research-only Good Picks vs remaining graded research baseline. Not official picks. No causal claim."
+  },
+  "inputCompleteness": {
+    "dimension": "INPUT_COMPLETENESS",
+    "starter": [
+      {
+        "availability": "BOTH_AVAILABLE",
+        "n": 24,
+        "correct": 14,
+        "incorrect": 10,
+        "accuracyPercent": 58.3,
+        "sampleStatus": "EARLY_SAMPLE"
+      },
+      {
+        "availability": "PARTIAL",
+        "n": 3,
+        "correct": 1,
+        "incorrect": 2,
+        "accuracyPercent": 33.3,
+        "sampleStatus": "INSUFFICIENT_SAMPLE"
+      },
+      {
+        "availability": "MISSING",
+        "n": 0,
+        "correct": 0,
+        "incorrect": 0,
+        "accuracyPercent": null,
+        "sampleStatus": "NO_SAMPLE"
+      }
+    ],
+    "note": "Observational correlation of pregame starter completeness with graded outcome. Not an Engine weight. Expected Lineup is coverage/timing only in v1."
+  },
+  "marketBenchmark": {
+    "dimension": "MARKET_BENCHMARK",
+    "koreanSource": "MANUAL_OBSERVATION",
+    "providerConfirmed": false,
+    "koreanUsedAsEngineInput": false,
+    "modelVsKorean": [
+      {
+        "group": "ALIGNED",
+        "n": 22,
+        "correct": 12,
+        "incorrect": 10,
+        "accuracyPercent": 54.5,
+        "sampleStatus": "EARLY_SAMPLE"
+      },
+      {
+        "group": "CONFLICT",
+        "n": 5,
+        "correct": 3,
+        "incorrect": 2,
+        "accuracyPercent": 60,
+        "sampleStatus": "INSUFFICIENT_SAMPLE"
+      }
+    ],
+    "koreanFavoriteBaseline": {
+      "n": 30,
+      "correct": 16,
+      "incorrect": 14,
+      "accuracyPercent": 53.3,
+      "sampleStatus": "DATA_COLLECTION"
+    },
+    "providerFavoriteBaseline": {
+      "n": 30,
+      "correct": 16,
+      "incorrect": 14,
+      "accuracyPercent": 53.3,
+      "sampleStatus": "DATA_COLLECTION"
+    },
+    "providerVsKorean": {
+      "SAME_FAVORITE": 39,
+      "DIFFERENT_FAVORITE": 0,
+      "NO_KOREAN_OBSERVATION": 0,
+      "NO_PROVIDER_MARKET": 0,
+      "AMBIGUOUS": 0
+    },
+    "note": "Korean market is operator-supplied, not Provider-confirmed, and is not an Engine input. Known 08-12/13/14 observations are post-Prediction. ALIGNED/CONFLICT accuracy uses graded research rows only. Favorite baselines use FINAL results and exclude AWAITING."
+  },
+  "expectedLineupCoverage": {
+    "observed": 31,
+    "notObserved": 8,
+    "expectedStatusCount": 31,
+    "confirmedStatusCount": 0,
+    "timing": {
+      "BEFORE_PREDICTION": 0,
+      "AFTER_PREDICTION_BUT_BEFORE_GAME": 31,
+      "LATE": 0,
+      "UNKNOWN": 0
+    },
+    "postPredictionPregameObservation": 31,
+    "usedByPredictionCount": 0,
+    "note": "Coverage and timing only. Not a v1 performance dimension. Never promoted to CONFIRMED. expectedLineupUsedByPrediction is always false."
+  },
+  "reviewTagQa": {
+    "dataClass": "POSTGAME_REVIEW_TAG",
+    "tags": [
+      {
+        "tag": "BULLPEN",
+        "winsWithTag": 7,
+        "lossesWithTag": 7,
+        "total": 14,
+        "dataClass": "POSTGAME_REVIEW_TAG",
+        "provenance": "UNKNOWN"
+      },
+      {
+        "tag": "MARKET",
+        "winsWithTag": 12,
+        "lossesWithTag": 2,
+        "total": 14,
+        "dataClass": "POSTGAME_REVIEW_TAG",
+        "provenance": "PREEXISTING_WARNING"
+      },
+      {
+        "tag": "LINEUP",
+        "winsWithTag": 0,
+        "lossesWithTag": 12,
+        "total": 12,
+        "dataClass": "POSTGAME_REVIEW_TAG",
+        "provenance": "PREEXISTING_WARNING"
+      },
+      {
+        "tag": "BLOWOUT",
+        "winsWithTag": 4,
+        "lossesWithTag": 3,
+        "total": 7,
+        "dataClass": "POSTGAME_REVIEW_TAG",
+        "provenance": "OUTCOME_DERIVED"
+      },
+      {
+        "tag": "ONE_RUN_GAME",
+        "winsWithTag": 1,
+        "lossesWithTag": 4,
+        "total": 5,
+        "dataClass": "POSTGAME_REVIEW_TAG",
+        "provenance": "OUTCOME_DERIVED"
+      },
+      {
+        "tag": "STARTER",
+        "winsWithTag": 0,
+        "lossesWithTag": 5,
+        "total": 5,
+        "dataClass": "POSTGAME_REVIEW_TAG",
+        "provenance": "PREEXISTING_WARNING"
+      }
+    ],
+    "note": "Descriptive postgame QA only. A tag appearing among losses is not evidence that the tag caused the loss. Not an Engine variable."
+  },
+  "researchStatus": {
+    "overall": "EARLY_SAMPLE",
+    "promotion": "PROHIBITED",
+    "allowedConclusions": [
+      "INSUFFICIENT_SAMPLE",
+      "EARLY_SAMPLE",
+      "DATA_COLLECTION",
+      "DATA_ACCUMULATION_CONTINUES",
+      "INVESTIGATE_MORE",
+      "NO_SAMPLE"
+    ],
+    "forbiddenConclusions": [
+      "PROMISING",
+      "READY_FOR_BACKTEST",
+      "VERIFIED"
+    ],
+    "note": "Reuses tracker SMALL_SAMPLE_THRESHOLD=10, EARLY_SAMPLE_THRESHOLD=30, and Registry <100 graded games cannot be PROMISING. autoApply remains false."
+  }
+}
