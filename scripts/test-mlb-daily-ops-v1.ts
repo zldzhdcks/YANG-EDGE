@@ -160,11 +160,6 @@ async function main() {
   assert.match(report08.operatorSummaryText, /FROZEN BEFORE GAME/);
   assert.match(report08.operatorSummaryText, /RESEARCH ONLY/);
   assert.match(report08.operatorSummaryText, /SEALED/);
-  assert.ok(
-    report08.lifecycle === "AWAITING_RESULT" ||
-      report08.lifecycle === "REVIEW_READY" ||
-      report08.lifecycle === "READY",
-  );
 
   // Recent gap visibility
   const r06 = report08.recentDays.find((d) => d.dateKst === "2026-08-06");

@@ -3,7 +3,7 @@
  * Run: npm run test:mlb-postgame-ops-v1
  *
  * Does not mutate repo Prediction / Recommendation Record.
- * FINAL / partial fixtures run in isolated temp cwd.
+ * PRE-RESULT / FINAL / PARTIAL / NO_PREGAME_SNAPSHOT fixtures run in isolated temp cwd.
  */
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
@@ -37,11 +37,63 @@ function copyRel(root: string, cwd: string, rel: string) {
   cpSync(src, dest);
 }
 
+const DATE_KST_08 = "2026-08-08";
+const PRED_08 = `data/predictions/mlb/${DATE_KST_08}.json`;
+const REC_08 = `data/recommendations/mlb/${DATE_KST_08}-engine-recommendations-v1.json`;
+const KOR_08 = `data/operator-input/mlb/${DATE_KST_08}-korean-market-odds-observation-v0.json`;
+const SCHEDULE_08 = `data/research/mlb/${DATE_KST_08}-schedule-v1.json`;
+const SUMMARY_08 = `data/research/mlb/${DATE_KST_08}-daily-research-summary-v1.json`;
+const SCHEDULE_07 = "data/research/mlb/2026-08-07-schedule-v1.json";
+
+function copyPregame08(root: string, cwd: string) {
+  copyRel(root, cwd, PRED_08);
+  copyRel(root, cwd, REC_08);
+  copyRel(root, cwd, KOR_08);
+  copyRel(root, cwd, SCHEDULE_08);
+  if (existsSync(path.join(root, SUMMARY_08))) {
+    copyRel(root, cwd, SUMMARY_08);
+  }
+  for (const rel of [
+    `data/research/mlb/${DATE_KST_08}-starter-dataset-v1.json`,
+    `data/research/mlb/${DATE_KST_08}-odds-history-dataset-v1.json`,
+    `data/research/mlb/${DATE_KST_08}-lineup-dataset-v1.json`,
+  ]) {
+    if (existsSync(path.join(root, rel))) copyRel(root, cwd, rel);
+  }
+}
+
+/** Isolated PRE-RESULT 08-08: sealed Recommendation, no official results / grades. */
+function createPreResultFixture(root: string): string {
+  const tmp = mkdtempSync(path.join(tmpdir(), "mlb-postgame-preresult-"));
+  copyPregame08(root, tmp);
+  for (const rel of [
+    `data/research/mlb/${DATE_KST_08}-official-results-v1.json`,
+    `data/research/mlb/${DATE_KST_08}-graded-predictions-v1.json`,
+    `data/research/mlb/${DATE_KST_08}-success-review-v1.json`,
+    `data/research/mlb/${DATE_KST_08}-failure-review-v1.json`,
+    `data/research/mlb/${DATE_KST_08}-daily-review-summary-v1.json`,
+  ]) {
+    assert.equal(
+      existsSync(path.join(tmp, rel)),
+      false,
+      `pre-result fixture must omit ${rel}`,
+    );
+  }
+  return tmp;
+}
+
+/** Isolated 08-07: schedule only → NO_PREGAME_SNAPSHOT. */
+function createNoPregameSnapshotFixture(root: string): string {
+  const tmp = mkdtempSync(path.join(tmpdir(), "mlb-postgame-nosnap-"));
+  copyRel(root, tmp, SCHEDULE_07);
+  return tmp;
+}
+
 async function main() {
   const root = process.cwd();
-  const pred08 = "data/predictions/mlb/2026-08-08.json";
-  const rec08 =
-    "data/recommendations/mlb/2026-08-08-engine-recommendations-v1.json";
+  const pred08 = PRED_08;
+  const rec08 = REC_08;
+  const kor08 = KOR_08;
   const beforePred = sha256File(pred08);
   const beforeRec = sha256File(rec08);
   const mtimePred = statSync(pred08).mtimeMs;
@@ -49,10 +101,16 @@ async function main() {
   const hash08 = JSON.parse(readFileSync(pred08, "utf8")).meta
     .predictionHashSha256 as string;
   assert.ok(hash08.startsWith("809b3973"));
+  const beforeKor = sha256File(kor08);
+  const mtimeKor = statSync(kor08).mtimeMs;
+  const korHash = JSON.parse(readFileSync(kor08, "utf8"))
+    .koreanMarketOddsHash as string;
 
-  // --- 08-07 NO_PREGAME_SNAPSHOT ---
+  // --- 08-07 NO_PREGAME_SNAPSHOT (isolated: schedule only) ---
+  const noSnapCwd = createNoPregameSnapshotFixture(root);
   const r07 = await runMlbPostgameOpsV1({
     dateKst: "2026-08-07",
+    cwd: noSnapCwd,
     assessOnly: true,
   });
   assert.equal(r07.opsSuccess, false);
@@ -63,16 +121,11 @@ async function main() {
   assert.match(r07.operatorSummaryText, /NO_PREGAME_SNAPSHOT/);
   assert.match(r07.operatorSummaryText, /사후 Prediction 생성 금지/);
 
-  // --- 08-08 assess: sealed record, awaiting results ---
-  const kor08 =
-    "data/operator-input/mlb/2026-08-08-korean-market-odds-observation-v0.json";
-  const beforeKor = sha256File(kor08);
-  const mtimeKor = statSync(kor08).mtimeMs;
-  const korHash = JSON.parse(readFileSync(kor08, "utf8"))
-    .koreanMarketOddsHash as string;
-
+  // --- 08-08 assess: sealed record, awaiting results (isolated PRE-RESULT) ---
+  const preResultCwd = createPreResultFixture(root);
   const r08 = await runMlbPostgameOpsV1({
-    dateKst: "2026-08-08",
+    dateKst: DATE_KST_08,
+    cwd: preResultCwd,
     assessOnly: true,
   });
   assert.equal(r08.opsSuccess, true);
@@ -105,10 +158,11 @@ async function main() {
   assert.equal(statSync(pred08).mtimeMs, mtimePred);
   assert.equal(statSync(rec08).mtimeMs, mtimeRec);
   assert.equal(statSync(kor08).mtimeMs, mtimeKor);
+  assert.equal(sha256File(path.join(preResultCwd, rec08)), beforeRec);
 
   // --- Fixture: FINAL slate in temp cwd ---
   const finalCwd = mkdtempSync(path.join(tmpdir(), "mlb-postgame-final-"));
-  const dateKst = "2026-08-08";
+  const dateKst = DATE_KST_08;
   const sealed = JSON.parse(readFileSync(rec08, "utf8")) as {
     picks: Array<{
       gameId: string;
@@ -118,23 +172,8 @@ async function main() {
     }>;
     predictionHash: string;
   };
-  const scheduleRel = `data/research/mlb/${dateKst}-schedule-v1.json`;
-  const summaryRel = `data/research/mlb/${dateKst}-daily-research-summary-v1.json`;
-  copyRel(root, finalCwd, pred08);
-  copyRel(root, finalCwd, rec08);
-  copyRel(root, finalCwd, kor08);
-  copyRel(root, finalCwd, scheduleRel);
-  if (existsSync(path.join(root, summaryRel))) {
-    copyRel(root, finalCwd, summaryRel);
-  }
-  // Copy starter/odds/lineup if present (review may reference)
-  for (const rel of [
-    `data/research/mlb/${dateKst}-starter-dataset-v1.json`,
-    `data/research/mlb/${dateKst}-odds-history-dataset-v1.json`,
-    `data/research/mlb/${dateKst}-lineup-dataset-v1.json`,
-  ]) {
-    if (existsSync(path.join(root, rel))) copyRel(root, finalCwd, rel);
-  }
+  const scheduleRel = SCHEDULE_08;
+  copyPregame08(root, finalCwd);
 
   const schedule = JSON.parse(
     readFileSync(path.join(finalCwd, scheduleRel), "utf8"),
@@ -292,10 +331,7 @@ async function main() {
 
   // --- Partial FINAL fixture ---
   const partialCwd = mkdtempSync(path.join(tmpdir(), "mlb-postgame-partial-"));
-  copyRel(root, partialCwd, pred08);
-  copyRel(root, partialCwd, rec08);
-  copyRel(root, partialCwd, kor08);
-  copyRel(root, partialCwd, scheduleRel);
+  copyPregame08(root, partialCwd);
   const partialResults = {
     ...resultsDoc,
     games: resultsGames.map((g, i) =>
@@ -375,11 +411,17 @@ async function main() {
   assert.ok(joinFail.rows.every((r) => r.joinStatus === "MARKET_JOIN_FAILED"));
   assert.equal(joinFail.favoriteWon, 0);
 
-  // Preflight helper
-  const pf07 = await preflightMlbPostgameOps({ dateKst: "2026-08-07" });
+  // Preflight helper (isolated lifecycle fixtures)
+  const pf07 = await preflightMlbPostgameOps({
+    dateKst: "2026-08-07",
+    cwd: noSnapCwd,
+  });
   assert.equal(pf07.ok, false);
   assert.equal(pf07.lifecycle, "NO_PREGAME_SNAPSHOT");
-  const pf08 = await preflightMlbPostgameOps({ dateKst: "2026-08-08" });
+  const pf08 = await preflightMlbPostgameOps({
+    dateKst: DATE_KST_08,
+    cwd: preResultCwd,
+  });
   assert.equal(pf08.ok, true);
   assert.equal(pf08.recommendationRecord, "SEALED");
 
@@ -400,9 +442,9 @@ async function main() {
   console.log("npm run ops:mlb-daily -- YYYY-MM-DD\n");
   console.log("Postgame command:");
   console.log("npm run ops:mlb-postgame -- YYYY-MM-DD\n");
-  console.log("08-07:");
+  console.log("08-07 (isolated):");
   console.log("NO_PREGAME_SNAPSHOT\n");
-  console.log("08-08:");
+  console.log("08-08 (isolated PRE-RESULT):");
   console.log(`Prediction: PRE_GAME_SNAPSHOT_VERIFIED · ${hash08.slice(0, 8)}…`);
   console.log("Recommendation Record: SEALED");
   console.log(`Postgame Status: ${r08.lifecycle}`);
