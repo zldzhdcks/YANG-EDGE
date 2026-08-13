@@ -76,6 +76,11 @@ export type FixtureRaw = {
       short?: string;
       elapsed?: number | null;
     };
+    venue?: {
+      id?: number | null;
+      name?: string | null;
+      city?: string | null;
+    };
   };
   league: {
     id: number;
