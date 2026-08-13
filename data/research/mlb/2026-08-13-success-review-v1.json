@@ -1,0 +1,438 @@
+{
+  "schemaVersion": "mlb-success-review-v1",
+  "dateKst": "2026-08-13",
+  "gradedArtifact": "2026-08-13-graded-predictions-v1.json",
+  "gradedHash": "f07750b3710399e1e8c5e48e43de3a772939ea92aff2f140cffd9f00a9434672",
+  "reviewLayerVersion": "mlb-research-review-v2",
+  "games": [
+    {
+      "gamePk": 824967,
+      "gameId": "mlb-athletics-tampa-bay-rays",
+      "pick": "Tampa Bay Rays",
+      "pickSide": "AWAY",
+      "actualWinner": "AWAY",
+      "homeScore": 4,
+      "awayScore": 8,
+      "predictionProbability": 0.547144,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "PASS",
+      "starterStatus": "UNKNOWN",
+      "oddsStatus": "UNKNOWN",
+      "lineupStatus": "UNKNOWN",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "MARKET"
+      ],
+      "whyCorrect": [
+        {
+          "category": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (AWAY)"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (AWAY)"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 824883,
+      "gameId": "mlb-atlanta-braves-new-york-mets",
+      "pick": "Atlanta Braves",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 6,
+      "awayScore": 3,
+      "predictionProbability": 0.500096,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "PASS",
+      "starterStatus": "UNKNOWN",
+      "oddsStatus": "UNKNOWN",
+      "lineupStatus": "UNKNOWN",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_SAMPLE_PARTIAL"
+      ],
+      "successCategories": [
+        "MARKET"
+      ],
+      "whyCorrect": [
+        {
+          "category": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (HOME)"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (HOME)"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 824562,
+      "gameId": "mlb-chicago-white-sox-cincinnati-reds",
+      "pick": "Chicago White Sox",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 5,
+      "awayScore": 0,
+      "predictionProbability": 0.532252,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "PASS",
+      "starterStatus": "UNKNOWN",
+      "oddsStatus": "UNKNOWN",
+      "lineupStatus": "UNKNOWN",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "MARKET",
+        "BLOWOUT"
+      ],
+      "whyCorrect": [
+        {
+          "category": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (HOME)"
+        },
+        {
+          "category": "BLOWOUT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "comfortable margin 5 — outcome less likely pure coin-flip"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (HOME)"
+        },
+        {
+          "factor": "BLOWOUT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "comfortable margin 5 — outcome less likely pure coin-flip"
+        }
+      ],
+      "counterInterpretation": "Blowout win: stronger outcome signal, still not causal proof for any single feature.",
+      "reviewConfidence": "LOW",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 823916,
+      "gameId": "mlb-los-angeles-dodgers-kansas-city-royals",
+      "pick": "Los Angeles Dodgers",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 4,
+      "awayScore": 2,
+      "predictionProbability": 0.514267,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "PASS",
+      "starterStatus": "UNKNOWN",
+      "oddsStatus": "UNKNOWN",
+      "lineupStatus": "UNKNOWN",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "MARKET",
+        "BULLPEN"
+      ],
+      "whyCorrect": [
+        {
+          "category": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (HOME)"
+        },
+        {
+          "category": "BULLPEN",
+          "assessment": "INSUFFICIENT_EVIDENCE",
+          "evidence": "bullpen flagged but side still correct (warnings: BULLPEN_WEIGHT_DISABLED_V0)"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (HOME)"
+        },
+        {
+          "factor": "BULLPEN",
+          "assessment": "INSUFFICIENT_EVIDENCE",
+          "evidence": "bullpen flagged but side still correct (warnings: BULLPEN_WEIGHT_DISABLED_V0)"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 823833,
+      "gameId": "mlb-miami-marlins-pittsburgh-pirates",
+      "pick": "Miami Marlins",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 8,
+      "awayScore": 2,
+      "predictionProbability": 0.50267,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "PASS",
+      "starterStatus": "UNKNOWN",
+      "oddsStatus": "UNKNOWN",
+      "lineupStatus": "UNKNOWN",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "MARKET",
+        "BLOWOUT"
+      ],
+      "whyCorrect": [
+        {
+          "category": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (HOME)"
+        },
+        {
+          "category": "BLOWOUT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "comfortable margin 6 — outcome less likely pure coin-flip"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (HOME)"
+        },
+        {
+          "factor": "BLOWOUT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "comfortable margin 6 — outcome less likely pure coin-flip"
+        }
+      ],
+      "counterInterpretation": "Blowout win: stronger outcome signal, still not causal proof for any single feature.",
+      "reviewConfidence": "LOW",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 823672,
+      "gameId": "mlb-minnesota-twins-baltimore-orioles",
+      "pick": "Minnesota Twins",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 7,
+      "awayScore": 5,
+      "predictionProbability": 0.507092,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "PASS",
+      "starterStatus": "UNKNOWN",
+      "oddsStatus": "UNKNOWN",
+      "lineupStatus": "UNKNOWN",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "MARKET",
+        "BULLPEN"
+      ],
+      "whyCorrect": [
+        {
+          "category": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (HOME)"
+        },
+        {
+          "category": "BULLPEN",
+          "assessment": "INSUFFICIENT_EVIDENCE",
+          "evidence": "bullpen flagged but side still correct (warnings: BULLPEN_WEIGHT_DISABLED_V0)"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (HOME)"
+        },
+        {
+          "factor": "BULLPEN",
+          "assessment": "INSUFFICIENT_EVIDENCE",
+          "evidence": "bullpen flagged but side still correct (warnings: BULLPEN_WEIGHT_DISABLED_V0)"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 823511,
+      "gameId": "mlb-new-york-yankees-seattle-mariners",
+      "pick": "New York Yankees",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 10,
+      "awayScore": 5,
+      "predictionProbability": 0.500101,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "PASS",
+      "starterStatus": "UNKNOWN",
+      "oddsStatus": "UNKNOWN",
+      "lineupStatus": "UNKNOWN",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "MARKET",
+        "BLOWOUT"
+      ],
+      "whyCorrect": [
+        {
+          "category": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (HOME)"
+        },
+        {
+          "category": "BLOWOUT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "comfortable margin 5 — outcome less likely pure coin-flip"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (HOME)"
+        },
+        {
+          "factor": "BLOWOUT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "comfortable margin 5 — outcome less likely pure coin-flip"
+        }
+      ],
+      "counterInterpretation": "Blowout win: stronger outcome signal, still not causal proof for any single feature.",
+      "reviewConfidence": "LOW",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 823263,
+      "gameId": "mlb-san-diego-padres-milwaukee-brewers",
+      "pick": "San Diego Padres",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 4,
+      "awayScore": 3,
+      "predictionProbability": 0.518509,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "PASS",
+      "starterStatus": "UNKNOWN",
+      "oddsStatus": "UNKNOWN",
+      "lineupStatus": "UNKNOWN",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "ONE_RUN_GAME",
+        "BULLPEN"
+      ],
+      "whyCorrect": [
+        {
+          "category": "ONE_RUN_GAME",
+          "assessment": "WEAK_SUPPORT",
+          "evidence": "won by 1 run (margin 1) — correct but high variance"
+        },
+        {
+          "category": "BULLPEN",
+          "assessment": "INSUFFICIENT_EVIDENCE",
+          "evidence": "bullpen flagged but side still correct (warnings: BULLPEN_WEIGHT_DISABLED_V0)"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "ONE_RUN_GAME",
+          "assessment": "WEAK_SUPPORT",
+          "evidence": "won by 1 run (margin 1) — correct but high variance"
+        },
+        {
+          "factor": "BULLPEN",
+          "assessment": "INSUFFICIENT_EVIDENCE",
+          "evidence": "bullpen flagged but side still correct (warnings: BULLPEN_WEIGHT_DISABLED_V0)"
+        }
+      ],
+      "counterInterpretation": "One-run win: correct side does not prove model skill; variance dominates.",
+      "reviewConfidence": "LOW",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 822779,
+      "gameId": "mlb-toronto-blue-jays-boston-red-sox",
+      "pick": "Toronto Blue Jays",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 6,
+      "awayScore": 4,
+      "predictionProbability": 0.50282,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "PASS",
+      "starterStatus": "UNKNOWN",
+      "oddsStatus": "UNKNOWN",
+      "lineupStatus": "UNKNOWN",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "BULLPEN"
+      ],
+      "whyCorrect": [
+        {
+          "category": "BULLPEN",
+          "assessment": "INSUFFICIENT_EVIDENCE",
+          "evidence": "bullpen flagged but side still correct (warnings: BULLPEN_WEIGHT_DISABLED_V0)"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "BULLPEN",
+          "assessment": "INSUFFICIENT_EVIDENCE",
+          "evidence": "bullpen flagged but side still correct (warnings: BULLPEN_WEIGHT_DISABLED_V0)"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW",
+      "observationOnly": true
+    }
+  ],
+  "generatedAt": "2026-08-13T09:59:20.529Z",
+  "reviewHash": "74e46346c9152797a4cb59d1ad23d2b4babcefc44a53d2911fcf9d076adac17a"
+}
