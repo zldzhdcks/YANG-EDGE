@@ -70,7 +70,13 @@ export type EngineRecommendationRecordV1 = {
     gameId: string;
     pick: string | null;
     tier: "STRONG" | "GOOD";
+    /**
+     * SELECTED-pick win probability (percent) for newly sealed records.
+     * Legacy sealed records (e.g. 2026-08-13 AWAY) may store HOME-side % —
+     * do not rewrite historical bytes; treat as ambiguous without re-seal.
+     */
     probability: number | null;
+    /** Input-quality score 0–100 — not win probability. */
     confidence: number | null;
     sourceType: "ENGINE_SNAPSHOT";
     predictionHash: string;

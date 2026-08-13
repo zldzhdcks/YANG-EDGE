@@ -40,7 +40,15 @@ export type DailyPickCard = {
   matchupLine: string;
   pickTeam: string | null;
   pickSide: "HOME" | "AWAY" | null;
+  /**
+   * Probability that the SELECTED pick wins (percent).
+   * Not home-side probability. See resolveSelectedPickProbability.
+   */
   modelProbabilityPercent: number | null;
+  /**
+   * Input-quality / data confidence score 0–100 — NOT win probability.
+   * Tiering uses this (GOOD ≥ 70). Do not display as "% to win".
+   */
   confidence: number | null;
   reasonChips: string[];
   passReasons: DailyPickReasonCode[];

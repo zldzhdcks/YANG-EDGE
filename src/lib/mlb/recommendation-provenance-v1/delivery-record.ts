@@ -50,6 +50,7 @@ export function buildEngineRecommendationRecord(input: {
       gameId: c.gameId,
       pick: c.pickTeam,
       tier: c.tier as "STRONG" | "GOOD",
+      // Contract: selected-pick win % (from DailyPickCard.modelProbabilityPercent)
       probability: c.modelProbabilityPercent,
       confidence: c.confidence,
       sourceType: "ENGINE_SNAPSHOT" as const,

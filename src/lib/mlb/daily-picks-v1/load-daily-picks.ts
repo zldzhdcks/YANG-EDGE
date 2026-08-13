@@ -12,6 +12,7 @@ import {
   type RecommendationProvenance,
   type SlateProvenanceBanner,
 } from "@/lib/mlb/recommendation-provenance-v1";
+import { resolveSelectedPickProbability } from "./resolve-selected-pick-probability";
 import {
   passReasonLabel,
   starLabel,
@@ -463,13 +464,10 @@ export async function loadDailyPicksV1(input: {
     const pickTeam =
       asString(pred.baselinePick) ??
       asString(asRecord(pred.researchBaseline)?.pick);
-    const ml = asRecord(
-      (Array.isArray(pred.marketPredictions) ? pred.marketPredictions : []).find(
-        (m) => asString(asRecord(m)?.marketType) === "MONEYLINE_2WAY",
-      ),
+    const pickProb = resolveSelectedPickProbability(
+      pred as Record<string, unknown>,
     );
-    const sel = asString(asRecord(ml?.researchBaseline)?.selection);
-    const pickSide = sel === "HOME" || sel === "AWAY" ? sel : null;
+    const pickSide = pickProb.pickSide;
     const researchOnly = pred.researchOnly === true || pred.officialPick == null;
     const inputStatus = asString(pred.inputStatus);
     const src = sourceTypeForTier(tier);
@@ -491,7 +489,8 @@ export async function loadDailyPicksV1(input: {
       matchupLine: `${abbreviateTeamName(away)} @ ${abbreviateTeamName(home)}`,
       pickTeam,
       pickSide,
-      modelProbabilityPercent: asNumber(pred.modelProbability),
+      // SELECTED-pick win % — never raw HOME-side top-level modelProbability
+      modelProbabilityPercent: pickProb.selectedPickProbabilityPercent,
       confidence,
       reasonChips: reasonChips(pred, tier),
       passReasons,
