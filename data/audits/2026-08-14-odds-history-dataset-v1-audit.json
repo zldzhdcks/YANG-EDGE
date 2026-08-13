@@ -1,0 +1,180 @@
+{
+  "meta": {
+    "version": "mlb-odds-history-dataset-v1-audit",
+    "kind": "odds-history-dataset-v1-build-audit",
+    "datasetId": "mlb-odds-history",
+    "schemaVersion": "mlb-odds-history-dataset-v1",
+    "builderVersion": "odds-history-dataset-builder-v1",
+    "dateKst": "2026-08-14",
+    "generatedAt": "2026-08-13T10:22:39.825Z",
+    "datasetStatus": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "researchOnly": true,
+    "predictionHashSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "predictionUnchanged": true,
+    "predictionOptional": true,
+    "intakeVersion": "mlb-independent-odds-v1",
+    "scheduleSource": "data/research/mlb/2026-08-14-schedule-v1.json",
+    "inputHashSha256": "724af7ee3edd5deacb2f880f6ad14014be571da9ff83292c68081df43052f2f3",
+    "resultHashSha256": "ee3aa50a08804e2b380d9c6a91d581399446d976362359acb02caa418ce78cb7",
+    "firstResultHash": "ee3aa50a08804e2b380d9c6a91d581399446d976362359acb02caa418ce78cb7",
+    "secondResultHash": "ee3aa50a08804e2b380d9c6a91d581399446d976362359acb02caa418ce78cb7",
+    "hashMatched": true
+  },
+  "independentIntake": {
+    "provider": "The Odds API",
+    "scheduleGames": 9,
+    "providerEvents": 9,
+    "gamesMatched": 9,
+    "collected": 9,
+    "partial": 0,
+    "notCollected": 0,
+    "collectionStatus": {
+      "COLLECTED": 9,
+      "PARTIAL": 0,
+      "NOT_COLLECTED": 0,
+      "PROVIDER_ERROR": 0,
+      "MATCH_NOT_FOUND": 0,
+      "INVALID_RESPONSE": 0,
+      "FORMAT_MISMATCH": 0,
+      "ODDS_AFTER_CUTOFF": 0,
+      "TEAM_MAPPING_FAILED": 0,
+      "MARKET_NOT_AVAILABLE": 0
+    },
+    "missingReasons": [
+      "Moneyline collected from authorized Odds Provider."
+    ]
+  },
+  "games": 9,
+  "openingCollected": 9,
+  "latestCollected": 9,
+  "marketProbabilityCollected": 9,
+  "movement": {
+    "UP": 0,
+    "DOWN": 0,
+    "UNCHANGED": 9,
+    "NOT_COLLECTED": 0
+  },
+  "joinQuality": {
+    "MATCHED": 9,
+    "MISSING_ODDS": 0,
+    "TIMELINE_ONLY": 0
+  },
+  "provider": {
+    "id": "the-odds-api",
+    "displayName": "The Odds API",
+    "sportKey": "baseball_mlb"
+  },
+  "cacheUsage": {
+    "firstRun": {
+      "rawHit": 2,
+      "rawMiss": 0,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 0
+    },
+    "secondRunWarm": {
+      "rawHit": 2,
+      "rawMiss": 0,
+      "derivedHit": 0,
+      "derivedMiss": 0,
+      "networkCalls": 0
+    }
+  },
+  "networkCalls": {
+    "firstRun": 0,
+    "secondRunWarm": 0
+  },
+  "regressionHashes": {
+    "before": {
+      "prediction": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "starter": "4784797269572ccba6b20c0431eea03ebb36f459f2c51efc32d8d9579c15a344",
+      "bullpen": null,
+      "lineup": "a8966ee04ca91b8df17d0c5cd5bcb043555ea72284594fd7766c8ca796985890",
+      "weather": null,
+      "travel": null
+    },
+    "after": {
+      "prediction": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "starter": "4784797269572ccba6b20c0431eea03ebb36f459f2c51efc32d8d9579c15a344",
+      "bullpen": null,
+      "lineup": "a8966ee04ca91b8df17d0c5cd5bcb043555ea72284594fd7766c8ca796985890",
+      "weather": null,
+      "travel": null
+    },
+    "unchanged": true
+  },
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true,
+      "detail": "OPTIONAL_ABSENT"
+    },
+    {
+      "id": "schedule-source-present",
+      "passed": true,
+      "detail": "data/research/mlb/2026-08-14-schedule-v1.json"
+    },
+    {
+      "id": "result-hash-matched",
+      "passed": true,
+      "detail": "ee3aa50a08804e2b380d9c6a91d581399446d976362359acb02caa418ce78cb7 == ee3aa50a08804e2b380d9c6a91d581399446d976362359acb02caa418ce78cb7"
+    },
+    {
+      "id": "warm-network-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "pre-game-market-only",
+      "passed": true,
+      "detail": "PRE_GAME_MARKET"
+    },
+    {
+      "id": "no-closing-odds",
+      "passed": true,
+      "detail": "false"
+    },
+    {
+      "id": "movement-values-valid",
+      "passed": true,
+      "detail": "UP/DOWN/UNCHANGED/NOT_COLLECTED"
+    },
+    {
+      "id": "regression-hashes-unchanged",
+      "passed": true,
+      "detail": "prediction/starter/bullpen/lineup/weather/travel"
+    },
+    {
+      "id": "engine-prohibited",
+      "passed": true,
+      "detail": "PROHIBITED"
+    },
+    {
+      "id": "no-invented-odds",
+      "passed": true,
+      "detail": "COLLECTED rows must have opening+latest"
+    }
+  ],
+  "legal": {
+    "oddsSource": "REFERENCE_ODDS_PROVIDER",
+    "publicRuntimeUseAllowed": false,
+    "commercialRuntimeUseAllowed": false,
+    "rawResponseInResearchCacheOnly": true,
+    "closingOddsCollected": false,
+    "postGameOddsCollected": false
+  },
+  "notes": [
+    "PRE_GAME_MARKET only — no closing or post-game odds.",
+    "Schedule-artifact-first independent intake.",
+    "Primary odds from authorized The Odds API (h2h/spreads/totals).",
+    "Prediction Snapshot is optional supplemental metadata only.",
+    "Movement compares only previous odds-history artifact (same date).",
+    "Engine admission PROHIBITED."
+  ],
+  "artifacts": {
+    "dataset": "data/research/mlb/2026-08-14-odds-history-dataset-v1.json",
+    "audit": "data/audits/2026-08-14-odds-history-dataset-v1-audit.json"
+  }
+}
