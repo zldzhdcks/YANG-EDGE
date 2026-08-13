@@ -1,5 +1,8 @@
 import { sha256 } from "@/lib/mlb/mlb-review-hash";
-import type { Football1x2OddsArtifactV1 } from "./types";
+import type {
+  Football1x2OddsArtifactV1,
+  Football1x2OddsObservationV1,
+} from "./types";
 
 export function omitVolatileOddsMeta<
   T extends { generatedAt?: string; artifactHash?: string },
@@ -17,6 +20,12 @@ export function computeFootball1x2OddsArtifactHash(
   },
 ): string {
   return sha256({ ...doc, meta: omitVolatileOddsMeta(doc.meta) });
+}
+
+export function computeFootball1x2OddsObservationHash(
+  observation: Football1x2OddsObservationV1,
+): string {
+  return sha256(observation);
 }
 
 export function buildOddsObservationId(

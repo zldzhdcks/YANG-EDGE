@@ -22,6 +22,7 @@ export {
 export {
   buildOddsObservationId,
   computeFootball1x2OddsArtifactHash,
+  computeFootball1x2OddsObservationHash,
   omitVolatileOddsMeta,
 } from "./hash";
 export { football1x2OddsV1Rel } from "./paths";
