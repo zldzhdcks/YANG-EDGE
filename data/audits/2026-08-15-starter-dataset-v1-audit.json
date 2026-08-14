@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "version": "mlb-starter-dataset-v1-audit",
+    "kind": "starter-dataset-v1-accumulation-audit",
+    "datasetId": "mlb-starter",
+    "schemaVersion": "mlb-starter-dataset-v1",
+    "builderVersion": "starter-dataset-builder-v1",
+    "dateKst": "2026-08-15",
+    "generatedAt": "2026-08-14T14:14:45.260Z",
+    "datasetStatus": "COLLECTING",
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "researchOnly": true,
+    "preGameCreatedNew": false,
+    "preGameImmutablePreserved": true,
+    "predictionHashSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "predictionUnchanged": true,
+    "predictionOptional": true,
+    "resultHashSha256": "d0670843e53440a4e762fb2086fcf0b30f13854aa552acef46f49940c35cbbde",
+    "firstResultHash": "d0670843e53440a4e762fb2086fcf0b30f13854aa552acef46f49940c35cbbde",
+    "secondResultHash": "d0670843e53440a4e762fb2086fcf0b30f13854aa552acef46f49940c35cbbde",
+    "hashMatched": true
+  },
+  "totals": {
+    "gameCount": 14,
+    "rowCount": 28,
+    "probableAvailable": 25,
+    "probableMissing": 3,
+    "joinQuality": {
+      "MATCHED": 28,
+      "AMBIGUOUS": 0,
+      "UNLINKED": 0
+    },
+    "seasonStatsAvailable": 25,
+    "recentStartsAvailable": 25,
+    "averageSampleSize": 13.6,
+    "starterMatched": 0,
+    "starterChanged": 0,
+    "awaitingResult": 28,
+    "unknownOrNotFinal": 0,
+    "targetGameIncluded": 0,
+    "cutoffViolation": 0,
+    "probableOverwrite": 0,
+    "confirmedRows": 0,
+    "resultHash": "d0670843e53440a4e762fb2086fcf0b30f13854aa552acef46f49940c35cbbde"
+  },
+  "cache": {
+    "rawHit": 26,
+    "rawMiss": 0,
+    "derivedHit": 25,
+    "derivedMiss": 0,
+    "networkCalls": 0,
+    "postGameRawHit": 28,
+    "postGameRawMiss": 0,
+    "postGameNetworkCalls": 0
+  },
+  "checks": [
+    {
+      "id": "prediction-hash-unchanged",
+      "passed": true,
+      "detail": "OPTIONAL_ABSENT"
+    },
+    {
+      "id": "pregame-immutable",
+      "passed": true,
+      "detail": "skip-overwrite"
+    },
+    {
+      "id": "result-hash-matched",
+      "passed": true,
+      "detail": "d0670843e53440a4e762fb2086fcf0b30f13854aa552acef46f49940c35cbbde == d0670843e53440a4e762fb2086fcf0b30f13854aa552acef46f49940c35cbbde"
+    },
+    {
+      "id": "target-game-excluded",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "cutoff-violations-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "confirmed-rows-zero",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "id": "no-matched-changed-while-awaiting-same-row",
+      "passed": true,
+      "detail": "resolver returns AWAITING_RESULT unless abstractGameState=Final"
+    }
+  ],
+  "artifacts": {
+    "preGame": "data/research/mlb/2026-08-15-starter-dataset-v1.json",
+    "postGameReview": "data/research/mlb/2026-08-15-starter-postgame-review-v1.json",
+    "audit": "data/audits/2026-08-15-starter-dataset-v1-audit.json"
+  }
+}

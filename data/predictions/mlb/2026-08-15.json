@@ -1,0 +1,1993 @@
+{
+  "meta": {
+    "schemaVersion": "mlb-research-prediction-snapshot-v1",
+    "modelVersion": "mlb-baseline-prediction-v0.1.0",
+    "modelStatus": "RESEARCH_BASELINE_V0",
+    "configHash": "baa93d0c4be1d41b01b54e0f3acadc006f1b5c37943156816a6d7b05e04258b3",
+    "inputManifestHash": "08f7bf9511d27cde4c3d7e3a31a224305abe947712e8ea8d804db860c4128461",
+    "predictionHashSha256": "91b31008eefc9235ea327d063d99f4f3192b36a758b81be71c71d590cd6e513a",
+    "generatedAt": "2026-08-14T14:17:41.547Z",
+    "dateKst": "2026-08-15",
+    "marketTypes": [
+      "MONEYLINE_2WAY"
+    ],
+    "notImplementedMarkets": [
+      "TOTALS",
+      "RUN_LINE",
+      "FIRST_5_INNINGS",
+      "PLAYER_PROPS",
+      "PARLAY",
+      "HANDICAP"
+    ],
+    "eligibleCount": 0,
+    "passCount": 12,
+    "blockedCount": 2,
+    "researchBaselineCount": 12,
+    "officialPickCount": 0,
+    "observationOnly": false,
+    "useMarketPrior": true,
+    "dryRun": false
+  },
+  "summary": {
+    "totalGames": 14,
+    "predictedGames": 12,
+    "researchOnly": true,
+    "purchaseEligible": false
+  },
+  "predictions": [
+    {
+      "predictionId": "mlb-athletics-texas-rangers:mlb-baseline-v0",
+      "gameId": "mlb-athletics-texas-rangers",
+      "externalId": "athletics-texas-rangers",
+      "dateKst": "2026-08-15",
+      "startTimeKst": "10:40",
+      "league": "MLB",
+      "homeTeam": "Athletics",
+      "awayTeam": "Texas Rangers",
+      "baselinePick": "Athletics",
+      "modelProbability": 50.9,
+      "edgeScore": 0.8,
+      "confidence": 46,
+      "recommendationGrade": null,
+      "baselineStatus": "PASS",
+      "marketProbability": 50.1,
+      "valueEdge": 0.8,
+      "openingOdds": 1.97,
+      "latestOdds": 1.97,
+      "oddsMovement": "UNCHANGED",
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "startingPitcher",
+        "marketPrior",
+        "homeAdvantage"
+      ],
+      "missingFactors": [
+        "CONFIRMED_LINEUP",
+        "HOME_STARTER"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-14T14:14:46.423Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_ONLY_NO_OFFICIAL",
+        "STARTER_IDENTITY_PARTIAL",
+        "STARTER_STATS_MISSING"
+      ],
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "MARKET_ONLY_NO_OFFICIAL"
+      ],
+      "missingInputs": [
+        "CONFIRMED_LINEUP",
+        "HOME_STARTER"
+      ],
+      "researchBaseline": {
+        "pick": "Athletics",
+        "confidence": 46,
+        "modelProbability": 50.9,
+        "researchOnly": true
+      },
+      "marketPredictions": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "line": null,
+          "homeProbability": 0.509431,
+          "awayProbability": 0.490569,
+          "marketHomeProbability": 0.501265,
+          "marketAwayProbability": 0.498735,
+          "modelEdgeHome": 0.008166,
+          "modelEdgeAway": -0.008166,
+          "confidence": 46,
+          "officialStatus": "PASS",
+          "officialPick": null,
+          "researchBaseline": {
+            "selection": "HOME",
+            "probability": 0.509431,
+            "researchOnly": true
+          },
+          "components": {
+            "base": 0,
+            "starter": 0.002613,
+            "bullpen": 0,
+            "lineup": 0,
+            "homeAdvantage": 0.08,
+            "marketPrior": 0.001265
+          },
+          "missingInputs": [
+            "CONFIRMED_LINEUP",
+            "HOME_STARTER"
+          ],
+          "warnings": [
+            "BULLPEN_WEIGHT_DISABLED_V0",
+            "LINEUP_NOT_CONFIRMED",
+            "MARKET_ONLY_NO_OFFICIAL",
+            "STARTER_STATS_MISSING"
+          ],
+          "explanations": [
+            "LINEUP_NOT_CONFIRMED",
+            "MARKET_SUPPORTS_HOME",
+            "PROBABILITY_CLAMP_APPLIED"
+          ],
+          "inputQuality": "MARKET_ONLY",
+          "calibration": {
+            "rawHomeProbability": 0.520957,
+            "clampedHomeProbability": 0.509431,
+            "shrinkStrength": 0.55,
+            "clampMin": 0.35,
+            "clampMax": 0.65
+          }
+        }
+      ],
+      "modelVersion": "mlb-baseline-prediction-v0.1.0",
+      "modelStatus": "RESEARCH_BASELINE_V0",
+      "explanations": [
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_SUPPORTS_HOME",
+        "PROBABILITY_CLAMP_APPLIED"
+      ],
+      "components": {
+        "base": 0,
+        "starter": 0.002613,
+        "bullpen": 0,
+        "lineup": 0,
+        "homeAdvantage": 0.08,
+        "marketPrior": 0.001265
+      },
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null
+    },
+    {
+      "predictionId": "mlb-atlanta-braves-arizona-diamondbacks:mlb-baseline-v0",
+      "gameId": "mlb-atlanta-braves-arizona-diamondbacks",
+      "externalId": "atlanta-braves-arizona-diamondbacks",
+      "dateKst": "2026-08-15",
+      "startTimeKst": "08:15",
+      "league": "MLB",
+      "homeTeam": "Atlanta Braves",
+      "awayTeam": "Arizona Diamondbacks",
+      "baselinePick": "Atlanta Braves",
+      "modelProbability": 52.8,
+      "edgeScore": -11.9,
+      "confidence": 46,
+      "recommendationGrade": null,
+      "baselineStatus": "PASS",
+      "marketProbability": 64.7,
+      "valueEdge": -11.9,
+      "openingOdds": 1.53,
+      "latestOdds": 1.53,
+      "oddsMovement": "UNCHANGED",
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "startingPitcher",
+        "marketPrior",
+        "homeAdvantage"
+      ],
+      "missingFactors": [
+        "CONFIRMED_LINEUP",
+        "HOME_STARTER"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-14T14:14:46.423Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_ONLY_NO_OFFICIAL",
+        "STARTER_IDENTITY_PARTIAL",
+        "STARTER_STATS_MISSING"
+      ],
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "MARKET_ONLY_NO_OFFICIAL"
+      ],
+      "missingInputs": [
+        "CONFIRMED_LINEUP",
+        "HOME_STARTER"
+      ],
+      "researchBaseline": {
+        "pick": "Atlanta Braves",
+        "confidence": 46,
+        "modelProbability": 52.8,
+        "researchOnly": true
+      },
+      "marketPredictions": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "line": null,
+          "homeProbability": 0.527697,
+          "awayProbability": 0.472303,
+          "marketHomeProbability": 0.646651,
+          "marketAwayProbability": 0.353349,
+          "modelEdgeHome": -0.118954,
+          "modelEdgeAway": 0.118954,
+          "confidence": 46,
+          "officialStatus": "PASS",
+          "officialPick": null,
+          "researchBaseline": {
+            "selection": "HOME",
+            "probability": 0.527697,
+            "researchOnly": true
+          },
+          "components": {
+            "base": 0,
+            "starter": 0.016363,
+            "bullpen": 0,
+            "lineup": 0,
+            "homeAdvantage": 0.08,
+            "marketPrior": 0.151088
+          },
+          "missingInputs": [
+            "CONFIRMED_LINEUP",
+            "HOME_STARTER"
+          ],
+          "warnings": [
+            "BULLPEN_WEIGHT_DISABLED_V0",
+            "LINEUP_NOT_CONFIRMED",
+            "MARKET_ONLY_NO_OFFICIAL",
+            "STARTER_STATS_MISSING"
+          ],
+          "explanations": [
+            "LINEUP_NOT_CONFIRMED",
+            "MARKET_SUPPORTS_HOME",
+            "PROBABILITY_CLAMP_APPLIED"
+          ],
+          "inputQuality": "MARKET_ONLY",
+          "calibration": {
+            "rawHomeProbability": 0.561549,
+            "clampedHomeProbability": 0.527697,
+            "shrinkStrength": 0.55,
+            "clampMin": 0.35,
+            "clampMax": 0.65
+          }
+        }
+      ],
+      "modelVersion": "mlb-baseline-prediction-v0.1.0",
+      "modelStatus": "RESEARCH_BASELINE_V0",
+      "explanations": [
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_SUPPORTS_HOME",
+        "PROBABILITY_CLAMP_APPLIED"
+      ],
+      "components": {
+        "base": 0,
+        "starter": 0.016363,
+        "bullpen": 0,
+        "lineup": 0,
+        "homeAdvantage": 0.08,
+        "marketPrior": 0.151088
+      },
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null
+    },
+    {
+      "predictionId": "mlb-chicago-cubs-st-louis-cardinals:mlb-baseline-v0",
+      "gameId": "mlb-chicago-cubs-st-louis-cardinals",
+      "externalId": "chicago-cubs-st-louis-cardinals",
+      "dateKst": "2026-08-15",
+      "startTimeKst": "03:20",
+      "league": "MLB",
+      "homeTeam": "Chicago Cubs",
+      "awayTeam": "St. Louis Cardinals",
+      "baselinePick": "Chicago Cubs",
+      "modelProbability": 55.4,
+      "edgeScore": -6.8,
+      "confidence": 73,
+      "recommendationGrade": null,
+      "baselineStatus": "PASS",
+      "marketProbability": 62.2,
+      "valueEdge": -6.8,
+      "openingOdds": 1.59,
+      "latestOdds": 1.59,
+      "oddsMovement": "UNCHANGED",
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "dataAvailability": 0.65,
+      "usedFactors": [
+        "startingPitcher",
+        "marketPrior",
+        "homeAdvantage"
+      ],
+      "missingFactors": [
+        "CONFIRMED_LINEUP"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-14T14:14:46.423Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "INPUT_QUALITY_LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "CONFIRMED_LINEUP"
+      ],
+      "researchBaseline": {
+        "pick": "Chicago Cubs",
+        "confidence": 73,
+        "modelProbability": 55.4,
+        "researchOnly": true
+      },
+      "marketPredictions": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "line": null,
+          "homeProbability": 0.554293,
+          "awayProbability": 0.445707,
+          "marketHomeProbability": 0.622328,
+          "marketAwayProbability": 0.377672,
+          "modelEdgeHome": -0.068035,
+          "modelEdgeAway": 0.068035,
+          "confidence": 73,
+          "officialStatus": "PASS",
+          "officialPick": null,
+          "researchBaseline": {
+            "selection": "HOME",
+            "probability": 0.554293,
+            "researchOnly": true
+          },
+          "components": {
+            "base": 0,
+            "starter": 0.132413,
+            "bullpen": 0,
+            "lineup": 0,
+            "homeAdvantage": 0.08,
+            "marketPrior": 0.12486
+          },
+          "missingInputs": [
+            "CONFIRMED_LINEUP"
+          ],
+          "warnings": [
+            "BULLPEN_WEIGHT_DISABLED_V0",
+            "INPUT_QUALITY_LIMITED_INPUT",
+            "LINEUP_NOT_CONFIRMED"
+          ],
+          "explanations": [
+            "HOME_STARTER_EDGE",
+            "LINEUP_NOT_CONFIRMED",
+            "MARKET_SUPPORTS_HOME",
+            "PROBABILITY_CLAMP_APPLIED"
+          ],
+          "inputQuality": "LIMITED_INPUT",
+          "calibration": {
+            "rawHomeProbability": 0.583528,
+            "clampedHomeProbability": 0.554293,
+            "shrinkStrength": 0.35,
+            "clampMin": 0.35,
+            "clampMax": 0.65
+          }
+        }
+      ],
+      "modelVersion": "mlb-baseline-prediction-v0.1.0",
+      "modelStatus": "RESEARCH_BASELINE_V0",
+      "explanations": [
+        "HOME_STARTER_EDGE",
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_SUPPORTS_HOME",
+        "PROBABILITY_CLAMP_APPLIED"
+      ],
+      "components": {
+        "base": 0,
+        "starter": 0.132413,
+        "bullpen": 0,
+        "lineup": 0,
+        "homeAdvantage": 0.08,
+        "marketPrior": 0.12486
+      },
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null
+    },
+    {
+      "predictionId": "mlb-cincinnati-reds-miami-marlins:mlb-baseline-v0",
+      "gameId": "mlb-cincinnati-reds-miami-marlins",
+      "externalId": "cincinnati-reds-miami-marlins",
+      "dateKst": "2026-08-15",
+      "startTimeKst": "07:10",
+      "league": "MLB",
+      "homeTeam": "Cincinnati Reds",
+      "awayTeam": "Miami Marlins",
+      "baselinePick": "Cincinnati Reds",
+      "modelProbability": 52.9,
+      "edgeScore": 1.5,
+      "confidence": 73,
+      "recommendationGrade": null,
+      "baselineStatus": "PASS",
+      "marketProbability": 51.4,
+      "valueEdge": 1.5,
+      "openingOdds": 1.93,
+      "latestOdds": 1.93,
+      "oddsMovement": "UNCHANGED",
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "dataAvailability": 0.65,
+      "usedFactors": [
+        "startingPitcher",
+        "marketPrior",
+        "homeAdvantage"
+      ],
+      "missingFactors": [
+        "CONFIRMED_LINEUP"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-14T14:14:46.423Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "INPUT_QUALITY_LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "CONFIRMED_LINEUP"
+      ],
+      "researchBaseline": {
+        "pick": "Cincinnati Reds",
+        "confidence": 73,
+        "modelProbability": 52.9,
+        "researchOnly": true
+      },
+      "marketPredictions": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "line": null,
+          "homeProbability": 0.528518,
+          "awayProbability": 0.471482,
+          "marketHomeProbability": 0.513854,
+          "marketAwayProbability": 0.486146,
+          "modelEdgeHome": 0.014664,
+          "modelEdgeAway": -0.014664,
+          "confidence": 73,
+          "officialStatus": "PASS",
+          "officialPick": null,
+          "researchBaseline": {
+            "selection": "HOME",
+            "probability": 0.528518,
+            "researchOnly": true
+          },
+          "components": {
+            "base": 0,
+            "starter": 0.082088,
+            "bullpen": 0,
+            "lineup": 0,
+            "homeAdvantage": 0.08,
+            "marketPrior": 0.013858
+          },
+          "missingInputs": [
+            "CONFIRMED_LINEUP"
+          ],
+          "warnings": [
+            "BULLPEN_WEIGHT_DISABLED_V0",
+            "INPUT_QUALITY_LIMITED_INPUT",
+            "LINEUP_NOT_CONFIRMED"
+          ],
+          "explanations": [
+            "HOME_STARTER_EDGE",
+            "LINEUP_NOT_CONFIRMED",
+            "MARKET_SUPPORTS_HOME",
+            "PROBABILITY_CLAMP_APPLIED"
+          ],
+          "inputQuality": "LIMITED_INPUT",
+          "calibration": {
+            "rawHomeProbability": 0.543873,
+            "clampedHomeProbability": 0.528518,
+            "shrinkStrength": 0.35,
+            "clampMin": 0.35,
+            "clampMax": 0.65
+          }
+        }
+      ],
+      "modelVersion": "mlb-baseline-prediction-v0.1.0",
+      "modelStatus": "RESEARCH_BASELINE_V0",
+      "explanations": [
+        "HOME_STARTER_EDGE",
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_SUPPORTS_HOME",
+        "PROBABILITY_CLAMP_APPLIED"
+      ],
+      "components": {
+        "base": 0,
+        "starter": 0.082088,
+        "bullpen": 0,
+        "lineup": 0,
+        "homeAdvantage": 0.08,
+        "marketPrior": 0.013858
+      },
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null
+    },
+    {
+      "predictionId": "mlb-cleveland-guardians-san-diego-padres:mlb-baseline-v0",
+      "gameId": "mlb-cleveland-guardians-san-diego-padres",
+      "externalId": "cleveland-guardians-san-diego-padres",
+      "dateKst": "2026-08-15",
+      "startTimeKst": "08:10",
+      "league": "MLB",
+      "homeTeam": "Cleveland Guardians",
+      "awayTeam": "San Diego Padres",
+      "baselinePick": "Cleveland Guardians",
+      "modelProbability": 51.9,
+      "edgeScore": -3,
+      "confidence": 73,
+      "recommendationGrade": null,
+      "baselineStatus": "PASS",
+      "marketProbability": 54.9,
+      "valueEdge": -3,
+      "openingOdds": 1.81,
+      "latestOdds": 1.81,
+      "oddsMovement": "UNCHANGED",
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "dataAvailability": 0.65,
+      "usedFactors": [
+        "startingPitcher",
+        "marketPrior",
+        "homeAdvantage"
+      ],
+      "missingFactors": [
+        "CONFIRMED_LINEUP"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-14T14:14:46.423Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "INPUT_QUALITY_LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "CONFIRMED_LINEUP"
+      ],
+      "researchBaseline": {
+        "pick": "Cleveland Guardians",
+        "confidence": 73,
+        "modelProbability": 51.9,
+        "researchOnly": true
+      },
+      "marketPredictions": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "line": null,
+          "homeProbability": 0.51885,
+          "awayProbability": 0.48115,
+          "marketHomeProbability": 0.548629,
+          "marketAwayProbability": 0.451371,
+          "modelEdgeHome": -0.029779,
+          "modelEdgeAway": 0.029779,
+          "confidence": 73,
+          "officialStatus": "PASS",
+          "officialPick": null,
+          "researchBaseline": {
+            "selection": "HOME",
+            "probability": 0.51885,
+            "researchOnly": true
+          },
+          "components": {
+            "base": 0,
+            "starter": -0.01265,
+            "bullpen": 0,
+            "lineup": 0,
+            "homeAdvantage": 0.08,
+            "marketPrior": 0.048783
+          },
+          "missingInputs": [
+            "CONFIRMED_LINEUP"
+          ],
+          "warnings": [
+            "BULLPEN_WEIGHT_DISABLED_V0",
+            "INPUT_QUALITY_LIMITED_INPUT",
+            "LINEUP_NOT_CONFIRMED"
+          ],
+          "explanations": [
+            "LINEUP_NOT_CONFIRMED",
+            "MARKET_SUPPORTS_HOME",
+            "PROBABILITY_CLAMP_APPLIED"
+          ],
+          "inputQuality": "LIMITED_INPUT",
+          "calibration": {
+            "rawHomeProbability": 0.529001,
+            "clampedHomeProbability": 0.51885,
+            "shrinkStrength": 0.35,
+            "clampMin": 0.35,
+            "clampMax": 0.65
+          }
+        }
+      ],
+      "modelVersion": "mlb-baseline-prediction-v0.1.0",
+      "modelStatus": "RESEARCH_BASELINE_V0",
+      "explanations": [
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_SUPPORTS_HOME",
+        "PROBABILITY_CLAMP_APPLIED"
+      ],
+      "components": {
+        "base": 0,
+        "starter": -0.01265,
+        "bullpen": 0,
+        "lineup": 0,
+        "homeAdvantage": 0.08,
+        "marketPrior": 0.048783
+      },
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null
+    },
+    {
+      "predictionId": "mlb-detroit-tigers-chicago-white-sox:mlb-baseline-v0",
+      "gameId": "mlb-detroit-tigers-chicago-white-sox",
+      "externalId": "detroit-tigers-chicago-white-sox",
+      "dateKst": "2026-08-15",
+      "startTimeKst": "07:40",
+      "league": "MLB",
+      "homeTeam": "Detroit Tigers",
+      "awayTeam": "Chicago White Sox",
+      "baselinePick": null,
+      "modelProbability": 51.1,
+      "edgeScore": -6.6,
+      "confidence": 34,
+      "recommendationGrade": null,
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 57.7,
+      "valueEdge": -6.6,
+      "openingOdds": 1.73,
+      "latestOdds": 1.73,
+      "oddsMovement": "UNCHANGED",
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "startingPitcher",
+        "marketPrior",
+        "homeAdvantage"
+      ],
+      "missingFactors": [
+        "CONFIRMED_LINEUP"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-14T14:14:46.423Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "BLOCKED",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INSUFFICIENT_INPUT",
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_SAMPLE_INSUFFICIENT"
+      ],
+      "officialStatus": "BLOCKED",
+      "officialPick": null,
+      "passReasons": [],
+      "missingInputs": [
+        "CONFIRMED_LINEUP"
+      ],
+      "researchBaseline": {
+        "pick": null,
+        "confidence": 34,
+        "modelProbability": 51.1,
+        "researchOnly": true
+      },
+      "marketPredictions": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "line": null,
+          "homeProbability": 0.511086,
+          "awayProbability": 0.488914,
+          "marketHomeProbability": 0.577017,
+          "marketAwayProbability": 0.422983,
+          "modelEdgeHome": -0.065931,
+          "modelEdgeAway": 0.065931,
+          "confidence": 34,
+          "officialStatus": "BLOCKED",
+          "officialPick": null,
+          "researchBaseline": {
+            "selection": "HOME",
+            "probability": 0.511086,
+            "researchOnly": true
+          },
+          "components": {
+            "base": 0,
+            "starter": -0.009556,
+            "bullpen": 0,
+            "lineup": 0,
+            "homeAdvantage": 0.08,
+            "marketPrior": 0.077635
+          },
+          "missingInputs": [
+            "CONFIRMED_LINEUP"
+          ],
+          "warnings": [
+            "BULLPEN_WEIGHT_DISABLED_V0",
+            "INSUFFICIENT_INPUT",
+            "LINEUP_NOT_CONFIRMED",
+            "STARTER_SAMPLE_INSUFFICIENT"
+          ],
+          "explanations": [
+            "LINEUP_NOT_CONFIRMED",
+            "LOW_SAMPLE_SHRINK_APPLIED",
+            "MARKET_SUPPORTS_HOME",
+            "PROBABILITY_CLAMP_APPLIED"
+          ],
+          "inputQuality": "INSUFFICIENT",
+          "calibration": {
+            "rawHomeProbability": 0.536952,
+            "clampedHomeProbability": 0.511086,
+            "shrinkStrength": 0.7,
+            "clampMin": 0.35,
+            "clampMax": 0.65
+          }
+        }
+      ],
+      "modelVersion": "mlb-baseline-prediction-v0.1.0",
+      "modelStatus": "RESEARCH_BASELINE_V0",
+      "explanations": [
+        "LINEUP_NOT_CONFIRMED",
+        "LOW_SAMPLE_SHRINK_APPLIED",
+        "MARKET_SUPPORTS_HOME",
+        "PROBABILITY_CLAMP_APPLIED"
+      ],
+      "components": {
+        "base": 0,
+        "starter": -0.009556,
+        "bullpen": 0,
+        "lineup": 0,
+        "homeAdvantage": 0.08,
+        "marketPrior": 0.077635
+      },
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null
+    },
+    {
+      "predictionId": "mlb-houston-astros-seattle-mariners:mlb-baseline-v0",
+      "gameId": "mlb-houston-astros-seattle-mariners",
+      "externalId": "houston-astros-seattle-mariners",
+      "dateKst": "2026-08-15",
+      "startTimeKst": "09:10",
+      "league": "MLB",
+      "homeTeam": "Houston Astros",
+      "awayTeam": "Seattle Mariners",
+      "baselinePick": "Houston Astros",
+      "modelProbability": 52.6,
+      "edgeScore": -0.9,
+      "confidence": 73,
+      "recommendationGrade": null,
+      "baselineStatus": "PASS",
+      "marketProbability": 53.5,
+      "valueEdge": -0.9,
+      "openingOdds": 1.86,
+      "latestOdds": 1.86,
+      "oddsMovement": "UNCHANGED",
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "dataAvailability": 0.65,
+      "usedFactors": [
+        "startingPitcher",
+        "marketPrior",
+        "homeAdvantage"
+      ],
+      "missingFactors": [
+        "CONFIRMED_LINEUP"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-14T14:14:46.423Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "INPUT_QUALITY_LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "CONFIRMED_LINEUP"
+      ],
+      "researchBaseline": {
+        "pick": "Houston Astros",
+        "confidence": 73,
+        "modelProbability": 52.6,
+        "researchOnly": true
+      },
+      "marketPredictions": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "line": null,
+          "homeProbability": 0.525837,
+          "awayProbability": 0.474163,
+          "marketHomeProbability": 0.535,
+          "marketAwayProbability": 0.465,
+          "modelEdgeHome": -0.009163,
+          "modelEdgeAway": 0.009163,
+          "confidence": 73,
+          "officialStatus": "PASS",
+          "officialPick": null,
+          "researchBaseline": {
+            "selection": "HOME",
+            "probability": 0.525837,
+            "researchOnly": true
+          },
+          "components": {
+            "base": 0,
+            "starter": 0.044275,
+            "bullpen": 0,
+            "lineup": 0,
+            "homeAdvantage": 0.08,
+            "marketPrior": 0.035057
+          },
+          "missingInputs": [
+            "CONFIRMED_LINEUP"
+          ],
+          "warnings": [
+            "BULLPEN_WEIGHT_DISABLED_V0",
+            "INPUT_QUALITY_LIMITED_INPUT",
+            "LINEUP_NOT_CONFIRMED"
+          ],
+          "explanations": [
+            "HOME_STARTER_EDGE",
+            "LINEUP_NOT_CONFIRMED",
+            "MARKET_SUPPORTS_HOME",
+            "PROBABILITY_CLAMP_APPLIED"
+          ],
+          "inputQuality": "LIMITED_INPUT",
+          "calibration": {
+            "rawHomeProbability": 0.539749,
+            "clampedHomeProbability": 0.525837,
+            "shrinkStrength": 0.35,
+            "clampMin": 0.35,
+            "clampMax": 0.65
+          }
+        }
+      ],
+      "modelVersion": "mlb-baseline-prediction-v0.1.0",
+      "modelStatus": "RESEARCH_BASELINE_V0",
+      "explanations": [
+        "HOME_STARTER_EDGE",
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_SUPPORTS_HOME",
+        "PROBABILITY_CLAMP_APPLIED"
+      ],
+      "components": {
+        "base": 0,
+        "starter": 0.044275,
+        "bullpen": 0,
+        "lineup": 0,
+        "homeAdvantage": 0.08,
+        "marketPrior": 0.035057
+      },
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null
+    },
+    {
+      "predictionId": "mlb-los-angeles-angels-kansas-city-royals:mlb-baseline-v0",
+      "gameId": "mlb-los-angeles-angels-kansas-city-royals",
+      "externalId": "los-angeles-angels-kansas-city-royals",
+      "dateKst": "2026-08-15",
+      "startTimeKst": "10:38",
+      "league": "MLB",
+      "homeTeam": "Los Angeles Angels",
+      "awayTeam": "Kansas City Royals",
+      "baselinePick": "Kansas City Royals",
+      "modelProbability": 47.8,
+      "edgeScore": -1.7,
+      "confidence": 62,
+      "recommendationGrade": null,
+      "baselineStatus": "PASS",
+      "marketProbability": 49.5,
+      "valueEdge": -1.7,
+      "openingOdds": 2.02,
+      "latestOdds": 2.02,
+      "oddsMovement": "UNCHANGED",
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "dataAvailability": 0.65,
+      "usedFactors": [
+        "startingPitcher",
+        "marketPrior",
+        "homeAdvantage"
+      ],
+      "missingFactors": [
+        "CONFIRMED_LINEUP"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-14T14:14:46.423Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_SAMPLE_PARTIAL"
+      ],
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "INPUT_QUALITY_LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "CONFIRMED_LINEUP"
+      ],
+      "researchBaseline": {
+        "pick": "Kansas City Royals",
+        "confidence": 62,
+        "modelProbability": 47.8,
+        "researchOnly": true
+      },
+      "marketPredictions": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "line": null,
+          "homeProbability": 0.478008,
+          "awayProbability": 0.521992,
+          "marketHomeProbability": 0.495,
+          "marketAwayProbability": 0.505,
+          "modelEdgeHome": -0.016992,
+          "modelEdgeAway": 0.016992,
+          "confidence": 62,
+          "officialStatus": "PASS",
+          "officialPick": null,
+          "researchBaseline": {
+            "selection": "AWAY",
+            "probability": 0.521992,
+            "researchOnly": true
+          },
+          "components": {
+            "base": 0,
+            "starter": -0.210543,
+            "bullpen": 0,
+            "lineup": 0,
+            "homeAdvantage": 0.08,
+            "marketPrior": -0.005
+          },
+          "missingInputs": [
+            "CONFIRMED_LINEUP"
+          ],
+          "warnings": [
+            "BULLPEN_WEIGHT_DISABLED_V0",
+            "INPUT_QUALITY_LIMITED_INPUT",
+            "LINEUP_NOT_CONFIRMED",
+            "STARTER_SAMPLE_PARTIAL"
+          ],
+          "explanations": [
+            "AWAY_STARTER_EDGE",
+            "LINEUP_NOT_CONFIRMED",
+            "LOW_SAMPLE_SHRINK_APPLIED",
+            "MARKET_SUPPORTS_AWAY",
+            "PROBABILITY_CLAMP_APPLIED"
+          ],
+          "inputQuality": "LIMITED_INPUT",
+          "calibration": {
+            "rawHomeProbability": 0.466166,
+            "clampedHomeProbability": 0.478008,
+            "shrinkStrength": 0.35,
+            "clampMin": 0.35,
+            "clampMax": 0.65
+          }
+        }
+      ],
+      "modelVersion": "mlb-baseline-prediction-v0.1.0",
+      "modelStatus": "RESEARCH_BASELINE_V0",
+      "explanations": [
+        "AWAY_STARTER_EDGE",
+        "LINEUP_NOT_CONFIRMED",
+        "LOW_SAMPLE_SHRINK_APPLIED",
+        "MARKET_SUPPORTS_AWAY",
+        "PROBABILITY_CLAMP_APPLIED"
+      ],
+      "components": {
+        "base": 0,
+        "starter": -0.210543,
+        "bullpen": 0,
+        "lineup": 0,
+        "homeAdvantage": 0.08,
+        "marketPrior": -0.005
+      },
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null
+    },
+    {
+      "predictionId": "mlb-los-angeles-dodgers-milwaukee-brewers:mlb-baseline-v0",
+      "gameId": "mlb-los-angeles-dodgers-milwaukee-brewers",
+      "externalId": "los-angeles-dodgers-milwaukee-brewers",
+      "dateKst": "2026-08-15",
+      "startTimeKst": "11:10",
+      "league": "MLB",
+      "homeTeam": "Los Angeles Dodgers",
+      "awayTeam": "Milwaukee Brewers",
+      "baselinePick": "Los Angeles Dodgers",
+      "modelProbability": 55.3,
+      "edgeScore": -7.4,
+      "confidence": 73,
+      "recommendationGrade": null,
+      "baselineStatus": "PASS",
+      "marketProbability": 62.7,
+      "valueEdge": -7.4,
+      "openingOdds": 1.58,
+      "latestOdds": 1.58,
+      "oddsMovement": "UNCHANGED",
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "dataAvailability": 0.65,
+      "usedFactors": [
+        "startingPitcher",
+        "marketPrior",
+        "homeAdvantage"
+      ],
+      "missingFactors": [
+        "CONFIRMED_LINEUP"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-14T14:14:46.423Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "INPUT_QUALITY_LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "CONFIRMED_LINEUP"
+      ],
+      "researchBaseline": {
+        "pick": "Los Angeles Dodgers",
+        "confidence": 73,
+        "modelProbability": 55.3,
+        "researchOnly": true
+      },
+      "marketPredictions": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "line": null,
+          "homeProbability": 0.553055,
+          "awayProbability": 0.446945,
+          "marketHomeProbability": 0.627358,
+          "marketAwayProbability": 0.372642,
+          "modelEdgeHome": -0.074303,
+          "modelEdgeAway": 0.074303,
+          "confidence": 73,
+          "officialStatus": "PASS",
+          "officialPick": null,
+          "researchBaseline": {
+            "selection": "HOME",
+            "probability": 0.553055,
+            "researchOnly": true
+          },
+          "components": {
+            "base": 0,
+            "starter": 0.119212,
+            "bullpen": 0,
+            "lineup": 0,
+            "homeAdvantage": 0.08,
+            "marketPrior": 0.130225
+          },
+          "missingInputs": [
+            "CONFIRMED_LINEUP"
+          ],
+          "warnings": [
+            "BULLPEN_WEIGHT_DISABLED_V0",
+            "INPUT_QUALITY_LIMITED_INPUT",
+            "LINEUP_NOT_CONFIRMED"
+          ],
+          "explanations": [
+            "HOME_STARTER_EDGE",
+            "LINEUP_NOT_CONFIRMED",
+            "MARKET_SUPPORTS_HOME",
+            "PROBABILITY_CLAMP_APPLIED"
+          ],
+          "inputQuality": "LIMITED_INPUT",
+          "calibration": {
+            "rawHomeProbability": 0.581622,
+            "clampedHomeProbability": 0.553055,
+            "shrinkStrength": 0.35,
+            "clampMin": 0.35,
+            "clampMax": 0.65
+          }
+        }
+      ],
+      "modelVersion": "mlb-baseline-prediction-v0.1.0",
+      "modelStatus": "RESEARCH_BASELINE_V0",
+      "explanations": [
+        "HOME_STARTER_EDGE",
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_SUPPORTS_HOME",
+        "PROBABILITY_CLAMP_APPLIED"
+      ],
+      "components": {
+        "base": 0,
+        "starter": 0.119212,
+        "bullpen": 0,
+        "lineup": 0,
+        "homeAdvantage": 0.08,
+        "marketPrior": 0.130225
+      },
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null
+    },
+    {
+      "predictionId": "mlb-new-york-mets-washington-nationals:mlb-baseline-v0",
+      "gameId": "mlb-new-york-mets-washington-nationals",
+      "externalId": "new-york-mets-washington-nationals",
+      "dateKst": "2026-08-15",
+      "startTimeKst": "08:10",
+      "league": "MLB",
+      "homeTeam": "New York Mets",
+      "awayTeam": "Washington Nationals",
+      "baselinePick": null,
+      "modelProbability": 51.4,
+      "edgeScore": -1,
+      "confidence": 34,
+      "recommendationGrade": null,
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 52.4,
+      "valueEdge": -1,
+      "openingOdds": 1.89,
+      "latestOdds": 1.89,
+      "oddsMovement": "UNCHANGED",
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "startingPitcher",
+        "marketPrior",
+        "homeAdvantage"
+      ],
+      "missingFactors": [
+        "CONFIRMED_LINEUP"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-14T14:14:46.423Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "BLOCKED",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INSUFFICIENT_INPUT",
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_SAMPLE_INSUFFICIENT"
+      ],
+      "officialStatus": "BLOCKED",
+      "officialPick": null,
+      "passReasons": [],
+      "missingInputs": [
+        "CONFIRMED_LINEUP"
+      ],
+      "researchBaseline": {
+        "pick": null,
+        "confidence": 34,
+        "modelProbability": 51.4,
+        "researchOnly": true
+      },
+      "marketPredictions": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "line": null,
+          "homeProbability": 0.513775,
+          "awayProbability": 0.486225,
+          "marketHomeProbability": 0.52393,
+          "marketAwayProbability": 0.47607,
+          "modelEdgeHome": -0.010155,
+          "modelEdgeAway": 0.010155,
+          "confidence": 34,
+          "officialStatus": "BLOCKED",
+          "officialPick": null,
+          "researchBaseline": {
+            "selection": "HOME",
+            "probability": 0.513775,
+            "researchOnly": true
+          },
+          "components": {
+            "base": 0,
+            "starter": 0.080231,
+            "bullpen": 0,
+            "lineup": 0,
+            "homeAdvantage": 0.08,
+            "marketPrior": 0.023948
+          },
+          "missingInputs": [
+            "CONFIRMED_LINEUP"
+          ],
+          "warnings": [
+            "BULLPEN_WEIGHT_DISABLED_V0",
+            "INSUFFICIENT_INPUT",
+            "LINEUP_NOT_CONFIRMED",
+            "STARTER_SAMPLE_INSUFFICIENT"
+          ],
+          "explanations": [
+            "HOME_STARTER_EDGE",
+            "LINEUP_NOT_CONFIRMED",
+            "LOW_SAMPLE_SHRINK_APPLIED",
+            "MARKET_SUPPORTS_HOME",
+            "PROBABILITY_CLAMP_APPLIED"
+          ],
+          "inputQuality": "INSUFFICIENT",
+          "calibration": {
+            "rawHomeProbability": 0.545915,
+            "clampedHomeProbability": 0.513775,
+            "shrinkStrength": 0.7,
+            "clampMin": 0.35,
+            "clampMax": 0.65
+          }
+        }
+      ],
+      "modelVersion": "mlb-baseline-prediction-v0.1.0",
+      "modelStatus": "RESEARCH_BASELINE_V0",
+      "explanations": [
+        "HOME_STARTER_EDGE",
+        "LINEUP_NOT_CONFIRMED",
+        "LOW_SAMPLE_SHRINK_APPLIED",
+        "MARKET_SUPPORTS_HOME",
+        "PROBABILITY_CLAMP_APPLIED"
+      ],
+      "components": {
+        "base": 0,
+        "starter": 0.080231,
+        "bullpen": 0,
+        "lineup": 0,
+        "homeAdvantage": 0.08,
+        "marketPrior": 0.023948
+      },
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null
+    },
+    {
+      "predictionId": "mlb-pittsburgh-pirates-boston-red-sox:mlb-baseline-v0",
+      "gameId": "mlb-pittsburgh-pirates-boston-red-sox",
+      "externalId": "pittsburgh-pirates-boston-red-sox",
+      "dateKst": "2026-08-15",
+      "startTimeKst": "07:40",
+      "league": "MLB",
+      "homeTeam": "Pittsburgh Pirates",
+      "awayTeam": "Boston Red Sox",
+      "baselinePick": "Boston Red Sox",
+      "modelProbability": 48.5,
+      "edgeScore": 2,
+      "confidence": 73,
+      "recommendationGrade": null,
+      "baselineStatus": "PASS",
+      "marketProbability": 46.5,
+      "valueEdge": 2,
+      "openingOdds": 2.14,
+      "latestOdds": 2.14,
+      "oddsMovement": "UNCHANGED",
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "dataAvailability": 0.65,
+      "usedFactors": [
+        "startingPitcher",
+        "marketPrior",
+        "homeAdvantage"
+      ],
+      "missingFactors": [
+        "CONFIRMED_LINEUP"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-14T14:14:46.423Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "INPUT_QUALITY_LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "CONFIRMED_LINEUP"
+      ],
+      "researchBaseline": {
+        "pick": "Boston Red Sox",
+        "confidence": 73,
+        "modelProbability": 48.5,
+        "researchOnly": true
+      },
+      "marketPredictions": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "line": null,
+          "homeProbability": 0.484591,
+          "awayProbability": 0.515409,
+          "marketHomeProbability": 0.465,
+          "marketAwayProbability": 0.535,
+          "modelEdgeHome": 0.019591,
+          "modelEdgeAway": -0.019591,
+          "confidence": 73,
+          "officialStatus": "PASS",
+          "officialPick": null,
+          "researchBaseline": {
+            "selection": "AWAY",
+            "probability": 0.515409,
+            "researchOnly": true
+          },
+          "components": {
+            "base": 0,
+            "starter": -0.139838,
+            "bullpen": 0,
+            "lineup": 0,
+            "homeAdvantage": 0.08,
+            "marketPrior": -0.035057
+          },
+          "missingInputs": [
+            "CONFIRMED_LINEUP"
+          ],
+          "warnings": [
+            "BULLPEN_WEIGHT_DISABLED_V0",
+            "INPUT_QUALITY_LIMITED_INPUT",
+            "LINEUP_NOT_CONFIRMED"
+          ],
+          "explanations": [
+            "AWAY_STARTER_EDGE",
+            "LINEUP_NOT_CONFIRMED",
+            "MARKET_SUPPORTS_AWAY",
+            "PROBABILITY_CLAMP_APPLIED"
+          ],
+          "inputQuality": "LIMITED_INPUT",
+          "calibration": {
+            "rawHomeProbability": 0.476294,
+            "clampedHomeProbability": 0.484591,
+            "shrinkStrength": 0.35,
+            "clampMin": 0.35,
+            "clampMax": 0.65
+          }
+        }
+      ],
+      "modelVersion": "mlb-baseline-prediction-v0.1.0",
+      "modelStatus": "RESEARCH_BASELINE_V0",
+      "explanations": [
+        "AWAY_STARTER_EDGE",
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_SUPPORTS_AWAY",
+        "PROBABILITY_CLAMP_APPLIED"
+      ],
+      "components": {
+        "base": 0,
+        "starter": -0.139838,
+        "bullpen": 0,
+        "lineup": 0,
+        "homeAdvantage": 0.08,
+        "marketPrior": -0.035057
+      },
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null
+    },
+    {
+      "predictionId": "mlb-san-francisco-giants-colorado-rockies:mlb-baseline-v0",
+      "gameId": "mlb-san-francisco-giants-colorado-rockies",
+      "externalId": "san-francisco-giants-colorado-rockies",
+      "dateKst": "2026-08-15",
+      "startTimeKst": "11:15",
+      "league": "MLB",
+      "homeTeam": "San Francisco Giants",
+      "awayTeam": "Colorado Rockies",
+      "baselinePick": "San Francisco Giants",
+      "modelProbability": 55.1,
+      "edgeScore": 0.1,
+      "confidence": 73,
+      "recommendationGrade": null,
+      "baselineStatus": "PASS",
+      "marketProbability": 55,
+      "valueEdge": 0.1,
+      "openingOdds": 1.8,
+      "latestOdds": 1.8,
+      "oddsMovement": "UNCHANGED",
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "dataAvailability": 0.65,
+      "usedFactors": [
+        "startingPitcher",
+        "marketPrior",
+        "homeAdvantage"
+      ],
+      "missingFactors": [
+        "CONFIRMED_LINEUP"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-14T14:14:46.423Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "INPUT_QUALITY_LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "CONFIRMED_LINEUP"
+      ],
+      "researchBaseline": {
+        "pick": "San Francisco Giants",
+        "confidence": 73,
+        "modelProbability": 55.1,
+        "researchOnly": true
+      },
+      "marketPredictions": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "line": null,
+          "homeProbability": 0.550523,
+          "awayProbability": 0.449477,
+          "marketHomeProbability": 0.55,
+          "marketAwayProbability": 0.45,
+          "modelEdgeHome": 0.000523,
+          "modelEdgeAway": -0.000523,
+          "confidence": 73,
+          "officialStatus": "PASS",
+          "officialPick": null,
+          "researchBaseline": {
+            "selection": "HOME",
+            "probability": 0.550523,
+            "researchOnly": true
+          },
+          "components": {
+            "base": 0,
+            "starter": 0.183287,
+            "bullpen": 0,
+            "lineup": 0,
+            "homeAdvantage": 0.08,
+            "marketPrior": 0.050168
+          },
+          "missingInputs": [
+            "CONFIRMED_LINEUP"
+          ],
+          "warnings": [
+            "BULLPEN_WEIGHT_DISABLED_V0",
+            "INPUT_QUALITY_LIMITED_INPUT",
+            "LINEUP_NOT_CONFIRMED"
+          ],
+          "explanations": [
+            "HOME_STARTER_EDGE",
+            "LINEUP_NOT_CONFIRMED",
+            "MARKET_SUPPORTS_HOME",
+            "PROBABILITY_CLAMP_APPLIED"
+          ],
+          "inputQuality": "LIMITED_INPUT",
+          "calibration": {
+            "rawHomeProbability": 0.577728,
+            "clampedHomeProbability": 0.550523,
+            "shrinkStrength": 0.35,
+            "clampMin": 0.35,
+            "clampMax": 0.65
+          }
+        }
+      ],
+      "modelVersion": "mlb-baseline-prediction-v0.1.0",
+      "modelStatus": "RESEARCH_BASELINE_V0",
+      "explanations": [
+        "HOME_STARTER_EDGE",
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_SUPPORTS_HOME",
+        "PROBABILITY_CLAMP_APPLIED"
+      ],
+      "components": {
+        "base": 0,
+        "starter": 0.183287,
+        "bullpen": 0,
+        "lineup": 0,
+        "homeAdvantage": 0.08,
+        "marketPrior": 0.050168
+      },
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null
+    },
+    {
+      "predictionId": "mlb-tampa-bay-rays-baltimore-orioles:mlb-baseline-v0",
+      "gameId": "mlb-tampa-bay-rays-baltimore-orioles",
+      "externalId": "tampa-bay-rays-baltimore-orioles",
+      "dateKst": "2026-08-15",
+      "startTimeKst": "08:10",
+      "league": "MLB",
+      "homeTeam": "Tampa Bay Rays",
+      "awayTeam": "Baltimore Orioles",
+      "baselinePick": "Tampa Bay Rays",
+      "modelProbability": 51.5,
+      "edgeScore": -8.4,
+      "confidence": 46,
+      "recommendationGrade": null,
+      "baselineStatus": "PASS",
+      "marketProbability": 59.9,
+      "valueEdge": -8.4,
+      "openingOdds": 1.65,
+      "latestOdds": 1.65,
+      "oddsMovement": "UNCHANGED",
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "startingPitcher",
+        "marketPrior",
+        "homeAdvantage"
+      ],
+      "missingFactors": [
+        "AWAY_STARTER",
+        "CONFIRMED_LINEUP"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-14T14:14:46.423Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_ONLY_NO_OFFICIAL",
+        "STARTER_IDENTITY_PARTIAL",
+        "STARTER_STATS_MISSING"
+      ],
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "MARKET_ONLY_NO_OFFICIAL"
+      ],
+      "missingInputs": [
+        "AWAY_STARTER",
+        "CONFIRMED_LINEUP"
+      ],
+      "researchBaseline": {
+        "pick": "Tampa Bay Rays",
+        "confidence": 46,
+        "modelProbability": 51.5,
+        "researchOnly": true
+      },
+      "marketPredictions": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "line": null,
+          "homeProbability": 0.514982,
+          "awayProbability": 0.485018,
+          "marketHomeProbability": 0.59854,
+          "marketAwayProbability": 0.40146,
+          "modelEdgeHome": -0.083558,
+          "modelEdgeAway": 0.083558,
+          "confidence": 46,
+          "officialStatus": "PASS",
+          "officialPick": null,
+          "researchBaseline": {
+            "selection": "HOME",
+            "probability": 0.514982,
+            "researchOnly": true
+          },
+          "components": {
+            "base": 0,
+            "starter": -0.046475,
+            "bullpen": 0,
+            "lineup": 0,
+            "homeAdvantage": 0.08,
+            "marketPrior": 0.099846
+          },
+          "missingInputs": [
+            "AWAY_STARTER",
+            "CONFIRMED_LINEUP"
+          ],
+          "warnings": [
+            "BULLPEN_WEIGHT_DISABLED_V0",
+            "LINEUP_NOT_CONFIRMED",
+            "MARKET_ONLY_NO_OFFICIAL",
+            "STARTER_STATS_MISSING"
+          ],
+          "explanations": [
+            "AWAY_STARTER_EDGE",
+            "LINEUP_NOT_CONFIRMED",
+            "MARKET_SUPPORTS_HOME",
+            "PROBABILITY_CLAMP_APPLIED"
+          ],
+          "inputQuality": "MARKET_ONLY",
+          "calibration": {
+            "rawHomeProbability": 0.533293,
+            "clampedHomeProbability": 0.514982,
+            "shrinkStrength": 0.55,
+            "clampMin": 0.35,
+            "clampMax": 0.65
+          }
+        }
+      ],
+      "modelVersion": "mlb-baseline-prediction-v0.1.0",
+      "modelStatus": "RESEARCH_BASELINE_V0",
+      "explanations": [
+        "AWAY_STARTER_EDGE",
+        "LINEUP_NOT_CONFIRMED",
+        "MARKET_SUPPORTS_HOME",
+        "PROBABILITY_CLAMP_APPLIED"
+      ],
+      "components": {
+        "base": 0,
+        "starter": -0.046475,
+        "bullpen": 0,
+        "lineup": 0,
+        "homeAdvantage": 0.08,
+        "marketPrior": 0.099846
+      },
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null
+    },
+    {
+      "predictionId": "mlb-toronto-blue-jays-new-york-yankees:mlb-baseline-v0",
+      "gameId": "mlb-toronto-blue-jays-new-york-yankees",
+      "externalId": "toronto-blue-jays-new-york-yankees",
+      "dateKst": "2026-08-15",
+      "startTimeKst": "08:15",
+      "league": "MLB",
+      "homeTeam": "Toronto Blue Jays",
+      "awayTeam": "New York Yankees",
+      "baselinePick": "New York Yankees",
+      "modelProbability": 48.9,
+      "edgeScore": 6.7,
+      "confidence": 62,
+      "recommendationGrade": null,
+      "baselineStatus": "PASS",
+      "marketProbability": 42.2,
+      "valueEdge": 6.7,
+      "openingOdds": 2.36,
+      "latestOdds": 2.36,
+      "oddsMovement": "UNCHANGED",
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "dataAvailability": 0.65,
+      "usedFactors": [
+        "startingPitcher",
+        "marketPrior",
+        "homeAdvantage"
+      ],
+      "missingFactors": [
+        "CONFIRMED_LINEUP"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-14T14:14:46.423Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_SAMPLE_PARTIAL"
+      ],
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "INPUT_QUALITY_LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "CONFIRMED_LINEUP"
+      ],
+      "researchBaseline": {
+        "pick": "New York Yankees",
+        "confidence": 62,
+        "modelProbability": 48.9,
+        "researchOnly": true
+      },
+      "marketPredictions": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "line": null,
+          "homeProbability": 0.488968,
+          "awayProbability": 0.511032,
+          "marketHomeProbability": 0.421569,
+          "marketAwayProbability": 0.578431,
+          "modelEdgeHome": 0.067399,
+          "modelEdgeAway": -0.067399,
+          "confidence": 62,
+          "officialStatus": "PASS",
+          "officialPick": null,
+          "researchBaseline": {
+            "selection": "AWAY",
+            "probability": 0.511032,
+            "researchOnly": true
+          },
+          "components": {
+            "base": 0,
+            "starter": -0.068829,
+            "bullpen": 0,
+            "lineup": 0,
+            "homeAdvantage": 0.08,
+            "marketPrior": -0.079084
+          },
+          "missingInputs": [
+            "CONFIRMED_LINEUP"
+          ],
+          "warnings": [
+            "BULLPEN_WEIGHT_DISABLED_V0",
+            "INPUT_QUALITY_LIMITED_INPUT",
+            "LINEUP_NOT_CONFIRMED",
+            "STARTER_SAMPLE_PARTIAL"
+          ],
+          "explanations": [
+            "AWAY_STARTER_EDGE",
+            "LINEUP_NOT_CONFIRMED",
+            "LOW_SAMPLE_SHRINK_APPLIED",
+            "MARKET_SUPPORTS_AWAY",
+            "PROBABILITY_CLAMP_APPLIED"
+          ],
+          "inputQuality": "LIMITED_INPUT",
+          "calibration": {
+            "rawHomeProbability": 0.483028,
+            "clampedHomeProbability": 0.488968,
+            "shrinkStrength": 0.35,
+            "clampMin": 0.35,
+            "clampMax": 0.65
+          }
+        }
+      ],
+      "modelVersion": "mlb-baseline-prediction-v0.1.0",
+      "modelStatus": "RESEARCH_BASELINE_V0",
+      "explanations": [
+        "AWAY_STARTER_EDGE",
+        "LINEUP_NOT_CONFIRMED",
+        "LOW_SAMPLE_SHRINK_APPLIED",
+        "MARKET_SUPPORTS_AWAY",
+        "PROBABILITY_CLAMP_APPLIED"
+      ],
+      "components": {
+        "base": 0,
+        "starter": -0.068829,
+        "bullpen": 0,
+        "lineup": 0,
+        "homeAdvantage": 0.08,
+        "marketPrior": -0.079084
+      },
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null
+    }
+  ]
+}
