@@ -58,6 +58,8 @@
     "test:football-prediction-snapshot-v0": "tsx scripts/test-football-prediction-snapshot-v0.ts",
     "research:football-market-baseline": "tsx scripts/build-football-market-baseline-prediction-v0.ts",
     "test:football-market-baseline-prediction-v0": "tsx scripts/test-football-market-baseline-prediction-v0.ts",
+    "result:football": "tsx --env-file=.env.local scripts/build-football-official-result-v0.ts",
+    "test:football-official-result-v0": "tsx scripts/test-football-official-result-v0.ts",
     "intake:mlb-domestic-markets": "tsx --env-file=.env.local scripts/intake-mlb-domestic-markets-v1.ts",
     "result:mlb": "tsx --env-file=.env.local scripts/build-mlb-official-results-v1.ts",
     "test:mlb-official-result-cache-policy": "tsx scripts/test-mlb-official-result-cache-policy-v1.ts",

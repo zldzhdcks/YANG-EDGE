@@ -97,6 +97,17 @@ export type FixtureRaw = {
     home: number | null;
     away: number | null;
   };
+  /**
+   * API-Football period scores. Do not treat `goals` as 90-minute 1X2.
+   * fulltime = regulation (90 minutes + stoppage).
+   * extratime / penalty = extra-time / shootout periods (copied as-is).
+   */
+  score?: {
+    halftime?: { home: number | null; away: number | null };
+    fulltime?: { home: number | null; away: number | null };
+    extratime?: { home: number | null; away: number | null };
+    penalty?: { home: number | null; away: number | null };
+  };
 };
 
 export type GetFixturesResult = {
