@@ -81,11 +81,42 @@ const TEAM_ALIASES: Record<string, string> = {
   자이언츠: "San Francisco Giants",
   콜로라도: "Colorado Rockies",
   캔자스시티: "Kansas City Royals",
+  시카컵스: "Chicago Cubs",
+  세인카디: "St. Louis Cardinals",
+  신시레즈: "Cincinnati Reds",
+  마이말린: "Miami Marlins",
+  피츠파이: "Pittsburgh Pirates",
+  보스레드: "Boston Red Sox",
+  디트타이: "Detroit Tigers",
+  시카화이: "Chicago White Sox",
+  탬파레이: "Tampa Bay Rays",
+  볼티오리: "Baltimore Orioles",
+  뉴욕메츠: "New York Mets",
+  워싱내셔: "Washington Nationals",
+  클리가디: "Cleveland Guardians",
+  토론블루: "Toronto Blue Jays",
+  뉴욕양키: "New York Yankees",
+  애틀브레: "Atlanta Braves",
+  애리다이: "Arizona Diamondbacks",
+  휴스애스: "Houston Astros",
+  시애매리: "Seattle Mariners",
+  LA에인절: "Los Angeles Angels",
+  캔자로열: "Kansas City Royals",
+  애슬레틱: "Athletics",
+  텍사레인: "Texas Rangers",
+  LA다저스: "Los Angeles Dodgers",
+  밀워브루: "Milwaukee Brewers",
+  콜로로키: "Colorado Rockies",
 };
 
 function canonicalTeam(ko: string): string | null {
   const key = ko.trim();
   return TEAM_ALIASES[key] ?? null;
+}
+
+/** Exact screenshot abbreviation → schedule canonical team. No fuzzy match. */
+export function canonicalDomesticTeam(ko: string): string | null {
+  return canonicalTeam(ko);
 }
 
 function priceOk(n: number): boolean {

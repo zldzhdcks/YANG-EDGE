@@ -61,6 +61,8 @@
     "result:football": "tsx --env-file=.env.local scripts/build-football-official-result-v0.ts",
     "test:football-official-result-v0": "tsx scripts/test-football-official-result-v0.ts",
     "intake:mlb-domestic-markets": "tsx --env-file=.env.local scripts/intake-mlb-domestic-markets-v1.ts",
+    "intake:mlb-2026-08-15-operator-observations": "tsx --env-file=.env.local scripts/intake-mlb-2026-08-15-operator-observations.ts",
+    "correct:mlb-2026-08-15-expected-lineup-transcription": "tsx --env-file=.env.local scripts/intake-mlb-2026-08-15-operator-observations.ts --correct-lineup-transcription",
     "result:mlb": "tsx --env-file=.env.local scripts/build-mlb-official-results-v1.ts",
     "test:mlb-official-result-cache-policy": "tsx scripts/test-mlb-official-result-cache-policy-v1.ts",
     "grade:mlb": "tsx --env-file=.env.local scripts/grade-mlb-predictions-v1.ts",
@@ -127,7 +129,8 @@
     "freeze:npb-pregame-evidence": "tsx --env-file=.env.local scripts/freeze-npb-pregame-evidence-snapshot-v0.ts",
     "test:mlb-expected-lineup-observation-v0": "tsx scripts/test-mlb-expected-lineup-observation-v0.ts",
     "seed:mlb-expected-lineup": "tsx scripts/seed-mlb-expected-lineup-observation-v0.ts",
-    "test:mlb-korean-market-odds-observation-v0": "tsx scripts/test-mlb-korean-market-odds-observation-v0.ts"
+    "test:mlb-korean-market-odds-observation-v0": "tsx scripts/test-mlb-korean-market-odds-observation-v0.ts",
+    "test:mlb-2026-08-15-operator-observations-intake-v0": "tsx scripts/test-mlb-2026-08-15-operator-observations-intake-v0.ts"
   },
   "dependencies": {
     "next": "16.2.10",
