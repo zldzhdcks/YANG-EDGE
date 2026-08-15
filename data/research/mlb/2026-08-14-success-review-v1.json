@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "mlb-success-review-v1",
+  "dateKst": "2026-08-14",
+  "gradedArtifact": "2026-08-14-graded-predictions-v1.json",
+  "gradedHash": "f14fc53706dbcba012a42b0cc864fcfcee4b1112145e7249e17606a440c38aa7",
+  "reviewLayerVersion": "mlb-research-review-v2",
+  "games": [
+    {
+      "gamePk": 824238,
+      "gameId": "mlb-detroit-tigers-cleveland-guardians",
+      "pick": "Detroit Tigers",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 3,
+      "awayScore": 0,
+      "predictionProbability": 0.504432,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "PASS",
+      "starterStatus": "UNKNOWN",
+      "oddsStatus": "UNKNOWN",
+      "lineupStatus": "UNKNOWN",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "MODEL_ALIGNMENT"
+      ],
+      "whyCorrect": [
+        {
+          "category": "MODEL_ALIGNMENT",
+          "assessment": "INSUFFICIENT_EVIDENCE",
+          "evidence": "pick-side probability 50.4%"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "MODEL_ALIGNMENT",
+          "assessment": "INSUFFICIENT_EVIDENCE",
+          "evidence": "pick-side probability 50.4%"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 822776,
+      "gameId": "mlb-toronto-blue-jays-boston-red-sox",
+      "pick": "Boston Red Sox",
+      "pickSide": "AWAY",
+      "actualWinner": "AWAY",
+      "homeScore": 0,
+      "awayScore": 7,
+      "predictionProbability": 0.542306,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "PASS",
+      "starterStatus": "UNKNOWN",
+      "oddsStatus": "UNKNOWN",
+      "lineupStatus": "UNKNOWN",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_SAMPLE_PARTIAL"
+      ],
+      "successCategories": [
+        "MARKET",
+        "BLOWOUT"
+      ],
+      "whyCorrect": [
+        {
+          "category": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (AWAY)"
+        },
+        {
+          "category": "BLOWOUT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "comfortable margin 7 — outcome less likely pure coin-flip"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "MARKET",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "market also favored pick side (AWAY)"
+        },
+        {
+          "factor": "BLOWOUT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "comfortable margin 7 — outcome less likely pure coin-flip"
+        }
+      ],
+      "counterInterpretation": "Blowout win: stronger outcome signal, still not causal proof for any single feature.",
+      "reviewConfidence": "LOW",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 822696,
+      "gameId": "mlb-washington-nationals-chicago-cubs",
+      "pick": "Washington Nationals",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 7,
+      "awayScore": 0,
+      "predictionProbability": 0.507331,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "PASS",
+      "starterStatus": "UNKNOWN",
+      "oddsStatus": "UNKNOWN",
+      "lineupStatus": "UNKNOWN",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "BLOWOUT"
+      ],
+      "whyCorrect": [
+        {
+          "category": "BLOWOUT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "comfortable margin 7 — outcome less likely pure coin-flip"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "BLOWOUT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "comfortable margin 7 — outcome less likely pure coin-flip"
+        }
+      ],
+      "counterInterpretation": "Blowout win: stronger outcome signal, still not causal proof for any single feature.",
+      "reviewConfidence": "LOW",
+      "observationOnly": true
+    }
+  ],
+  "generatedAt": "2026-08-14T14:41:40.188Z",
+  "reviewHash": "6b09f14aca5ee36c67201e64b5849cd55c096a414884a1651029b09661030960"
+}

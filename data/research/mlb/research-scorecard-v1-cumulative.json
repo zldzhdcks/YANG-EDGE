@@ -7,51 +7,51 @@
       "2026-08-13",
       "2026-08-14"
     ],
-    "generatedAt": "2026-08-13T12:19:15.119Z",
+    "generatedAt": "2026-08-15T13:12:59.886Z",
     "researchOnly": true,
     "engineAdmission": "PROHIBITED",
     "autoApply": false,
     "outcomeDenominatorExcludesAwaiting": true,
-    "scorecardHash": "86abc5bc0c614f2e51394d5eb8fb598579a473755b44af354605c3be8b19cb93"
+    "scorecardHash": "9e117b1b4a02dcc8e9ebc9ef47b792c76b94846053fa7b9d4ddca294bf83ee21"
   },
   "rowCount": 39,
-  "awaitingExcludedFromOutcomes": 9,
+  "awaitingExcludedFromOutcomes": 0,
   "calibration": {
     "dimension": "CALIBRATION",
-    "gradedN": 27,
-    "correct": 15,
-    "incorrect": 12,
-    "accuracyPercent": 55.6,
-    "meanBrier": 0.2503718888888889,
-    "meanLogLoss": 0.6938951311960868,
+    "gradedN": 36,
+    "correct": 18,
+    "incorrect": 18,
+    "accuracyPercent": 50,
+    "meanBrier": 0.25202075,
+    "meanLogLoss": 0.697192916320925,
     "home": {
-      "n": 19,
-      "correct": 12,
-      "incorrect": 7,
-      "accuracyPercent": 63.2,
+      "n": 26,
+      "correct": 14,
+      "incorrect": 12,
+      "accuracyPercent": 53.8,
       "sampleStatus": "EARLY_SAMPLE"
     },
     "away": {
-      "n": 8,
-      "correct": 3,
-      "incorrect": 5,
-      "accuracyPercent": 37.5,
-      "sampleStatus": "INSUFFICIENT_SAMPLE"
+      "n": 10,
+      "correct": 4,
+      "incorrect": 6,
+      "accuracyPercent": 40,
+      "sampleStatus": "EARLY_SAMPLE"
     },
     "probabilityBuckets": [
       {
         "bucket": "0.500-0.525",
-        "n": 23,
-        "predictedAverage": 0.5115652173913043,
-        "actualWinRate": 0.5652173913043478,
+        "n": 28,
+        "predictedAverage": 0.5107142857142857,
+        "actualWinRate": 0.5357142857142857,
         "status": "OK"
       },
       {
         "bucket": "0.525-0.550",
-        "n": 4,
-        "predictedAverage": null,
-        "actualWinRate": null,
-        "status": "INSUFFICIENT_SAMPLE"
+        "n": 8,
+        "predictedAverage": 0.536625,
+        "actualWinRate": 0.375,
+        "status": "OK"
       },
       {
         "bucket": "0.550-0.575",
@@ -75,24 +75,24 @@
         "status": "EMPTY"
       }
     ],
-    "sampleStatus": "EARLY_SAMPLE",
+    "sampleStatus": "DATA_COLLECTION",
     "note": "Graded research predictions only. BLOCKED and AWAITING excluded. Selected-pick probability via resolveSelectedPickProbability. No VERIFIED conclusion."
   },
   "recommendationSelection": {
     "dimension": "RECOMMENDATION_SELECTION_VALUE",
     "goodPick": {
-      "n": 4,
+      "n": 5,
       "correct": 2,
-      "incorrect": 2,
-      "accuracyPercent": 50,
+      "incorrect": 3,
+      "accuracyPercent": 40,
       "sampleStatus": "INSUFFICIENT_SAMPLE"
     },
     "nonGoodResearch": {
-      "n": 23,
-      "correct": 13,
-      "incorrect": 10,
-      "accuracyPercent": 56.5,
-      "sampleStatus": "EARLY_SAMPLE"
+      "n": 31,
+      "correct": 16,
+      "incorrect": 15,
+      "accuracyPercent": 51.6,
+      "sampleStatus": "DATA_COLLECTION"
     },
     "note": "Research-only Good Picks vs remaining graded research baseline. Not official picks. No causal claim."
   },
@@ -101,11 +101,11 @@
     "starter": [
       {
         "availability": "BOTH_AVAILABLE",
-        "n": 24,
-        "correct": 14,
-        "incorrect": 10,
-        "accuracyPercent": 58.3,
-        "sampleStatus": "EARLY_SAMPLE"
+        "n": 33,
+        "correct": 17,
+        "incorrect": 16,
+        "accuracyPercent": 51.5,
+        "sampleStatus": "DATA_COLLECTION"
       },
       {
         "availability": "PARTIAL",
@@ -134,33 +134,33 @@
     "modelVsKorean": [
       {
         "group": "ALIGNED",
-        "n": 22,
-        "correct": 12,
-        "incorrect": 10,
-        "accuracyPercent": 54.5,
+        "n": 28,
+        "correct": 13,
+        "incorrect": 15,
+        "accuracyPercent": 46.4,
         "sampleStatus": "EARLY_SAMPLE"
       },
       {
         "group": "CONFLICT",
-        "n": 5,
-        "correct": 3,
-        "incorrect": 2,
-        "accuracyPercent": 60,
+        "n": 8,
+        "correct": 5,
+        "incorrect": 3,
+        "accuracyPercent": 62.5,
         "sampleStatus": "INSUFFICIENT_SAMPLE"
       }
     ],
     "koreanFavoriteBaseline": {
-      "n": 30,
-      "correct": 16,
-      "incorrect": 14,
-      "accuracyPercent": 53.3,
+      "n": 39,
+      "correct": 18,
+      "incorrect": 21,
+      "accuracyPercent": 46.2,
       "sampleStatus": "DATA_COLLECTION"
     },
     "providerFavoriteBaseline": {
-      "n": 30,
-      "correct": 16,
-      "incorrect": 14,
-      "accuracyPercent": 53.3,
+      "n": 39,
+      "correct": 18,
+      "incorrect": 21,
+      "accuracyPercent": 46.2,
       "sampleStatus": "DATA_COLLECTION"
     },
     "providerVsKorean": {
@@ -191,42 +191,42 @@
     "dataClass": "POSTGAME_REVIEW_TAG",
     "tags": [
       {
+        "tag": "LINEUP",
+        "winsWithTag": 0,
+        "lossesWithTag": 18,
+        "total": 18,
+        "dataClass": "POSTGAME_REVIEW_TAG",
+        "provenance": "PREEXISTING_WARNING"
+      },
+      {
         "tag": "BULLPEN",
         "winsWithTag": 7,
-        "lossesWithTag": 7,
-        "total": 14,
+        "lossesWithTag": 10,
+        "total": 17,
         "dataClass": "POSTGAME_REVIEW_TAG",
         "provenance": "UNKNOWN"
       },
       {
         "tag": "MARKET",
-        "winsWithTag": 12,
-        "lossesWithTag": 2,
-        "total": 14,
-        "dataClass": "POSTGAME_REVIEW_TAG",
-        "provenance": "PREEXISTING_WARNING"
-      },
-      {
-        "tag": "LINEUP",
-        "winsWithTag": 0,
-        "lossesWithTag": 12,
-        "total": 12,
+        "winsWithTag": 13,
+        "lossesWithTag": 3,
+        "total": 16,
         "dataClass": "POSTGAME_REVIEW_TAG",
         "provenance": "PREEXISTING_WARNING"
       },
       {
         "tag": "BLOWOUT",
-        "winsWithTag": 4,
-        "lossesWithTag": 3,
-        "total": 7,
+        "winsWithTag": 6,
+        "lossesWithTag": 6,
+        "total": 12,
         "dataClass": "POSTGAME_REVIEW_TAG",
         "provenance": "OUTCOME_DERIVED"
       },
       {
         "tag": "ONE_RUN_GAME",
         "winsWithTag": 1,
-        "lossesWithTag": 4,
-        "total": 5,
+        "lossesWithTag": 7,
+        "total": 8,
         "dataClass": "POSTGAME_REVIEW_TAG",
         "provenance": "OUTCOME_DERIVED"
       },
@@ -237,12 +237,20 @@
         "total": 5,
         "dataClass": "POSTGAME_REVIEW_TAG",
         "provenance": "PREEXISTING_WARNING"
+      },
+      {
+        "tag": "MODEL_ALIGNMENT",
+        "winsWithTag": 1,
+        "lossesWithTag": 0,
+        "total": 1,
+        "dataClass": "POSTGAME_REVIEW_TAG",
+        "provenance": "POSTGAME_DESCRIPTIVE"
       }
     ],
     "note": "Descriptive postgame QA only. A tag appearing among losses is not evidence that the tag caused the loss. Not an Engine variable."
   },
   "researchStatus": {
-    "overall": "EARLY_SAMPLE",
+    "overall": "DATA_COLLECTION",
     "promotion": "PROHIBITED",
     "allowedConclusions": [
       "INSUFFICIENT_SAMPLE",

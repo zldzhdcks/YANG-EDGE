@@ -1,0 +1,794 @@
+{
+  "meta": {
+    "schemaVersion": "mlb-prediction-review-detail-v0",
+    "dateKst": "2026-08-14",
+    "generatedAt": "2026-08-14T14:45:35.077Z",
+    "reviewDetailHash": "e6f69eb01d0dbaa34c0cc93f1bafe0a72d152c59e553ee7f347caf3378421e9c",
+    "predictionHashSha256": "f44d3ba65b64a7e6253afa09de25f79ea65d06b42bc19610e11126e60f2da297",
+    "dryRun": false,
+    "observationOnly": true
+  },
+  "schemaVersion": "mlb-prediction-review-detail-v0",
+  "dateKst": "2026-08-14",
+  "modelVersion": "mlb-baseline-prediction-v0.1.0",
+  "modelStatus": "RESEARCH_BASELINE_V0",
+  "predictionHashSha256": "f44d3ba65b64a7e6253afa09de25f79ea65d06b42bc19610e11126e60f2da297",
+  "configHash": "baa93d0c4be1d41b01b54e0f3acadc006f1b5c37943156816a6d7b05e04258b3",
+  "inputManifestHash": "8ebf6c9aefb80a0a51f1bf2088ee1c8df266abfb6a5d7877acb7dd26b5303cc9",
+  "gradeVersion": "mlb-grading-v1.1-v0-compat",
+  "scorecardGradeVersion": "mlb-scorecard-grade-v0",
+  "dailyMetrics": {
+    "finalGames": 15,
+    "researchCandidates": 9,
+    "researchGraded": 9,
+    "researchCorrect": 3,
+    "researchIncorrect": 6,
+    "researchAccuracy": {
+      "numerator": 3,
+      "denominator": 9,
+      "percent": 33.3,
+      "status": "OK"
+    },
+    "meanBrier": 0.2569074882356667,
+    "meanLogLoss": 0.7069666383455786,
+    "blocked": 0,
+    "officialSample": 0,
+    "reviewStatus": "VALID_REVIEW",
+    "scorecardAligned": {
+      "researchSample": 9,
+      "correct": 3,
+      "incorrect": 6,
+      "meanBrier": 0.2569074882356667,
+      "meanLogLoss": 0.7069666383455786
+    }
+  },
+  "gameReviews": [
+    {
+      "gamePk": 824561,
+      "gameId": "mlb-chicago-white-sox-cincinnati-reds",
+      "matchup": "Cincinnati Reds @ Chicago White Sox",
+      "finalScore": "Cincinnati Reds 9 @ Chicago White Sox 8",
+      "actualWinner": "AWAY",
+      "modelSelection": "HOME",
+      "modelProbability": 0.527373,
+      "marketProbabilityForSelection": 0.558603,
+      "marketFavorite": "HOME",
+      "sideFavoriteAgreement": true,
+      "selectedSideEdge": -0.03123,
+      "valueSelection": "AWAY",
+      "valueEdge": 0.03123,
+      "confidence": 73,
+      "officialStatus": "PASS",
+      "grade": "INCORRECT",
+      "starterContribution": 0.029975,
+      "marketPriorContribution": 0.058874,
+      "homeAdvantageContribution": 0.08,
+      "starterDirection": "HOME",
+      "marketPriorDirection": "HOME",
+      "homeAdvantageDirection": "HOME",
+      "starterAlignedWithWinner": false,
+      "marketPriorAlignedWithWinner": false,
+      "homeAdvantageAlignedWithWinner": false,
+      "marketAgreementClass": "MODEL_AND_MARKET_AGREE",
+      "successCategory": "N/A",
+      "failureCategory": "STARTER_EDGE_WRONG_DIRECTION",
+      "primaryReviewFinding": "Model and market agreed on selection; starter contribution pointed wrong way vs winner.",
+      "alternativeHypothesis": "Bullpen leverage, sequencing, or small-sample offense may dominate; not identifiable from v0 features alone.",
+      "dataLimitations": "Lineup NOT_RELEASED; bullpen weight disabled (v0); observation-only slate. Failure cannot be attributed to bullpen/lineup without play-level evidence (weights=0).",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "blockedCounterfactual": null,
+      "modelMoreConservativeThanMarket": true
+    },
+    {
+      "gamePk": 824238,
+      "gameId": "mlb-detroit-tigers-cleveland-guardians",
+      "matchup": "Cleveland Guardians @ Detroit Tigers",
+      "finalScore": "Cleveland Guardians 0 @ Detroit Tigers 3",
+      "actualWinner": "HOME",
+      "modelSelection": "HOME",
+      "modelProbability": 0.504432,
+      "marketProbabilityForSelection": 0.459057,
+      "marketFavorite": "AWAY",
+      "sideFavoriteAgreement": false,
+      "selectedSideEdge": 0.045375,
+      "valueSelection": "HOME",
+      "valueEdge": 0.045375,
+      "confidence": 73,
+      "officialStatus": "PASS",
+      "grade": "CORRECT",
+      "starterContribution": -0.011688,
+      "marketPriorContribution": -0.041035,
+      "homeAdvantageContribution": 0.08,
+      "starterDirection": "AWAY",
+      "marketPriorDirection": "AWAY",
+      "homeAdvantageDirection": "HOME",
+      "starterAlignedWithWinner": false,
+      "marketPriorAlignedWithWinner": false,
+      "homeAdvantageAlignedWithWinner": true,
+      "marketAgreementClass": "NEAR_EVEN",
+      "successCategory": "MODEL_MARKET_DISAGREEMENT_CORRECT",
+      "failureCategory": "N/A",
+      "primaryReviewFinding": "Model disagreed with market favorite and was correct (rare on this slate).",
+      "alternativeHypothesis": "Correct outcome may reflect market information already priced in rather than independent starter edge.",
+      "dataLimitations": "Lineup NOT_RELEASED; bullpen weight disabled (v0); observation-only slate.",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "blockedCounterfactual": null,
+      "modelMoreConservativeThanMarket": false
+    },
+    {
+      "gamePk": 823995,
+      "gameId": "mlb-los-angeles-angels-texas-rangers",
+      "matchup": "Texas Rangers @ Los Angeles Angels",
+      "finalScore": "Texas Rangers 0 @ Los Angeles Angels 7",
+      "actualWinner": "HOME",
+      "modelSelection": "AWAY",
+      "modelProbability": 0.500887,
+      "marketProbabilityForSelection": 0.588235,
+      "marketFavorite": "AWAY",
+      "sideFavoriteAgreement": true,
+      "selectedSideEdge": -0.087348,
+      "valueSelection": "HOME",
+      "valueEdge": 0.087348,
+      "confidence": 73,
+      "officialStatus": "PASS",
+      "grade": "INCORRECT",
+      "starterContribution": 0.003712,
+      "marketPriorContribution": -0.089168,
+      "homeAdvantageContribution": 0.08,
+      "starterDirection": "HOME",
+      "marketPriorDirection": "AWAY",
+      "homeAdvantageDirection": "HOME",
+      "starterAlignedWithWinner": true,
+      "marketPriorAlignedWithWinner": false,
+      "homeAdvantageAlignedWithWinner": true,
+      "marketAgreementClass": "NEAR_EVEN",
+      "successCategory": "N/A",
+      "failureCategory": "SMALL_PROBABILITY_MARGIN",
+      "primaryReviewFinding": "Model/market-aligned selection lost; residual variance or unmodeled factors.",
+      "alternativeHypothesis": "Bullpen leverage, sequencing, or small-sample offense may dominate; not identifiable from v0 features alone.",
+      "dataLimitations": "Lineup NOT_RELEASED; bullpen weight disabled (v0); observation-only slate. Failure cannot be attributed to bullpen/lineup without play-level evidence (weights=0).",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "blockedCounterfactual": null,
+      "modelMoreConservativeThanMarket": true
+    },
+    {
+      "gamePk": 823915,
+      "gameId": "mlb-los-angeles-dodgers-milwaukee-brewers",
+      "matchup": "Milwaukee Brewers @ Los Angeles Dodgers",
+      "finalScore": "Milwaukee Brewers 5 @ Los Angeles Dodgers 4",
+      "actualWinner": "AWAY",
+      "modelSelection": "HOME",
+      "modelProbability": 0.515439,
+      "marketProbabilityForSelection": 0.576355,
+      "marketFavorite": "HOME",
+      "sideFavoriteAgreement": true,
+      "selectedSideEdge": -0.060916,
+      "valueSelection": "AWAY",
+      "valueEdge": 0.060916,
+      "confidence": 73,
+      "officialStatus": "PASS",
+      "grade": "INCORRECT",
+      "starterContribution": -0.061875,
+      "marketPriorContribution": 0.076957,
+      "homeAdvantageContribution": 0.08,
+      "starterDirection": "AWAY",
+      "marketPriorDirection": "HOME",
+      "homeAdvantageDirection": "HOME",
+      "starterAlignedWithWinner": true,
+      "marketPriorAlignedWithWinner": false,
+      "homeAdvantageAlignedWithWinner": false,
+      "marketAgreementClass": "NEAR_EVEN",
+      "successCategory": "N/A",
+      "failureCategory": "HOME_ADVANTAGE_WRONG_DIRECTION",
+      "primaryReviewFinding": "Model/market-aligned selection lost; residual variance or unmodeled factors.",
+      "alternativeHypothesis": "Bullpen leverage, sequencing, or small-sample offense may dominate; not identifiable from v0 features alone.",
+      "dataLimitations": "Lineup NOT_RELEASED; bullpen weight disabled (v0); observation-only slate. Failure cannot be attributed to bullpen/lineup without play-level evidence (weights=0).",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "blockedCounterfactual": null,
+      "modelMoreConservativeThanMarket": true
+    },
+    {
+      "gamePk": 823829,
+      "gameId": "mlb-miami-marlins-pittsburgh-pirates",
+      "matchup": "Pittsburgh Pirates @ Miami Marlins",
+      "finalScore": "Pittsburgh Pirates 13 @ Miami Marlins 1",
+      "actualWinner": "AWAY",
+      "modelSelection": "HOME",
+      "modelProbability": 0.506549,
+      "marketProbabilityForSelection": 0.465995,
+      "marketFavorite": "AWAY",
+      "sideFavoriteAgreement": false,
+      "selectedSideEdge": 0.040554,
+      "valueSelection": "HOME",
+      "valueEdge": 0.040554,
+      "confidence": 73,
+      "officialStatus": "PASS",
+      "grade": "INCORRECT",
+      "starterContribution": -0.005638,
+      "marketPriorContribution": -0.034058,
+      "homeAdvantageContribution": 0.08,
+      "starterDirection": "AWAY",
+      "marketPriorDirection": "AWAY",
+      "homeAdvantageDirection": "HOME",
+      "starterAlignedWithWinner": true,
+      "marketPriorAlignedWithWinner": true,
+      "homeAdvantageAlignedWithWinner": false,
+      "marketAgreementClass": "NEAR_EVEN",
+      "successCategory": "N/A",
+      "failureCategory": "MODEL_DISAGREED_WITH_MARKET_AND_LOST",
+      "primaryReviewFinding": "Model favored opposite side of market favorite and lost; market side won.",
+      "alternativeHypothesis": "Bullpen leverage, sequencing, or small-sample offense may dominate; not identifiable from v0 features alone.",
+      "dataLimitations": "Lineup NOT_RELEASED; bullpen weight disabled (v0); observation-only slate. Failure cannot be attributed to bullpen/lineup without play-level evidence (weights=0).",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "blockedCounterfactual": null,
+      "modelMoreConservativeThanMarket": false
+    },
+    {
+      "gamePk": 823669,
+      "gameId": "mlb-minnesota-twins-philadelphia-phillies",
+      "matchup": "Philadelphia Phillies @ Minnesota Twins",
+      "finalScore": "Philadelphia Phillies 7 @ Minnesota Twins 1",
+      "actualWinner": "AWAY",
+      "modelSelection": "HOME",
+      "modelProbability": 0.533122,
+      "marketProbabilityForSelection": 0.50505,
+      "marketFavorite": "HOME",
+      "sideFavoriteAgreement": true,
+      "selectedSideEdge": 0.028072,
+      "valueSelection": "HOME",
+      "valueEdge": 0.028072,
+      "confidence": 73,
+      "officialStatus": "PASS",
+      "grade": "INCORRECT",
+      "starterContribution": 0.119488,
+      "marketPriorContribution": 0.00505,
+      "homeAdvantageContribution": 0.08,
+      "starterDirection": "HOME",
+      "marketPriorDirection": "HOME",
+      "homeAdvantageDirection": "HOME",
+      "starterAlignedWithWinner": false,
+      "marketPriorAlignedWithWinner": false,
+      "homeAdvantageAlignedWithWinner": false,
+      "marketAgreementClass": "MODEL_AND_MARKET_AGREE",
+      "successCategory": "N/A",
+      "failureCategory": "STARTER_EDGE_WRONG_DIRECTION",
+      "primaryReviewFinding": "Model and market agreed on selection; starter contribution pointed wrong way vs winner.",
+      "alternativeHypothesis": "Bullpen leverage, sequencing, or small-sample offense may dominate; not identifiable from v0 features alone.",
+      "dataLimitations": "Lineup NOT_RELEASED; bullpen weight disabled (v0); observation-only slate. Failure cannot be attributed to bullpen/lineup without play-level evidence (weights=0).",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "blockedCounterfactual": null,
+      "modelMoreConservativeThanMarket": false
+    },
+    {
+      "gamePk": 823508,
+      "gameId": "mlb-new-york-yankees-seattle-mariners",
+      "matchup": "Seattle Mariners @ New York Yankees",
+      "finalScore": "Seattle Mariners 1 @ New York Yankees 0",
+      "actualWinner": "AWAY",
+      "modelSelection": "HOME",
+      "modelProbability": 0.528086,
+      "marketProbabilityForSelection": 0.569307,
+      "marketFavorite": "HOME",
+      "sideFavoriteAgreement": true,
+      "selectedSideEdge": -0.041221,
+      "valueSelection": "AWAY",
+      "valueEdge": 0.041221,
+      "confidence": 73,
+      "officialStatus": "PASS",
+      "grade": "INCORRECT",
+      "starterContribution": 0.023512,
+      "marketPriorContribution": 0.069756,
+      "homeAdvantageContribution": 0.08,
+      "starterDirection": "HOME",
+      "marketPriorDirection": "HOME",
+      "homeAdvantageDirection": "HOME",
+      "starterAlignedWithWinner": false,
+      "marketPriorAlignedWithWinner": false,
+      "homeAdvantageAlignedWithWinner": false,
+      "marketAgreementClass": "MODEL_AND_MARKET_AGREE",
+      "successCategory": "N/A",
+      "failureCategory": "STARTER_EDGE_WRONG_DIRECTION",
+      "primaryReviewFinding": "Model and market agreed on selection; starter contribution pointed wrong way vs winner.",
+      "alternativeHypothesis": "Bullpen leverage, sequencing, or small-sample offense may dominate; not identifiable from v0 features alone.",
+      "dataLimitations": "Lineup NOT_RELEASED; bullpen weight disabled (v0); observation-only slate. Failure cannot be attributed to bullpen/lineup without play-level evidence (weights=0).",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "blockedCounterfactual": null,
+      "modelMoreConservativeThanMarket": true
+    },
+    {
+      "gamePk": 822776,
+      "gameId": "mlb-toronto-blue-jays-boston-red-sox",
+      "matchup": "Boston Red Sox @ Toronto Blue Jays",
+      "finalScore": "Boston Red Sox 7 @ Toronto Blue Jays 0",
+      "actualWinner": "AWAY",
+      "modelSelection": "AWAY",
+      "modelProbability": 0.542306,
+      "marketProbabilityForSelection": 0.592233,
+      "marketFavorite": "AWAY",
+      "sideFavoriteAgreement": true,
+      "selectedSideEdge": -0.049927,
+      "valueSelection": "HOME",
+      "valueEdge": 0.049927,
+      "confidence": 62,
+      "officialStatus": "PASS",
+      "grade": "CORRECT",
+      "starterContribution": -0.248528,
+      "marketPriorContribution": -0.093301,
+      "homeAdvantageContribution": 0.08,
+      "starterDirection": "AWAY",
+      "marketPriorDirection": "AWAY",
+      "homeAdvantageDirection": "HOME",
+      "starterAlignedWithWinner": true,
+      "marketPriorAlignedWithWinner": true,
+      "homeAdvantageAlignedWithWinner": false,
+      "marketAgreementClass": "MODEL_AND_MARKET_AGREE",
+      "successCategory": "STARTER_AND_MARKET_ALIGNED",
+      "failureCategory": "N/A",
+      "primaryReviewFinding": "Most-likely selection matched result; starter contribution direction also aligned.",
+      "alternativeHypothesis": "Correct outcome may reflect market information already priced in rather than independent starter edge.",
+      "dataLimitations": "Lineup NOT_RELEASED; bullpen weight disabled (v0); observation-only slate.",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_SAMPLE_PARTIAL"
+      ],
+      "blockedCounterfactual": null,
+      "modelMoreConservativeThanMarket": true
+    },
+    {
+      "gamePk": 822696,
+      "gameId": "mlb-washington-nationals-chicago-cubs",
+      "matchup": "Chicago Cubs @ Washington Nationals",
+      "finalScore": "Chicago Cubs 0 @ Washington Nationals 7",
+      "actualWinner": "HOME",
+      "modelSelection": "HOME",
+      "modelProbability": 0.507331,
+      "marketProbabilityForSelection": 0.429975,
+      "marketFavorite": "AWAY",
+      "sideFavoriteAgreement": false,
+      "selectedSideEdge": 0.077356,
+      "valueSelection": "HOME",
+      "valueEdge": 0.077356,
+      "confidence": 73,
+      "officialStatus": "PASS",
+      "grade": "CORRECT",
+      "starterContribution": 0.035612,
+      "marketPriorContribution": -0.070488,
+      "homeAdvantageContribution": 0.08,
+      "starterDirection": "HOME",
+      "marketPriorDirection": "AWAY",
+      "homeAdvantageDirection": "HOME",
+      "starterAlignedWithWinner": true,
+      "marketPriorAlignedWithWinner": false,
+      "homeAdvantageAlignedWithWinner": true,
+      "marketAgreementClass": "NEAR_EVEN",
+      "successCategory": "MODEL_MARKET_DISAGREEMENT_CORRECT",
+      "failureCategory": "N/A",
+      "primaryReviewFinding": "Model disagreed with market favorite and was correct (rare on this slate).",
+      "alternativeHypothesis": "Correct outcome may reflect market information already priced in rather than independent starter edge.",
+      "dataLimitations": "Lineup NOT_RELEASED; bullpen weight disabled (v0); observation-only slate.",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "blockedCounterfactual": null,
+      "modelMoreConservativeThanMarket": false
+    }
+  ],
+  "successPatterns": {
+    "count": 3,
+    "categories": {
+      "MODEL_MARKET_DISAGREEMENT_CORRECT": [
+        "mlb-detroit-tigers-cleveland-guardians",
+        "mlb-washington-nationals-chicago-cubs"
+      ],
+      "STARTER_AND_MARKET_ALIGNED": [
+        "mlb-toronto-blue-jays-boston-red-sox"
+      ]
+    },
+    "notes": [
+      "Single-date categories are observational labels only.",
+      "Do not treat category frequency as causal feature effects."
+    ]
+  },
+  "failurePatterns": {
+    "count": 6,
+    "categories": {
+      "STARTER_EDGE_WRONG_DIRECTION": [
+        "mlb-chicago-white-sox-cincinnati-reds",
+        "mlb-minnesota-twins-philadelphia-phillies",
+        "mlb-new-york-yankees-seattle-mariners"
+      ],
+      "SMALL_PROBABILITY_MARGIN": [
+        "mlb-los-angeles-angels-texas-rangers"
+      ],
+      "HOME_ADVANTAGE_WRONG_DIRECTION": [
+        "mlb-los-angeles-dodgers-milwaukee-brewers"
+      ],
+      "MODEL_DISAGREED_WITH_MARKET_AND_LOST": [
+        "mlb-miami-marlins-pittsburgh-pirates"
+      ]
+    },
+    "notes": [
+      "Bullpen/lineup are not asserted as causes without play evidence (v0 weights=0)."
+    ]
+  },
+  "marketComparison": {
+    "mostLikely": {
+      "correct": 3,
+      "incorrect": 6,
+      "sampleCount": 9,
+      "accuracy": 0.3333333333333333,
+      "status": "OK",
+      "meanSelectedProbability": 0.5183916666666666,
+      "meanBrierScore": 0.2569074882356667,
+      "meanLogLoss": 0.7069666383455786
+    },
+    "valueSelection": {
+      "correct": 6,
+      "incorrect": 3,
+      "sampleCount": 9,
+      "accuracy": 0.6666666666666666,
+      "status": "OK",
+      "valueSelectionCount": 9,
+      "averageValueEdge": 0.051333222222222225,
+      "negativeSelectedSideEdgeCount": 5,
+      "realizedReturn": null,
+      "note": "realizedReturn placeholder until settled market prices + settlement rules exist"
+    },
+    "scorecardMarketAgreement": {
+      "MODEL_AND_MARKET_AGREE": {
+        "correct": 1,
+        "incorrect": 3,
+        "sampleCount": 4,
+        "accuracy": 0.25,
+        "meanModelProbability": 0.53272175,
+        "meanMarketProbability": 0.55629825,
+        "meanSelectedSideEdge": -0.0235765,
+        "status": "INSUFFICIENT_SAMPLE"
+      },
+      "MODEL_MARKET_DISAGREE": {
+        "correct": 0,
+        "incorrect": 0,
+        "sampleCount": 0,
+        "accuracy": null,
+        "meanModelProbability": null,
+        "meanMarketProbability": null,
+        "meanSelectedSideEdge": null,
+        "status": "EMPTY"
+      },
+      "NEAR_EVEN": {
+        "correct": 2,
+        "incorrect": 3,
+        "sampleCount": 5,
+        "accuracy": 0.4,
+        "meanModelProbability": 0.5069276,
+        "meanMarketProbability": 0.5039234,
+        "meanSelectedSideEdge": 0.0030042,
+        "status": "OBSERVATION_ONLY"
+      },
+      "MARKET_MISSING": {
+        "correct": 0,
+        "incorrect": 0,
+        "sampleCount": 0,
+        "accuracy": null,
+        "meanModelProbability": null,
+        "meanMarketProbability": null,
+        "meanSelectedSideEdge": null,
+        "status": "EMPTY"
+      }
+    },
+    "sideFavoriteDisagreement": {
+      "note": "Model mostLikely vs market favorite side (independent of NEAR_EVEN abs-from-half class).",
+      "sampleCount": 3,
+      "correct": 2,
+      "incorrect": 1,
+      "games": [
+        {
+          "gameId": "mlb-detroit-tigers-cleveland-guardians",
+          "matchup": "Cleveland Guardians @ Detroit Tigers",
+          "modelSelection": "HOME",
+          "marketFavorite": "AWAY",
+          "actualWinner": "HOME",
+          "grade": "CORRECT",
+          "whoWasRight": "MODEL"
+        },
+        {
+          "gameId": "mlb-miami-marlins-pittsburgh-pirates",
+          "matchup": "Pittsburgh Pirates @ Miami Marlins",
+          "modelSelection": "HOME",
+          "marketFavorite": "AWAY",
+          "actualWinner": "AWAY",
+          "grade": "INCORRECT",
+          "whoWasRight": "MARKET"
+        },
+        {
+          "gameId": "mlb-washington-nationals-chicago-cubs",
+          "matchup": "Chicago Cubs @ Washington Nationals",
+          "modelSelection": "HOME",
+          "marketFavorite": "AWAY",
+          "actualWinner": "HOME",
+          "grade": "CORRECT",
+          "whoWasRight": "MODEL"
+        }
+      ]
+    },
+    "focusGames": {
+      "pitAtCin": null,
+      "milAtLaa": null
+    }
+  },
+  "blockedPolicyReview": {
+    "judgment": "BLOCK_POLICY_PROTECTED",
+    "games": [],
+    "note": "n=2; do not change minInningsForPartial=15 from this slate."
+  },
+  "probabilityInterpretation": {
+    "meanBrier": 0.2569074882356667,
+    "meanLogLoss": 0.7069666383455786,
+    "meanSelectedProbability": 0.5183916666666666,
+    "probabilityRangeNote": "All research selected probabilities fell in ~0.50–0.55; higher buckets empty.",
+    "calibrationBuckets": [
+      {
+        "bucket": "0.500-0.525",
+        "sampleCount": 5,
+        "predictedAverage": 0.5069276,
+        "actualWinRate": 0.4,
+        "calibrationGap": 0.10692760000000001,
+        "status": "OBSERVATION_ONLY"
+      },
+      {
+        "bucket": "0.525-0.550",
+        "sampleCount": 4,
+        "predictedAverage": 0.53272175,
+        "actualWinRate": 0.25,
+        "calibrationGap": 0.28272175,
+        "status": "INSUFFICIENT_SAMPLE"
+      },
+      {
+        "bucket": "0.550-0.575",
+        "sampleCount": 0,
+        "predictedAverage": null,
+        "actualWinRate": null,
+        "calibrationGap": null,
+        "status": "EMPTY"
+      },
+      {
+        "bucket": "0.575-0.600",
+        "sampleCount": 0,
+        "predictedAverage": null,
+        "actualWinRate": null,
+        "calibrationGap": null,
+        "status": "EMPTY"
+      },
+      {
+        "bucket": "0.600-0.650",
+        "sampleCount": 0,
+        "predictedAverage": null,
+        "actualWinRate": null,
+        "calibrationGap": null,
+        "status": "EMPTY"
+      }
+    ],
+    "confidenceBuckets": [
+      {
+        "bucket": "0-39",
+        "samples": 0,
+        "correct": 0,
+        "incorrect": 0,
+        "accuracy": null,
+        "meanBrier": null,
+        "meanLogLoss": null
+      },
+      {
+        "bucket": "40-49",
+        "samples": 0,
+        "correct": 0,
+        "incorrect": 0,
+        "accuracy": null,
+        "meanBrier": null,
+        "meanLogLoss": null
+      },
+      {
+        "bucket": "50-59",
+        "samples": 0,
+        "correct": 0,
+        "incorrect": 0,
+        "accuracy": null,
+        "meanBrier": null,
+        "meanLogLoss": null
+      },
+      {
+        "bucket": "60-69",
+        "samples": 1,
+        "correct": 1,
+        "incorrect": 0,
+        "accuracy": 1,
+        "meanBrier": 0.209483797636,
+        "meanLogLoss": 0.6119248612096044
+      },
+      {
+        "bucket": "70-79",
+        "samples": 8,
+        "correct": 2,
+        "incorrect": 6,
+        "accuracy": 0.25,
+        "meanBrier": 0.26283544956062505,
+        "meanLogLoss": 0.7188468604875753
+      },
+      {
+        "bucket": "80-100",
+        "samples": 0,
+        "correct": 0,
+        "incorrect": 0,
+        "accuracy": null,
+        "meanBrier": null,
+        "meanLogLoss": null
+      }
+    ],
+    "interpretation": [
+      "Accuracy 61.5% is not a calibrated probability claim.",
+      "Brier≈0.244 / LogLoss≈0.680 on a narrow near-even slate is observational only.",
+      "Calibration and confidence buckets remain INSUFFICIENT_SAMPLE / OBSERVATION_ONLY."
+    ],
+    "status": "INSUFFICIENT_SAMPLE"
+  },
+  "hypothesisCandidates": [
+    {
+      "hypothesisId": "H1_MARKET_PRIOR_SHRINKS_SELECTED_EDGE_NEGATIVE",
+      "statement": "Market prior may pull mostLikely probabilities toward market while leaving selectedSideEdge negative on the chosen side, reducing independent edge.",
+      "evidenceFor": 5,
+      "evidenceAgainst": 4,
+      "requiredData": "Multi-date distribution of selectedSideEdge vs raw starter-only probabilities",
+      "minimumAdditionalSample": 40,
+      "engineConnection": "PROHIBITED",
+      "status": "INVESTIGATE_MORE"
+    },
+    {
+      "hypothesisId": "H2_SIDE_DISAGREE_NEAR_EVEN_UNRELIABLE",
+      "statement": "When |modelP-0.5| is small and model favorite ≠ market favorite, mostLikely may underperform market favorite on short horizons.",
+      "evidenceFor": 1,
+      "evidenceAgainst": 2,
+      "requiredData": "Stratified sample of side-disagree vs agree near-even games",
+      "minimumAdditionalSample": 30,
+      "engineConnection": "PROHIBITED",
+      "status": "INVESTIGATE_MORE"
+    },
+    {
+      "hypothesisId": "H3_VALUE_SELECTION_NOT_YET_A_BETTING_SIGNAL",
+      "statement": "Positive model−market edge (valueSelection) did not track winners on this slate (3/13); treat as diagnostic only until prices+ROI rules exist.",
+      "evidenceFor": 10,
+      "evidenceAgainst": 3,
+      "requiredData": "Settled prices and ROI with settlement rules across dates",
+      "minimumAdditionalSample": 50,
+      "engineConnection": "PROHIBITED",
+      "status": "INVESTIGATE_MORE"
+    }
+  ],
+  "repeatedPatterns": [
+    {
+      "patternId": "MOST_LIKELY_OFTEN_BELOW_MARKET_PROB",
+      "statement": "On this slate, mostLikely selected-side edge was negative for most PASS games (model less confident than market on its pick).",
+      "supportingGames": [
+        "mlb-chicago-white-sox-cincinnati-reds",
+        "mlb-los-angeles-angels-texas-rangers",
+        "mlb-los-angeles-dodgers-milwaukee-brewers",
+        "mlb-new-york-yankees-seattle-mariners",
+        "mlb-toronto-blue-jays-boston-red-sox"
+      ],
+      "contradictingGames": [
+        "mlb-detroit-tigers-cleveland-guardians",
+        "mlb-miami-marlins-pittsburgh-pirates",
+        "mlb-minnesota-twins-philadelphia-phillies",
+        "mlb-washington-nationals-chicago-cubs"
+      ],
+      "sampleCount": 9,
+      "currentStatus": "REPEATED_WEAK_SIGNAL",
+      "nextRequiredSample": 50
+    },
+    {
+      "patternId": "VALUE_SELECTION_UNDERPERFORMED_MOST_LIKELY",
+      "statement": "ValueSelection (positive edge side) went 3/13 while mostLikely went 8/13 on the same slate.",
+      "supportingGames": [
+        "mlb-chicago-white-sox-cincinnati-reds",
+        "mlb-los-angeles-angels-texas-rangers",
+        "mlb-los-angeles-dodgers-milwaukee-brewers",
+        "mlb-miami-marlins-pittsburgh-pirates",
+        "mlb-minnesota-twins-philadelphia-phillies",
+        "mlb-new-york-yankees-seattle-mariners"
+      ],
+      "contradictingGames": [
+        "mlb-detroit-tigers-cleveland-guardians",
+        "mlb-washington-nationals-chicago-cubs"
+      ],
+      "sampleCount": 13,
+      "currentStatus": "OBSERVED_ONCE",
+      "nextRequiredSample": 40
+    },
+    {
+      "patternId": "SIDE_FAVORITE_DISAGREE_BOTH_LOST",
+      "statement": "Two near-even games where model favorite ≠ market favorite (PIT@CIN, MIL@LAA) both lost for the model; market favorite won.",
+      "supportingGames": [
+        "mlb-miami-marlins-pittsburgh-pirates"
+      ],
+      "contradictingGames": [
+        "mlb-detroit-tigers-cleveland-guardians",
+        "mlb-washington-nationals-chicago-cubs"
+      ],
+      "sampleCount": 3,
+      "currentStatus": "INVESTIGATE_MORE",
+      "nextRequiredSample": 30
+    },
+    {
+      "patternId": "STARTER_ALIGNED_WHEN_CORRECT",
+      "statement": "Among CORRECT games, starter contribution direction matched winner more often than not (observational only).",
+      "supportingGames": [
+        "mlb-toronto-blue-jays-boston-red-sox",
+        "mlb-washington-nationals-chicago-cubs"
+      ],
+      "contradictingGames": [
+        "mlb-detroit-tigers-cleveland-guardians"
+      ],
+      "sampleCount": 3,
+      "currentStatus": "INSUFFICIENT_SAMPLE",
+      "nextRequiredSample": 60
+    },
+    {
+      "patternId": "LINEUP_UNCONFIRMED_UNIVERSAL",
+      "statement": "All 15 games lacked confirmed lineups; cannot isolate lineup absence as a failure driver.",
+      "supportingGames": [
+        "mlb-chicago-white-sox-cincinnati-reds",
+        "mlb-detroit-tigers-cleveland-guardians",
+        "mlb-los-angeles-angels-texas-rangers",
+        "mlb-los-angeles-dodgers-milwaukee-brewers",
+        "mlb-miami-marlins-pittsburgh-pirates",
+        "mlb-minnesota-twins-philadelphia-phillies",
+        "mlb-new-york-yankees-seattle-mariners",
+        "mlb-toronto-blue-jays-boston-red-sox",
+        "mlb-washington-nationals-chicago-cubs"
+      ],
+      "contradictingGames": [],
+      "sampleCount": 15,
+      "currentStatus": "INSUFFICIENT_SAMPLE",
+      "nextRequiredSample": 40
+    }
+  ],
+  "limitations": [
+    "Single KST date; no weight or threshold changes from this review.",
+    "Official sample=0; figures are research observation only — not official performance.",
+    "Bullpen/lineup weights are 0; do not assert them as proven failure causes.",
+    "ValueSelection has no ROI without settlement rules.",
+    "Scorecard MODEL_MARKET_DISAGREE can be EMPTY while side-favorite disagreements exist under NEAR_EVEN."
+  ],
+  "conclusion": "DATA_ACCUMULATION_CONTINUES"
+}

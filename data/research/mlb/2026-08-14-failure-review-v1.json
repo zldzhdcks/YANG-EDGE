@@ -1,0 +1,323 @@
+{
+  "schemaVersion": "mlb-failure-review-v1",
+  "dateKst": "2026-08-14",
+  "gradedArtifact": "2026-08-14-graded-predictions-v1.json",
+  "gradedHash": "f14fc53706dbcba012a42b0cc864fcfcee4b1112145e7249e17606a440c38aa7",
+  "reviewLayerVersion": "mlb-research-review-v2",
+  "games": [
+    {
+      "gamePk": 824561,
+      "gameId": "mlb-chicago-white-sox-cincinnati-reds",
+      "pick": "Chicago White Sox",
+      "pickSide": "HOME",
+      "actualWinner": "AWAY",
+      "homeScore": 8,
+      "awayScore": 9,
+      "predictionProbability": 0.527373,
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "starterCompleteness": "UNKNOWN",
+      "oddsAvailability": "UNKNOWN",
+      "lineupCutoffStatus": "UNKNOWN",
+      "unexpectedOutcome": "Pick HOME lost; final 9-8 (away-home), margin 1; tags=[LINEUP, ONE_RUN_GAME, BULLPEN]",
+      "failureCategories": [
+        "LINEUP",
+        "ONE_RUN_GAME",
+        "BULLPEN"
+      ],
+      "possibleCauses": [
+        {
+          "category": "LINEUP",
+          "assessment": "POSSIBLE",
+          "evidence": "lineup incomplete or unconfirmed (LINEUP_NOT_CONFIRMED)"
+        },
+        {
+          "category": "ONE_RUN_GAME",
+          "assessment": "CONSISTENT_WITH_HYPOTHESIS",
+          "evidence": "final margin 1 run — high variance / sequencing risk"
+        },
+        {
+          "category": "BULLPEN",
+          "assessment": "POSSIBLE",
+          "evidence": "close final (margin 1); late-inning leverage may have decided the game"
+        },
+        {
+          "category": "DATA_QUALITY",
+          "assessment": "POSSIBLE",
+          "evidence": "INPUT_QUALITY_LIMITED_INPUT; LINEUP_NOT_CONFIRMED"
+        }
+      ],
+      "dataQualityRisk": "Input gaps may have contributed (INPUT_QUALITY_LIMITED_INPUT, LINEUP_NOT_CONFIRMED).",
+      "modelJudgmentRisk": "Pick-side probability was not strongly directional; miss is less informative for model judgment.",
+      "volatilityRisk": "One-run final — treat as high-volatility miss.",
+      "devilsAdvocate": "Missing lineup may have changed the true matchup; the model never saw confirmed bats.",
+      "alternativeHypothesis": "Late bullpen leverage / sequencing may dominate final winner more than starter/odds.",
+      "conclusion": "INVESTIGATE_MORE",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 823995,
+      "gameId": "mlb-los-angeles-angels-texas-rangers",
+      "pick": "Texas Rangers",
+      "pickSide": "AWAY",
+      "actualWinner": "HOME",
+      "homeScore": 7,
+      "awayScore": 0,
+      "predictionProbability": 0.500887,
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "starterCompleteness": "UNKNOWN",
+      "oddsAvailability": "UNKNOWN",
+      "lineupCutoffStatus": "UNKNOWN",
+      "unexpectedOutcome": "Pick AWAY lost; final 0-7 (away-home), margin 7; tags=[LINEUP, BLOWOUT]",
+      "failureCategories": [
+        "LINEUP",
+        "BLOWOUT"
+      ],
+      "possibleCauses": [
+        {
+          "category": "LINEUP",
+          "assessment": "POSSIBLE",
+          "evidence": "lineup incomplete or unconfirmed (LINEUP_NOT_CONFIRMED)"
+        },
+        {
+          "category": "BLOWOUT",
+          "assessment": "POSSIBLE",
+          "evidence": "final margin 7 runs — outcome diverged sharply from pick"
+        },
+        {
+          "category": "DATA_QUALITY",
+          "assessment": "POSSIBLE",
+          "evidence": "INPUT_QUALITY_LIMITED_INPUT; LINEUP_NOT_CONFIRMED"
+        }
+      ],
+      "dataQualityRisk": "Input gaps may have contributed (INPUT_QUALITY_LIMITED_INPUT, LINEUP_NOT_CONFIRMED).",
+      "modelJudgmentRisk": "Pick-side probability was not strongly directional; miss is less informative for model judgment.",
+      "volatilityRisk": "Blowout miss — check market/starter misread rather than pure coin-flip.",
+      "devilsAdvocate": "Missing lineup may have changed the true matchup; the model never saw confirmed bats.",
+      "alternativeHypothesis": "Actual winner may reflect small-sample offense or defensive variance.",
+      "conclusion": "INVESTIGATE_MORE",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 823915,
+      "gameId": "mlb-los-angeles-dodgers-milwaukee-brewers",
+      "pick": "Los Angeles Dodgers",
+      "pickSide": "HOME",
+      "actualWinner": "AWAY",
+      "homeScore": 4,
+      "awayScore": 5,
+      "predictionProbability": 0.515439,
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "starterCompleteness": "UNKNOWN",
+      "oddsAvailability": "UNKNOWN",
+      "lineupCutoffStatus": "UNKNOWN",
+      "unexpectedOutcome": "Pick HOME lost; final 5-4 (away-home), margin 1; tags=[LINEUP, ONE_RUN_GAME, BULLPEN]",
+      "failureCategories": [
+        "LINEUP",
+        "ONE_RUN_GAME",
+        "BULLPEN"
+      ],
+      "possibleCauses": [
+        {
+          "category": "LINEUP",
+          "assessment": "POSSIBLE",
+          "evidence": "lineup incomplete or unconfirmed (LINEUP_NOT_CONFIRMED)"
+        },
+        {
+          "category": "ONE_RUN_GAME",
+          "assessment": "CONSISTENT_WITH_HYPOTHESIS",
+          "evidence": "final margin 1 run — high variance / sequencing risk"
+        },
+        {
+          "category": "BULLPEN",
+          "assessment": "POSSIBLE",
+          "evidence": "close final (margin 1); late-inning leverage may have decided the game"
+        },
+        {
+          "category": "DATA_QUALITY",
+          "assessment": "POSSIBLE",
+          "evidence": "INPUT_QUALITY_LIMITED_INPUT; LINEUP_NOT_CONFIRMED"
+        }
+      ],
+      "dataQualityRisk": "Input gaps may have contributed (INPUT_QUALITY_LIMITED_INPUT, LINEUP_NOT_CONFIRMED).",
+      "modelJudgmentRisk": "Pick-side probability was not strongly directional; miss is less informative for model judgment.",
+      "volatilityRisk": "One-run final — treat as high-volatility miss.",
+      "devilsAdvocate": "Missing lineup may have changed the true matchup; the model never saw confirmed bats.",
+      "alternativeHypothesis": "Late bullpen leverage / sequencing may dominate final winner more than starter/odds.",
+      "conclusion": "INVESTIGATE_MORE",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 823829,
+      "gameId": "mlb-miami-marlins-pittsburgh-pirates",
+      "pick": "Miami Marlins",
+      "pickSide": "HOME",
+      "actualWinner": "AWAY",
+      "homeScore": 1,
+      "awayScore": 13,
+      "predictionProbability": 0.506549,
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "starterCompleteness": "UNKNOWN",
+      "oddsAvailability": "UNKNOWN",
+      "lineupCutoffStatus": "UNKNOWN",
+      "unexpectedOutcome": "Pick HOME lost; final 13-1 (away-home), margin 12; tags=[LINEUP, MARKET, BLOWOUT]",
+      "failureCategories": [
+        "LINEUP",
+        "MARKET",
+        "BLOWOUT"
+      ],
+      "possibleCauses": [
+        {
+          "category": "LINEUP",
+          "assessment": "POSSIBLE",
+          "evidence": "lineup incomplete or unconfirmed (LINEUP_NOT_CONFIRMED)"
+        },
+        {
+          "category": "MARKET",
+          "assessment": "POSSIBLE",
+          "evidence": "market favored AWAY while pick was HOME; oddsMovement=UNCHANGED"
+        },
+        {
+          "category": "BLOWOUT",
+          "assessment": "POSSIBLE",
+          "evidence": "final margin 12 runs — outcome diverged sharply from pick"
+        },
+        {
+          "category": "DATA_QUALITY",
+          "assessment": "POSSIBLE",
+          "evidence": "INPUT_QUALITY_LIMITED_INPUT; LINEUP_NOT_CONFIRMED"
+        }
+      ],
+      "dataQualityRisk": "Input gaps may have contributed (INPUT_QUALITY_LIMITED_INPUT, LINEUP_NOT_CONFIRMED).",
+      "modelJudgmentRisk": "Pick-side probability was not strongly directional; miss is less informative for model judgment.",
+      "volatilityRisk": "Blowout miss — check market/starter misread rather than pure coin-flip.",
+      "devilsAdvocate": "Missing lineup may have changed the true matchup; the model never saw confirmed bats.",
+      "alternativeHypothesis": "Market may have already priced the true favorite; model edge was noise.",
+      "conclusion": "INVESTIGATE_MORE",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 823669,
+      "gameId": "mlb-minnesota-twins-philadelphia-phillies",
+      "pick": "Minnesota Twins",
+      "pickSide": "HOME",
+      "actualWinner": "AWAY",
+      "homeScore": 1,
+      "awayScore": 7,
+      "predictionProbability": 0.533122,
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "starterCompleteness": "UNKNOWN",
+      "oddsAvailability": "UNKNOWN",
+      "lineupCutoffStatus": "UNKNOWN",
+      "unexpectedOutcome": "Pick HOME lost; final 7-1 (away-home), margin 6; tags=[LINEUP, BLOWOUT]",
+      "failureCategories": [
+        "LINEUP",
+        "BLOWOUT"
+      ],
+      "possibleCauses": [
+        {
+          "category": "LINEUP",
+          "assessment": "POSSIBLE",
+          "evidence": "lineup incomplete or unconfirmed (LINEUP_NOT_CONFIRMED)"
+        },
+        {
+          "category": "BLOWOUT",
+          "assessment": "POSSIBLE",
+          "evidence": "final margin 6 runs — outcome diverged sharply from pick"
+        },
+        {
+          "category": "DATA_QUALITY",
+          "assessment": "POSSIBLE",
+          "evidence": "INPUT_QUALITY_LIMITED_INPUT; LINEUP_NOT_CONFIRMED"
+        }
+      ],
+      "dataQualityRisk": "Input gaps may have contributed (INPUT_QUALITY_LIMITED_INPUT, LINEUP_NOT_CONFIRMED).",
+      "modelJudgmentRisk": "Pick-side probability was not strongly directional; miss is less informative for model judgment.",
+      "volatilityRisk": "Blowout miss — check market/starter misread rather than pure coin-flip.",
+      "devilsAdvocate": "Missing lineup may have changed the true matchup; the model never saw confirmed bats.",
+      "alternativeHypothesis": "Actual winner may reflect small-sample offense or defensive variance.",
+      "conclusion": "INVESTIGATE_MORE",
+      "observationOnly": true
+    },
+    {
+      "gamePk": 823508,
+      "gameId": "mlb-new-york-yankees-seattle-mariners",
+      "pick": "New York Yankees",
+      "pickSide": "HOME",
+      "actualWinner": "AWAY",
+      "homeScore": 0,
+      "awayScore": 1,
+      "predictionProbability": 0.528086,
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "BULLPEN_WEIGHT_DISABLED_V0",
+        "INPUT_QUALITY_LIMITED_INPUT",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "starterCompleteness": "UNKNOWN",
+      "oddsAvailability": "UNKNOWN",
+      "lineupCutoffStatus": "UNKNOWN",
+      "unexpectedOutcome": "Pick HOME lost; final 1-0 (away-home), margin 1; tags=[LINEUP, ONE_RUN_GAME, BULLPEN]",
+      "failureCategories": [
+        "LINEUP",
+        "ONE_RUN_GAME",
+        "BULLPEN"
+      ],
+      "possibleCauses": [
+        {
+          "category": "LINEUP",
+          "assessment": "POSSIBLE",
+          "evidence": "lineup incomplete or unconfirmed (LINEUP_NOT_CONFIRMED)"
+        },
+        {
+          "category": "ONE_RUN_GAME",
+          "assessment": "CONSISTENT_WITH_HYPOTHESIS",
+          "evidence": "final margin 1 run — high variance / sequencing risk"
+        },
+        {
+          "category": "BULLPEN",
+          "assessment": "POSSIBLE",
+          "evidence": "close final (margin 1); late-inning leverage may have decided the game"
+        },
+        {
+          "category": "DATA_QUALITY",
+          "assessment": "POSSIBLE",
+          "evidence": "INPUT_QUALITY_LIMITED_INPUT; LINEUP_NOT_CONFIRMED"
+        }
+      ],
+      "dataQualityRisk": "Input gaps may have contributed (INPUT_QUALITY_LIMITED_INPUT, LINEUP_NOT_CONFIRMED).",
+      "modelJudgmentRisk": "Pick-side probability was not strongly directional; miss is less informative for model judgment.",
+      "volatilityRisk": "One-run final — treat as high-volatility miss.",
+      "devilsAdvocate": "Missing lineup may have changed the true matchup; the model never saw confirmed bats.",
+      "alternativeHypothesis": "Late bullpen leverage / sequencing may dominate final winner more than starter/odds.",
+      "conclusion": "INVESTIGATE_MORE",
+      "observationOnly": true
+    }
+  ],
+  "generatedAt": "2026-08-14T14:41:40.188Z",
+  "reviewHash": "c327c44efb8cc48793db09e58cf524863b96333025cd87d624458ca1be4999a8"
+}
