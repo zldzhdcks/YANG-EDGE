@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "yang-edge-manual-observation-raw-v1",
+  "snapshotDateKst": "2026-08-16",
+  "receivedAtKst": "2026-08-15T22:21:00+09:00",
+  "sourceType": "MANUAL_OPERATOR_OBSERVATION",
+  "captureTime": "UNKNOWN",
+  "researchOnly": true,
+  "engineAdmission": "PROHIBITED",
+  "notes": [
+    "Raw screenshots preserved before structured transcription.",
+    "MLB lineup screenshots are EXPECTED_LINEUP only, never OFFICIAL_LINEUP.",
+    "Odds screenshots are manual observations and must not be treated as licensed provider API data.",
+    "Structured ingestion must preserve the raw image SHA-256 and observation provenance.",
+    "Do not backfill these observations into already-frozen predictions unless the original snapshot time can be proven pregame."
+  ],
+  "files": [
+    {
+      "file": "mlb_odds_01.png",
+      "category": "MLB_DOMESTIC_ODDS",
+      "sha256": "cca327175e17b1d0b46a3d1e7186f2f7c530c17f1aa9cd753db196ad96b6ce60",
+      "bytes": 152388
+    },
+    {
+      "file": "mlb_odds_02.png",
+      "category": "MLB_DOMESTIC_ODDS",
+      "sha256": "e8578d35bacbc54b6cb4e67e53f49cd5d06ce1e703e4987511ac73a6019692be",
+      "bytes": 149677
+    },
+    {
+      "file": "mlb_odds_03.png",
+      "category": "MLB_DOMESTIC_ODDS",
+      "sha256": "d38c86083868cabc470947d83276a634aac9970e646e21931ba3e06e8194dddc",
+      "bytes": 97481
+    },
+    {
+      "file": "mlb_expected_lineups_01.png",
+      "category": "MLB_EXPECTED_LINEUP",
+      "sha256": "f274797e41fe6aa17a2ed213352c4ad06e71d4bb4d8bbdcb289ce4df903dec3f",
+      "bytes": 193276
+    },
+    {
+      "file": "mlb_expected_lineups_02.png",
+      "category": "MLB_EXPECTED_LINEUP",
+      "sha256": "d3eab0703c12511c577be89b4583b1264421a81029a50e6d1930110246eed077",
+      "bytes": 199458
+    },
+    {
+      "file": "mlb_expected_lineups_03.png",
+      "category": "MLB_EXPECTED_LINEUP",
+      "sha256": "25aae66128bcf266d51b37f8337b35a8d8f79c2a6cef979dcb31f92521a2ea5b",
+      "bytes": 102130
+    },
+    {
+      "file": "football_odds_01.png",
+      "category": "FOOTBALL_DOMESTIC_ODDS",
+      "sha256": "59ad5fd8f1353205d48bd5d2c4fb7223636a2d08e1f1eb47e2884b938b4c5709",
+      "bytes": 146136
+    },
+    {
+      "file": "football_odds_02.png",
+      "category": "FOOTBALL_DOMESTIC_ODDS",
+      "sha256": "b372644f633165827d53a4b53cc42b2621d00ab5cf55aa72d8903bf849cde1e8",
+      "bytes": 182410
+    },
+    {
+      "file": "football_odds_03.png",
+      "category": "FOOTBALL_DOMESTIC_ODDS",
+      "sha256": "a4268a7caca5b7e1aea69bce926728138311ae7c9c10fd334f39e8b9c3e665c0",
+      "bytes": 172607
+    },
+    {
+      "file": "football_odds_04.png",
+      "category": "FOOTBALL_DOMESTIC_ODDS",
+      "sha256": "1b0d23decb2999e478592bc3140344180f592179a3a1fcb92948971854cbe70a",
+      "bytes": 130492
+    }
+  ]
+}
