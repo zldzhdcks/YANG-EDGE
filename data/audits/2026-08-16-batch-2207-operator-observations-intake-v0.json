@@ -23,7 +23,7 @@
   "schedulePath": "data/research/mlb/2026-08-17-schedule-v1.json",
   "scheduleHash": "697c42de3976bb278d3ae144616a41883db1de62ce5a092c76e078a94b75af0c",
   "expectedLineupPath": "data/operator-input/mlb/2026-08-17-expected-lineup-observation-v0.json",
-  "expectedLineupHash": "8f1f9ac1a894e765a6bc544a46f6b0e9e625cdfc118d9393e93827e99591a433",
+  "expectedLineupHash": "fe1a4d8c43b9bbb85c12b8a90746388cf767366e013127ec030979aca48a0068",
   "domesticMarketsPath": "data/operator-input/mlb/2026-08-17-domestic-markets-v1.json",
   "domesticMarketsRowsHash": "e230abf15a00c1a94d8193c754842388e01b34e37dcd09b28458acb6ac9d72fc",
   "koreanMarketPath": "data/operator-input/mlb/2026-08-17-korean-market-odds-observation-v0.json",
@@ -374,28 +374,14 @@
       "raw": "Estuary Ruiz",
       "candidate": "Esteury Ruiz",
       "game": "Miami Marlins @ Cincinnati Reds",
-      "note": "Screenshot transcription kept raw; not auto-corrected."
+      "note": "Screenshot raw kept as Estuary Ruiz; canonical candidate Esteury Ruiz. Do not overwrite raw."
     },
     {
-      "kind": "LINEUP_NAME_CANDIDATE",
-      "raw": "Kyle Isabel",
+      "kind": "LINEUP_TRANSCRIPTION_CORRECTION",
+      "raw": "Kyle Isbel",
       "candidate": "Kyle Isbel",
       "game": "Kansas City Royals @ Los Angeles Angels",
-      "note": "Screenshot transcription kept raw; not auto-corrected."
-    },
-    {
-      "kind": "LINEUP_NAME_CANDIDATE",
-      "raw": "Lake Bachar",
-      "candidate": null,
-      "game": "Boston Red Sox @ Pittsburgh Pirates",
-      "note": "Probable starter name transcribed as displayed. Confirm spelling."
-    },
-    {
-      "kind": "LINEUP_NAME_CANDIDATE",
-      "raw": "Jim Jarvis",
-      "candidate": null,
-      "game": "Arizona Diamondbacks @ Atlanta Braves",
-      "note": "Braves SS name transcribed as displayed. Confirm."
+      "note": "Source screenshot reads Kyle Isbel. Corrected Isabel → Isbel before prediction freeze. Raw screenshot unchanged."
     },
     {
       "kind": "ALIAS_TABLE_ADDITION",
@@ -424,5 +410,12 @@
   ],
   "sourcePolicy": "OPERATOR_MANUAL_SCREENSHOT_OBSERVATION",
   "legal": "INTERNAL_ONLY",
-  "commercialUseStatus": "INTERNAL_ONLY"
+  "commercialUseStatus": "INTERNAL_ONLY",
+  "lineupTranscriptionCorrection": {
+    "applied": true,
+    "from": "Kyle Isabel",
+    "to": "Kyle Isbel",
+    "oldExpectedLineupHash": "8f1f9ac1a894e765a6bc544a46f6b0e9e625cdfc118d9393e93827e99591a433",
+    "expectedLineupHash": "fe1a4d8c43b9bbb85c12b8a90746388cf767366e013127ec030979aca48a0068"
+  }
 }

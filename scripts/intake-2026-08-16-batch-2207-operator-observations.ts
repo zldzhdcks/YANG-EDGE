@@ -431,7 +431,7 @@ const LINEUP_SLATE: LineupSlateEntry[] = [
       "LF I. Collins S",
       "3B Nick Loftin R",
       "RF John Rave L",
-      "CF Kyle Isabel L",
+      "CF Kyle Isbel L",
     ],
     home: [
       "SS Zach Neto R",
@@ -1213,28 +1213,7 @@ async function main() {
         raw: "Estuary Ruiz",
         candidate: "Esteury Ruiz",
         game: "Miami Marlins @ Cincinnati Reds",
-        note: "Screenshot transcription kept raw; not auto-corrected.",
-      },
-      {
-        kind: "LINEUP_NAME_CANDIDATE",
-        raw: "Kyle Isabel",
-        candidate: "Kyle Isbel",
-        game: "Kansas City Royals @ Los Angeles Angels",
-        note: "Screenshot transcription kept raw; not auto-corrected.",
-      },
-      {
-        kind: "LINEUP_NAME_CANDIDATE",
-        raw: "Lake Bachar",
-        candidate: null,
-        game: "Boston Red Sox @ Pittsburgh Pirates",
-        note: "Probable starter name transcribed as displayed. Confirm spelling.",
-      },
-      {
-        kind: "LINEUP_NAME_CANDIDATE",
-        raw: "Jim Jarvis",
-        candidate: null,
-        game: "Arizona Diamondbacks @ Atlanta Braves",
-        note: "Braves SS name transcribed as displayed. Confirm.",
+        note: "Screenshot raw kept as Estuary Ruiz; canonical candidate Esteury Ruiz. Do not overwrite raw.",
       },
       {
         kind: "ALIAS_TABLE_ADDITION",
