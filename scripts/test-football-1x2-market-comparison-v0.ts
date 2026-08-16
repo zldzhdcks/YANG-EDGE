@@ -140,10 +140,12 @@ async function main() {
     observedAt: "2026-08-16T14:21:33.737Z",
   });
   assert.equal(plan16.wouldCallProvider, false);
-  assert.equal(plan17.wouldCallProvider, false);
-  assert.equal(plan16.skipped.sportKeyNotMapped, 11);
-  assert.equal(plan17.skipped.sportKeyNotMapped, 4);
+  assert.equal(plan16.skipped.sportKeyNotMapped, 0);
+  assert.equal(plan17.wouldCallProvider, true);
+  assert.deepEqual(plan17.sportKeysToFetch, ["soccer_usa_mls"]);
+  assert.equal(plan17.skipped.sportKeyNotMapped, 0);
   assert.equal(plan17.skipped.identityBlocked, 2);
+  assert.equal(plan17.skipped.teamBridgeMissing, 0);
 
   const racing = targets.find((g) => g.fixtureId === 1570339)!;
   const joined = joinFixtureToOddsEvent({

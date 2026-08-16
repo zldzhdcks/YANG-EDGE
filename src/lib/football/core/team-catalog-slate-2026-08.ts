@@ -11,6 +11,8 @@ export const SLATE_SRC_2026_08_12 =
   "data/research/football/2026-08-12-schedule-v1.json" as const;
 export const SLATE_SRC_2026_08_14 =
   "data/research/football/2026-08-14-schedule-v1.json" as const;
+export const SLATE_SRC_2026_08_17 =
+  "data/research/football/2026-08-17-schedule-v1.json" as const;
 
 /** [providerTeamId, providerReportedName] */
 export type SlateTeamSeed = readonly [string, string];
@@ -69,4 +71,16 @@ export const FOOTBALL_SLATE_2026_08_14_TEAMS: SlateTeamSeed[] = [
   ["211", "Benfica"],
   ["3403", "Pafos"],
   ["571", "Red Bull Salzburg"],
+];
+
+/**
+ * La Liga IDENTITY_REVIEW_REQUIRED rows on 2026-08-17 schedule.
+ * Seed only the four provider [id, name] pairs stored on that artifact.
+ * Historical schedule is not rejoined.
+ */
+export const FOOTBALL_SLATE_2026_08_17_TEAMS: SlateTeamSeed[] = [
+  ["540", "Espanyol"],
+  ["539", "Levante"],
+  ["4665", "Racing Santander"],
+  ["533", "Villarreal"],
 ];

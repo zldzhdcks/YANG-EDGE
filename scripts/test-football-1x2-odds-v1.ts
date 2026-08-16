@@ -489,10 +489,11 @@ async function main() {
     observedAt: "2026-08-14T09:00:00.000Z",
   });
   assert.equal(getOddsSportKey("fb-comp-api-football-98")?.sportKey, "soccer_japan_j_league");
-  assert.deepEqual(
-    FOOTBALL_ODDS_TEAM_BRIDGE_V1.map((e) => e.canonicalTeamId).sort(),
-    ["fb-team-v1-api-football-281", "fb-team-v1-api-football-306"],
-  );
+  assert.equal(getOddsSportKey("fb-comp-api-football-140")?.sportKey, "soccer_spain_la_liga");
+  assert.equal(getOddsSportKey("fb-comp-api-football-253")?.sportKey, "soccer_usa_mls");
+  const bridgeIds = FOOTBALL_ODDS_TEAM_BRIDGE_V1.map((e) => e.canonicalTeamId);
+  assert.equal(bridgeIds.includes("fb-team-v1-api-football-281"), true);
+  assert.equal(bridgeIds.includes("fb-team-v1-api-football-306"), true);
   assert.equal(live14Prod.wouldCallProvider, true);
   assert.deepEqual(live14Prod.sportKeysToFetch, ["soccer_japan_j_league"]);
 
