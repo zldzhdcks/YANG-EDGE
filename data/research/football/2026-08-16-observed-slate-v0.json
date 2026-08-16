@@ -1,0 +1,1269 @@
+{
+  "schemaVersion": "football-observed-slate-v0",
+  "builderVersion": "football-observed-slate-builder-v0",
+  "batchId": "2026-08-16/batch-2207",
+  "dateKst": "2026-08-16",
+  "sourceObservationPath": "data/operator-observations/structured/2026-08-16/batch-2207-football-manual-market-observation-v0.json",
+  "sourceObservationHash": "bdeaa45e427d6b36146d23093c197aefb719968895b75b86a607227c8cb7491a",
+  "sourceMappingPath": "data/research/football/2026-08-16-manual-observation-fixture-mapping-v1.json",
+  "sourceMappingHash": "a4175aff55706fa55fa156383ff5658d694231c126a5336c90956b5d2681ed22",
+  "receivedAtKst": "2026-08-16T22:07:00+09:00",
+  "captureTime": "UNKNOWN",
+  "generatedAt": "2026-08-16T14:12:46.626Z",
+  "researchOnly": true,
+  "engineAdmission": "PROHIBITED",
+  "engineConnected": false,
+  "autoApply": false,
+  "resultDataUsed": false,
+  "doesNotReplaceScheduleV1": true,
+  "scheduleFilterUnchanged": true,
+  "note": "Research overlay. football-schedule-v1 still drops unregistered competitions. Observed/Scheduled is separated from Prediction Eligible. No Engine admission.",
+  "passSchemaAudit": {
+    "existingSnapshotHasPassUnsupportedCompetition": false,
+    "overlayUsesPassUnsupportedCompetition": true,
+    "enginePickSchemaChanged": false
+  },
+  "summary": {
+    "observedGames": 15,
+    "fixtureMapped": 15,
+    "registeredCompetition": 6,
+    "unregisteredCompetition": 9,
+    "pregameEligible": 14,
+    "cutoffBlocked": 1,
+    "droppedFromObservedSlate": 0,
+    "marketRows": 60,
+    "oneX2Observations": 15,
+    "oneX2Joined": 15,
+    "oneX2RegisteredEligible": 6,
+    "oneX2UnsupportedObserved": 8,
+    "oneX2CutoffBlocked": 1
+  },
+  "competitionGap": [
+    {
+      "providerCompetitionId": 24,
+      "providerCompetitionName": "ASEAN Championship",
+      "rawLeagueLabels": [
+        "축ASEA챔"
+      ],
+      "observedFixtureCount": 1,
+      "marketObservationPresent": true,
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "matchFormat": "CUP",
+      "potential1x2Compatibility": "REVIEW",
+      "currentReasonUnregistered": "Not in football-competition-profile-v1. International cup (ASEAN Championship).",
+      "registrationCandidateStatus": "FORMAT_REVIEW_REQUIRED"
+    },
+    {
+      "providerCompetitionId": 40,
+      "providerCompetitionName": "Championship",
+      "rawLeagueLabels": [
+        "EFL챔"
+      ],
+      "observedFixtureCount": 1,
+      "marketObservationPresent": true,
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "matchFormat": "LEAGUE_MATCH",
+      "potential1x2Compatibility": "REVIEW",
+      "currentReasonUnregistered": "Not in football-competition-profile-v1. Raw label EFL챔 mapped to Championship; West Ham identity vs typical Premier League membership needs format/competition review.",
+      "registrationCandidateStatus": "FORMAT_REVIEW_REQUIRED"
+    },
+    {
+      "providerCompetitionId": 88,
+      "providerCompetitionName": "Eredivisie",
+      "rawLeagueLabels": [
+        "에레디비"
+      ],
+      "observedFixtureCount": 1,
+      "marketObservationPresent": true,
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "matchFormat": "LEAGUE_MATCH",
+      "potential1x2Compatibility": "LIKELY",
+      "currentReasonUnregistered": "Not in football-competition-profile-v1. Eredivisie league 1X2 is structurally compatible but not registered.",
+      "registrationCandidateStatus": "CANDIDATE_FOR_RESEARCH_REGISTRATION"
+    },
+    {
+      "providerCompetitionId": 103,
+      "providerCompetitionName": "Eliteserien",
+      "rawLeagueLabels": [
+        "엘리테세"
+      ],
+      "observedFixtureCount": 4,
+      "marketObservationPresent": true,
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "matchFormat": "LEAGUE_MATCH",
+      "potential1x2Compatibility": "LIKELY",
+      "currentReasonUnregistered": "Not in football-competition-profile-v1. Eliteserien league 1X2 is structurally compatible but not registered.",
+      "registrationCandidateStatus": "CANDIDATE_FOR_RESEARCH_REGISTRATION"
+    },
+    {
+      "providerCompetitionId": 526,
+      "providerCompetitionName": "Trophée des Champions",
+      "rawLeagueLabels": [
+        "프슈퍼컵"
+      ],
+      "observedFixtureCount": 1,
+      "marketObservationPresent": true,
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "matchFormat": "CUP",
+      "potential1x2Compatibility": "REVIEW",
+      "currentReasonUnregistered": "Not in football-competition-profile-v1. One-off super cup / shield format.",
+      "registrationCandidateStatus": "FORMAT_REVIEW_REQUIRED"
+    },
+    {
+      "providerCompetitionId": 528,
+      "providerCompetitionName": "Community Shield",
+      "rawLeagueLabels": [
+        "잉슈퍼컵"
+      ],
+      "observedFixtureCount": 1,
+      "marketObservationPresent": true,
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "matchFormat": "CUP",
+      "potential1x2Compatibility": "REVIEW",
+      "currentReasonUnregistered": "Not in football-competition-profile-v1. One-off super cup / shield format.",
+      "registrationCandidateStatus": "FORMAT_REVIEW_REQUIRED"
+    }
+  ],
+  "games": [
+    {
+      "rowId": 1,
+      "fixtureId": 1619317,
+      "observationStatus": "OBSERVED",
+      "fixtureIdentityStatus": "MATCHED",
+      "competitionAdmissionStatus": "UNREGISTERED",
+      "pregameEvidenceStatus": "CUTOFF_BLOCKED",
+      "slatePredictionStatus": "NOT_PREGAME_ELIGIBLE",
+      "researchUsageEligibility": "NOT_PREGAME_ELIGIBLE",
+      "slateResearchStatus": "CUTOFF_BLOCKED",
+      "cutoffStatus": "NOT_PREGAME_ELIGIBLE",
+      "rawLeagueLabel": "축ASEA챔",
+      "providerCompetitionId": 24,
+      "providerCompetitionName": "ASEAN Championship",
+      "rawLeftTeam": "Malaysia",
+      "rawRightTeam": "Vietnam",
+      "candidateLeftTeam": "Malaysia",
+      "candidateRightTeam": "Vietnam",
+      "providerHomeTeamId": 1538,
+      "providerHomeTeamName": "Malaysia",
+      "providerAwayTeamId": 1542,
+      "providerAwayTeamName": "Vietnam",
+      "displayedDateKst": "2026-08-16",
+      "displayedStartKst": "22:00",
+      "providerKickoffUtc": "2026-08-16T13:00:00.000Z",
+      "providerKickoffKst": "2026-08-16 22:00",
+      "sourceScreenshotFile": "odds_01.png",
+      "sourceScreenshotSha256": "dc4821f8cc6b5ffb4f5777b1a8b8d9d18f287bb8a71d8ed748913501ebcb2304",
+      "inScheduleArtifact": false,
+      "markets": [
+        {
+          "rawMarketLabel": "1X2",
+          "marketKind": "ONE_X_TWO",
+          "line": null,
+          "prices": [
+            4.95,
+            3.45,
+            1.52
+          ],
+          "oneX2Joined": true
+        },
+        {
+          "rawMarketLabel": "H +1.0",
+          "marketKind": "HANDICAP",
+          "line": 1,
+          "prices": [
+            2.3,
+            3.1,
+            2.55
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "U 2.5",
+          "marketKind": "TOTALS",
+          "line": 2.5,
+          "prices": [
+            1.62,
+            null,
+            1.93
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "SUM",
+          "marketKind": "SUM_RAW_ONLY",
+          "line": null,
+          "prices": [
+            1.77,
+            null,
+            1.75
+          ],
+          "oneX2Joined": false
+        }
+      ]
+    },
+    {
+      "rowId": 2,
+      "fixtureId": 1582365,
+      "observationStatus": "OBSERVED",
+      "fixtureIdentityStatus": "MATCHED",
+      "competitionAdmissionStatus": "UNREGISTERED",
+      "pregameEvidenceStatus": "ELIGIBLE",
+      "slatePredictionStatus": "NOT_SUPPORTED_COMPETITION",
+      "researchUsageEligibility": "OBSERVED_UNSUPPORTED",
+      "slateResearchStatus": "PASS_UNSUPPORTED_COMPETITION",
+      "cutoffStatus": "PRE_GAME_ELIGIBLE_BY_RECEIVED_AT",
+      "rawLeagueLabel": "잉슈퍼컵",
+      "providerCompetitionId": 528,
+      "providerCompetitionName": "Community Shield",
+      "rawLeftTeam": "아스널",
+      "rawRightTeam": "맨체스C",
+      "candidateLeftTeam": "Arsenal",
+      "candidateRightTeam": "Manchester City",
+      "providerHomeTeamId": 42,
+      "providerHomeTeamName": "Arsenal",
+      "providerAwayTeamId": 50,
+      "providerAwayTeamName": "Manchester City",
+      "displayedDateKst": "2026-08-16",
+      "displayedStartKst": "23:00",
+      "providerKickoffUtc": "2026-08-16T14:00:00.000Z",
+      "providerKickoffKst": "2026-08-16 23:00",
+      "sourceScreenshotFile": "odds_01.png",
+      "sourceScreenshotSha256": "dc4821f8cc6b5ffb4f5777b1a8b8d9d18f287bb8a71d8ed748913501ebcb2304",
+      "inScheduleArtifact": false,
+      "markets": [
+        {
+          "rawMarketLabel": "1X2",
+          "marketKind": "ONE_X_TWO",
+          "line": null,
+          "prices": [
+            2.6,
+            3.1,
+            2.26
+          ],
+          "oneX2Joined": true
+        },
+        {
+          "rawMarketLabel": "H +1.0",
+          "marketKind": "HANDICAP",
+          "line": 1,
+          "prices": [
+            1.49,
+            3.8,
+            4.65
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "U 2.5",
+          "marketKind": "TOTALS",
+          "line": 2.5,
+          "prices": [
+            1.77,
+            null,
+            1.75
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "SUM",
+          "marketKind": "SUM_RAW_ONLY",
+          "line": null,
+          "prices": [
+            1.77,
+            null,
+            1.75
+          ],
+          "oneX2Joined": false
+        }
+      ]
+    },
+    {
+      "rowId": 3,
+      "fixtureId": 1552134,
+      "observationStatus": "OBSERVED",
+      "fixtureIdentityStatus": "MATCHED",
+      "competitionAdmissionStatus": "UNREGISTERED",
+      "pregameEvidenceStatus": "ELIGIBLE",
+      "slatePredictionStatus": "NOT_SUPPORTED_COMPETITION",
+      "researchUsageEligibility": "OBSERVED_UNSUPPORTED",
+      "slateResearchStatus": "PASS_UNSUPPORTED_COMPETITION",
+      "cutoffStatus": "PRE_GAME_ELIGIBLE_BY_RECEIVED_AT",
+      "rawLeagueLabel": "에레디비",
+      "providerCompetitionId": 88,
+      "providerCompetitionName": "Eredivisie",
+      "rawLeftTeam": "아약스",
+      "rawRightTeam": "헤이렌베",
+      "candidateLeftTeam": "Ajax",
+      "candidateRightTeam": "Heerenveen",
+      "providerHomeTeamId": 194,
+      "providerHomeTeamName": "Ajax",
+      "providerAwayTeamId": 210,
+      "providerAwayTeamName": "Heerenveen",
+      "displayedDateKst": "2026-08-16",
+      "displayedStartKst": "23:45",
+      "providerKickoffUtc": "2026-08-16T14:45:00.000Z",
+      "providerKickoffKst": "2026-08-16 23:45",
+      "sourceScreenshotFile": "odds_01.png",
+      "sourceScreenshotSha256": "dc4821f8cc6b5ffb4f5777b1a8b8d9d18f287bb8a71d8ed748913501ebcb2304",
+      "inScheduleArtifact": false,
+      "markets": [
+        {
+          "rawMarketLabel": "1X2",
+          "marketKind": "ONE_X_TWO",
+          "line": null,
+          "prices": [
+            1.38,
+            4.25,
+            5.3
+          ],
+          "oneX2Joined": true
+        },
+        {
+          "rawMarketLabel": "H -1.0",
+          "marketKind": "HANDICAP",
+          "line": -1,
+          "prices": [
+            2.09,
+            3.5,
+            2.6
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "U 3.5",
+          "marketKind": "TOTALS",
+          "line": 3.5,
+          "prices": [
+            1.63,
+            null,
+            1.91
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "SUM",
+          "marketKind": "SUM_RAW_ONLY",
+          "line": null,
+          "prices": [
+            1.76,
+            null,
+            1.76
+          ],
+          "oneX2Joined": false
+        }
+      ]
+    },
+    {
+      "rowId": 4,
+      "fixtureId": 1563093,
+      "observationStatus": "OBSERVED",
+      "fixtureIdentityStatus": "MATCHED",
+      "competitionAdmissionStatus": "UNREGISTERED",
+      "pregameEvidenceStatus": "ELIGIBLE",
+      "slatePredictionStatus": "NOT_SUPPORTED_COMPETITION",
+      "researchUsageEligibility": "OBSERVED_UNSUPPORTED",
+      "slateResearchStatus": "PASS_UNSUPPORTED_COMPETITION",
+      "cutoffStatus": "PRE_GAME_ELIGIBLE_BY_RECEIVED_AT",
+      "rawLeagueLabel": "EFL챔",
+      "providerCompetitionId": 40,
+      "providerCompetitionName": "Championship",
+      "rawLeftTeam": "번리",
+      "rawRightTeam": "웨스트햄",
+      "candidateLeftTeam": "Burnley",
+      "candidateRightTeam": "West Ham",
+      "providerHomeTeamId": 44,
+      "providerHomeTeamName": "Burnley",
+      "providerAwayTeamId": 48,
+      "providerAwayTeamName": "West Ham",
+      "displayedDateKst": "2026-08-17",
+      "displayedStartKst": "00:00",
+      "providerKickoffUtc": "2026-08-16T15:00:00.000Z",
+      "providerKickoffKst": "2026-08-17 00:00",
+      "sourceScreenshotFile": "odds_01.png",
+      "sourceScreenshotSha256": "dc4821f8cc6b5ffb4f5777b1a8b8d9d18f287bb8a71d8ed748913501ebcb2304",
+      "inScheduleArtifact": false,
+      "markets": [
+        {
+          "rawMarketLabel": "1X2",
+          "marketKind": "ONE_X_TWO",
+          "line": null,
+          "prices": [
+            2.7,
+            3.25,
+            2.12
+          ],
+          "oneX2Joined": true
+        },
+        {
+          "rawMarketLabel": "H +1.0",
+          "marketKind": "HANDICAP",
+          "line": 1,
+          "prices": [
+            1.57,
+            3.75,
+            4.05
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "U 2.5",
+          "marketKind": "TOTALS",
+          "line": 2.5,
+          "prices": [
+            1.96,
+            null,
+            1.6
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "SUM",
+          "marketKind": "SUM_RAW_ONLY",
+          "line": null,
+          "prices": [
+            1.77,
+            null,
+            1.75
+          ],
+          "oneX2Joined": false
+        }
+      ]
+    },
+    {
+      "rowId": 5,
+      "fixtureId": 1570339,
+      "observationStatus": "OBSERVED",
+      "fixtureIdentityStatus": "MATCHED",
+      "competitionAdmissionStatus": "REGISTERED",
+      "pregameEvidenceStatus": "ELIGIBLE",
+      "slatePredictionStatus": "NOT_EVALUATED",
+      "researchUsageEligibility": "FUTURE_RESEARCH_ELIGIBLE",
+      "slateResearchStatus": "OBSERVED_REGISTERED",
+      "cutoffStatus": "PRE_GAME_ELIGIBLE_BY_RECEIVED_AT",
+      "rawLeagueLabel": "라리가",
+      "providerCompetitionId": 140,
+      "providerCompetitionName": "La Liga",
+      "rawLeftTeam": "라싱산탄",
+      "rawRightTeam": "비야레알",
+      "candidateLeftTeam": "Racing Santander",
+      "candidateRightTeam": "Villarreal",
+      "providerHomeTeamId": 4665,
+      "providerHomeTeamName": "Racing Santander",
+      "providerAwayTeamId": 533,
+      "providerAwayTeamName": "Villarreal",
+      "displayedDateKst": "2026-08-17",
+      "displayedStartKst": "00:00",
+      "providerKickoffUtc": "2026-08-16T15:00:00.000Z",
+      "providerKickoffKst": "2026-08-17 00:00",
+      "sourceScreenshotFile": "odds_01.png",
+      "sourceScreenshotSha256": "dc4821f8cc6b5ffb4f5777b1a8b8d9d18f287bb8a71d8ed748913501ebcb2304",
+      "inScheduleArtifact": true,
+      "markets": [
+        {
+          "rawMarketLabel": "1X2",
+          "marketKind": "ONE_X_TWO",
+          "line": null,
+          "prices": [
+            2.95,
+            3.2,
+            2.01
+          ],
+          "oneX2Joined": true
+        },
+        {
+          "rawMarketLabel": "H +1.0",
+          "marketKind": "HANDICAP",
+          "line": 1,
+          "prices": [
+            1.62,
+            3.8,
+            3.7
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "U 2.5",
+          "marketKind": "TOTALS",
+          "line": 2.5,
+          "prices": [
+            1.89,
+            null,
+            1.65
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "SUM",
+          "marketKind": "SUM_RAW_ONLY",
+          "line": null,
+          "prices": [
+            1.77,
+            null,
+            1.75
+          ],
+          "oneX2Joined": false
+        }
+      ]
+    },
+    {
+      "rowId": 6,
+      "fixtureId": 1494739,
+      "observationStatus": "OBSERVED",
+      "fixtureIdentityStatus": "MATCHED",
+      "competitionAdmissionStatus": "UNREGISTERED",
+      "pregameEvidenceStatus": "ELIGIBLE",
+      "slatePredictionStatus": "NOT_SUPPORTED_COMPETITION",
+      "researchUsageEligibility": "OBSERVED_UNSUPPORTED",
+      "slateResearchStatus": "PASS_UNSUPPORTED_COMPETITION",
+      "cutoffStatus": "PRE_GAME_ELIGIBLE_BY_RECEIVED_AT",
+      "rawLeagueLabel": "엘리테세",
+      "providerCompetitionId": 103,
+      "providerCompetitionName": "Eliteserien",
+      "rawLeftTeam": "사릅스보",
+      "rawRightTeam": "사네피오",
+      "candidateLeftTeam": "Sarpsborg 08",
+      "candidateRightTeam": "Sandefjord",
+      "providerHomeTeamId": 333,
+      "providerHomeTeamName": "Sarpsborg 08 FF",
+      "providerAwayTeamId": 332,
+      "providerAwayTeamName": "Sandefjord",
+      "displayedDateKst": "2026-08-17",
+      "displayedStartKst": "00:00",
+      "providerKickoffUtc": "2026-08-16T15:00:00.000Z",
+      "providerKickoffKst": "2026-08-17 00:00",
+      "sourceScreenshotFile": "odds_01.png",
+      "sourceScreenshotSha256": "dc4821f8cc6b5ffb4f5777b1a8b8d9d18f287bb8a71d8ed748913501ebcb2304",
+      "inScheduleArtifact": false,
+      "markets": [
+        {
+          "rawMarketLabel": "1X2",
+          "marketKind": "ONE_X_TWO",
+          "line": null,
+          "prices": [
+            1.73,
+            3.6,
+            3.4
+          ],
+          "oneX2Joined": true
+        },
+        {
+          "rawMarketLabel": "H -1.0",
+          "marketKind": "HANDICAP",
+          "line": -1,
+          "prices": [
+            2.95,
+            3.6,
+            1.88
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "U 3.5",
+          "marketKind": "TOTALS",
+          "line": 3.5,
+          "prices": [
+            1.51,
+            null,
+            2.11
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "SUM",
+          "marketKind": "SUM_RAW_ONLY",
+          "line": null,
+          "prices": [
+            1.76,
+            null,
+            1.76
+          ],
+          "oneX2Joined": false
+        }
+      ]
+    },
+    {
+      "rowId": 7,
+      "fixtureId": 1494734,
+      "observationStatus": "OBSERVED",
+      "fixtureIdentityStatus": "MATCHED",
+      "competitionAdmissionStatus": "UNREGISTERED",
+      "pregameEvidenceStatus": "ELIGIBLE",
+      "slatePredictionStatus": "NOT_SUPPORTED_COMPETITION",
+      "researchUsageEligibility": "OBSERVED_UNSUPPORTED",
+      "slateResearchStatus": "PASS_UNSUPPORTED_COMPETITION",
+      "cutoffStatus": "PRE_GAME_ELIGIBLE_BY_RECEIVED_AT",
+      "rawLeagueLabel": "엘리테세",
+      "providerCompetitionId": 103,
+      "providerCompetitionName": "Eliteserien",
+      "rawLeftTeam": "SK브란",
+      "rawRightTeam": "함캄",
+      "candidateLeftTeam": "SK Brann",
+      "candidateRightTeam": "HamKam",
+      "providerHomeTeamId": 319,
+      "providerHomeTeamName": "Brann",
+      "providerAwayTeamId": 2159,
+      "providerAwayTeamName": "Ham-Kam",
+      "displayedDateKst": "2026-08-17",
+      "displayedStartKst": "00:00",
+      "providerKickoffUtc": "2026-08-16T15:00:00.000Z",
+      "providerKickoffKst": "2026-08-17 00:00",
+      "sourceScreenshotFile": "odds_01.png",
+      "sourceScreenshotSha256": "dc4821f8cc6b5ffb4f5777b1a8b8d9d18f287bb8a71d8ed748913501ebcb2304",
+      "inScheduleArtifact": false,
+      "markets": [
+        {
+          "rawMarketLabel": "1X2",
+          "marketKind": "ONE_X_TWO",
+          "line": null,
+          "prices": [
+            1.48,
+            4.05,
+            4.4
+          ],
+          "oneX2Joined": true
+        },
+        {
+          "rawMarketLabel": "H -1.0",
+          "marketKind": "HANDICAP",
+          "line": -1,
+          "prices": [
+            2.4,
+            3.5,
+            2.24
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "U 3.5",
+          "marketKind": "TOTALS",
+          "line": 3.5,
+          "prices": [
+            1.59,
+            null,
+            1.97
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "SUM",
+          "marketKind": "SUM_RAW_ONLY",
+          "line": null,
+          "prices": [
+            1.76,
+            null,
+            1.76
+          ],
+          "oneX2Joined": false
+        }
+      ]
+    },
+    {
+      "rowId": 8,
+      "fixtureId": 1494737,
+      "observationStatus": "OBSERVED",
+      "fixtureIdentityStatus": "MATCHED",
+      "competitionAdmissionStatus": "UNREGISTERED",
+      "pregameEvidenceStatus": "ELIGIBLE",
+      "slatePredictionStatus": "NOT_SUPPORTED_COMPETITION",
+      "researchUsageEligibility": "OBSERVED_UNSUPPORTED",
+      "slateResearchStatus": "PASS_UNSUPPORTED_COMPETITION",
+      "cutoffStatus": "PRE_GAME_ELIGIBLE_BY_RECEIVED_AT",
+      "rawLeagueLabel": "엘리테세",
+      "providerCompetitionId": 103,
+      "providerCompetitionName": "Eliteserien",
+      "rawLeftTeam": "몰데FK",
+      "rawRightTeam": "트롬쇠IL",
+      "candidateLeftTeam": "Molde FK",
+      "candidateRightTeam": "Tromso IL",
+      "providerHomeTeamId": 329,
+      "providerHomeTeamName": "Molde",
+      "providerAwayTeamId": 325,
+      "providerAwayTeamName": "Tromso",
+      "displayedDateKst": "2026-08-17",
+      "displayedStartKst": "00:00",
+      "providerKickoffUtc": "2026-08-16T15:00:00.000Z",
+      "providerKickoffKst": "2026-08-17 00:00",
+      "sourceScreenshotFile": "odds_01.png",
+      "sourceScreenshotSha256": "dc4821f8cc6b5ffb4f5777b1a8b8d9d18f287bb8a71d8ed748913501ebcb2304",
+      "inScheduleArtifact": false,
+      "markets": [
+        {
+          "rawMarketLabel": "1X2",
+          "marketKind": "ONE_X_TWO",
+          "line": null,
+          "prices": [
+            1.99,
+            3.3,
+            2.9
+          ],
+          "oneX2Joined": true
+        },
+        {
+          "rawMarketLabel": "H -1.0",
+          "marketKind": "HANDICAP",
+          "line": -1,
+          "prices": [
+            3.6,
+            3.75,
+            1.65
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "U 2.5",
+          "marketKind": "TOTALS",
+          "line": 2.5,
+          "prices": [
+            2.05,
+            null,
+            1.54
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "SUM",
+          "marketKind": "SUM_RAW_ONLY",
+          "line": null,
+          "prices": [
+            1.76,
+            null,
+            1.76
+          ],
+          "oneX2Joined": false
+        }
+      ]
+    },
+    {
+      "rowId": 9,
+      "fixtureId": 1570338,
+      "observationStatus": "OBSERVED",
+      "fixtureIdentityStatus": "MATCHED",
+      "competitionAdmissionStatus": "REGISTERED",
+      "pregameEvidenceStatus": "ELIGIBLE",
+      "slatePredictionStatus": "NOT_EVALUATED",
+      "researchUsageEligibility": "FUTURE_RESEARCH_ELIGIBLE",
+      "slateResearchStatus": "OBSERVED_REGISTERED",
+      "cutoffStatus": "PRE_GAME_ELIGIBLE_BY_RECEIVED_AT",
+      "rawLeagueLabel": "라리가",
+      "providerCompetitionId": 140,
+      "providerCompetitionName": "La Liga",
+      "rawLeftTeam": "에스파뇰",
+      "rawRightTeam": "레반테",
+      "candidateLeftTeam": "Espanyol",
+      "candidateRightTeam": "Levante",
+      "providerHomeTeamId": 540,
+      "providerHomeTeamName": "Espanyol",
+      "providerAwayTeamId": 539,
+      "providerAwayTeamName": "Levante",
+      "displayedDateKst": "2026-08-17",
+      "displayedStartKst": "02:00",
+      "providerKickoffUtc": "2026-08-16T17:00:00.000Z",
+      "providerKickoffKst": "2026-08-17 02:00",
+      "sourceScreenshotFile": "odds_02.png",
+      "sourceScreenshotSha256": "69431457a5d60415763558ca205017b0c3bd95f5c22c59d30c5ed8a9327ed7db",
+      "inScheduleArtifact": true,
+      "markets": [
+        {
+          "rawMarketLabel": "1X2",
+          "marketKind": "ONE_X_TWO",
+          "line": null,
+          "prices": [
+            2,
+            2.85,
+            3.35
+          ],
+          "oneX2Joined": true
+        },
+        {
+          "rawMarketLabel": "H -1.0",
+          "marketKind": "HANDICAP",
+          "line": -1,
+          "prices": [
+            3.9,
+            3.35,
+            1.68
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "U 2.5",
+          "marketKind": "TOTALS",
+          "line": 2.5,
+          "prices": [
+            1.6,
+            null,
+            1.96
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "SUM",
+          "marketKind": "SUM_RAW_ONLY",
+          "line": null,
+          "prices": [
+            1.77,
+            null,
+            1.75
+          ],
+          "oneX2Joined": false
+        }
+      ]
+    },
+    {
+      "rowId": 10,
+      "fixtureId": 1494735,
+      "observationStatus": "OBSERVED",
+      "fixtureIdentityStatus": "MATCHED",
+      "competitionAdmissionStatus": "UNREGISTERED",
+      "pregameEvidenceStatus": "ELIGIBLE",
+      "slatePredictionStatus": "NOT_SUPPORTED_COMPETITION",
+      "researchUsageEligibility": "OBSERVED_UNSUPPORTED",
+      "slateResearchStatus": "PASS_UNSUPPORTED_COMPETITION",
+      "cutoffStatus": "PRE_GAME_ELIGIBLE_BY_RECEIVED_AT",
+      "rawLeagueLabel": "엘리테세",
+      "providerCompetitionId": 103,
+      "providerCompetitionName": "Eliteserien",
+      "rawLeftTeam": "프레드릭",
+      "rawRightTeam": "크리스티",
+      "candidateLeftTeam": "Fredrikstad",
+      "candidateRightTeam": "Kristiansund",
+      "providerHomeTeamId": 2149,
+      "providerHomeTeamName": "Fredrikstad",
+      "providerAwayTeamId": 320,
+      "providerAwayTeamName": "Kristiansund BK",
+      "displayedDateKst": "2026-08-17",
+      "displayedStartKst": "02:15",
+      "providerKickoffUtc": "2026-08-16T17:15:00.000Z",
+      "providerKickoffKst": "2026-08-17 02:15",
+      "sourceScreenshotFile": "odds_02.png",
+      "sourceScreenshotSha256": "69431457a5d60415763558ca205017b0c3bd95f5c22c59d30c5ed8a9327ed7db",
+      "inScheduleArtifact": false,
+      "markets": [
+        {
+          "rawMarketLabel": "1X2",
+          "marketKind": "ONE_X_TWO",
+          "line": null,
+          "prices": [
+            1.77,
+            3.35,
+            3.5
+          ],
+          "oneX2Joined": true
+        },
+        {
+          "rawMarketLabel": "H -1.0",
+          "marketKind": "HANDICAP",
+          "line": -1,
+          "prices": [
+            3.15,
+            3.45,
+            1.84
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "U 2.5",
+          "marketKind": "TOTALS",
+          "line": 2.5,
+          "prices": [
+            1.93,
+            null,
+            1.62
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "SUM",
+          "marketKind": "SUM_RAW_ONLY",
+          "line": null,
+          "prices": [
+            1.77,
+            null,
+            1.75
+          ],
+          "oneX2Joined": false
+        }
+      ]
+    },
+    {
+      "rowId": 11,
+      "fixtureId": 1546791,
+      "observationStatus": "OBSERVED",
+      "fixtureIdentityStatus": "MATCHED",
+      "competitionAdmissionStatus": "UNREGISTERED",
+      "pregameEvidenceStatus": "ELIGIBLE",
+      "slatePredictionStatus": "NOT_SUPPORTED_COMPETITION",
+      "researchUsageEligibility": "OBSERVED_UNSUPPORTED",
+      "slateResearchStatus": "PASS_UNSUPPORTED_COMPETITION",
+      "cutoffStatus": "PRE_GAME_ELIGIBLE_BY_RECEIVED_AT",
+      "rawLeagueLabel": "프슈퍼컵",
+      "providerCompetitionId": 526,
+      "providerCompetitionName": "Trophée des Champions",
+      "rawLeftTeam": "RC랑스",
+      "rawRightTeam": "PSG",
+      "candidateLeftTeam": "RC Lens",
+      "candidateRightTeam": "Paris Saint-Germain",
+      "providerHomeTeamId": 116,
+      "providerHomeTeamName": "Lens",
+      "providerAwayTeamId": 85,
+      "providerAwayTeamName": "Paris Saint Germain",
+      "displayedDateKst": "2026-08-17",
+      "displayedStartKst": "03:45",
+      "providerKickoffUtc": "2026-08-16T18:45:00.000Z",
+      "providerKickoffKst": "2026-08-17 03:45",
+      "sourceScreenshotFile": "odds_03.png",
+      "sourceScreenshotSha256": "88c801c508c1469332176254298a2077d6e07870eadbe719d76eed1f5a88317b",
+      "inScheduleArtifact": false,
+      "markets": [
+        {
+          "rawMarketLabel": "1X2",
+          "marketKind": "ONE_X_TWO",
+          "line": null,
+          "prices": [
+            4.1,
+            3.8,
+            1.56
+          ],
+          "oneX2Joined": true
+        },
+        {
+          "rawMarketLabel": "H +1.0",
+          "marketKind": "HANDICAP",
+          "line": 1,
+          "prices": [
+            2.05,
+            3.35,
+            2.75
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "U 2.5",
+          "marketKind": "TOTALS",
+          "line": 2.5,
+          "prices": [
+            2.17,
+            null,
+            1.48
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "SUM",
+          "marketKind": "SUM_RAW_ONLY",
+          "line": null,
+          "prices": [
+            1.77,
+            null,
+            1.75
+          ],
+          "oneX2Joined": false
+        }
+      ]
+    },
+    {
+      "rowId": 12,
+      "fixtureId": 1490389,
+      "observationStatus": "OBSERVED",
+      "fixtureIdentityStatus": "MATCHED",
+      "competitionAdmissionStatus": "REGISTERED",
+      "pregameEvidenceStatus": "ELIGIBLE",
+      "slatePredictionStatus": "NOT_EVALUATED",
+      "researchUsageEligibility": "FUTURE_RESEARCH_ELIGIBLE",
+      "slateResearchStatus": "OBSERVED_REGISTERED",
+      "cutoffStatus": "PRE_GAME_ELIGIBLE_BY_RECEIVED_AT",
+      "rawLeagueLabel": "MLS",
+      "providerCompetitionId": 253,
+      "providerCompetitionName": "Major League Soccer",
+      "rawLeftTeam": "시카파이",
+      "rawRightTeam": "포틀팀버",
+      "candidateLeftTeam": "Chicago Fire",
+      "candidateRightTeam": "Portland Timbers",
+      "providerHomeTeamId": 1607,
+      "providerHomeTeamName": "Chicago Fire",
+      "providerAwayTeamId": 1617,
+      "providerAwayTeamName": "Portland Timbers",
+      "displayedDateKst": "2026-08-17",
+      "displayedStartKst": "07:00",
+      "providerKickoffUtc": "2026-08-16T22:00:00.000Z",
+      "providerKickoffKst": "2026-08-17 07:00",
+      "sourceScreenshotFile": "odds_04.png",
+      "sourceScreenshotSha256": "885c8cdca4d6c4f44297efe2f48a627795e4c32fab636e88c369b8e223c63dca",
+      "inScheduleArtifact": true,
+      "markets": [
+        {
+          "rawMarketLabel": "1X2",
+          "marketKind": "ONE_X_TWO",
+          "line": null,
+          "prices": [
+            1.46,
+            4.2,
+            4.4
+          ],
+          "oneX2Joined": true
+        },
+        {
+          "rawMarketLabel": "H -1.0",
+          "marketKind": "HANDICAP",
+          "line": -1,
+          "prices": [
+            2.22,
+            3.65,
+            2.35
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "U 3.5",
+          "marketKind": "TOTALS",
+          "line": 3.5,
+          "prices": [
+            1.8,
+            null,
+            1.72
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "SUM",
+          "marketKind": "SUM_RAW_ONLY",
+          "line": null,
+          "prices": [
+            1.76,
+            null,
+            1.76
+          ],
+          "oneX2Joined": false
+        }
+      ]
+    },
+    {
+      "rowId": 13,
+      "fixtureId": 1490388,
+      "observationStatus": "OBSERVED",
+      "fixtureIdentityStatus": "MATCHED",
+      "competitionAdmissionStatus": "REGISTERED",
+      "pregameEvidenceStatus": "ELIGIBLE",
+      "slatePredictionStatus": "NOT_EVALUATED",
+      "researchUsageEligibility": "FUTURE_RESEARCH_ELIGIBLE",
+      "slateResearchStatus": "OBSERVED_REGISTERED",
+      "cutoffStatus": "PRE_GAME_ELIGIBLE_BY_RECEIVED_AT",
+      "rawLeagueLabel": "MLS",
+      "providerCompetitionId": 253,
+      "providerCompetitionName": "Major League Soccer",
+      "rawLeftTeam": "뉴욕시티",
+      "rawRightTeam": "필라유니",
+      "candidateLeftTeam": "New York City FC",
+      "candidateRightTeam": "Philadelphia Union",
+      "providerHomeTeamId": 1604,
+      "providerHomeTeamName": "New York City FC",
+      "providerAwayTeamId": 1599,
+      "providerAwayTeamName": "Philadelphia Union",
+      "displayedDateKst": "2026-08-17",
+      "displayedStartKst": "07:00",
+      "providerKickoffUtc": "2026-08-16T22:00:00.000Z",
+      "providerKickoffKst": "2026-08-17 07:00",
+      "sourceScreenshotFile": "odds_04.png",
+      "sourceScreenshotSha256": "885c8cdca4d6c4f44297efe2f48a627795e4c32fab636e88c369b8e223c63dca",
+      "inScheduleArtifact": true,
+      "markets": [
+        {
+          "rawMarketLabel": "1X2",
+          "marketKind": "ONE_X_TWO",
+          "line": null,
+          "prices": [
+            2.11,
+            3.35,
+            2.65
+          ],
+          "oneX2Joined": true
+        },
+        {
+          "rawMarketLabel": "H -1.0",
+          "marketKind": "HANDICAP",
+          "line": -1,
+          "prices": [
+            4,
+            4,
+            1.54
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "U 2.5",
+          "marketKind": "TOTALS",
+          "line": 2.5,
+          "prices": [
+            2.11,
+            null,
+            1.51
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "SUM",
+          "marketKind": "SUM_RAW_ONLY",
+          "line": null,
+          "prices": [
+            1.76,
+            null,
+            1.76
+          ],
+          "oneX2Joined": false
+        }
+      ]
+    },
+    {
+      "rowId": 14,
+      "fixtureId": 1490383,
+      "observationStatus": "OBSERVED",
+      "fixtureIdentityStatus": "MATCHED",
+      "competitionAdmissionStatus": "REGISTERED",
+      "pregameEvidenceStatus": "ELIGIBLE",
+      "slatePredictionStatus": "NOT_EVALUATED",
+      "researchUsageEligibility": "FUTURE_RESEARCH_ELIGIBLE",
+      "slateResearchStatus": "OBSERVED_REGISTERED",
+      "cutoffStatus": "PRE_GAME_ELIGIBLE_BY_RECEIVED_AT",
+      "rawLeagueLabel": "MLS",
+      "providerCompetitionId": 253,
+      "providerCompetitionName": "Major League Soccer",
+      "rawLeftTeam": "오스틴FC",
+      "rawRightTeam": "FC댈러스",
+      "candidateLeftTeam": "Austin FC",
+      "candidateRightTeam": "FC Dallas",
+      "providerHomeTeamId": 16489,
+      "providerHomeTeamName": "Austin",
+      "providerAwayTeamId": 1597,
+      "providerAwayTeamName": "FC Dallas",
+      "displayedDateKst": "2026-08-17",
+      "displayedStartKst": "09:30",
+      "providerKickoffUtc": "2026-08-17T00:30:00.000Z",
+      "providerKickoffKst": "2026-08-17 09:30",
+      "sourceScreenshotFile": "odds_05.png",
+      "sourceScreenshotSha256": "907091049dc2829bdfeaa4478f0eaf5ec7b5d1c09e044cbc0500c687428044c9",
+      "inScheduleArtifact": true,
+      "markets": [
+        {
+          "rawMarketLabel": "1X2",
+          "marketKind": "ONE_X_TWO",
+          "line": null,
+          "prices": [
+            2.6,
+            3.35,
+            2.14
+          ],
+          "oneX2Joined": true
+        },
+        {
+          "rawMarketLabel": "H +1.0",
+          "marketKind": "HANDICAP",
+          "line": 1,
+          "prices": [
+            1.54,
+            3.85,
+            4.15
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "U 2.5",
+          "marketKind": "TOTALS",
+          "line": 2.5,
+          "prices": [
+            2.11,
+            null,
+            1.51
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "SUM",
+          "marketKind": "SUM_RAW_ONLY",
+          "line": null,
+          "prices": [
+            1.76,
+            null,
+            1.76
+          ],
+          "oneX2Joined": false
+        }
+      ]
+    },
+    {
+      "rowId": 15,
+      "fixtureId": 1490390,
+      "observationStatus": "OBSERVED",
+      "fixtureIdentityStatus": "MATCHED",
+      "competitionAdmissionStatus": "REGISTERED",
+      "pregameEvidenceStatus": "ELIGIBLE",
+      "slatePredictionStatus": "NOT_EVALUATED",
+      "researchUsageEligibility": "FUTURE_RESEARCH_ELIGIBLE",
+      "slateResearchStatus": "OBSERVED_REGISTERED",
+      "cutoffStatus": "PRE_GAME_ELIGIBLE_BY_RECEIVED_AT",
+      "rawLeagueLabel": "MLS",
+      "providerCompetitionId": 253,
+      "providerCompetitionName": "Major League Soccer",
+      "rawLeftTeam": "시애사운",
+      "rawRightTeam": "밴쿠화이",
+      "candidateLeftTeam": "Seattle Sounders",
+      "candidateRightTeam": "Vancouver Whitecaps",
+      "providerHomeTeamId": 1595,
+      "providerHomeTeamName": "Seattle Sounders",
+      "providerAwayTeamId": 1603,
+      "providerAwayTeamName": "Vancouver Whitecaps",
+      "displayedDateKst": "2026-08-17",
+      "displayedStartKst": "11:30",
+      "providerKickoffUtc": "2026-08-17T02:30:00.000Z",
+      "providerKickoffKst": "2026-08-17 11:30",
+      "sourceScreenshotFile": "odds_05.png",
+      "sourceScreenshotSha256": "907091049dc2829bdfeaa4478f0eaf5ec7b5d1c09e044cbc0500c687428044c9",
+      "inScheduleArtifact": true,
+      "markets": [
+        {
+          "rawMarketLabel": "1X2",
+          "marketKind": "ONE_X_TWO",
+          "line": null,
+          "prices": [
+            3.25,
+            3.45,
+            1.81
+          ],
+          "oneX2Joined": true
+        },
+        {
+          "rawMarketLabel": "H +1.0",
+          "marketKind": "HANDICAP",
+          "line": 1,
+          "prices": [
+            1.79,
+            3.6,
+            3.2
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "U 2.5",
+          "marketKind": "TOTALS",
+          "line": 2.5,
+          "prices": [
+            2.17,
+            null,
+            1.48
+          ],
+          "oneX2Joined": false
+        },
+        {
+          "rawMarketLabel": "SUM",
+          "marketKind": "SUM_RAW_ONLY",
+          "line": null,
+          "prices": [
+            1.76,
+            null,
+            1.76
+          ],
+          "oneX2Joined": false
+        }
+      ]
+    }
+  ]
+}
