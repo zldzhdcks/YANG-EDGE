@@ -1,0 +1,1868 @@
+{
+  "meta": {
+    "schemaVersion": "mlb-domestic-markets-v1",
+    "dateKst": "2026-08-17",
+    "observedAt": "2026-08-16T13:07:00.000Z",
+    "enteredAt": "2026-08-16T13:07:00.000Z",
+    "sourceType": "ADMIN_MANUAL_SCREENSHOT",
+    "extractionMethod": "MANUAL_VISUAL_CONFIRMATION",
+    "confirmationMethod": "ADMIN_VERIFIED",
+    "commercialUseStatus": "INTERNAL_ONLY",
+    "screenshotCount": 4,
+    "scheduleArtifact": "data/research/mlb/2026-08-17-schedule-v1.json",
+    "scheduleHash": "697c42de3976bb278d3ae144616a41883db1de62ce5a092c76e078a94b75af0c",
+    "rowsHash": "e230abf15a00c1a94d8193c754842388e01b34e37dcd09b28458acb6ac9d72fc",
+    "marketCounts": {
+      "MONEYLINE_2WAY": 15,
+      "DOMESTIC_THREE_WAY_SPECIAL": 15,
+      "RUN_LINE": 15,
+      "TOTALS": 15,
+      "UNSUPPORTED_OR_UNRESOLVED": 15,
+      "FIRST_HALF_THREE_WAY": 1,
+      "FIRST_HALF_RUN_LINE": 1,
+      "FIRST_HALF_TOTALS": 1
+    },
+    "unresolvedRows": 0,
+    "cancelledExcluded": 0,
+    "capturedBeforeStart": true,
+    "namespace": "DOMESTIC_OPERATOR_COMPARISON",
+    "doesNotReplaceOverseasPrior": true
+  },
+  "summary": {
+    "totalScheduleGames": 15,
+    "mappedGames": 15,
+    "unmappedScheduleGames": 0,
+    "moneylineComplete": 15,
+    "totalsComplete": 15,
+    "runLineComplete": 15,
+    "specialMarketsRawOnly": 33
+  },
+  "games": [
+    {
+      "gamePk": 822940,
+      "internalGameId": "mlb-tampa-bay-rays-baltimore-orioles",
+      "homeTeam": "Tampa Bay Rays",
+      "awayTeam": "Baltimore Orioles",
+      "homeTeamId": 139,
+      "awayTeamId": 110,
+      "commenceTimeUtc": "2026-08-16T16:15:00Z",
+      "startTimeKst": "01:15",
+      "displayOrder": 1,
+      "screenLeftTeam": "탬파레이",
+      "screenRightTeam": "볼티오리",
+      "screenLeftCanonical": "Tampa Bay Rays",
+      "screenRightCanonical": "Baltimore Orioles",
+      "mappingMethod": "EXACT_TEAM_PAIR_AND_START_TIME; orientation=left_home",
+      "cutoffStatus": "PASS",
+      "capturedBeforeStart": true,
+      "rawMarkets": [
+        {
+          "rawMarketCode": "MONEYLINE_2WAY",
+          "screenLabel": "승패",
+          "prices": [
+            1.52,
+            2.09
+          ],
+          "line": null,
+          "sideHint": "screenLeft/screenRight"
+        },
+        {
+          "rawMarketCode": "승①패",
+          "screenLabel": "승①패",
+          "prices": [
+            2.1,
+            3.3,
+            2.7
+          ],
+          "line": null,
+          "sideHint": "home/draw/away screen order",
+          "notes": [
+            "Settlement rule vs standard MLB 1X2 not confirmed; stored as DOMESTIC_THREE_WAY_SPECIAL"
+          ]
+        },
+        {
+          "rawMarketCode": "H_RUN_LINE",
+          "screenLabel": "H -2.5",
+          "prices": [
+            2.87,
+            1.27
+          ],
+          "line": -2.5,
+          "sideHint": "H=home handicap"
+        },
+        {
+          "rawMarketCode": "U_TOTALS",
+          "screenLabel": "U 7.5",
+          "prices": [
+            1.85,
+            1.68
+          ],
+          "line": 7.5,
+          "sideHint": "Under listed first then Over"
+        },
+        {
+          "rawMarketCode": "SUM",
+          "screenLabel": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "sideHint": null,
+          "notes": [
+            "Meaning unresolved vs standard markets"
+          ]
+        }
+      ],
+      "normalizedMarkets": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "homePrice": 1.52,
+          "awayPrice": 2.09,
+          "predictionSupport": "SUPPORTED_V0"
+        },
+        {
+          "marketType": "DOMESTIC_THREE_WAY_SPECIAL",
+          "rawMarketCode": "승①패",
+          "homeWinPrice": 2.1,
+          "drawPrice": 3.3,
+          "awayWinPrice": 2.7,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "RUN_LINE",
+          "line": 2.5,
+          "homeHandicap": -2.5,
+          "homePrice": 2.87,
+          "awayPrice": 1.27,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "TOTALS",
+          "line": 7.5,
+          "underPrice": 1.85,
+          "overPrice": 1.68,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "UNSUPPORTED_OR_UNRESOLVED",
+          "rawMarketCode": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "predictionSupport": "EXCLUDED"
+        }
+      ]
+    },
+    {
+      "gamePk": 823344,
+      "internalGameId": "mlb-pittsburgh-pirates-boston-red-sox",
+      "homeTeam": "Pittsburgh Pirates",
+      "awayTeam": "Boston Red Sox",
+      "homeTeamId": 134,
+      "awayTeamId": 111,
+      "commenceTimeUtc": "2026-08-16T17:35:00Z",
+      "startTimeKst": "02:35",
+      "displayOrder": 2,
+      "screenLeftTeam": "피츠파이",
+      "screenRightTeam": "보스레드",
+      "screenLeftCanonical": "Pittsburgh Pirates",
+      "screenRightCanonical": "Boston Red Sox",
+      "mappingMethod": "EXACT_TEAM_PAIR_AND_START_TIME; orientation=left_home",
+      "cutoffStatus": "PASS",
+      "capturedBeforeStart": true,
+      "rawMarkets": [
+        {
+          "rawMarketCode": "MONEYLINE_2WAY",
+          "screenLabel": "승패",
+          "prices": [
+            1.77,
+            1.75
+          ],
+          "line": null,
+          "sideHint": "screenLeft/screenRight"
+        },
+        {
+          "rawMarketCode": "승①패",
+          "screenLabel": "승①패",
+          "prices": [
+            2.55,
+            3.3,
+            2.2
+          ],
+          "line": null,
+          "sideHint": "home/draw/away screen order",
+          "notes": [
+            "Settlement rule vs standard MLB 1X2 not confirmed; stored as DOMESTIC_THREE_WAY_SPECIAL"
+          ]
+        },
+        {
+          "rawMarketCode": "H_RUN_LINE",
+          "screenLabel": "H +2.5",
+          "prices": [
+            1.26,
+            2.92
+          ],
+          "line": 2.5,
+          "sideHint": "H=home handicap"
+        },
+        {
+          "rawMarketCode": "U_TOTALS",
+          "screenLabel": "U 8.5",
+          "prices": [
+            1.68,
+            1.85
+          ],
+          "line": 8.5,
+          "sideHint": "Under listed first then Over"
+        },
+        {
+          "rawMarketCode": "SUM",
+          "screenLabel": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "sideHint": null,
+          "notes": [
+            "Meaning unresolved vs standard markets"
+          ]
+        }
+      ],
+      "normalizedMarkets": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "homePrice": 1.77,
+          "awayPrice": 1.75,
+          "predictionSupport": "SUPPORTED_V0"
+        },
+        {
+          "marketType": "DOMESTIC_THREE_WAY_SPECIAL",
+          "rawMarketCode": "승①패",
+          "homeWinPrice": 2.55,
+          "drawPrice": 3.3,
+          "awayWinPrice": 2.2,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "RUN_LINE",
+          "line": 2.5,
+          "homeHandicap": 2.5,
+          "homePrice": 1.26,
+          "awayPrice": 2.92,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "TOTALS",
+          "line": 8.5,
+          "underPrice": 1.68,
+          "overPrice": 1.85,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "UNSUPPORTED_OR_UNRESOLVED",
+          "rawMarketCode": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "predictionSupport": "EXCLUDED"
+        }
+      ]
+    },
+    {
+      "gamePk": 824880,
+      "internalGameId": "mlb-atlanta-braves-arizona-diamondbacks",
+      "homeTeam": "Atlanta Braves",
+      "awayTeam": "Arizona Diamondbacks",
+      "homeTeamId": 144,
+      "awayTeamId": 109,
+      "commenceTimeUtc": "2026-08-16T17:35:00Z",
+      "startTimeKst": "02:35",
+      "displayOrder": 3,
+      "screenLeftTeam": "애틀브레",
+      "screenRightTeam": "애리다이",
+      "screenLeftCanonical": "Atlanta Braves",
+      "screenRightCanonical": "Arizona Diamondbacks",
+      "mappingMethod": "EXACT_TEAM_PAIR_AND_START_TIME; orientation=left_home",
+      "cutoffStatus": "PASS",
+      "capturedBeforeStart": true,
+      "rawMarkets": [
+        {
+          "rawMarketCode": "MONEYLINE_2WAY",
+          "screenLabel": "승패",
+          "prices": [
+            1.57,
+            2
+          ],
+          "line": null,
+          "sideHint": "screenLeft/screenRight"
+        },
+        {
+          "rawMarketCode": "승①패",
+          "screenLabel": "승①패",
+          "prices": [
+            2.18,
+            3.35,
+            2.55
+          ],
+          "line": null,
+          "sideHint": "home/draw/away screen order",
+          "notes": [
+            "Settlement rule vs standard MLB 1X2 not confirmed; stored as DOMESTIC_THREE_WAY_SPECIAL"
+          ]
+        },
+        {
+          "rawMarketCode": "H_RUN_LINE",
+          "screenLabel": "H -2.5",
+          "prices": [
+            2.92,
+            1.26
+          ],
+          "line": -2.5,
+          "sideHint": "H=home handicap"
+        },
+        {
+          "rawMarketCode": "U_TOTALS",
+          "screenLabel": "U 8.5",
+          "prices": [
+            1.89,
+            1.65
+          ],
+          "line": 8.5,
+          "sideHint": "Under listed first then Over"
+        },
+        {
+          "rawMarketCode": "SUM",
+          "screenLabel": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "sideHint": null,
+          "notes": [
+            "Meaning unresolved vs standard markets"
+          ]
+        }
+      ],
+      "normalizedMarkets": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "homePrice": 1.57,
+          "awayPrice": 2,
+          "predictionSupport": "SUPPORTED_V0"
+        },
+        {
+          "marketType": "DOMESTIC_THREE_WAY_SPECIAL",
+          "rawMarketCode": "승①패",
+          "homeWinPrice": 2.18,
+          "drawPrice": 3.35,
+          "awayWinPrice": 2.55,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "RUN_LINE",
+          "line": 2.5,
+          "homeHandicap": -2.5,
+          "homePrice": 2.92,
+          "awayPrice": 1.26,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "TOTALS",
+          "line": 8.5,
+          "underPrice": 1.89,
+          "overPrice": 1.65,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "UNSUPPORTED_OR_UNRESOLVED",
+          "rawMarketCode": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "predictionSupport": "EXCLUDED"
+        }
+      ]
+    },
+    {
+      "gamePk": 822774,
+      "internalGameId": "mlb-toronto-blue-jays-new-york-yankees",
+      "homeTeam": "Toronto Blue Jays",
+      "awayTeam": "New York Yankees",
+      "homeTeamId": 141,
+      "awayTeamId": 147,
+      "commenceTimeUtc": "2026-08-16T17:37:00Z",
+      "startTimeKst": "02:37",
+      "displayOrder": 4,
+      "screenLeftTeam": "토론블루",
+      "screenRightTeam": "뉴욕양키",
+      "screenLeftCanonical": "Toronto Blue Jays",
+      "screenRightCanonical": "New York Yankees",
+      "mappingMethod": "EXACT_TEAM_PAIR_AND_START_TIME; orientation=left_home",
+      "cutoffStatus": "PASS",
+      "capturedBeforeStart": true,
+      "rawMarkets": [
+        {
+          "rawMarketCode": "MONEYLINE_2WAY",
+          "screenLabel": "승패",
+          "prices": [
+            1.65,
+            1.89
+          ],
+          "line": null,
+          "sideHint": "screenLeft/screenRight"
+        },
+        {
+          "rawMarketCode": "승①패",
+          "screenLabel": "승①패",
+          "prices": [
+            2.36,
+            3.15,
+            2.45
+          ],
+          "line": null,
+          "sideHint": "home/draw/away screen order",
+          "notes": [
+            "Settlement rule vs standard MLB 1X2 not confirmed; stored as DOMESTIC_THREE_WAY_SPECIAL"
+          ]
+        },
+        {
+          "rawMarketCode": "H_RUN_LINE",
+          "screenLabel": "H -2.5",
+          "prices": [
+            3.3,
+            1.2
+          ],
+          "line": -2.5,
+          "sideHint": "H=home handicap"
+        },
+        {
+          "rawMarketCode": "U_TOTALS",
+          "screenLabel": "U 7.5",
+          "prices": [
+            1.65,
+            1.89
+          ],
+          "line": 7.5,
+          "sideHint": "Under listed first then Over"
+        },
+        {
+          "rawMarketCode": "SUM",
+          "screenLabel": "SUM",
+          "prices": [
+            1.54,
+            2.05
+          ],
+          "line": null,
+          "sideHint": null,
+          "notes": [
+            "Meaning unresolved vs standard markets"
+          ]
+        }
+      ],
+      "normalizedMarkets": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "homePrice": 1.65,
+          "awayPrice": 1.89,
+          "predictionSupport": "SUPPORTED_V0"
+        },
+        {
+          "marketType": "DOMESTIC_THREE_WAY_SPECIAL",
+          "rawMarketCode": "승①패",
+          "homeWinPrice": 2.36,
+          "drawPrice": 3.15,
+          "awayWinPrice": 2.45,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "RUN_LINE",
+          "line": 2.5,
+          "homeHandicap": -2.5,
+          "homePrice": 3.3,
+          "awayPrice": 1.2,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "TOTALS",
+          "line": 7.5,
+          "underPrice": 1.65,
+          "overPrice": 1.89,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "UNSUPPORTED_OR_UNRESOLVED",
+          "rawMarketCode": "SUM",
+          "prices": [
+            1.54,
+            2.05
+          ],
+          "line": null,
+          "predictionSupport": "EXCLUDED"
+        }
+      ]
+    },
+    {
+      "gamePk": 823590,
+      "internalGameId": "mlb-new-york-mets-washington-nationals",
+      "homeTeam": "New York Mets",
+      "awayTeam": "Washington Nationals",
+      "homeTeamId": 121,
+      "awayTeamId": 120,
+      "commenceTimeUtc": "2026-08-16T17:40:00Z",
+      "startTimeKst": "02:40",
+      "displayOrder": 5,
+      "screenLeftTeam": "뉴욕메츠",
+      "screenRightTeam": "워싱내셔",
+      "screenLeftCanonical": "New York Mets",
+      "screenRightCanonical": "Washington Nationals",
+      "mappingMethod": "EXACT_TEAM_PAIR_AND_START_TIME; orientation=left_home",
+      "cutoffStatus": "PASS",
+      "capturedBeforeStart": true,
+      "rawMarkets": [
+        {
+          "rawMarketCode": "MONEYLINE_2WAY",
+          "screenLabel": "승패",
+          "prices": [
+            1.43,
+            2.29
+          ],
+          "line": null,
+          "sideHint": "screenLeft/screenRight"
+        },
+        {
+          "rawMarketCode": "승①패",
+          "screenLabel": "승①패",
+          "prices": [
+            1.92,
+            3.4,
+            3
+          ],
+          "line": null,
+          "sideHint": "home/draw/away screen order",
+          "notes": [
+            "Settlement rule vs standard MLB 1X2 not confirmed; stored as DOMESTIC_THREE_WAY_SPECIAL"
+          ]
+        },
+        {
+          "rawMarketCode": "H_RUN_LINE",
+          "screenLabel": "H -2.5",
+          "prices": [
+            2.56,
+            1.34
+          ],
+          "line": -2.5,
+          "sideHint": "H=home handicap"
+        },
+        {
+          "rawMarketCode": "U_TOTALS",
+          "screenLabel": "U 8.5",
+          "prices": [
+            1.67,
+            1.86
+          ],
+          "line": 8.5,
+          "sideHint": "Under listed first then Over"
+        },
+        {
+          "rawMarketCode": "SUM",
+          "screenLabel": "SUM",
+          "prices": [
+            1.56,
+            2.02
+          ],
+          "line": null,
+          "sideHint": null,
+          "notes": [
+            "Meaning unresolved vs standard markets"
+          ]
+        }
+      ],
+      "normalizedMarkets": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "homePrice": 1.43,
+          "awayPrice": 2.29,
+          "predictionSupport": "SUPPORTED_V0"
+        },
+        {
+          "marketType": "DOMESTIC_THREE_WAY_SPECIAL",
+          "rawMarketCode": "승①패",
+          "homeWinPrice": 1.92,
+          "drawPrice": 3.4,
+          "awayWinPrice": 3,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "RUN_LINE",
+          "line": 2.5,
+          "homeHandicap": -2.5,
+          "homePrice": 2.56,
+          "awayPrice": 1.34,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "TOTALS",
+          "line": 8.5,
+          "underPrice": 1.67,
+          "overPrice": 1.86,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "UNSUPPORTED_OR_UNRESOLVED",
+          "rawMarketCode": "SUM",
+          "prices": [
+            1.56,
+            2.02
+          ],
+          "line": null,
+          "predictionSupport": "EXCLUDED"
+        }
+      ]
+    },
+    {
+      "gamePk": 824236,
+      "internalGameId": "mlb-detroit-tigers-chicago-white-sox",
+      "homeTeam": "Detroit Tigers",
+      "awayTeam": "Chicago White Sox",
+      "homeTeamId": 116,
+      "awayTeamId": 145,
+      "commenceTimeUtc": "2026-08-16T17:40:00Z",
+      "startTimeKst": "02:40",
+      "displayOrder": 6,
+      "screenLeftTeam": "디트타이",
+      "screenRightTeam": "시카화이",
+      "screenLeftCanonical": "Detroit Tigers",
+      "screenRightCanonical": "Chicago White Sox",
+      "mappingMethod": "EXACT_TEAM_PAIR_AND_START_TIME; orientation=left_home",
+      "cutoffStatus": "PASS",
+      "capturedBeforeStart": true,
+      "rawMarkets": [
+        {
+          "rawMarketCode": "MONEYLINE_2WAY",
+          "screenLabel": "승패",
+          "prices": [
+            1.73,
+            1.79
+          ],
+          "line": null,
+          "sideHint": "screenLeft/screenRight"
+        },
+        {
+          "rawMarketCode": "승①패",
+          "screenLabel": "승①패",
+          "prices": [
+            2.5,
+            3.25,
+            2.26
+          ],
+          "line": null,
+          "sideHint": "home/draw/away screen order",
+          "notes": [
+            "Settlement rule vs standard MLB 1X2 not confirmed; stored as DOMESTIC_THREE_WAY_SPECIAL"
+          ]
+        },
+        {
+          "rawMarketCode": "H_RUN_LINE",
+          "screenLabel": "H -2.5",
+          "prices": [
+            3.46,
+            1.18
+          ],
+          "line": -2.5,
+          "sideHint": "H=home handicap"
+        },
+        {
+          "rawMarketCode": "U_TOTALS",
+          "screenLabel": "U 8.5",
+          "prices": [
+            1.66,
+            1.87
+          ],
+          "line": 8.5,
+          "sideHint": "Under listed first then Over"
+        },
+        {
+          "rawMarketCode": "SUM",
+          "screenLabel": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "sideHint": null,
+          "notes": [
+            "Meaning unresolved vs standard markets"
+          ]
+        }
+      ],
+      "normalizedMarkets": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "homePrice": 1.73,
+          "awayPrice": 1.79,
+          "predictionSupport": "SUPPORTED_V0"
+        },
+        {
+          "marketType": "DOMESTIC_THREE_WAY_SPECIAL",
+          "rawMarketCode": "승①패",
+          "homeWinPrice": 2.5,
+          "drawPrice": 3.25,
+          "awayWinPrice": 2.26,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "RUN_LINE",
+          "line": 2.5,
+          "homeHandicap": -2.5,
+          "homePrice": 3.46,
+          "awayPrice": 1.18,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "TOTALS",
+          "line": 8.5,
+          "underPrice": 1.66,
+          "overPrice": 1.87,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "UNSUPPORTED_OR_UNRESOLVED",
+          "rawMarketCode": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "predictionSupport": "EXCLUDED"
+        }
+      ]
+    },
+    {
+      "gamePk": 824397,
+      "internalGameId": "mlb-cleveland-guardians-san-diego-padres",
+      "homeTeam": "Cleveland Guardians",
+      "awayTeam": "San Diego Padres",
+      "homeTeamId": 114,
+      "awayTeamId": 135,
+      "commenceTimeUtc": "2026-08-16T17:40:00Z",
+      "startTimeKst": "02:40",
+      "displayOrder": 7,
+      "screenLeftTeam": "클리가디",
+      "screenRightTeam": "샌디파드",
+      "screenLeftCanonical": "Cleveland Guardians",
+      "screenRightCanonical": "San Diego Padres",
+      "mappingMethod": "EXACT_TEAM_PAIR_AND_START_TIME; orientation=left_home",
+      "cutoffStatus": "PASS",
+      "capturedBeforeStart": true,
+      "rawMarkets": [
+        {
+          "rawMarketCode": "MONEYLINE_2WAY",
+          "screenLabel": "승패",
+          "prices": [
+            1.77,
+            1.75
+          ],
+          "line": null,
+          "sideHint": "screenLeft/screenRight"
+        },
+        {
+          "rawMarketCode": "승①패",
+          "screenLabel": "승①패",
+          "prices": [
+            2.55,
+            3.25,
+            2.22
+          ],
+          "line": null,
+          "sideHint": "home/draw/away screen order",
+          "notes": [
+            "Settlement rule vs standard MLB 1X2 not confirmed; stored as DOMESTIC_THREE_WAY_SPECIAL"
+          ]
+        },
+        {
+          "rawMarketCode": "H_RUN_LINE",
+          "screenLabel": "H +2.5",
+          "prices": [
+            1.25,
+            2.97
+          ],
+          "line": 2.5,
+          "sideHint": "H=home handicap"
+        },
+        {
+          "rawMarketCode": "U_TOTALS",
+          "screenLabel": "U 8.5",
+          "prices": [
+            1.67,
+            1.86
+          ],
+          "line": 8.5,
+          "sideHint": "Under listed first then Over"
+        },
+        {
+          "rawMarketCode": "SUM",
+          "screenLabel": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "sideHint": null,
+          "notes": [
+            "Meaning unresolved vs standard markets"
+          ]
+        }
+      ],
+      "normalizedMarkets": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "homePrice": 1.77,
+          "awayPrice": 1.75,
+          "predictionSupport": "SUPPORTED_V0"
+        },
+        {
+          "marketType": "DOMESTIC_THREE_WAY_SPECIAL",
+          "rawMarketCode": "승①패",
+          "homeWinPrice": 2.55,
+          "drawPrice": 3.25,
+          "awayWinPrice": 2.22,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "RUN_LINE",
+          "line": 2.5,
+          "homeHandicap": 2.5,
+          "homePrice": 1.25,
+          "awayPrice": 2.97,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "TOTALS",
+          "line": 8.5,
+          "underPrice": 1.67,
+          "overPrice": 1.86,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "UNSUPPORTED_OR_UNRESOLVED",
+          "rawMarketCode": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "predictionSupport": "EXCLUDED"
+        }
+      ]
+    },
+    {
+      "gamePk": 824477,
+      "internalGameId": "mlb-cincinnati-reds-miami-marlins",
+      "homeTeam": "Cincinnati Reds",
+      "awayTeam": "Miami Marlins",
+      "homeTeamId": 113,
+      "awayTeamId": 146,
+      "commenceTimeUtc": "2026-08-16T17:40:00Z",
+      "startTimeKst": "02:40",
+      "displayOrder": 8,
+      "screenLeftTeam": "신시레즈",
+      "screenRightTeam": "마이말린",
+      "screenLeftCanonical": "Cincinnati Reds",
+      "screenRightCanonical": "Miami Marlins",
+      "mappingMethod": "EXACT_TEAM_PAIR_AND_START_TIME; orientation=left_home",
+      "cutoffStatus": "PASS",
+      "capturedBeforeStart": true,
+      "rawMarkets": [
+        {
+          "rawMarketCode": "MONEYLINE_2WAY",
+          "screenLabel": "승패",
+          "prices": [
+            1.86,
+            1.67
+          ],
+          "line": null,
+          "sideHint": "screenLeft/screenRight"
+        },
+        {
+          "rawMarketCode": "승①패",
+          "screenLabel": "승①패",
+          "prices": [
+            2.7,
+            3.35,
+            2.08
+          ],
+          "line": null,
+          "sideHint": "home/draw/away screen order",
+          "notes": [
+            "Settlement rule vs standard MLB 1X2 not confirmed; stored as DOMESTIC_THREE_WAY_SPECIAL"
+          ]
+        },
+        {
+          "rawMarketCode": "H_RUN_LINE",
+          "screenLabel": "H +2.5",
+          "prices": [
+            1.3,
+            2.72
+          ],
+          "line": 2.5,
+          "sideHint": "H=home handicap"
+        },
+        {
+          "rawMarketCode": "U_TOTALS",
+          "screenLabel": "U 9.5",
+          "prices": [
+            1.6,
+            1.96
+          ],
+          "line": 9.5,
+          "sideHint": "Under listed first then Over"
+        },
+        {
+          "rawMarketCode": "SUM",
+          "screenLabel": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "sideHint": null,
+          "notes": [
+            "Meaning unresolved vs standard markets"
+          ]
+        }
+      ],
+      "normalizedMarkets": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "homePrice": 1.86,
+          "awayPrice": 1.67,
+          "predictionSupport": "SUPPORTED_V0"
+        },
+        {
+          "marketType": "DOMESTIC_THREE_WAY_SPECIAL",
+          "rawMarketCode": "승①패",
+          "homeWinPrice": 2.7,
+          "drawPrice": 3.35,
+          "awayWinPrice": 2.08,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "RUN_LINE",
+          "line": 2.5,
+          "homeHandicap": 2.5,
+          "homePrice": 1.3,
+          "awayPrice": 2.72,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "TOTALS",
+          "line": 9.5,
+          "underPrice": 1.6,
+          "overPrice": 1.96,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "UNSUPPORTED_OR_UNRESOLVED",
+          "rawMarketCode": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "predictionSupport": "EXCLUDED"
+        }
+      ]
+    },
+    {
+      "gamePk": 823670,
+      "internalGameId": "mlb-minnesota-twins-philadelphia-phillies",
+      "homeTeam": "Minnesota Twins",
+      "awayTeam": "Philadelphia Phillies",
+      "homeTeamId": 142,
+      "awayTeamId": 143,
+      "commenceTimeUtc": "2026-08-16T18:10:00Z",
+      "startTimeKst": "03:10",
+      "displayOrder": 9,
+      "screenLeftTeam": "미네트윈",
+      "screenRightTeam": "필라필리",
+      "screenLeftCanonical": "Minnesota Twins",
+      "screenRightCanonical": "Philadelphia Phillies",
+      "mappingMethod": "EXACT_TEAM_PAIR_AND_START_TIME; orientation=left_home",
+      "cutoffStatus": "PASS",
+      "capturedBeforeStart": true,
+      "rawMarkets": [
+        {
+          "rawMarketCode": "MONEYLINE_2WAY",
+          "screenLabel": "승패",
+          "prices": [
+            1.79,
+            1.73
+          ],
+          "line": null,
+          "sideHint": "screenLeft/screenRight"
+        },
+        {
+          "rawMarketCode": "승①패",
+          "screenLabel": "승①패",
+          "prices": [
+            2.6,
+            3.35,
+            2.14
+          ],
+          "line": null,
+          "sideHint": "home/draw/away screen order",
+          "notes": [
+            "Settlement rule vs standard MLB 1X2 not confirmed; stored as DOMESTIC_THREE_WAY_SPECIAL"
+          ]
+        },
+        {
+          "rawMarketCode": "H_RUN_LINE",
+          "screenLabel": "H +2.5",
+          "prices": [
+            1.27,
+            2.87
+          ],
+          "line": 2.5,
+          "sideHint": "H=home handicap"
+        },
+        {
+          "rawMarketCode": "U_TOTALS",
+          "screenLabel": "U 9.5",
+          "prices": [
+            1.66,
+            1.87
+          ],
+          "line": 9.5,
+          "sideHint": "Under listed first then Over"
+        },
+        {
+          "rawMarketCode": "SUM",
+          "screenLabel": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "sideHint": null,
+          "notes": [
+            "Meaning unresolved vs standard markets"
+          ]
+        }
+      ],
+      "normalizedMarkets": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "homePrice": 1.79,
+          "awayPrice": 1.73,
+          "predictionSupport": "SUPPORTED_V0"
+        },
+        {
+          "marketType": "DOMESTIC_THREE_WAY_SPECIAL",
+          "rawMarketCode": "승①패",
+          "homeWinPrice": 2.6,
+          "drawPrice": 3.35,
+          "awayWinPrice": 2.14,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "RUN_LINE",
+          "line": 2.5,
+          "homeHandicap": 2.5,
+          "homePrice": 1.27,
+          "awayPrice": 2.87,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "TOTALS",
+          "line": 9.5,
+          "underPrice": 1.66,
+          "overPrice": 1.87,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "UNSUPPORTED_OR_UNRESOLVED",
+          "rawMarketCode": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "predictionSupport": "EXCLUDED"
+        }
+      ]
+    },
+    {
+      "gamePk": 824642,
+      "internalGameId": "mlb-chicago-cubs-st-louis-cardinals",
+      "homeTeam": "Chicago Cubs",
+      "awayTeam": "St. Louis Cardinals",
+      "homeTeamId": 112,
+      "awayTeamId": 138,
+      "commenceTimeUtc": "2026-08-16T19:15:00Z",
+      "startTimeKst": "04:15",
+      "displayOrder": 10,
+      "screenLeftTeam": "시카컵스",
+      "screenRightTeam": "세인카디",
+      "screenLeftCanonical": "Chicago Cubs",
+      "screenRightCanonical": "St. Louis Cardinals",
+      "mappingMethod": "EXACT_TEAM_PAIR_AND_START_TIME; orientation=left_home",
+      "cutoffStatus": "PASS",
+      "capturedBeforeStart": true,
+      "rawMarkets": [
+        {
+          "rawMarketCode": "MONEYLINE_2WAY",
+          "screenLabel": "승패",
+          "prices": [
+            1.48,
+            2.17
+          ],
+          "line": null,
+          "sideHint": "screenLeft/screenRight"
+        },
+        {
+          "rawMarketCode": "승①패",
+          "screenLabel": "승①패",
+          "prices": [
+            2.01,
+            3.4,
+            2.8
+          ],
+          "line": null,
+          "sideHint": "home/draw/away screen order",
+          "notes": [
+            "Settlement rule vs standard MLB 1X2 not confirmed; stored as DOMESTIC_THREE_WAY_SPECIAL"
+          ]
+        },
+        {
+          "rawMarketCode": "H_RUN_LINE",
+          "screenLabel": "H -2.5",
+          "prices": [
+            2.68,
+            1.31
+          ],
+          "line": -2.5,
+          "sideHint": "H=home handicap"
+        },
+        {
+          "rawMarketCode": "U_TOTALS",
+          "screenLabel": "U 8.5",
+          "prices": [
+            1.85,
+            1.68
+          ],
+          "line": 8.5,
+          "sideHint": "Under listed first then Over"
+        },
+        {
+          "rawMarketCode": "SUM",
+          "screenLabel": "SUM",
+          "prices": [
+            1.56,
+            2.02
+          ],
+          "line": null,
+          "sideHint": null,
+          "notes": [
+            "Meaning unresolved vs standard markets"
+          ]
+        }
+      ],
+      "normalizedMarkets": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "homePrice": 1.48,
+          "awayPrice": 2.17,
+          "predictionSupport": "SUPPORTED_V0"
+        },
+        {
+          "marketType": "DOMESTIC_THREE_WAY_SPECIAL",
+          "rawMarketCode": "승①패",
+          "homeWinPrice": 2.01,
+          "drawPrice": 3.4,
+          "awayWinPrice": 2.8,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "RUN_LINE",
+          "line": 2.5,
+          "homeHandicap": -2.5,
+          "homePrice": 2.68,
+          "awayPrice": 1.31,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "TOTALS",
+          "line": 8.5,
+          "underPrice": 1.85,
+          "overPrice": 1.68,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "UNSUPPORTED_OR_UNRESOLVED",
+          "rawMarketCode": "SUM",
+          "prices": [
+            1.56,
+            2.02
+          ],
+          "line": null,
+          "predictionSupport": "EXCLUDED"
+        }
+      ]
+    },
+    {
+      "gamePk": 823182,
+      "internalGameId": "mlb-san-francisco-giants-colorado-rockies",
+      "homeTeam": "San Francisco Giants",
+      "awayTeam": "Colorado Rockies",
+      "homeTeamId": 137,
+      "awayTeamId": 115,
+      "commenceTimeUtc": "2026-08-16T20:05:00Z",
+      "startTimeKst": "05:05",
+      "displayOrder": 11,
+      "screenLeftTeam": "샌프자이",
+      "screenRightTeam": "콜로로키",
+      "screenLeftCanonical": "San Francisco Giants",
+      "screenRightCanonical": "Colorado Rockies",
+      "mappingMethod": "EXACT_TEAM_PAIR_AND_START_TIME; orientation=left_home",
+      "cutoffStatus": "PASS",
+      "capturedBeforeStart": true,
+      "rawMarkets": [
+        {
+          "rawMarketCode": "MONEYLINE_2WAY",
+          "screenLabel": "승패",
+          "prices": [
+            1.6,
+            1.96
+          ],
+          "line": null,
+          "sideHint": "screenLeft/screenRight"
+        },
+        {
+          "rawMarketCode": "승①패",
+          "screenLabel": "승①패",
+          "prices": [
+            2.24,
+            3.3,
+            2.5
+          ],
+          "line": null,
+          "sideHint": "home/draw/away screen order",
+          "notes": [
+            "Settlement rule vs standard MLB 1X2 not confirmed; stored as DOMESTIC_THREE_WAY_SPECIAL"
+          ]
+        },
+        {
+          "rawMarketCode": "H_RUN_LINE",
+          "screenLabel": "H -2.5",
+          "prices": [
+            3.09,
+            1.23
+          ],
+          "line": -2.5,
+          "sideHint": "H=home handicap"
+        },
+        {
+          "rawMarketCode": "U_TOTALS",
+          "screenLabel": "U 7.5",
+          "prices": [
+            1.89,
+            1.65
+          ],
+          "line": 7.5,
+          "sideHint": "Under listed first then Over"
+        },
+        {
+          "rawMarketCode": "SUM",
+          "screenLabel": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "sideHint": null,
+          "notes": [
+            "Meaning unresolved vs standard markets"
+          ]
+        }
+      ],
+      "normalizedMarkets": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "homePrice": 1.6,
+          "awayPrice": 1.96,
+          "predictionSupport": "SUPPORTED_V0"
+        },
+        {
+          "marketType": "DOMESTIC_THREE_WAY_SPECIAL",
+          "rawMarketCode": "승①패",
+          "homeWinPrice": 2.24,
+          "drawPrice": 3.3,
+          "awayWinPrice": 2.5,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "RUN_LINE",
+          "line": 2.5,
+          "homeHandicap": -2.5,
+          "homePrice": 3.09,
+          "awayPrice": 1.23,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "TOTALS",
+          "line": 7.5,
+          "underPrice": 1.89,
+          "overPrice": 1.65,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "UNSUPPORTED_OR_UNRESOLVED",
+          "rawMarketCode": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "predictionSupport": "EXCLUDED"
+        }
+      ]
+    },
+    {
+      "gamePk": 824965,
+      "internalGameId": "mlb-athletics-texas-rangers",
+      "homeTeam": "Athletics",
+      "awayTeam": "Texas Rangers",
+      "homeTeamId": 133,
+      "awayTeamId": 140,
+      "commenceTimeUtc": "2026-08-16T20:05:00Z",
+      "startTimeKst": "05:05",
+      "displayOrder": 12,
+      "screenLeftTeam": "애슬레틱",
+      "screenRightTeam": "텍사레인",
+      "screenLeftCanonical": "Athletics",
+      "screenRightCanonical": "Texas Rangers",
+      "mappingMethod": "EXACT_TEAM_PAIR_AND_START_TIME; orientation=left_home",
+      "cutoffStatus": "PASS",
+      "capturedBeforeStart": true,
+      "rawMarkets": [
+        {
+          "rawMarketCode": "MONEYLINE_2WAY",
+          "screenLabel": "승패",
+          "prices": [
+            2.07,
+            1.53
+          ],
+          "line": null,
+          "sideHint": "screenLeft/screenRight"
+        },
+        {
+          "rawMarketCode": "승①패",
+          "screenLabel": "승①패",
+          "prices": [
+            3.1,
+            3.5,
+            1.85
+          ],
+          "line": null,
+          "sideHint": "home/draw/away screen order",
+          "notes": [
+            "Settlement rule vs standard MLB 1X2 not confirmed; stored as DOMESTIC_THREE_WAY_SPECIAL"
+          ]
+        },
+        {
+          "rawMarketCode": "H_RUN_LINE",
+          "screenLabel": "H +2.5",
+          "prices": [
+            1.4,
+            2.37
+          ],
+          "line": 2.5,
+          "sideHint": "H=home handicap"
+        },
+        {
+          "rawMarketCode": "U_TOTALS",
+          "screenLabel": "U 10.5",
+          "prices": [
+            1.77,
+            1.75
+          ],
+          "line": 10.5,
+          "sideHint": "Under listed first then Over"
+        },
+        {
+          "rawMarketCode": "SUM",
+          "screenLabel": "SUM",
+          "prices": [
+            1.56,
+            2.02
+          ],
+          "line": null,
+          "sideHint": null,
+          "notes": [
+            "Meaning unresolved vs standard markets"
+          ]
+        }
+      ],
+      "normalizedMarkets": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "homePrice": 2.07,
+          "awayPrice": 1.53,
+          "predictionSupport": "SUPPORTED_V0"
+        },
+        {
+          "marketType": "DOMESTIC_THREE_WAY_SPECIAL",
+          "rawMarketCode": "승①패",
+          "homeWinPrice": 3.1,
+          "drawPrice": 3.5,
+          "awayWinPrice": 1.85,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "RUN_LINE",
+          "line": 2.5,
+          "homeHandicap": 2.5,
+          "homePrice": 1.4,
+          "awayPrice": 2.37,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "TOTALS",
+          "line": 10.5,
+          "underPrice": 1.77,
+          "overPrice": 1.75,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "UNSUPPORTED_OR_UNRESOLVED",
+          "rawMarketCode": "SUM",
+          "prices": [
+            1.56,
+            2.02
+          ],
+          "line": null,
+          "predictionSupport": "EXCLUDED"
+        }
+      ]
+    },
+    {
+      "gamePk": 823991,
+      "internalGameId": "mlb-los-angeles-angels-kansas-city-royals",
+      "homeTeam": "Los Angeles Angels",
+      "awayTeam": "Kansas City Royals",
+      "homeTeamId": 108,
+      "awayTeamId": 118,
+      "commenceTimeUtc": "2026-08-16T20:07:00Z",
+      "startTimeKst": "05:07",
+      "displayOrder": 13,
+      "screenLeftTeam": "LA에인절",
+      "screenRightTeam": "캔자로얄",
+      "screenLeftCanonical": "Los Angeles Angels",
+      "screenRightCanonical": "Kansas City Royals",
+      "mappingMethod": "EXACT_TEAM_PAIR_AND_START_TIME; orientation=left_home",
+      "cutoffStatus": "PASS",
+      "capturedBeforeStart": true,
+      "rawMarkets": [
+        {
+          "rawMarketCode": "MONEYLINE_2WAY",
+          "screenLabel": "승패",
+          "prices": [
+            1.89,
+            1.65
+          ],
+          "line": null,
+          "sideHint": "screenLeft/screenRight"
+        },
+        {
+          "rawMarketCode": "승①패",
+          "screenLabel": "승①패",
+          "prices": [
+            2.75,
+            3.35,
+            2.05
+          ],
+          "line": null,
+          "sideHint": "home/draw/away screen order",
+          "notes": [
+            "Settlement rule vs standard MLB 1X2 not confirmed; stored as DOMESTIC_THREE_WAY_SPECIAL"
+          ]
+        },
+        {
+          "rawMarketCode": "H_RUN_LINE",
+          "screenLabel": "H +2.5",
+          "prices": [
+            1.31,
+            2.68
+          ],
+          "line": 2.5,
+          "sideHint": "H=home handicap"
+        },
+        {
+          "rawMarketCode": "U_TOTALS",
+          "screenLabel": "U 9.5",
+          "prices": [
+            1.67,
+            1.86
+          ],
+          "line": 9.5,
+          "sideHint": "Under listed first then Over"
+        },
+        {
+          "rawMarketCode": "SUM",
+          "screenLabel": "SUM",
+          "prices": [
+            1.56,
+            2.02
+          ],
+          "line": null,
+          "sideHint": null,
+          "notes": [
+            "Meaning unresolved vs standard markets"
+          ]
+        }
+      ],
+      "normalizedMarkets": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "homePrice": 1.89,
+          "awayPrice": 1.65,
+          "predictionSupport": "SUPPORTED_V0"
+        },
+        {
+          "marketType": "DOMESTIC_THREE_WAY_SPECIAL",
+          "rawMarketCode": "승①패",
+          "homeWinPrice": 2.75,
+          "drawPrice": 3.35,
+          "awayWinPrice": 2.05,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "RUN_LINE",
+          "line": 2.5,
+          "homeHandicap": 2.5,
+          "homePrice": 1.31,
+          "awayPrice": 2.68,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "TOTALS",
+          "line": 9.5,
+          "underPrice": 1.67,
+          "overPrice": 1.86,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "UNSUPPORTED_OR_UNRESOLVED",
+          "rawMarketCode": "SUM",
+          "prices": [
+            1.56,
+            2.02
+          ],
+          "line": null,
+          "predictionSupport": "EXCLUDED"
+        }
+      ]
+    },
+    {
+      "gamePk": 823912,
+      "internalGameId": "mlb-los-angeles-dodgers-milwaukee-brewers",
+      "homeTeam": "Los Angeles Dodgers",
+      "awayTeam": "Milwaukee Brewers",
+      "homeTeamId": 119,
+      "awayTeamId": 158,
+      "commenceTimeUtc": "2026-08-16T20:10:00Z",
+      "startTimeKst": "05:10",
+      "displayOrder": 14,
+      "screenLeftTeam": "LA다저스",
+      "screenRightTeam": "밀워브루",
+      "screenLeftCanonical": "Los Angeles Dodgers",
+      "screenRightCanonical": "Milwaukee Brewers",
+      "mappingMethod": "EXACT_TEAM_PAIR_AND_START_TIME; orientation=left_home",
+      "cutoffStatus": "PASS",
+      "capturedBeforeStart": true,
+      "rawMarkets": [
+        {
+          "rawMarketCode": "MONEYLINE_2WAY",
+          "screenLabel": "승패",
+          "prices": [
+            1.42,
+            2.31
+          ],
+          "line": null,
+          "sideHint": "screenLeft/screenRight"
+        },
+        {
+          "rawMarketCode": "승①패",
+          "screenLabel": "승①패",
+          "prices": [
+            1.91,
+            3.35,
+            3.05
+          ],
+          "line": null,
+          "sideHint": "home/draw/away screen order",
+          "notes": [
+            "Settlement rule vs standard MLB 1X2 not confirmed; stored as DOMESTIC_THREE_WAY_SPECIAL"
+          ]
+        },
+        {
+          "rawMarketCode": "H_RUN_LINE",
+          "screenLabel": "H -2.5",
+          "prices": [
+            2.56,
+            1.34
+          ],
+          "line": -2.5,
+          "sideHint": "H=home handicap"
+        },
+        {
+          "rawMarketCode": "U_TOTALS",
+          "screenLabel": "U 7.5",
+          "prices": [
+            1.81,
+            1.71
+          ],
+          "line": 7.5,
+          "sideHint": "Under listed first then Over"
+        },
+        {
+          "rawMarketCode": "SUM",
+          "screenLabel": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "sideHint": null,
+          "notes": [
+            "Meaning unresolved vs standard markets"
+          ]
+        }
+      ],
+      "normalizedMarkets": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "homePrice": 1.42,
+          "awayPrice": 2.31,
+          "predictionSupport": "SUPPORTED_V0"
+        },
+        {
+          "marketType": "DOMESTIC_THREE_WAY_SPECIAL",
+          "rawMarketCode": "승①패",
+          "homeWinPrice": 1.91,
+          "drawPrice": 3.35,
+          "awayWinPrice": 3.05,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "RUN_LINE",
+          "line": 2.5,
+          "homeHandicap": -2.5,
+          "homePrice": 2.56,
+          "awayPrice": 1.34,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "TOTALS",
+          "line": 7.5,
+          "underPrice": 1.81,
+          "overPrice": 1.71,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "UNSUPPORTED_OR_UNRESOLVED",
+          "rawMarketCode": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "predictionSupport": "EXCLUDED"
+        }
+      ]
+    },
+    {
+      "gamePk": 824156,
+      "internalGameId": "mlb-houston-astros-seattle-mariners",
+      "homeTeam": "Houston Astros",
+      "awayTeam": "Seattle Mariners",
+      "homeTeamId": 117,
+      "awayTeamId": 136,
+      "commenceTimeUtc": "2026-08-16T23:20:00Z",
+      "startTimeKst": "08:20",
+      "displayOrder": 15,
+      "screenLeftTeam": "휴스애스",
+      "screenRightTeam": "시애매리",
+      "screenLeftCanonical": "Houston Astros",
+      "screenRightCanonical": "Seattle Mariners",
+      "mappingMethod": "EXACT_TEAM_PAIR_AND_START_TIME; orientation=left_home",
+      "cutoffStatus": "PASS",
+      "capturedBeforeStart": true,
+      "rawMarkets": [
+        {
+          "rawMarketCode": "MONEYLINE_2WAY",
+          "screenLabel": "승패",
+          "prices": [
+            1.63,
+            1.91
+          ],
+          "line": null,
+          "sideHint": "screenLeft/screenRight"
+        },
+        {
+          "rawMarketCode": "승①패",
+          "screenLabel": "승①패",
+          "prices": [
+            2.33,
+            3.2,
+            2.45
+          ],
+          "line": null,
+          "sideHint": "home/draw/away screen order",
+          "notes": [
+            "Settlement rule vs standard MLB 1X2 not confirmed; stored as DOMESTIC_THREE_WAY_SPECIAL"
+          ]
+        },
+        {
+          "rawMarketCode": "H_RUN_LINE",
+          "screenLabel": "H -2.5",
+          "prices": [
+            3.23,
+            1.21
+          ],
+          "line": -2.5,
+          "sideHint": "H=home handicap"
+        },
+        {
+          "rawMarketCode": "U_TOTALS",
+          "screenLabel": "U 7.5",
+          "prices": [
+            1.8,
+            1.72
+          ],
+          "line": 7.5,
+          "sideHint": "Under listed first then Over"
+        },
+        {
+          "rawMarketCode": "SUM",
+          "screenLabel": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "sideHint": null,
+          "notes": [
+            "Meaning unresolved vs standard markets"
+          ]
+        },
+        {
+          "rawMarketCode": "h_THREE_WAY",
+          "screenLabel": "h(전반)",
+          "prices": [
+            1.99,
+            5.2,
+            2.2
+          ],
+          "line": null,
+          "sideHint": "first half 1X2"
+        },
+        {
+          "rawMarketCode": "h_H_RUN_LINE",
+          "screenLabel": "h H -1.5",
+          "prices": [
+            2.97,
+            1.25
+          ],
+          "line": -1.5,
+          "sideHint": "first half home handicap"
+        },
+        {
+          "rawMarketCode": "h_U_TOTALS",
+          "screenLabel": "h U 3.5",
+          "prices": [
+            1.99,
+            1.58
+          ],
+          "line": 3.5,
+          "sideHint": "first half under/over"
+        }
+      ],
+      "normalizedMarkets": [
+        {
+          "marketType": "MONEYLINE_2WAY",
+          "homePrice": 1.63,
+          "awayPrice": 1.91,
+          "predictionSupport": "SUPPORTED_V0"
+        },
+        {
+          "marketType": "DOMESTIC_THREE_WAY_SPECIAL",
+          "rawMarketCode": "승①패",
+          "homeWinPrice": 2.33,
+          "drawPrice": 3.2,
+          "awayWinPrice": 2.45,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "RUN_LINE",
+          "line": 2.5,
+          "homeHandicap": -2.5,
+          "homePrice": 3.23,
+          "awayPrice": 1.21,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "TOTALS",
+          "line": 7.5,
+          "underPrice": 1.8,
+          "overPrice": 1.72,
+          "predictionSupport": "STORED_NOT_USED_V0"
+        },
+        {
+          "marketType": "UNSUPPORTED_OR_UNRESOLVED",
+          "rawMarketCode": "SUM",
+          "prices": [
+            1.55,
+            2.04
+          ],
+          "line": null,
+          "predictionSupport": "EXCLUDED"
+        },
+        {
+          "marketType": "FIRST_HALF_THREE_WAY",
+          "prices": [
+            1.99,
+            5.2,
+            2.2
+          ],
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "FIRST_HALF_RUN_LINE",
+          "homeHandicap": -1.5,
+          "homePrice": 2.97,
+          "awayPrice": 1.25,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        },
+        {
+          "marketType": "FIRST_HALF_TOTALS",
+          "line": 3.5,
+          "underPrice": 1.99,
+          "overPrice": 1.58,
+          "predictionSupport": "NOT_IMPLEMENTED"
+        }
+      ]
+    }
+  ],
+  "unresolved": [],
+  "unmappedSchedule": []
+}

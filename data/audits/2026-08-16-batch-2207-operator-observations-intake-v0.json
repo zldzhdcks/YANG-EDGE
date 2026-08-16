@@ -1,0 +1,428 @@
+{
+  "schemaVersion": "mlb-operator-observations-intake-v0",
+  "batchId": "2026-08-16/batch-2207",
+  "dateKst": "2026-08-17",
+  "generatedAt": "2026-08-16T13:07:00.000Z",
+  "receivedAtKst": "2026-08-16T22:07:00+09:00",
+  "captureTime": "UNKNOWN",
+  "sourceType": "MANUAL_OPERATOR_OBSERVATION",
+  "researchOnly": true,
+  "engineAdmission": "PROHIBITED",
+  "inboxSource": "C:\\Users\\TCTCTC\\YANG-EDGE\\YANG-EDGE-INBOX\\YANG-EDGE_INBOX_2026-08-16_2207\\2026-08-16\\batch-2207",
+  "rawPath": "data/operator-observations/raw/2026-08-16/batch-2207",
+  "screenshotSha256": {
+    "odds_01.png": "dc4821f8cc6b5ffb4f5777b1a8b8d9d18f287bb8a71d8ed748913501ebcb2304",
+    "odds_02.png": "69431457a5d60415763558ca205017b0c3bd95f5c22c59d30c5ed8a9327ed7db",
+    "odds_03.png": "88c801c508c1469332176254298a2077d6e07870eadbe719d76eed1f5a88317b",
+    "odds_04.png": "885c8cdca4d6c4f44297efe2f48a627795e4c32fab636e88c369b8e223c63dca",
+    "odds_05.png": "907091049dc2829bdfeaa4478f0eaf5ec7b5d1c09e044cbc0500c687428044c9",
+    "mlb_expected_lineups_01.png": "5564c668a48698b597b4514d0b5c1251edee538ebf338825b16c1dfc2d17a758",
+    "mlb_expected_lineups_02.png": "4fd46b33e4d52c382559d489e333056d792d5cc9eadd6b43db133793b0085b38",
+    "mlb_expected_lineups_03.png": "69884ef82a9956a7b2b390d7a32a8fec8adbf5c6244c6e2efd646c2aac57bccf"
+  },
+  "schedulePath": "data/research/mlb/2026-08-17-schedule-v1.json",
+  "scheduleHash": "697c42de3976bb278d3ae144616a41883db1de62ce5a092c76e078a94b75af0c",
+  "expectedLineupPath": "data/operator-input/mlb/2026-08-17-expected-lineup-observation-v0.json",
+  "expectedLineupHash": "8f1f9ac1a894e765a6bc544a46f6b0e9e625cdfc118d9393e93827e99591a433",
+  "domesticMarketsPath": "data/operator-input/mlb/2026-08-17-domestic-markets-v1.json",
+  "domesticMarketsRowsHash": "e230abf15a00c1a94d8193c754842388e01b34e37dcd09b28458acb6ac9d72fc",
+  "koreanMarketPath": "data/operator-input/mlb/2026-08-17-korean-market-odds-observation-v0.json",
+  "koreanMarketOddsHash": "2227e8c430d288917a6b08fa2fc377faadd3c4a33af76232fa058f3a54756254",
+  "footballObservationPath": "data/operator-observations/structured/2026-08-16/batch-2207-football-manual-market-observation-v0.json",
+  "lineupScreenshotCount": 3,
+  "domesticOddsScreenshotCount": 4,
+  "mixedOddsScreenshotCount": 5,
+  "lineupGames": 15,
+  "teamLineups": 30,
+  "battingSlots": 270,
+  "domesticMappedGames": 15,
+  "koreanMoneylineGames": 15,
+  "preGameLineupObservations": 15,
+  "lateObservations": 0,
+  "joinErrors": 0,
+  "unresolvedDomesticRows": 0,
+  "footballGames": 15,
+  "footballPregameEligible": 14,
+  "footballCutoffBlocked": 1,
+  "predictionTouched": false,
+  "recommendationTouched": false,
+  "engineTouched": false,
+  "scorecardTouched": false,
+  "postgameTouched": false,
+  "mapping": [
+    {
+      "gamePk": 822940,
+      "awayTeam": "Baltimore Orioles",
+      "homeTeam": "Tampa Bay Rays",
+      "startTimeKst": "01:15",
+      "commenceTimeUtc": "2026-08-16T16:15:00Z",
+      "lineupScreenshot": "mlb_expected_lineups_01.png",
+      "lineupScreenshotSha256": "5564c668a48698b597b4514d0b5c1251edee538ebf338825b16c1dfc2d17a758",
+      "awayStarterRaw": "Trevor Rogers L",
+      "homeStarterRaw": "Freddy Peralta R",
+      "cutoffLabel": "PRE_GAME_OBSERVATION"
+    },
+    {
+      "gamePk": 824880,
+      "awayTeam": "Arizona Diamondbacks",
+      "homeTeam": "Atlanta Braves",
+      "startTimeKst": "02:35",
+      "commenceTimeUtc": "2026-08-16T17:35:00Z",
+      "lineupScreenshot": "mlb_expected_lineups_01.png",
+      "lineupScreenshotSha256": "5564c668a48698b597b4514d0b5c1251edee538ebf338825b16c1dfc2d17a758",
+      "awayStarterRaw": "Michael Soroka R",
+      "homeStarterRaw": "Bryce Elder R",
+      "cutoffLabel": "PRE_GAME_OBSERVATION"
+    },
+    {
+      "gamePk": 823344,
+      "awayTeam": "Boston Red Sox",
+      "homeTeam": "Pittsburgh Pirates",
+      "startTimeKst": "02:35",
+      "commenceTimeUtc": "2026-08-16T17:35:00Z",
+      "lineupScreenshot": "mlb_expected_lineups_01.png",
+      "lineupScreenshotSha256": "5564c668a48698b597b4514d0b5c1251edee538ebf338825b16c1dfc2d17a758",
+      "awayStarterRaw": "Patrick Sandoval L",
+      "homeStarterRaw": "Lake Bachar R",
+      "cutoffLabel": "PRE_GAME_OBSERVATION"
+    },
+    {
+      "gamePk": 822774,
+      "awayTeam": "New York Yankees",
+      "homeTeam": "Toronto Blue Jays",
+      "startTimeKst": "02:37",
+      "commenceTimeUtc": "2026-08-16T17:37:00Z",
+      "lineupScreenshot": "mlb_expected_lineups_01.png",
+      "lineupScreenshotSha256": "5564c668a48698b597b4514d0b5c1251edee538ebf338825b16c1dfc2d17a758",
+      "awayStarterRaw": "Ryan Weathers L",
+      "homeStarterRaw": "Dylan Cease R",
+      "cutoffLabel": "PRE_GAME_OBSERVATION"
+    },
+    {
+      "gamePk": 824397,
+      "awayTeam": "San Diego Padres",
+      "homeTeam": "Cleveland Guardians",
+      "startTimeKst": "02:40",
+      "commenceTimeUtc": "2026-08-16T17:40:00Z",
+      "lineupScreenshot": "mlb_expected_lineups_01.png",
+      "lineupScreenshotSha256": "5564c668a48698b597b4514d0b5c1251edee538ebf338825b16c1dfc2d17a758",
+      "awayStarterRaw": "Casey Mize R",
+      "homeStarterRaw": "Tanner Bibee R",
+      "cutoffLabel": "PRE_GAME_OBSERVATION"
+    },
+    {
+      "gamePk": 824236,
+      "awayTeam": "Chicago White Sox",
+      "homeTeam": "Detroit Tigers",
+      "startTimeKst": "02:40",
+      "commenceTimeUtc": "2026-08-16T17:40:00Z",
+      "lineupScreenshot": "mlb_expected_lineups_01.png",
+      "lineupScreenshotSha256": "5564c668a48698b597b4514d0b5c1251edee538ebf338825b16c1dfc2d17a758",
+      "awayStarterRaw": "Sean Burke R",
+      "homeStarterRaw": "Drew Anderson R",
+      "cutoffLabel": "PRE_GAME_OBSERVATION"
+    },
+    {
+      "gamePk": 824477,
+      "awayTeam": "Miami Marlins",
+      "homeTeam": "Cincinnati Reds",
+      "startTimeKst": "02:40",
+      "commenceTimeUtc": "2026-08-16T17:40:00Z",
+      "lineupScreenshot": "mlb_expected_lineups_02.png",
+      "lineupScreenshotSha256": "4fd46b33e4d52c382559d489e333056d792d5cc9eadd6b43db133793b0085b38",
+      "awayStarterRaw": "Eury Perez R",
+      "homeStarterRaw": "Nick Lodolo L",
+      "cutoffLabel": "PRE_GAME_OBSERVATION"
+    },
+    {
+      "gamePk": 823590,
+      "awayTeam": "Washington Nationals",
+      "homeTeam": "New York Mets",
+      "startTimeKst": "02:40",
+      "commenceTimeUtc": "2026-08-16T17:40:00Z",
+      "lineupScreenshot": "mlb_expected_lineups_02.png",
+      "lineupScreenshotSha256": "4fd46b33e4d52c382559d489e333056d792d5cc9eadd6b43db133793b0085b38",
+      "awayStarterRaw": "Jake Irvin R",
+      "homeStarterRaw": "Christian Scott R",
+      "cutoffLabel": "PRE_GAME_OBSERVATION"
+    },
+    {
+      "gamePk": 823670,
+      "awayTeam": "Philadelphia Phillies",
+      "homeTeam": "Minnesota Twins",
+      "startTimeKst": "03:10",
+      "commenceTimeUtc": "2026-08-16T18:10:00Z",
+      "lineupScreenshot": "mlb_expected_lineups_02.png",
+      "lineupScreenshotSha256": "4fd46b33e4d52c382559d489e333056d792d5cc9eadd6b43db133793b0085b38",
+      "awayStarterRaw": "Andrew Painter R",
+      "homeStarterRaw": "Dean Kremer R",
+      "cutoffLabel": "PRE_GAME_OBSERVATION"
+    },
+    {
+      "gamePk": 824642,
+      "awayTeam": "St. Louis Cardinals",
+      "homeTeam": "Chicago Cubs",
+      "startTimeKst": "04:15",
+      "commenceTimeUtc": "2026-08-16T19:15:00Z",
+      "lineupScreenshot": "mlb_expected_lineups_02.png",
+      "lineupScreenshotSha256": "4fd46b33e4d52c382559d489e333056d792d5cc9eadd6b43db133793b0085b38",
+      "awayStarterRaw": "Hunter Dobbins R",
+      "homeStarterRaw": "Edward Cabrera R",
+      "cutoffLabel": "PRE_GAME_OBSERVATION"
+    },
+    {
+      "gamePk": 824965,
+      "awayTeam": "Texas Rangers",
+      "homeTeam": "Athletics",
+      "startTimeKst": "05:05",
+      "commenceTimeUtc": "2026-08-16T20:05:00Z",
+      "lineupScreenshot": "mlb_expected_lineups_02.png",
+      "lineupScreenshotSha256": "4fd46b33e4d52c382559d489e333056d792d5cc9eadd6b43db133793b0085b38",
+      "awayStarterRaw": "Cody Bradford L",
+      "homeStarterRaw": "Jacob Lopez L",
+      "cutoffLabel": "PRE_GAME_OBSERVATION"
+    },
+    {
+      "gamePk": 823182,
+      "awayTeam": "Colorado Rockies",
+      "homeTeam": "San Francisco Giants",
+      "startTimeKst": "05:05",
+      "commenceTimeUtc": "2026-08-16T20:05:00Z",
+      "lineupScreenshot": "mlb_expected_lineups_02.png",
+      "lineupScreenshotSha256": "4fd46b33e4d52c382559d489e333056d792d5cc9eadd6b43db133793b0085b38",
+      "awayStarterRaw": "Gabriel Hughes R",
+      "homeStarterRaw": "Blade Tidwell R",
+      "cutoffLabel": "PRE_GAME_OBSERVATION"
+    },
+    {
+      "gamePk": 823991,
+      "awayTeam": "Kansas City Royals",
+      "homeTeam": "Los Angeles Angels",
+      "startTimeKst": "05:07",
+      "commenceTimeUtc": "2026-08-16T20:07:00Z",
+      "lineupScreenshot": "mlb_expected_lineups_03.png",
+      "lineupScreenshotSha256": "69884ef82a9956a7b2b390d7a32a8fec8adbf5c6244c6e2efd646c2aac57bccf",
+      "awayStarterRaw": "Noah Cameron L",
+      "homeStarterRaw": "Ryan Johnson R",
+      "cutoffLabel": "PRE_GAME_OBSERVATION"
+    },
+    {
+      "gamePk": 823912,
+      "awayTeam": "Milwaukee Brewers",
+      "homeTeam": "Los Angeles Dodgers",
+      "startTimeKst": "05:10",
+      "commenceTimeUtc": "2026-08-16T20:10:00Z",
+      "lineupScreenshot": "mlb_expected_lineups_03.png",
+      "lineupScreenshotSha256": "69884ef82a9956a7b2b390d7a32a8fec8adbf5c6244c6e2efd646c2aac57bccf",
+      "awayStarterRaw": "Logan Henderson R",
+      "homeStarterRaw": "Tarik Skubal L",
+      "cutoffLabel": "PRE_GAME_OBSERVATION"
+    },
+    {
+      "gamePk": 824156,
+      "awayTeam": "Seattle Mariners",
+      "homeTeam": "Houston Astros",
+      "startTimeKst": "08:20",
+      "commenceTimeUtc": "2026-08-16T23:20:00Z",
+      "lineupScreenshot": "mlb_expected_lineups_03.png",
+      "lineupScreenshotSha256": "69884ef82a9956a7b2b390d7a32a8fec8adbf5c6244c6e2efd646c2aac57bccf",
+      "awayStarterRaw": "Bryan Woo R",
+      "homeStarterRaw": "Hunter Brown R",
+      "cutoffLabel": "PRE_GAME_OBSERVATION"
+    }
+  ],
+  "domesticRowScreenshots": [
+    {
+      "displayOrder": 1,
+      "screenLeftTeam": "탬파레이",
+      "screenRightTeam": "볼티오리",
+      "screenStartKst": "01:15",
+      "screenshot": "odds_02.png",
+      "screenshotSha256": "69431457a5d60415763558ca205017b0c3bd95f5c22c59d30c5ed8a9327ed7db",
+      "firstHalfScreenshot": null
+    },
+    {
+      "displayOrder": 2,
+      "screenLeftTeam": "피츠파이",
+      "screenRightTeam": "보스레드",
+      "screenStartKst": "02:35",
+      "screenshot": "odds_02.png",
+      "screenshotSha256": "69431457a5d60415763558ca205017b0c3bd95f5c22c59d30c5ed8a9327ed7db",
+      "firstHalfScreenshot": null
+    },
+    {
+      "displayOrder": 3,
+      "screenLeftTeam": "애틀브레",
+      "screenRightTeam": "애리다이",
+      "screenStartKst": "02:35",
+      "screenshot": "odds_02.png",
+      "screenshotSha256": "69431457a5d60415763558ca205017b0c3bd95f5c22c59d30c5ed8a9327ed7db",
+      "firstHalfScreenshot": null
+    },
+    {
+      "displayOrder": 4,
+      "screenLeftTeam": "토론블루",
+      "screenRightTeam": "뉴욕양키",
+      "screenStartKst": "02:37",
+      "screenshot": "odds_02.png",
+      "screenshotSha256": "69431457a5d60415763558ca205017b0c3bd95f5c22c59d30c5ed8a9327ed7db",
+      "firstHalfScreenshot": null
+    },
+    {
+      "displayOrder": 5,
+      "screenLeftTeam": "뉴욕메츠",
+      "screenRightTeam": "워싱내셔",
+      "screenStartKst": "02:40",
+      "screenshot": "odds_02.png",
+      "screenshotSha256": "69431457a5d60415763558ca205017b0c3bd95f5c22c59d30c5ed8a9327ed7db",
+      "firstHalfScreenshot": null
+    },
+    {
+      "displayOrder": 6,
+      "screenLeftTeam": "디트타이",
+      "screenRightTeam": "시카화이",
+      "screenStartKst": "02:40",
+      "screenshot": "odds_03.png",
+      "screenshotSha256": "88c801c508c1469332176254298a2077d6e07870eadbe719d76eed1f5a88317b",
+      "firstHalfScreenshot": null
+    },
+    {
+      "displayOrder": 7,
+      "screenLeftTeam": "클리가디",
+      "screenRightTeam": "샌디파드",
+      "screenStartKst": "02:40",
+      "screenshot": "odds_03.png",
+      "screenshotSha256": "88c801c508c1469332176254298a2077d6e07870eadbe719d76eed1f5a88317b",
+      "firstHalfScreenshot": null
+    },
+    {
+      "displayOrder": 8,
+      "screenLeftTeam": "신시레즈",
+      "screenRightTeam": "마이말린",
+      "screenStartKst": "02:40",
+      "screenshot": "odds_03.png",
+      "screenshotSha256": "88c801c508c1469332176254298a2077d6e07870eadbe719d76eed1f5a88317b",
+      "firstHalfScreenshot": null
+    },
+    {
+      "displayOrder": 9,
+      "screenLeftTeam": "미네트윈",
+      "screenRightTeam": "필라필리",
+      "screenStartKst": "03:10",
+      "screenshot": "odds_03.png",
+      "screenshotSha256": "88c801c508c1469332176254298a2077d6e07870eadbe719d76eed1f5a88317b",
+      "firstHalfScreenshot": null
+    },
+    {
+      "displayOrder": 10,
+      "screenLeftTeam": "시카컵스",
+      "screenRightTeam": "세인카디",
+      "screenStartKst": "04:15",
+      "screenshot": "odds_03.png",
+      "screenshotSha256": "88c801c508c1469332176254298a2077d6e07870eadbe719d76eed1f5a88317b",
+      "firstHalfScreenshot": null
+    },
+    {
+      "displayOrder": 11,
+      "screenLeftTeam": "샌프자이",
+      "screenRightTeam": "콜로로키",
+      "screenStartKst": "05:05",
+      "screenshot": "odds_04.png",
+      "screenshotSha256": "885c8cdca4d6c4f44297efe2f48a627795e4c32fab636e88c369b8e223c63dca",
+      "firstHalfScreenshot": null
+    },
+    {
+      "displayOrder": 12,
+      "screenLeftTeam": "애슬레틱",
+      "screenRightTeam": "텍사레인",
+      "screenStartKst": "05:05",
+      "screenshot": "odds_04.png",
+      "screenshotSha256": "885c8cdca4d6c4f44297efe2f48a627795e4c32fab636e88c369b8e223c63dca",
+      "firstHalfScreenshot": null
+    },
+    {
+      "displayOrder": 13,
+      "screenLeftTeam": "LA에인절",
+      "screenRightTeam": "캔자로얄",
+      "screenStartKst": "05:07",
+      "screenshot": "odds_04.png",
+      "screenshotSha256": "885c8cdca4d6c4f44297efe2f48a627795e4c32fab636e88c369b8e223c63dca",
+      "firstHalfScreenshot": null
+    },
+    {
+      "displayOrder": 14,
+      "screenLeftTeam": "LA다저스",
+      "screenRightTeam": "밀워브루",
+      "screenStartKst": "05:10",
+      "screenshot": "odds_04.png",
+      "screenshotSha256": "885c8cdca4d6c4f44297efe2f48a627795e4c32fab636e88c369b8e223c63dca",
+      "firstHalfScreenshot": null
+    },
+    {
+      "displayOrder": 15,
+      "screenLeftTeam": "휴스애스",
+      "screenRightTeam": "시애매리",
+      "screenStartKst": "08:20",
+      "screenshot": "odds_04.png",
+      "screenshotSha256": "885c8cdca4d6c4f44297efe2f48a627795e4c32fab636e88c369b8e223c63dca",
+      "firstHalfScreenshot": "odds_05.png"
+    }
+  ],
+  "needsReview": [
+    {
+      "kind": "LINEUP_NAME_CANDIDATE",
+      "raw": "Estuary Ruiz",
+      "candidate": "Esteury Ruiz",
+      "game": "Miami Marlins @ Cincinnati Reds",
+      "note": "Screenshot transcription kept raw; not auto-corrected."
+    },
+    {
+      "kind": "LINEUP_NAME_CANDIDATE",
+      "raw": "Kyle Isabel",
+      "candidate": "Kyle Isbel",
+      "game": "Kansas City Royals @ Los Angeles Angels",
+      "note": "Screenshot transcription kept raw; not auto-corrected."
+    },
+    {
+      "kind": "LINEUP_NAME_CANDIDATE",
+      "raw": "Lake Bachar",
+      "candidate": null,
+      "game": "Boston Red Sox @ Pittsburgh Pirates",
+      "note": "Probable starter name transcribed as displayed. Confirm spelling."
+    },
+    {
+      "kind": "LINEUP_NAME_CANDIDATE",
+      "raw": "Jim Jarvis",
+      "candidate": null,
+      "game": "Arizona Diamondbacks @ Atlanta Braves",
+      "note": "Braves SS name transcribed as displayed. Confirm."
+    },
+    {
+      "kind": "ALIAS_TABLE_ADDITION",
+      "raw": "미네트윈 / 필라필리 / 캔자로얄",
+      "candidate": "Minnesota Twins / Philadelphia Phillies / Kansas City Royals",
+      "note": "Added to existing domestic TEAM_ALIASES using the same 4-char sportsbook abbreviation pattern. Raw screen labels retained on domestic rows."
+    },
+    {
+      "kind": "FOOTBALL_SCREEN_LABEL_LANGUAGE",
+      "raw": "odds_01/02/03 football team names stored in English transcription",
+      "candidate": "Korean glyphs on screen were not captured character-exactly",
+      "note": "MLS rows on odds_04/05 keep Korean abbreviations from the screenshot. Confirm Korean labels for odds_01-03 if needed."
+    },
+    {
+      "kind": "FOOTBALL_LEAGUE_LABEL",
+      "raw": "EFL챔 / Burnley : West Ham",
+      "candidate": null,
+      "note": "Raw league/teams preserved. Do not assume Premier League vs Championship."
+    },
+    {
+      "kind": "FOOTBALL_UNMAPPED",
+      "raw": "all football/MLS rows",
+      "candidate": null,
+      "note": "No 2026-08-16 or 2026-08-17 football schedule artifact. mappingStatus=UNRESOLVED_MAPPING."
+    }
+  ],
+  "sourcePolicy": "OPERATOR_MANUAL_SCREENSHOT_OBSERVATION",
+  "legal": "INTERNAL_ONLY",
+  "commercialUseStatus": "INTERNAL_ONLY"
+}
