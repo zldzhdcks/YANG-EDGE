@@ -19,6 +19,7 @@ import {
   FOOTBALL_SLATE_2026_08_12_TEAMS,
   FOOTBALL_SLATE_2026_08_14_TEAMS,
   FOOTBALL_SLATE_2026_08_17_TEAMS,
+  FOOTBALL_SLATE_2026_08_18_TEAMS,
   FOOTBALL_TEAM_CATALOG_V1,
   FOOTBALL_TEAM_CONFLICTS_V1,
   getMatchedTeam,
@@ -497,9 +498,10 @@ async function main() {
     ...FOOTBALL_SLATE_2026_08_12_TEAMS,
     ...FOOTBALL_SLATE_2026_08_14_TEAMS,
     ...FOOTBALL_SLATE_2026_08_17_TEAMS,
+    ...FOOTBALL_SLATE_2026_08_18_TEAMS,
   ];
-  assert.equal(slateIds.length, 52);
-  assert.equal(new Set(slateIds.map(([id]) => id)).size, 52);
+  assert.equal(slateIds.length, 54);
+  assert.equal(new Set(slateIds.map(([id]) => id)).size, 54);
   for (const [id] of slateIds) {
     const hit = resolveProviderTeam("api-football", id);
     assert.equal(hit.status, "MATCHED", `slate ${id}`);

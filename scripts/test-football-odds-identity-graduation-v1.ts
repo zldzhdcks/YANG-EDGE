@@ -11,6 +11,7 @@ import path from "node:path";
 import {
   FOOTBALL_BLOCKED_PROVIDER_TEAM_IDS,
   FOOTBALL_SLATE_2026_08_17_TEAMS,
+  FOOTBALL_SLATE_2026_08_18_TEAMS,
   FOOTBALL_TEAM_CATALOG_V1,
   assertTeamCatalogIntegrity,
   resolveProviderTeam,
@@ -207,6 +208,10 @@ async function main() {
     ["4665", "Racing Santander"],
     ["533", "Villarreal"],
   ]);
+  assert.deepEqual(FOOTBALL_SLATE_2026_08_18_TEAMS, [
+    ["544", "Deportivo La Coruna"],
+    ["797", "Elche"],
+  ]);
 
   const laLiga = [
     { providerId: "540", name: "Espanyol", odds: "Espanyol" },
@@ -270,6 +275,79 @@ async function main() {
     teamBridge: FOOTBALL_ODDS_TEAM_BRIDGE_V1,
   });
   assert.equal(racingSlugRejected.status, "NOT_JOINED");
+
+  const deporElche = [
+    {
+      providerId: "544",
+      catalogName: "Deportivo La Coruna",
+      odds: "Deportivo La Coruña",
+    },
+    { providerId: "797", catalogName: "Elche", odds: "Elche CF" },
+  ];
+  for (const team of deporElche) {
+    const resolved = resolveProviderTeam("api-football", team.providerId);
+    assert.equal(resolved.status, "MATCHED", team.providerId);
+    assert.equal(
+      resolved.canonicalTeamId,
+      `fb-team-v1-api-football-${team.providerId}`,
+    );
+    const catalog = FOOTBALL_TEAM_CATALOG_V1.find(
+      (t) => t.providerTeamId === team.providerId,
+    );
+    assert.ok(catalog);
+    assert.equal(catalog!.canonicalName, team.catalogName);
+    assert.equal(
+      catalog!.source,
+      "data/research/football/2026-08-18-schedule-v1.json",
+    );
+    assert.deepEqual(getOddsTeamNames(resolved.canonicalTeamId!), [team.odds]);
+  }
+
+  const deporJoin = joinScheduleRowToOddsEvent({
+    row: row({
+      dateKst: "2026-08-18",
+      matchId: "soccer-api-football-1570337",
+      providerMatchId: "1570337",
+      competitionId: "fb-comp-api-football-140",
+      homeTeamId: "fb-team-v1-api-football-544",
+      awayTeamId: "fb-team-v1-api-football-797",
+      kickoffTimeUtc: "2026-08-17T19:00:00.000Z",
+    }),
+    events: [
+      oddsEvent({
+        id: "7b9f4d89d66c48e0c496aab1679e4ae4",
+        sportKey: "soccer_spain_la_liga",
+        home: "Deportivo La Coruña",
+        away: "Elche CF",
+        commence: "2026-08-17T19:00:00Z",
+      }),
+    ],
+    teamBridge: FOOTBALL_ODDS_TEAM_BRIDGE_V1,
+  });
+  assert.equal(deporJoin.status, "JOINED");
+
+  const deporScheduleNameRejected = joinScheduleRowToOddsEvent({
+    row: row({
+      dateKst: "2026-08-18",
+      matchId: "soccer-api-football-1570337",
+      providerMatchId: "1570337",
+      competitionId: "fb-comp-api-football-140",
+      homeTeamId: "fb-team-v1-api-football-544",
+      awayTeamId: "fb-team-v1-api-football-797",
+      kickoffTimeUtc: "2026-08-17T19:00:00.000Z",
+    }),
+    events: [
+      oddsEvent({
+        id: "fake-schedule-name",
+        sportKey: "soccer_spain_la_liga",
+        home: "Deportivo La Coruna",
+        away: "Elche",
+        commence: "2026-08-17T19:00:00Z",
+      }),
+    ],
+    teamBridge: FOOTBALL_ODDS_TEAM_BRIDGE_V1,
+  });
+  assert.equal(deporScheduleNameRejected.status, "NOT_JOINED");
 
   const unknown = resolveProviderTeam("api-football", "999001");
   assert.equal(unknown.status, "IDENTITY_REVIEW_REQUIRED");

@@ -52,6 +52,7 @@ export {
   FOOTBALL_SLATE_2026_08_12_TEAMS,
   FOOTBALL_SLATE_2026_08_14_TEAMS,
   FOOTBALL_SLATE_2026_08_17_TEAMS,
+  FOOTBALL_SLATE_2026_08_18_TEAMS,
 } from "./team-catalog-slate-2026-08";
 export {
   assertResearchFixtureInput,

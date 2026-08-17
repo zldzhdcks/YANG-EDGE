@@ -4,17 +4,17 @@
     "builderVersion": "football-schedule-builder-v1",
     "identityVersion": "football-core-identity-v1",
     "dateKst": "2026-08-18",
-    "generatedAt": "2026-08-17T13:49:34.777Z",
+    "generatedAt": "2026-08-17T14:14:19.253Z",
     "provider": "api-football",
     "researchOnly": true,
     "legalStatus": "NEEDS_LEGAL_REVIEW",
     "scheduleGames": 1,
-    "identityMatched": 0,
-    "identityBlocked": 1,
-    "formatEligible": 0,
+    "identityMatched": 1,
+    "identityBlocked": 0,
+    "formatEligible": 1,
     "formatNotSupported": 0,
     "droppedUnregisteredCompetition": 140,
-    "artifactHash": "62fd238cdff4068205b2242e0f5c337d960c0cfeed27978037e9bf8d80a93626"
+    "artifactHash": "aea84117b126de241bb6bfd34c544bfc5da779aea5803f86f820123669b57116"
   },
   "rows": [
     {
@@ -34,16 +34,11 @@
       "status": "SCHEDULED",
       "venue": "Estadio Municipal de Riazor",
       "researchOnly": true,
-      "homeTeamId": null,
-      "awayTeamId": null,
-      "identityStatus": "IDENTITY_REVIEW_REQUIRED",
-      "identityReasons": [
-        "UNKNOWN_PROVIDER_TEAM_ID",
-        "PROVIDER_TEAM_ID:544",
-        "UNKNOWN_PROVIDER_TEAM_ID",
-        "PROVIDER_TEAM_ID:797"
-      ],
-      "predictionEligibility": "IDENTITY_BLOCKED"
+      "homeTeamId": "fb-team-v1-api-football-544",
+      "awayTeamId": "fb-team-v1-api-football-797",
+      "identityStatus": "MATCHED",
+      "identityReasons": [],
+      "predictionEligibility": "ELIGIBLE_FORMAT"
     }
   ]
 }

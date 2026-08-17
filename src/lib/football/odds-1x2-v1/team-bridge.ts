@@ -18,6 +18,10 @@ const CMP_V0 =
   "data/research/football/2026-08-16-1x2-market-comparison-v0.json";
 const MLS_VERIFIED_AT = "2026-08-16T14:27:47.964Z";
 const LA_LIGA_VERIFIED_AT = "2026-08-16T14:27:47.334Z";
+const LA_LIGA_2026_08_18_EVIDENCE =
+  "data/research/football/2026-08-18-la-liga-odds-identity-evidence-v0.json";
+const LA_LIGA_2026_08_18_EVENT_ID = "7b9f4d89d66c48e0c496aab1679e4ae4";
+const LA_LIGA_2026_08_18_VERIFIED_AT = "2026-08-17T14:17:15.455Z";
 
 function comparisonEventSource(oddsProviderEventId: string): string {
   return `${CMP_V0} the-odds-api event id=${oddsProviderEventId}`;
@@ -121,6 +125,20 @@ export const FOOTBALL_ODDS_TEAM_BRIDGE_V1: FootballOddsTeamBridgeEntry[] = [
     oddsTeamNames: ["Levante"],
     source: comparisonEventSource("4e24891d0ee382bfda6305eabbc54754"),
     verifiedAt: LA_LIGA_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-544",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Deportivo La Coruña"],
+    source: `${LA_LIGA_2026_08_18_EVIDENCE} the-odds-api event id=${LA_LIGA_2026_08_18_EVENT_ID}`,
+    verifiedAt: LA_LIGA_2026_08_18_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-797",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Elche CF"],
+    source: `${LA_LIGA_2026_08_18_EVIDENCE} the-odds-api event id=${LA_LIGA_2026_08_18_EVENT_ID}`,
+    verifiedAt: LA_LIGA_2026_08_18_VERIFIED_AT,
   },
 ];
 
