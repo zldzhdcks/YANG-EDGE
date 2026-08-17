@@ -1,0 +1,336 @@
+{
+  "schemaVersion": "mlb-daily-review-summary-v1",
+  "dateKst": "2026-08-17",
+  "reviewLayerVersion": "mlb-research-review-v2",
+  "artifacts": {
+    "prediction": "data/predictions/mlb/2026-08-17.json",
+    "result": "data/research/mlb/2026-08-17-official-results-v1.json",
+    "graded": "data/research/mlb/2026-08-17-graded-predictions-v1.json",
+    "successReview": "data/research/mlb/2026-08-17-success-review-v1.json",
+    "failureReview": "data/research/mlb/2026-08-17-failure-review-v1.json"
+  },
+  "hashes": {
+    "predictionHash": "7c24e7ed5141d3b6766312517f276047b3e66c3f9d816fc42091b5010364ee08",
+    "resultHash": "8f10970ad080c1d63425e099a2a45be652e0b5fa415ec6b4748566662a37acba",
+    "gradedHash": "70aa52603ae4910be1744bee520ebe2e04a2cb23cd170e4c7925941daa849efc",
+    "inputHash": "7c5e54f88b867cbf4145ba74f0ce4d173727ea2b024e967acdfb9fa6d1ca9f43",
+    "successReviewHash": "abd1572930bc8133ccdcc770ad0c254cb7eb771e8ae3a84811f2cbf67132bb8b",
+    "failureReviewHash": "31fb77914bc237ff81cf5f67992ec728a1bf62851e2fa7c63d5abb59d33e06b6"
+  },
+  "gradeCounts": {
+    "totalGames": 15,
+    "eligiblePredictions": 0,
+    "limitedInputPredictions": 14,
+    "blocked": 1,
+    "noPick": 0,
+    "graded": 14,
+    "correct": 4,
+    "incorrect": 10,
+    "pending": 0,
+    "void": 0,
+    "matchErrors": 0,
+    "accuracy": {
+      "numerator": 4,
+      "denominator": 14,
+      "percent": 28.6,
+      "status": "OK",
+      "exclusionPolicy": "correct / (correct + incorrect); excludes PENDING, VOID, BLOCKED, NO_PICK, MATCH_ERROR"
+    },
+    "eligibleAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "NO_GRADED_SAMPLE"
+    },
+    "limitedInputAccuracy": {
+      "numerator": 4,
+      "denominator": 14,
+      "percent": 28.6,
+      "status": "OK"
+    },
+    "researchCandidates": 14,
+    "researchGraded": 14,
+    "researchCorrect": 4,
+    "researchIncorrect": 10,
+    "researchAccuracy": {
+      "numerator": 4,
+      "denominator": 14,
+      "percent": 28.6,
+      "status": "OK"
+    },
+    "researchMeanBrier": 0.2590948454002857,
+    "researchMeanLogLoss": 0.7113507964299128,
+    "officialSampleCount": 0,
+    "officialGraded": 0,
+    "officialCorrect": 0,
+    "officialIncorrect": 0,
+    "officialAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "N/A"
+    },
+    "predictionContract": "RESEARCH_BASELINE_V0",
+    "modelVersion": "mlb-baseline-prediction-v0.1.0",
+    "modelStatus": "RESEARCH_BASELINE_V0"
+  },
+  "officialPerformance": {
+    "eligiblePredictions": 0,
+    "officialSampleCount": 0,
+    "officialGraded": 0,
+    "officialCorrect": 0,
+    "officialIncorrect": 0,
+    "officialAccuracy": "N/A"
+  },
+  "researchPerformance": {
+    "researchCandidates": 14,
+    "researchGraded": 14,
+    "researchCorrect": 4,
+    "researchIncorrect": 10,
+    "researchAccuracy": 28.6,
+    "researchBrier": 0.2590948454002857,
+    "researchLogLoss": 0.7113507964299128,
+    "modelVersion": "mlb-baseline-prediction-v0.1.0"
+  },
+  "blockedPolicy": {
+    "blockedGames": 1,
+    "blockedCounterfactualCorrect": 1,
+    "blockedCounterfactualIncorrect": 0
+  },
+  "failureCategoryCount": {
+    "STARTER": 4,
+    "LINEUP": 10,
+    "MARKET": 10,
+    "BLOWOUT": 4,
+    "BULLPEN": 4,
+    "ONE_RUN_GAME": 2
+  },
+  "successCategoryCount": {
+    "MARKET": 4,
+    "BULLPEN": 2,
+    "BLOWOUT": 1,
+    "ONE_RUN_GAME": 1
+  },
+  "failureCategoryTable": [
+    {
+      "label": "ATH-TEX",
+      "gameId": "mlb-athletics-texas-rangers",
+      "gamePk": 824965,
+      "categories": [
+        "STARTER",
+        "LINEUP",
+        "MARKET"
+      ],
+      "line": "ATH-TEX → STARTER + LINEUP + MARKET"
+    },
+    {
+      "label": "CHC-STL",
+      "gameId": "mlb-chicago-cubs-st-louis-cardinals",
+      "gamePk": 824642,
+      "categories": [
+        "LINEUP",
+        "MARKET",
+        "BLOWOUT"
+      ],
+      "line": "CHC-STL → LINEUP + MARKET + BLOWOUT"
+    },
+    {
+      "label": "CLE-SD",
+      "gameId": "mlb-cleveland-guardians-san-diego-padres",
+      "gamePk": 824397,
+      "categories": [
+        "LINEUP",
+        "MARKET",
+        "BLOWOUT"
+      ],
+      "line": "CLE-SD → LINEUP + MARKET + BLOWOUT"
+    },
+    {
+      "label": "DET-CWS",
+      "gameId": "mlb-detroit-tigers-chicago-white-sox",
+      "gamePk": 824236,
+      "categories": [
+        "LINEUP",
+        "MARKET",
+        "BULLPEN"
+      ],
+      "line": "DET-CWS → LINEUP + MARKET + BULLPEN"
+    },
+    {
+      "label": "HOU-SEA",
+      "gameId": "mlb-houston-astros-seattle-mariners",
+      "gamePk": 824156,
+      "categories": [
+        "LINEUP",
+        "MARKET",
+        "ONE_RUN_GAME",
+        "BULLPEN"
+      ],
+      "line": "HOU-SEA → LINEUP + MARKET + ONE_RUN + BULLPEN"
+    },
+    {
+      "label": "LAD-MIL",
+      "gameId": "mlb-los-angeles-dodgers-milwaukee-brewers",
+      "gamePk": 823912,
+      "categories": [
+        "STARTER",
+        "LINEUP",
+        "MARKET"
+      ],
+      "line": "LAD-MIL → STARTER + LINEUP + MARKET"
+    },
+    {
+      "label": "MIN-PHI",
+      "gameId": "mlb-minnesota-twins-philadelphia-phillies",
+      "gamePk": 823670,
+      "categories": [
+        "STARTER",
+        "LINEUP",
+        "MARKET",
+        "BULLPEN"
+      ],
+      "line": "MIN-PHI → STARTER + LINEUP + MARKET + BULLPEN"
+    },
+    {
+      "label": "SF-COL",
+      "gameId": "mlb-san-francisco-giants-colorado-rockies",
+      "gamePk": 823182,
+      "categories": [
+        "STARTER",
+        "LINEUP",
+        "MARKET",
+        "BLOWOUT"
+      ],
+      "line": "SF-COL → STARTER + LINEUP + MARKET + BLOWOUT"
+    },
+    {
+      "label": "TB-BAL",
+      "gameId": "mlb-tampa-bay-rays-baltimore-orioles",
+      "gamePk": 822940,
+      "categories": [
+        "LINEUP",
+        "MARKET",
+        "BLOWOUT"
+      ],
+      "line": "TB-BAL → LINEUP + MARKET + BLOWOUT"
+    },
+    {
+      "label": "TOR-NYY",
+      "gameId": "mlb-toronto-blue-jays-new-york-yankees",
+      "gamePk": 822774,
+      "categories": [
+        "LINEUP",
+        "MARKET",
+        "ONE_RUN_GAME",
+        "BULLPEN"
+      ],
+      "line": "TOR-NYY → LINEUP + MARKET + ONE_RUN + BULLPEN"
+    }
+  ],
+  "predictionConfidenceHistogram": {
+    "schemaVersion": "mlb-prediction-confidence-histogram-v1",
+    "unit": "prediction.confidence_0_100",
+    "totalSamples": 15,
+    "buckets": [
+      {
+        "label": "0–49",
+        "minInclusive": 0,
+        "maxExclusive": 50,
+        "count": 2
+      },
+      {
+        "label": "50–54",
+        "minInclusive": 50,
+        "maxExclusive": 55,
+        "count": 1
+      },
+      {
+        "label": "55–59",
+        "minInclusive": 55,
+        "maxExclusive": 60,
+        "count": 0
+      },
+      {
+        "label": "60–64",
+        "minInclusive": 60,
+        "maxExclusive": 65,
+        "count": 2
+      },
+      {
+        "label": "65–69",
+        "minInclusive": 65,
+        "maxExclusive": 70,
+        "count": 0
+      },
+      {
+        "label": "70–79",
+        "minInclusive": 70,
+        "maxExclusive": 80,
+        "count": 10
+      },
+      {
+        "label": "80+",
+        "minInclusive": 80,
+        "maxExclusive": 101,
+        "count": 0
+      }
+    ]
+  },
+  "leakageAudit": {
+    "status": "PASS",
+    "checks": [
+      {
+        "id": "prediction_hash",
+        "status": "PASS",
+        "detail": "VERIFIED_V0_PREDICTION_HASH: v0 predictionHashSha256 matches hashPredictions fingerprint"
+      },
+      {
+        "id": "input_manifest_object",
+        "status": "PASS",
+        "detail": "v0 uses inputManifestHash; absence of legacy inputManifest object is not leakage"
+      },
+      {
+        "id": "predicted_before_slate_cutoff",
+        "status": "PASS",
+        "detail": "legacy slate cutoffTime not present on v0 meta; commence-time leakage checked separately when available"
+      },
+      {
+        "id": "input_manifest_warnings",
+        "status": "PASS",
+        "detail": "no post-game leakage warnings in manifest"
+      }
+    ],
+    "predictionHashVerified": true,
+    "hashValidationMethod": "VERIFIED_V0_PREDICTION_HASH",
+    "predictionContract": "RESEARCH_BASELINE_V0",
+    "inputHash": "7c5e54f88b867cbf4145ba74f0ce4d173727ea2b024e967acdfb9fa6d1ca9f43"
+  },
+  "reviewStatus": "VALID_REVIEW",
+  "successPatterns": [
+    "MARKET",
+    "BULLPEN",
+    "BLOWOUT",
+    "ONE_RUN_GAME"
+  ],
+  "failurePatterns": [
+    "STARTER",
+    "LINEUP",
+    "MARKET",
+    "BLOWOUT",
+    "BULLPEN",
+    "ONE_RUN_GAME"
+  ],
+  "dataQualityWarnings": [
+    "BULLPEN_WEIGHT_DISABLED_V0",
+    "LINEUP_NOT_CONFIRMED",
+    "MARKET_ONLY_NO_OFFICIAL",
+    "STARTER_STATS_MISSING",
+    "INPUT_QUALITY_LIMITED_INPUT",
+    "STARTER_SAMPLE_PARTIAL",
+    "INSUFFICIENT_INPUT",
+    "STARTER_SAMPLE_INSUFFICIENT"
+  ],
+  "generatedAt": "2026-08-17T12:25:03.750Z",
+  "reviewHash": "082cf3d5f5d13e2152e22716630802bdb1fe35471dd5956a169e87ed8b72c67b",
+  "assistantSummary": "MLB Daily Review — 2026-08-17 (research-review-v2)\nPrediction contract: RESEARCH_BASELINE_V0\nEligible predictions (official): 0\nOfficial sample: 0\nOfficial Accuracy: N/A\nResearch candidates: 14\nResearch graded: 14\nResearch correct/incorrect: 4/10\nResearch Accuracy: 28.6%\nResearch Brier: 0.2590948454002857\nResearch LogLoss: 0.7113507964299128\nBlocked games: 1\nFailure categories: STARTER=4, LINEUP=10, MARKET=10, BLOWOUT=4, BULLPEN=4, ONE_RUN_GAME=2\nSuccess categories: MARKET=4, BULLPEN=2, BLOWOUT=1, ONE_RUN_GAME=1\nPrimary failure candidates: STARTER, LINEUP, MARKET, BLOWOUT, BULLPEN, ONE_RUN_GAME\nConclusion: DATA_ACCUMULATION_CONTINUES\n\nFailure Category by Game\nATH-TEX → STARTER + LINEUP + MARKET\nCHC-STL → LINEUP + MARKET + BLOWOUT\nCLE-SD → LINEUP + MARKET + BLOWOUT\nDET-CWS → LINEUP + MARKET + BULLPEN\nHOU-SEA → LINEUP + MARKET + ONE_RUN + BULLPEN\nLAD-MIL → STARTER + LINEUP + MARKET\nMIN-PHI → STARTER + LINEUP + MARKET + BULLPEN\nSF-COL → STARTER + LINEUP + MARKET + BLOWOUT\nTB-BAL → LINEUP + MARKET + BLOWOUT\nTOR-NYY → LINEUP + MARKET + ONE_RUN + BULLPEN"
+}

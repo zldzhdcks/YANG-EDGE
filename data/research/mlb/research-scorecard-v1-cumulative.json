@@ -6,52 +6,53 @@
       "2026-08-12",
       "2026-08-13",
       "2026-08-14",
-      "2026-08-15"
+      "2026-08-15",
+      "2026-08-17"
     ],
-    "generatedAt": "2026-08-16T12:54:03.936Z",
+    "generatedAt": "2026-08-17T12:37:04.098Z",
     "researchOnly": true,
     "engineAdmission": "PROHIBITED",
     "autoApply": false,
     "outcomeDenominatorExcludesAwaiting": true,
-    "scorecardHash": "0a08e3d4eadf1c63554fe1100c939379024f9a668a44b0f7f98f792292f2fe9d"
+    "scorecardHash": "3b30eef2fec529255bc01b654ecaea630e6450054f5ac5a8bb3c17bfa1220989"
   },
-  "rowCount": 53,
+  "rowCount": 68,
   "awaitingExcludedFromOutcomes": 0,
   "calibration": {
     "dimension": "CALIBRATION",
-    "gradedN": 48,
-    "correct": 24,
-    "incorrect": 24,
-    "accuracyPercent": 50,
-    "meanBrier": 0.2506431458333333,
-    "meanLogLoss": 0.6944281454845155,
+    "gradedN": 62,
+    "correct": 28,
+    "incorrect": 34,
+    "accuracyPercent": 45.2,
+    "meanBrier": 0.2525733225806451,
+    "meanLogLoss": 0.6982927799749206,
     "home": {
-      "n": 35,
-      "correct": 19,
-      "incorrect": 16,
-      "accuracyPercent": 54.3,
+      "n": 46,
+      "correct": 21,
+      "incorrect": 25,
+      "accuracyPercent": 45.7,
       "sampleStatus": "DATA_COLLECTION"
     },
     "away": {
-      "n": 13,
-      "correct": 5,
-      "incorrect": 8,
-      "accuracyPercent": 38.5,
+      "n": 16,
+      "correct": 7,
+      "incorrect": 9,
+      "accuracyPercent": 43.8,
       "sampleStatus": "EARLY_SAMPLE"
     },
     "probabilityBuckets": [
       {
         "bucket": "0.500-0.525",
-        "n": 34,
-        "predictedAverage": 0.5115,
-        "actualWinRate": 0.5,
+        "n": 44,
+        "predictedAverage": 0.5116363636363636,
+        "actualWinRate": 0.45454545454545453,
         "status": "OK"
       },
       {
         "bucket": "0.525-0.550",
-        "n": 11,
-        "predictedAverage": 0.5341818181818181,
-        "actualWinRate": 0.45454545454545453,
+        "n": 15,
+        "predictedAverage": 0.5350666666666667,
+        "actualWinRate": 0.4,
         "status": "OK"
       },
       {
@@ -82,17 +83,17 @@
   "recommendationSelection": {
     "dimension": "RECOMMENDATION_SELECTION_VALUE",
     "goodPick": {
-      "n": 8,
-      "correct": 4,
-      "incorrect": 4,
+      "n": 10,
+      "correct": 5,
+      "incorrect": 5,
       "accuracyPercent": 50,
-      "sampleStatus": "INSUFFICIENT_SAMPLE"
+      "sampleStatus": "EARLY_SAMPLE"
     },
     "nonGoodResearch": {
-      "n": 40,
-      "correct": 20,
-      "incorrect": 20,
-      "accuracyPercent": 50,
+      "n": 52,
+      "correct": 23,
+      "incorrect": 29,
+      "accuracyPercent": 44.2,
       "sampleStatus": "DATA_COLLECTION"
     },
     "note": "Research-only Good Picks vs remaining graded research baseline. Not official picks. No causal claim."
@@ -102,10 +103,10 @@
     "starter": [
       {
         "availability": "BOTH_AVAILABLE",
-        "n": 42,
-        "correct": 22,
-        "incorrect": 20,
-        "accuracyPercent": 52.4,
+        "n": 56,
+        "correct": 26,
+        "incorrect": 30,
+        "accuracyPercent": 46.4,
         "sampleStatus": "DATA_COLLECTION"
       },
       {
@@ -135,37 +136,37 @@
     "modelVsKorean": [
       {
         "group": "ALIGNED",
-        "n": 38,
-        "correct": 17,
-        "incorrect": 21,
-        "accuracyPercent": 44.7,
+        "n": 50,
+        "correct": 21,
+        "incorrect": 29,
+        "accuracyPercent": 42,
         "sampleStatus": "DATA_COLLECTION"
       },
       {
         "group": "CONFLICT",
-        "n": 10,
+        "n": 12,
         "correct": 7,
-        "incorrect": 3,
-        "accuracyPercent": 70,
+        "incorrect": 5,
+        "accuracyPercent": 58.3,
         "sampleStatus": "EARLY_SAMPLE"
       }
     ],
     "koreanFavoriteBaseline": {
-      "n": 53,
-      "correct": 23,
-      "incorrect": 30,
-      "accuracyPercent": 43.4,
+      "n": 68,
+      "correct": 29,
+      "incorrect": 39,
+      "accuracyPercent": 42.6,
       "sampleStatus": "DATA_COLLECTION"
     },
     "providerFavoriteBaseline": {
-      "n": 53,
-      "correct": 25,
-      "incorrect": 28,
-      "accuracyPercent": 47.2,
+      "n": 68,
+      "correct": 31,
+      "incorrect": 37,
+      "accuracyPercent": 45.6,
       "sampleStatus": "DATA_COLLECTION"
     },
     "providerVsKorean": {
-      "SAME_FAVORITE": 51,
+      "SAME_FAVORITE": 66,
       "DIFFERENT_FAVORITE": 2,
       "NO_KOREAN_OBSERVATION": 0,
       "NO_PROVIDER_MARKET": 0,
@@ -174,12 +175,12 @@
     "note": "Korean market is operator-supplied, not Provider-confirmed, and is not an Engine input. Known 08-12/13/14 observations are post-Prediction. ALIGNED/CONFLICT accuracy uses graded research rows only. Favorite baselines use FINAL results and exclude AWAITING."
   },
   "expectedLineupCoverage": {
-    "observed": 45,
+    "observed": 60,
     "notObserved": 8,
-    "expectedStatusCount": 45,
+    "expectedStatusCount": 60,
     "confirmedStatusCount": 0,
     "timing": {
-      "BEFORE_PREDICTION": 14,
+      "BEFORE_PREDICTION": 29,
       "AFTER_PREDICTION_BUT_BEFORE_GAME": 31,
       "LATE": 0,
       "UNKNOWN": 0
@@ -192,50 +193,50 @@
     "dataClass": "POSTGAME_REVIEW_TAG",
     "tags": [
       {
-        "tag": "BULLPEN",
-        "winsWithTag": 10,
-        "lossesWithTag": 14,
-        "total": 24,
+        "tag": "MARKET",
+        "winsWithTag": 23,
+        "lossesWithTag": 13,
+        "total": 36,
         "dataClass": "POSTGAME_REVIEW_TAG",
-        "provenance": "UNKNOWN"
+        "provenance": "PREEXISTING_WARNING"
       },
       {
         "tag": "LINEUP",
         "winsWithTag": 0,
-        "lossesWithTag": 24,
-        "total": 24,
+        "lossesWithTag": 34,
+        "total": 34,
         "dataClass": "POSTGAME_REVIEW_TAG",
         "provenance": "PREEXISTING_WARNING"
       },
       {
-        "tag": "MARKET",
-        "winsWithTag": 19,
-        "lossesWithTag": 3,
-        "total": 22,
+        "tag": "BULLPEN",
+        "winsWithTag": 12,
+        "lossesWithTag": 18,
+        "total": 30,
         "dataClass": "POSTGAME_REVIEW_TAG",
-        "provenance": "PREEXISTING_WARNING"
+        "provenance": "UNKNOWN"
       },
       {
         "tag": "BLOWOUT",
-        "winsWithTag": 7,
-        "lossesWithTag": 6,
-        "total": 13,
+        "winsWithTag": 8,
+        "lossesWithTag": 10,
+        "total": 18,
         "dataClass": "POSTGAME_REVIEW_TAG",
         "provenance": "OUTCOME_DERIVED"
       },
       {
         "tag": "ONE_RUN_GAME",
-        "winsWithTag": 3,
-        "lossesWithTag": 8,
-        "total": 11,
+        "winsWithTag": 4,
+        "lossesWithTag": 10,
+        "total": 14,
         "dataClass": "POSTGAME_REVIEW_TAG",
         "provenance": "OUTCOME_DERIVED"
       },
       {
         "tag": "STARTER",
         "winsWithTag": 0,
-        "lossesWithTag": 8,
-        "total": 8,
+        "lossesWithTag": 12,
+        "total": 12,
         "dataClass": "POSTGAME_REVIEW_TAG",
         "provenance": "PREEXISTING_WARNING"
       },

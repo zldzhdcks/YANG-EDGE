@@ -6,16 +6,16 @@
     "schemaVersion": "mlb-starter-dataset-v1",
     "builderVersion": "starter-dataset-builder-v1",
     "dateKst": "2026-08-17",
-    "generatedAt": "2026-08-16T13:34:39.080Z",
+    "generatedAt": "2026-08-17T12:31:06.067Z",
     "datasetStatus": "COLLECTING",
     "engineAdmission": "PROHIBITED",
     "engineConnected": false,
     "researchOnly": true,
-    "preGameCreatedNew": true,
-    "preGameImmutablePreserved": false,
-    "predictionHashSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "preGameCreatedNew": false,
+    "preGameImmutablePreserved": true,
+    "predictionHashSha256": "8ee3e4c85f618873d4bdc40f8f8149853920a7610cf23609e8d9eb9a951f6caa",
     "predictionUnchanged": true,
-    "predictionOptional": true,
+    "predictionOptional": false,
     "resultHashSha256": "ea1aea2f380c74b021a210a9a323501b6c0ecb80390cac6e5f5d0bc2d4cece24",
     "firstResultHash": "ea1aea2f380c74b021a210a9a323501b6c0ecb80390cac6e5f5d0bc2d4cece24",
     "secondResultHash": "ea1aea2f380c74b021a210a9a323501b6c0ecb80390cac6e5f5d0bc2d4cece24",
@@ -34,9 +34,9 @@
     "seasonStatsAvailable": 29,
     "recentStartsAvailable": 29,
     "averageSampleSize": 12.7,
-    "starterMatched": 0,
+    "starterMatched": 30,
     "starterChanged": 0,
-    "awaitingResult": 30,
+    "awaitingResult": 0,
     "unknownOrNotFinal": 0,
     "targetGameIncluded": 0,
     "cutoffViolation": 0,
@@ -50,7 +50,7 @@
     "derivedHit": 30,
     "derivedMiss": 0,
     "networkCalls": 0,
-    "postGameRawHit": 15,
+    "postGameRawHit": 45,
     "postGameRawMiss": 15,
     "postGameNetworkCalls": 15
   },
@@ -58,12 +58,12 @@
     {
       "id": "prediction-hash-unchanged",
       "passed": true,
-      "detail": "OPTIONAL_ABSENT"
+      "detail": "8ee3e4c85f618873d4bdc40f8f8149853920a7610cf23609e8d9eb9a951f6caa"
     },
     {
       "id": "pregame-immutable",
       "passed": true,
-      "detail": "created-once"
+      "detail": "skip-overwrite"
     },
     {
       "id": "result-hash-matched",
