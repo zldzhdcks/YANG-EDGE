@@ -10,5 +10,4 @@ export const NAV_ITEMS = [
   { label: "내 가계부", href: "/ledger" },
   { label: "피드백", href: "/feedback" },
   { label: "Learning", href: "/learning" },
-  { label: "로그인", href: "/#login" },
 ] as const;

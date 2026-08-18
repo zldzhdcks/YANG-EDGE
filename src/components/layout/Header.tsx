@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import { NAV_ITEMS } from "@/constants/navigation";
-import Button from "@/components/ui/Button";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,27 +15,15 @@ export default function Header() {
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
-          {NAV_ITEMS.map((item) =>
-            item.label === "로그인" ? (
-              <Button
-                key={item.href}
-                href={item.href}
-                variant="outline"
-                size="sm"
-                className="rounded-md px-3 py-1.5 shadow-none"
-              >
-                {item.label}
-              </Button>
-            ) : (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-sm text-zinc-400 transition-colors hover:text-white"
-              >
-                {item.label}
-              </Link>
-            ),
-          )}
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-sm text-zinc-400 transition-colors hover:text-white focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         <button
@@ -66,7 +53,7 @@ export default function Header() {
                 <Link
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="block rounded-md px-3 py-2.5 text-sm text-zinc-400 hover:bg-white/5 hover:text-white"
+                  className="block rounded-md px-3 py-2.5 text-sm text-zinc-400 hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
                 >
                   {item.label}
                 </Link>

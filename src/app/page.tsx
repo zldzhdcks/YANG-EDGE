@@ -1,58 +1,24 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/home/HeroSection";
-import TodayEdgePicks from "@/components/home/TodayEdgePicks";
-import TodayGames from "@/components/home/TodayGames";
-import ResearchSlateGames from "@/components/home/ResearchSlateGames";
+import HomeBestPicks from "@/components/home/HomeBestPicks";
+import HomeRecord from "@/components/home/HomeRecord";
 import { loadTodayEdgePicks } from "@/lib/api/today-edge-picks";
-import { loadHomeGames } from "@/lib/api/home-games";
-import { loadResearchSlateGames } from "@/lib/edge/load-research-slate-games";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const edgePickResult = await loadTodayEdgePicks();
-  const targetDateKst =
-    edgePickResult.status !== "error"
-      ? edgePickResult.result.meta.targetDateKst
-      : "";
-
-  const [homeGames, researchGames] = await Promise.all([
-    loadHomeGames(),
-    targetDateKst
-      ? loadResearchSlateGames(targetDateKst)
-      : Promise.resolve([]),
-  ]);
-
-  const showResearchGames = researchGames.length > 0;
+  const selection =
+    edgePickResult.status === "error" ? null : edgePickResult.result;
 
   return (
     <>
       <Header />
       <main>
         <HeroSection />
-        <TodayEdgePicks
-          result={
-            edgePickResult.status !== "error"
-              ? edgePickResult.result
-              : null
-          }
-          emptyMessage={
-            edgePickResult.status === "empty"
-              ? edgePickResult.message
-              : edgePickResult.status === "error"
-                ? edgePickResult.message
-                : undefined
-          }
-        />
-        {showResearchGames ? (
-          <ResearchSlateGames
-            dateKst={targetDateKst}
-            games={researchGames}
-          />
-        ) : (
-          <TodayGames result={homeGames} compactEmpty />
-        )}
+        <HomeBestPicks result={selection} />
+        <HomeRecord />
       </main>
       <Footer />
     </>
