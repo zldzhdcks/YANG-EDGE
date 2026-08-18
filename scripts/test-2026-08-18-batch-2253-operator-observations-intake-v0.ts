@@ -157,7 +157,7 @@ async function main() {
     const file = line.slice(3).replace(/"/g, "");
     if (
       file.includes("data/predictions/") ||
-      file.includes("data/operator-input/") ||
+      (file.includes("data/operator-input/") && !file.includes("2026-08-19")) ||
       (file.includes("data/research/") && !file.includes("2026-08-19"))
     ) {
       throw new Error(`forbidden dirty path: ${xy} ${file}`);

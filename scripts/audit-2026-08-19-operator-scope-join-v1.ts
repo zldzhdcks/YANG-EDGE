@@ -99,6 +99,11 @@ export async function auditOperatorScopeJoin(cwd = process.cwd()) {
     throw new Error("SCOPE_SHRINK_AFTER_LOCK_FORBIDDEN");
   }
 
+  const joinAbs = path.join(cwd, JOIN_REL);
+  if (existsSync(joinAbs)) {
+    return JSON.parse(readFileSync(joinAbs, "utf8"));
+  }
+
   const obs = JSON.parse(readFileSync(obsAbs, "utf8")) as {
     domesticOdds: Array<{
       rawHomeLabel: string;
@@ -395,7 +400,6 @@ export async function auditOperatorScopeJoin(cwd = process.cwd()) {
     },
   };
 
-  const joinAbs = path.join(cwd, JOIN_REL);
   await mkdir(path.dirname(joinAbs), { recursive: true });
   await writeFile(joinAbs, `${JSON.stringify(document, null, 2)}\n`, "utf8");
   return document;
@@ -405,7 +409,7 @@ async function main() {
   const doc = await auditOperatorScopeJoin();
   console.log(
     [
-      `wrote ${JOIN_REL}`,
+      existsSync(path.join(process.cwd(), JOIN_REL)) ? `sealed ${JOIN_REL}` : `wrote ${JOIN_REL}`,
       `mlbMatched=${doc.mlb.matched}/${doc.mlb.observedExpected}`,
       `footballAccounted=${doc.football.joins.length}`,
       `unexplainedMissing=${doc.coverage.unexplainedMissing}`,

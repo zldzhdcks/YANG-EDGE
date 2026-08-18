@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "yang-edge-pregame-input-close-v1",
+  "dateKst": "2026-08-19",
+  "generatedAt": "2026-08-18T15:02:49.286Z",
+  "artifactGeneratedAt": "2026-08-18T15:02:49.286Z",
+  "observedAt": "2026-08-18T13:53:44.000Z",
+  "researchOnly": true,
+  "sourceScopeLock": "data/audits/2026-08-19-daily-scope-lock-v1.json",
+  "sourceMlbSchedule": "data/research/mlb/2026-08-19-schedule-v1.json",
+  "sourceFootballSchedule": "data/research/football/2026-08-19-schedule-v1.json",
+  "sourceOperatorObservation": "data/operator-observations/structured/2026-08-18/batch-2253-next-pregame-v0.json",
+  "sourceOperatorObservationHash": "192603ca220e95a9a99982678a27ba1ad8e317e3d6f0dfd4e83dae4df5aeea27",
+  "scopeLockedAt": "2026-08-18T14:28:40.761Z",
+  "MLB": {
+    "scheduleGames": 15,
+    "gamePkUnique": 15,
+    "starter": {
+      "games": 15,
+      "rows": 30,
+      "probableAvailable": 28,
+      "probableMissing": 2,
+      "rel": "data/research/mlb/2026-08-19-starter-dataset-v1.json",
+      "auditRel": "data/audits/2026-08-19-starter-dataset-v1-audit.json"
+    },
+    "providerOdds": {
+      "games": 15,
+      "matched": 15,
+      "collected": 15,
+      "partial": 0,
+      "notCollected": 0,
+      "provider": "The Odds API",
+      "resultHash": "b9e7bdc262a33910eb4f849e58703ac96ecc0613302fffde86f840fc0fbf907f",
+      "networkCalls": 1,
+      "rel": "data/research/mlb/2026-08-19-odds-history-dataset-v1.json",
+      "auditRel": "data/audits/2026-08-19-odds-history-dataset-v1-audit.json"
+    },
+    "officialLineup": {
+      "games": 15,
+      "confirmed": 0,
+      "partial": 0,
+      "notReleased": 15,
+      "notCollected": 0,
+      "rel": "data/research/mlb/2026-08-19-lineup-dataset-v1.json",
+      "auditRel": "data/audits/2026-08-19-lineup-dataset-v1-audit.json"
+    },
+    "expectedLineupObservation": {
+      "games": 15,
+      "matched": 15,
+      "teamLineups": 30,
+      "slots": 270,
+      "expected": 15,
+      "confirmed": 0,
+      "preGameObservations": 15,
+      "late": 0,
+      "observedAt": "2026-08-18T13:53:44.000Z",
+      "rel": "data/operator-input/mlb/2026-08-19-expected-lineup-observation-v0.json"
+    },
+    "koreanMarketOddsObservation": {
+      "games": 15,
+      "matched": 15,
+      "observed": 15,
+      "pregame": 15,
+      "late": 0,
+      "market": "KOREAN_MARKET",
+      "marketType": "MONEYLINE",
+      "sourceType": "MANUAL_OBSERVATION",
+      "observedAt": "2026-08-18T13:53:44.000Z",
+      "rel": "data/operator-input/mlb/2026-08-19-korean-market-odds-observation-v0.json"
+    }
+  },
+  "FOOTBALL": {
+    "scopeGames": 6,
+    "accounted": 6,
+    "blocked": 6,
+    "unexplainedMissing": 0,
+    "rows": [
+      {
+        "fixture": "루도고레츠 – AEK아테",
+        "rawLeagueLabel": "UCL",
+        "joinStatus": "IDENTITY_BLOCKED",
+        "pregameInputStatus": "VALID_BLOCKED_IDENTITY",
+        "reason": "NO_EXACT_FOOTBALL_TEAM_ALIAS; UCL_ROWS_EXIST_IN_SCHEDULE_BUT_SCREENSHOT_LABELS_NOT_JOINED"
+      },
+      {
+        "fixture": "D자그레 – 비킹FK",
+        "rawLeagueLabel": "UCL",
+        "joinStatus": "IDENTITY_BLOCKED",
+        "pregameInputStatus": "VALID_BLOCKED_IDENTITY",
+        "reason": "NO_EXACT_FOOTBALL_TEAM_ALIAS; UCL_ROWS_EXIST_IN_SCHEDULE_BUT_SCREENSHOT_LABELS_NOT_JOINED"
+      },
+      {
+        "fixture": "페네르SK – 리용",
+        "rawLeagueLabel": "UCL",
+        "joinStatus": "IDENTITY_BLOCKED",
+        "pregameInputStatus": "VALID_BLOCKED_IDENTITY",
+        "reason": "NO_EXACT_FOOTBALL_TEAM_ALIAS; UCL_ROWS_EXIST_IN_SCHEDULE_BUT_SCREENSHOT_LABELS_NOT_JOINED"
+      },
+      {
+        "fixture": "리바다비 – 플루미넨",
+        "rawLeagueLabel": "코파리베",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_코파리베_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "톨리마 – 델바예",
+        "rawLeagueLabel": "코파리베",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_코파리베_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "카톨리카 – 에스라플",
+        "rawLeagueLabel": "코파리베",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_코파리베_NOT_IN_COMPETITION_REGISTRY"
+      }
+    ]
+  },
+  "timing": {
+    "screenshotObservedAt": "2026-08-18T13:53:44.000Z",
+    "artifactGeneratedAt": "2026-08-18T15:02:49.286Z",
+    "allEvidencePreKickoff": true
+  },
+  "predictionRun": false,
+  "snapshotRun": false,
+  "postgameAccess": false,
+  "engineConnected": false,
+  "unexplainedMissing": 0,
+  "stageStatus": "B_PREGAME_INPUT_DONE",
+  "leakage": {
+    "predictionCalls": 0,
+    "snapshotCalls": 0,
+    "resultCalls": 0,
+    "gradeCalls": 0,
+    "reviewCalls": 0,
+    "postgameCalls": 0,
+    "engineCalls": 0,
+    "recommendationCalls": 0,
+    "frozenArtifactsModified": false
+  }
+}
