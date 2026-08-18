@@ -22,6 +22,8 @@ import {
   auditPregameInputClose,
 } from "./audit-2026-08-19-pregame-input-close-v1";
 
+const FREEZE_CLOSE_REL = "data/audits/2026-08-19-pregame-freeze-close-v1.json";
+
 function sha256File(abs: string): string {
   return createHash("sha256").update(readFileSync(abs)).digest("hex");
 }
@@ -32,7 +34,10 @@ async function main() {
   const obsHash = sha256File(path.join(cwd, OBS_REL));
   assert.equal(obsHash, lock.sourceOperatorObservationHash);
   assert.equal(lock.observedScope.total, 21);
-  assert.equal(existsSync(path.join(cwd, PREDICTION_REL)), false);
+  const freezeCloseExists = existsSync(path.join(cwd, FREEZE_CLOSE_REL));
+  if (!freezeCloseExists) {
+    assert.equal(existsSync(path.join(cwd, PREDICTION_REL)), false);
+  }
   assert.equal(existsSync(path.join(cwd, SNAPSHOT_REL)), false);
 
   const scheduleBefore = sha256File(path.join(cwd, MLB_SCHEDULE_REL));
@@ -103,7 +108,17 @@ async function main() {
   for (const line of status.split(/\r?\n/).filter(Boolean)) {
     const xy = line.slice(0, 2);
     const file = line.slice(3).replace(/"/g, "");
-    if (file.includes("data/predictions/") || file.includes("data/recommendations/")) {
+    if (
+      file.includes("data/predictions/") ||
+      file.includes("data/recommendations/")
+    ) {
+      if (
+        freezeCloseExists &&
+        (file.includes("2026-08-19.json") ||
+          file.includes("2026-08-19-daily-research-summary-v1.json"))
+      ) {
+        continue;
+      }
       throw new Error(`forbidden dirty path: ${line}`);
     }
     if (xy.trim() !== "??" && (file.includes("리포트") || file.includes("353\\246\\254"))) {

@@ -15,7 +15,12 @@ import path from "node:path";
 import { getKstToday } from "../src/lib/datetime/kst";
 import { spawnLocalTsxScript } from "./lib/spawn-local-tsx";
 
-const DATE = process.argv[2]?.trim() || getKstToday();
+const FROM_EXISTING = process.argv.includes("--from-existing");
+const DATE =
+  process.argv
+    .slice(2)
+    .find((a) => a !== "--from-existing" && /^\d{4}-\d{2}-\d{2}$/.test(a))
+    ?.trim() || getKstToday();
 const SUMMARY_SCHEMA_VERSION = "mlb-daily-research-summary-v1";
 const PIPELINE_VERSION = "mlb-daily-research-v1.1";
 const ROUNDING_POLICY =
@@ -450,7 +455,9 @@ async function extractCounts(dateKst: string) {
 
 async function main() {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(DATE)) {
-    console.error("Usage: npm run research:mlb-daily -- YYYY-MM-DD");
+    console.error(
+      "Usage: npm run research:mlb-daily -- YYYY-MM-DD [--from-existing]",
+    );
     process.exitCode = 1;
     return;
   }
@@ -460,11 +467,36 @@ async function main() {
   console.log(`║  Date: ${DATE}                       ║`);
   console.log(`╚══════════════════════════════════════════╝`);
   console.log(
-    "\nPipeline: Schedule → Starter → Odds → Lineup → Research Ready → Assistant Summary\n",
+    FROM_EXISTING
+      ? "\nPipeline: from-existing (collectors skipped) → Research Ready → Assistant Summary\n"
+      : "\nPipeline: Schedule → Starter → Odds → Lineup → Research Ready → Assistant Summary\n",
   );
 
-  for (const step of STEPS) {
-    await runStep(step, DATE);
+  if (FROM_EXISTING) {
+    const paths = artifactPaths(DATE);
+    for (const step of STEPS) {
+      const artifactRel = paths[step.artifactKey];
+      const exists = await fileExists(path.join(process.cwd(), artifactRel));
+      const doc = exists ? await readJson(artifactRel) : null;
+      const assessed = step.assess(doc, artifactRel);
+      results.push({
+        step: step.name,
+        run: exists ? "SUCCESS" : "FAIL",
+        status: assessed.status,
+        detail: exists
+          ? `${assessed.detail} [from-existing, collectors not invoked]`
+          : assessed.detail,
+        artifact: exists ? artifactRel : null,
+        exitCode: exists ? 0 : 1,
+      });
+      console.log(
+        `── ${step.name}: ${exists ? "SUCCESS" : "FAIL"} (artifact=${assessed.status}) ──`,
+      );
+    }
+  } else {
+    for (const step of STEPS) {
+      await runStep(step, DATE);
+    }
   }
 
   const ready = computeResearchReady();
@@ -490,6 +522,13 @@ async function main() {
     process.cwd(),
     artifactPaths(DATE).summary,
   );
+  if (FROM_EXISTING && (await fileExists(summaryPath))) {
+    console.log(
+      `\n  Summary already exists — refusing overwrite: ${path.relative(process.cwd(), summaryPath)}`,
+    );
+    console.log("\nMLB_DAILY_RESEARCH_BUILDER_V1_FROM_EXISTING_UNCHANGED\n");
+    return;
+  }
   const summary = {
     schemaVersion: SUMMARY_SCHEMA_VERSION,
     dateKst: DATE,
@@ -521,11 +560,17 @@ async function main() {
     })),
     counts,
     assistantSummary: assistantLines.join("\n"),
-    notes: [
-      "Orchestrator only — dataset builders were invoked, not reimplemented.",
-      "Research Ready is based on generated artifacts.",
-      "Assistant Summary describes data quality only; no predictions.",
-    ],
+    notes: FROM_EXISTING
+      ? [
+          "from-existing: dataset collectors were NOT invoked.",
+          "Research Ready is based on sealed artifacts already on disk.",
+          "Assistant Summary describes data quality only; no predictions.",
+        ]
+      : [
+          "Orchestrator only — dataset builders were invoked, not reimplemented.",
+          "Research Ready is based on generated artifacts.",
+          "Assistant Summary describes data quality only; no predictions.",
+        ],
   };
 
   await mkdir(path.dirname(summaryPath), { recursive: true });

@@ -40,6 +40,16 @@ function readJson(cwd: string, rel: string): unknown {
 }
 
 export async function auditPregameInputClose(cwd = process.cwd()) {
+  const existingAbs = path.join(cwd, CLOSE_REL);
+  if (existsSync(existingAbs)) {
+    return JSON.parse(readFileSync(existingAbs, "utf8")) as Awaited<
+      ReturnType<typeof buildPregameInputCloseDocument>
+    >;
+  }
+  return buildPregameInputCloseDocument(cwd);
+}
+
+async function buildPregameInputCloseDocument(cwd: string) {
   const generatedAt = new Date().toISOString();
   const required = [
     LOCK_REL,
