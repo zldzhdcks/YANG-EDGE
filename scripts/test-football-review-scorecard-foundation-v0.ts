@@ -95,6 +95,45 @@ function main() {
   assert.equal(research.officialKpi.eligible, false);
   assert.equal(research.officialKpi.accuracy, null);
 
+  assert.throws(
+    () =>
+      buildFootballReviewRecord({
+        dateKst: "2026-08-04",
+        sampleLane: "RESEARCH",
+        grades: [
+          {
+            matchId: "mix",
+            marketType: "MONEYLINE_3WAY_1X2",
+            predictedSide: "HOME",
+            actualSide: "HOME",
+            gradingAllowed: true,
+            sampleLane: "OFFICIAL",
+          },
+        ],
+      }),
+    /REVIEW_LANE_SAMPLE_MISMATCH/,
+  );
+  assert.throws(
+    () =>
+      buildFootballScorecard({
+        dateKst: "2026-08-04",
+        sampleLane: "RESEARCH",
+        rows: [
+          {
+            gradeInput: {
+              matchId: "mix",
+              marketType: "MONEYLINE_3WAY_1X2",
+              predictedSide: "HOME",
+              actualSide: "HOME",
+              gradingAllowed: true,
+              sampleLane: "OFFICIAL",
+            },
+          },
+        ],
+      }),
+    /SCORECARD_SAMPLE_LANE_MISMATCH/,
+  );
+
   const official = buildFootballReviewRecord({
     dateKst: "2026-08-04",
     sampleLane: "OFFICIAL",

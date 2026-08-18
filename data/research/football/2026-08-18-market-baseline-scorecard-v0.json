@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "schemaVersion": "football-market-baseline-scorecard-v0",
+    "builderVersion": "football-market-baseline-postgame-review-builder-v0",
+    "generatedAt": "2026-08-18T13:34:34.722Z",
+    "insufficientSample": true,
+    "dateKst": "2026-08-18",
+    "matchIds": [
+      "soccer-api-football-1570337"
+    ],
+    "sourceMarketBaselinePath": "data/research/football/2026-08-18-market-baseline-prediction-v0.json",
+    "sourceMarketBaselinePredictionHash": "80724133c71146253e5caabf0fa271302da82ebda7b3ee7d3d2a1da9ae5ce920",
+    "sourceOfficialResultPath": "data/research/football/2026-08-18-official-result-v0.json",
+    "sourceOfficialResultArtifactHash": "d92f0b1fe59e803d77ead7f69d420c1604fd226c6b6d9749de0fce246be299aa",
+    "sourceMatchResultHash": "4d6c0c13233b0a264afc1d1436499b5172bbd2fcf233eccdea8ff0dc562b4a63",
+    "sampleLane": "RESEARCH",
+    "predictionClass": "MARKET_BASELINE",
+    "model": "NONE",
+    "engine": "NONE",
+    "recommendation": "NONE",
+    "officialPickCount": 0,
+    "engineImpact": "NONE",
+    "predictionFormulaConnected": false,
+    "researchOnly": true
+  },
+  "scorecard": {
+    "schemaVersion": "football-scorecard-v0",
+    "sampleLane": "RESEARCH",
+    "generatedAt": "2026-08-18T13:34:34.722Z",
+    "dateKst": "2026-08-18",
+    "foundationVersion": "football-review-scorecard-foundation-v0",
+    "engineImpact": "NONE",
+    "predictionFormulaConnected": false,
+    "rows": [
+      {
+        "matchId": "soccer-api-football-1570337",
+        "sampleLane": "RESEARCH",
+        "grade": {
+          "matchId": "soccer-api-football-1570337",
+          "marketType": "MONEYLINE_3WAY_1X2",
+          "predictedSide": "HOME",
+          "actualSide": "DRAW",
+          "verdict": "INCORRECT",
+          "blockReason": null,
+          "sampleLane": "RESEARCH",
+          "exactMatch": false
+        },
+        "probabilities": {
+          "home": 0.434898968586169,
+          "draw": 0.30882035562222093,
+          "away": 0.25628067579161007
+        },
+        "brier": 0.7325461984637112,
+        "logLoss": 1.1749955445383011,
+        "calibrationBucket": "0.20-0.40",
+        "confidenceBucket": "MID",
+        "componentAlignment": "NOT_APPLICABLE"
+      }
+    ],
+    "metrics": {
+      "accuracy": 0,
+      "meanBrier": 0.7325461984637112,
+      "meanLogLoss": 1.1749955445383011,
+      "gradedCount": 1,
+      "blockedCount": 0
+    },
+    "calibration": {
+      "observationOnly": true,
+      "buckets": [
+        {
+          "id": "0.00-0.20",
+          "count": 0,
+          "meanPredicted": null,
+          "hitRate": null
+        },
+        {
+          "id": "0.20-0.40",
+          "count": 1,
+          "meanPredicted": 0.30882035562222093,
+          "hitRate": 0
+        },
+        {
+          "id": "0.40-0.60",
+          "count": 0,
+          "meanPredicted": null,
+          "hitRate": null
+        },
+        {
+          "id": "0.60-0.80",
+          "count": 0,
+          "meanPredicted": null,
+          "hitRate": null
+        },
+        {
+          "id": "0.80-1.00",
+          "count": 0,
+          "meanPredicted": null,
+          "hitRate": null
+        }
+      ]
+    },
+    "confidence": {
+      "predictionLayerConnected": false,
+      "buckets": [
+        {
+          "id": "LOW",
+          "count": 0
+        },
+        {
+          "id": "MID",
+          "count": 1
+        },
+        {
+          "id": "HIGH",
+          "count": 0
+        }
+      ]
+    },
+    "component": {
+      "frameworkOnly": true,
+      "note": "Component alignment placeholder — Engine/Weight not connected."
+    },
+    "observationNote": "Scorecard metrics are research observations only — not Official KPI."
+  }
+}

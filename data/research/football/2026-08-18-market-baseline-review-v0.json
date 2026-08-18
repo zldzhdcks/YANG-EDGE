@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "schemaVersion": "football-market-baseline-review-v0",
+    "builderVersion": "football-market-baseline-postgame-review-builder-v0",
+    "generatedAt": "2026-08-18T13:34:34.722Z",
+    "dateKst": "2026-08-18",
+    "matchIds": [
+      "soccer-api-football-1570337"
+    ],
+    "sourceMarketBaselinePath": "data/research/football/2026-08-18-market-baseline-prediction-v0.json",
+    "sourceMarketBaselinePredictionHash": "80724133c71146253e5caabf0fa271302da82ebda7b3ee7d3d2a1da9ae5ce920",
+    "sourceOfficialResultPath": "data/research/football/2026-08-18-official-result-v0.json",
+    "sourceOfficialResultArtifactHash": "d92f0b1fe59e803d77ead7f69d420c1604fd226c6b6d9749de0fce246be299aa",
+    "sourceMatchResultHash": "4d6c0c13233b0a264afc1d1436499b5172bbd2fcf233eccdea8ff0dc562b4a63",
+    "sampleLane": "RESEARCH",
+    "predictionClass": "MARKET_BASELINE",
+    "model": "NONE",
+    "engine": "NONE",
+    "recommendation": "NONE",
+    "officialPickCount": 0,
+    "engineImpact": "NONE",
+    "predictionFormulaConnected": false,
+    "researchOnly": true
+  },
+  "review": {
+    "schemaVersion": "football-review-v0",
+    "reviewLane": "RESEARCH_REVIEW",
+    "sampleLane": "RESEARCH",
+    "generatedAt": "2026-08-18T13:34:34.722Z",
+    "dateKst": "2026-08-18",
+    "identityVersion": "football-identity-v0",
+    "resultFoundationVersion": "football-result-foundation-v0",
+    "grades": [
+      {
+        "matchId": "soccer-api-football-1570337",
+        "marketType": "MONEYLINE_3WAY_1X2",
+        "predictedSide": "HOME",
+        "actualSide": "DRAW",
+        "verdict": "INCORRECT",
+        "blockReason": null,
+        "sampleLane": "RESEARCH",
+        "exactMatch": false
+      }
+    ],
+    "summary": {
+      "graded": 1,
+      "correct": 0,
+      "incorrect": 1,
+      "blocked": 0,
+      "observationNote": "Research Review는 관찰용입니다. Official KPI와 혼합하지 않습니다."
+    },
+    "officialKpi": {
+      "accuracy": null,
+      "eligible": false
+    }
+  }
+}
