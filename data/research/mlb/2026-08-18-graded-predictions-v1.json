@@ -1,0 +1,351 @@
+{
+  "schemaVersion": "mlb-graded-predictions-v1",
+  "dateKst": "2026-08-18",
+  "generatedAt": "2026-08-18T13:00:20.921Z",
+  "predictionArtifact": "2026-08-18.json",
+  "predictionHash": "97237eb6e6f52efec95889da07428b0ae0ae333ec903702c54505622b81132f3",
+  "resultArtifact": "2026-08-18-official-results-v1.json",
+  "resultHash": "5a25257b4e0b47a73037dfda969bff975cea29c489aaff0e937a9c4ad69342d1",
+  "gradingPolicyVersion": "mlb-grading-v1.1-v0-compat",
+  "summary": {
+    "totalGames": 11,
+    "eligiblePredictions": 0,
+    "limitedInputPredictions": 9,
+    "blocked": 2,
+    "noPick": 0,
+    "graded": 9,
+    "correct": 6,
+    "incorrect": 3,
+    "pending": 0,
+    "void": 0,
+    "matchErrors": 0,
+    "accuracy": {
+      "numerator": 6,
+      "denominator": 9,
+      "percent": 66.7,
+      "status": "OK",
+      "exclusionPolicy": "correct / (correct + incorrect); excludes PENDING, VOID, BLOCKED, NO_PICK, MATCH_ERROR"
+    },
+    "eligibleAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "NO_GRADED_SAMPLE"
+    },
+    "limitedInputAccuracy": {
+      "numerator": 6,
+      "denominator": 9,
+      "percent": 66.7,
+      "status": "OK"
+    },
+    "researchCandidates": 0,
+    "researchGraded": 0,
+    "researchCorrect": 0,
+    "researchIncorrect": 0,
+    "researchAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "N/A"
+    },
+    "researchMeanBrier": null,
+    "researchMeanLogLoss": null,
+    "officialSampleCount": 0,
+    "officialGraded": 0,
+    "officialCorrect": 0,
+    "officialIncorrect": 0,
+    "officialAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "N/A"
+    },
+    "predictionContract": "LEGACY_V1",
+    "modelVersion": null,
+    "modelStatus": null
+  },
+  "games": [
+    {
+      "gamePk": 824725,
+      "gameId": "mlb-boston-red-sox-arizona-diamondbacks",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Boston Red Sox",
+      "actualWinner": "HOME",
+      "homeScore": 11,
+      "awayScore": 1,
+      "grade": "CORRECT",
+      "predictionProbability": 0.5,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_IDENTITY_PARTIAL"
+      ],
+      "warnings": [],
+      "predictionContract": "LEGACY_V1",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      }
+    },
+    {
+      "gamePk": 824641,
+      "gameId": "mlb-chicago-cubs-chicago-white-sox",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Chicago Cubs",
+      "actualWinner": "HOME",
+      "homeScore": 7,
+      "awayScore": 5,
+      "grade": "CORRECT",
+      "predictionProbability": 0.53,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "LEGACY_V1",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      }
+    },
+    {
+      "gamePk": null,
+      "gameId": "mlb-cincinnati-reds-st-louis-cardinals",
+      "matchStatus": "DUPLICATE_MATCH",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_IDENTITY_MISSING_BOTH_SIDES"
+      ],
+      "warnings": [
+        "schedule artifact contains duplicate internalGameId for this game"
+      ],
+      "predictionContract": "LEGACY_V1",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      }
+    },
+    {
+      "gamePk": null,
+      "gameId": "mlb-cincinnati-reds-st-louis-cardinals",
+      "matchStatus": "DUPLICATE_MATCH",
+      "inputStatus": "BLOCKED",
+      "pick": null,
+      "pickTeam": null,
+      "actualWinner": null,
+      "homeScore": null,
+      "awayScore": null,
+      "grade": "BLOCKED",
+      "predictionProbability": null,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_IDENTITY_MISSING_BOTH_SIDES"
+      ],
+      "warnings": [
+        "schedule artifact contains duplicate internalGameId for this game"
+      ],
+      "predictionContract": "LEGACY_V1",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      }
+    },
+    {
+      "gamePk": 824320,
+      "gameId": "mlb-colorado-rockies-los-angeles-dodgers",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Colorado Rockies",
+      "actualWinner": "AWAY",
+      "homeScore": 5,
+      "awayScore": 11,
+      "grade": "INCORRECT",
+      "predictionProbability": 0.56,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "LEGACY_V1",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      }
+    },
+    {
+      "gamePk": 824077,
+      "gameId": "mlb-kansas-city-royals-athletics",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Kansas City Royals",
+      "actualWinner": "HOME",
+      "homeScore": 9,
+      "awayScore": 5,
+      "grade": "CORRECT",
+      "predictionProbability": 0.53,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "LEGACY_V1",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      }
+    },
+    {
+      "gamePk": 823668,
+      "gameId": "mlb-minnesota-twins-atlanta-braves",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "AWAY",
+      "pickTeam": "Atlanta Braves",
+      "actualWinner": "HOME",
+      "homeScore": 4,
+      "awayScore": 2,
+      "grade": "INCORRECT",
+      "predictionProbability": 0.52,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "LEGACY_V1",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      }
+    },
+    {
+      "gamePk": 823589,
+      "gameId": "mlb-new-york-mets-san-diego-padres",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "New York Mets",
+      "actualWinner": "HOME",
+      "homeScore": 2,
+      "awayScore": 1,
+      "grade": "CORRECT",
+      "predictionProbability": 0.54,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "LEGACY_V1",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      }
+    },
+    {
+      "gamePk": 823427,
+      "gameId": "mlb-philadelphia-phillies-miami-marlins",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Philadelphia Phillies",
+      "actualWinner": "HOME",
+      "homeScore": 6,
+      "awayScore": 5,
+      "grade": "CORRECT",
+      "predictionProbability": 0.55,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "LEGACY_V1",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      }
+    },
+    {
+      "gamePk": 823343,
+      "gameId": "mlb-pittsburgh-pirates-detroit-tigers",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Pittsburgh Pirates",
+      "actualWinner": "AWAY",
+      "homeScore": 5,
+      "awayScore": 8,
+      "grade": "INCORRECT",
+      "predictionProbability": 0.53,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "LEGACY_V1",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      }
+    },
+    {
+      "gamePk": 822939,
+      "gameId": "mlb-tampa-bay-rays-baltimore-orioles",
+      "matchStatus": "MATCHED",
+      "inputStatus": "LIMITED_INPUT",
+      "pick": "HOME",
+      "pickTeam": "Tampa Bay Rays",
+      "actualWinner": "HOME",
+      "homeScore": 7,
+      "awayScore": 6,
+      "grade": "CORRECT",
+      "predictionProbability": 0.51,
+      "baselineStatus": "INSUFFICIENT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "warnings": [],
+      "predictionContract": "LEGACY_V1",
+      "officialGrade": {
+        "selection": null,
+        "result": "NO_PICK",
+        "eligible": false,
+        "graded": false
+      }
+    }
+  ]
+}

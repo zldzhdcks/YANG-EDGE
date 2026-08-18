@@ -1,0 +1,161 @@
+{
+  "schemaVersion": "mlb-failure-review-v1",
+  "dateKst": "2026-08-18",
+  "gradedArtifact": "2026-08-18-graded-predictions-v1.json",
+  "gradedHash": "ce7b90cb0d5be65890c09bb30dda8c351ab47f828ca4e74296b8e97229d08d18",
+  "reviewLayerVersion": "mlb-research-review-v2",
+  "games": [
+    {
+      "gamePk": 824320,
+      "gameId": "mlb-colorado-rockies-los-angeles-dodgers",
+      "pick": "Colorado Rockies",
+      "pickSide": "HOME",
+      "actualWinner": "AWAY",
+      "homeScore": 5,
+      "awayScore": 11,
+      "predictionProbability": 0.56,
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "starterCompleteness": "PARTIAL",
+      "oddsAvailability": "READY",
+      "lineupCutoffStatus": "PARTIAL",
+      "unexpectedOutcome": "Pick HOME lost; final 11-5 (away-home), margin 6; tags=[STARTER, LINEUP, BLOWOUT]",
+      "failureCategories": [
+        "STARTER",
+        "LINEUP",
+        "BLOWOUT"
+      ],
+      "possibleCauses": [
+        {
+          "category": "STARTER",
+          "assessment": "POSSIBLE",
+          "evidence": "pre-game pitcherDirection=HOME_EDGE; starter-related warnings=none"
+        },
+        {
+          "category": "LINEUP",
+          "assessment": "POSSIBLE",
+          "evidence": "lineup incomplete or unconfirmed (LINEUP_NOT_CONFIRMED)"
+        },
+        {
+          "category": "BLOWOUT",
+          "assessment": "POSSIBLE",
+          "evidence": "final margin 6 runs — outcome diverged sharply from pick"
+        },
+        {
+          "category": "DATA_QUALITY",
+          "assessment": "POSSIBLE",
+          "evidence": "LINEUP_NOT_CONFIRMED"
+        }
+      ],
+      "dataQualityRisk": "Input gaps may have contributed (LINEUP_NOT_CONFIRMED).",
+      "modelJudgmentRisk": "Pick-side probability was not strongly directional; miss is less informative for model judgment.",
+      "volatilityRisk": "Blowout miss — check market/starter misread rather than pure coin-flip.",
+      "devilsAdvocate": "The pick may have been reasonable pre-game; late leverage or sequencing could explain the loss.",
+      "alternativeHypothesis": "Starter signal may have been incomplete or wrong-sided versus actual outing.",
+      "conclusion": "INVESTIGATE_MORE",
+      "observationOnly": false
+    },
+    {
+      "gamePk": 823668,
+      "gameId": "mlb-minnesota-twins-atlanta-braves",
+      "pick": "Atlanta Braves",
+      "pickSide": "AWAY",
+      "actualWinner": "HOME",
+      "homeScore": 4,
+      "awayScore": 2,
+      "predictionProbability": 0.52,
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "starterCompleteness": "PARTIAL",
+      "oddsAvailability": "READY",
+      "lineupCutoffStatus": "PARTIAL",
+      "unexpectedOutcome": "Pick AWAY lost; final 2-4 (away-home), margin 2; tags=[STARTER, LINEUP, BULLPEN]",
+      "failureCategories": [
+        "STARTER",
+        "LINEUP",
+        "BULLPEN"
+      ],
+      "possibleCauses": [
+        {
+          "category": "STARTER",
+          "assessment": "POSSIBLE",
+          "evidence": "pre-game pitcherDirection=AWAY_EDGE; starter-related warnings=none"
+        },
+        {
+          "category": "LINEUP",
+          "assessment": "POSSIBLE",
+          "evidence": "lineup incomplete or unconfirmed (LINEUP_NOT_CONFIRMED)"
+        },
+        {
+          "category": "BULLPEN",
+          "assessment": "POSSIBLE",
+          "evidence": "close final (margin 2); late-inning leverage may have decided the game"
+        },
+        {
+          "category": "DATA_QUALITY",
+          "assessment": "POSSIBLE",
+          "evidence": "LINEUP_NOT_CONFIRMED"
+        }
+      ],
+      "dataQualityRisk": "Input gaps may have contributed (LINEUP_NOT_CONFIRMED).",
+      "modelJudgmentRisk": "Pick-side probability was not strongly directional; miss is less informative for model judgment.",
+      "volatilityRisk": "Single-game MLB outcomes are high variance; one miss is not conclusive.",
+      "devilsAdvocate": "The pick may have been reasonable pre-game; late leverage or sequencing could explain the loss.",
+      "alternativeHypothesis": "Starter signal may have been incomplete or wrong-sided versus actual outing.",
+      "conclusion": "INVESTIGATE_MORE",
+      "observationOnly": false
+    },
+    {
+      "gamePk": 823343,
+      "gameId": "mlb-pittsburgh-pirates-detroit-tigers",
+      "pick": "Pittsburgh Pirates",
+      "pickSide": "HOME",
+      "actualWinner": "AWAY",
+      "homeScore": 5,
+      "awayScore": 8,
+      "predictionProbability": 0.53,
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "starterCompleteness": "PARTIAL",
+      "oddsAvailability": "READY",
+      "lineupCutoffStatus": "PARTIAL",
+      "unexpectedOutcome": "Pick HOME lost; final 8-5 (away-home), margin 3; tags=[STARTER, LINEUP]",
+      "failureCategories": [
+        "STARTER",
+        "LINEUP"
+      ],
+      "possibleCauses": [
+        {
+          "category": "STARTER",
+          "assessment": "POSSIBLE",
+          "evidence": "pre-game pitcherDirection=HOME_EDGE; starter-related warnings=none"
+        },
+        {
+          "category": "LINEUP",
+          "assessment": "POSSIBLE",
+          "evidence": "lineup incomplete or unconfirmed (LINEUP_NOT_CONFIRMED)"
+        },
+        {
+          "category": "DATA_QUALITY",
+          "assessment": "POSSIBLE",
+          "evidence": "LINEUP_NOT_CONFIRMED"
+        }
+      ],
+      "dataQualityRisk": "Input gaps may have contributed (LINEUP_NOT_CONFIRMED).",
+      "modelJudgmentRisk": "Pick-side probability was not strongly directional; miss is less informative for model judgment.",
+      "volatilityRisk": "Single-game MLB outcomes are high variance; one miss is not conclusive.",
+      "devilsAdvocate": "The pick may have been reasonable pre-game; late leverage or sequencing could explain the loss.",
+      "alternativeHypothesis": "Starter signal may have been incomplete or wrong-sided versus actual outing.",
+      "conclusion": "INVESTIGATE_MORE",
+      "observationOnly": false
+    }
+  ],
+  "generatedAt": "2026-08-18T13:00:20.929Z",
+  "reviewHash": "036416fcaa725a4b21a736222e11d52e257765a261f4ef3bec788497830fa365"
+}

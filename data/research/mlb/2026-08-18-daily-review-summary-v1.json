@@ -1,0 +1,240 @@
+{
+  "schemaVersion": "mlb-daily-review-summary-v1",
+  "dateKst": "2026-08-18",
+  "reviewLayerVersion": "mlb-research-review-v2",
+  "artifacts": {
+    "prediction": "data/predictions/mlb/2026-08-18.json",
+    "result": "data/research/mlb/2026-08-18-official-results-v1.json",
+    "graded": "data/research/mlb/2026-08-18-graded-predictions-v1.json",
+    "successReview": "data/research/mlb/2026-08-18-success-review-v1.json",
+    "failureReview": "data/research/mlb/2026-08-18-failure-review-v1.json"
+  },
+  "hashes": {
+    "predictionHash": "97237eb6e6f52efec95889da07428b0ae0ae333ec903702c54505622b81132f3",
+    "resultHash": "5a25257b4e0b47a73037dfda969bff975cea29c489aaff0e937a9c4ad69342d1",
+    "gradedHash": "ce7b90cb0d5be65890c09bb30dda8c351ab47f828ca4e74296b8e97229d08d18",
+    "inputHash": "e8381d671b32c16b0d0fc4731f6de7f909698efe2a505cb9505f72de8f89de20",
+    "successReviewHash": "6427ac66c93f6050f3700b536fdeba15c7d0b144bdd6e0a4854749a91faa4a22",
+    "failureReviewHash": "036416fcaa725a4b21a736222e11d52e257765a261f4ef3bec788497830fa365"
+  },
+  "gradeCounts": {
+    "totalGames": 11,
+    "eligiblePredictions": 0,
+    "limitedInputPredictions": 9,
+    "blocked": 2,
+    "noPick": 0,
+    "graded": 9,
+    "correct": 6,
+    "incorrect": 3,
+    "pending": 0,
+    "void": 0,
+    "matchErrors": 0,
+    "accuracy": {
+      "numerator": 6,
+      "denominator": 9,
+      "percent": 66.7,
+      "status": "OK",
+      "exclusionPolicy": "correct / (correct + incorrect); excludes PENDING, VOID, BLOCKED, NO_PICK, MATCH_ERROR"
+    },
+    "eligibleAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "NO_GRADED_SAMPLE"
+    },
+    "limitedInputAccuracy": {
+      "numerator": 6,
+      "denominator": 9,
+      "percent": 66.7,
+      "status": "OK"
+    },
+    "researchCandidates": 0,
+    "researchGraded": 0,
+    "researchCorrect": 0,
+    "researchIncorrect": 0,
+    "researchAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "N/A"
+    },
+    "researchMeanBrier": null,
+    "researchMeanLogLoss": null,
+    "officialSampleCount": 0,
+    "officialGraded": 0,
+    "officialCorrect": 0,
+    "officialIncorrect": 0,
+    "officialAccuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "N/A"
+    },
+    "predictionContract": "LEGACY_V1",
+    "modelVersion": null,
+    "modelStatus": null
+  },
+  "officialPerformance": {
+    "eligiblePredictions": 0,
+    "officialSampleCount": 0,
+    "officialGraded": 0,
+    "officialCorrect": 0,
+    "officialIncorrect": 0,
+    "officialAccuracy": "N/A"
+  },
+  "researchPerformance": {
+    "researchCandidates": 0,
+    "researchGraded": 0,
+    "researchCorrect": 0,
+    "researchIncorrect": 0,
+    "researchAccuracy": null,
+    "researchBrier": null,
+    "researchLogLoss": null,
+    "modelVersion": null
+  },
+  "blockedPolicy": {
+    "blockedGames": 2,
+    "blockedCounterfactualCorrect": 0,
+    "blockedCounterfactualIncorrect": 0
+  },
+  "failureCategoryCount": {
+    "STARTER": 3,
+    "LINEUP": 3,
+    "BLOWOUT": 1,
+    "BULLPEN": 1
+  },
+  "successCategoryCount": {
+    "BLOWOUT": 1,
+    "STARTER": 5,
+    "ONE_RUN_GAME": 3,
+    "MODEL_ALIGNMENT": 1
+  },
+  "failureCategoryTable": [
+    {
+      "label": "COL-LAD",
+      "gameId": "mlb-colorado-rockies-los-angeles-dodgers",
+      "gamePk": 824320,
+      "categories": [
+        "STARTER",
+        "LINEUP",
+        "BLOWOUT"
+      ],
+      "line": "COL-LAD → STARTER + LINEUP + BLOWOUT"
+    },
+    {
+      "label": "MIN-ATL",
+      "gameId": "mlb-minnesota-twins-atlanta-braves",
+      "gamePk": 823668,
+      "categories": [
+        "STARTER",
+        "LINEUP",
+        "BULLPEN"
+      ],
+      "line": "MIN-ATL → STARTER + LINEUP + BULLPEN"
+    },
+    {
+      "label": "PIT-DET",
+      "gameId": "mlb-pittsburgh-pirates-detroit-tigers",
+      "gamePk": 823343,
+      "categories": [
+        "STARTER",
+        "LINEUP"
+      ],
+      "line": "PIT-DET → STARTER + LINEUP"
+    }
+  ],
+  "predictionConfidenceHistogram": {
+    "schemaVersion": "mlb-prediction-confidence-histogram-v1",
+    "unit": "prediction.confidence_0_100",
+    "totalSamples": 9,
+    "buckets": [
+      {
+        "label": "0–49",
+        "minInclusive": 0,
+        "maxExclusive": 50,
+        "count": 9
+      },
+      {
+        "label": "50–54",
+        "minInclusive": 50,
+        "maxExclusive": 55,
+        "count": 0
+      },
+      {
+        "label": "55–59",
+        "minInclusive": 55,
+        "maxExclusive": 60,
+        "count": 0
+      },
+      {
+        "label": "60–64",
+        "minInclusive": 60,
+        "maxExclusive": 65,
+        "count": 0
+      },
+      {
+        "label": "65–69",
+        "minInclusive": 65,
+        "maxExclusive": 70,
+        "count": 0
+      },
+      {
+        "label": "70–79",
+        "minInclusive": 70,
+        "maxExclusive": 80,
+        "count": 0
+      },
+      {
+        "label": "80+",
+        "minInclusive": 80,
+        "maxExclusive": 101,
+        "count": 0
+      }
+    ]
+  },
+  "leakageAudit": {
+    "status": "WARN",
+    "checks": [
+      {
+        "id": "prediction_hash",
+        "status": "PASS",
+        "detail": "VERIFIED_LEGACY_FINGERPRINT: prediction immutable-field fingerprint hash verified"
+      },
+      {
+        "id": "predicted_before_slate_cutoff",
+        "status": "PASS",
+        "detail": "predictedAt is on or before slate cutoff"
+      },
+      {
+        "id": "input_manifest_warnings",
+        "status": "WARN",
+        "detail": "input manifest contains post-game or blocked warnings"
+      }
+    ],
+    "predictionHashVerified": true,
+    "hashValidationMethod": "VERIFIED_LEGACY_FINGERPRINT",
+    "predictionContract": "LEGACY_V1",
+    "inputHash": "e8381d671b32c16b0d0fc4731f6de7f909698efe2a505cb9505f72de8f89de20"
+  },
+  "reviewStatus": "VALID_REVIEW",
+  "successPatterns": [
+    "BLOWOUT",
+    "STARTER",
+    "ONE_RUN_GAME",
+    "MODEL_ALIGNMENT"
+  ],
+  "failurePatterns": [
+    "STARTER",
+    "LINEUP",
+    "BLOWOUT",
+    "BULLPEN"
+  ],
+  "dataQualityWarnings": [
+    "LINEUP_NOT_CONFIRMED",
+    "STARTER_IDENTITY_PARTIAL",
+    "STARTER_IDENTITY_MISSING_BOTH_SIDES"
+  ],
+  "generatedAt": "2026-08-18T13:00:20.929Z",
+  "reviewHash": "83c197a027158b7890c509c4c21f6b49d90201772ca7b6be7de330e8a240293b",
+  "assistantSummary": "MLB Daily Review — 2026-08-18 (research-review-v2)\nPrediction contract: LEGACY_V1\nEligible predictions (official): 0\nOfficial sample: 0\nOfficial Accuracy: N/A\nResearch candidates: 0\nResearch graded: 0\nResearch correct/incorrect: 0/0\nResearch Accuracy: N/A\nResearch Brier: null\nResearch LogLoss: null\nBlocked games: 2\nFailure categories: STARTER=3, LINEUP=3, BLOWOUT=1, BULLPEN=1\nSuccess categories: BLOWOUT=1, STARTER=5, ONE_RUN_GAME=3, MODEL_ALIGNMENT=1\nPrimary failure candidates: STARTER, LINEUP, BLOWOUT, BULLPEN\nConclusion: DATA_ACCUMULATION_CONTINUES\n\nFailure Category by Game\nCOL-LAD → STARTER + LINEUP + BLOWOUT\nMIN-ATL → STARTER + LINEUP + BULLPEN\nPIT-DET → STARTER + LINEUP"
+}
