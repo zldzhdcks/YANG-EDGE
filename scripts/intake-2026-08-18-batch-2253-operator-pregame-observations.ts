@@ -1102,6 +1102,23 @@ export async function runIntake(cwd = process.cwd()) {
     if (bytes !== shot.bytes) throw new Error(`raw size mutation ${shot.file}`);
   }
 
+  const structuredAbs = path.join(cwd, STRUCTURED_REL);
+  const manifestAbs = path.join(cwd, MANIFEST_REL);
+  const auditAbs = path.join(cwd, AUDIT_REL);
+  if (
+    existsSync(structuredAbs) &&
+    existsSync(manifestAbs) &&
+    existsSync(auditAbs)
+  ) {
+    const document = JSON.parse(readFileSync(structuredAbs, "utf8"));
+    const manifest = JSON.parse(readFileSync(manifestAbs, "utf8"));
+    const audit = JSON.parse(readFileSync(auditAbs, "utf8"));
+    if (document.predictionInput !== false || manifest.predictionInput !== false) {
+      throw new Error("SEALED_INTAKE_PREDICTION_INPUT_NOT_FALSE");
+    }
+    return { document, manifest, audit };
+  }
+
   const scheduleExists =
     existsSync(path.join(cwd, `data/research/mlb/${SLATE_DATE_KST}-schedule-v1.json`)) ||
     existsSync(
@@ -1306,7 +1323,6 @@ export async function runIntake(cwd = process.cwd()) {
     },
   };
 
-  const structuredAbs = path.join(cwd, STRUCTURED_REL);
   await mkdir(path.dirname(structuredAbs), { recursive: true });
   await writeFile(structuredAbs, `${JSON.stringify(document, null, 2)}\n`, "utf8");
 
@@ -1356,7 +1372,7 @@ export async function runIntake(cwd = process.cwd()) {
     })),
   };
   await writeFile(
-    path.join(cwd, MANIFEST_REL),
+    manifestAbs,
     `${JSON.stringify(manifest, null, 2)}\n`,
     "utf8",
   );
@@ -1387,7 +1403,6 @@ export async function runIntake(cwd = process.cwd()) {
     },
     nextOperatingDay: document.nextOperatingDay,
   };
-  const auditAbs = path.join(cwd, AUDIT_REL);
   await mkdir(path.dirname(auditAbs), { recursive: true });
   await writeFile(auditAbs, `${JSON.stringify(audit, null, 2)}\n`, "utf8");
 

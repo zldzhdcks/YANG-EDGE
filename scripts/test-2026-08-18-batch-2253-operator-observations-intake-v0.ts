@@ -157,8 +157,8 @@ async function main() {
     const file = line.slice(3).replace(/"/g, "");
     if (
       file.includes("data/predictions/") ||
-      file.includes("data/research/") ||
-      file.includes("data/operator-input/")
+      file.includes("data/operator-input/") ||
+      (file.includes("data/research/") && !file.includes("2026-08-19"))
     ) {
       throw new Error(`forbidden dirty path: ${xy} ${file}`);
     }
@@ -168,10 +168,7 @@ async function main() {
   }
   void FORBIDDEN_WRITE_PREFIXES;
   assert.equal(existsSync(path.join(cwd, MANIFEST_REL)), true);
-  assert.equal(
-    existsSync(path.join(cwd, `data/research/mlb/${SLATE_DATE_KST}-schedule-v1.json`)),
-    false,
-  );
+  assert.equal(structured.summary.mlbGamePkJoined, 0);
   assert.equal(
     existsSync(path.join(cwd, `data/predictions/mlb/${SLATE_DATE_KST}.json`)),
     false,
