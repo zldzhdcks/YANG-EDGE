@@ -1,7 +1,9 @@
+import Link from "next/link";
 import {
   LEGAL_NOTICE_ITEMS,
   LEGAL_NOTICE_TITLE,
 } from "@/constants/prototype";
+import { FOOTER_NAV_ITEMS } from "@/constants/navigation";
 
 export default function Footer() {
   return (
@@ -28,20 +30,34 @@ export default function Footer() {
         <p className="text-xs text-zinc-500">
           © {new Date().getFullYear()} YANG EDGE. All rights reserved.
         </p>
-        <div className="flex gap-4">
-          <span
-            className="cursor-default text-xs text-zinc-600"
-            title="페이지 준비 중"
-          >
-            이용약관 (준비 중)
+        <nav
+          aria-label="부가 메뉴"
+          className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-zinc-600"
+        >
+          {FOOTER_NAV_ITEMS.map((item, index) => (
+            <span key={item.href} className="inline-flex items-center gap-3">
+              {index > 0 ? (
+                <span aria-hidden className="text-zinc-700">
+                  ·
+                </span>
+              ) : null}
+              <Link
+                href={item.href}
+                className="hover:text-zinc-400 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
+              >
+                {item.label}
+              </Link>
+            </span>
+          ))}
+          <span aria-hidden className="text-zinc-700">
+            ·
           </span>
-          <span
-            className="cursor-default text-xs text-zinc-600"
-            title="페이지 준비 중"
-          >
-            개인정보처리방침 (준비 중)
+          <span title="페이지 준비 중">이용약관 (준비 중)</span>
+          <span aria-hidden className="text-zinc-700">
+            ·
           </span>
-        </div>
+          <span title="페이지 준비 중">개인정보처리방침 (준비 중)</span>
+        </nav>
       </div>
     </footer>
   );

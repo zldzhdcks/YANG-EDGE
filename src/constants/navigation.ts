@@ -8,6 +8,13 @@
 export const NAV_ITEMS = [
   { label: "오늘 경기", href: "/games" },
   { label: "내 가계부", href: "/ledger" },
-  { label: "피드백", href: "/feedback" },
+] as const;
+
+/**
+ * Footer secondary links. Routes stay public; not in Header.
+ * Labels match the destination page titles, not invented grouping names.
+ */
+export const FOOTER_NAV_ITEMS = [
   { label: "Learning", href: "/learning" },
+  { label: "피드백", href: "/feedback" },
 ] as const;
