@@ -1,0 +1,728 @@
+{
+  "schemaVersion": "yang-edge-football-big5-odds-team-bridge-readiness-v1",
+  "generatedAt": "2026-08-19T15:49:51.881Z",
+  "researchOnly": true,
+  "networkCalls": {
+    "apiFootball": 0,
+    "theOddsApi": 0
+  },
+  "predictionCalls": 0,
+  "resultCalls": 0,
+  "frozenMutations": 0,
+  "mandatoryCompletion": {
+    "dateKst": "2026-08-20",
+    "total": "60%",
+    "unchanged": true
+  },
+  "oddsCallGraph": {
+    "schedule": "data/research/football/{date}-schedule-v1.json",
+    "eligibility": "src/lib/football/odds-1x2-v1/build.ts planOddsFetches requires predictionEligibility=ELIGIBLE_FORMAT",
+    "sportKey": "src/lib/football/odds-1x2-v1/sport-keys.ts getOddsSportKey",
+    "canonicalTeamIds": "schedule row.homeTeamId / awayTeamId (catalog MATCHED)",
+    "teamBridge": "src/lib/football/odds-1x2-v1/team-bridge.ts getOddsTeamNames — missing ⇒ teamBridgeMissing skip",
+    "provider": "scripts/build-football-1x2-odds-v1.ts live The Odds API only when sportKeysToFetch nonempty",
+    "eventJoin": "src/lib/football/odds-1x2-v1/event-join.ts joinScheduleRowToOddsEvent exact names + sportKey + |kickoff|<=15m",
+    "quotes": "src/lib/football/odds-1x2-v1/quotes.ts extractEventBookmakerQuotes",
+    "artifact": "football-1x2-odds-v1"
+  },
+  "joinContract": {
+    "canonicalIdsRequired": true,
+    "oddsTeamExactStrings": true,
+    "kickoffToleranceMinutes": 15,
+    "competitionSportKeyRequired": true,
+    "fuzzy": false,
+    "slug": false,
+    "substring": false,
+    "caseInsensitiveAutoMatch": false,
+    "homeAwayAutoReverseCorrection": false,
+    "matchFn": "Array.prototype.includes exact string"
+  },
+  "p0Definition": {
+    "not": "pre-register every 2026-27 league team",
+    "is": "for each official Schedule ELIGIBLE_FORMAT Big-5 match that has a The Odds API event, join with exact sport-key + canonical IDs + exact odds names before kickoff",
+    "dailySlateVsFullSeason": "Opening ops need daily slate coverage. Full-season catalog completeness is a separate P1/P2 denominator and is NOT_PROVEN here."
+  },
+  "denominators": {
+    "FULL_CURRENT_SEASON_TEAM_COUNT": {
+      "status": "NOT_PROVEN",
+      "reason": "No 2026 /teams roster artifact. Free plan previously rejected season 2026. Do not guess 20-club tables."
+    },
+    "KNOWN_CANONICAL_BIG5_TEAMS": {
+      "status": "PARTIAL",
+      "note": "Catalog country hints are not 2026-27 membership. Proven canonical Big-5 membership = observed on Big-5 schedule + current catalog MATCHED.",
+      "catalogCountryHint": {
+        "EPL": 4,
+        "LaLiga": 2,
+        "SerieA": 0,
+        "Bundesliga": 1,
+        "Ligue1": 0
+      },
+      "observedCanonicalTotal": 6
+    },
+    "OBSERVED_BIG5_SCHEDULE_TEAMS": {
+      "uniqueProviderTeamIds": 12,
+      "uniqueCanonicalIds": 6,
+      "scannedScheduleDates": [
+        "2026-08-12",
+        "2026-08-14",
+        "2026-08-16",
+        "2026-08-17",
+        "2026-08-18",
+        "2026-08-19",
+        "2026-08-20"
+      ]
+    }
+  },
+  "leagues": [
+    {
+      "key": "EPL",
+      "canonicalName": "Premier League",
+      "competitionId": "fb-comp-api-football-39",
+      "sportKey": "soccer_epl",
+      "sportKeyStatus": "CONFIGURED_NOT_PROVEN",
+      "sportKeySource": "data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+      "sportKeyLiveExactVerified": false,
+      "sportKeyHistoricalOnly": true,
+      "sportKeyLastEvidenceDate": "2020-06-06T10:05:00Z",
+      "sportKeyConfidence": "historical-key-only",
+      "sportKeyEvidence": [
+        "data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+        "coverageStatus=DOCUMENTED_AVAILABLE_NOT_PROBED",
+        "code map exists; no live /sports exact-key football artifact"
+      ],
+      "observedScheduleRows": 0,
+      "eligibleFormatRowsOnArtifacts": 0,
+      "observedProviderTeamIds": [],
+      "observedCanonicalTeams": 0,
+      "observedCanonicalTeamList": [],
+      "observedCanonicalPending": [],
+      "bridgeReady": 0,
+      "bridgeReadyIds": [],
+      "bridgeMissing": 0,
+      "bridgeMissingIds": [],
+      "observedCoveragePercent": null,
+      "observedCoverageDenominator": "observedCanonicalTeams_currentCatalogResolve",
+      "notFullSeasonCoverage": true,
+      "catalogCountryHintCount": 4,
+      "bridgeEntries": 0,
+      "bridgeEntryList": [],
+      "openingReadinessAlignment": {
+        "oddsBridgeCount": 0,
+        "matchesCode": true,
+        "canonicalRegisteredTeamCount": 4,
+        "seasonTeamCount": "NOT_PROVEN"
+      },
+      "existingJoinedOddsGames": 0,
+      "evidenceReadyForBridge": [],
+      "notSafeToBridge": [
+        {
+          "reason": "NO_CURRENT_EVIDENCE",
+          "canonicalTeamId": "fb-team-v1-api-football-33",
+          "canonicalName": "Manchester United",
+          "note": "Catalog country hint only. No Big-5 schedule row in scanned artifacts. Not 2026-27 membership proof."
+        },
+        {
+          "reason": "NO_CURRENT_EVIDENCE",
+          "canonicalTeamId": "fb-team-v1-api-football-40",
+          "canonicalName": "Liverpool",
+          "note": "Catalog country hint only. No Big-5 schedule row in scanned artifacts. Not 2026-27 membership proof."
+        },
+        {
+          "reason": "NO_CURRENT_EVIDENCE",
+          "canonicalTeamId": "fb-team-v1-api-football-50",
+          "canonicalName": "Manchester City",
+          "note": "Catalog country hint only. No Big-5 schedule row in scanned artifacts. Not 2026-27 membership proof."
+        },
+        {
+          "reason": "NO_CURRENT_EVIDENCE",
+          "canonicalTeamId": "fb-team-v1-api-football-42",
+          "canonicalName": "Arsenal",
+          "note": "Catalog country hint only. No Big-5 schedule row in scanned artifacts. Not 2026-27 membership proof."
+        },
+        {
+          "reason": "NO_CURRENT_EVIDENCE",
+          "league": "EPL",
+          "note": "No Big-5 schedule rows and no registry bridge entries for this competition in scanned artifacts."
+        }
+      ],
+      "sportKeyVsTeamBridge": "BOTH",
+      "blockers": {
+        "sportKey": true,
+        "teamBridge": false,
+        "catalogPendingOnObservedSlate": false,
+        "noObservedFixtures": true
+      },
+      "p0Status": "NO_OBSERVED_SLATE_SPORT_KEY_NOT_LIVE_VERIFIED_BRIDGE_EMPTY"
+    },
+    {
+      "key": "LaLiga",
+      "canonicalName": "La Liga",
+      "competitionId": "fb-comp-api-football-140",
+      "sportKey": "soccer_spain_la_liga",
+      "sportKeyStatus": "LIVE_VERIFIED",
+      "sportKeySource": "data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+      "sportKeyLiveExactVerified": true,
+      "sportKeyHistoricalOnly": false,
+      "sportKeyLastEvidenceDate": "2026-08-17T14:17:15.455Z",
+      "sportKeyConfidence": "high",
+      "sportKeyEvidence": [
+        "data/research/football/2026-08-18-la-liga-odds-identity-evidence-v0.json",
+        "sportKeyExactMatch.key=soccer_spain_la_liga",
+        "title=La Liga - Spain"
+      ],
+      "observedScheduleRows": 6,
+      "eligibleFormatRowsOnArtifacts": 1,
+      "observedProviderTeamIds": [
+        "4665",
+        "530",
+        "533",
+        "535",
+        "536",
+        "539",
+        "540",
+        "542",
+        "544",
+        "546",
+        "728",
+        "797"
+      ],
+      "observedCanonicalTeams": 6,
+      "observedCanonicalTeamList": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-540",
+          "providerTeamId": "540",
+          "fixtureName": "Espanyol"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-539",
+          "providerTeamId": "539",
+          "fixtureName": "Levante"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-4665",
+          "providerTeamId": "4665",
+          "fixtureName": "Racing Santander"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-533",
+          "providerTeamId": "533",
+          "fixtureName": "Villarreal"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-544",
+          "providerTeamId": "544",
+          "fixtureName": "Deportivo La Coruna"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-797",
+          "providerTeamId": "797",
+          "fixtureName": "Elche"
+        }
+      ],
+      "observedCanonicalPending": [
+        {
+          "providerTeamId": "542",
+          "fixtureName": "Alaves"
+        },
+        {
+          "providerTeamId": "546",
+          "fixtureName": "Getafe"
+        },
+        {
+          "providerTeamId": "536",
+          "fixtureName": "Sevilla"
+        },
+        {
+          "providerTeamId": "728",
+          "fixtureName": "Rayo Vallecano"
+        },
+        {
+          "providerTeamId": "530",
+          "fixtureName": "Atletico Madrid"
+        },
+        {
+          "providerTeamId": "535",
+          "fixtureName": "Malaga"
+        }
+      ],
+      "bridgeReady": 6,
+      "bridgeReadyIds": [
+        "fb-team-v1-api-football-540",
+        "fb-team-v1-api-football-539",
+        "fb-team-v1-api-football-4665",
+        "fb-team-v1-api-football-533",
+        "fb-team-v1-api-football-544",
+        "fb-team-v1-api-football-797"
+      ],
+      "bridgeMissing": 0,
+      "bridgeMissingIds": [],
+      "observedCoveragePercent": 100,
+      "observedCoverageDenominator": "observedCanonicalTeams_currentCatalogResolve",
+      "notFullSeasonCoverage": true,
+      "catalogCountryHintCount": 2,
+      "bridgeEntries": 6,
+      "bridgeEntryList": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-4665",
+          "oddsTeamNames": [
+            "Real Racing Club de Santander"
+          ],
+          "source": "data/research/football/2026-08-16-1x2-market-comparison-v0.json the-odds-api event id=f32c9c00fd77e4ec1abd5e34d67a6817",
+          "verifiedAt": "2026-08-16T14:27:47.334Z"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-533",
+          "oddsTeamNames": [
+            "Villarreal"
+          ],
+          "source": "data/research/football/2026-08-16-1x2-market-comparison-v0.json the-odds-api event id=f32c9c00fd77e4ec1abd5e34d67a6817",
+          "verifiedAt": "2026-08-16T14:27:47.334Z"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-540",
+          "oddsTeamNames": [
+            "Espanyol"
+          ],
+          "source": "data/research/football/2026-08-16-1x2-market-comparison-v0.json the-odds-api event id=4e24891d0ee382bfda6305eabbc54754",
+          "verifiedAt": "2026-08-16T14:27:47.334Z"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-539",
+          "oddsTeamNames": [
+            "Levante"
+          ],
+          "source": "data/research/football/2026-08-16-1x2-market-comparison-v0.json the-odds-api event id=4e24891d0ee382bfda6305eabbc54754",
+          "verifiedAt": "2026-08-16T14:27:47.334Z"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-544",
+          "oddsTeamNames": [
+            "Deportivo La Coruña"
+          ],
+          "source": "data/research/football/2026-08-18-la-liga-odds-identity-evidence-v0.json the-odds-api event id=7b9f4d89d66c48e0c496aab1679e4ae4",
+          "verifiedAt": "2026-08-17T14:17:15.455Z"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-797",
+          "oddsTeamNames": [
+            "Elche CF"
+          ],
+          "source": "data/research/football/2026-08-18-la-liga-odds-identity-evidence-v0.json the-odds-api event id=7b9f4d89d66c48e0c496aab1679e4ae4",
+          "verifiedAt": "2026-08-17T14:17:15.455Z"
+        }
+      ],
+      "openingReadinessAlignment": {
+        "oddsBridgeCount": 6,
+        "matchesCode": true,
+        "canonicalRegisteredTeamCount": 8,
+        "seasonTeamCount": "NOT_PROVEN"
+      },
+      "existingJoinedOddsGames": 1,
+      "evidenceReadyForBridge": [],
+      "notSafeToBridge": [
+        {
+          "reason": "CANONICAL_TEAM_MISSING",
+          "providerTeamId": "530",
+          "fixtureName": "Atletico Madrid",
+          "oddsExactNameObserved": "Atlético Madrid",
+          "oddsProviderEventId": "857e387be2e9f73e825ad02a2ec74cc3",
+          "evidenceSource": "data/research/football/2026-08-18-la-liga-odds-identity-evidence-v0.json",
+          "note": "Same-match Odds event exists, but catalog MATCHED canonical ID is missing. Not EVIDENCE_READY_FOR_BRIDGE."
+        },
+        {
+          "reason": "CANONICAL_TEAM_MISSING",
+          "providerTeamId": "535",
+          "fixtureName": "Malaga",
+          "oddsExactNameObserved": "Málaga",
+          "oddsProviderEventId": "857e387be2e9f73e825ad02a2ec74cc3",
+          "evidenceSource": "data/research/football/2026-08-18-la-liga-odds-identity-evidence-v0.json",
+          "note": "Same-match Odds event exists, but catalog MATCHED canonical ID is missing. Not EVIDENCE_READY_FOR_BRIDGE."
+        },
+        {
+          "reason": "CANONICAL_TEAM_MISSING",
+          "providerTeamId": "542",
+          "fixtureName": "Alaves",
+          "dates": [
+            "2026-08-16"
+          ]
+        },
+        {
+          "reason": "CANONICAL_TEAM_MISSING",
+          "providerTeamId": "546",
+          "fixtureName": "Getafe",
+          "dates": [
+            "2026-08-16"
+          ]
+        },
+        {
+          "reason": "CANONICAL_TEAM_MISSING",
+          "providerTeamId": "536",
+          "fixtureName": "Sevilla",
+          "dates": [
+            "2026-08-16"
+          ]
+        },
+        {
+          "reason": "CANONICAL_TEAM_MISSING",
+          "providerTeamId": "728",
+          "fixtureName": "Rayo Vallecano",
+          "dates": [
+            "2026-08-16"
+          ]
+        },
+        {
+          "reason": "ONLY_DISPLAY_NAME_MATCH",
+          "canonicalTeamId": "fb-team-v1-api-football-541",
+          "canonicalName": "Real Madrid",
+          "note": "Odds payload contains a display-equal team string, but no Big-5 schedule row exists for that fixture. Forbidden as bridge evidence."
+        },
+        {
+          "reason": "ONLY_DISPLAY_NAME_MATCH",
+          "canonicalTeamId": "fb-team-v1-api-football-529",
+          "canonicalName": "Barcelona",
+          "note": "Odds payload contains a display-equal team string, but no Big-5 schedule row exists for that fixture. Forbidden as bridge evidence."
+        }
+      ],
+      "sportKeyVsTeamBridge": "NEITHER_CATALOG_PENDING_ON_SLATE",
+      "blockers": {
+        "sportKey": false,
+        "teamBridge": false,
+        "catalogPendingOnObservedSlate": true,
+        "noObservedFixtures": false
+      },
+      "p0Status": "PARTIAL_OBSERVED_CANONICAL_BRIDGED_CATALOG_PENDING_REMAINS"
+    },
+    {
+      "key": "SerieA",
+      "canonicalName": "Serie A",
+      "competitionId": "fb-comp-api-football-135",
+      "sportKey": "soccer_italy_serie_a",
+      "sportKeyStatus": "CONFIGURED_NOT_PROVEN",
+      "sportKeySource": "data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+      "sportKeyLiveExactVerified": false,
+      "sportKeyHistoricalOnly": true,
+      "sportKeyLastEvidenceDate": "2020-06-06T10:05:00Z",
+      "sportKeyConfidence": "historical-key-only",
+      "sportKeyEvidence": [
+        "data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+        "coverageStatus=DOCUMENTED_AVAILABLE_NOT_PROBED",
+        "code map exists; no live /sports exact-key football artifact"
+      ],
+      "observedScheduleRows": 0,
+      "eligibleFormatRowsOnArtifacts": 0,
+      "observedProviderTeamIds": [],
+      "observedCanonicalTeams": 0,
+      "observedCanonicalTeamList": [],
+      "observedCanonicalPending": [],
+      "bridgeReady": 0,
+      "bridgeReadyIds": [],
+      "bridgeMissing": 0,
+      "bridgeMissingIds": [],
+      "observedCoveragePercent": null,
+      "observedCoverageDenominator": "observedCanonicalTeams_currentCatalogResolve",
+      "notFullSeasonCoverage": true,
+      "catalogCountryHintCount": 0,
+      "bridgeEntries": 0,
+      "bridgeEntryList": [],
+      "openingReadinessAlignment": {
+        "oddsBridgeCount": 0,
+        "matchesCode": true,
+        "canonicalRegisteredTeamCount": 0,
+        "seasonTeamCount": "NOT_PROVEN"
+      },
+      "existingJoinedOddsGames": 0,
+      "evidenceReadyForBridge": [],
+      "notSafeToBridge": [
+        {
+          "reason": "NO_CURRENT_EVIDENCE",
+          "league": "SerieA",
+          "note": "No Big-5 schedule rows and no registry bridge entries for this competition in scanned artifacts."
+        }
+      ],
+      "sportKeyVsTeamBridge": "BOTH",
+      "blockers": {
+        "sportKey": true,
+        "teamBridge": false,
+        "catalogPendingOnObservedSlate": false,
+        "noObservedFixtures": true
+      },
+      "p0Status": "NO_OBSERVED_SLATE_SPORT_KEY_NOT_LIVE_VERIFIED_BRIDGE_EMPTY"
+    },
+    {
+      "key": "Bundesliga",
+      "canonicalName": "Bundesliga",
+      "competitionId": "fb-comp-api-football-78",
+      "sportKey": "soccer_germany_bundesliga",
+      "sportKeyStatus": "CONFIGURED_NOT_PROVEN",
+      "sportKeySource": "data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+      "sportKeyLiveExactVerified": false,
+      "sportKeyHistoricalOnly": true,
+      "sportKeyLastEvidenceDate": "2020-06-06T10:05:00Z",
+      "sportKeyConfidence": "historical-key-only",
+      "sportKeyEvidence": [
+        "data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+        "coverageStatus=DOCUMENTED_AVAILABLE_NOT_PROBED",
+        "code map exists; no live /sports exact-key football artifact"
+      ],
+      "observedScheduleRows": 0,
+      "eligibleFormatRowsOnArtifacts": 0,
+      "observedProviderTeamIds": [],
+      "observedCanonicalTeams": 0,
+      "observedCanonicalTeamList": [],
+      "observedCanonicalPending": [],
+      "bridgeReady": 0,
+      "bridgeReadyIds": [],
+      "bridgeMissing": 0,
+      "bridgeMissingIds": [],
+      "observedCoveragePercent": null,
+      "observedCoverageDenominator": "observedCanonicalTeams_currentCatalogResolve",
+      "notFullSeasonCoverage": true,
+      "catalogCountryHintCount": 1,
+      "bridgeEntries": 0,
+      "bridgeEntryList": [],
+      "openingReadinessAlignment": {
+        "oddsBridgeCount": 0,
+        "matchesCode": true,
+        "canonicalRegisteredTeamCount": 1,
+        "seasonTeamCount": "NOT_PROVEN"
+      },
+      "existingJoinedOddsGames": 0,
+      "evidenceReadyForBridge": [],
+      "notSafeToBridge": [
+        {
+          "reason": "NO_CURRENT_EVIDENCE",
+          "canonicalTeamId": "fb-team-v1-api-football-157",
+          "canonicalName": "Bayern Munich",
+          "note": "Catalog country hint only. No Big-5 schedule row in scanned artifacts. Not 2026-27 membership proof."
+        },
+        {
+          "reason": "NO_CURRENT_EVIDENCE",
+          "league": "Bundesliga",
+          "note": "No Big-5 schedule rows and no registry bridge entries for this competition in scanned artifacts."
+        }
+      ],
+      "sportKeyVsTeamBridge": "BOTH",
+      "blockers": {
+        "sportKey": true,
+        "teamBridge": false,
+        "catalogPendingOnObservedSlate": false,
+        "noObservedFixtures": true
+      },
+      "p0Status": "NO_OBSERVED_SLATE_SPORT_KEY_NOT_LIVE_VERIFIED_BRIDGE_EMPTY"
+    },
+    {
+      "key": "Ligue1",
+      "canonicalName": "Ligue 1",
+      "competitionId": "fb-comp-api-football-61",
+      "sportKey": "soccer_france_ligue_one",
+      "sportKeyStatus": "CONFIGURED_NOT_PROVEN",
+      "sportKeySource": "data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+      "sportKeyLiveExactVerified": false,
+      "sportKeyHistoricalOnly": true,
+      "sportKeyLastEvidenceDate": "2020-07-16T00:55:00Z",
+      "sportKeyConfidence": "historical-key-only",
+      "sportKeyEvidence": [
+        "data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+        "coverageStatus=DOCUMENTED_AVAILABLE_NOT_PROBED",
+        "code map exists; no live /sports exact-key football artifact"
+      ],
+      "observedScheduleRows": 0,
+      "eligibleFormatRowsOnArtifacts": 0,
+      "observedProviderTeamIds": [],
+      "observedCanonicalTeams": 0,
+      "observedCanonicalTeamList": [],
+      "observedCanonicalPending": [],
+      "bridgeReady": 0,
+      "bridgeReadyIds": [],
+      "bridgeMissing": 0,
+      "bridgeMissingIds": [],
+      "observedCoveragePercent": null,
+      "observedCoverageDenominator": "observedCanonicalTeams_currentCatalogResolve",
+      "notFullSeasonCoverage": true,
+      "catalogCountryHintCount": 0,
+      "bridgeEntries": 0,
+      "bridgeEntryList": [],
+      "openingReadinessAlignment": {
+        "oddsBridgeCount": 0,
+        "matchesCode": true,
+        "canonicalRegisteredTeamCount": 0,
+        "seasonTeamCount": "NOT_PROVEN"
+      },
+      "existingJoinedOddsGames": 0,
+      "evidenceReadyForBridge": [],
+      "notSafeToBridge": [
+        {
+          "reason": "NO_CURRENT_EVIDENCE",
+          "league": "Ligue1",
+          "note": "No Big-5 schedule rows and no registry bridge entries for this competition in scanned artifacts."
+        }
+      ],
+      "sportKeyVsTeamBridge": "BOTH",
+      "blockers": {
+        "sportKey": true,
+        "teamBridge": false,
+        "catalogPendingOnObservedSlate": false,
+        "noObservedFixtures": true
+      },
+      "p0Status": "NO_OBSERVED_SLATE_SPORT_KEY_NOT_LIVE_VERIFIED_BRIDGE_EMPTY"
+    }
+  ],
+  "global": {
+    "fullSeasonDenominatorStatus": "NOT_PROVEN",
+    "bridgeEntriesTotal": 16,
+    "big5BridgeEntries": 6,
+    "evidenceReadyCandidates": 0,
+    "oddsEventEvidenceCount": 24,
+    "football1x2OddsArtifacts": 3,
+    "openingReadinessLaLigaBridgeCountExpected": 6,
+    "openingReadinessLaLigaBridgeCountActual": 6
+  },
+  "evidenceReadyCandidates": [],
+  "blockerMatrix": [
+    {
+      "league": "EPL",
+      "sportKey": "CONFIGURED_NOT_PROVEN",
+      "sportKeyBlocker": true,
+      "teamBridge": 0,
+      "teamBridgeBlocker": false,
+      "other": "NO_OBSERVED_FIXTURES",
+      "sportKeyVsTeamBridge": "BOTH",
+      "p0Status": "NO_OBSERVED_SLATE_SPORT_KEY_NOT_LIVE_VERIFIED_BRIDGE_EMPTY"
+    },
+    {
+      "league": "LaLiga",
+      "sportKey": "LIVE_VERIFIED",
+      "sportKeyBlocker": false,
+      "teamBridge": 6,
+      "teamBridgeBlocker": false,
+      "other": "CATALOG_PENDING_ON_OBSERVED_SLATE",
+      "sportKeyVsTeamBridge": "NEITHER_CATALOG_PENDING_ON_SLATE",
+      "p0Status": "PARTIAL_OBSERVED_CANONICAL_BRIDGED_CATALOG_PENDING_REMAINS"
+    },
+    {
+      "league": "SerieA",
+      "sportKey": "CONFIGURED_NOT_PROVEN",
+      "sportKeyBlocker": true,
+      "teamBridge": 0,
+      "teamBridgeBlocker": false,
+      "other": "NO_OBSERVED_FIXTURES",
+      "sportKeyVsTeamBridge": "BOTH",
+      "p0Status": "NO_OBSERVED_SLATE_SPORT_KEY_NOT_LIVE_VERIFIED_BRIDGE_EMPTY"
+    },
+    {
+      "league": "Bundesliga",
+      "sportKey": "CONFIGURED_NOT_PROVEN",
+      "sportKeyBlocker": true,
+      "teamBridge": 0,
+      "teamBridgeBlocker": false,
+      "other": "NO_OBSERVED_FIXTURES",
+      "sportKeyVsTeamBridge": "BOTH",
+      "p0Status": "NO_OBSERVED_SLATE_SPORT_KEY_NOT_LIVE_VERIFIED_BRIDGE_EMPTY"
+    },
+    {
+      "league": "Ligue1",
+      "sportKey": "CONFIGURED_NOT_PROVEN",
+      "sportKeyBlocker": true,
+      "teamBridge": 0,
+      "teamBridgeBlocker": false,
+      "other": "NO_OBSERVED_FIXTURES",
+      "sportKeyVsTeamBridge": "BOTH",
+      "p0Status": "NO_OBSERVED_SLATE_SPORT_KEY_NOT_LIVE_VERIFIED_BRIDGE_EMPTY"
+    }
+  ],
+  "existingOddsEvidence": {
+    "artifacts": [
+      {
+        "rel": "data/research/football/2026-08-12-1x2-odds-v1.json",
+        "joinedGames": 0,
+        "providerCalled": false,
+        "note": "UCL/UEL notSupportedFormat; no Big-5"
+      },
+      {
+        "rel": "data/research/football/2026-08-14-1x2-odds-v1.json",
+        "sportKey": "soccer_japan_j_league",
+        "note": "J1 not Big-5"
+      },
+      {
+        "rel": "data/research/football/2026-08-16-1x2-market-comparison-v0.json",
+        "sportKeys": [
+          "soccer_spain_la_liga",
+          "soccer_usa_mls"
+        ],
+        "note": "comparison overlay; La Liga names already on team-bridge"
+      },
+      {
+        "rel": "data/research/football/2026-08-18-1x2-odds-v1.json",
+        "sportKey": "soccer_spain_la_liga",
+        "joinedGames": 1,
+        "officialDataset": true
+      },
+      {
+        "rel": "data/research/football/2026-08-18-la-liga-odds-identity-evidence-v0.json",
+        "eventCount": 16,
+        "officialOddsDataset": false,
+        "note": "raw Odds names for identity evidence; extra events lack same-match canonical schedule join except Deportivo/Elche"
+      }
+    ]
+  },
+  "laLigaReferenceTrace": {
+    "scheduleRel": "data/research/football/2026-08-18-schedule-v1.json",
+    "matchId": "soccer-api-football-1570337",
+    "fixtureId": "1570337",
+    "competitionId": "fb-comp-api-football-140",
+    "homeCanonical": "fb-team-v1-api-football-544",
+    "awayCanonical": "fb-team-v1-api-football-797",
+    "sportKey": "soccer_spain_la_liga",
+    "bridgeHome": [
+      "Deportivo La Coruña"
+    ],
+    "bridgeAway": [
+      "Elche CF"
+    ],
+    "oddsRel": "data/research/football/2026-08-18-1x2-odds-v1.json",
+    "oddsProviderEventId": "7b9f4d89d66c48e0c496aab1679e4ae4",
+    "join": "JOINED",
+    "snapshotRel": "data/research/football/2026-08-18-prediction-snapshot-v0.json",
+    "predictionRel": "data/research/football/2026-08-18-market-baseline-prediction-v0.json",
+    "identityEvidenceRel": "data/research/football/2026-08-18-la-liga-odds-identity-evidence-v0.json"
+  },
+  "incrementalStrategy": {
+    "dailyExactEventBridgeCandidateModel": "PARTIAL",
+    "legal": "Copy exact The Odds API home_team/away_team from a pregame collect already justified by sport-key. Do not invent names from Schedule display strings.",
+    "leakage": "SAFE if candidates are registry proposals only. FORBIDDEN to rewrite sealed Snapshot/Prediction with postgame names.",
+    "falseJoinRisk": "Mitigated by exact string + sport-key + 15m kickoff. Still requires human confirm before team-bridge.ts write. No auto-reverse.",
+    "operationalBurden": "Admin review per new club. Fits YANG EDGE explicit registry. Lower than paid /teams full-roster guess.",
+    "seasonAdaptability": "HIGH for promoted/new clubs if they appear on official fixtures + Odds events.",
+    "implementThisMission": false
+  },
+  "p0Blockers": [
+    "ELIGIBLE_FORMAT still requires canonical catalog MATCHED before Odds planOddsFetches",
+    "Observed catalog-pending Big-5 teams (La Liga 530/535/542/546/536/728) cannot enter Odds collection",
+    "EPL/Serie A/Bundesliga/Ligue 1: zero observed 2026-27 schedule rows in repo, zero Big-5 bridge entries beyond La Liga observed six"
+  ],
+  "p1Blockers": [
+    "EPL/Serie A/Bundesliga/Ligue 1 sport keys are CONFIGURED_NOT_PROVEN (historical DOCUMENTED_AVAILABLE_NOT_PROBED, no live /sports exact-key football artifact)",
+    "FULL_CURRENT_SEASON_TEAM_COUNT NOT_PROVEN",
+    "08-18 extra La Liga Odds names (Real Madrid, Barcelona, …) lack same-match sealed Schedule canonical join"
+  ],
+  "p2Blockers": [
+    "Provider-independent canonical IDs still deferred",
+    "No automated bridge drift detection beyond exact-name collision asserts"
+  ],
+  "nextMissionRecommendation": "Football Daily Odds Bridge Candidate Intake v1",
+  "nextMissionWhy": "Existing immutable Odds evidence has zero safe unbridged same-match canonical joins left to add. Bridge Completion v1 would be empty. Live sport-key verification is P1. Opening P0 is an intake path that turns a day's exact Odds events + sealed Schedule canonical IDs into reviewed bridge entries without guessing.",
+  "frozenHashes": {
+    "schedule": {
+      "rel": "data/research/football/2026-08-20-schedule-v1.json",
+      "sha256": "7318cf39f461d7e5423d82a670e23d040cf3083a6ea1b71dcc6414299b071440"
+    },
+    "odds0818": {
+      "rel": "data/research/football/2026-08-18-1x2-odds-v1.json",
+      "sha256": "8e3048a950172a4e9cf04b0de6f345cef11e556e763fede58b027b85f3f15c04"
+    },
+    "hybrid": {
+      "rel": "data/audits/football-schedule-hybrid-identity-gate-v1.json",
+      "sha256": "860d6a3d7b9b1bd15fd553ac69773d118100c19d8dce01a53b1dad67a75cb6a0"
+    }
+  }
+}
