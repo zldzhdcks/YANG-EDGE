@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "yang-edge-football-daily-odds-bridge-candidate-intake-v1",
+  "generatedAt": "2026-08-19T15:49:51.881Z",
+  "researchOnly": true,
+  "networkCallsDuringDevelopment": {
+    "apiFootball": 0,
+    "theOddsApi": 0
+  },
+  "providerCapability": {
+    "listEventsPresent": true,
+    "getOddsNotUsedForDiscovery": true
+  },
+  "policy": {
+    "exactOnly": true,
+    "noFuzzy": true,
+    "noAutoApprove": true,
+    "noAutoRegistryMutation": true,
+    "predictionInput": false
+  },
+  "replayTests": {
+    "dateKst": "2026-08-18",
+    "matchId": "soccer-api-football-1570337",
+    "inMemoryBridgeRemoved": true,
+    "candidateStatus": "PENDING_REVIEW_SINGLE_EVENT_UNANCHORED",
+    "oddsProviderEventId": "7b9f4d89d66c48e0c496aab1679e4ae4",
+    "restoredBridgeStatus": "NO_CANDIDATE_NEEDED"
+  },
+  "singleSideAnchorTest": {
+    "status": "PENDING_REVIEW_SINGLE_SIDE_ANCHORED",
+    "autoApproved": false
+  },
+  "ambiguousTest": {
+    "status": "AMBIGUOUS_EVENT_CANDIDATES"
+  },
+  "orientationTest": {
+    "status": "ORIENTATION_CONFLICT"
+  },
+  "canonicalMissingTest": {
+    "status": "CANONICAL_IDENTITY_BLOCKED"
+  },
+  "postKickoffTest": {
+    "timingClass": "LATE_IDENTITY_EVIDENCE",
+    "pregameUsable": false,
+    "predictionInput": false
+  },
+  "frozenHashes": {
+    "data/research/football/2026-08-20-schedule-v1.json": "7318cf39f461d7e5423d82a670e23d040cf3083a6ea1b71dcc6414299b071440",
+    "data/research/football/2026-08-18-1x2-odds-v1.json": "8e3048a950172a4e9cf04b0de6f345cef11e556e763fede58b027b85f3f15c04",
+    "data/audits/football-big5-odds-team-bridge-readiness-v1.json": "c60c6a7f615dfc8578b51519a99a271735486887b439f30e4c63f656850cab53",
+    "data/audits/football-schedule-hybrid-identity-gate-v1.json": "860d6a3d7b9b1bd15fd553ac69773d118100c19d8dce01a53b1dad67a75cb6a0"
+  },
+  "mandatoryCompletion": {
+    "dateKst": "2026-08-20",
+    "total": "60%",
+    "unchanged": true
+  }
+}
