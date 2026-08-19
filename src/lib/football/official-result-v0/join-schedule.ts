@@ -84,6 +84,14 @@ export function joinProviderFixtureToScheduleRow(
     }
   }
 
+  if (
+    reasonCodes.includes("FIXTURE_ID_MISMATCH") ||
+    reasonCodes.includes("HOME_AWAY_MISMATCH") ||
+    reasonCodes.includes("REVERSED_RESULT_SUSPECTED")
+  ) {
+    reasonCodes.push("RESULT_PROVIDER_IDENTITY_MISMATCH");
+  }
+
   const ok = reasonCodes.length === 0 && orientation === "MATCHED";
   if (!ok && !reasonCodes.includes("IDENTITY_UNRESOLVED")) {
     reasonCodes.push("IDENTITY_UNRESOLVED");

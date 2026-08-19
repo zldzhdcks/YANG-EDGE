@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "yang-edge-football-schedule-hybrid-identity-gate-v1",
+  "generatedAt": "2026-08-19T15:49:51.881Z",
+  "researchOnly": true,
+  "networkCalls": 0,
+  "frozenMutations": 0,
+  "mandatoryCompletion": {
+    "dateKst": "2026-08-20",
+    "total": "60%",
+    "unchanged": true
+  },
+  "policy": {
+    "scheduleIdentity": "NO CHANGE. Catalog miss remains IDENTITY_REVIEW_REQUIRED + IDENTITY_BLOCKED for prediction. Provider-complete rows stay stored.",
+    "canonicalEnrichment": "Still required for MATCHED / Odds / Snapshot / Prediction. Not required for Official Result eligibility.",
+    "resultEligibility": "hasCompleteProviderFixtureIdentity(row). Does not require homeTeamId/awayTeamId or ELIGIBLE_FORMAT.",
+    "oddsEligibility": "UNCHANGED. IDENTITY_BLOCKED skipped; canonical + team bridge required.",
+    "predictionEligibility": "UNCHANGED. Catalog miss stays IDENTITY_BLOCKED.",
+    "gradeEligibility": "Review iterates baseline prediction matches only. Result-only rows are not graded.",
+    "unregisteredCompetitionDropRemains": true
+  },
+  "20260820DryRun": {
+    "artifactModified": false,
+    "rows": 20,
+    "matched": 18,
+    "canonicalPending": 2,
+    "providerComplete": 20,
+    "hybridResultCandidates": 20,
+    "predictionCandidates": 15,
+    "atleticoMalaga": {
+      "providerComplete": true,
+      "resultCandidate": true,
+      "predictionCandidate": false
+    },
+    "celticLask": {
+      "providerComplete": true,
+      "resultCandidate": true,
+      "predictionCandidate": false
+    }
+  },
+  "regression": {
+    "matchedBehaviorUnchanged": true,
+    "predictionGateUnchanged": true,
+    "oddsGateUnchanged": true,
+    "resultOnlyNotGraded": true,
+    "scheduleSchemaChanged": false
+  },
+  "leakage": {
+    "pregameFixtureIdentityUse": "SAFE",
+    "postgameCanonicalRewriteOfPrediction": "FORBIDDEN"
+  },
+  "nextP0Candidate": "Football Big-5 Odds Team Bridge Readiness / Completion (not auto-executed)"
+}

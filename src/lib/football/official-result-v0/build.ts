@@ -35,6 +35,7 @@ import {
   mapApiFootballShortStatusToResultStatus,
 } from "./map-provider-status";
 import { footballOfficialResultV0Rel } from "./paths";
+import { hasCompleteProviderFixtureIdentity } from "./provider-identity";
 import {
   FOOTBALL_OFFICIAL_RESULT_MARKET_SETTLEMENT,
   FOOTBALL_OFFICIAL_RESULT_PROVIDER,
@@ -63,9 +64,9 @@ function mapScheduleStatusToIdentityStatus(
 export function identityFromScheduleRow(
   row: FootballScheduleRowV1,
 ): FootballMatchIdentity {
-  if (!row.homeTeamId || !row.awayTeamId) {
+  if (!hasCompleteProviderFixtureIdentity(row)) {
     throw new Error(
-      `FOOTBALL_OFFICIAL_RESULT_SCHEDULE_TEAM_ID_MISSING: ${row.matchId}`,
+      `FOOTBALL_OFFICIAL_RESULT_PROVIDER_IDENTITY_INCOMPLETE: ${row.matchId}`,
     );
   }
   if (!row.seasonId) {
@@ -84,20 +85,28 @@ export function identityFromScheduleRow(
     competitionId: row.competitionId,
     season: row.seasonId,
     kickoffUtc: row.kickoffTimeUtc,
-    homeTeamId: row.homeTeamId,
-    awayTeamId: row.awayTeamId,
+    homeTeamId: row.homeTeamId ?? row.homeProviderTeamId,
+    awayTeamId: row.awayTeamId ?? row.awayProviderTeamId,
     neutralVenue: false,
     status: mapScheduleStatusToIdentityStatus(row.status),
   });
 }
 
+/**
+ * Hybrid Result eligibility: complete official provider fixture identity.
+ * Canonical catalog MATCHED / predictionEligibility are not required.
+ */
 export function selectOfficialResultTargetRows(
   rows: FootballScheduleRowV1[],
 ): FootballScheduleRowV1[] {
   return rows
-    .filter((row) => row.predictionEligibility === "ELIGIBLE_FORMAT")
+    .filter((row) => hasCompleteProviderFixtureIdentity(row))
     .slice()
     .sort((a, b) => a.matchId.localeCompare(b.matchId));
+}
+
+function isPredictionBlockingResultRow(row: FootballScheduleRowV1): boolean {
+  return row.predictionEligibility === "ELIGIBLE_FORMAT";
 }
 
 function marketOneXTwo(
@@ -257,8 +266,8 @@ export function resolveOfficialResultMatch(input: {
     matchId: input.row.matchId,
     fixtureId: input.row.providerMatchId,
     competitionId: input.row.competitionId,
-    homeTeamId: input.row.homeTeamId ?? identity.homeTeamId,
-    awayTeamId: input.row.awayTeamId ?? identity.awayTeamId,
+    homeTeamId: input.row.homeTeamId,
+    awayTeamId: input.row.awayTeamId,
     homeTeamName: input.row.homeTeamName,
     awayTeamName: input.row.awayTeamName,
     kickoffTimeUtc: input.row.kickoffTimeUtc,
@@ -419,7 +428,10 @@ export async function buildFootballOfficialResultV0(input: {
 
   let providerRequestCount = 0;
   let providerCachedCount = 0;
-  const resolvedMatches: ReturnType<typeof resolveOfficialResultMatch>[] = [];
+  const resolvedMatches: Array<{
+    resolved: ReturnType<typeof resolveOfficialResultMatch>;
+    row: FootballScheduleRowV1;
+  }> = [];
 
   for (const row of targets) {
     const fixtureId = Number(row.providerMatchId);
@@ -436,17 +448,18 @@ export async function buildFootballOfficialResultV0(input: {
         `FOOTBALL_OFFICIAL_RESULT_PROVIDER_FIXTURE_MISSING: ${row.providerMatchId}`,
       );
     }
-    resolvedMatches.push(
-      resolveOfficialResultMatch({
+    resolvedMatches.push({
+      resolved: resolveOfficialResultMatch({
         row,
         fixture: fetched.fixture,
         resultObservedAt: input.resultObservedAt,
       }),
-    );
+      row,
+    });
   }
 
-  const first = resolvedMatches[0]!;
-  const reasonCodes = resolvedMatches.flatMap((r) => r.match.reasonCodes);
+  const first = resolvedMatches[0]!.resolved;
+  const reasonCodes = resolvedMatches.flatMap((r) => r.resolved.match.reasonCodes);
   const baseRun = {
     rel,
     providerRequestCount,
@@ -454,20 +467,28 @@ export async function buildFootballOfficialResultV0(input: {
     providerStatusRaw: first.providerStatusRaw,
     resultStatus: first.resultStatus,
     reasonCodes,
-    matchSummaries: resolvedMatches.map((r) => r.match),
+    matchSummaries: resolvedMatches.map((r) => r.resolved.match),
   };
 
-  for (const resolved of resolvedMatches) {
-    if (!resolved.joinOk) failIdentity(resolved);
+  const blocking = resolvedMatches.filter((r) =>
+    isPredictionBlockingResultRow(r.row),
+  );
+  const extras = resolvedMatches.filter(
+    (r) => !isPredictionBlockingResultRow(r.row),
+  );
+  const sealLane = blocking.length > 0 ? blocking : extras;
+
+  for (const item of sealLane) {
+    if (!item.resolved.joinOk) failIdentity(item.resolved);
   }
 
-  const anyWaiting = resolvedMatches.some((r) =>
-    isWaitingFinalStatus(r.resultStatus),
+  const anyWaiting = sealLane.some((r) =>
+    isWaitingFinalStatus(r.resolved.resultStatus),
   );
-  const anyNonFinalTerminal = resolvedMatches.some((r) =>
-    isNonFinalTerminalStatus(r.resultStatus),
+  const anyNonFinalTerminal = sealLane.some((r) =>
+    isNonFinalTerminalStatus(r.resolved.resultStatus),
   );
-  const allFinal = resolvedMatches.every((r) => isFinalStatus(r.resultStatus));
+  const allFinal = sealLane.every((r) => isFinalStatus(r.resolved.resultStatus));
 
   if (!allFinal) {
     return {
@@ -479,9 +500,26 @@ export async function buildFootballOfficialResultV0(input: {
     };
   }
 
-  for (const resolved of resolvedMatches) {
-    if (!resolved.match.gradingAllowed) failBlockedFinal(resolved.match);
+  for (const item of sealLane) {
+    if (!item.resolved.match.gradingAllowed) failBlockedFinal(item.resolved.match);
   }
+
+  const acceptedExtras =
+    blocking.length > 0
+      ? extras
+          .filter(
+            (r) =>
+              r.resolved.joinOk &&
+              isFinalStatus(r.resolved.resultStatus) &&
+              r.resolved.match.gradingAllowed,
+          )
+          .map((r) => r.resolved.match)
+      : [];
+
+  const sealedMatches = [
+    ...sealLane.map((r) => r.resolved.match),
+    ...acceptedExtras,
+  ].sort((a, b) => a.matchId.localeCompare(b.matchId));
 
   const document = assembleArtifact({
     dateKst: input.dateKst,
@@ -491,7 +529,7 @@ export async function buildFootballOfficialResultV0(input: {
     sourceScheduleHash: schedule.document.meta.artifactHash,
     scheduleMatches: schedule.document.rows.length,
     providerRequestedGames: providerRequestCount,
-    matches: resolvedMatches.map((r) => r.match),
+    matches: sealedMatches,
   });
 
   let wrote = false;

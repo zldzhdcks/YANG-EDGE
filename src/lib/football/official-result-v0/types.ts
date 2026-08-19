@@ -28,8 +28,10 @@ export type FootballOfficialResultMatchV0 = {
   matchId: string;
   fixtureId: string;
   competitionId: string;
-  homeTeamId: string;
-  awayTeamId: string;
+  /** Canonical catalog ID. Null when catalog enrichment is pending. */
+  homeTeamId: string | null;
+  /** Canonical catalog ID. Null when catalog enrichment is pending. */
+  awayTeamId: string | null;
   homeTeamName: string;
   awayTeamName: string;
   kickoffTimeUtc: string | null;

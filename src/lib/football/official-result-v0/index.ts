@@ -18,6 +18,7 @@ export {
   resolveOfficialResultMatch,
   selectOfficialResultTargetRows,
 } from "./build";
+export { hasCompleteProviderFixtureIdentity } from "./provider-identity";
 export {
   computeFootballOfficialResultArtifactHash,
   omitVolatileOfficialResultMeta,
