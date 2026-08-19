@@ -1,0 +1,815 @@
+{
+  "schemaVersion": "yang-edge-pregame-input-close-v1",
+  "dateKst": "2026-08-20",
+  "generatedAt": "2026-08-19T16:16:06.182Z",
+  "artifactGeneratedAt": "2026-08-19T16:16:06.182Z",
+  "observedAt": "2026-08-19T15:08:36.000Z",
+  "researchOnly": true,
+  "sourceScopeLock": "data/audits/2026-08-20-daily-scope-lock-v1.json",
+  "sourceMlbSchedule": "data/research/mlb/2026-08-20-schedule-v1.json",
+  "sourceFootballSchedule": "data/research/football/2026-08-20-schedule-v1.json",
+  "sourceOperatorObservation": "data/operator-observations/structured/2026-08-20/batch-0008-next-pregame-v0.json",
+  "sourceOperatorObservationHash": "6c8c8d5a74476614afe5905b05d4a331be72ed89d80fe8b372c0e60b09a37877",
+  "scopeLockedAt": "2026-08-19T15:49:20.360Z",
+  "sourceHashes": {
+    "before": {
+      "lock": "fbc80ab706432e7f2a54713069222d4025439c7768474eec348337064b24ea58",
+      "operatorStructured": "6c8c8d5a74476614afe5905b05d4a331be72ed89d80fe8b372c0e60b09a37877",
+      "join": "29458d18a671e8a89d570c54d8d92953d0dc95ead0201436428fc9375cf0f969",
+      "mlbSchedule": "26530269c11b37f69e6a4cd8021eaceef02b7f3058dc5495cdcda80a4a275792",
+      "footballSchedule": "7318cf39f461d7e5423d82a670e23d040cf3083a6ea1b71dcc6414299b071440",
+      "frozen0819": {
+        "prediction": "78ff77d372cc9827df8107b596b5adf80b3eb8df619f63f6d288fe773126c9a7",
+        "lock": "5efd2b0da7ba4cd7f170e6169531ada836558048a0229696927f9b2d56914daa",
+        "expected": "6c273065797e956d98b9a3b5ac6ef67ccfd9766270e3302caeb9d7ed05672d62",
+        "freezeClose": "0a3d4b8b2bb29af52f3e94d5e67c59f07cd70007cb8d82fcd4d0d79710d46987"
+      }
+    },
+    "after": {
+      "lock": "fbc80ab706432e7f2a54713069222d4025439c7768474eec348337064b24ea58",
+      "operatorStructured": "6c8c8d5a74476614afe5905b05d4a331be72ed89d80fe8b372c0e60b09a37877",
+      "join": "29458d18a671e8a89d570c54d8d92953d0dc95ead0201436428fc9375cf0f969",
+      "mlbSchedule": "26530269c11b37f69e6a4cd8021eaceef02b7f3058dc5495cdcda80a4a275792",
+      "footballSchedule": "7318cf39f461d7e5423d82a670e23d040cf3083a6ea1b71dcc6414299b071440",
+      "frozenPrediction0819": "78ff77d372cc9827df8107b596b5adf80b3eb8df619f63f6d288fe773126c9a7",
+      "frozenLock0819": "5efd2b0da7ba4cd7f170e6169531ada836558048a0229696927f9b2d56914daa",
+      "frozenExpected0819": "6c273065797e956d98b9a3b5ac6ef67ccfd9766270e3302caeb9d7ed05672d62",
+      "frozenFreeze0819": "0a3d4b8b2bb29af52f3e94d5e67c59f07cd70007cb8d82fcd4d0d79710d46987"
+    },
+    "unchanged": true
+  },
+  "MLB": {
+    "scheduleGames": 15,
+    "gamePkUnique": 15,
+    "starter": {
+      "games": 15,
+      "rows": 30,
+      "probableAvailable": 28,
+      "probableMissing": 2,
+      "preGame": 15,
+      "late": 0,
+      "unknown": 0,
+      "networkCalls": 0,
+      "postGameStatusCalls": 15,
+      "rel": "data/research/mlb/2026-08-20-starter-dataset-v1.json",
+      "auditRel": "data/audits/2026-08-20-starter-dataset-v1-audit.json"
+    },
+    "providerOdds": {
+      "games": 15,
+      "matched": 15,
+      "collected": 15,
+      "partial": 0,
+      "notCollected": 0,
+      "provider": "The Odds API",
+      "resultHash": "8fdb8eb4a6962bd74d48e5d7606ad1fe4626d920ded2ab5fc0d500fe08831ca7",
+      "networkCalls": 1,
+      "preGame": 15,
+      "late": 0,
+      "rel": "data/research/mlb/2026-08-20-odds-history-dataset-v1.json",
+      "auditRel": "data/audits/2026-08-20-odds-history-dataset-v1-audit.json"
+    },
+    "officialLineup": {
+      "games": 15,
+      "confirmed": 3,
+      "partial": 1,
+      "notReleased": 11,
+      "notCollected": 0,
+      "networkCalls": 16,
+      "preGameByTimestamp": 15,
+      "lateByTimestamp": 0,
+      "rel": "data/research/mlb/2026-08-20-lineup-dataset-v1.json",
+      "auditRel": "data/audits/2026-08-20-lineup-dataset-v1-audit.json"
+    },
+    "operatorConfirmedLineup": {
+      "games": 3,
+      "full": 2,
+      "partial": 1,
+      "slots": 45,
+      "officialPromotion": 0,
+      "preGame": 3,
+      "late": 0,
+      "rel": "data/operator-input/mlb/2026-08-20-confirmed-lineup-observation-v0.json"
+    },
+    "operatorExpectedLineup": {
+      "games": 15,
+      "observed": 13,
+      "teamLineups": 25,
+      "slots": 225,
+      "expected": 13,
+      "confirmed": 0,
+      "preGameObservations": 13,
+      "late": 0,
+      "observedAt": "2026-08-19T15:08:36.000Z",
+      "rel": "data/operator-input/mlb/2026-08-20-expected-lineup-observation-v0.json"
+    },
+    "koreanMarketOddsObservation": {
+      "games": 15,
+      "matched": 13,
+      "observed": 13,
+      "identityBlocked": 2,
+      "accountedObservations": 15,
+      "pregame": 13,
+      "late": 0,
+      "market": "KOREAN_MARKET",
+      "marketType": "MONEYLINE",
+      "sourceType": "MANUAL_OBSERVATION",
+      "observedAt": "2026-08-19T15:08:36.000Z",
+      "blockedLabels": [
+        "템파레이",
+        "캔자로알"
+      ],
+      "rel": "data/operator-input/mlb/2026-08-20-korean-market-odds-observation-v0.json"
+    },
+    "perGame": [
+      {
+        "gamePk": 824801,
+        "matchup": "New York Yankees @ Baltimore Orioles",
+        "startTimeKst": "07:35",
+        "commenceTimeUtc": "2026-08-19T22:35:00Z",
+        "starterStatus": "PROBABLE_AVAILABLE",
+        "starterTiming": "PRE_GAME",
+        "providerOddsStatus": "COLLECTED",
+        "providerOddsTiming": "PRE_GAME",
+        "officialLineupStatus": "NOT_RELEASED",
+        "officialLineupTiming": "PRE_GAME",
+        "officialBuilderPhase": "PRE_GAME",
+        "operatorConfirmedStatus": "NOT_OBSERVED",
+        "operatorExpectedStatus": "EXPECTED_OBSERVED",
+        "operatorLineupTiming": "PRE_GAME",
+        "selectedLineupSource": {
+          "away": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          },
+          "home": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          }
+        },
+        "selectedLineupStatus": "OPERATOR_EXPECTED",
+        "koreanOddsStatus": "MATCHED_PRE_GAME",
+        "pregameInputStatus": "READY",
+        "blockingReasons": []
+      },
+      {
+        "gamePk": 824722,
+        "matchup": "Arizona Diamondbacks @ Boston Red Sox",
+        "startTimeKst": "05:10",
+        "commenceTimeUtc": "2026-08-19T20:10:00Z",
+        "starterStatus": "PROBABLE_AVAILABLE",
+        "starterTiming": "PRE_GAME",
+        "providerOddsStatus": "COLLECTED",
+        "providerOddsTiming": "PRE_GAME",
+        "officialLineupStatus": "NOT_RELEASED",
+        "officialLineupTiming": "PRE_GAME",
+        "officialBuilderPhase": "PRE_GAME",
+        "operatorConfirmedStatus": "NOT_OBSERVED",
+        "operatorExpectedStatus": "EXPECTED_OBSERVED",
+        "operatorLineupTiming": "PRE_GAME",
+        "selectedLineupSource": {
+          "away": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          },
+          "home": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          }
+        },
+        "selectedLineupStatus": "OPERATOR_EXPECTED",
+        "koreanOddsStatus": "MATCHED_PRE_GAME",
+        "pregameInputStatus": "READY",
+        "blockingReasons": []
+      },
+      {
+        "gamePk": 824640,
+        "matchup": "Chicago White Sox @ Chicago Cubs",
+        "startTimeKst": "03:20",
+        "commenceTimeUtc": "2026-08-19T18:20:00Z",
+        "starterStatus": "PROBABLE_AVAILABLE",
+        "starterTiming": "PRE_GAME",
+        "providerOddsStatus": "COLLECTED",
+        "providerOddsTiming": "PRE_GAME",
+        "officialLineupStatus": "PARTIAL",
+        "officialLineupTiming": "PRE_GAME",
+        "officialBuilderPhase": "POST_GAME",
+        "operatorConfirmedStatus": "CONFIRMED_PARTIAL",
+        "operatorExpectedStatus": "EXPECTED_OBSERVED",
+        "operatorLineupTiming": "PRE_GAME",
+        "selectedLineupSource": {
+          "away": {
+            "source": "OFFICIAL_PROVIDER",
+            "status": "CONFIRMED",
+            "lineupSelectionStatus": "OFFICIAL_PROVIDER_CONFIRMED"
+          },
+          "home": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          }
+        },
+        "selectedLineupStatus": "MIXED_CONFIRMED_EXPECTED",
+        "koreanOddsStatus": "MATCHED_PRE_GAME",
+        "pregameInputStatus": "READY",
+        "blockingReasons": []
+      },
+      {
+        "gamePk": 824476,
+        "matchup": "St. Louis Cardinals @ Cincinnati Reds",
+        "startTimeKst": "07:40",
+        "commenceTimeUtc": "2026-08-19T22:40:00Z",
+        "starterStatus": "PROBABLE_AVAILABLE",
+        "starterTiming": "PRE_GAME",
+        "providerOddsStatus": "COLLECTED",
+        "providerOddsTiming": "PRE_GAME",
+        "officialLineupStatus": "NOT_RELEASED",
+        "officialLineupTiming": "PRE_GAME",
+        "officialBuilderPhase": "PRE_GAME",
+        "operatorConfirmedStatus": "NOT_OBSERVED",
+        "operatorExpectedStatus": "EXPECTED_OBSERVED",
+        "operatorLineupTiming": "PRE_GAME",
+        "selectedLineupSource": {
+          "away": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          },
+          "home": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          }
+        },
+        "selectedLineupStatus": "OPERATOR_EXPECTED",
+        "koreanOddsStatus": "MATCHED_PRE_GAME",
+        "pregameInputStatus": "READY",
+        "blockingReasons": []
+      },
+      {
+        "gamePk": 824394,
+        "matchup": "San Francisco Giants @ Cleveland Guardians",
+        "startTimeKst": "07:40",
+        "commenceTimeUtc": "2026-08-19T22:40:00Z",
+        "starterStatus": "PROBABLE_AVAILABLE",
+        "starterTiming": "PRE_GAME",
+        "providerOddsStatus": "COLLECTED",
+        "providerOddsTiming": "PRE_GAME",
+        "officialLineupStatus": "NOT_RELEASED",
+        "officialLineupTiming": "PRE_GAME",
+        "officialBuilderPhase": "PRE_GAME",
+        "operatorConfirmedStatus": "NOT_OBSERVED",
+        "operatorExpectedStatus": "EXPECTED_OBSERVED",
+        "operatorLineupTiming": "PRE_GAME",
+        "selectedLineupSource": {
+          "away": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          },
+          "home": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          }
+        },
+        "selectedLineupStatus": "OPERATOR_EXPECTED",
+        "koreanOddsStatus": "MATCHED_PRE_GAME",
+        "pregameInputStatus": "READY",
+        "blockingReasons": []
+      },
+      {
+        "gamePk": 824318,
+        "matchup": "Los Angeles Dodgers @ Colorado Rockies",
+        "startTimeKst": "09:40",
+        "commenceTimeUtc": "2026-08-20T00:40:00Z",
+        "starterStatus": "PROBABLE_AVAILABLE",
+        "starterTiming": "PRE_GAME",
+        "providerOddsStatus": "COLLECTED",
+        "providerOddsTiming": "PRE_GAME",
+        "officialLineupStatus": "NOT_RELEASED",
+        "officialLineupTiming": "PRE_GAME",
+        "officialBuilderPhase": "PRE_GAME",
+        "operatorConfirmedStatus": "NOT_OBSERVED",
+        "operatorExpectedStatus": "EXPECTED_OBSERVED",
+        "operatorLineupTiming": "PRE_GAME",
+        "selectedLineupSource": {
+          "away": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          },
+          "home": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          }
+        },
+        "selectedLineupStatus": "OPERATOR_EXPECTED",
+        "koreanOddsStatus": "MATCHED_PRE_GAME",
+        "pregameInputStatus": "READY",
+        "blockingReasons": []
+      },
+      {
+        "gamePk": 824155,
+        "matchup": "Los Angeles Angels @ Houston Astros",
+        "startTimeKst": "09:10",
+        "commenceTimeUtc": "2026-08-20T00:10:00Z",
+        "starterStatus": "PROBABLE_AVAILABLE",
+        "starterTiming": "PRE_GAME",
+        "providerOddsStatus": "COLLECTED",
+        "providerOddsTiming": "PRE_GAME",
+        "officialLineupStatus": "NOT_RELEASED",
+        "officialLineupTiming": "PRE_GAME",
+        "officialBuilderPhase": "PRE_GAME",
+        "operatorConfirmedStatus": "NOT_OBSERVED",
+        "operatorExpectedStatus": "EXPECTED_OBSERVED",
+        "operatorLineupTiming": "PRE_GAME",
+        "selectedLineupSource": {
+          "away": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          },
+          "home": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          }
+        },
+        "selectedLineupStatus": "OPERATOR_EXPECTED",
+        "koreanOddsStatus": "MATCHED_PRE_GAME",
+        "pregameInputStatus": "READY",
+        "blockingReasons": []
+      },
+      {
+        "gamePk": 824076,
+        "matchup": "Athletics @ Kansas City Royals",
+        "startTimeKst": "08:40",
+        "commenceTimeUtc": "2026-08-19T23:40:00Z",
+        "starterStatus": "PROBABLE_MISSING",
+        "starterTiming": "PRE_GAME",
+        "providerOddsStatus": "COLLECTED",
+        "providerOddsTiming": "PRE_GAME",
+        "officialLineupStatus": "NOT_RELEASED",
+        "officialLineupTiming": "PRE_GAME",
+        "officialBuilderPhase": "PRE_GAME",
+        "operatorConfirmedStatus": "NOT_OBSERVED",
+        "operatorExpectedStatus": "EXPECTED_OBSERVED",
+        "operatorLineupTiming": "PRE_GAME",
+        "selectedLineupSource": {
+          "away": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          },
+          "home": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          }
+        },
+        "selectedLineupStatus": "OPERATOR_EXPECTED",
+        "koreanOddsStatus": "NOT_JOINED",
+        "pregameInputStatus": "VALID_BLOCKED_STARTER_MISSING",
+        "blockingReasons": [
+          "VALID_BLOCKED_STARTER_MISSING"
+        ]
+      },
+      {
+        "gamePk": 823748,
+        "matchup": "Seattle Mariners @ Milwaukee Brewers",
+        "startTimeKst": "08:40",
+        "commenceTimeUtc": "2026-08-19T23:40:00Z",
+        "starterStatus": "PROBABLE_AVAILABLE",
+        "starterTiming": "PRE_GAME",
+        "providerOddsStatus": "COLLECTED",
+        "providerOddsTiming": "PRE_GAME",
+        "officialLineupStatus": "NOT_RELEASED",
+        "officialLineupTiming": "PRE_GAME",
+        "officialBuilderPhase": "PRE_GAME",
+        "operatorConfirmedStatus": "NOT_OBSERVED",
+        "operatorExpectedStatus": "EXPECTED_OBSERVED",
+        "operatorLineupTiming": "PRE_GAME",
+        "selectedLineupSource": {
+          "away": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          },
+          "home": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          }
+        },
+        "selectedLineupStatus": "OPERATOR_EXPECTED",
+        "koreanOddsStatus": "MATCHED_PRE_GAME",
+        "pregameInputStatus": "READY",
+        "blockingReasons": []
+      },
+      {
+        "gamePk": 823664,
+        "matchup": "Atlanta Braves @ Minnesota Twins",
+        "startTimeKst": "02:40",
+        "commenceTimeUtc": "2026-08-19T17:40:00Z",
+        "starterStatus": "PROBABLE_AVAILABLE",
+        "starterTiming": "PRE_GAME",
+        "providerOddsStatus": "COLLECTED",
+        "providerOddsTiming": "PRE_GAME",
+        "officialLineupStatus": "CONFIRMED",
+        "officialLineupTiming": "PRE_GAME",
+        "officialBuilderPhase": "POST_GAME",
+        "operatorConfirmedStatus": "NOT_OBSERVED",
+        "operatorExpectedStatus": "EXPECTED_OBSERVED",
+        "operatorLineupTiming": "PRE_GAME",
+        "selectedLineupSource": {
+          "away": {
+            "source": "OFFICIAL_PROVIDER",
+            "status": "CONFIRMED",
+            "lineupSelectionStatus": "OFFICIAL_PROVIDER_CONFIRMED"
+          },
+          "home": {
+            "source": "OFFICIAL_PROVIDER",
+            "status": "CONFIRMED",
+            "lineupSelectionStatus": "OFFICIAL_PROVIDER_CONFIRMED"
+          }
+        },
+        "selectedLineupStatus": "OFFICIAL_PROVIDER_CONFIRMED",
+        "koreanOddsStatus": "MATCHED_PRE_GAME",
+        "pregameInputStatus": "READY",
+        "blockingReasons": []
+      },
+      {
+        "gamePk": 823587,
+        "matchup": "San Diego Padres @ New York Mets",
+        "startTimeKst": "02:10",
+        "commenceTimeUtc": "2026-08-19T17:10:00Z",
+        "starterStatus": "PROBABLE_AVAILABLE",
+        "starterTiming": "PRE_GAME",
+        "providerOddsStatus": "COLLECTED",
+        "providerOddsTiming": "PRE_GAME",
+        "officialLineupStatus": "CONFIRMED",
+        "officialLineupTiming": "PRE_GAME",
+        "officialBuilderPhase": "POST_GAME",
+        "operatorConfirmedStatus": "CONFIRMED_FULL",
+        "operatorExpectedStatus": "NOT_OBSERVED",
+        "operatorLineupTiming": "PRE_GAME",
+        "selectedLineupSource": {
+          "away": {
+            "source": "OFFICIAL_PROVIDER",
+            "status": "CONFIRMED",
+            "lineupSelectionStatus": "OFFICIAL_PROVIDER_CONFIRMED"
+          },
+          "home": {
+            "source": "OFFICIAL_PROVIDER",
+            "status": "CONFIRMED",
+            "lineupSelectionStatus": "OFFICIAL_PROVIDER_CONFIRMED"
+          }
+        },
+        "selectedLineupStatus": "OFFICIAL_PROVIDER_CONFIRMED",
+        "koreanOddsStatus": "MATCHED_PRE_GAME",
+        "pregameInputStatus": "READY",
+        "blockingReasons": []
+      },
+      {
+        "gamePk": 823424,
+        "matchup": "Miami Marlins @ Philadelphia Phillies",
+        "startTimeKst": "07:05",
+        "commenceTimeUtc": "2026-08-19T22:05:00Z",
+        "starterStatus": "PROBABLE_AVAILABLE",
+        "starterTiming": "PRE_GAME",
+        "providerOddsStatus": "COLLECTED",
+        "providerOddsTiming": "PRE_GAME",
+        "officialLineupStatus": "NOT_RELEASED",
+        "officialLineupTiming": "PRE_GAME",
+        "officialBuilderPhase": "PRE_GAME",
+        "operatorConfirmedStatus": "NOT_OBSERVED",
+        "operatorExpectedStatus": "EXPECTED_OBSERVED",
+        "operatorLineupTiming": "PRE_GAME",
+        "selectedLineupSource": {
+          "away": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          },
+          "home": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          }
+        },
+        "selectedLineupStatus": "OPERATOR_EXPECTED",
+        "koreanOddsStatus": "MATCHED_PRE_GAME",
+        "pregameInputStatus": "READY",
+        "blockingReasons": []
+      },
+      {
+        "gamePk": 823342,
+        "matchup": "Detroit Tigers @ Pittsburgh Pirates",
+        "startTimeKst": "01:35",
+        "commenceTimeUtc": "2026-08-19T16:35:00Z",
+        "starterStatus": "PROBABLE_AVAILABLE",
+        "starterTiming": "PRE_GAME",
+        "providerOddsStatus": "COLLECTED",
+        "providerOddsTiming": "PRE_GAME",
+        "officialLineupStatus": "CONFIRMED",
+        "officialLineupTiming": "PRE_GAME",
+        "officialBuilderPhase": "POST_GAME",
+        "operatorConfirmedStatus": "CONFIRMED_FULL",
+        "operatorExpectedStatus": "NOT_OBSERVED",
+        "operatorLineupTiming": "PRE_GAME",
+        "selectedLineupSource": {
+          "away": {
+            "source": "OFFICIAL_PROVIDER",
+            "status": "CONFIRMED",
+            "lineupSelectionStatus": "OFFICIAL_PROVIDER_CONFIRMED"
+          },
+          "home": {
+            "source": "OFFICIAL_PROVIDER",
+            "status": "CONFIRMED",
+            "lineupSelectionStatus": "OFFICIAL_PROVIDER_CONFIRMED"
+          }
+        },
+        "selectedLineupStatus": "OFFICIAL_PROVIDER_CONFIRMED",
+        "koreanOddsStatus": "MATCHED_PRE_GAME",
+        "pregameInputStatus": "READY",
+        "blockingReasons": []
+      },
+      {
+        "gamePk": 822937,
+        "matchup": "Toronto Blue Jays @ Tampa Bay Rays",
+        "startTimeKst": "07:40",
+        "commenceTimeUtc": "2026-08-19T22:40:00Z",
+        "starterStatus": "PROBABLE_AVAILABLE",
+        "starterTiming": "PRE_GAME",
+        "providerOddsStatus": "COLLECTED",
+        "providerOddsTiming": "PRE_GAME",
+        "officialLineupStatus": "NOT_RELEASED",
+        "officialLineupTiming": "PRE_GAME",
+        "officialBuilderPhase": "PRE_GAME",
+        "operatorConfirmedStatus": "NOT_OBSERVED",
+        "operatorExpectedStatus": "EXPECTED_OBSERVED",
+        "operatorLineupTiming": "PRE_GAME",
+        "selectedLineupSource": {
+          "away": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          },
+          "home": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          }
+        },
+        "selectedLineupStatus": "OPERATOR_EXPECTED",
+        "koreanOddsStatus": "NOT_JOINED",
+        "pregameInputStatus": "READY",
+        "blockingReasons": []
+      },
+      {
+        "gamePk": 822860,
+        "matchup": "Washington Nationals @ Texas Rangers",
+        "startTimeKst": "09:05",
+        "commenceTimeUtc": "2026-08-20T00:05:00Z",
+        "starterStatus": "PROBABLE_AVAILABLE",
+        "starterTiming": "PRE_GAME",
+        "providerOddsStatus": "COLLECTED",
+        "providerOddsTiming": "PRE_GAME",
+        "officialLineupStatus": "NOT_RELEASED",
+        "officialLineupTiming": "PRE_GAME",
+        "officialBuilderPhase": "PRE_GAME",
+        "operatorConfirmedStatus": "NOT_OBSERVED",
+        "operatorExpectedStatus": "EXPECTED_OBSERVED",
+        "operatorLineupTiming": "PRE_GAME",
+        "selectedLineupSource": {
+          "away": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          },
+          "home": {
+            "source": "MANUAL_OBSERVATION",
+            "status": "EXPECTED",
+            "lineupSelectionStatus": "OPERATOR_EXPECTED"
+          }
+        },
+        "selectedLineupStatus": "OPERATOR_EXPECTED",
+        "koreanOddsStatus": "MATCHED_PRE_GAME",
+        "pregameInputStatus": "READY",
+        "blockingReasons": []
+      }
+    ],
+    "ready": 14,
+    "validBlocked": 1
+  },
+  "FOOTBALL": {
+    "scopeGames": 23,
+    "accounted": 23,
+    "matchedRegistered": 0,
+    "identityBlocked": 5,
+    "unregistered": 18,
+    "blocked": 23,
+    "providerCalls": 0,
+    "unexplainedMissing": 0,
+    "rows": [
+      {
+        "fixture": "셀틱 – LASK",
+        "rawLeagueLabel": "UCL",
+        "joinStatus": "IDENTITY_BLOCKED",
+        "pregameInputStatus": "VALID_BLOCKED_IDENTITY",
+        "reason": "NO_EXACT_FOOTBALL_TEAM_ALIAS; SCREENSHOT_LABEL_UCL_NOT_EQUAL_TO_REGISTRY_DISPLAY_UEFA_챔피언스리그"
+      },
+      {
+        "fixture": "슬로반브 – NK첼레",
+        "rawLeagueLabel": "UCL",
+        "joinStatus": "IDENTITY_BLOCKED",
+        "pregameInputStatus": "VALID_BLOCKED_IDENTITY",
+        "reason": "NO_EXACT_FOOTBALL_TEAM_ALIAS; SCREENSHOT_LABEL_UCL_NOT_EQUAL_TO_REGISTRY_DISPLAY_UEFA_챔피언스리그"
+      },
+      {
+        "fixture": "H베르셰 – 사바FK",
+        "rawLeagueLabel": "UCL",
+        "joinStatus": "IDENTITY_BLOCKED",
+        "pregameInputStatus": "VALID_BLOCKED_IDENTITY",
+        "reason": "NO_EXACT_FOOTBALL_TEAM_ALIAS; SCREENSHOT_LABEL_UCL_NOT_EQUAL_TO_REGISTRY_DISPLAY_UEFA_챔피언스리그"
+      },
+      {
+        "fixture": "네이메헌 – 보되글림",
+        "rawLeagueLabel": "UCL",
+        "joinStatus": "IDENTITY_BLOCKED",
+        "pregameInputStatus": "VALID_BLOCKED_IDENTITY",
+        "reason": "NO_EXACT_FOOTBALL_TEAM_ALIAS; SCREENSHOT_LABEL_UCL_NOT_EQUAL_TO_REGISTRY_DISPLAY_UEFA_챔피언스리그"
+      },
+      {
+        "fixture": "AT마드 – 말라가",
+        "rawLeagueLabel": "라리가",
+        "joinStatus": "IDENTITY_BLOCKED",
+        "pregameInputStatus": "VALID_BLOCKED_IDENTITY",
+        "reason": "COMPETITION_REGISTERED_AS_라리가; SCREENSHOT_TEAM_ALIASES_NOT_IN_FOOTBALL_IDENTITY_MAP"
+      },
+      {
+        "fixture": "세로포르 – SE파우메",
+        "rawLeagueLabel": "코파리베",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_코파리베_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "코킴보U – 플라텐세",
+        "rawLeagueLabel": "코파리베",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_코파리베_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "플라멩구 – 크루제이",
+        "rawLeagueLabel": "코파리베",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_코파리베_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "FC신시내 – 뉴욕시티",
+        "rawLeagueLabel": "MLS",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_MLS_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "콜럼크루 – CF몽레알",
+        "rawLeagueLabel": "MLS",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_MLS_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "DC유나이 – 뉴잉레벌",
+        "rawLeagueLabel": "MLS",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_MLS_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "뉴욕레드 – 내슈빌SC",
+        "rawLeagueLabel": "MLS",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_MLS_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "올랜시티 – 시카파이",
+        "rawLeagueLabel": "MLS",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_MLS_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "필라유니 – 인터마이",
+        "rawLeagueLabel": "MLS",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_MLS_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "토론토FC – 샬럿FC",
+        "rawLeagueLabel": "MLS",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_MLS_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "스포캔자 – 세인시티",
+        "rawLeagueLabel": "MLS",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_MLS_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "미네유나 – 애틀유나",
+        "rawLeagueLabel": "MLS",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_MLS_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "콜로래피 – LAFC",
+        "rawLeagueLabel": "MLS",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_MLS_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "레알솔트 – FC댈러스",
+        "rawLeagueLabel": "MLS",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_MLS_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "시애사운 – 오스틴FC",
+        "rawLeagueLabel": "MLS",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_MLS_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "LA갤럭시 – 새너어스",
+        "rawLeagueLabel": "MLS",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_MLS_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "포틀팀버 – 샌디에FC",
+        "rawLeagueLabel": "MLS",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_MLS_NOT_IN_COMPETITION_REGISTRY"
+      },
+      {
+        "fixture": "밴쿠화이 – 휴스다이",
+        "rawLeagueLabel": "MLS",
+        "joinStatus": "UNREGISTERED_COMPETITION",
+        "pregameInputStatus": "VALID_BLOCKED_UNREGISTERED_COMPETITION",
+        "reason": "SCREENSHOT_LEAGUE_MLS_NOT_IN_COMPETITION_REGISTRY"
+      }
+    ]
+  },
+  "timing": {
+    "screenshotObservedAt": "2026-08-19T15:08:36.000Z",
+    "artifactGeneratedAt": "2026-08-19T16:16:06.182Z",
+    "firstMlbStartUtc": "2026-08-19T16:35:00Z",
+    "allSelectedPregameInputsBeforeStart": true,
+    "lateEvidenceSelected": 0,
+    "unknownTimingSelected": 0
+  },
+  "koreanIdentityContract": {
+    "blockedRowsBlockStageB": false,
+    "reason": "Canonical Stage B requires locked-scope accounting, lawful provider attempts, and explicit blocked reasons. Korean market odds are a supplemental operator observation. Provider Odds 15/15 were collected. The two screenshot labels remain IDENTITY_BLOCKED with gamePk=null. 08-19 treated football IDENTITY_BLOCKED rows as VALID_BLOCKED while still closing Stage B. Contract was not lowered."
+  },
+  "predictionRun": false,
+  "snapshotRun": false,
+  "postgameAccess": false,
+  "engineConnected": false,
+  "unexplainedMissing": 0,
+  "accountedTotal": 38,
+  "scopeShrink": 0,
+  "stageStatus": "B_PREGAME_INPUT_DONE",
+  "leakage": {
+    "predictionCalls": 0,
+    "snapshotCalls": 0,
+    "resultCalls": 0,
+    "gradeCalls": 0,
+    "reviewCalls": 0,
+    "postgameCalls": 0,
+    "engineCalls": 0,
+    "recommendationCalls": 0,
+    "footballOddsProviderCalls": 0,
+    "frozenArtifactsModified": false
+  }
+}
