@@ -1,0 +1,1080 @@
+{
+  "schemaVersion": "yang-edge-football-opening-readiness-v1",
+  "generatedAt": "2026-08-19T17:03:49.676Z",
+  "researchOnly": true,
+  "network": {
+    "providerCalls": 0,
+    "apiFootball": 0,
+    "theOddsApi": 0,
+    "resultProvider": 0
+  },
+  "predictionCalls": 0,
+  "engineCalls": 0,
+  "frozenArtifactMutations": 0,
+  "mandatoryCompletion": {
+    "dateKst": "2026-08-20",
+    "total": "60%",
+    "supplementalMissionEffect": "0%"
+  },
+  "frozenHashesBefore": {
+    "prediction": {
+      "rel": "data/predictions/mlb/2026-08-20.json",
+      "sha256": "67f22360cdc5d797d81d6582516bc183eb034ff54c1231dddb8c27f567f2a3e6"
+    },
+    "freezeClose": {
+      "rel": "data/audits/2026-08-20-pregame-freeze-close-v1.json",
+      "sha256": "7d5bbfceb284711d44eb191fba478be5b110e26b0a709250e0838bb8d3eaca8d"
+    },
+    "inputClose": {
+      "rel": "data/audits/2026-08-20-pregame-input-close-v1.json",
+      "sha256": "d0e2860c27da1a27888dc83d014569435bbe07d9b56ba0da87b30134e4e0730c"
+    },
+    "scopeLock": {
+      "rel": "data/audits/2026-08-20-daily-scope-lock-v1.json",
+      "sha256": "fbc80ab706432e7f2a54713069222d4025439c7768474eec348337064b24ea58"
+    },
+    "footballSchedule": {
+      "rel": "data/research/football/2026-08-20-schedule-v1.json",
+      "sha256": "7318cf39f461d7e5423d82a670e23d040cf3083a6ea1b71dcc6414299b071440"
+    },
+    "confirmed": {
+      "rel": "data/operator-input/mlb/2026-08-20-confirmed-lineup-observation-v0.json",
+      "sha256": "3bb784ce95a35c09b4fa13e52e9157dcb36f166ffb4a0ad7fbc5958de7dca119"
+    },
+    "expected": {
+      "rel": "data/operator-input/mlb/2026-08-20-expected-lineup-observation-v0.json",
+      "sha256": "6548e349f93f7f1603aaee3f25d0a24e68535be1fe71f04d90e771f71d0b1ebc"
+    }
+  },
+  "targets": [
+    "EPL",
+    "LA_LIGA",
+    "SERIE_A",
+    "BUNDESLIGA",
+    "LIGUE_1"
+  ],
+  "leagues": [
+    {
+      "league": "EPL",
+      "competitionId": "fb-comp-api-football-39",
+      "canonicalName": "Premier League",
+      "displayNameKo": "프리미어리그",
+      "provider": "api-football",
+      "providerCompetitionId": "39",
+      "competitionType": "LEAGUE",
+      "defaultMatchFormat": "LEAGUE_MATCH",
+      "seasonCalendar": "EUROPEAN_SPLIT",
+      "researchStatus": "RESEARCH_ONLY",
+      "predictionEligibility": "ELIGIBLE_FORMAT",
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "foundationRegistrySeason": "2025",
+      "coverage": {
+        "seasonTeamCount": "NOT_PROVEN",
+        "canonicalRegisteredTeamCount": 4,
+        "providerTeamIdsKnown": 4,
+        "operatorAliasCount": 3,
+        "oddsBridgeCount": 0,
+        "catalogProviderTeamIds": [
+          "33",
+          "40",
+          "50",
+          "42"
+        ],
+        "operatorAliasNames": [
+          "아스널",
+          "리버풀",
+          "맨시티"
+        ],
+        "oddsBridgedProviderTeamIds": []
+      },
+      "oddsSportKey": "soccer_epl",
+      "oddsSportKeySource": "data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+      "oddsTeamBridgeStatus": "NONE",
+      "gates": {
+        "config": {
+          "max": 10,
+          "score": 10,
+          "status": "READY",
+          "evidence": [
+            "profile fb-comp-api-football-39 providerCompetitionId=39",
+            "defaultMatchFormat=LEAGUE_MATCH",
+            "predictionEligibility=ELIGIBLE_FORMAT",
+            "seasonIdAuthoritative=FIXTURE",
+            "foundationRegistrySeasonTag=2025"
+          ],
+          "blockers": [
+            "FOUNDATION_REGISTRY_SEASON_TAG_2025_UNUSED_BY_SCHEDULE_BUT_STALE_FOR_2026_27"
+          ]
+        },
+        "schedule": {
+          "max": 15,
+          "score": 12,
+          "status": "PARTIAL",
+          "evidence": [
+            "builder + tests support this providerCompetitionId",
+            "no recent football-schedule-v1 row for this competitionId (summer slate / not collected)"
+          ],
+          "blockers": []
+        },
+        "identity": {
+          "max": 20,
+          "score": 6,
+          "status": "PARTIAL",
+          "evidence": [
+            "canonicalRegisteredFromKnownIds=4",
+            "providerIdsKnown=4",
+            "operatorAliasEntries=3",
+            "oddsBridgeOverlap=0",
+            "missingKnownIds=none",
+            "resolveProviderTeam is provider-ID only; no fuzzy name guessing",
+            "seasonTeamCount=NOT_PROVEN"
+          ],
+          "blockers": [
+            "CATALOG_NOT_LEAGUE_COMPLETE"
+          ]
+        },
+        "odds": {
+          "max": 20,
+          "score": 6,
+          "status": "PARTIAL",
+          "evidence": [
+            "sportKey=soccer_epl",
+            "sportKeySource=data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+            "oddsBridgeCount=0",
+            "1X2 complete market + pregame cutoff exist in odds-1x2-v1 (common)",
+            "no league-specific odds join artifact; historical sport-key coverageStatus=DOCUMENTED_AVAILABLE_NOT_PROBED"
+          ],
+          "blockers": [
+            "SPORT_KEY_MAPPED_BUT_ODDS_TEAM_BRIDGE_EMPTY"
+          ]
+        },
+        "freeze": {
+          "max": 10,
+          "score": 10,
+          "status": "READY",
+          "evidence": [
+            "common: prediction-snapshot-v0 consumes Schedule+Odds only",
+            "late odds rejected: observedAt > freezeAt or >= kickoff",
+            "immutable snapshotHash",
+            "tests: test:football-prediction-snapshot-v0",
+            "league-agnostic contract; La Liga/J1 artifacts prove the shared freeze path"
+          ],
+          "blockers": []
+        },
+        "prediction": {
+          "max": 10,
+          "score": 10,
+          "status": "READY",
+          "evidence": [
+            "predictionClass=MARKET_BASELINE",
+            "engine=NONE officialPickCount=0",
+            "consumes frozen snapshot only",
+            "PASS/BLOCKED via baselineStatus / snapshotStatus accounting",
+            "tests: test:football-market-baseline-prediction-v0"
+          ],
+          "blockers": []
+        },
+        "result": {
+          "max": 10,
+          "score": 7,
+          "status": "PARTIAL",
+          "evidence": [
+            "official-result-v0 joins by provider fixture ID",
+            "marketSettlement=REGULATION_90_MINUTES_1X2",
+            "ET/PEN separated; 1X2 from score.fulltime only",
+            "selectOfficialResultTargetRows requires ELIGIBLE_FORMAT",
+            "no league-specific official-result artifact"
+          ],
+          "blockers": [
+            "IDENTITY_BLOCKED_ROWS_ARE_DROPPED_FROM_RESULT_COLLECTION"
+          ]
+        },
+        "gradeReview": {
+          "max": 5,
+          "score": 4,
+          "status": "PARTIAL",
+          "evidence": [
+            "gradeFootballOneXTwo DRAW first-class; prediction snapshot not mutated",
+            "path: research:football-postgame-review → review + scorecard",
+            "artifacts: 2026-08-18-market-baseline-review-v0.json / scorecard (insufficientSample=true)",
+            "no separate Success Review / Failure Review products"
+          ],
+          "blockers": []
+        }
+      },
+      "total": 65,
+      "status": "PARTIAL",
+      "goNoGo": "GO_WITH_BLOCKERS"
+    },
+    {
+      "league": "LA_LIGA",
+      "competitionId": "fb-comp-api-football-140",
+      "canonicalName": "La Liga",
+      "displayNameKo": "라리가",
+      "provider": "api-football",
+      "providerCompetitionId": "140",
+      "competitionType": "LEAGUE",
+      "defaultMatchFormat": "LEAGUE_MATCH",
+      "seasonCalendar": "EUROPEAN_SPLIT",
+      "researchStatus": "RESEARCH_ONLY",
+      "predictionEligibility": "ELIGIBLE_FORMAT",
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "foundationRegistrySeason": "2025",
+      "coverage": {
+        "seasonTeamCount": "NOT_PROVEN",
+        "canonicalRegisteredTeamCount": 8,
+        "providerTeamIdsKnown": 8,
+        "operatorAliasCount": 2,
+        "oddsBridgeCount": 6,
+        "catalogProviderTeamIds": [
+          "541",
+          "529",
+          "540",
+          "539",
+          "4665",
+          "533",
+          "544",
+          "797"
+        ],
+        "operatorAliasNames": [
+          "레알 마드리드",
+          "바르셀로나"
+        ],
+        "oddsBridgedProviderTeamIds": [
+          "540",
+          "539",
+          "4665",
+          "533",
+          "544",
+          "797"
+        ]
+      },
+      "oddsSportKey": "soccer_spain_la_liga",
+      "oddsSportKeySource": "data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+      "oddsTeamBridgeStatus": "PARTIAL",
+      "gates": {
+        "config": {
+          "max": 10,
+          "score": 10,
+          "status": "READY",
+          "evidence": [
+            "profile fb-comp-api-football-140 providerCompetitionId=140",
+            "defaultMatchFormat=LEAGUE_MATCH",
+            "predictionEligibility=ELIGIBLE_FORMAT",
+            "seasonIdAuthoritative=FIXTURE",
+            "foundationRegistrySeasonTag=2025"
+          ],
+          "blockers": [
+            "FOUNDATION_REGISTRY_SEASON_TAG_2025_UNUSED_BY_SCHEDULE_BUT_STALE_FOR_2026_27"
+          ]
+        },
+        "schedule": {
+          "max": 15,
+          "score": 15,
+          "status": "READY",
+          "evidence": [
+            "builder filters by competition profile + date fetch; matchId=soccer-api-football-{fixtureId}",
+            "recentScheduleDates=2026-08-16,2026-08-17,2026-08-18,2026-08-20",
+            "tests: test:football-schedule-v1"
+          ],
+          "blockers": []
+        },
+        "identity": {
+          "max": 20,
+          "score": 10,
+          "status": "PARTIAL",
+          "evidence": [
+            "canonicalRegisteredFromKnownIds=8",
+            "providerIdsKnown=8",
+            "operatorAliasEntries=2",
+            "oddsBridgeOverlap=6",
+            "missingKnownIds=none",
+            "resolveProviderTeam is provider-ID only; no fuzzy name guessing",
+            "seasonTeamCount=NOT_PROVEN"
+          ],
+          "blockers": [
+            "CATALOG_NOT_LEAGUE_COMPLETE",
+            "2026-08-20 Atletico Madrid 530 / Malaga 535 UNKNOWN_PROVIDER_TEAM_ID"
+          ]
+        },
+        "odds": {
+          "max": 20,
+          "score": 14,
+          "status": "PARTIAL",
+          "evidence": [
+            "sportKey=soccer_spain_la_liga",
+            "sportKeySource=data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+            "oddsBridgeCount=6",
+            "1X2 complete market + pregame cutoff exist in odds-1x2-v1 (common)",
+            "evidence: 2026-08-18-1x2-odds-v1.json joinedGames=1 sportKey=soccer_spain_la_liga"
+          ],
+          "blockers": [
+            "ODDS_TEAM_BRIDGE_PARTIAL_NOT_FULL_LEAGUE"
+          ]
+        },
+        "freeze": {
+          "max": 10,
+          "score": 10,
+          "status": "READY",
+          "evidence": [
+            "common: prediction-snapshot-v0 consumes Schedule+Odds only",
+            "late odds rejected: observedAt > freezeAt or >= kickoff",
+            "immutable snapshotHash",
+            "tests: test:football-prediction-snapshot-v0",
+            "evidence: 2026-08-18-prediction-snapshot-v0.json frozenGames=1"
+          ],
+          "blockers": []
+        },
+        "prediction": {
+          "max": 10,
+          "score": 10,
+          "status": "READY",
+          "evidence": [
+            "predictionClass=MARKET_BASELINE",
+            "engine=NONE officialPickCount=0",
+            "consumes frozen snapshot only",
+            "PASS/BLOCKED via baselineStatus / snapshotStatus accounting",
+            "tests: test:football-market-baseline-prediction-v0"
+          ],
+          "blockers": []
+        },
+        "result": {
+          "max": 10,
+          "score": 9,
+          "status": "PARTIAL",
+          "evidence": [
+            "official-result-v0 joins by provider fixture ID",
+            "marketSettlement=REGULATION_90_MINUTES_1X2",
+            "ET/PEN separated; 1X2 from score.fulltime only",
+            "selectOfficialResultTargetRows requires ELIGIBLE_FORMAT",
+            "evidence: 2026-08-18-official-result-v0.json FINAL 1-1 DRAW"
+          ],
+          "blockers": [
+            "IDENTITY_BLOCKED_ROWS_ARE_DROPPED_FROM_RESULT_COLLECTION"
+          ]
+        },
+        "gradeReview": {
+          "max": 5,
+          "score": 4,
+          "status": "PARTIAL",
+          "evidence": [
+            "gradeFootballOneXTwo DRAW first-class; prediction snapshot not mutated",
+            "path: research:football-postgame-review → review + scorecard",
+            "artifacts: 2026-08-18-market-baseline-review-v0.json / scorecard (insufficientSample=true)",
+            "no separate Success Review / Failure Review products"
+          ],
+          "blockers": []
+        }
+      },
+      "total": 82,
+      "status": "PARTIAL",
+      "goNoGo": "GO_WITH_BLOCKERS"
+    },
+    {
+      "league": "SERIE_A",
+      "competitionId": "fb-comp-api-football-135",
+      "canonicalName": "Serie A",
+      "displayNameKo": "세리에 A",
+      "provider": "api-football",
+      "providerCompetitionId": "135",
+      "competitionType": "LEAGUE",
+      "defaultMatchFormat": "LEAGUE_MATCH",
+      "seasonCalendar": "EUROPEAN_SPLIT",
+      "researchStatus": "RESEARCH_ONLY",
+      "predictionEligibility": "ELIGIBLE_FORMAT",
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "foundationRegistrySeason": "2025",
+      "coverage": {
+        "seasonTeamCount": "NOT_PROVEN",
+        "canonicalRegisteredTeamCount": 0,
+        "providerTeamIdsKnown": 0,
+        "operatorAliasCount": 0,
+        "oddsBridgeCount": 0,
+        "catalogProviderTeamIds": [],
+        "operatorAliasNames": [],
+        "oddsBridgedProviderTeamIds": []
+      },
+      "oddsSportKey": "soccer_italy_serie_a",
+      "oddsSportKeySource": "data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+      "oddsTeamBridgeStatus": "NONE",
+      "gates": {
+        "config": {
+          "max": 10,
+          "score": 10,
+          "status": "READY",
+          "evidence": [
+            "profile fb-comp-api-football-135 providerCompetitionId=135",
+            "defaultMatchFormat=LEAGUE_MATCH",
+            "predictionEligibility=ELIGIBLE_FORMAT",
+            "seasonIdAuthoritative=FIXTURE",
+            "foundationRegistrySeasonTag=2025"
+          ],
+          "blockers": [
+            "FOUNDATION_REGISTRY_SEASON_TAG_2025_UNUSED_BY_SCHEDULE_BUT_STALE_FOR_2026_27"
+          ]
+        },
+        "schedule": {
+          "max": 15,
+          "score": 12,
+          "status": "PARTIAL",
+          "evidence": [
+            "builder + tests support this providerCompetitionId",
+            "no recent football-schedule-v1 row for this competitionId (summer slate / not collected)"
+          ],
+          "blockers": []
+        },
+        "identity": {
+          "max": 20,
+          "score": 2,
+          "status": "BLOCKED",
+          "evidence": [
+            "canonicalRegisteredFromKnownIds=0",
+            "providerIdsKnown=0",
+            "operatorAliasEntries=0",
+            "oddsBridgeOverlap=0",
+            "missingKnownIds=none",
+            "resolveProviderTeam is provider-ID only; no fuzzy name guessing",
+            "seasonTeamCount=NOT_PROVEN"
+          ],
+          "blockers": [
+            "ZERO_CANONICAL_TEAMS_EVERY_MATCH_IDENTITY_BLOCKED"
+          ]
+        },
+        "odds": {
+          "max": 20,
+          "score": 6,
+          "status": "PARTIAL",
+          "evidence": [
+            "sportKey=soccer_italy_serie_a",
+            "sportKeySource=data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+            "oddsBridgeCount=0",
+            "1X2 complete market + pregame cutoff exist in odds-1x2-v1 (common)",
+            "no league-specific odds join artifact; historical sport-key coverageStatus=DOCUMENTED_AVAILABLE_NOT_PROBED"
+          ],
+          "blockers": [
+            "SPORT_KEY_MAPPED_BUT_ODDS_TEAM_BRIDGE_EMPTY"
+          ]
+        },
+        "freeze": {
+          "max": 10,
+          "score": 10,
+          "status": "READY",
+          "evidence": [
+            "common: prediction-snapshot-v0 consumes Schedule+Odds only",
+            "late odds rejected: observedAt > freezeAt or >= kickoff",
+            "immutable snapshotHash",
+            "tests: test:football-prediction-snapshot-v0",
+            "league-agnostic contract; La Liga/J1 artifacts prove the shared freeze path"
+          ],
+          "blockers": []
+        },
+        "prediction": {
+          "max": 10,
+          "score": 10,
+          "status": "READY",
+          "evidence": [
+            "predictionClass=MARKET_BASELINE",
+            "engine=NONE officialPickCount=0",
+            "consumes frozen snapshot only",
+            "PASS/BLOCKED via baselineStatus / snapshotStatus accounting",
+            "tests: test:football-market-baseline-prediction-v0"
+          ],
+          "blockers": []
+        },
+        "result": {
+          "max": 10,
+          "score": 7,
+          "status": "PARTIAL",
+          "evidence": [
+            "official-result-v0 joins by provider fixture ID",
+            "marketSettlement=REGULATION_90_MINUTES_1X2",
+            "ET/PEN separated; 1X2 from score.fulltime only",
+            "selectOfficialResultTargetRows requires ELIGIBLE_FORMAT",
+            "no league-specific official-result artifact"
+          ],
+          "blockers": [
+            "IDENTITY_BLOCKED_ROWS_ARE_DROPPED_FROM_RESULT_COLLECTION"
+          ]
+        },
+        "gradeReview": {
+          "max": 5,
+          "score": 4,
+          "status": "PARTIAL",
+          "evidence": [
+            "gradeFootballOneXTwo DRAW first-class; prediction snapshot not mutated",
+            "path: research:football-postgame-review → review + scorecard",
+            "artifacts: 2026-08-18-market-baseline-review-v0.json / scorecard (insufficientSample=true)",
+            "no separate Success Review / Failure Review products"
+          ],
+          "blockers": []
+        }
+      },
+      "total": 61,
+      "status": "BLOCKED",
+      "goNoGo": "GO_WITH_BLOCKERS"
+    },
+    {
+      "league": "BUNDESLIGA",
+      "competitionId": "fb-comp-api-football-78",
+      "canonicalName": "Bundesliga",
+      "displayNameKo": "분데스리가",
+      "provider": "api-football",
+      "providerCompetitionId": "78",
+      "competitionType": "LEAGUE",
+      "defaultMatchFormat": "LEAGUE_MATCH",
+      "seasonCalendar": "EUROPEAN_SPLIT",
+      "researchStatus": "RESEARCH_ONLY",
+      "predictionEligibility": "ELIGIBLE_FORMAT",
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "foundationRegistrySeason": "2025",
+      "coverage": {
+        "seasonTeamCount": "NOT_PROVEN",
+        "canonicalRegisteredTeamCount": 1,
+        "providerTeamIdsKnown": 1,
+        "operatorAliasCount": 1,
+        "oddsBridgeCount": 0,
+        "catalogProviderTeamIds": [
+          "157"
+        ],
+        "operatorAliasNames": [
+          "바이에른"
+        ],
+        "oddsBridgedProviderTeamIds": []
+      },
+      "oddsSportKey": "soccer_germany_bundesliga",
+      "oddsSportKeySource": "data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+      "oddsTeamBridgeStatus": "NONE",
+      "gates": {
+        "config": {
+          "max": 10,
+          "score": 10,
+          "status": "READY",
+          "evidence": [
+            "profile fb-comp-api-football-78 providerCompetitionId=78",
+            "defaultMatchFormat=LEAGUE_MATCH",
+            "predictionEligibility=ELIGIBLE_FORMAT",
+            "seasonIdAuthoritative=FIXTURE",
+            "foundationRegistrySeasonTag=2025"
+          ],
+          "blockers": [
+            "FOUNDATION_REGISTRY_SEASON_TAG_2025_UNUSED_BY_SCHEDULE_BUT_STALE_FOR_2026_27"
+          ]
+        },
+        "schedule": {
+          "max": 15,
+          "score": 12,
+          "status": "PARTIAL",
+          "evidence": [
+            "builder + tests support this providerCompetitionId",
+            "no recent football-schedule-v1 row for this competitionId (summer slate / not collected)"
+          ],
+          "blockers": []
+        },
+        "identity": {
+          "max": 20,
+          "score": 3,
+          "status": "BLOCKED",
+          "evidence": [
+            "canonicalRegisteredFromKnownIds=1",
+            "providerIdsKnown=1",
+            "operatorAliasEntries=1",
+            "oddsBridgeOverlap=0",
+            "missingKnownIds=none",
+            "resolveProviderTeam is provider-ID only; no fuzzy name guessing",
+            "seasonTeamCount=NOT_PROVEN"
+          ],
+          "blockers": [
+            "CATALOG_NOT_LEAGUE_COMPLETE"
+          ]
+        },
+        "odds": {
+          "max": 20,
+          "score": 6,
+          "status": "PARTIAL",
+          "evidence": [
+            "sportKey=soccer_germany_bundesliga",
+            "sportKeySource=data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+            "oddsBridgeCount=0",
+            "1X2 complete market + pregame cutoff exist in odds-1x2-v1 (common)",
+            "no league-specific odds join artifact; historical sport-key coverageStatus=DOCUMENTED_AVAILABLE_NOT_PROBED"
+          ],
+          "blockers": [
+            "SPORT_KEY_MAPPED_BUT_ODDS_TEAM_BRIDGE_EMPTY"
+          ]
+        },
+        "freeze": {
+          "max": 10,
+          "score": 10,
+          "status": "READY",
+          "evidence": [
+            "common: prediction-snapshot-v0 consumes Schedule+Odds only",
+            "late odds rejected: observedAt > freezeAt or >= kickoff",
+            "immutable snapshotHash",
+            "tests: test:football-prediction-snapshot-v0",
+            "league-agnostic contract; La Liga/J1 artifacts prove the shared freeze path"
+          ],
+          "blockers": []
+        },
+        "prediction": {
+          "max": 10,
+          "score": 10,
+          "status": "READY",
+          "evidence": [
+            "predictionClass=MARKET_BASELINE",
+            "engine=NONE officialPickCount=0",
+            "consumes frozen snapshot only",
+            "PASS/BLOCKED via baselineStatus / snapshotStatus accounting",
+            "tests: test:football-market-baseline-prediction-v0"
+          ],
+          "blockers": []
+        },
+        "result": {
+          "max": 10,
+          "score": 7,
+          "status": "PARTIAL",
+          "evidence": [
+            "official-result-v0 joins by provider fixture ID",
+            "marketSettlement=REGULATION_90_MINUTES_1X2",
+            "ET/PEN separated; 1X2 from score.fulltime only",
+            "selectOfficialResultTargetRows requires ELIGIBLE_FORMAT",
+            "no league-specific official-result artifact"
+          ],
+          "blockers": [
+            "IDENTITY_BLOCKED_ROWS_ARE_DROPPED_FROM_RESULT_COLLECTION"
+          ]
+        },
+        "gradeReview": {
+          "max": 5,
+          "score": 4,
+          "status": "PARTIAL",
+          "evidence": [
+            "gradeFootballOneXTwo DRAW first-class; prediction snapshot not mutated",
+            "path: research:football-postgame-review → review + scorecard",
+            "artifacts: 2026-08-18-market-baseline-review-v0.json / scorecard (insufficientSample=true)",
+            "no separate Success Review / Failure Review products"
+          ],
+          "blockers": []
+        }
+      },
+      "total": 62,
+      "status": "PARTIAL",
+      "goNoGo": "GO_WITH_BLOCKERS"
+    },
+    {
+      "league": "LIGUE_1",
+      "competitionId": "fb-comp-api-football-61",
+      "canonicalName": "Ligue 1",
+      "displayNameKo": "리그 1",
+      "provider": "api-football",
+      "providerCompetitionId": "61",
+      "competitionType": "LEAGUE",
+      "defaultMatchFormat": "LEAGUE_MATCH",
+      "seasonCalendar": "EUROPEAN_SPLIT",
+      "researchStatus": "RESEARCH_ONLY",
+      "predictionEligibility": "ELIGIBLE_FORMAT",
+      "legalStatus": "NEEDS_LEGAL_REVIEW",
+      "foundationRegistrySeason": "2025",
+      "coverage": {
+        "seasonTeamCount": "NOT_PROVEN",
+        "canonicalRegisteredTeamCount": 0,
+        "providerTeamIdsKnown": 0,
+        "operatorAliasCount": 0,
+        "oddsBridgeCount": 0,
+        "catalogProviderTeamIds": [],
+        "operatorAliasNames": [],
+        "oddsBridgedProviderTeamIds": []
+      },
+      "oddsSportKey": "soccer_france_ligue_one",
+      "oddsSportKeySource": "data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+      "oddsTeamBridgeStatus": "NONE",
+      "gates": {
+        "config": {
+          "max": 10,
+          "score": 10,
+          "status": "READY",
+          "evidence": [
+            "profile fb-comp-api-football-61 providerCompetitionId=61",
+            "defaultMatchFormat=LEAGUE_MATCH",
+            "predictionEligibility=ELIGIBLE_FORMAT",
+            "seasonIdAuthoritative=FIXTURE",
+            "foundationRegistrySeasonTag=2025"
+          ],
+          "blockers": [
+            "FOUNDATION_REGISTRY_SEASON_TAG_2025_UNUSED_BY_SCHEDULE_BUT_STALE_FOR_2026_27"
+          ]
+        },
+        "schedule": {
+          "max": 15,
+          "score": 12,
+          "status": "PARTIAL",
+          "evidence": [
+            "builder + tests support this providerCompetitionId",
+            "no recent football-schedule-v1 row for this competitionId (summer slate / not collected)"
+          ],
+          "blockers": []
+        },
+        "identity": {
+          "max": 20,
+          "score": 2,
+          "status": "BLOCKED",
+          "evidence": [
+            "canonicalRegisteredFromKnownIds=0",
+            "providerIdsKnown=0",
+            "operatorAliasEntries=0",
+            "oddsBridgeOverlap=0",
+            "missingKnownIds=none",
+            "resolveProviderTeam is provider-ID only; no fuzzy name guessing",
+            "seasonTeamCount=NOT_PROVEN"
+          ],
+          "blockers": [
+            "ZERO_CANONICAL_TEAMS_EVERY_MATCH_IDENTITY_BLOCKED"
+          ]
+        },
+        "odds": {
+          "max": 20,
+          "score": 6,
+          "status": "PARTIAL",
+          "evidence": [
+            "sportKey=soccer_france_ligue_one",
+            "sportKeySource=data/audits/multi-sport-historical-odds-coverage-audit-v1.json",
+            "oddsBridgeCount=0",
+            "1X2 complete market + pregame cutoff exist in odds-1x2-v1 (common)",
+            "no league-specific odds join artifact; historical sport-key coverageStatus=DOCUMENTED_AVAILABLE_NOT_PROBED"
+          ],
+          "blockers": [
+            "SPORT_KEY_MAPPED_BUT_ODDS_TEAM_BRIDGE_EMPTY"
+          ]
+        },
+        "freeze": {
+          "max": 10,
+          "score": 10,
+          "status": "READY",
+          "evidence": [
+            "common: prediction-snapshot-v0 consumes Schedule+Odds only",
+            "late odds rejected: observedAt > freezeAt or >= kickoff",
+            "immutable snapshotHash",
+            "tests: test:football-prediction-snapshot-v0",
+            "league-agnostic contract; La Liga/J1 artifacts prove the shared freeze path"
+          ],
+          "blockers": []
+        },
+        "prediction": {
+          "max": 10,
+          "score": 10,
+          "status": "READY",
+          "evidence": [
+            "predictionClass=MARKET_BASELINE",
+            "engine=NONE officialPickCount=0",
+            "consumes frozen snapshot only",
+            "PASS/BLOCKED via baselineStatus / snapshotStatus accounting",
+            "tests: test:football-market-baseline-prediction-v0"
+          ],
+          "blockers": []
+        },
+        "result": {
+          "max": 10,
+          "score": 7,
+          "status": "PARTIAL",
+          "evidence": [
+            "official-result-v0 joins by provider fixture ID",
+            "marketSettlement=REGULATION_90_MINUTES_1X2",
+            "ET/PEN separated; 1X2 from score.fulltime only",
+            "selectOfficialResultTargetRows requires ELIGIBLE_FORMAT",
+            "no league-specific official-result artifact"
+          ],
+          "blockers": [
+            "IDENTITY_BLOCKED_ROWS_ARE_DROPPED_FROM_RESULT_COLLECTION"
+          ]
+        },
+        "gradeReview": {
+          "max": 5,
+          "score": 4,
+          "status": "PARTIAL",
+          "evidence": [
+            "gradeFootballOneXTwo DRAW first-class; prediction snapshot not mutated",
+            "path: research:football-postgame-review → review + scorecard",
+            "artifacts: 2026-08-18-market-baseline-review-v0.json / scorecard (insufficientSample=true)",
+            "no separate Success Review / Failure Review products"
+          ],
+          "blockers": []
+        }
+      },
+      "total": 61,
+      "status": "BLOCKED",
+      "goNoGo": "GO_WITH_BLOCKERS"
+    }
+  ],
+  "openingReadinessTable": [
+    {
+      "league": "Premier League",
+      "config": 10,
+      "schedule": 12,
+      "identity": 6,
+      "odds": 6,
+      "freeze": 10,
+      "prediction": 10,
+      "result": 7,
+      "gradeReview": 4,
+      "total": 65,
+      "status": "PARTIAL"
+    },
+    {
+      "league": "La Liga",
+      "config": 10,
+      "schedule": 15,
+      "identity": 10,
+      "odds": 14,
+      "freeze": 10,
+      "prediction": 10,
+      "result": 9,
+      "gradeReview": 4,
+      "total": 82,
+      "status": "PARTIAL"
+    },
+    {
+      "league": "Serie A",
+      "config": 10,
+      "schedule": 12,
+      "identity": 2,
+      "odds": 6,
+      "freeze": 10,
+      "prediction": 10,
+      "result": 7,
+      "gradeReview": 4,
+      "total": 61,
+      "status": "BLOCKED"
+    },
+    {
+      "league": "Bundesliga",
+      "config": 10,
+      "schedule": 12,
+      "identity": 3,
+      "odds": 6,
+      "freeze": 10,
+      "prediction": 10,
+      "result": 7,
+      "gradeReview": 4,
+      "total": 62,
+      "status": "PARTIAL"
+    },
+    {
+      "league": "Ligue 1",
+      "config": 10,
+      "schedule": 12,
+      "identity": 2,
+      "odds": 6,
+      "freeze": 10,
+      "prediction": 10,
+      "result": 7,
+      "gradeReview": 4,
+      "total": 61,
+      "status": "BLOCKED"
+    }
+  ],
+  "pipelineAverage": 66.2,
+  "lowestLeague": "Serie A",
+  "highestLeague": "La Liga",
+  "p0BlockerCount": 2,
+  "dualRegistry": {
+    "note": "Schedule uses competition profiles. Operator 2026-08-20 join used foundation registry v0 displayName exact match.",
+    "profilesIncludeMls": true,
+    "foundationRegistryIncludesMls": false,
+    "foundationSeasonTags": [
+      {
+        "competitionId": "fb-comp-api-football-39",
+        "season": "2025"
+      },
+      {
+        "competitionId": "fb-comp-api-football-140",
+        "season": "2025"
+      },
+      {
+        "competitionId": "fb-comp-api-football-135",
+        "season": "2025"
+      },
+      {
+        "competitionId": "fb-comp-api-football-78",
+        "season": "2025"
+      },
+      {
+        "competitionId": "fb-comp-api-football-61",
+        "season": "2025"
+      }
+    ]
+  },
+  "uclUelSideNote": {
+    "ucl": {
+      "competitionId": "fb-comp-api-football-2",
+      "matchFormat": "UNKNOWN",
+      "predictionEligibility": "NOT_SUPPORTED_FORMAT",
+      "oddsSportKey": null
+    },
+    "uel": {
+      "competitionId": "fb-comp-api-football-3",
+      "matchFormat": "UNKNOWN",
+      "predictionEligibility": "NOT_SUPPORTED_FORMAT",
+      "oddsSportKey": null
+    },
+    "excludedFromBig5Scores": true
+  },
+  "scheduleSeasonSafety": {
+    "status": "RISK",
+    "fixtureSeasonIsScheduleSoT": true,
+    "hardcodedSeasonInProfiles": false,
+    "foundationRegistrySeasonHardcoded": "2025 for Big 5 / UCL / UEL",
+    "evidence": "2026-08-18 La Liga row seasonId=2026 from fixture.league.season",
+    "dateFetchNotSeasonFetch": true
+  },
+  "leakage": {
+    "predictionSnapshotProviderCall": false,
+    "marketBaselineProviderCall": false,
+    "predictionReadsResult": false,
+    "predictionReadsPostgame": false,
+    "lateOddsRejected": true,
+    "dummyProviderAdmittedAsResearch": false
+  },
+  "identitySafety": {
+    "schedulePrimaryId": "provider fixture ID → matchId soccer-api-football-{fixtureId}",
+    "oddsJoin": "sportKey + exact odds team names + kickoff ±15m (NOT fixture ID)",
+    "resultJoin": "provider fixture ID + provider team IDs",
+    "teamPairOnlyJoin": false,
+    "oddsJoinTeamPairRisk": "PRESENT_IF_SAME_TEAMS_SAME_SPORT_KEY_WITHIN_TOLERANCE"
+  },
+  "resultSemantics": {
+    "league1x2": "regular 90 minutes from score.fulltime",
+    "extraTime": "stored separately; does not change oneXTwoOutcome",
+    "penalties": "stored separately; advancementWinner only",
+    "cupVsLeague": "UCL/UEL defaultMatchFormat=UNKNOWN → NOT_SUPPORTED_FORMAT"
+  },
+  "gradeReviewPaths": {
+    "grade": {
+      "status": "IMPLEMENTED",
+      "fn": "src/lib/football/review-scorecard-foundation-v0/grade-one-x-two.ts",
+      "operational": "src/lib/football/market-baseline-postgame-review-v0/build.ts",
+      "artifact": "data/research/football/2026-08-18-market-baseline-review-v0.json",
+      "predictionImmutable": true,
+      "resultSeparate": true,
+      "drawSupported": true,
+      "passBlockedExcluded": true
+    },
+    "successReview": {
+      "status": "NOT_IMPLEMENTED",
+      "note": "CORRECT/INCORRECT live inside combined RESEARCH_REVIEW"
+    },
+    "failureReview": {
+      "status": "NOT_IMPLEMENTED",
+      "note": "same combined review record"
+    },
+    "scorecard": {
+      "status": "IMPLEMENTED",
+      "artifact": "data/research/football/2026-08-18-market-baseline-scorecard-v0.json",
+      "insufficientSample": true
+    }
+  },
+  "operatorSlate2026_08_20": {
+    "observed": 23,
+    "matchedRegistered": 0,
+    "identityBlocked": 5,
+    "unregistered": 18,
+    "causes": {
+      "unregisteredMls": 15,
+      "unregisteredCopaLibertadores": 3,
+      "identityBlockedUclLabelMismatch": 4,
+      "identityBlockedLaLigaMissingTeamAlias": 1
+    },
+    "notes": [
+      "Operator join used foundation registry v0 displayName exact match, not competition profiles.",
+      "MLS is profiled but missing from foundation registry v0 → screenshot MLS labeled UNREGISTERED.",
+      "UCL screenshot label !== registry displayName UEFA 챔피언스리그.",
+      "La Liga registered; AT마드/말라가 not in TEAM_ALIASES. Schedule also IDENTITY_BLOCKED for provider 530/535."
+    ],
+    "big5OpeningRecurrenceRisk": "YES",
+    "recurrenceWhy": "Korean operator aliases and exact competition-label match are incomplete; catalog holes (e.g. Atletico 530) also block the research schedule path, not only screenshots."
+  },
+  "modelMaturity": {
+    "predictionClass": "MARKET_BASELINE",
+    "officialEngine": "NONE",
+    "features": [
+      "frozen median-devig 1X2 probabilities",
+      "renormalize to sum 1",
+      "argmax"
+    ],
+    "calibration": false,
+    "validatedSample": {
+      "footballMarketBaselineGraded": 1,
+      "dateKst": "2026-08-18",
+      "matchId": "soccer-api-football-1570337",
+      "verdict": "INCORRECT",
+      "insufficientSample": true
+    },
+    "engineAdmission": "PROHIBITED",
+    "pipelineReadyIsNotModelValidated": true
+  },
+  "openingDayFailureModes": [
+    "Unknown API-Football team ID → IDENTITY_BLOCKED (2026-08-20 Atletico 530 / Malaga 535)",
+    "Canonical ID exists but Odds team bridge missing → no 1X2 join",
+    "Operator screenshot league label ≠ registry displayName (UCL vs UEFA 챔피언스리그; EPL vs 프리미어리그)",
+    "Operator Korean team alias missing on a registered competition",
+    "Official result skips IDENTITY_BLOCKED rows (ELIGIBLE_FORMAT filter)",
+    "FreezeAt >= kickoff → MISSED_SNAPSHOT_FREEZE_WINDOW",
+    "Foundation registry season=2025 used as API season instead of fixture.league.season",
+    "Operator join registry ≠ competition profiles (MLS profiled, operator UNREGISTERED)",
+    "Odds join by team names+kickoff, not fixture ID, if two events share sport-key window",
+    "UCL/UEL mixed into daily prediction slate remain NOT_SUPPORTED_FORMAT"
+  ],
+  "blockers": {
+    "P0": [
+      "Complete Big-5 canonical team catalog from provider team IDs (blocks ELIGIBLE_FORMAT → odds/snapshot/result)",
+      "Complete Big-5 Odds team bridge after canonical IDs exist (sport-key alone cannot join)"
+    ],
+    "P1": [
+      "Operator competition-label aliases (EPL/UCL abbreviations) and Korean team aliases for screenshot slate",
+      "Align foundation registry v0 with competition profiles (MLS, season tag)",
+      "Live /sports re-verify EPL/Serie A/Bundesliga/Ligue 1 sport keys (currently historical NOT_PROBED except La Liga 08-18)"
+    ],
+    "P2": [
+      "Model validation beyond n=1 MARKET_BASELINE sample",
+      "Separate Success/Failure Review products",
+      "UCL/UEL matchFormat support",
+      "legalStatus NEEDS_LEGAL_REVIEW"
+    ]
+  },
+  "recommendedNextMission": "Football Team Identity Catalog Completion v1 — seed provider team IDs for Premier League / La Liga / Serie A / Bundesliga / Ligue 1 so schedule rows can become ELIGIBLE_FORMAT. Odds bridge is the next gate after that.",
+  "leakageSafetyExpected": {
+    "predictionSnapshotProvider": "NO",
+    "marketPredictionProvider": "NO",
+    "resultInput": "NO",
+    "postgameInput": "NO",
+    "lateOdds": "rejected"
+  },
+  "frozenHashesAfter": {
+    "prediction": {
+      "rel": "data/predictions/mlb/2026-08-20.json",
+      "sha256": "67f22360cdc5d797d81d6582516bc183eb034ff54c1231dddb8c27f567f2a3e6"
+    },
+    "freezeClose": {
+      "rel": "data/audits/2026-08-20-pregame-freeze-close-v1.json",
+      "sha256": "7d5bbfceb284711d44eb191fba478be5b110e26b0a709250e0838bb8d3eaca8d"
+    },
+    "inputClose": {
+      "rel": "data/audits/2026-08-20-pregame-input-close-v1.json",
+      "sha256": "d0e2860c27da1a27888dc83d014569435bbe07d9b56ba0da87b30134e4e0730c"
+    },
+    "scopeLock": {
+      "rel": "data/audits/2026-08-20-daily-scope-lock-v1.json",
+      "sha256": "fbc80ab706432e7f2a54713069222d4025439c7768474eec348337064b24ea58"
+    },
+    "footballSchedule": {
+      "rel": "data/research/football/2026-08-20-schedule-v1.json",
+      "sha256": "7318cf39f461d7e5423d82a670e23d040cf3083a6ea1b71dcc6414299b071440"
+    },
+    "confirmed": {
+      "rel": "data/operator-input/mlb/2026-08-20-confirmed-lineup-observation-v0.json",
+      "sha256": "3bb784ce95a35c09b4fa13e52e9157dcb36f166ffb4a0ad7fbc5958de7dca119"
+    },
+    "expected": {
+      "rel": "data/operator-input/mlb/2026-08-20-expected-lineup-observation-v0.json",
+      "sha256": "6548e349f93f7f1603aaee3f25d0a24e68535be1fe71f04d90e771f71d0b1ebc"
+    }
+  }
+}
