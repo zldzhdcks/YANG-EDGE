@@ -1,5 +1,6 @@
 import type { SportFilter } from "@/types/game";
 import { SPORT_FILTERS } from "@/constants/games";
+import { cn } from "@/utils/cn";
 
 type LeagueFilterProps = {
   value: SportFilter;
@@ -8,11 +9,7 @@ type LeagueFilterProps = {
 
 export default function LeagueFilter({ value, onChange }: LeagueFilterProps) {
   return (
-    <div
-      role="tablist"
-      aria-label="종목 선택"
-      className="flex gap-1 overflow-x-auto rounded-lg border border-white/[0.08] bg-zinc-900 p-1"
-    >
+    <div role="group" aria-label="종목 선택" className="flex flex-wrap gap-1.5">
       {SPORT_FILTERS.map((filter) => {
         const isActive = value === filter.id;
 
@@ -20,14 +17,15 @@ export default function LeagueFilter({ value, onChange }: LeagueFilterProps) {
           <button
             key={filter.id}
             type="button"
-            role="tab"
-            aria-selected={isActive}
+            aria-pressed={isActive}
             onClick={() => onChange(filter.id)}
-            className={`shrink-0 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+            className={cn(
+              "rounded-full px-3 py-1.5 text-sm transition-colors",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40",
               isActive
-                ? "bg-blue-600 text-white"
-                : "text-zinc-400 hover:text-white"
-            }`}
+                ? "bg-white/[0.12] font-semibold text-white ring-1 ring-white/20"
+                : "font-medium text-zinc-400 hover:bg-white/[0.04] hover:text-white",
+            )}
           >
             {filter.label}
           </button>

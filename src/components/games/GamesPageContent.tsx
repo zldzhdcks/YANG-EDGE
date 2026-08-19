@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { SportFilter } from "@/types/game";
 import type { GameWithOdds } from "@/types/game-with-odds";
@@ -9,7 +16,10 @@ import {
   buildGamesPath,
   parseGamesDateParam,
 } from "@/lib/datetime/games-date";
-import { buildGamesFilterSummary } from "@/lib/games/filter-summary";
+import {
+  buildGamesFilterSummary,
+  recommendationFilterSummaryLabel,
+} from "@/lib/games/filter-summary";
 import { groupGamesByLeague } from "@/lib/games/group";
 import {
   DEFAULT_RECOMMENDATION_FILTER,
@@ -19,6 +29,7 @@ import {
   writeStoredRecommendationFilter,
   type RecommendationFilterId,
 } from "@/lib/games/recommendation-filter";
+import { cn } from "@/utils/cn";
 import Card from "@/components/ui/Card";
 import SearchBar from "./SearchBar";
 import DatePicker from "./DatePicker";
@@ -118,6 +129,8 @@ export default function GamesPageContent() {
   const [search, setSearch] = useState("");
   const [date, setDate] = useState(dateFromUrl);
   const [sport, setSport] = useState<SportFilter>("all");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const filtersId = useId();
   // SSR은 DEFAULT, 클라이언트는 localStorage (hydration 안전)
   const recommendation = useSyncExternalStore(
     subscribeRecommendationFilter,
@@ -275,51 +288,92 @@ export default function GamesPageContent() {
       pipelineDebug;
   }, [pipelineDebug]);
 
+  const recommendationActive =
+    recommendation !== DEFAULT_RECOMMENDATION_FILTER;
+  const searchActive = search.trim().length > 0;
+  const secondaryFilterActive = recommendationActive || searchActive;
+  const secondaryFilterIndicator = [
+    recommendationActive
+      ? recommendationFilterSummaryLabel(recommendation)
+      : null,
+    searchActive ? "검색" : null,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
-      <div className="mb-8">
+      <div className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight text-white">
           오늘 경기
         </h1>
         <p className="mt-1 text-sm text-zinc-500">
-          경기를 선택하면 EDGE Detail로 이동합니다.
+          선택한 날짜의 경기와 분석 상태를 확인하세요.
         </p>
       </div>
 
-      {process.env.NODE_ENV !== "production" && state === "success" && (
-        <pre
-          data-testid="games-pipeline-debug"
-          className="mb-4 overflow-x-auto rounded-lg border border-amber-500/40 bg-amber-500/10 p-3 text-[11px] leading-relaxed text-amber-100"
-        >
-          {`[games pipeline]
-1 API fetch → state: KBO ${pipelineDebug.state.kbo} / NPB ${pipelineDebug.state.npb} (total ${pipelineDebug.state.total}) url=${pipelineDebug.apiFetchUrl} frozen=${pipelineDebug.usedFrozenSlate}
-2 filtered: KBO ${pipelineDebug.filtered.kbo} / NPB ${pipelineDebug.filtered.npb}
-3 grouped: KBO ${pipelineDebug.grouped.kbo} (visible ${pipelineDebug.grouped.kboVisible}) / NPB ${pipelineDebug.grouped.npb} (visible ${pipelineDebug.grouped.npbVisible})
-4 rendered: see section data-visible-count (must match grouped visible)`}
-        </pre>
-      )}
-
       <div className="space-y-4">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <SearchBar value={search} onChange={setSearch} />
-          <DatePicker value={date} today={today} onChange={setDateAndUrl} />
-        </div>
-
+        <DatePicker value={date} today={today} onChange={setDateAndUrl} />
         <LeagueFilter value={sport} onChange={setSport} />
-        <RecommendationFilter
-          value={recommendation}
-          onChange={handleRecommendationChange}
-          counts={recommendationCounts}
-        />
+
+        <div>
+          <button
+            type="button"
+            aria-expanded={filtersOpen}
+            aria-controls={filtersId}
+            aria-label={
+              secondaryFilterActive
+                ? `필터, ${secondaryFilterIndicator} 적용 중`
+                : "필터"
+            }
+            onClick={() => setFiltersOpen((open) => !open)}
+            className={cn(
+              "inline-flex max-w-full flex-wrap items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40",
+              secondaryFilterActive
+                ? "border-white/20 font-medium text-white"
+                : "border-white/[0.08] font-medium text-zinc-400 hover:border-white/[0.14] hover:text-white",
+            )}
+          >
+            <span>필터</span>
+            {secondaryFilterActive && (
+              <>
+                <span
+                  aria-hidden="true"
+                  className="h-1.5 w-1.5 rounded-full bg-white"
+                />
+                <span className="min-w-0 text-zinc-300">
+                  · {secondaryFilterIndicator}
+                </span>
+              </>
+            )}
+            <span className="text-zinc-500" aria-hidden="true">
+              {filtersOpen ? "▴" : "▾"}
+            </span>
+          </button>
+
+          <div id={filtersId} hidden={!filtersOpen} className="mt-3 space-y-3">
+            <div>
+              <p className="mb-1.5 text-xs text-zinc-500">팀 검색</p>
+              <SearchBar value={search} onChange={setSearch} />
+            </div>
+            <div>
+              <p className="mb-1.5 text-xs text-zinc-500">추천 상태</p>
+              <RecommendationFilter
+                value={recommendation}
+                onChange={handleRecommendationChange}
+                counts={recommendationCounts}
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-6">
         {showSummary && (
-          <div className="mb-4">
-            <p className="text-sm leading-relaxed text-zinc-400">
-              {filterSummary}
-            </p>
-          </div>
+          <p className="mb-3 text-xs tabular-nums text-zinc-500">
+            {filterSummary}
+          </p>
         )}
 
         <GamesResult state={state} items={filteredItems} listDate={date} />
@@ -339,41 +393,29 @@ function GamesResult({
 }) {
   if (state === "loading") {
     return (
-      <Card padding="none" className="rounded-xl px-6 py-16 text-center">
-        <p className="text-sm font-medium text-zinc-400">
-          경기 일정을 불러오는 중...
-        </p>
-      </Card>
+      <StatusMessage>경기 일정을 불러오는 중...</StatusMessage>
     );
   }
 
   if (state === "error") {
-    return (
-      <Card padding="none" className="rounded-xl px-6 py-16 text-center">
-        <p className="text-sm font-medium text-zinc-400">
-          경기 일정을 불러오지 못했습니다.
-        </p>
-        <p className="mt-1 text-xs text-zinc-500">
-          잠시 후 다시 시도해 주세요.
-        </p>
-      </Card>
-    );
+    return <StatusMessage>경기 일정을 불러오지 못했습니다.</StatusMessage>;
   }
 
   // 날짜에 경기가 아예 없을 때만 날짜 빈 상태
   if (state === "empty") {
     return (
-      <Card padding="none" className="rounded-xl px-6 py-16 text-center">
-        <p className="text-sm font-medium text-zinc-400">
-          선택한 날짜에 등록된 경기가 없습니다.
-        </p>
-        <p className="mt-1 text-xs text-zinc-500">
-          다른 날짜나 종목을 선택해 보세요.
-        </p>
-      </Card>
+      <StatusMessage>선택한 날짜에 등록된 경기가 없습니다.</StatusMessage>
     );
   }
 
   // 필터 결과 0건 → GameList 빈 안내 ("조건에 맞는 경기가 없습니다.")
   return <GameList items={items} listDate={listDate} />;
+}
+
+function StatusMessage({ children }: { children: string }) {
+  return (
+    <Card padding="none" className="rounded-xl px-4 py-8 text-center">
+      <p className="text-sm font-medium text-zinc-400">{children}</p>
+    </Card>
+  );
 }

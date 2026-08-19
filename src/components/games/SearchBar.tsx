@@ -24,7 +24,7 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="팀명, 리그 검색"
-        className="h-10 w-full rounded-lg border border-white/[0.08] bg-zinc-900 pr-4 pl-10 text-sm text-white placeholder:text-zinc-500 focus:border-blue-500/40 focus:outline-none"
+        className="h-10 w-full rounded-lg border border-white/[0.08] bg-zinc-900 pr-4 pl-10 text-sm text-white placeholder:text-zinc-500 focus:border-blue-500/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
       />
     </label>
   );

@@ -8,10 +8,12 @@ import {
   type OddsAvailability,
 } from "@/types/game-with-odds";
 import Badge from "@/components/ui/Badge";
-import { buttonClasses } from "@/components/ui/Button";
 import AnalysisNavLink from "@/components/analysis/AnalysisNavLink";
 import PredictionResultBadge from "@/components/research/PredictionResultBadge";
 import { getMatchDisplayLabel, getTeamDisplayName } from "@/lib/teams";
+import { cn } from "@/utils/cn";
+
+type GameCardDensity = "standard" | "compact";
 
 type GameCardProps = {
   game: GameData;
@@ -45,6 +47,8 @@ type GameCardProps = {
   researchOutcome?: GameResearchOutcomeDisplay | null;
   /** 리그 그룹 헤더가 있을 때 카드 내 리그 라벨 숨김 */
   hideLeague?: boolean;
+  /** compact: /games 목록. standard: 기존 밀도 (다른 consumer 호환) */
+  density?: GameCardDensity;
 };
 
 function formatOdds(value: number): string {
@@ -189,6 +193,33 @@ function ResearchOutcomeRow({
   );
 }
 
+function CompactResearchResult({
+  outcome,
+}: {
+  outcome: GameResearchOutcomeDisplay;
+}) {
+  return (
+    <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs tabular-nums text-zinc-400">
+      <span>
+        {outcome.awayScore}–{outcome.homeScore}
+      </span>
+      <span className="inline-flex items-center gap-1 text-zinc-300">
+        {outcome.predictionHit ? (
+          <>
+            <span aria-hidden="true">✓</span>
+            적중
+          </>
+        ) : (
+          <>
+            <span aria-hidden="true">×</span>
+            실패
+          </>
+        )}
+      </span>
+    </p>
+  );
+}
+
 /** recommendation-grade 색 토큰 → 기존 Badge variant (새 색 추가 없음) */
 function gradeBadgeVariant(
   color: GameRecommendationGrade["color"],
@@ -204,6 +235,57 @@ function gradeBadgeVariant(
     default:
       return "default";
   }
+}
+
+function CompactGameCardBody({
+  game,
+  recommendation = null,
+  researchOutcome = null,
+}: Pick<GameCardProps, "game" | "recommendation" | "researchOutcome">) {
+  const awayName = getTeamDisplayName({
+    originalName: game.awayTeam,
+    sport: game.sport,
+    league: game.league,
+  });
+  const homeName = getTeamDisplayName({
+    originalName: game.homeTeam,
+    sport: game.sport,
+    league: game.league,
+  });
+  return (
+    <div className="flex items-start gap-3 py-0.5">
+      <p className="w-12 shrink-0 pt-0.5 text-sm tabular-nums text-zinc-400">
+        {game.startTime}
+      </p>
+
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-medium break-words text-white">
+          <span className="sr-only">원정 </span>
+          {awayName}
+        </p>
+        <p className="text-sm break-words text-zinc-300">
+          <span className="sr-only">홈 </span>
+          {homeName}
+        </p>
+        {researchOutcome && <CompactResearchResult outcome={researchOutcome} />}
+      </div>
+
+      <div className="flex shrink-0 flex-col items-end gap-1 pt-0.5">
+        {recommendation != null && (
+          <Badge
+            variant={gradeBadgeVariant(recommendation.color)}
+            className="px-1.5 py-0.5 tracking-wide"
+          >
+            {recommendation.grade}
+          </Badge>
+        )}
+        <span className="text-xs font-medium text-zinc-500 group-hover:text-zinc-300">
+          분석 보기
+          <span aria-hidden="true"> →</span>
+        </span>
+      </div>
+    </div>
+  );
 }
 
 function GameCardBody({
@@ -233,7 +315,7 @@ function GameCardBody({
               <p className="text-xs font-medium text-zinc-500">{game.league}</p>
             )}
             <h3
-              className={`text-base font-semibold text-white sm:text-lg ${hideLeague ? "" : "mt-1"}`}
+              className={`text-base font-semibold break-words text-white sm:text-lg ${hideLeague ? "" : "mt-1"}`}
             >
               {matchLabel}
             </h3>
@@ -276,13 +358,9 @@ function GameCardBody({
         )}
       </div>
 
-      <span
-        className={buttonClasses({
-          size: "sm",
-          className: "h-9 shrink-0 px-4 text-sm group-hover:bg-blue-500",
-        })}
-      >
-        연구 보기
+      <span className="shrink-0 pt-1 text-sm font-medium text-zinc-500 group-hover:text-zinc-300">
+        분석 보기
+        <span aria-hidden="true"> →</span>
       </span>
     </div>
   );
@@ -298,9 +376,14 @@ export default function GameCard({
   recommendation = null,
   researchOutcome = null,
   hideLeague = false,
+  density = "standard",
 }: GameCardProps) {
-  const wrapperClass =
-    "group block w-full border-b border-white/[0.06] py-5 first:pt-0 last:border-b-0 last:pb-0";
+  const isCompact = density === "compact";
+  const wrapperClass = cn(
+    "group block w-full border-b border-white/[0.06] text-left last:border-b-0",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#09090b]",
+    isCompact ? "py-3" : "py-5 first:pt-0 last:pb-0",
+  );
 
   return (
     <AnalysisNavLink
@@ -308,16 +391,24 @@ export default function GameCard({
       fromDate={fromDate}
       className={wrapperClass}
     >
-      <GameCardBody
-        game={game}
-        odds={odds}
-        oddsComparison={oddsComparison}
-        oddsAvailability={oddsAvailability}
-        oddsUnavailableReason={oddsUnavailableReason}
-        recommendation={recommendation}
-        researchOutcome={researchOutcome}
-        hideLeague={hideLeague}
-      />
+      {isCompact ? (
+        <CompactGameCardBody
+          game={game}
+          recommendation={recommendation}
+          researchOutcome={researchOutcome}
+        />
+      ) : (
+        <GameCardBody
+          game={game}
+          odds={odds}
+          oddsComparison={oddsComparison}
+          oddsAvailability={oddsAvailability}
+          oddsUnavailableReason={oddsUnavailableReason}
+          recommendation={recommendation}
+          researchOutcome={researchOutcome}
+          hideLeague={hideLeague}
+        />
+      )}
     </AnalysisNavLink>
   );
 }

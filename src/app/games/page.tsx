@@ -7,7 +7,7 @@ import Card from "@/components/ui/Card";
 
 export const metadata: Metadata = {
   title: "오늘 경기 | YANG EDGE",
-  description: "오늘의 축구, 야구, 농구 경기를 확인하고 EDGE Detail로 이동하세요.",
+  description: "선택한 날짜의 경기를 확인하고 분석으로 이동하세요.",
 };
 
 /**
@@ -23,7 +23,7 @@ export default function GamesPage() {
         <Suspense
           fallback={
             <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
-              <Card padding="none" className="rounded-xl px-6 py-16 text-center">
+              <Card padding="none" className="rounded-xl px-4 py-8 text-center">
                 <p className="text-sm font-medium text-zinc-400">
                   경기 일정을 불러오는 중...
                 </p>

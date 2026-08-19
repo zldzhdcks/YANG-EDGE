@@ -31,7 +31,7 @@ export default function DatePicker({ value, today, onChange }: DatePickerProps) 
           type="date"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="h-10 w-full min-w-[9.5rem] rounded-lg border border-white/[0.08] bg-zinc-900 px-3 text-sm text-white focus:border-blue-500/40 focus:outline-none sm:w-40 [color-scheme:dark]"
+          className="h-10 w-full min-w-[9.5rem] rounded-lg border border-white/[0.08] bg-zinc-900 px-3 text-sm text-white focus:border-blue-500/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 sm:w-40 [color-scheme:dark]"
         />
       </label>
 

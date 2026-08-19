@@ -20,12 +20,9 @@ type GameListProps = {
 export default function GameList({ items, listDate }: GameListProps) {
   if (items.length === 0) {
     return (
-      <Card padding="none" className="rounded-xl px-6 py-16 text-center">
+      <Card padding="none" className="rounded-xl px-4 py-8 text-center">
         <p className="text-sm font-medium text-zinc-400">
           조건에 맞는 경기가 없습니다.
-        </p>
-        <p className="mt-1 text-xs text-zinc-500">
-          검색어나 종목, 날짜를 변경해 보세요.
         </p>
       </Card>
     );
@@ -60,14 +57,16 @@ function LeagueSection({
       data-visible-count={shown.length}
       data-rendered-count={shown.length}
     >
-      <div className="mb-3 flex items-baseline justify-between gap-3">
+      <div className="mb-2 flex items-baseline justify-between gap-3">
         <h2 className="text-sm font-semibold tracking-wide text-white">
           {group.league}
         </h2>
-        <p className="text-xs text-zinc-500">{group.totalCount}경기</p>
+        <p className="text-xs tabular-nums text-zinc-500">
+          {group.totalCount}경기
+        </p>
       </div>
 
-      <Card padding="none" className="rounded-xl px-4 sm:px-6">
+      <div className="border-t border-white/[0.06]">
         {shown.map((item) => (
           <GameCard
             key={item.game.id || getStableGameRenderKey(item.game)}
@@ -80,15 +79,16 @@ function LeagueSection({
             researchOutcome={item.researchOutcome ?? null}
             hideLeague
             fromDate={listDate}
+            density="compact"
           />
         ))}
-      </Card>
+      </div>
 
       {!fullSlate && group.hasMore && !expanded && (
         <button
           type="button"
           onClick={() => setExpanded(true)}
-          className="mt-3 w-full rounded-lg border border-white/[0.08] py-2.5 text-sm font-medium text-zinc-400 transition-colors hover:border-white/[0.16] hover:text-white"
+          className="mt-3 w-full rounded-lg border border-white/[0.08] py-2 text-sm font-medium text-zinc-400 transition-colors hover:border-white/[0.16] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
         >
           {group.hiddenCount}경기 더 보기
         </button>

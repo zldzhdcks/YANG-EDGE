@@ -3,6 +3,7 @@ import {
   type RecommendationFilterCounts,
   type RecommendationFilterId,
 } from "@/lib/games/recommendation-filter";
+import { cn } from "@/utils/cn";
 
 type RecommendationFilterProps = {
   value: RecommendationFilterId;
@@ -17,9 +18,9 @@ export default function RecommendationFilter({
 }: RecommendationFilterProps) {
   return (
     <div
-      role="tablist"
+      role="group"
       aria-label="추천 등급 필터"
-      className="flex gap-1 overflow-x-auto rounded-lg border border-white/[0.08] bg-zinc-900 p-1"
+      className="flex flex-wrap gap-1.5"
     >
       {RECOMMENDATION_FILTERS.map((filter) => {
         const isActive = value === filter.id;
@@ -29,20 +30,22 @@ export default function RecommendationFilter({
           <button
             key={filter.id}
             type="button"
-            role="tab"
-            aria-selected={isActive}
+            aria-pressed={isActive}
             onClick={() => onChange(filter.id)}
-            className={`shrink-0 rounded-md px-3 py-2 text-sm font-medium transition-colors sm:px-4 ${
+            className={cn(
+              "rounded-full px-3 py-1.5 text-sm transition-colors",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40",
               isActive
-                ? "bg-blue-600 text-white"
-                : "text-zinc-400 hover:text-white"
-            }`}
+                ? "bg-white/[0.12] font-semibold text-white ring-1 ring-white/20"
+                : "font-medium text-zinc-400 hover:bg-white/[0.04] hover:text-white",
+            )}
           >
             <span>{filter.label}</span>
             <span
-              className={`ml-1.5 tabular-nums text-xs font-normal ${
-                isActive ? "text-blue-100/80" : "text-zinc-500"
-              }`}
+              className={cn(
+                "ml-1.5 tabular-nums text-xs font-normal",
+                isActive ? "text-zinc-300" : "text-zinc-500",
+              )}
             >
               {count}
             </span>
