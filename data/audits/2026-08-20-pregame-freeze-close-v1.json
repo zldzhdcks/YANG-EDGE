@@ -1,0 +1,183 @@
+{
+  "schemaVersion": "yang-edge-pregame-freeze-close-v1",
+  "dateKst": "2026-08-20",
+  "generatedAt": "2026-08-19T16:29:35.302Z",
+  "researchOnly": true,
+  "MLB": {
+    "scheduleGames": 15,
+    "predictionRows": 15,
+    "predictionHash": "334a67a4038626c681f6437f4373053de0b900f3b9ff4afe649dfd27481ab473",
+    "inputHash": "d5b2f53dc343be25353103ee4a90c200d7092af87ae143fdeef18b9d7be89dad",
+    "eligible": 3,
+    "pass": 14,
+    "blocked": 1,
+    "limitedInput": 11,
+    "good": 0,
+    "predictedAt": "2026-08-19T16:27:02.247Z",
+    "generatedAt": "2026-08-19T16:27:22.953Z",
+    "firstPitchUtc": "2026-08-19T16:35:00Z",
+    "firstPitchKst": "2026-08-20 01:35 KST",
+    "minutesBeforeFirstPitch": 8,
+    "allBeforeKickoff": true,
+    "lateFreezeRows": 0,
+    "schemaVersion": "mlb-research-prediction-snapshot-v1",
+    "researchOnly": true,
+    "resultsFetched": false,
+    "engineRerun": false,
+    "officialPickCount": 0,
+    "starterProbable": 28,
+    "starterMissing": 2,
+    "officialLineupConfirmed": 3,
+    "officialLineupNotReleased": 11,
+    "inventedValues": 0,
+    "snapshotRel": "data/predictions/mlb/2026-08-20.json",
+    "dailySummaryRel": "data/research/mlb/2026-08-20-daily-research-summary-v1.json",
+    "sourceFiles": {
+      "dailySummary": "2026-08-20-daily-research-summary-v1.json",
+      "schedule": "2026-08-20-schedule-v1.json",
+      "starter": "2026-08-20-starter-dataset-v1.json",
+      "odds": "2026-08-20-odds-history-dataset-v1.json",
+      "lineup": "2026-08-20-lineup-dataset-v1.json"
+    }
+  },
+  "FOOTBALL": {
+    "scopeGames": 23,
+    "predictionEligible": 0,
+    "validBlocked": 23,
+    "predictionGenerated": 0,
+    "engineCalled": false,
+    "postgameAccess": false
+  },
+  "officialLineupSemanticMismatch": {
+    "postGameLabelRows": 8,
+    "selectedRows": 8,
+    "selectedBeforeCutoff": 8,
+    "lateRowsSelected": 0,
+    "resultDerivedFieldsUsed": 0,
+    "rawArtifactRewritten": false,
+    "selected": [
+      {
+        "gamePk": 824640,
+        "team": "Chicago White Sox",
+        "sourceTimestamp": "2026-08-19T16:06:11.310Z",
+        "cutoffTime": "2026-08-19T18:20:00Z",
+        "collectionStatus": "PARTIAL"
+      },
+      {
+        "gamePk": 824640,
+        "team": "Chicago Cubs",
+        "sourceTimestamp": "2026-08-19T16:06:11.310Z",
+        "cutoffTime": "2026-08-19T18:20:00Z",
+        "collectionStatus": "PARTIAL"
+      },
+      {
+        "gamePk": 823664,
+        "team": "Atlanta Braves",
+        "sourceTimestamp": "2026-08-19T16:06:10.132Z",
+        "cutoffTime": "2026-08-19T17:40:00Z",
+        "collectionStatus": "CONFIRMED"
+      },
+      {
+        "gamePk": 823664,
+        "team": "Minnesota Twins",
+        "sourceTimestamp": "2026-08-19T16:06:10.132Z",
+        "cutoffTime": "2026-08-19T17:40:00Z",
+        "collectionStatus": "CONFIRMED"
+      },
+      {
+        "gamePk": 823587,
+        "team": "San Diego Padres",
+        "sourceTimestamp": "2026-08-19T16:06:09.950Z",
+        "cutoffTime": "2026-08-19T17:10:00Z",
+        "collectionStatus": "CONFIRMED"
+      },
+      {
+        "gamePk": 823587,
+        "team": "New York Mets",
+        "sourceTimestamp": "2026-08-19T16:06:09.950Z",
+        "cutoffTime": "2026-08-19T17:10:00Z",
+        "collectionStatus": "CONFIRMED"
+      },
+      {
+        "gamePk": 823342,
+        "team": "Detroit Tigers",
+        "sourceTimestamp": "2026-08-19T16:06:09.590Z",
+        "cutoffTime": "2026-08-19T16:35:00Z",
+        "collectionStatus": "CONFIRMED"
+      },
+      {
+        "gamePk": 823342,
+        "team": "Pittsburgh Pirates",
+        "sourceTimestamp": "2026-08-19T16:06:09.590Z",
+        "cutoffTime": "2026-08-19T16:35:00Z",
+        "collectionStatus": "CONFIRMED"
+      }
+    ]
+  },
+  "operatorWiring": {
+    "confirmedWiredToEngine": false,
+    "expectedWiredToEngine": false,
+    "koreanOddsWiredToEngine": false,
+    "starterPostgameReviewReferenced": false
+  },
+  "accountedTotal": 38,
+  "scopeShrink": 0,
+  "unexplainedMissing": 0,
+  "providerCalls": 0,
+  "resultCalls": 0,
+  "gradeCalls": 0,
+  "reviewCalls": 0,
+  "postgameCalls": 0,
+  "engineMutation": false,
+  "engineRerun": false,
+  "dailySummaryHashBeforePrediction": "a7d970a1843e6feaf42be80e8ae25a34727801d30e051cc4f481163f7846da47",
+  "dailySummaryHashAfter": "a7d970a1843e6feaf42be80e8ae25a34727801d30e051cc4f481163f7846da47",
+  "dailySummaryUnchanged": true,
+  "predictionArtifactSha256": "67f22360cdc5d797d81d6582516bc183eb034ff54c1231dddb8c27f567f2a3e6",
+  "inputHashesBefore": {
+    "mlbSchedule": "26530269c11b37f69e6a4cd8021eaceef02b7f3058dc5495cdcda80a4a275792",
+    "starter": "2aff99ba032097a7b254f963f0caeab8492c30af42a519c4156faff8005a601e",
+    "providerOdds": "def25d53fee103818190c48e68347240e25b14533a88b723a125bc2fbd3855e1",
+    "officialLineup": "88866df06ad0cea69a6a51e4d26ef88099e21d93660b1b70fcbe260343592fab",
+    "confirmedLineupObservation": "3bb784ce95a35c09b4fa13e52e9157dcb36f166ffb4a0ad7fbc5958de7dca119",
+    "expectedLineupObservation": "6548e349f93f7f1603aaee3f25d0a24e68535be1fe71f04d90e771f71d0b1ebc",
+    "koreanMarketOddsObservation": "ecddef8bf92ed62c144b77941ace47b7556a65bd88aa05ea5ed790a0c4cab04b",
+    "dailyScopeLock": "fbc80ab706432e7f2a54713069222d4025439c7768474eec348337064b24ea58",
+    "pregameInputClose": "d0e2860c27da1a27888dc83d014569435bbe07d9b56ba0da87b30134e4e0730c",
+    "footballSchedule": "7318cf39f461d7e5423d82a670e23d040cf3083a6ea1b71dcc6414299b071440",
+    "operatorStructured": "6c8c8d5a74476614afe5905b05d4a331be72ed89d80fe8b372c0e60b09a37877",
+    "scopeJoin": "29458d18a671e8a89d570c54d8d92953d0dc95ead0201436428fc9375cf0f969"
+  },
+  "inputHashesAfter": {
+    "mlbSchedule": "26530269c11b37f69e6a4cd8021eaceef02b7f3058dc5495cdcda80a4a275792",
+    "starter": "2aff99ba032097a7b254f963f0caeab8492c30af42a519c4156faff8005a601e",
+    "providerOdds": "def25d53fee103818190c48e68347240e25b14533a88b723a125bc2fbd3855e1",
+    "officialLineup": "88866df06ad0cea69a6a51e4d26ef88099e21d93660b1b70fcbe260343592fab",
+    "confirmedLineupObservation": "3bb784ce95a35c09b4fa13e52e9157dcb36f166ffb4a0ad7fbc5958de7dca119",
+    "expectedLineupObservation": "6548e349f93f7f1603aaee3f25d0a24e68535be1fe71f04d90e771f71d0b1ebc",
+    "koreanMarketOddsObservation": "ecddef8bf92ed62c144b77941ace47b7556a65bd88aa05ea5ed790a0c4cab04b",
+    "dailyScopeLock": "fbc80ab706432e7f2a54713069222d4025439c7768474eec348337064b24ea58",
+    "pregameInputClose": "d0e2860c27da1a27888dc83d014569435bbe07d9b56ba0da87b30134e4e0730c",
+    "footballSchedule": "7318cf39f461d7e5423d82a670e23d040cf3083a6ea1b71dcc6414299b071440",
+    "operatorStructured": "6c8c8d5a74476614afe5905b05d4a331be72ed89d80fe8b372c0e60b09a37877",
+    "scopeJoin": "29458d18a671e8a89d570c54d8d92953d0dc95ead0201436428fc9375cf0f969"
+  },
+  "allFrozenInputsUnchanged": true,
+  "stageStatus": "C_PREGAME_FREEZE_DONE",
+  "leakage": {
+    "providerCalls": 0,
+    "builderCollectorCalls": 0,
+    "resultCalls": 0,
+    "gradeCalls": 0,
+    "reviewCalls": 0,
+    "postgameCalls": 0,
+    "scorecardCalls": 0,
+    "recommendationRerunCalls": 0,
+    "engineMutation": false,
+    "canonicalPredictionEngineExecution": 1,
+    "expectedLineupWiredIntoEngine": false,
+    "confirmedLineupWiredIntoEngine": false,
+    "koreanMarketOddsWiredIntoEngine": false,
+    "starterPostgameReviewReferenced": false
+  }
+}

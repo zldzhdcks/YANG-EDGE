@@ -1,0 +1,1416 @@
+{
+  "meta": {
+    "version": "mlb-research-prediction-snapshot-v1",
+    "dateKst": "2026-08-20",
+    "league": "MLB",
+    "kind": "research-prediction-snapshot",
+    "generatedAt": "2026-08-19T16:27:22.953Z",
+    "predictedAt": "2026-08-19T16:27:02.247Z",
+    "purchaseEligible": false,
+    "researchOnly": true,
+    "purchaseReason": "RESEARCH_DATASET_ONLY",
+    "bettingLine": false,
+    "engineRerun": false,
+    "resultsFetched": false,
+    "immutablePredictionFields": [
+      "predictionId",
+      "gameId",
+      "externalId",
+      "dateKst",
+      "startTimeKst",
+      "league",
+      "homeTeam",
+      "awayTeam",
+      "baselinePick",
+      "modelProbability",
+      "edgeScore",
+      "confidence",
+      "recommendationGrade",
+      "baselineStatus",
+      "marketProbability",
+      "valueEdge",
+      "openingOdds",
+      "latestOdds",
+      "oddsMovement",
+      "pitcherDirection",
+      "pitcherReviewAvailable",
+      "dataAvailability",
+      "usedFactors",
+      "missingFactors",
+      "purchaseEligible",
+      "researchOnly",
+      "purchaseReason",
+      "predictedAt",
+      "sourceSnapshotVersions",
+      "snapshotIntegrity",
+      "integrityWarnings",
+      "inputStatus",
+      "inputWarnings"
+    ],
+    "sourceFiles": {
+      "dailySummary": "2026-08-20-daily-research-summary-v1.json",
+      "schedule": "2026-08-20-schedule-v1.json",
+      "starter": "2026-08-20-starter-dataset-v1.json",
+      "odds": "2026-08-20-odds-history-dataset-v1.json",
+      "lineup": "2026-08-20-lineup-dataset-v1.json"
+    },
+    "sourceGeneratedAt": {
+      "dailySummary": "2026-08-19T16:27:02.247Z"
+    },
+    "sourceSnapshotVersions": {
+      "dailySummary": "mlb-daily-research-summary-v1",
+      "schedule": "mlb-schedule-v1",
+      "starter": "mlb-starter-dataset-v1",
+      "odds": "mlb-odds-history-dataset-v1",
+      "lineup": "mlb-lineup-dataset-v1"
+    },
+    "predictionHashSha256": "334a67a4038626c681f6437f4373053de0b900f3b9ff4afe649dfd27481ab473",
+    "deterministic": true,
+    "duplicateSafe": true,
+    "inputManifest": {
+      "schemaVersion": "mlb-prediction-input-manifest-v1",
+      "dateKst": "2026-08-20",
+      "createdAt": "2026-08-19T16:27:22.940Z",
+      "dailySummary": {
+        "artifact": "2026-08-20-daily-research-summary-v1.json",
+        "schemaVersion": "mlb-daily-research-summary-v1",
+        "pipelineVersion": "mlb-daily-research-v1.1",
+        "researchReadyPercent": 74
+      },
+      "inputs": {
+        "schedule": {
+          "artifact": "2026-08-20-schedule-v1.json",
+          "status": "READY"
+        },
+        "starter": {
+          "artifact": "2026-08-20-starter-dataset-v1.json",
+          "status": "PARTIAL"
+        },
+        "odds": {
+          "artifact": "2026-08-20-odds-history-dataset-v1.json",
+          "status": "READY"
+        },
+        "lineup": {
+          "artifact": "2026-08-20-lineup-dataset-v1.json",
+          "status": "PARTIAL"
+        }
+      },
+      "cutoffTime": "2026-08-20T00:40:00Z",
+      "cutoffPolicy": "per-game commenceTimeUtc validation across Schedule/Starter/Odds/Lineup artifacts",
+      "inputHash": "d5b2f53dc343be25353103ee4a90c200d7092af87ae143fdeef18b9d7be89dad",
+      "warnings": [
+        "LINEUP_DATASET_PARTIAL",
+        "STARTER_DATASET_PARTIAL",
+        "mlb-baltimore-orioles-new-york-yankees:LIMITED_INPUT",
+        "mlb-boston-red-sox-arizona-diamondbacks:LIMITED_INPUT",
+        "mlb-chicago-cubs-chicago-white-sox:LIMITED_INPUT",
+        "mlb-cincinnati-reds-st-louis-cardinals:LIMITED_INPUT",
+        "mlb-cleveland-guardians-san-francisco-giants:LIMITED_INPUT",
+        "mlb-colorado-rockies-los-angeles-dodgers:LIMITED_INPUT",
+        "mlb-houston-astros-los-angeles-angels:LIMITED_INPUT",
+        "mlb-kansas-city-royals-athletics:BLOCKED",
+        "mlb-milwaukee-brewers-seattle-mariners:LIMITED_INPUT",
+        "mlb-philadelphia-phillies-miami-marlins:LIMITED_INPUT",
+        "mlb-tampa-bay-rays-toronto-blue-jays:LIMITED_INPUT",
+        "mlb-texas-rangers-washington-nationals:LIMITED_INPUT"
+      ]
+    },
+    "note": "Prediction consumer reads existing MLB research artifacts only. No provider calls, no builder execution, no Research Ready weighting in engine."
+  },
+  "summary": {
+    "total": 15,
+    "BASELINE_CANDIDATE": 0,
+    "PASS": 14,
+    "researchBaselinePass": 0,
+    "researchBaselineInsufficient": 15,
+    "MARKET_CONFLICT": 0,
+    "INSUFFICIENT": 15,
+    "officialStatus": {
+      "ELIGIBLE": 0,
+      "PASS": 14,
+      "BLOCKED": 1
+    },
+    "purchaseEligible": 0,
+    "researchOnly": 15,
+    "snapshotIntegrityVerified": 3,
+    "snapshotIntegrityUnverified": 12,
+    "unchangedOnRerun": false,
+    "preservedExistingPredictions": 0,
+    "preservedGradedResults": 0,
+    "eligibleGames": 3,
+    "limitedInputGames": 11,
+    "blockedGames": 1
+  },
+  "predictions": [
+    {
+      "predictionId": "mlb-research-2026-08-20-mlb-baltimore-orioles-new-york-yankees",
+      "gameId": "mlb-baltimore-orioles-new-york-yankees",
+      "externalId": "baltimore-orioles-new-york-yankees",
+      "dateKst": "2026-08-20",
+      "startTimeKst": "07:35",
+      "league": "MLB",
+      "homeTeam": "Baltimore Orioles",
+      "awayTeam": "New York Yankees",
+      "baselinePick": "New York Yankees",
+      "modelProbability": 52,
+      "edgeScore": -1.8,
+      "confidence": 35,
+      "recommendationGrade": "PASS",
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 53,
+      "valueEdge": -1.2,
+      "openingOdds": 2.12,
+      "latestOdds": 2.12,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": "AWAY_EDGE",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "선발투수",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-19T16:27:02.247Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "UNVERIFIED",
+      "integrityWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null,
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "LINEUP_NOT_CONFIRMED",
+        "BASELINE_INSUFFICIENT",
+        "LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "researchBaseline": {
+        "pick": "New York Yankees",
+        "confidence": 35,
+        "modelProbability": 52,
+        "researchOnly": true
+      }
+    },
+    {
+      "predictionId": "mlb-research-2026-08-20-mlb-boston-red-sox-arizona-diamondbacks",
+      "gameId": "mlb-boston-red-sox-arizona-diamondbacks",
+      "externalId": "boston-red-sox-arizona-diamondbacks",
+      "dateKst": "2026-08-20",
+      "startTimeKst": "05:10",
+      "league": "MLB",
+      "homeTeam": "Boston Red Sox",
+      "awayTeam": "Arizona Diamondbacks",
+      "baselinePick": "Boston Red Sox",
+      "modelProbability": 53,
+      "edgeScore": 2.7,
+      "confidence": 35,
+      "recommendationGrade": "PASS",
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 60,
+      "valueEdge": -7.4,
+      "openingOdds": 1.66,
+      "latestOdds": 1.66,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": "HOME_EDGE",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "선발투수",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-19T16:27:02.247Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "UNVERIFIED",
+      "integrityWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null,
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "LINEUP_NOT_CONFIRMED",
+        "BASELINE_INSUFFICIENT",
+        "LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "researchBaseline": {
+        "pick": "Boston Red Sox",
+        "confidence": 35,
+        "modelProbability": 53,
+        "researchOnly": true
+      }
+    },
+    {
+      "predictionId": "mlb-research-2026-08-20-mlb-chicago-cubs-chicago-white-sox",
+      "gameId": "mlb-chicago-cubs-chicago-white-sox",
+      "externalId": "chicago-cubs-chicago-white-sox",
+      "dateKst": "2026-08-20",
+      "startTimeKst": "03:20",
+      "league": "MLB",
+      "homeTeam": "Chicago Cubs",
+      "awayTeam": "Chicago White Sox",
+      "baselinePick": "Chicago White Sox",
+      "modelProbability": 50,
+      "edgeScore": -0.5,
+      "confidence": 34,
+      "recommendationGrade": "PASS",
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 42,
+      "valueEdge": 8.1,
+      "openingOdds": 1.72,
+      "latestOdds": 1.72,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": "AWAY_EDGE",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "선발투수",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-19T16:27:02.247Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "UNVERIFIED",
+      "integrityWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null,
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "LINEUP_NOT_CONFIRMED",
+        "BASELINE_INSUFFICIENT",
+        "LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "researchBaseline": {
+        "pick": "Chicago White Sox",
+        "confidence": 34,
+        "modelProbability": 50,
+        "researchOnly": true
+      }
+    },
+    {
+      "predictionId": "mlb-research-2026-08-20-mlb-cincinnati-reds-st-louis-cardinals",
+      "gameId": "mlb-cincinnati-reds-st-louis-cardinals",
+      "externalId": "cincinnati-reds-st-louis-cardinals",
+      "dateKst": "2026-08-20",
+      "startTimeKst": "07:40",
+      "league": "MLB",
+      "homeTeam": "Cincinnati Reds",
+      "awayTeam": "St. Louis Cardinals",
+      "baselinePick": "Cincinnati Reds",
+      "modelProbability": 56,
+      "edgeScore": 5.9,
+      "confidence": 37,
+      "recommendationGrade": "WATCH",
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 58,
+      "valueEdge": -1.9,
+      "openingOdds": 1.73,
+      "latestOdds": 1.73,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": "HOME_EDGE",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "선발투수",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-19T16:27:02.247Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "UNVERIFIED",
+      "integrityWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null,
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "LINEUP_NOT_CONFIRMED",
+        "BASELINE_INSUFFICIENT",
+        "LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "researchBaseline": {
+        "pick": "Cincinnati Reds",
+        "confidence": 37,
+        "modelProbability": 56,
+        "researchOnly": true
+      }
+    },
+    {
+      "predictionId": "mlb-research-2026-08-20-mlb-cleveland-guardians-san-francisco-giants",
+      "gameId": "mlb-cleveland-guardians-san-francisco-giants",
+      "externalId": "cleveland-guardians-san-francisco-giants",
+      "dateKst": "2026-08-20",
+      "startTimeKst": "07:40",
+      "league": "MLB",
+      "homeTeam": "Cleveland Guardians",
+      "awayTeam": "San Francisco Giants",
+      "baselinePick": "Cleveland Guardians",
+      "modelProbability": 50,
+      "edgeScore": 0,
+      "confidence": 30,
+      "recommendationGrade": "PASS",
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 67,
+      "valueEdge": -16.9,
+      "openingOdds": 1.49,
+      "latestOdds": 1.49,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": "NEUTRAL",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.2,
+      "usedFactors": [
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수",
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-19T16:27:02.247Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "UNVERIFIED",
+      "integrityWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null,
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "LINEUP_NOT_CONFIRMED",
+        "BASELINE_INSUFFICIENT",
+        "LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "선발투수",
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "researchBaseline": {
+        "pick": "Cleveland Guardians",
+        "confidence": 30,
+        "modelProbability": 50,
+        "researchOnly": true
+      }
+    },
+    {
+      "predictionId": "mlb-research-2026-08-20-mlb-colorado-rockies-los-angeles-dodgers",
+      "gameId": "mlb-colorado-rockies-los-angeles-dodgers",
+      "externalId": "colorado-rockies-los-angeles-dodgers",
+      "dateKst": "2026-08-20",
+      "startTimeKst": "09:40",
+      "league": "MLB",
+      "homeTeam": "Colorado Rockies",
+      "awayTeam": "Los Angeles Dodgers",
+      "baselinePick": "Los Angeles Dodgers",
+      "modelProbability": 56,
+      "edgeScore": -5.8,
+      "confidence": 37,
+      "recommendationGrade": "WATCH",
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 64,
+      "valueEdge": -8.4,
+      "openingOdds": 2.76,
+      "latestOdds": 2.76,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": "AWAY_EDGE",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "선발투수",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-19T16:27:02.247Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "UNVERIFIED",
+      "integrityWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null,
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "LINEUP_NOT_CONFIRMED",
+        "BASELINE_INSUFFICIENT",
+        "LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "researchBaseline": {
+        "pick": "Los Angeles Dodgers",
+        "confidence": 37,
+        "modelProbability": 56,
+        "researchOnly": true
+      }
+    },
+    {
+      "predictionId": "mlb-research-2026-08-20-mlb-houston-astros-los-angeles-angels",
+      "gameId": "mlb-houston-astros-los-angeles-angels",
+      "externalId": "houston-astros-los-angeles-angels",
+      "dateKst": "2026-08-20",
+      "startTimeKst": "09:10",
+      "league": "MLB",
+      "homeTeam": "Houston Astros",
+      "awayTeam": "Los Angeles Angels",
+      "baselinePick": "Houston Astros",
+      "modelProbability": 50,
+      "edgeScore": 0,
+      "confidence": 30,
+      "recommendationGrade": "PASS",
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 59,
+      "valueEdge": -9.2,
+      "openingOdds": 1.67,
+      "latestOdds": 1.67,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": "NEUTRAL",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.2,
+      "usedFactors": [
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수",
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-19T16:27:02.247Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "UNVERIFIED",
+      "integrityWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null,
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "LINEUP_NOT_CONFIRMED",
+        "BASELINE_INSUFFICIENT",
+        "LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "선발투수",
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "researchBaseline": {
+        "pick": "Houston Astros",
+        "confidence": 30,
+        "modelProbability": 50,
+        "researchOnly": true
+      }
+    },
+    {
+      "predictionId": "mlb-research-2026-08-20-mlb-kansas-city-royals-athletics",
+      "gameId": "mlb-kansas-city-royals-athletics",
+      "externalId": "kansas-city-royals-athletics",
+      "dateKst": "2026-08-20",
+      "startTimeKst": "08:40",
+      "league": "MLB",
+      "homeTeam": "Kansas City Royals",
+      "awayTeam": "Athletics",
+      "baselinePick": null,
+      "modelProbability": null,
+      "edgeScore": null,
+      "confidence": null,
+      "recommendationGrade": null,
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": null,
+      "valueEdge": null,
+      "openingOdds": 1.67,
+      "latestOdds": 1.67,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": null,
+      "pitcherReviewAvailable": false,
+      "dataAvailability": null,
+      "usedFactors": [],
+      "missingFactors": [],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-19T16:27:02.247Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "UNVERIFIED",
+      "integrityWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_IDENTITY_MISSING_BOTH_SIDES"
+      ],
+      "inputStatus": "BLOCKED",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_IDENTITY_MISSING_BOTH_SIDES"
+      ],
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null,
+      "officialStatus": "BLOCKED",
+      "officialPick": null,
+      "passReasons": [
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_IDENTITY_MISSING_BOTH_SIDES"
+      ],
+      "missingInputs": [
+        "LINEUP_NOT_CONFIRMED",
+        "STARTER_IDENTITY_MISSING_BOTH_SIDES"
+      ],
+      "researchBaseline": {
+        "pick": null,
+        "confidence": null,
+        "modelProbability": null,
+        "researchOnly": true
+      }
+    },
+    {
+      "predictionId": "mlb-research-2026-08-20-mlb-milwaukee-brewers-seattle-mariners",
+      "gameId": "mlb-milwaukee-brewers-seattle-mariners",
+      "externalId": "milwaukee-brewers-seattle-mariners",
+      "dateKst": "2026-08-20",
+      "startTimeKst": "08:40",
+      "league": "MLB",
+      "homeTeam": "Milwaukee Brewers",
+      "awayTeam": "Seattle Mariners",
+      "baselinePick": "Seattle Mariners",
+      "modelProbability": 53,
+      "edgeScore": -3,
+      "confidence": 35,
+      "recommendationGrade": "PASS",
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 46,
+      "valueEdge": 6.8,
+      "openingOdds": 1.85,
+      "latestOdds": 1.85,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": "AWAY_EDGE",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "선발투수",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-19T16:27:02.247Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "UNVERIFIED",
+      "integrityWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null,
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "LINEUP_NOT_CONFIRMED",
+        "BASELINE_INSUFFICIENT",
+        "LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "researchBaseline": {
+        "pick": "Seattle Mariners",
+        "confidence": 35,
+        "modelProbability": 53,
+        "researchOnly": true
+      }
+    },
+    {
+      "predictionId": "mlb-research-2026-08-20-mlb-minnesota-twins-atlanta-braves",
+      "gameId": "mlb-minnesota-twins-atlanta-braves",
+      "externalId": "minnesota-twins-atlanta-braves",
+      "dateKst": "2026-08-20",
+      "startTimeKst": "02:40",
+      "league": "MLB",
+      "homeTeam": "Minnesota Twins",
+      "awayTeam": "Atlanta Braves",
+      "baselinePick": "Minnesota Twins",
+      "modelProbability": 50,
+      "edgeScore": 0,
+      "confidence": 30,
+      "recommendationGrade": "PASS",
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 49,
+      "valueEdge": 1.3,
+      "openingOdds": 2.04,
+      "latestOdds": 2.04,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": "NEUTRAL",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.2,
+      "usedFactors": [
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "선발투수",
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-19T16:27:02.247Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "ELIGIBLE",
+      "inputWarnings": [],
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null,
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "BASELINE_INSUFFICIENT"
+      ],
+      "missingInputs": [
+        "선발투수",
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "researchBaseline": {
+        "pick": "Minnesota Twins",
+        "confidence": 30,
+        "modelProbability": 50,
+        "researchOnly": true
+      }
+    },
+    {
+      "predictionId": "mlb-research-2026-08-20-mlb-new-york-mets-san-diego-padres",
+      "gameId": "mlb-new-york-mets-san-diego-padres",
+      "externalId": "new-york-mets-san-diego-padres",
+      "dateKst": "2026-08-20",
+      "startTimeKst": "02:10",
+      "league": "MLB",
+      "homeTeam": "New York Mets",
+      "awayTeam": "San Diego Padres",
+      "baselinePick": "New York Mets",
+      "modelProbability": 54,
+      "edgeScore": 4,
+      "confidence": 36,
+      "recommendationGrade": "PASS",
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 44,
+      "valueEdge": 10.5,
+      "openingOdds": 2.28,
+      "latestOdds": 2.28,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": "HOME_EDGE",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "선발투수",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-19T16:27:02.247Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "ELIGIBLE",
+      "inputWarnings": [],
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null,
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "BASELINE_INSUFFICIENT"
+      ],
+      "missingInputs": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "researchBaseline": {
+        "pick": "New York Mets",
+        "confidence": 36,
+        "modelProbability": 54,
+        "researchOnly": true
+      }
+    },
+    {
+      "predictionId": "mlb-research-2026-08-20-mlb-philadelphia-phillies-miami-marlins",
+      "gameId": "mlb-philadelphia-phillies-miami-marlins",
+      "externalId": "philadelphia-phillies-miami-marlins",
+      "dateKst": "2026-08-20",
+      "startTimeKst": "07:05",
+      "league": "MLB",
+      "homeTeam": "Philadelphia Phillies",
+      "awayTeam": "Miami Marlins",
+      "baselinePick": "Miami Marlins",
+      "modelProbability": 54,
+      "edgeScore": -4.1,
+      "confidence": 36,
+      "recommendationGrade": "PASS",
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 46,
+      "valueEdge": 8.4,
+      "openingOdds": 1.83,
+      "latestOdds": 1.83,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": "AWAY_EDGE",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "선발투수",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-19T16:27:02.247Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "UNVERIFIED",
+      "integrityWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null,
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "LINEUP_NOT_CONFIRMED",
+        "BASELINE_INSUFFICIENT",
+        "LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "researchBaseline": {
+        "pick": "Miami Marlins",
+        "confidence": 36,
+        "modelProbability": 54,
+        "researchOnly": true
+      }
+    },
+    {
+      "predictionId": "mlb-research-2026-08-20-mlb-pittsburgh-pirates-detroit-tigers",
+      "gameId": "mlb-pittsburgh-pirates-detroit-tigers",
+      "externalId": "pittsburgh-pirates-detroit-tigers",
+      "dateKst": "2026-08-20",
+      "startTimeKst": "01:35",
+      "league": "MLB",
+      "homeTeam": "Pittsburgh Pirates",
+      "awayTeam": "Detroit Tigers",
+      "baselinePick": "Detroit Tigers",
+      "modelProbability": 56,
+      "edgeScore": -6,
+      "confidence": 38,
+      "recommendationGrade": "WATCH",
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 41,
+      "valueEdge": 15,
+      "openingOdds": 1.68,
+      "latestOdds": 1.68,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": "AWAY_EDGE",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "선발투수",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-19T16:27:02.247Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "VERIFIED",
+      "integrityWarnings": [],
+      "inputStatus": "ELIGIBLE",
+      "inputWarnings": [],
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null,
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "BASELINE_INSUFFICIENT"
+      ],
+      "missingInputs": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "researchBaseline": {
+        "pick": "Detroit Tigers",
+        "confidence": 38,
+        "modelProbability": 56,
+        "researchOnly": true
+      }
+    },
+    {
+      "predictionId": "mlb-research-2026-08-20-mlb-tampa-bay-rays-toronto-blue-jays",
+      "gameId": "mlb-tampa-bay-rays-toronto-blue-jays",
+      "externalId": "tampa-bay-rays-toronto-blue-jays",
+      "dateKst": "2026-08-20",
+      "startTimeKst": "07:40",
+      "league": "MLB",
+      "homeTeam": "Tampa Bay Rays",
+      "awayTeam": "Toronto Blue Jays",
+      "baselinePick": "Tampa Bay Rays",
+      "modelProbability": 56,
+      "edgeScore": 6,
+      "confidence": 38,
+      "recommendationGrade": "WATCH",
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 65,
+      "valueEdge": -8.7,
+      "openingOdds": 1.54,
+      "latestOdds": 1.54,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": "HOME_EDGE",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "선발투수",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-19T16:27:02.247Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "UNVERIFIED",
+      "integrityWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null,
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "LINEUP_NOT_CONFIRMED",
+        "BASELINE_INSUFFICIENT",
+        "LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "researchBaseline": {
+        "pick": "Tampa Bay Rays",
+        "confidence": 38,
+        "modelProbability": 56,
+        "researchOnly": true
+      }
+    },
+    {
+      "predictionId": "mlb-research-2026-08-20-mlb-texas-rangers-washington-nationals",
+      "gameId": "mlb-texas-rangers-washington-nationals",
+      "externalId": "texas-rangers-washington-nationals",
+      "dateKst": "2026-08-20",
+      "startTimeKst": "09:05",
+      "league": "MLB",
+      "homeTeam": "Texas Rangers",
+      "awayTeam": "Washington Nationals",
+      "baselinePick": "Washington Nationals",
+      "modelProbability": 51,
+      "edgeScore": -1.1,
+      "confidence": 34,
+      "recommendationGrade": "PASS",
+      "baselineStatus": "INSUFFICIENT",
+      "marketProbability": 45,
+      "valueEdge": 5.8,
+      "openingOdds": 1.83,
+      "latestOdds": 1.83,
+      "oddsMovement": "NOT_COLLECTED",
+      "pitcherDirection": "AWAY_EDGE",
+      "pitcherReviewAvailable": true,
+      "dataAvailability": 0.3,
+      "usedFactors": [
+        "선발투수",
+        "부상/전력",
+        "연승/연패"
+      ],
+      "missingFactors": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일"
+      ],
+      "purchaseEligible": false,
+      "researchOnly": true,
+      "purchaseReason": "RESEARCH_DATASET_ONLY",
+      "predictedAt": "2026-08-19T16:27:02.247Z",
+      "sourceSnapshotVersions": {
+        "dailySummary": "mlb-daily-research-summary-v1",
+        "schedule": "mlb-schedule-v1",
+        "starter": "mlb-starter-dataset-v1",
+        "odds": "mlb-odds-history-dataset-v1",
+        "lineup": "mlb-lineup-dataset-v1"
+      },
+      "snapshotIntegrity": "UNVERIFIED",
+      "integrityWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "inputStatus": "LIMITED_INPUT",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "resultStatus": "pending",
+      "homeScore": null,
+      "awayScore": null,
+      "actualWinner": null,
+      "predictionHit": null,
+      "gradedAt": null,
+      "feedbackClassification": null,
+      "officialStatus": "PASS",
+      "officialPick": null,
+      "passReasons": [
+        "LINEUP_NOT_CONFIRMED",
+        "BASELINE_INSUFFICIENT",
+        "LIMITED_INPUT"
+      ],
+      "missingInputs": [
+        "최근 폼",
+        "득점력",
+        "실점 억제",
+        "홈/원정 성적",
+        "리그 순위",
+        "맞대결",
+        "휴식일",
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "researchBaseline": {
+        "pick": "Washington Nationals",
+        "confidence": 34,
+        "modelProbability": 51,
+        "researchOnly": true
+      }
+    }
+  ]
+}
