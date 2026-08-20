@@ -83,11 +83,18 @@ export default function MlbExpectedLineupIntakeForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           dateKst: initial.dateKst,
-          drafts: initial.games.map((g) => ({
-            gamePk: g.gamePk,
-            awayPaste: drafts[g.gamePk]?.awayPaste ?? "",
-            homePaste: drafts[g.gamePk]?.homePaste ?? "",
-          })),
+          drafts: initial.games
+            .filter((g) => {
+              const d = drafts[g.gamePk];
+              return Boolean(
+                d?.awayPaste.trim() || d?.homePaste.trim(),
+              );
+            })
+            .map((g) => ({
+              gamePk: g.gamePk,
+              awayPaste: drafts[g.gamePk]?.awayPaste ?? "",
+              homePaste: drafts[g.gamePk]?.homePaste ?? "",
+            })),
         }),
       });
       const body = (await res.json()) as {
@@ -127,7 +134,8 @@ export default function MlbExpectedLineupIntakeForm({
           <p className="mt-2 text-xs text-emerald-300/90">{initial.summaryLine}</p>
         ) : null}
         <p className="mt-1 text-xs text-zinc-400">
-          Filled games: {filled}/{initial.games.length}
+          Filled games: {filled}/{initial.games.length} · 미입력 경기는
+          NOT_OBSERVED · 한 쪽만 입력하면 거부됩니다
         </p>
       </div>
 

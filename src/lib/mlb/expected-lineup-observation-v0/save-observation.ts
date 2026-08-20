@@ -245,6 +245,15 @@ export async function saveMlbExpectedLineupObservation(input: {
   const pathRel = mlbExpectedLineupObservationRel(dateKst);
   const errors: string[] = [];
 
+  if (input.drafts.length === 0) {
+    return {
+      ok: false,
+      pathRel,
+      document: null,
+      errors: ["NO_OBSERVATIONS_TO_SAVE"],
+    };
+  }
+
   let schedule;
   try {
     schedule = await loadMlbScheduleArtifact(dateKst, cwd);

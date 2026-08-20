@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import {
-  parseExpectedLineupPaste,
   saveMlbExpectedLineupObservation,
+  selectExpectedLineupDraftsFromPastes,
 } from "@/lib/mlb/expected-lineup-observation-v0";
 
 export const dynamic = "force-dynamic";
@@ -29,30 +29,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, errors: ["INVALID_DATE"] }, { status: 400 });
   }
 
-  const parseErrors: string[] = [];
-  const drafts = [];
-  for (const raw of body.drafts ?? []) {
-    const gamePk = Number(raw.gamePk);
-    if (!Number.isFinite(gamePk)) {
-      parseErrors.push("INVALID_GAMEPK");
-      continue;
-    }
-    const away = parseExpectedLineupPaste(raw.awayPaste ?? "");
-    const home = parseExpectedLineupPaste(raw.homePaste ?? "");
-    parseErrors.push(
-      ...away.errors.map((e) => `AWAY:${gamePk}:${e}`),
-      ...home.errors.map((e) => `HOME:${gamePk}:${e}`),
-    );
-    drafts.push({
-      gamePk,
-      awayLineup: away.batters,
-      homeLineup: home.batters,
-    });
-  }
-
-  if (parseErrors.length) {
+  const selected = selectExpectedLineupDraftsFromPastes(body.drafts ?? []);
+  if (selected.errors.length) {
     return NextResponse.json(
-      { ok: false, errors: parseErrors },
+      { ok: false, errors: selected.errors },
       { status: 400 },
     );
   }
@@ -60,7 +40,8 @@ export async function POST(req: Request) {
   const result = await saveMlbExpectedLineupObservation({
     dateKst,
     observedAt: body.observedAt,
-    drafts,
+    drafts: selected.drafts,
+    allowMissingDrafts: true,
   });
 
   if (!result.ok) {
