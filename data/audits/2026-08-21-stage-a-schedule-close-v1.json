@@ -1,0 +1,71 @@
+{
+    "schemaVersion":  "yang-edge-daily-stage-a-close-v1",
+    "dateKst":  "2026-08-21",
+    "generatedAt":  "2026-08-20T18:58:05.8503165+00:00",
+    "mandatoryStage":  "A_SCHEDULE_SCOPE",
+    "mandatoryWeightPct":  10,
+    "stageResult":  "COMPLETED_WITH_BLOCKED_INPUT",
+    "stageACompleted":  true,
+    "completionCreditPct":  10,
+    "scope":  {
+                  "total":  24,
+                  "MLB":  9,
+                  "FOOTBALL":  15,
+                  "scopeShrinkApplied":  false
+              },
+    "mlb":  {
+                "status":  "PASS",
+                "observedScope":  9,
+                "officialSchedule":  9,
+                "identityMatched":  9,
+                "scheduleRel":  "data/research/mlb/2026-08-21-schedule-v1.json",
+                "scheduleSha256":  "98d7a9202210361f450281e656e7c22e6b283febcc44cb30bdcfd67e5a42c9fe"
+            },
+    "football":  {
+                     "status":  "BLOCKED_PRE_GAME_SCHEDULE_UNAVAILABLE",
+                     "observedScope":  15,
+                     "retainedInMandatoryDenominator":  true,
+                     "providerScheduleArtifactPresent":  false,
+                     "identityMatched":  0,
+                     "identityBlocked":  15,
+                     "blockReason":  "NO_2026_08_21_PREGAME_PROVIDER_SCHEDULE_ARTIFACT_OR_QUALIFYING_CACHE",
+                     "currentProviderRefetchAllowedForPregameReconstruction":  false,
+                     "currentProviderRefetchReason":  "CURRENT_FIXTURE_STATUS_CAN_BE_LIVE_OR_FINISHED_AFTER_KICKOFF"
+                 },
+    "recoverySearch":  {
+                           "exactDateSearch":  "2026-08-21",
+                           "dateHitCount":  6,
+                           "uniqueHitPaths":  [
+                                                  "data\\cache\\research\\kbo\\raw\\api-baseball\\games_league_5_season_2026.json",
+                                                  "data\\research\\football\\2026-08-18-la-liga-odds-identity-evidence-v0.json"
+                                              ],
+                           "qualifyingFootballPregameScheduleHits":  0,
+                           "reviewedNonQualifyingHits":  [
+                                                             {
+                                                                 "path":  "data/cache/research/kbo/raw/api-baseball/games_league_5_season_2026.json",
+                                                                 "reason":  "KBO_CACHE_NOT_FOOTBALL"
+                                                             },
+                                                             {
+                                                                 "path":  "data/research/football/2026-08-18-la-liga-odds-identity-evidence-v0.json",
+                                                                 "reason":  "08_18_ODDS_IDENTITY_EVIDENCE_CONTAINS_FUTURE_EVENT_DATE_NOT_08_21_PREGAME_SCHEDULE"
+                                                             }
+                                                         ]
+                       },
+    "provenance":  {
+                       "scopeLockRel":  "data/audits/2026-08-21-daily-scope-lock-v1.json",
+                       "scopeLockSha256":  "882deb35ea51ee9b58399b3a21ea042baa865c89f720ed35696b44a3c4cf4c07",
+                       "joinAuditRel":  "data/audits/2026-08-21-operator-scope-join-recovery-v1.json",
+                       "joinAuditSha256":  "7fee76f18e306ee0ffe3e2b59bde244bb65208a36b9b290de337ba783bb89bf7"
+                   },
+    "safety":  {
+                   "providerCalls":  0,
+                   "predictionCalls":  0,
+                   "resultCalls":  0,
+                   "engineCalls":  0,
+                   "predictionInput":  false,
+                   "retroactiveScheduleFabricated":  false,
+                   "scopeShrinkForbidden":  true
+               },
+    "nextMandatoryStage":  "B_PREGAME_INPUTS",
+    "note":  "Stage A is operationally closed because the full locked scope is accounted for. MLB 9/9 has an official schedule and identity join. Football 15/15 remains in the denominator and is closed as a documented BLOCKED condition; no post-kickoff Provider refetch is promoted to pregame evidence."
+}
