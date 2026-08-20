@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "mlb-daily-research-summary-v1",
+  "dateKst": "2026-08-21",
+  "generatedAt": "2026-08-20T19:22:31.994Z",
+  "pipelineVersion": "mlb-daily-research-v1.1",
+  "roundingPolicy": "Per dataset: READY=weight, PARTIAL=floor(weight/2), FAILED/SKIP=0; percent=score because max=100.",
+  "pipeline": [
+    "Schedule",
+    "Starter",
+    "Odds",
+    "Lineup"
+  ],
+  "steps": [
+    {
+      "step": "Schedule",
+      "run": "SUCCESS",
+      "status": "READY",
+      "detail": "9 games [from-existing, collectors not invoked]",
+      "artifact": "data/research/mlb/2026-08-21-schedule-v1.json",
+      "exitCode": 0
+    },
+    {
+      "step": "Starter",
+      "run": "FAIL",
+      "status": "FAILED",
+      "detail": "Missing data/research/mlb/2026-08-21-starter-dataset-v1.json",
+      "artifact": null,
+      "exitCode": 1
+    },
+    {
+      "step": "Odds",
+      "run": "FAIL",
+      "status": "FAILED",
+      "detail": "Missing data/research/mlb/2026-08-21-odds-history-dataset-v1.json",
+      "artifact": null,
+      "exitCode": 1
+    },
+    {
+      "step": "Lineup",
+      "run": "SUCCESS",
+      "status": "PARTIAL",
+      "detail": "confirmed=1 partial=2 notReleased=6 / 9 [from-existing, collectors not invoked]",
+      "artifact": "data/research/mlb/2026-08-21-lineup-dataset-v1.json",
+      "exitCode": 0
+    }
+  ],
+  "researchReady": {
+    "score": 37,
+    "max": 100,
+    "percent": 37,
+    "missing": [
+      "Starter",
+      "Odds",
+      "Lineup"
+    ],
+    "datasets": [
+      {
+        "dataset": "Schedule",
+        "status": "READY",
+        "detail": "9 games [from-existing, collectors not invoked]",
+        "artifact": "data/research/mlb/2026-08-21-schedule-v1.json"
+      },
+      {
+        "dataset": "Starter",
+        "status": "FAILED",
+        "detail": "Missing data/research/mlb/2026-08-21-starter-dataset-v1.json",
+        "artifact": null
+      },
+      {
+        "dataset": "Odds",
+        "status": "FAILED",
+        "detail": "Missing data/research/mlb/2026-08-21-odds-history-dataset-v1.json",
+        "artifact": null
+      },
+      {
+        "dataset": "Lineup",
+        "status": "PARTIAL",
+        "detail": "confirmed=1 partial=2 notReleased=6 / 9 [from-existing, collectors not invoked]",
+        "artifact": "data/research/mlb/2026-08-21-lineup-dataset-v1.json"
+      }
+    ],
+    "breakdown": [
+      {
+        "dataset": "Schedule",
+        "status": "READY",
+        "weight": 25,
+        "awardedPoints": 25,
+        "maxPoints": 25,
+        "ruleApplied": "FULL",
+        "detail": "9 games [from-existing, collectors not invoked]",
+        "artifact": "data/research/mlb/2026-08-21-schedule-v1.json"
+      },
+      {
+        "dataset": "Starter",
+        "status": "FAILED",
+        "weight": 25,
+        "awardedPoints": 0,
+        "maxPoints": 25,
+        "ruleApplied": "ZERO",
+        "detail": "Missing data/research/mlb/2026-08-21-starter-dataset-v1.json",
+        "artifact": null
+      },
+      {
+        "dataset": "Odds",
+        "status": "FAILED",
+        "weight": 25,
+        "awardedPoints": 0,
+        "maxPoints": 25,
+        "ruleApplied": "ZERO",
+        "detail": "Missing data/research/mlb/2026-08-21-odds-history-dataset-v1.json",
+        "artifact": null
+      },
+      {
+        "dataset": "Lineup",
+        "status": "PARTIAL",
+        "weight": 25,
+        "awardedPoints": 12,
+        "maxPoints": 25,
+        "ruleApplied": "HALF_FLOOR",
+        "detail": "confirmed=1 partial=2 notReleased=6 / 9 [from-existing, collectors not invoked]",
+        "artifact": "data/research/mlb/2026-08-21-lineup-dataset-v1.json"
+      }
+    ]
+  },
+  "sourceArtifacts": [
+    {
+      "dataset": "Schedule",
+      "status": "READY",
+      "produced": true,
+      "artifact": "data/research/mlb/2026-08-21-schedule-v1.json"
+    },
+    {
+      "dataset": "Starter",
+      "status": "FAILED",
+      "produced": false,
+      "artifact": null
+    },
+    {
+      "dataset": "Odds",
+      "status": "FAILED",
+      "produced": false,
+      "artifact": null
+    },
+    {
+      "dataset": "Lineup",
+      "status": "PARTIAL",
+      "produced": true,
+      "artifact": "data/research/mlb/2026-08-21-lineup-dataset-v1.json"
+    }
+  ],
+  "counts": {
+    "scheduleGames": 9,
+    "starterComplete": null,
+    "oddsCollected": null,
+    "lineupConfirmed": "1/9 confirmed"
+  },
+  "assistantSummary": "MLB Daily Research Assistant Summary (2026-08-21)\n\nSchedule: 9 games\nStarter: —\nOdds: —\nLineup: 1/9 confirmed\n\nResearch Ready: 37%\n  - Schedule: READY (9 games [from-existing, collectors not invoked])\n  - Starter: FAILED (Missing data/research/mlb/2026-08-21-starter-dataset-v1.json)\n  - Odds: FAILED (Missing data/research/mlb/2026-08-21-odds-history-dataset-v1.json)\n  - Lineup: PARTIAL (confirmed=1 partial=2 notReleased=6 / 9 [from-existing, collectors not invoked])\n\nRemaining gaps:\n  - Starter\n  - Odds\n  - Lineup\n\nThis summary describes current data quality only. No predictions.",
+  "notes": [
+    "from-existing: dataset collectors were NOT invoked.",
+    "Research Ready is based on sealed artifacts already on disk.",
+    "Assistant Summary describes data quality only; no predictions."
+  ]
+}

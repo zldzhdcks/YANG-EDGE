@@ -1,0 +1,102 @@
+{
+    "schemaVersion":  "yang-edge-daily-stage-c-close-v1",
+    "dateKst":  "2026-08-21",
+    "generatedAt":  "2026-08-20T19:26:25.5996353+00:00",
+    "mandatoryStage":  "C_PREDICTION_SNAPSHOT_OR_PASS",
+    "mandatoryWeightPct":  20,
+    "stageResult":  "COMPLETED_WITH_BLOCKED_INPUT",
+    "stageCCompleted":  true,
+    "completionCreditPct":  20,
+    "scope":  {
+                  "total":  24,
+                  "MLB":  9,
+                  "FOOTBALL":  15,
+                  "scopeShrinkApplied":  false
+              },
+    "mlb":  {
+                "scopeGames":  9,
+                "predictionSnapshotPresent":  false,
+                "predictionCreated":  false,
+                "officialRecommendationCreated":  false,
+                "alreadyStartedWithoutPregameSnapshot":  {
+                                                             "count":  6,
+                                                             "status":  "BLOCKED_LATE_RECOVERY_NO_PREGAME_SNAPSHOT",
+                                                             "retroactivePredictionAllowed":  false
+                                                         },
+                "remainingPregameDryRun":  {
+                                               "count":  3,
+                                               "gameIds":  [
+                                                               "mlb-baltimore-orioles-new-york-yankees",
+                                                               "mlb-texas-rangers-washington-nationals",
+                                                               "mlb-houston-astros-los-angeles-angels"
+                                                           ],
+                                               "providerCalls":  0,
+                                               "writes":  0,
+                                               "inputAudit":  "READY",
+                                               "predictionStage":  "BLOCKED",
+                                               "blocker":  "REQUIRED_INPUT_INVALID",
+                                               "snapshotVerify":  "SKIPPED",
+                                               "actualPredictionExecutionAllowedAfterDryRun":  false
+                                           },
+                "requiredInputState":  {
+                                           "researchReadyPercent":  37,
+                                           "schedule":  "READY",
+                                           "starter":  "FAILED_MISSING_ARTIFACT",
+                                           "odds":  "FAILED_MISSING_ARTIFACT",
+                                           "lineup":  "PARTIAL"
+                                       },
+                "safeCollectionConstraint":  {
+                                                 "currentDailyCollectorIsolation":  "FULL_DATE_ONLY_FOR_STARTER_AND_ODDS",
+                                                 "targetedGameIdsAreNotForwardedToStarterCollector":  true,
+                                                 "targetedGameIdsAreNotForwardedToOddsCollector":  true,
+                                                 "sourceCommit":  "f49ea3cfc31b7fd5f159847e5edd26a79b7dd360",
+                                                 "sourceFiles":  [
+                                                                     "src/lib/mlb/daily-pregame-v0/orchestrator.ts",
+                                                                     "scripts/run-mlb-daily-ops-v1.ts"
+                                                                 ],
+                                                 "reason":  "Do not run full-date collectors after part of the slate has started merely to rescue remaining games."
+                                             }
+            },
+    "football":  {
+                     "scopeFixtures":  15,
+                     "status":  "BLOCKED_PRE_GAME_SCHEDULE_IDENTITY_UNAVAILABLE",
+                     "predictionSnapshotPresent":  false,
+                     "retroactivePredictionAllowed":  false,
+                     "retainedInMandatoryDenominator":  true
+                 },
+    "summaryArtifact":  {
+                            "path":  "data/research/mlb/2026-08-21-daily-research-summary-v1.json",
+                            "sha256":  "4a88c179b25550c85d66111003e441f02fa04b67034033ee948514214a1ce246",
+                            "fromExisting":  true,
+                            "collectorsInvoked":  false,
+                            "predictionsProduced":  false,
+                            "researchReadyPercent":  37
+                        },
+    "provenance":  {
+                       "stageBRel":  "data/audits/2026-08-21-stage-b-pregame-inputs-close-v1.json",
+                       "stageBSha256":  "042e16bd55846f0a0fc475c25cf0c25bf8fc194706324807bdec0a36d29f97a8",
+                       "scopeRel":  "data/audits/2026-08-21-daily-scope-lock-v1.json",
+                       "scopeSha256":  "882deb35ea51ee9b58399b3a21ea042baa865c89f720ed35696b44a3c4cf4c07",
+                       "scheduleRel":  "data/research/mlb/2026-08-21-schedule-v1.json",
+                       "scheduleSha256":  "98d7a9202210361f450281e656e7c22e6b283febcc44cb30bdcfd67e5a42c9fe",
+                       "lineupRel":  "data/research/mlb/2026-08-21-lineup-dataset-v1.json",
+                       "lineupSha256":  "d6aee118b2f7d6bf7de1136e0911a914e004d77bbe2fb8f1f4b34b03d643aba0",
+                       "recoveryRel":  "data/operator-observations/structured/2026-08-21/batch-0202-scope-recovery-v0.json",
+                       "recoverySha256":  "331e76bd555056170060a307959375978192c949a301aa03b3ea304aeeb0226a"
+                   },
+    "safety":  {
+                   "closeScriptProviderCalls":  0,
+                   "closeScriptPredictionCalls":  0,
+                   "closeScriptResultCalls":  0,
+                   "closeScriptEngineCalls":  0,
+                   "dryRunProviderCalls":  0,
+                   "dryRunWrites":  0,
+                   "predictionInputFabricated":  false,
+                   "postStartDataPromotedToPregame":  false,
+                   "retroactivePredictionFabricated":  false,
+                   "scopeShrinkForbidden":  true
+               },
+    "mandatoryProgressAfterRemoteSealPct":  50,
+    "nextMandatoryStage":  "D_PREGAME_GIT_REMOTE_SEAL",
+    "note":  "Stage C is closed as a documented BLOCKED outcome, not as a successful prediction run. Six MLB games had already started without a pregame snapshot before recovery. The three remaining MLB games were isolated in a dry-run, but Prediction v0 returned REQUIRED_INPUT_INVALID with providerCalls=0 and writes=0. Current Starter and Odds collectors are full-date collectors rather than safe per-game recovery collectors, so they are not invoked after part of the slate has started. Football 15/15 remains blocked by missing pregame schedule identity. No retroactive prediction is created."
+}
