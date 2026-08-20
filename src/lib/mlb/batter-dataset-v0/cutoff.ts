@@ -85,3 +85,51 @@ export function slateFullyPregame(
     return Number.isFinite(t) && t > nowMs;
   });
 }
+
+/**
+ * Live hitting fetch gate v0.
+ *
+ * POLICY A — FULL_SLATE_BEFORE_FIRST_PITCH_ONLY:
+ * network Stats API is allowed only while every slate game is still
+ * in the future. After the first pitch, the whole slate is CLOSED.
+ *
+ * POLICY B (PER_GAME_CUTOFF) is intentionally not implemented in v0.
+ * Mid-slate fetches after some games have started would mix a live
+ * season aggregate window with completed same-day results unless every
+ * caller re-implements the same as-of filter. v0 keeps one gate.
+ */
+export const BATTER_FETCH_GATE_POLICY =
+  "FULL_SLATE_BEFORE_FIRST_PITCH_ONLY" as const;
+
+export type BatterFetchGateWindow = "OPEN" | "CLOSED";
+
+export type BatterFetchGate = {
+  policy: typeof BATTER_FETCH_GATE_POLICY;
+  window: BatterFetchGateWindow;
+  firstCommenceUtc: string | null;
+  commencedCount: number;
+  remainingCount: number;
+  slateFullyPregame: boolean;
+};
+
+export function evaluateFullSlateFetchGate(
+  commenceTimesUtc: string[],
+  nowMs: number,
+): BatterFetchGate {
+  const times = commenceTimesUtc
+    .map((iso) => ({ iso, t: Date.parse(iso) }))
+    .filter((row) => Number.isFinite(row.t))
+    .sort((a, b) => a.t - b.t || a.iso.localeCompare(b.iso));
+  const firstCommenceUtc = times[0]?.iso ?? null;
+  const commencedCount = times.filter((row) => row.t <= nowMs).length;
+  const remainingCount = times.filter((row) => row.t > nowMs).length;
+  const fully = slateFullyPregame(commenceTimesUtc, nowMs);
+  return {
+    policy: BATTER_FETCH_GATE_POLICY,
+    window: fully ? "OPEN" : "CLOSED",
+    firstCommenceUtc,
+    commencedCount,
+    remainingCount,
+    slateFullyPregame: fully,
+  };
+}

@@ -60,7 +60,7 @@ function asNumber(v: unknown): number | null {
   return typeof v === "number" && Number.isFinite(v) ? v : null;
 }
 
-type ScheduleGame = {
+export type ScheduleGame = {
   gameId: string;
   gamePk: number;
   homeTeam: string;
@@ -189,7 +189,7 @@ function expectedSlots(
     }));
 }
 
-function resolveSideSlots(input: {
+export function resolveSideSlots(input: {
   lineupRows: LineupDatasetRow[];
   expected: MlbExpectedLineupObservationV0 | null;
   gamePk: number;

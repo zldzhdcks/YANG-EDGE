@@ -14,6 +14,8 @@
     "research:mlb-lineup": "tsx --env-file=.env.local scripts/build-mlb-lineup-dataset-v1.ts",
     "research:mlb-batter-dataset-v0": "tsx scripts/build-mlb-batter-dataset-v0.ts",
     "test:mlb-batter-dataset-v0": "tsx scripts/test-mlb-batter-dataset-v0.ts",
+    "ops:mlb-batter-pregame": "tsx --env-file=.env.local scripts/run-mlb-batter-pregame-ops-v0.ts",
+    "test:mlb-batter-pregame-ops-v0": "tsx scripts/test-mlb-batter-pregame-ops-v0.ts",
     "research:mlb-daily": "tsx --env-file=.env.local scripts/build-mlb-daily-research-v1.ts",
     "research:mlb-remaining-pregame": "tsx --env-file=.env.local scripts/run-mlb-remaining-pregame-accumulation-v1.ts",
     "test:odds-format": "tsx scripts/test-odds-format-contract-v1.ts",
