@@ -1,0 +1,47 @@
+{
+    "schemaVersion":  "mlb-confirmed-lineup-late-supplement-audit-v1",
+    "dateKst":  "2026-08-21",
+    "generatedAt":  "2026-08-21T08:08:08.3896352+09:00",
+    "status":  "PASS",
+    "purpose":  "LATE_STRUCTURED_SUPPLEMENT_FROM_PRE_GAME_RAW_EVIDENCE",
+    "mandatoryDailyCompletionPctBefore":  60,
+    "mandatoryDailyCompletionPctAfter":  60,
+    "affectsMandatoryCompletion":  false,
+    "coverage":  {
+                     "priorConfirmedObserved":  6,
+                     "addedConfirmedObserved":  3,
+                     "combinedConfirmedObserved":  9,
+                     "totalMlbGames":  9,
+                     "combinedObservedCoverage":  "9/9"
+                 },
+    "temporalIntegrity":  {
+                              "rawScreenshotCapturedPregame":  true,
+                              "rawScreenshotTimestampKst":  "2026-08-21T06:25:48.796+09:00",
+                              "structuredTranscriptionCreatedPostCutoff":  true,
+                              "classification":  "POST_CUTOFF_TRANSCRIPTION_FROM_PREGAME_RAW_EVIDENCE",
+                              "noClaimThatStructuredFileExistedPregame":  true
+                          },
+    "stageCImmutability":  {
+                               "stageCAlreadySealed":  true,
+                               "stageCChanged":  false,
+                               "predictionCreated":  false,
+                               "supplementalEvidenceMayModifyPastPrediction":  false,
+                               "predictionInputAllowed":  false,
+                               "postHocUpgradeOfStageC":  false
+                           },
+    "safety":  {
+                   "providerCalls":  0,
+                   "resultCalls":  0,
+                   "predictionCalls":  0,
+                   "engineCalls":  0,
+                   "crawlingUsed":  false,
+                   "researchOnly":  true
+               },
+    "artifacts":  {
+                      "rawCopy":  "data/operator-observations/raw/2026-08-21/batch-0625-lineup-late-supplement/source-062548.png",
+                      "rawManifest":  "data/operator-observations/raw/2026-08-21/batch-0625-lineup-late-supplement/manifest.json",
+                      "structuredSupplement":  "data/operator-observations/structured/2026-08-21/batch-0625-confirmed-lineup-late-supplement-v1.json",
+                      "audit":  "data/audits/2026-08-21-mlb-confirmed-lineup-late-supplement-v1.json"
+                  },
+    "note":  "Observed MLB confirmed-lineup coverage is recorded as 9/9. The raw screenshot was captured pregame, but this structured transcription was created after the earliest covered game started. It is research provenance only and cannot reconstruct or upgrade sealed Stage C."
+}
