@@ -1,0 +1,99 @@
+{
+    "schemaVersion":  "yang-edge-daily-stage-b-close-v1",
+    "dateKst":  "2026-08-21",
+    "generatedAt":  "2026-08-20T19:11:36.3225805+00:00",
+    "mandatoryStage":  "B_PREGAME_INPUTS_IDENTITY_ODDS",
+    "mandatoryWeightPct":  20,
+    "stageResult":  "COMPLETED_WITH_BLOCKED_INPUT",
+    "stageBCompleted":  true,
+    "completionCreditPct":  20,
+    "scope":  {
+                  "total":  24,
+                  "MLB":  9,
+                  "FOOTBALL":  15,
+                  "scopeShrinkApplied":  false
+              },
+    "mlb":  {
+                "scopeGames":  9,
+                "identity":  {
+                                 "status":  "PASS",
+                                 "matched":  9,
+                                 "total":  9
+                             },
+                "starter":  {
+                                "status":  "BLOCKED_PRE_GAME_STARTER_DATASET_UNAVAILABLE",
+                                "datasetPresent":  false,
+                                "retroactiveProviderReconstructionAllowed":  false
+                            },
+                "odds":  {
+                             "status":  "PREGAME_DOMESTIC_ODDS_EVIDENCE_CAPTURED_MACHINE_DATASET_UNAVAILABLE",
+                             "domesticOddsScreenshots":  4,
+                             "capturedBeforeEarliestVisibleStart":  true,
+                             "machineOddsDatasetPresent":  false,
+                             "retroactiveOddsDatasetFabricated":  false
+                         },
+                "lineup":  {
+                               "status":  "PARTIAL_PREGAME_INPUT_CAPTURED",
+                               "providerDatasetPresent":  true,
+                               "providerPreGameStatus":  "COLLECTED",
+                               "providerMatchedGames":  9,
+                               "providerConfirmedGames":  1,
+                               "providerPartialGames":  2,
+                               "providerNotReleasedGames":  6,
+                               "completeTeamSides":  4,
+                               "operatorExpectedCoverage":  "9/9",
+                               "operatorConfirmedCoverage":  "6/9",
+                               "operatorEvidencePredictionInput":  false
+                           }
+            },
+    "football":  {
+                     "scopeFixtures":  15,
+                     "identity":  {
+                                      "status":  "BLOCKED_PRE_GAME_SCHEDULE_UNAVAILABLE",
+                                      "matched":  0,
+                                      "blocked":  15
+                                  },
+                     "odds":  {
+                                  "status":  "PREGAME_DOMESTIC_ODDS_EVIDENCE_PRESENT_IDENTITY_JOIN_BLOCKED",
+                                  "evidenceBatchCoversObservedScope":  true,
+                                  "machineJoinAllowed":  false,
+                                  "reason":  "FOOTBALL_PREGAME_PROVIDER_SCHEDULE_IDENTITY_UNAVAILABLE"
+                              },
+                     "pregameInputs":  {
+                                           "status":  "BLOCKED_BY_SCHEDULE_IDENTITY",
+                                           "retainedInMandatoryDenominator":  true
+                                       }
+                 },
+    "evidence":  {
+                     "domesticOddsScreenshots":  4,
+                     "allDomesticOddsCapturedBeforeEarliestVisibleStart":  true,
+                     "mlbExpectedLineupCoverage":  "9/9",
+                     "mlbConfirmedLineupCoverage":  "6/9",
+                     "sourceRecoveryRel":  "data/operator-observations/structured/2026-08-21/batch-0202-scope-recovery-v0.json",
+                     "sourceRecoverySha256":  "331e76bd555056170060a307959375978192c949a301aa03b3ea304aeeb0226a"
+                 },
+    "provenance":  {
+                       "stageARel":  "data/audits/2026-08-21-stage-a-schedule-close-v1.json",
+                       "stageASha256":  "a5d8125e6ab9a81ce53b7084a8e9014188288b88320acb86a33b0d4736121f05",
+                       "scopeRel":  "data/audits/2026-08-21-daily-scope-lock-v1.json",
+                       "scopeSha256":  "882deb35ea51ee9b58399b3a21ea042baa865c89f720ed35696b44a3c4cf4c07",
+                       "lineupRel":  "data/research/mlb/2026-08-21-lineup-dataset-v1.json",
+                       "lineupSha256":  "d6aee118b2f7d6bf7de1136e0911a914e004d77bbe2fb8f1f4b34b03d643aba0",
+                       "lineupAuditRel":  "data/audits/2026-08-21-lineup-dataset-v1-audit.json",
+                       "lineupAuditSha256":  "d708bb24a71f96cb7ca59a63ca0f499f329c06f02ddcae264d2e8c6ebbc18122"
+                   },
+    "safety":  {
+                   "providerCalls":  0,
+                   "predictionCalls":  0,
+                   "resultCalls":  0,
+                   "engineCalls":  0,
+                   "predictionInput":  false,
+                   "retroactiveStarterFabricated":  false,
+                   "retroactiveOddsDatasetFabricated":  false,
+                   "lateLineupPromotedToPregame":  false,
+                   "scopeShrinkForbidden":  true
+               },
+    "mandatoryProgressAfterRemoteSealPct":  30,
+    "nextMandatoryStage":  "C_PREDICTION_SNAPSHOT_OR_PASS",
+    "note":  "Stage B is operationally closed without fabricating missing machine datasets. MLB identity is 9/9. Pregame domestic odds evidence exists but the MLB machine odds dataset is absent. The MLB starter dataset is absent and is closed as BLOCKED. MLB lineup collection is partial but timestamp-proven pregame collection exists, with operator evidence preserving expected 9/9 and confirmed 6/9 coverage. Football remains 15/15 in scope but pregame schedule identity is unavailable, so machine joins remain blocked."
+}
