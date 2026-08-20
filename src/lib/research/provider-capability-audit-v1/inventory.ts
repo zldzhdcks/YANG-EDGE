@@ -1,0 +1,301 @@
+/**
+ * Provider inventory + frozen MLB Stats API public probe evidence.
+ * No secrets. Paid APIs were not called in this mission.
+ */
+import type {
+  MlbStatsApiProbeEvidence,
+  ProviderInventoryRow,
+} from "./types";
+
+export const MLB_STATS_API_PUBLIC_PROBE: MlbStatsApiProbeEvidence = {
+  executed: true,
+  paidCalls: 0,
+  httpAttempts: 13,
+  httpSuccess: 12,
+  httpFailed: 1,
+  note: "Public unauthenticated statsapi.mlb.com only. Representative single-player calls on 2026-08-20. No historical sweep. metricAverages returned HTTP 500.",
+  statTypesObserved: [
+    "gameLog",
+    "lastXGames",
+    "byDateRange",
+    "byMonth",
+    "homeAndAway",
+    "statSplits",
+    "statSplitsAdvanced",
+    "sabermetrics",
+    "expectedStatistics",
+    "seasonAdvanced",
+    "career",
+    "pitchArsenal",
+    "pitchLog",
+    "playLog",
+    "tracking",
+    "metricAverages",
+    "vsPlayer",
+    "vsTeam",
+  ],
+  situationCodesOfInterest: [
+    "vl:vs Left",
+    "vr:vs Right",
+    "h:Home Games",
+    "a:Away Games",
+    "d:Day Games",
+    "n:Night Games",
+    "d7:Last 7 Days",
+    "d30:Last 30 Days",
+    "l10:Last 10",
+    "dr2:Two Days of Rest",
+    "dr5:Five Plus Days of Rest",
+  ],
+  hittingGameLogStatKeys: [
+    "airOuts",
+    "atBats",
+    "atBatsPerHomeRun",
+    "avg",
+    "babip",
+    "baseOnBalls",
+    "doubles",
+    "gamesPlayed",
+    "groundOutsToAirouts",
+    "hits",
+    "homeRuns",
+    "obp",
+    "ops",
+    "plateAppearances",
+    "rbi",
+    "slg",
+    "strikeOuts",
+    "totalBases",
+    "triples",
+  ],
+  sabermetricsHittingKeys: [
+    "woba",
+    "wRc",
+    "wRcPlus",
+    "war",
+    "wRaa",
+    "rar",
+    "spd",
+  ],
+  sabermetricsPitchingKeys: [
+    "fip",
+    "xfip",
+    "eraMinus",
+    "fipMinus",
+    "war",
+    "ra9War",
+    "rar",
+  ],
+  expectedStatisticsKeys: ["avg", "slg", "woba", "wobaCon"],
+  seasonAdvancedHittingKeys: [
+    "iso",
+    "babip",
+    "plateAppearances",
+    "swingAndMisses",
+    "totalSwings",
+    "strikeoutsPerPlateAppearance",
+    "walksPerPlateAppearance",
+    "homeRunsPerPlateAppearance",
+  ],
+  statSplitsSitCodesReturned: ["h", "a", "d", "n", "vl", "vr"],
+  statSplitsStatKeys: [
+    "avg",
+    "obp",
+    "ops",
+    "slg",
+    "plateAppearances",
+    "atBats",
+    "hits",
+    "homeRuns",
+    "baseOnBalls",
+    "strikeOuts",
+    "babip",
+  ],
+  pitchArsenalKeys: [
+    "type",
+    "percentage",
+    "averageSpeed",
+    "count",
+    "totalPitches",
+  ],
+  pitchArsenalTypesObserved: ["FF", "SI", "FC", "SL", "ST", "CU", "CH"],
+  trackingHittingSplits: 0,
+  metricAveragesHttpStatus: 500,
+};
+
+export const PROVIDER_INVENTORY: ProviderInventoryRow[] = [
+  {
+    id: "mlb-stats-api",
+    officialName: "MLB Stats API (statsapi.mlb.com)",
+    sports: ["MLB"],
+    repositoryIntegration: true,
+    apiKeyRequired: false,
+    currentCodePath:
+      "src/lib/mlb/research-stats-cache.ts + starter/lineup/bullpen/injury/weather/travel builders",
+    researchSourceOfTruth: true,
+    historicalSupport:
+      "Season gameLog / people stats for requested season. Depth is whatever Stats API returns; not a paid warehouse.",
+    livePregameSupport:
+      "Schedule hydrate probablePitcher+lineups, boxscore, venues. Prediction must consume frozen artifacts, not live calls.",
+    playerDataSupport:
+      "People, pitching gameLog stored. Hitting gameLog / sabermetrics / splits / pitchArsenal observed in this mission, not stored.",
+    advancedDataSupport:
+      "sabermetrics (wOBA, wRC+, FIP, xFIP), expectedStatistics (avg/slg/woba), pitchArsenal (type/usage/avgSpeed). Barrel/EV not in observed payloads. tracking empty; metricAverages 500.",
+    pricingPlanVisibility: "Public unauthenticated HTTP. No plan.",
+    licenseNote:
+      "Starter artifacts already flag MLB_STATSAPI_COMMERCIAL_USE_UNVERIFIED. Public product / redistribution needs written review.",
+    licenseClass: "PUBLIC_DISPLAY_REQUIRES_REVIEW",
+  },
+  {
+    id: "api-baseball",
+    officialName: "API-Baseball (API-Sports)",
+    sports: ["MLB", "KBO"],
+    repositoryIntegration: true,
+    apiKeyRequired: true,
+    currentCodePath:
+      "src/lib/games/mlb-games.ts ; src/lib/kbo/providers/api-baseball-kbo-schedule-provider.ts",
+    researchSourceOfTruth: false,
+    historicalSupport:
+      "Games by league+season used for identity. Player historical stats: players endpoint observed missing (2026-07-27).",
+    livePregameSupport: "Schedule/games for MLB+KBO identity. Not player strength.",
+    playerDataSupport:
+      "GET /players?search= returned official 'endpoint does not exist' (repo daily-test). Not a batter/pitcher stat source.",
+    advancedDataSupport: "Not observed. Do not assume Statcast/saber.",
+    pricingPlanVisibility:
+      "Public marketing: Free 100 req/day; Pro $15 / Ultra $25 / Mega $35 (api-sports.io/sports/baseball). CURRENT_PLAN_UNKNOWN.",
+    licenseNote:
+      "API-Sports terms: no commercial league license granted; resale of feed forbidden. Public display NEEDS_WRITTEN_PROVIDER_CONFIRMATION.",
+    licenseClass: "PUBLIC_DISPLAY_REQUIRES_REVIEW",
+  },
+  {
+    id: "sportsdataio",
+    officialName: "SportsDataIO MLB",
+    sports: ["MLB"],
+    repositoryIntegration: true,
+    apiKeyRequired: true,
+    currentCodePath:
+      "src/lib/sportsdata/sportsdata-provider.ts (GamesByDate, StartingLineupsByDate, Injuries)",
+    researchSourceOfTruth: false,
+    historicalSupport:
+      "Marketing: historical warehouse / Vault via sales. Self-serve historical depth not confirmed for this repo's key.",
+    livePregameSupport:
+      "Wired: games, probable pitchers from GamesByDate, projected/confirmed lineups, injuries. Research builders set sportsDataIoUsed=false.",
+    playerDataSupport:
+      "Official dictionary includes PlayerGame/PlayerSeason counting stats, OPS, BABIP, wOBA (WeightedOnBasePercentage), FIP. Code does not fetch those endpoints.",
+    advancedDataSupport:
+      "Dictionary has wOBA and FIP. No Barrel%/HardHit%/xwOBA/spin fields found in the official MLB data dictionary page fetched 2026-08-20. Pitch-by-pitch marketed; not wired.",
+    pricingPlanVisibility:
+      "Trial scrambled blocked. Discovery Lab / Vault / Leagues quote from prior odds audit. CURRENT_PLAN_UNKNOWN.",
+    licenseNote:
+      "Trial scrambled permanently prohibited as research. Discovery Lab documented as not for commercial redistribution. Sales agreement likely for production.",
+    licenseClass: "COMMERCIAL_LICENSE_REQUIRED",
+  },
+  {
+    id: "api-football",
+    officialName: "API-Football (API-Sports)",
+    sports: ["FOOTBALL"],
+    repositoryIntegration: true,
+    apiKeyRequired: true,
+    currentCodePath:
+      "src/lib/football/api-football-provider.ts (fixtures, standings, teams/statistics, injuries, fixtures/lineups)",
+    researchSourceOfTruth: true,
+    historicalSupport:
+      "Fixtures by date/league/season used for schedule-v1. Player season history via /players exists in official guide, not wired.",
+    livePregameSupport:
+      "Fixtures for slate. Lineups typically 20–40 min before kickoff per official guide. Injuries method wired unused.",
+    playerDataSupport:
+      "Official guide: /players and /fixtures/players with minutes, goals, assists, shots, key passes, tackles, cards, GK saves. Code has no getPlayers.",
+    advancedDataSupport:
+      "Official beginner guide does not list xG, npxG, xA, PSxG, PPDA, field tilt. /teams/statistics documented as W/D/L, goals, clean sheets, form — not xG.",
+    pricingPlanVisibility:
+      "Same API-Sports family pricing (Free 100/day; paid from ~$10–$15/mo marketing). CURRENT_PLAN_UNKNOWN. getStatus can reveal plan without printing secrets — not called (quota unknown).",
+    licenseNote:
+      "Same API-Sports terms. Public/commercial display requires review. Do not resell the feed.",
+    licenseClass: "PUBLIC_DISPLAY_REQUIRES_REVIEW",
+  },
+  {
+    id: "the-odds-api",
+    officialName: "The Odds API v4",
+    sports: ["MLB", "FOOTBALL", "KBO", "NPB", "BASKETBALL"],
+    repositoryIntegration: true,
+    apiKeyRequired: true,
+    currentCodePath:
+      "src/lib/odds/the-odds-api-provider.ts ; football odds-1x2 ; MLB odds-history",
+    researchSourceOfTruth: true,
+    historicalSupport:
+      "Paid plans only. Free-plan historical probe PLAN_BLOCKED. Business decision HOLD (existing audit).",
+    livePregameSupport: "Event list + bookmaker odds. Not player/lineup.",
+    playerDataSupport: "None. Odds outcomes only.",
+    advancedDataSupport: "None for player strength.",
+    pricingPlanVisibility:
+      "Public: Free 500 credits; 20K $30/mo includes Historical. CURRENT_PLAN_UNKNOWN for this workspace key.",
+    licenseNote:
+      "Terms: analytics/apps allowed if data is not the product sold; no standalone redistribution. PER_USE_LEGAL_REVIEW_REQUIRED.",
+    licenseClass: "REDISTRIBUTION_RESTRICTED",
+  },
+  {
+    id: "thesportsdb",
+    officialName: "TheSportsDB",
+    sports: ["KBO", "NPB"],
+    repositoryIntegration: true,
+    apiKeyRequired: true,
+    currentCodePath: "src/lib/sports/thesportsdb-provider.ts ; KBO schedule fallback",
+    researchSourceOfTruth: false,
+    historicalSupport: "eventsday.php. Free tier limited (3 events/day/league in code).",
+    livePregameSupport: "Schedule identity only.",
+    playerDataSupport: "Not used. Not an Independent Model player source.",
+    advancedDataSupport: "None in current paths.",
+    pricingPlanVisibility: "Free tier limits documented in code. CURRENT_PLAN_UNKNOWN.",
+    licenseNote: "REVIEW_REQUIRED in PROVIDER_POLICY. Attribution/display conditions need review.",
+    licenseClass: "PUBLIC_DISPLAY_REQUIRES_REVIEW",
+  },
+  {
+    id: "weather-candidates",
+    officialName: "NOAA NWS / Open-Meteo / OpenWeather One Call (candidates)",
+    sports: ["MLB", "FOOTBALL"],
+    repositoryIntegration: false,
+    apiKeyRequired: true,
+    currentCodePath:
+      "Named only in src/lib/mlb/weather-dataset-types.ts WEATHER_PROVIDER_CANDIDATES. Forecast NOT_COLLECTED.",
+    researchSourceOfTruth: false,
+    historicalSupport: "Not collected.",
+    livePregameSupport: "Not selected. roofType stored from MLB venues only.",
+    playerDataSupport: "None.",
+    advancedDataSupport: "Pregame forecast vs postgame observed weather must stay separated.",
+    pricingPlanVisibility: "Not purchased. Do not buy in this mission.",
+    licenseNote: "Select later; NOAA vs commercial ToS differ. UNKNOWN until selected.",
+    licenseClass: "UNKNOWN",
+  },
+  {
+    id: "api-basketball-nba",
+    officialName: "API-Basketball / API-NBA (API-Sports)",
+    sports: ["BASKETBALL"],
+    repositoryIntegration: false,
+    apiKeyRequired: true,
+    currentCodePath: "None. ApiSportsProvider.getGames throws not implemented.",
+    researchSourceOfTruth: false,
+    historicalSupport: "Family marketed. Payload unverified in this repo.",
+    livePregameSupport: "Not wired.",
+    playerDataSupport: "Preview only. Official NBA docs exist at api-sports.io/documentation/nba/v2.",
+    advancedDataSupport: "on/off, usage, TS% not confirmed. NEEDS_PROVIDER_DOC_REVIEW.",
+    pricingPlanVisibility: "Same API-Sports marketing tiers. Not subscribed in code.",
+    licenseNote: "Same API-Sports terms + league IP.",
+    licenseClass: "PUBLIC_DISPLAY_REQUIRES_REVIEW",
+  },
+  {
+    id: "api-volleyball",
+    officialName: "API-Volleyball (API-Sports)",
+    sports: ["VOLLEYBALL"],
+    repositoryIntegration: false,
+    apiKeyRequired: true,
+    currentCodePath: "None.",
+    researchSourceOfTruth: false,
+    historicalSupport: "Family marketed. Cloudflare blocked full doc fetch this mission.",
+    livePregameSupport: "Not wired.",
+    playerDataSupport: "Preview only.",
+    advancedDataSupport: "Receive/serve/block efficiency UNKNOWN.",
+    pricingPlanVisibility: "Same family marketing. Not purchased here.",
+    licenseNote: "Same API-Sports terms.",
+    licenseClass: "PUBLIC_DISPLAY_REQUIRES_REVIEW",
+  },
+];
