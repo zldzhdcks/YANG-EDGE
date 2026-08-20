@@ -1,0 +1,51 @@
+﻿{
+    "schemaVersion":  "yang-edge-daily-scope-lock-v1",
+    "dateKst":  "2026-08-21",
+    "scopeLockedAt":  "2026-08-20T18:33:53.5040341+00:00",
+    "lockType":  "LATE_RECOVERY_FROM_PREEXISTING_RAW_EVIDENCE",
+    "sourceOperatorObservationRel":  "data/operator-observations/structured/2026-08-21/batch-0202-scope-recovery-v0.json",
+    "sourceOperatorObservationHash":  "331e76bd555056170060a307959375978192c949a301aa03b3ea304aeeb0226a",
+    "sourceRawManifestRel":  "data/operator-observations/raw/2026-08-21/batch-0202-late-recovery/manifest.json",
+    "sourceRawManifestHash":  "3c9ed61b7143b57115e5f0ca533c406af3a4a1983472ae14a7ce12f5c317b904",
+    "sourceEvidenceWindowKst":  {
+                                    "firstObservedAt":  "2026-08-20T22:04:05.6219522+09:00",
+                                    "lastObservedAt":  "2026-08-21T02:02:09.4805637+09:00",
+                                    "recoveredAfterCapture":  true
+                                },
+    "sports":  [
+                   "MLB",
+                   "FOOTBALL"
+               ],
+    "observedScope":  {
+                          "MLB":  9,
+                          "FOOTBALL":  15,
+                          "footballByLeague":  {
+                                                   "UEL":  12,
+                                                   "LALIGA":  1,
+                                                   "COPA_LIBERTADORES":  2
+                                               },
+                          "total":  24
+                      },
+    "identityValidation":  {
+                               "mlbMatched":  9,
+                               "mlbBlocked":  0,
+                               "footballMatched":  0,
+                               "footballBlocked":  15,
+                               "footballBlockReason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                           },
+    "scheduleValidation":  {
+                               "mlbSchedulePresent":  true,
+                               "mlbScheduleHash":  "98d7a9202210361f450281e656e7c22e6b283febcc44cb30bdcfd67e5a42c9fe",
+                               "footballSchedulePresent":  false,
+                               "status":  "PARTIAL_BLOCKED",
+                               "stageAComplete":  false
+                           },
+    "scopeShrinkAfterLockForbidden":  true,
+    "researchOnly":  true,
+    "prediction":  "NONE",
+    "engine":  "NONE",
+    "recommendation":  "NONE",
+    "predictionInput":  false,
+    "recoveryCreatedPrediction":  false,
+    "note":  "Recovered daily scope from byte-identical operator screenshots captured before or around game cutoffs. Recovery does not convert late evidence into pregame evidence. MLB identity is schedule-validated 9/9. Football remains in denominator but identity is blocked because the 2026-08-21 football schedule artifact is absent."
+}

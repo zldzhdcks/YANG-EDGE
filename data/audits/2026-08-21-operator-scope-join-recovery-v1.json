@@ -1,0 +1,304 @@
+﻿{
+    "schemaVersion":  "yang-edge-operator-scope-join-recovery-v1",
+    "dateKst":  "2026-08-21",
+    "generatedAt":  "2026-08-20T18:33:53.6040126+00:00",
+    "researchOnly":  true,
+    "prediction":  "NONE",
+    "engine":  "NONE",
+    "recommendation":  "NONE",
+    "predictionInput":  false,
+    "scopeLockRel":  "data/audits/2026-08-21-daily-scope-lock-v1.json",
+    "scopeLockHash":  "882deb35ea51ee9b58399b3a21ea042baa865c89f720ed35696b44a3c4cf4c07",
+    "sourceOperatorObservationRel":  "data/operator-observations/structured/2026-08-21/batch-0202-scope-recovery-v0.json",
+    "sourceOperatorObservationHash":  "331e76bd555056170060a307959375978192c949a301aa03b3ea304aeeb0226a",
+    "mlbScheduleRel":  "data/research/mlb/2026-08-21-schedule-v1.json",
+    "mlbScheduleHash":  "98d7a9202210361f450281e656e7c22e6b283febcc44cb30bdcfd67e5a42c9fe",
+    "footballScheduleRel":  "data/research/football/2026-08-21-schedule-v1.json",
+    "footballSchedulePresent":  false,
+    "coverage":  {
+                     "observedScope":  24,
+                     "mlbObserved":  9,
+                     "footballObserved":  15,
+                     "accounted":  24,
+                     "scheduleValidated":  9,
+                     "identityBlocked":  15,
+                     "unexplainedMissing":  0,
+                     "ambiguous":  0,
+                     "scopeDiscoveryConflict":  false,
+                     "scheduleStageDone":  false
+                 },
+    "mlb":  {
+                "observed":  9,
+                "officialSchedule":  9,
+                "matched":  9,
+                "identityBlocked":  0,
+                "ambiguous":  0,
+                "missing":  0,
+                "uniqueGamePkJoined":  9,
+                "joins":  [
+                              {
+                                  "sport":  "MLB",
+                                  "protoId":  5215,
+                                  "gamePk":  824474,
+                                  "recoveryAway":  "STL",
+                                  "recoveryHome":  "CIN",
+                                  "scheduleAway":  "St. Louis Cardinals",
+                                  "scheduleHome":  "Cincinnati Reds",
+                                  "startKst":  "01:40",
+                                  "scheduleStartKst":  "01:40",
+                                  "commenceTimeUtc":  "2026-08-20T16:40:00Z",
+                                  "status":  "MATCHED_REGISTERED",
+                                  "reason":  "EXACT_PROTO_GAMEPK_TIME_JOIN"
+                              },
+                              {
+                                  "sport":  "MLB",
+                                  "protoId":  5220,
+                                  "gamePk":  822934,
+                                  "recoveryAway":  "TOR",
+                                  "recoveryHome":  "TB",
+                                  "scheduleAway":  "Toronto Blue Jays",
+                                  "scheduleHome":  "Tampa Bay Rays",
+                                  "startKst":  "02:10",
+                                  "scheduleStartKst":  "02:10",
+                                  "commenceTimeUtc":  "2026-08-20T17:10:00Z",
+                                  "status":  "MATCHED_REGISTERED",
+                                  "reason":  "EXACT_PROTO_GAMEPK_TIME_JOIN"
+                              },
+                              {
+                                  "sport":  "MLB",
+                                  "protoId":  5225,
+                                  "gamePk":  824395,
+                                  "recoveryAway":  "SF",
+                                  "recoveryHome":  "CLE",
+                                  "scheduleAway":  "San Francisco Giants",
+                                  "scheduleHome":  "Cleveland Guardians",
+                                  "startKst":  "02:10",
+                                  "scheduleStartKst":  "02:10",
+                                  "commenceTimeUtc":  "2026-08-20T17:10:00Z",
+                                  "status":  "MATCHED_REGISTERED",
+                                  "reason":  "EXACT_PROTO_GAMEPK_TIME_JOIN"
+                              },
+                              {
+                                  "sport":  "MLB",
+                                  "protoId":  5230,
+                                  "gamePk":  823747,
+                                  "recoveryAway":  "SEA",
+                                  "recoveryHome":  "MIL",
+                                  "scheduleAway":  "Seattle Mariners",
+                                  "scheduleHome":  "Milwaukee Brewers",
+                                  "startKst":  "03:10",
+                                  "scheduleStartKst":  "03:10",
+                                  "commenceTimeUtc":  "2026-08-20T18:10:00Z",
+                                  "status":  "MATCHED_REGISTERED",
+                                  "reason":  "EXACT_PROTO_GAMEPK_TIME_JOIN"
+                              },
+                              {
+                                  "sport":  "MLB",
+                                  "protoId":  5235,
+                                  "gamePk":  824074,
+                                  "recoveryAway":  "ATH",
+                                  "recoveryHome":  "KC",
+                                  "scheduleAway":  "Athletics",
+                                  "scheduleHome":  "Kansas City Royals",
+                                  "startKst":  "03:10",
+                                  "scheduleStartKst":  "03:10",
+                                  "commenceTimeUtc":  "2026-08-20T18:10:00Z",
+                                  "status":  "MATCHED_REGISTERED",
+                                  "reason":  "EXACT_PROTO_GAMEPK_TIME_JOIN"
+                              },
+                              {
+                                  "sport":  "MLB",
+                                  "protoId":  5240,
+                                  "gamePk":  824589,
+                                  "recoveryAway":  "ATL",
+                                  "recoveryHome":  "CWS",
+                                  "scheduleAway":  "Atlanta Braves",
+                                  "scheduleHome":  "Chicago White Sox",
+                                  "startKst":  "03:10",
+                                  "scheduleStartKst":  "03:10",
+                                  "commenceTimeUtc":  "2026-08-20T18:10:00Z",
+                                  "status":  "MATCHED_REGISTERED",
+                                  "reason":  "EXACT_PROTO_GAMEPK_TIME_JOIN"
+                              },
+                              {
+                                  "sport":  "MLB",
+                                  "protoId":  5254,
+                                  "gamePk":  824802,
+                                  "recoveryAway":  "NYY",
+                                  "recoveryHome":  "BAL",
+                                  "scheduleAway":  "New York Yankees",
+                                  "scheduleHome":  "Baltimore Orioles",
+                                  "startKst":  "07:35",
+                                  "scheduleStartKst":  "07:35",
+                                  "commenceTimeUtc":  "2026-08-20T22:35:00Z",
+                                  "status":  "MATCHED_REGISTERED",
+                                  "reason":  "EXACT_PROTO_GAMEPK_TIME_JOIN"
+                              },
+                              {
+                                  "sport":  "MLB",
+                                  "protoId":  5259,
+                                  "gamePk":  822861,
+                                  "recoveryAway":  "WSH",
+                                  "recoveryHome":  "TEX",
+                                  "scheduleAway":  "Washington Nationals",
+                                  "scheduleHome":  "Texas Rangers",
+                                  "startKst":  "09:05",
+                                  "scheduleStartKst":  "09:05",
+                                  "commenceTimeUtc":  "2026-08-21T00:05:00Z",
+                                  "status":  "MATCHED_REGISTERED",
+                                  "reason":  "EXACT_PROTO_GAMEPK_TIME_JOIN"
+                              },
+                              {
+                                  "sport":  "MLB",
+                                  "protoId":  5264,
+                                  "gamePk":  824153,
+                                  "recoveryAway":  "LAA",
+                                  "recoveryHome":  "HOU",
+                                  "scheduleAway":  "Los Angeles Angels",
+                                  "scheduleHome":  "Houston Astros",
+                                  "startKst":  "09:10",
+                                  "scheduleStartKst":  "09:10",
+                                  "commenceTimeUtc":  "2026-08-21T00:10:00Z",
+                                  "status":  "MATCHED_REGISTERED",
+                                  "reason":  "EXACT_PROTO_GAMEPK_TIME_JOIN"
+                              }
+                          ]
+            },
+    "football":  {
+                     "observed":  15,
+                     "officialScheduleAvailable":  false,
+                     "matched":  0,
+                     "identityBlocked":  15,
+                     "blockReason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING",
+                     "rows":  [
+                                  {
+                                      "sport":  "FOOTBALL",
+                                      "protoId":  5147,
+                                      "startKst":  "00:00",
+                                      "competition":  "UEL",
+                                      "status":  "IDENTITY_BLOCKED",
+                                      "reason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                                  },
+                                  {
+                                      "sport":  "FOOTBALL",
+                                      "protoId":  5152,
+                                      "startKst":  "01:00",
+                                      "competition":  "UEL",
+                                      "status":  "IDENTITY_BLOCKED",
+                                      "reason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                                  },
+                                  {
+                                      "sport":  "FOOTBALL",
+                                      "protoId":  5157,
+                                      "startKst":  "01:00",
+                                      "competition":  "UEL",
+                                      "status":  "IDENTITY_BLOCKED",
+                                      "reason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                                  },
+                                  {
+                                      "sport":  "FOOTBALL",
+                                      "protoId":  5162,
+                                      "startKst":  "02:00",
+                                      "competition":  "UEL",
+                                      "status":  "IDENTITY_BLOCKED",
+                                      "reason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                                  },
+                                  {
+                                      "sport":  "FOOTBALL",
+                                      "protoId":  5167,
+                                      "startKst":  "02:00",
+                                      "competition":  "UEL",
+                                      "status":  "IDENTITY_BLOCKED",
+                                      "reason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                                  },
+                                  {
+                                      "sport":  "FOOTBALL",
+                                      "protoId":  5172,
+                                      "startKst":  "02:00",
+                                      "competition":  "UEL",
+                                      "status":  "IDENTITY_BLOCKED",
+                                      "reason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                                  },
+                                  {
+                                      "sport":  "FOOTBALL",
+                                      "protoId":  5177,
+                                      "startKst":  "02:00",
+                                      "competition":  "UEL",
+                                      "status":  "IDENTITY_BLOCKED",
+                                      "reason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                                  },
+                                  {
+                                      "sport":  "FOOTBALL",
+                                      "protoId":  5182,
+                                      "startKst":  "02:00",
+                                      "competition":  "UEL",
+                                      "status":  "IDENTITY_BLOCKED",
+                                      "reason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                                  },
+                                  {
+                                      "sport":  "FOOTBALL",
+                                      "protoId":  5187,
+                                      "startKst":  "03:00",
+                                      "competition":  "UEL",
+                                      "status":  "IDENTITY_BLOCKED",
+                                      "reason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                                  },
+                                  {
+                                      "sport":  "FOOTBALL",
+                                      "protoId":  5192,
+                                      "startKst":  "03:00",
+                                      "competition":  "UEL",
+                                      "status":  "IDENTITY_BLOCKED",
+                                      "reason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                                  },
+                                  {
+                                      "sport":  "FOOTBALL",
+                                      "protoId":  5197,
+                                      "startKst":  "03:00",
+                                      "competition":  "UEL",
+                                      "status":  "IDENTITY_BLOCKED",
+                                      "reason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                                  },
+                                  {
+                                      "sport":  "FOOTBALL",
+                                      "protoId":  5202,
+                                      "startKst":  "04:00",
+                                      "competition":  "UEL",
+                                      "status":  "IDENTITY_BLOCKED",
+                                      "reason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                                  },
+                                  {
+                                      "sport":  "FOOTBALL",
+                                      "protoId":  5245,
+                                      "startKst":  "04:00",
+                                      "competition":  "LALIGA",
+                                      "status":  "IDENTITY_BLOCKED",
+                                      "reason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                                  },
+                                  {
+                                      "sport":  "FOOTBALL",
+                                      "protoId":  5250,
+                                      "startKst":  "07:00",
+                                      "competition":  "COPA_LIBERTADORES",
+                                      "status":  "IDENTITY_BLOCKED",
+                                      "reason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                                  },
+                                  {
+                                      "sport":  "FOOTBALL",
+                                      "protoId":  5272,
+                                      "startKst":  "09:30",
+                                      "competition":  "COPA_LIBERTADORES",
+                                      "status":  "IDENTITY_BLOCKED",
+                                      "reason":  "FOOTBALL_SCHEDULE_ARTIFACT_MISSING"
+                                  }
+                              ]
+                 },
+    "temporalIntegrity":  {
+                              "sourceEvidenceFirstObservedAtKst":  "2026-08-20T22:04:05.6219522+09:00",
+                              "sourceEvidenceLastObservedAtKst":  "2026-08-21T02:02:09.4805637+09:00",
+                              "recoveryRunAfterCapture":  true,
+                              "retroactivePredictionCreated":  false,
+                              "lateEvidencePromotedToPregame":  false
+                          },
+    "status":  "SCOPE_LOCKED_WITH_SCHEDULE_BLOCK"
+}

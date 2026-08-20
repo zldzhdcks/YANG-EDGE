@@ -1,0 +1,263 @@
+﻿{
+    "schemaVersion":  "yang-edge-2026-08-21-scope-recovery-v0",
+    "dateKst":  "2026-08-21",
+    "batchId":  "2026-08-21/batch-0202-late-recovery",
+    "recoveryType":  "LATE_PROCESSING_OF_PREEXISTING_RAW_EVIDENCE",
+    "researchOnly":  true,
+    "engineAdmission":  "PROHIBITED",
+    "predictionInput":  false,
+    "predictionCreatedByRecovery":  false,
+    "providerCalls":  0,
+    "engineCalls":  0,
+    "resultCalls":  0,
+    "rawEvidenceHashVerified":  true,
+    "rawFiles":  8,
+    "evidenceClassification":  {
+                                   "domesticOddsScreenshots":  4,
+                                   "mlbExpectedLineupScreenshots":  2,
+                                   "mlbConfirmedLineupScreenshots":  2,
+                                   "allDomesticOddsCapturedBeforeEarliestVisibleStart":  true,
+                                   "mlbExpectedCoverageGames":  9,
+                                   "mlbConfirmedCoverageGames":  6,
+                                   "mlbExpectedCoverage":  "9/9",
+                                   "mlbConfirmedCoverage":  "6/9"
+                               },
+    "observedScopeCandidate":  {
+                                   "status":  "RECOVERED_EVIDENCE_PENDING_IDENTITY_AUDIT",
+                                   "totalVisibleFixtures":  24,
+                                   "mlbVisibleGames":  9,
+                                   "footballVisibleFixtures":  15,
+                                   "footballByCompetition":  {
+                                                                 "UEL":  12,
+                                                                 "LALIGA":  1,
+                                                                 "COPA_LIBERTADORES":  2
+                                                             },
+                                   "mandatoryPercentComputed":  false,
+                                   "note":  "This is recovered scope evidence, not a completed Daily Scope Lock."
+                               },
+    "domesticOddsEvidence":  [
+                                 {
+                                     "file":  "스크린샷 2026-08-20 220405.png",
+                                     "sha256":  "384D015049E67F73FB07B473B46315140D5D710C6DE01DE7A6EE8BD8137064FD",
+                                     "observedAtKst":  "2026-08-20T22:04:05.6219522+09:00",
+                                     "predictionInput":  false
+                                 },
+                                 {
+                                     "file":  "스크린샷 2026-08-20 220605.png",
+                                     "sha256":  "A128C399EA3AA6A23FA6BE9810D1FAC4557E721D59888ED2A00AB248E927EA85",
+                                     "observedAtKst":  "2026-08-20T22:06:05.4068849+09:00",
+                                     "predictionInput":  false
+                                 },
+                                 {
+                                     "file":  "스크린샷 2026-08-20 220613.png",
+                                     "sha256":  "BAE85D3F96CC0052C5C53AF9A93161C10A6A1136B8AEA7F579026CFF20FC1D56",
+                                     "observedAtKst":  "2026-08-20T22:06:13.8614991+09:00",
+                                     "predictionInput":  false
+                                 },
+                                 {
+                                     "file":  "스크린샷 2026-08-20 220622.png",
+                                     "sha256":  "01894DF2947AC4F5B450A95B95CB3022D7F7CDC3D084260D233509B6EB1A8A22",
+                                     "observedAtKst":  "2026-08-20T22:06:22.4250800+09:00",
+                                     "predictionInput":  false
+                                 }
+                             ],
+    "lineupEvidence":  [
+                           {
+                               "file":  "스크린샷 2026-08-20 220705.png",
+                               "sha256":  "A76959DFDB696C81C47141A584BC82974EB1B76B22EF976220E45E89C4FC1E74",
+                               "observedAtKst":  "2026-08-20T22:07:05.9144420+09:00",
+                               "predictionInput":  false
+                           },
+                           {
+                               "file":  "스크린샷 2026-08-20 220709.png",
+                               "sha256":  "FC83778609DB4AF245CDBDA764C6101D7634EF2F4CA51A2BC6C348275F5F015E",
+                               "observedAtKst":  "2026-08-20T22:07:09.5260747+09:00",
+                               "predictionInput":  false
+                           },
+                           {
+                               "file":  "스크린샷 2026-08-20 235846.png",
+                               "sha256":  "79FB4FD2A7E42673F541B4AD5D0A9B718FD3A1F79F16051B81CF724DCE5B78D3",
+                               "observedAtKst":  "2026-08-20T23:58:46.1554682+09:00",
+                               "predictionInput":  false
+                           },
+                           {
+                               "file":  "스크린샷 2026-08-21 020209.png",
+                               "sha256":  "C2CCE570E0125577ABB5C5116061B186997FE64875C32A5BC589C4923B5B08EA",
+                               "observedAtKst":  "2026-08-21T02:02:09.4805637+09:00",
+                               "predictionInput":  false
+                           }
+                       ],
+    "mlbGames":  [
+                     {
+                         "protoId":  5215,
+                         "startKst":  "01:40",
+                         "away":  "STL",
+                         "home":  "CIN",
+                         "expectedEvidence":  "스크린샷 2026-08-20 220705.png",
+                         "confirmedEvidence":  "스크린샷 2026-08-20 235846.png",
+                         "confirmedPregame":  true
+                     },
+                     {
+                         "protoId":  5220,
+                         "startKst":  "02:10",
+                         "away":  "TOR",
+                         "home":  "TB",
+                         "expectedEvidence":  "스크린샷 2026-08-20 220705.png",
+                         "confirmedEvidence":  "스크린샷 2026-08-20 235846.png",
+                         "confirmedPregame":  true
+                     },
+                     {
+                         "protoId":  5225,
+                         "startKst":  "02:10",
+                         "away":  "SF",
+                         "home":  "CLE",
+                         "expectedEvidence":  "스크린샷 2026-08-20 220705.png",
+                         "confirmedEvidence":  "스크린샷 2026-08-20 235846.png",
+                         "confirmedPregame":  true
+                     },
+                     {
+                         "protoId":  5230,
+                         "startKst":  "03:10",
+                         "away":  "SEA",
+                         "home":  "MIL",
+                         "expectedEvidence":  "스크린샷 2026-08-20 220705.png",
+                         "confirmedEvidence":  "스크린샷 2026-08-21 020209.png",
+                         "confirmedPregame":  true
+                     },
+                     {
+                         "protoId":  5235,
+                         "startKst":  "03:10",
+                         "away":  "ATH",
+                         "home":  "KC",
+                         "expectedEvidence":  "스크린샷 2026-08-20 220705.png",
+                         "confirmedEvidence":  "스크린샷 2026-08-21 020209.png",
+                         "confirmedPregame":  true
+                     },
+                     {
+                         "protoId":  5240,
+                         "startKst":  "03:10",
+                         "away":  "ATL",
+                         "home":  "CWS",
+                         "expectedEvidence":  "스크린샷 2026-08-20 220705.png",
+                         "confirmedEvidence":  "스크린샷 2026-08-21 020209.png",
+                         "confirmedPregame":  true
+                     },
+                     {
+                         "protoId":  5254,
+                         "startKst":  "07:35",
+                         "away":  "NYY",
+                         "home":  "BAL",
+                         "expectedEvidence":  "스크린샷 2026-08-20 220709.png",
+                         "confirmedEvidence":  null,
+                         "confirmedPregame":  false
+                     },
+                     {
+                         "protoId":  5259,
+                         "startKst":  "09:05",
+                         "away":  "WSH",
+                         "home":  "TEX",
+                         "expectedEvidence":  "스크린샷 2026-08-20 220709.png",
+                         "confirmedEvidence":  null,
+                         "confirmedPregame":  false
+                     },
+                     {
+                         "protoId":  5264,
+                         "startKst":  "09:10",
+                         "away":  "LAA",
+                         "home":  "HOU",
+                         "expectedEvidence":  "스크린샷 2026-08-20 220709.png",
+                         "confirmedEvidence":  null,
+                         "confirmedPregame":  false
+                     }
+                 ],
+    "footballGames":  [
+                          {
+                              "protoId":  5147,
+                              "startKst":  "00:00",
+                              "competition":  "UEL"
+                          },
+                          {
+                              "protoId":  5152,
+                              "startKst":  "01:00",
+                              "competition":  "UEL"
+                          },
+                          {
+                              "protoId":  5157,
+                              "startKst":  "01:00",
+                              "competition":  "UEL"
+                          },
+                          {
+                              "protoId":  5162,
+                              "startKst":  "02:00",
+                              "competition":  "UEL"
+                          },
+                          {
+                              "protoId":  5167,
+                              "startKst":  "02:00",
+                              "competition":  "UEL"
+                          },
+                          {
+                              "protoId":  5172,
+                              "startKst":  "02:00",
+                              "competition":  "UEL"
+                          },
+                          {
+                              "protoId":  5177,
+                              "startKst":  "02:00",
+                              "competition":  "UEL"
+                          },
+                          {
+                              "protoId":  5182,
+                              "startKst":  "02:00",
+                              "competition":  "UEL"
+                          },
+                          {
+                              "protoId":  5187,
+                              "startKst":  "03:00",
+                              "competition":  "UEL"
+                          },
+                          {
+                              "protoId":  5192,
+                              "startKst":  "03:00",
+                              "competition":  "UEL"
+                          },
+                          {
+                              "protoId":  5197,
+                              "startKst":  "03:00",
+                              "competition":  "UEL"
+                          },
+                          {
+                              "protoId":  5202,
+                              "startKst":  "04:00",
+                              "competition":  "UEL"
+                          },
+                          {
+                              "protoId":  5245,
+                              "startKst":  "04:00",
+                              "competition":  "LALIGA"
+                          },
+                          {
+                              "protoId":  5250,
+                              "startKst":  "07:00",
+                              "competition":  "COPA_LIBERTADORES"
+                          },
+                          {
+                              "protoId":  5272,
+                              "startKst":  "09:30",
+                              "competition":  "COPA_LIBERTADORES"
+                          }
+                      ],
+    "timingPolicy":  {
+                         "source":  "RAW_MANIFEST_TIMESTAMPS_AND_SCREENSHOT_FILENAMES",
+                         "oddsCaptureWindowKst":  "2026-08-20T22:04:05+09:00..2026-08-20T22:06:22+09:00",
+                         "expectedLineupCaptureWindowKst":  "2026-08-20T22:07:05+09:00..2026-08-20T22:07:09+09:00",
+                         "confirmedEarlyCaptureKst":  "2026-08-20T23:58:46+09:00",
+                         "confirmedMidCaptureKst":  "2026-08-21T02:02:09+09:00",
+                         "note":  "Confirmed evidence is treated pregame only for games whose displayed start is later than the source evidence timestamp."
+                     },
+    "next":  {
+                 "required":  "IDENTITY_JOIN_AUDIT",
+                 "noRetroactivePrediction":  true,
+                 "noPostStartEvidencePromotion":  true
+             }
+}
