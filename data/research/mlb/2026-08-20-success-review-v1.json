@@ -1,0 +1,486 @@
+{
+  "schemaVersion": "mlb-success-review-v1",
+  "dateKst": "2026-08-20",
+  "gradedArtifact": "2026-08-20-graded-predictions-v1.json",
+  "gradedHash": "f332bb8d6fdb71112b764a7b180128041cd2901af99473ad602628513e4fe68a",
+  "reviewLayerVersion": "mlb-research-review-v2",
+  "games": [
+    {
+      "gamePk": 824801,
+      "gameId": "mlb-baltimore-orioles-new-york-yankees",
+      "pick": "New York Yankees",
+      "pickSide": "AWAY",
+      "actualWinner": "AWAY",
+      "homeScore": 3,
+      "awayScore": 5,
+      "predictionProbability": 0.52,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "INSUFFICIENT",
+      "starterStatus": "PARTIAL",
+      "oddsStatus": "READY",
+      "lineupStatus": "PARTIAL",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "STARTER"
+      ],
+      "whyCorrect": [
+        {
+          "category": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=AWAY_EDGE aligned with correct side"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=AWAY_EDGE aligned with correct side"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW",
+      "observationOnly": false
+    },
+    {
+      "gamePk": 824640,
+      "gameId": "mlb-chicago-cubs-chicago-white-sox",
+      "pick": "Chicago White Sox",
+      "pickSide": "AWAY",
+      "actualWinner": "AWAY",
+      "homeScore": 0,
+      "awayScore": 3,
+      "predictionProbability": 0.5,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "INSUFFICIENT",
+      "starterStatus": "PARTIAL",
+      "oddsStatus": "READY",
+      "lineupStatus": "PARTIAL",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "STARTER"
+      ],
+      "whyCorrect": [
+        {
+          "category": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=AWAY_EDGE aligned with correct side"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=AWAY_EDGE aligned with correct side"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW",
+      "observationOnly": false
+    },
+    {
+      "gamePk": 824476,
+      "gameId": "mlb-cincinnati-reds-st-louis-cardinals",
+      "pick": "Cincinnati Reds",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 5,
+      "awayScore": 4,
+      "predictionProbability": 0.56,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "INSUFFICIENT",
+      "starterStatus": "PARTIAL",
+      "oddsStatus": "READY",
+      "lineupStatus": "PARTIAL",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "STARTER",
+        "ONE_RUN_GAME",
+        "MODEL_ALIGNMENT"
+      ],
+      "whyCorrect": [
+        {
+          "category": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=HOME_EDGE aligned with correct side"
+        },
+        {
+          "category": "ONE_RUN_GAME",
+          "assessment": "WEAK_SUPPORT",
+          "evidence": "won by 1 run (margin 1) — correct but high variance"
+        },
+        {
+          "category": "MODEL_ALIGNMENT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pick-side probability 56.0%"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=HOME_EDGE aligned with correct side"
+        },
+        {
+          "factor": "ONE_RUN_GAME",
+          "assessment": "WEAK_SUPPORT",
+          "evidence": "won by 1 run (margin 1) — correct but high variance"
+        },
+        {
+          "factor": "MODEL_ALIGNMENT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pick-side probability 56.0%"
+        }
+      ],
+      "counterInterpretation": "One-run win: correct side does not prove model skill; variance dominates.",
+      "reviewConfidence": "LOW",
+      "observationOnly": false
+    },
+    {
+      "gamePk": 824318,
+      "gameId": "mlb-colorado-rockies-los-angeles-dodgers",
+      "pick": "Los Angeles Dodgers",
+      "pickSide": "AWAY",
+      "actualWinner": "AWAY",
+      "homeScore": 4,
+      "awayScore": 6,
+      "predictionProbability": 0.56,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "INSUFFICIENT",
+      "starterStatus": "PARTIAL",
+      "oddsStatus": "READY",
+      "lineupStatus": "PARTIAL",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "STARTER",
+        "MODEL_ALIGNMENT"
+      ],
+      "whyCorrect": [
+        {
+          "category": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=AWAY_EDGE aligned with correct side"
+        },
+        {
+          "category": "MODEL_ALIGNMENT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pick-side probability 56.0%"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=AWAY_EDGE aligned with correct side"
+        },
+        {
+          "factor": "MODEL_ALIGNMENT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pick-side probability 56.0%"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW",
+      "observationOnly": false
+    },
+    {
+      "gamePk": 824155,
+      "gameId": "mlb-houston-astros-los-angeles-angels",
+      "pick": "Houston Astros",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 3,
+      "awayScore": 2,
+      "predictionProbability": 0.5,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "INSUFFICIENT",
+      "starterStatus": "PARTIAL",
+      "oddsStatus": "READY",
+      "lineupStatus": "PARTIAL",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "ONE_RUN_GAME"
+      ],
+      "whyCorrect": [
+        {
+          "category": "ONE_RUN_GAME",
+          "assessment": "WEAK_SUPPORT",
+          "evidence": "won by 1 run (margin 1) — correct but high variance"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "ONE_RUN_GAME",
+          "assessment": "WEAK_SUPPORT",
+          "evidence": "won by 1 run (margin 1) — correct but high variance"
+        }
+      ],
+      "counterInterpretation": "One-run win: correct side does not prove model skill; variance dominates.",
+      "reviewConfidence": "LOW",
+      "observationOnly": false
+    },
+    {
+      "gamePk": 823748,
+      "gameId": "mlb-milwaukee-brewers-seattle-mariners",
+      "pick": "Seattle Mariners",
+      "pickSide": "AWAY",
+      "actualWinner": "AWAY",
+      "homeScore": 5,
+      "awayScore": 7,
+      "predictionProbability": 0.53,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "INSUFFICIENT",
+      "starterStatus": "PARTIAL",
+      "oddsStatus": "READY",
+      "lineupStatus": "PARTIAL",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "STARTER"
+      ],
+      "whyCorrect": [
+        {
+          "category": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=AWAY_EDGE aligned with correct side"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=AWAY_EDGE aligned with correct side"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW",
+      "observationOnly": false
+    },
+    {
+      "gamePk": 823664,
+      "gameId": "mlb-minnesota-twins-atlanta-braves",
+      "pick": "Minnesota Twins",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 6,
+      "awayScore": 4,
+      "predictionProbability": 0.5,
+      "inputStatus": "ELIGIBLE",
+      "baselineStatus": "INSUFFICIENT",
+      "starterStatus": "PARTIAL",
+      "oddsStatus": "READY",
+      "lineupStatus": "PARTIAL",
+      "inputWarnings": [],
+      "successCategories": [
+        "LINEUP",
+        "INPUT_QUALITY"
+      ],
+      "whyCorrect": [
+        {
+          "category": "LINEUP",
+          "assessment": "CONSISTENT_WITH_HYPOTHESIS",
+          "evidence": "lineup inputs were not the primary limited-input flag"
+        },
+        {
+          "category": "INPUT_QUALITY",
+          "assessment": "CONSISTENT_WITH_HYPOTHESIS",
+          "evidence": "no material non-bullpen input warnings on this game"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "LINEUP",
+          "assessment": "CONSISTENT_WITH_HYPOTHESIS",
+          "evidence": "lineup inputs were not the primary limited-input flag"
+        },
+        {
+          "factor": "INPUT_QUALITY",
+          "assessment": "CONSISTENT_WITH_HYPOTHESIS",
+          "evidence": "no material non-bullpen input warnings on this game"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW",
+      "observationOnly": false
+    },
+    {
+      "gamePk": 823587,
+      "gameId": "mlb-new-york-mets-san-diego-padres",
+      "pick": "New York Mets",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 4,
+      "awayScore": 2,
+      "predictionProbability": 0.54,
+      "inputStatus": "ELIGIBLE",
+      "baselineStatus": "INSUFFICIENT",
+      "starterStatus": "PARTIAL",
+      "oddsStatus": "READY",
+      "lineupStatus": "PARTIAL",
+      "inputWarnings": [],
+      "successCategories": [
+        "STARTER",
+        "LINEUP",
+        "INPUT_QUALITY"
+      ],
+      "whyCorrect": [
+        {
+          "category": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=HOME_EDGE aligned with correct side"
+        },
+        {
+          "category": "LINEUP",
+          "assessment": "CONSISTENT_WITH_HYPOTHESIS",
+          "evidence": "lineup inputs were not the primary limited-input flag"
+        },
+        {
+          "category": "INPUT_QUALITY",
+          "assessment": "CONSISTENT_WITH_HYPOTHESIS",
+          "evidence": "no material non-bullpen input warnings on this game"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=HOME_EDGE aligned with correct side"
+        },
+        {
+          "factor": "LINEUP",
+          "assessment": "CONSISTENT_WITH_HYPOTHESIS",
+          "evidence": "lineup inputs were not the primary limited-input flag"
+        },
+        {
+          "factor": "INPUT_QUALITY",
+          "assessment": "CONSISTENT_WITH_HYPOTHESIS",
+          "evidence": "no material non-bullpen input warnings on this game"
+        }
+      ],
+      "counterInterpretation": "A correct pick does not validate any single input variable; outcome may reflect variance or unmodeled game flow.",
+      "reviewConfidence": "LOW",
+      "observationOnly": false
+    },
+    {
+      "gamePk": 822937,
+      "gameId": "mlb-tampa-bay-rays-toronto-blue-jays",
+      "pick": "Tampa Bay Rays",
+      "pickSide": "HOME",
+      "actualWinner": "HOME",
+      "homeScore": 7,
+      "awayScore": 6,
+      "predictionProbability": 0.56,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "INSUFFICIENT",
+      "starterStatus": "PARTIAL",
+      "oddsStatus": "READY",
+      "lineupStatus": "PARTIAL",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "STARTER",
+        "ONE_RUN_GAME",
+        "MODEL_ALIGNMENT"
+      ],
+      "whyCorrect": [
+        {
+          "category": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=HOME_EDGE aligned with correct side"
+        },
+        {
+          "category": "ONE_RUN_GAME",
+          "assessment": "WEAK_SUPPORT",
+          "evidence": "won by 1 run (margin 1) — correct but high variance"
+        },
+        {
+          "category": "MODEL_ALIGNMENT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pick-side probability 56.0%"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=HOME_EDGE aligned with correct side"
+        },
+        {
+          "factor": "ONE_RUN_GAME",
+          "assessment": "WEAK_SUPPORT",
+          "evidence": "won by 1 run (margin 1) — correct but high variance"
+        },
+        {
+          "factor": "MODEL_ALIGNMENT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pick-side probability 56.0%"
+        }
+      ],
+      "counterInterpretation": "One-run win: correct side does not prove model skill; variance dominates.",
+      "reviewConfidence": "LOW",
+      "observationOnly": false
+    },
+    {
+      "gamePk": 822860,
+      "gameId": "mlb-texas-rangers-washington-nationals",
+      "pick": "Washington Nationals",
+      "pickSide": "AWAY",
+      "actualWinner": "AWAY",
+      "homeScore": 0,
+      "awayScore": 6,
+      "predictionProbability": 0.51,
+      "inputStatus": "LIMITED_INPUT",
+      "baselineStatus": "INSUFFICIENT",
+      "starterStatus": "PARTIAL",
+      "oddsStatus": "READY",
+      "lineupStatus": "PARTIAL",
+      "inputWarnings": [
+        "LINEUP_NOT_CONFIRMED"
+      ],
+      "successCategories": [
+        "STARTER",
+        "BLOWOUT"
+      ],
+      "whyCorrect": [
+        {
+          "category": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=AWAY_EDGE aligned with correct side"
+        },
+        {
+          "category": "BLOWOUT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "comfortable margin 6 — outcome less likely pure coin-flip"
+        }
+      ],
+      "possibleFactors": [
+        {
+          "factor": "STARTER",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "pitcherDirection=AWAY_EDGE aligned with correct side"
+        },
+        {
+          "factor": "BLOWOUT",
+          "assessment": "POSSIBLE_SUPPORT",
+          "evidence": "comfortable margin 6 — outcome less likely pure coin-flip"
+        }
+      ],
+      "counterInterpretation": "Blowout win: stronger outcome signal, still not causal proof for any single feature.",
+      "reviewConfidence": "LOW",
+      "observationOnly": false
+    }
+  ],
+  "generatedAt": "2026-08-20T11:22:28.628Z",
+  "reviewHash": "c165a09eaf2134c8f29b0074b88df4974f57f12343f5890f37e2384e8fa76d38"
+}
