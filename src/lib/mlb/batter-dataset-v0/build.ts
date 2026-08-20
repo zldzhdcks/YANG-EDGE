@@ -16,6 +16,7 @@ import { mlbExpectedLineupObservationRel } from "../expected-lineup-observation-
 import { mlbLineupDatasetRel } from "../expected-lineup-observation-v0/paths";
 import { mlbScheduleRel } from "../research-scorecard-v1/paths";
 import { mlbPredictionRel } from "../research-scorecard-v1/paths";
+import { isProvenPregameConfirmedLineup } from "../lineup-temporal-phase";
 import {
   filterHittingGameLogAsOf,
   latestIncludedGameDate,
@@ -146,13 +147,12 @@ function officialPregameLineup(
   row: LineupDatasetRow | undefined,
 ): LineupSlot[] | null {
   if (!row) return null;
-  if (row.collectionPhase === "POST_GAME") return null;
-  if (row.collectionStatus !== "CONFIRMED" || row.confirmed !== true) return null;
+  if (!isProvenPregameConfirmedLineup(row)) return null;
   if (!Array.isArray(row.battingOrder) || row.battingOrder.length === 0) {
     return null;
   }
   return row.battingOrder
-    .filter((b) => b.slot >= 1 && b.slot <= 9)
+    .filter((b) => b.slot >= 1 && b.slot <= 9 && typeof b.playerId === "number")
     .map((b) => ({
       battingOrder: b.slot,
       playerId: b.playerId,
@@ -199,8 +199,14 @@ export function resolveSideSlots(input: {
   const official = input.lineupRows.find(
     (r) => r.gamePk === input.gamePk && r.side === input.side,
   );
-  if (official?.collectionPhase === "POST_GAME" && official.confirmed) {
+  if (
+    official?.collectionPhase === "POST_GAME" &&
+    (official.confirmed === true || official.collectionStatus === "CONFIRMED")
+  ) {
     warnings.push("POSTGAME_LINEUP_EXCLUDED");
+  }
+  if (official?.collectionPhase === "UNKNOWN") {
+    warnings.push("TEMPORAL_PROVENANCE_UNPROVEN");
   }
   const confirmed = officialPregameLineup(official);
   if (confirmed && confirmed.length > 0) {

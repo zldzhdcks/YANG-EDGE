@@ -30,7 +30,14 @@ import {
   type LineupSide,
   type LineupStatus,
   type LineupSubstituteRow,
+  type PreGameLineupStatus,
 } from "./lineup-dataset-types";
+import {
+  resolveLineupSource,
+  resolveLineupTemporalPhase,
+  resolvePreGameLineupStatus,
+  TEMPORAL_PROVENANCE_UNPROVEN,
+} from "./lineup-temporal-phase";
 
 function asRecord(v: unknown): Record<string, unknown> | null {
   return typeof v === "object" && v !== null && !Array.isArray(v)
@@ -366,6 +373,7 @@ function usScheduleDateFromInstant(iso: string): string {
 async function loadScheduleLineupsByPk(
   targets: GameTarget[],
   usage: CacheUsageStats,
+  cacheOnly: boolean,
 ): Promise<Map<number, ScheduleLineupRef>> {
   const usDates = new Set<string>();
   for (const t of targets) {
@@ -379,7 +387,7 @@ async function loadScheduleLineupsByPk(
     let body: unknown;
     let fetchedAt: string | null = null;
     try {
-      body = await getRawStatsJson(pathQuery, usage);
+      body = await getRawStatsJson(pathQuery, usage, { cacheOnly });
       const cachePath = path.join(
         process.cwd(),
         "data/cache/research/mlb/raw/statsapi",
@@ -391,7 +399,7 @@ async function loadScheduleLineupsByPk(
         };
         fetchedAt = asString(cached.meta?.fetchedAt);
       } catch {
-        fetchedAt = new Date().toISOString();
+        fetchedAt = null;
       }
     } catch {
       continue;
@@ -509,6 +517,8 @@ function buildTeamRow(args: {
   confirmed: boolean;
   lineupSource: string | null;
   collectionPhase: LineupCollectionPhase;
+  preGameStatus: PreGameLineupStatus;
+  extraWarnings?: string[];
 }): LineupDatasetRow {
   const inputHash = sha256(
     stableStringify({
@@ -541,7 +551,7 @@ function buildTeamRow(args: {
     startTimeKst: args.game.startTimeKst,
     lineupType: "ACTUAL_STARTING",
     collectionPhase: args.collectionPhase,
-    preGameStatus: "NOT_COLLECTED",
+    preGameStatus: args.preGameStatus,
     collectionStatus: args.collectionStatus,
     reason: args.reason,
     confirmed: args.confirmed,
@@ -557,8 +567,11 @@ function buildTeamRow(args: {
     missingFields: args.extracted.missingFields,
     warnings: [
       ...args.extracted.warnings,
+      ...(args.extraWarnings ?? []),
       `COLLECTION_STATUS=${args.collectionStatus}`,
       `SCHEDULE_FIRST_LINEUP_INTAKE_V1`,
+      `LINEUP_SOURCE=${args.lineupSource ?? "none"}`,
+      `COLLECTION_PHASE=${args.collectionPhase}`,
     ],
     researchOnly: true,
     legalStatus: "INTERNAL_RESEARCH_ONLY",
@@ -583,16 +596,19 @@ function resolveGameStatus(
   collectionStatus: LineupCollectionStatus;
   reason: string;
   confirmed: boolean;
-  collectionPhase: LineupCollectionPhase;
   lineupSource: string | null;
 } {
+  const lineupSource = resolveLineupSource({
+    usedBoxscore: opts.usedBoxscore,
+    usedScheduleLineups: opts.usedScheduleLineups,
+  });
+
   if (opts.providerError) {
     return {
       collectionStatus: "PROVIDER_ERROR",
       reason: opts.providerError,
       confirmed: false,
-      collectionPhase: "PRE_GAME",
-      lineupSource: null,
+      lineupSource,
     };
   }
 
@@ -608,10 +624,7 @@ function resolveGameStatus(
         ? "Official starting lineups collected from MLB Stats API boxscore."
         : "Official starting lineups collected from MLB Stats API schedule lineups.",
       confirmed: true,
-      collectionPhase: opts.usedBoxscore ? "POST_GAME" : "PRE_GAME",
-      lineupSource: opts.usedBoxscore
-        ? "mlb-statsapi-boxscore"
-        : "mlb-statsapi-schedule-lineups",
+      lineupSource,
     };
   }
 
@@ -621,12 +634,7 @@ function resolveGameStatus(
       reason:
         "Lineup data is partially available; one or both sides are incomplete.",
       confirmed: false,
-      collectionPhase: opts.usedBoxscore ? "POST_GAME" : "PRE_GAME",
-      lineupSource: opts.usedBoxscore
-        ? "mlb-statsapi-boxscore"
-        : opts.usedScheduleLineups
-          ? "mlb-statsapi-schedule-lineups"
-          : null,
+      lineupSource,
     };
   }
 
@@ -636,8 +644,7 @@ function resolveGameStatus(
       reason:
         "Game is live/final but no official starting batting-order slots were present.",
       confirmed: false,
-      collectionPhase: "POST_GAME",
-      lineupSource: opts.usedBoxscore ? "mlb-statsapi-boxscore" : null,
+      lineupSource,
     };
   }
 
@@ -645,8 +652,7 @@ function resolveGameStatus(
     collectionStatus: "NOT_RELEASED",
     reason: "Official starting lineup has not been released.",
     confirmed: false,
-    collectionPhase: "PRE_GAME",
-    lineupSource: null,
+    lineupSource,
   };
 }
 
@@ -660,13 +666,19 @@ export type BuildLineupDatasetResult = {
 
 export async function buildLineupDatasetV1(input: {
   dateKst: string;
+  allowNetwork?: boolean;
 }): Promise<BuildLineupDatasetResult> {
   const predictionHash = EMPTY_PREDICTION_HASH;
   const usage = createCacheUsage();
+  const cacheOnly = input.allowNetwork === false;
   const { targets, scheduleSource } = await resolveScheduleTargets(
     input.dateKst,
   );
-  const scheduleLineups = await loadScheduleLineupsByPk(targets, usage);
+  const scheduleLineups = await loadScheduleLineupsByPk(
+    targets,
+    usage,
+    cacheOnly,
+  );
   const generatedAt = new Date().toISOString();
   const rows: LineupDatasetRow[] = [];
 
@@ -695,12 +707,21 @@ export async function buildLineupDatasetV1(input: {
         game.awayTeam,
         "MATCH_NOT_FOUND",
       );
+      const temporal = resolveLineupTemporalPhase({
+        sourceTimestamp: null,
+        cutoffTime: game.cutoffTime,
+      });
       const status = {
         collectionStatus: "MATCH_NOT_FOUND" as const,
         reason: "Schedule game is missing a valid MLB gamePk.",
         confirmed: false,
-        collectionPhase: "PRE_GAME" as const,
         lineupSource: null,
+        collectionPhase: temporal.collectionPhase,
+        preGameStatus: resolvePreGameLineupStatus({
+          collectionPhase: temporal.collectionPhase,
+          hasCollectedLineupData: false,
+        }),
+        extraWarnings: temporal.warnings,
       };
       gameStatusCounts.MATCH_NOT_FOUND += 1;
       rows.push(
@@ -743,10 +764,9 @@ export async function buildLineupDatasetV1(input: {
 
     try {
       const boxBody = asRecord(
-        await getRawStatsJson(
-          `/api/v1/game/${game.gamePk}/boxscore`,
-          usage,
-        ),
+        await getRawStatsJson(`/api/v1/game/${game.gamePk}/boxscore`, usage, {
+          cacheOnly,
+        }),
       );
       const teams = asRecord(boxBody?.teams);
       homeEx = extractSideFromBoxscore(teams?.home);
@@ -827,6 +847,16 @@ export async function buildLineupDatasetV1(input: {
       usedScheduleLineups,
       providerError,
     });
+    const temporal = resolveLineupTemporalPhase({
+      sourceTimestamp,
+      cutoffTime: game.cutoffTime,
+    });
+    const hasCollectedLineupData =
+      homeEx.starters.length > 0 || awayEx.starters.length > 0;
+    const preGameStatus = resolvePreGameLineupStatus({
+      collectionPhase: temporal.collectionPhase,
+      hasCollectedLineupData,
+    });
     gameStatusCounts[status.collectionStatus] += 1;
 
     rows.push(
@@ -839,6 +869,9 @@ export async function buildLineupDatasetV1(input: {
         opponent: awayEx,
         sourceTimestamp,
         ...status,
+        collectionPhase: temporal.collectionPhase,
+        preGameStatus,
+        extraWarnings: temporal.warnings,
       }),
       buildTeamRow({
         generatedAt,
@@ -849,6 +882,9 @@ export async function buildLineupDatasetV1(input: {
         opponent: homeEx,
         sourceTimestamp,
         ...status,
+        collectionPhase: temporal.collectionPhase,
+        preGameStatus,
+        extraWarnings: temporal.warnings,
       }),
     );
   }
@@ -941,8 +977,9 @@ export async function buildLineupDatasetV1(input: {
       notes: [
         "Schedule-first independent lineup intake — Prediction Snapshot is not an input.",
         "Official lineups only from MLB Stats API boxscore / schedule hydrate=lineups.",
-        "Projected lineups are never invented.",
-        "preGameStatus=NOT_COLLECTED — no separate pre-game snapshot field.",
+        "lineupSource is endpoint provenance; collectionPhase is temporal provenance from sourceTimestamp vs cutoffTime.",
+        "boxscore is a source, not a postgame phase. Missing timestamps stay UNKNOWN and are never PRE_GAME.",
+        "preGameStatus=COLLECTED only when PRE_GAME is timestamp-proven and lineup data exists.",
         "team.battingOrder not used for starters (*00 slot rule).",
         "Engine admission PROHIBITED",
       ],
@@ -958,7 +995,9 @@ export async function buildLineupDatasetV1(input: {
       battingSlotMissing,
       substitutesSeparated,
       startersMarkedSubstitute,
-      preGameStatus: "NOT_COLLECTED",
+      preGameStatus: rows.some((r) => r.preGameStatus === "COLLECTED")
+        ? "COLLECTED"
+        : "NOT_COLLECTED",
       postGameStatuses,
       battingSideCollected: 0,
       peopleApiCalls: 0,
@@ -1000,21 +1039,48 @@ export function assertLineupDatasetIntegrity(
   if (document.summary.peopleApiCalls !== 0) {
     errors.push("people API calls must be 0");
   }
-  if (document.summary.preGameStatus !== "NOT_COLLECTED") {
-    errors.push("preGameStatus must be NOT_COLLECTED");
-  }
 
   for (const row of document.rows) {
-    if (row.preGameStatus !== "NOT_COLLECTED") {
-      errors.push(`${row.gameId}/${row.side}: preGame backfill detected`);
+    if (
+      row.preGameStatus !== "NOT_COLLECTED" &&
+      row.preGameStatus !== "COLLECTED"
+    ) {
+      errors.push(`${row.gameId}/${row.side}: invalid preGameStatus`);
+    }
+    if (row.preGameStatus === "COLLECTED" && row.collectionPhase !== "PRE_GAME") {
+      errors.push(
+        `${row.gameId}/${row.side}: COLLECTED requires collectionPhase PRE_GAME`,
+      );
+    }
+    if (row.preGameStatus === "COLLECTED") {
+      const src = Date.parse(row.sourceTimestamp ?? "");
+      const cut = Date.parse(row.cutoffTime ?? "");
+      if (!Number.isFinite(src) || !Number.isFinite(cut) || src >= cut) {
+        errors.push(
+          `${row.gameId}/${row.side}: COLLECTED requires sourceTimestamp < cutoffTime`,
+        );
+      }
     }
     if (
       row.collectionPhase !== "POST_GAME" &&
-      row.collectionPhase !== "PRE_GAME"
+      row.collectionPhase !== "PRE_GAME" &&
+      row.collectionPhase !== "UNKNOWN"
     ) {
       errors.push(
-        `${row.gameId}/${row.side}: collectionPhase must be POST_GAME or PRE_GAME`,
+        `${row.gameId}/${row.side}: collectionPhase must be POST_GAME, PRE_GAME, or UNKNOWN`,
       );
+    }
+    if (
+      row.collectionPhase === "PRE_GAME" &&
+      !row.warnings.includes(TEMPORAL_PROVENANCE_UNPROVEN)
+    ) {
+      const src = Date.parse(row.sourceTimestamp ?? "");
+      const cut = Date.parse(row.cutoffTime ?? "");
+      if (!Number.isFinite(src) || !Number.isFinite(cut) || src >= cut) {
+        errors.push(
+          `${row.gameId}/${row.side}: PRE_GAME requires proven sourceTimestamp < cutoffTime`,
+        );
+      }
     }
     if (row.lineupType !== "ACTUAL_STARTING") {
       errors.push(

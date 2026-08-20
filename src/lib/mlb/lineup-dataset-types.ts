@@ -11,9 +11,9 @@ export const LINEUP_BUILDER_VERSION = "lineup-dataset-builder-v1";
 
 export type LineupSide = "home" | "away";
 export type LineupType = "ACTUAL_STARTING";
-export type LineupCollectionPhase = "POST_GAME" | "PRE_GAME";
+export type LineupCollectionPhase = "POST_GAME" | "PRE_GAME" | "UNKNOWN";
 export type LineupStatus = "COMPLETE" | "INCOMPLETE";
-export type PreGameLineupStatus = "NOT_COLLECTED";
+export type PreGameLineupStatus = "COLLECTED" | "NOT_COLLECTED";
 
 /** Per-game (and per-team row) collection status for independent intake. */
 export type LineupCollectionStatus =
@@ -60,7 +60,10 @@ export type LineupDatasetRow = {
   startTimeKst?: string | null;
   lineupType: LineupType;
   collectionPhase: LineupCollectionPhase;
-  /** Pre-game snapshot never backfilled from post-game boxscore. */
+  /**
+   * Temporal pregame collection, not source-endpoint identity.
+   * COLLECTED only when PRE_GAME is timestamp-proven and lineup data exists.
+   */
   preGameStatus: PreGameLineupStatus;
   /** Independent intake status (additive). */
   collectionStatus?: LineupCollectionStatus;

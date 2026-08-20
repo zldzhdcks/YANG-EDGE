@@ -12,6 +12,7 @@
     "research:mlb-schedule": "tsx --env-file=.env.local scripts/build-mlb-schedule-artifact-v1.ts",
     "research:mlb-odds": "tsx --env-file=.env.local scripts/build-mlb-odds-history-dataset-v1.ts",
     "research:mlb-lineup": "tsx --env-file=.env.local scripts/build-mlb-lineup-dataset-v1.ts",
+    "test:mlb-lineup-temporal-provenance-v1": "tsx scripts/test-mlb-lineup-temporal-provenance-v1.ts",
     "research:mlb-batter-dataset-v0": "tsx scripts/build-mlb-batter-dataset-v0.ts",
     "test:mlb-batter-dataset-v0": "tsx scripts/test-mlb-batter-dataset-v0.ts",
     "ops:mlb-batter-pregame": "tsx --env-file=.env.local scripts/run-mlb-batter-pregame-ops-v0.ts",

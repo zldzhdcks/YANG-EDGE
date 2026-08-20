@@ -95,7 +95,10 @@ function lineupRow(input: {
     side: input.side,
     lineupType: "ACTUAL_STARTING",
     collectionPhase: input.phase,
-    preGameStatus: "NOT_COLLECTED",
+    preGameStatus:
+      input.phase === "PRE_GAME" && input.confirmed
+        ? "COLLECTED"
+        : "NOT_COLLECTED",
     collectionStatus: input.confirmed ? "CONFIRMED" : "NOT_RELEASED",
     confirmed: input.confirmed,
     lineupSource: input.confirmed ? "mlb-statsapi-schedule-lineups" : null,

@@ -15,10 +15,12 @@ import {
   buildLineupDatasetV1,
 } from "../src/lib/mlb/build-lineup-dataset";
 
+const ARGS = process.argv.slice(2);
 const DATE =
-  process.argv[2]?.trim() ||
-  process.env.MLB_TARGET_DATE_KST?.trim() ||
+  ARGS.find((a) => /^\d{4}-\d{2}-\d{2}$/.test(a)) ??
+  process.env.MLB_TARGET_DATE_KST?.trim() ??
   "";
+const CACHE_ONLY = ARGS.includes("--cache-only");
 
 function sha256(text: string): string {
   return createHash("sha256").update(text, "utf8").digest("hex");
@@ -34,13 +36,16 @@ async function readHashIfExists(rel: string): Promise<string | null> {
 
 async function main() {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(DATE)) {
-    console.error("Usage: npm run research:mlb-lineup -- YYYY-MM-DD");
+    console.error("Usage: npm run research:mlb-lineup -- YYYY-MM-DD [--cache-only]");
     process.exitCode = 1;
     return;
   }
 
   console.log(`=== MLB Schedule-First Lineup Intake v1 (${DATE}) ===`);
   console.log("NOTE: Prediction Snapshot is not read by this collector.");
+  if (CACHE_ONLY) {
+    console.log("NOTE: --cache-only — no live Stats API fetch.");
+  }
 
   const regressionBefore = {
     schedule: await readHashIfExists(
@@ -55,13 +60,19 @@ async function main() {
     prediction: await readHashIfExists(`data/predictions/mlb/${DATE}.json`),
   };
 
-  const first = await buildLineupDatasetV1({ dateKst: DATE });
+  const first = await buildLineupDatasetV1({
+    dateKst: DATE,
+    allowNetwork: !CACHE_ONLY,
+  });
   const integrity = assertLineupDatasetIntegrity(first.document);
   if (integrity.length > 0) {
     throw new Error(`integrity failed:\n- ${integrity.join("\n- ")}`);
   }
 
-  const second = await buildLineupDatasetV1({ dateKst: DATE });
+  const second = await buildLineupDatasetV1({
+    dateKst: DATE,
+    allowNetwork: !CACHE_ONLY,
+  });
   const hashMatched =
     first.document.meta.resultHashSha256 ===
     second.document.meta.resultHashSha256;

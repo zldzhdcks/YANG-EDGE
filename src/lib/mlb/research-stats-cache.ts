@@ -74,6 +74,8 @@ export type GetRawStatsJsonOptions = {
   cwd?: string;
   /** When true: skip disk read, always hit StatsAPI, overwrite raw cache. */
   forceRefresh?: boolean;
+  /** When true: never network; throw if disk cache is missing. */
+  cacheOnly?: boolean;
 };
 
 function resolveGetRawStatsOptions(
@@ -94,7 +96,9 @@ export async function getRawStatsJson(
   usage: CacheUsageStats,
   cwdOrOptions?: string | GetRawStatsJsonOptions,
 ): Promise<unknown> {
-  const { cwd, forceRefresh = false } = resolveGetRawStatsOptions(cwdOrOptions);
+  const { cwd, forceRefresh = false, cacheOnly = false } = resolveGetRawStatsOptions(
+    cwdOrOptions,
+  );
   const key = pathQuery.replace(/^\//, "").replace(/[?&=]/g, "_");
   const file = rawPath(key, cwd);
 
@@ -105,8 +109,17 @@ export async function getRawStatsJson(
       const parsed = JSON.parse(raw) as { body?: unknown };
       return parsed.body ?? parsed;
     } catch {
+      if (cacheOnly) {
+        usage.rawMiss += 1;
+        throw new Error(`CACHE_ONLY_MISS ${pathQuery}`);
+      }
       // miss → network
     }
+  }
+
+  if (cacheOnly) {
+    usage.rawMiss += 1;
+    throw new Error(`CACHE_ONLY_MISS ${pathQuery}`);
   }
 
   usage.rawMiss += 1;
