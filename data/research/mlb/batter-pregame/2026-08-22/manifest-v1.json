@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "mlb-batter-pregame-manifest-v1",
+  "dateKst": "2026-08-22",
+  "generatedAt": "2026-08-22T02:08:01.853Z",
+  "dailyBatterDatasetFrozen": false,
+  "dailyBatterDatasetRel": "data/research/mlb/2026-08-22-batter-dataset-v0.json",
+  "captures": [
+    {
+      "gamePk": 823101,
+      "captureId": "b50439519d8ce4374e386b01ea24d0896e3027e1d8a8ae2500b253f63c9d4611",
+      "rel": "data/research/mlb/batter-pregame/2026-08-22/games/823101.json",
+      "skippedSealed": false
+    },
+    {
+      "gamePk": 823911,
+      "captureId": "cfb35ae444daea6b78c273a9887a5b101185169970efc7a54c8915661882a162",
+      "rel": "data/research/mlb/batter-pregame/2026-08-22/games/823911.json",
+      "skippedSealed": false
+    }
+  ],
+  "notes": [
+    "Per-game captures are write-once under batter-pregame/{date}/games/{gamePk}.json.",
+    "Daily batter-dataset-v0.json is never overwritten by lineup refresh.",
+    "Hitting stats use cutoff-filtered gameLog (statsThroughDate = previous day). No season-to-date aggregates.",
+    "This capture is research sidecar only. No market. No prediction. Engine admission PROHIBITED.",
+    "Daily batter dataset not frozen — confirmed pregame captures may be appended per game."
+  ],
+  "researchOnly": true,
+  "engineAdmission": "PROHIBITED",
+  "predictionInputAllowed": false
+}
