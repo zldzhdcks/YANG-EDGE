@@ -1,0 +1,37 @@
+{
+    "schemaVersion":  "mlb-pregame-schedule-evidence-audit-v1",
+    "dateKst":  "2026-08-22",
+    "generatedAtKst":  "2026-08-22T10:10:07.8842283+09:00",
+    "status":  "PASS",
+    "evidence":  {
+                     "sourceSha256":  "A45ED79FA9F63196D14B1776207E606303CE56B6E6086EB4D1616BC36AAAA6BB",
+                     "sourceBytes":  65598,
+                     "fetchedAtKst":  "2026-08-20T23:07:59.4280000+09:00",
+                     "targetMlbDate":  "2026-08-21",
+                     "targetGameCount":  15,
+                     "firstScheduledStartKst":  "2026-08-22T05:10:00.0000000+09:00",
+                     "lastScheduledStartKst":  "2026-08-22T11:10:00.0000000+09:00",
+                     "fetchedBeforeFirstGame":  true,
+                     "copyHashMismatch":  0,
+                     "copySizeMismatch":  0
+                 },
+    "classification":  "VALID_PREGAME_MLB_SCHEDULE_EVIDENCE",
+    "mlbScopeCandidate":  15,
+    "overallDailyScopeLockCreated":  false,
+    "mandatoryDailyCompletion":  "UNASSESSED_BEFORE_DAILY_SCOPE_LOCK",
+    "safety":  {
+                   "providerCalls":  0,
+                   "predictionCalls":  0,
+                   "resultCalls":  0,
+                   "engineCalls":  0,
+                   "noRetroactiveProviderUse":  true,
+                   "predictionInputAllowed":  false,
+                   "researchOnly":  true
+               },
+    "artifacts":  {
+                      "rawCopy":  "data/operator-observations/raw/2026-08-22/batch-2307-mlb-schedule-evidence/schedule-source.json",
+                      "rawManifest":  "data/operator-observations/raw/2026-08-22/batch-2307-mlb-schedule-evidence/manifest.json",
+                      "structuredSchedule":  "data/operator-observations/structured/2026-08-22/mlb-schedule-scope-source-v1.json",
+                      "audit":  "data/audits/2026-08-22-mlb-pregame-schedule-evidence-v1.json"
+                  }
+}

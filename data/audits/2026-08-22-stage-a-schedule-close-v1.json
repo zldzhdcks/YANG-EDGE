@@ -1,0 +1,44 @@
+{
+    "schemaVersion":  "yang-edge-daily-stage-a-close-v1",
+    "dateKst":  "2026-08-22",
+    "generatedAtKst":  "2026-08-22T10:13:02.6056011+09:00",
+    "mandatoryStage":  "A_SCHEDULE_SCOPE",
+    "weight":  10,
+    "stageResult":  "COMPLETED_LOCALLY_PENDING_REMOTE_SEAL",
+    "stageACompleted":  true,
+    "scope":  {
+                  "total":  15,
+                  "MLB":  15,
+                  "Football":  0,
+                  "noScopeShrink":  true
+              },
+    "schedule":  {
+                     "MLB":  {
+                                 "status":  "PASS",
+                                 "games":  15,
+                                 "evidenceType":  "PREEXISTING_PREGAME_CACHE",
+                                 "sourceFetchedAtKst":  "2026-08-20T23:07:59.4280000+09:00",
+                                 "firstGameKst":  "2026-08-22T05:10:00.0000000+09:00",
+                                 "lastGameKst":  "2026-08-22T11:10:00.0000000+09:00"
+                             }
+                 },
+    "operatorEvidenceWindow":  {
+                                   "screenshots":  14,
+                                   "firstCaptureKst":  "2026-08-22T09:27:26.3900000+09:00",
+                                   "lastCaptureKst":  "2026-08-22T09:31:18.7480000+09:00",
+                                   "gamesAlreadyStartedBeforeWindow":  10,
+                                   "gamesFutureAfterWindow":  5,
+                                   "contentJoinStatus":  "PENDING"
+                               },
+    "safety":  {
+                   "providerCalls":  0,
+                   "predictionCalls":  0,
+                   "resultCalls":  0,
+                   "engineCalls":  0,
+                   "noRetroactiveProviderUse":  true,
+                   "noPredictionCreated":  true
+               },
+    "remoteSealRequiredForCredit":  true,
+    "creditAfterRemoteSeal":  10,
+    "nextStage":  "B_PREGAME_INPUTS"
+}

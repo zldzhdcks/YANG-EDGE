@@ -1,0 +1,34 @@
+{
+    "schemaVersion":  "pre-scope-raw-evidence-seal-audit-v1",
+    "dateKst":  "2026-08-22",
+    "generatedAtKst":  "2026-08-22T10:01:26.3708699+09:00",
+    "status":  "PASS",
+    "purpose":  "PRESERVE_OPERATOR_SCREENSHOTS_BEFORE_SCOPE_AND_TEMPORAL_JOIN",
+    "evidenceCount":  14,
+    "sourceTimeRangeLocal":  {
+                                 "first":  "2026-08-22T09:27:26.390+09:00",
+                                 "last":  "2026-08-22T09:31:18.748+09:00"
+                             },
+    "copyIntegrity":  {
+                          "copied":  14,
+                          "hashMismatch":  0,
+                          "sizeMismatch":  0
+                      },
+    "temporalClassification":  "PENDING_SCHEDULE_JOIN",
+    "scopeLockCreated":  false,
+    "mandatoryDailyCompletion":  "UNASSESSED_BEFORE_DAILY_SCOPE_LOCK",
+    "safety":  {
+                   "providerCalls":  0,
+                   "predictionCalls":  0,
+                   "resultCalls":  0,
+                   "engineCalls":  0,
+                   "predictionInputAllowed":  false,
+                   "noPregameClaimYet":  true,
+                   "researchOnly":  true
+               },
+    "artifacts":  {
+                      "rawDirectory":  "data/operator-observations/raw/2026-08-22/batch-0931-pre-scope-evidence",
+                      "manifest":  "data/operator-observations/raw/2026-08-22/batch-0931-pre-scope-evidence/manifest.json",
+                      "audit":  "data/audits/2026-08-22-pre-scope-raw-evidence-seal-v1.json"
+                  }
+}
