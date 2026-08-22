@@ -32,7 +32,7 @@ Contracts:
   --game-id      Limit refresh/capture to one schedule game.
 
 Per-game cutoff. Immutable append-only raw snapshots under
-data/research/mlb/lineup-refresh/{date}/raw/{gamePk}/{payloadHash}.json
+data/research/mlb/lineup-refresh/{date}/raw/{gamePk}/{payloads|observations}/*.json
 Prediction is not executed. Frozen batter-dataset-v0 is never overwritten.
 `;
 }
