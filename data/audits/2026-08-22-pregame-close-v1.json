@@ -1,0 +1,39 @@
+{
+    "schemaVersion":  "yang-edge-daily-pregame-close-v1",
+    "dateKst":  "2026-08-22",
+    "generatedAtKst":  "2026-08-22T10:42:49.1077516+09:00",
+    "denominator":  15,
+    "MLB":  15,
+    "stageA":  {
+                   "status":  "REMOTE_SEALED",
+                   "credit":  10,
+                   "commit":  "0d53a9e7d0522e47256768de19efec829995ae5f"
+               },
+    "stageB":  {
+                   "status":  "COMPLETED_WITH_BLOCKED_INPUTS_PENDING_REMOTE_SEAL",
+                   "creditAfterRemoteSeal":  20,
+                   "artifact":  "data/audits/2026-08-22-stage-b-pregame-inputs-close-v1.json"
+               },
+    "stageC":  {
+                   "status":  "COMPLETED_AS_PASS_PENDING_REMOTE_SEAL",
+                   "creditAfterRemoteSeal":  20,
+                   "artifact":  "data/audits/2026-08-22-stage-c-prediction-close-v1.json"
+               },
+    "stageD":  {
+                   "status":  "READY_FOR_REMOTE_SEAL",
+                   "creditAfterSuccessfulRemoteSeal":  10,
+                   "note":  "Stage D is satisfied by exact remote sealing of this Stage B/C close; no proof-of-proof commit is required."
+               },
+    "mandatoryCompletionBeforeThisRemoteSeal":  10,
+    "mandatoryCompletionAfterSuccessfulRemoteSeal":  60,
+    "nextMandatoryStage":  "E_RESULT_AND_GRADE_AFTER_FINAL_RESULTS",
+    "resultCollection":  "DO_NOT_RUN_UNTIL_RESULTS_ARE_FINAL",
+    "safety":  {
+                   "noScopeShrink":  true,
+                   "noRetroactivePrediction":  true,
+                   "noRetroactivePregamePromotion":  true,
+                   "providerCalls":  0,
+                   "predictionCalls":  0,
+                   "resultCalls":  0
+               }
+}
