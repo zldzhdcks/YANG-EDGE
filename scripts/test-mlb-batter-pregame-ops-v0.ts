@@ -412,23 +412,26 @@ function testFetchGate() {
 }
 
 async function testDryRunNoProvider() {
-  const sources = confirmedSources();
-  const summary = await runBatterPregameOps({
-    dateKst: "2026-08-21",
-    dryRun: true,
-    nowMs: FUTURE_NOW,
-    sources,
+  await withTmp(async (cwd) => {
+    const sources = confirmedSources();
+    const summary = await runBatterPregameOps({
+      dateKst: "2026-08-21",
+      cwd,
+      dryRun: true,
+      nowMs: FUTURE_NOW,
+      sources,
+    });
+    assert.equal(summary.providerCalls, 0);
+    assert.equal(summary.written, false);
+    assert.equal(summary.fetchGate.window, "OPEN");
+    assert.equal(summary.canFetch, true);
+    assert.equal(summary.uniquePlayerIds, 17);
+    assert.equal(summary.expectedProviderCallsIfLive, 34);
+    assert.equal(summary.predictionExecuted, false);
+    assert.equal(summary.independentModelSample, 0);
+    assert.equal(summary.marketUsed, false);
+    assert.ok(formatBatterPregameOpsSummary(summary).includes("Prediction executed: NO"));
   });
-  assert.equal(summary.providerCalls, 0);
-  assert.equal(summary.written, false);
-  assert.equal(summary.fetchGate.window, "OPEN");
-  assert.equal(summary.canFetch, true);
-  assert.equal(summary.uniquePlayerIds, 17);
-  assert.equal(summary.expectedProviderCallsIfLive, 34);
-  assert.equal(summary.predictionExecuted, false);
-  assert.equal(summary.independentModelSample, 0);
-  assert.equal(summary.marketUsed, false);
-  assert.ok(formatBatterPregameOpsSummary(summary).includes("Prediction executed: NO"));
   console.log("PASS dry-run provider calls = 0, playerIds counted");
 }
 
@@ -488,17 +491,20 @@ async function testPostgameAndExpectedPolicies() {
     99,
     expectedObs(99),
   );
-  const dry = await runBatterPregameOps({
-    dateKst: "2026-08-21",
-    dryRun: true,
-    nowMs: FUTURE_NOW,
-    sources: postgame,
+  await withTmp(async (cwd) => {
+    const dry = await runBatterPregameOps({
+      dateKst: "2026-08-21",
+      cwd,
+      dryRun: true,
+      nowMs: FUTURE_NOW,
+      sources: postgame,
+    });
+    assert.equal(dry.lineup.confirmedPreGame, 0);
+    assert.equal(dry.lineup.expectedPreGame, 2);
+    assert.equal(dry.uniquePlayerIds, 0);
+    assert.equal(dry.leakage.postgameLineupExcluded, 2);
+    assert.equal(dry.canFetch, false);
   });
-  assert.equal(dry.lineup.confirmedPreGame, 0);
-  assert.equal(dry.lineup.expectedPreGame, 2);
-  assert.equal(dry.uniquePlayerIds, 0);
-  assert.equal(dry.leakage.postgameLineupExcluded, 2);
-  assert.equal(dry.canFetch, false);
 
   const { document } = await buildBatterDatasetV0({
     dateKst: "2026-08-21",

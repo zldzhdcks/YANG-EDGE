@@ -90,6 +90,9 @@ function resolveGetRawStatsOptions(
  * Default: reuse disk cache (Starter / Bullpen / Schedule Builder).
  * Official Result must pass `{ forceRefresh: true }` so pre-pitch
  * schedule snapshots cannot freeze status as NOT_FINAL forever.
+ * MLB pregame lineup refresh must NOT use forceRefresh here: it would
+ * overwrite raw evidence. Late confirmed lineups are stored append-only
+ * under data/research/mlb/lineup-refresh/{date}/raw/.
  */
 export async function getRawStatsJson(
   pathQuery: string,

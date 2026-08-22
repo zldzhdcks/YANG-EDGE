@@ -27,8 +27,8 @@ export default async function MlbExpectedLineupIntakePage(props: {
     <main className="mx-auto max-w-5xl space-y-6 px-4 py-6 sm:px-6">
       <header className="border-b border-zinc-800 pb-5">
         <div className="flex flex-wrap gap-2">
-          <span className="rounded bg-teal-700/30 px-2 py-0.5 text-xs font-semibold tracking-wider text-teal-300">
-            INTERNAL
+          <span className="rounded bg-zinc-700/40 px-2 py-0.5 text-xs font-semibold tracking-wider text-zinc-300">
+            FALLBACK / OPERATOR EXCEPTION
           </span>
           <span className="rounded bg-teal-700/30 px-2 py-0.5 text-xs font-semibold tracking-wider text-teal-200">
             MLB EXPECTED LINEUP
@@ -38,7 +38,7 @@ export default async function MlbExpectedLineupIntakePage(props: {
           MLB Expected Lineup Observation
         </h1>
         <p className="mt-1 text-sm text-zinc-500">
-          예상 라인업 관찰 저장 · CONFIRMED 승격 금지 · Prediction 불변
+          수동 관찰 예외 도구 · CONFIRMED 승격 금지 · 정상 경로는 Lineup Auto Refresh
         </p>
         <div className="mt-3 flex flex-wrap gap-3 text-xs">
           <a
@@ -48,10 +48,10 @@ export default async function MlbExpectedLineupIntakePage(props: {
             ← Research Lab
           </a>
           <a
-            href={`/internal/research/mlb?date=${encodeURIComponent(dateKst)}`}
+            href={`/internal/research/mlb/lineup-refresh?date=${encodeURIComponent(dateKst)}`}
             className="text-sky-400 hover:underline"
           >
-            MLB Research UX
+            Lineup Refresh (normal)
           </a>
         </div>
       </header>

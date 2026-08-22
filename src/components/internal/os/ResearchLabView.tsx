@@ -81,17 +81,39 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
         </div>
       </section>
 
+      <section className="rounded-xl border border-sky-900/40 bg-sky-950/20 px-5 py-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-sky-300/90">
+              MLB · LINEUP REFRESH · NORMAL PATH
+            </p>
+            <h2 className="text-lg font-bold text-white">
+              MLB Lineup Auto Refresh
+            </h2>
+            <p className="mt-1 text-sm text-zinc-400">
+              Provider snapshots · per-game cutoff · 수동 붙여넣기 불필요
+            </p>
+          </div>
+          <a
+            href={`/internal/research/mlb/lineup-refresh?date=${encodeURIComponent(dateKst)}`}
+            className="rounded-lg border border-sky-700 bg-sky-900/40 px-4 py-2 text-sm font-semibold text-sky-100 hover:bg-sky-800/50"
+          >
+            Lineup Refresh →
+          </a>
+        </div>
+      </section>
+
       <section className="rounded-xl border border-teal-900/40 bg-teal-950/20 px-5 py-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-teal-300/90">
-              MLB · EXPECTED LINEUP · MANUAL OBSERVATION
+              MLB · EXPECTED LINEUP · FALLBACK / EXCEPTION
             </p>
             <h2 className="text-lg font-bold text-white">
               MLB Expected Lineup Observation
             </h2>
             <p className="mt-1 text-sm text-zinc-400">
-              예상 타순 관찰 · 확정 아님 · Prediction / Recommendation 불변
+              예외 도구 · 확정 아님 · 정상 운영은 Lineup Auto Refresh
             </p>
           </div>
           <a

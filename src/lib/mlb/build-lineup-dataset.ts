@@ -38,6 +38,10 @@ import {
   resolvePreGameLineupStatus,
   TEMPORAL_PROVENANCE_UNPROVEN,
 } from "./lineup-temporal-phase";
+import {
+  listLineupSnapshots,
+  pickBestPregameRawSnapshot,
+} from "./lineup-refresh-v1/store";
 
 function asRecord(v: unknown): Record<string, unknown> | null {
   return typeof v === "object" && v !== null && !Array.isArray(v)
@@ -110,7 +114,7 @@ async function resolveScheduleTargets(
   };
 }
 
-type ExtractedSide = {
+export type ExtractedSide = {
   teamId: number;
   teamName: string;
   starters: LineupBatterRow[];
@@ -210,7 +214,7 @@ function finalizeExtractedSide(
   };
 }
 
-function extractSideFromBoxscore(teamRaw: unknown): ExtractedSide {
+export function extractSideFromBoxscore(teamRaw: unknown): ExtractedSide {
   const team = asRecord(teamRaw);
   const teamInfo = asRecord(team?.team);
   const teamId = asNumber(teamInfo?.id) ?? -1;
@@ -763,17 +767,32 @@ export async function buildLineupDatasetV1(input: {
       scheduleRef?.abstractState ?? game.statusAbstract ?? null;
 
     try {
-      const boxBody = asRecord(
-        await getRawStatsJson(`/api/v1/game/${game.gamePk}/boxscore`, usage, {
-          cacheOnly,
+      const refreshSnap = pickBestPregameRawSnapshot(
+        await listLineupSnapshots({
+          dateKst: input.dateKst,
+          gamePk: game.gamePk,
         }),
       );
-      const teams = asRecord(boxBody?.teams);
-      homeEx = extractSideFromBoxscore(teams?.home);
-      awayEx = extractSideFromBoxscore(teams?.away);
-      sourceTimestamp = await readBoxscoreFetchedAt(game.gamePk);
-      usedBoxscore = true;
-      providerGamePks.add(game.gamePk);
+      if (refreshSnap?.ok) {
+        const teams = asRecord(asRecord(refreshSnap.body)?.teams);
+        homeEx = extractSideFromBoxscore(teams?.home);
+        awayEx = extractSideFromBoxscore(teams?.away);
+        sourceTimestamp = refreshSnap.sourceTimestamp;
+        usedBoxscore = true;
+        providerGamePks.add(game.gamePk);
+      } else {
+        const boxBody = asRecord(
+          await getRawStatsJson(`/api/v1/game/${game.gamePk}/boxscore`, usage, {
+            cacheOnly,
+          }),
+        );
+        const teams = asRecord(boxBody?.teams);
+        homeEx = extractSideFromBoxscore(teams?.home);
+        awayEx = extractSideFromBoxscore(teams?.away);
+        sourceTimestamp = await readBoxscoreFetchedAt(game.gamePk);
+        usedBoxscore = true;
+        providerGamePks.add(game.gamePk);
+      }
     } catch (e) {
       providerError =
         e instanceof Error
@@ -978,6 +997,7 @@ export async function buildLineupDatasetV1(input: {
         "Schedule-first independent lineup intake — Prediction Snapshot is not an input.",
         "Official lineups only from MLB Stats API boxscore / schedule hydrate=lineups.",
         "lineupSource is endpoint provenance; collectionPhase is temporal provenance from sourceTimestamp vs cutoffTime.",
+        "Pregame lineup refresh snapshots (data/research/mlb/lineup-refresh/) are preferred over the destructive statsapi raw cache when a PRE_GAME snapshot exists.",
         "boxscore is a source, not a postgame phase. Missing timestamps stay UNKNOWN and are never PRE_GAME.",
         "preGameStatus=COLLECTED only when PRE_GAME is timestamp-proven and lineup data exists.",
         "team.battingOrder not used for starters (*00 slot rule).",
