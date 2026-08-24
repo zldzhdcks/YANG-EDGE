@@ -1,0 +1,32 @@
+{
+    "schemaVersion":  "yang-edge-daily-pregame-close-v1",
+    "dateKst":  "2026-08-24",
+    "generatedAtKst":  "2026-08-24T09:48:37.0586952+09:00",
+    "denominator":  15,
+    "MLB":  15,
+    "Football":  0,
+    "stageA":  {
+                   "status":  "READY_FOR_REMOTE_SEAL",
+                   "creditAfterRemoteSeal":  10,
+                   "artifact":  "data/audits/2026-08-24-daily-scope-lock-v1.json"
+               },
+    "stageB":  {
+                   "status":  "COMPLETED_WITH_BLOCKED_INPUTS_PENDING_REMOTE_SEAL",
+                   "creditAfterRemoteSeal":  20,
+                   "artifact":  "data/audits/2026-08-24-stage-b-pregame-inputs-close-v1.json"
+               },
+    "stageC":  {
+                   "status":  "COMPLETED_AS_PASS_PENDING_REMOTE_SEAL",
+                   "creditAfterRemoteSeal":  20,
+                   "artifact":  "data/audits/2026-08-24-stage-c-prediction-close-v1.json"
+               },
+    "stageD":  {
+                   "status":  "READY_FOR_REMOTE_SEAL",
+                   "creditAfterSuccessfulRemoteSeal":  10
+               },
+    "mandatoryCompletionAfterSuccessfulRemoteSeal":  60,
+    "nextMandatoryStage":  "E_RESULT_AND_GRADE_AFTER_FINAL_RESULTS",
+    "noRetroactivePrediction":  true,
+    "noRetroactivePregamePromotion":  true,
+    "independentModelSampleDelta":  0
+}

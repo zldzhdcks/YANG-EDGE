@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "mlb-batter-pregame-manifest-v1",
+  "dateKst": "2026-08-24",
+  "generatedAt": "2026-08-24T00:45:59.348Z",
+  "dailyBatterDatasetFrozen": false,
+  "dailyBatterDatasetRel": "data/research/mlb/2026-08-24-batter-dataset-v0.json",
+  "captures": [],
+  "notes": [
+    "Per-game captures are write-once under batter-pregame/{date}/games/{gamePk}.json.",
+    "Daily batter-dataset-v0.json is never overwritten by lineup refresh.",
+    "Hitting stats use cutoff-filtered gameLog (statsThroughDate = previous day). No season-to-date aggregates.",
+    "This capture is research sidecar only. No market. No prediction. Engine admission PROHIBITED.",
+    "Daily batter dataset not frozen — confirmed pregame captures may be appended per game."
+  ],
+  "researchOnly": true,
+  "engineAdmission": "PROHIBITED",
+  "predictionInputAllowed": false
+}
