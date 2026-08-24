@@ -1,0 +1,49 @@
+{
+    "schemaVersion":  "yang-edge-daily-close-v1",
+    "dateKst":  "2026-08-22",
+    "denominator":  15,
+    "MLB":  15,
+    "Football":  0,
+    "stageA":  {
+                   "credit":  10,
+                   "status":  "REMOTE_SEALED"
+               },
+    "stageB":  {
+                   "credit":  20,
+                   "status":  "REMOTE_SEALED"
+               },
+    "stageC":  {
+                   "credit":  20,
+                   "status":  "REMOTE_SEALED_AS_PASS"
+               },
+    "stageD":  {
+                   "credit":  10,
+                   "status":  "REMOTE_SEALED"
+               },
+    "stageE":  {
+                   "creditAfterRemoteSeal":  15,
+                   "status":  "ALL_RESULTS_FINAL_GRADE_NOT_GRADABLE",
+                   "reason":  "NO_PREGAME_SNAPSHOT"
+               },
+    "stageF":  {
+                   "creditAfterRemoteSeal":  20,
+                   "status":  "REVIEW_COMPLETED_AS_NA",
+                   "reason":  "NO_GRADABLE_PREDICTIONS"
+               },
+    "stageG":  {
+                   "creditAfterSuccessfulRemoteSeal":  5,
+                   "status":  "READY_FOR_REMOTE_SEAL",
+                   "finalGitSyncSatisfiedByExactRemoteSeal":  true
+               },
+    "mandatoryCompletionBeforeThisRemoteSeal":  60,
+    "mandatoryCompletionAfterSuccessfulRemoteSeal":  100,
+    "predictionSnapshot":  "NOT_FOUND",
+    "gradeStatus":  "NOT_GRADABLE",
+    "gradeReason":  "NO_PREGAME_SNAPSHOT",
+    "resultCoverage":  "15_OF_15_FINAL",
+    "independentModelSampleDelta":  0,
+    "noRetroactivePrediction":  true,
+    "noRetroactivePregamePromotion":  true,
+    "localReportsDirectoryExcluded":  true,
+    "finalStatusAfterRemoteSeal":  "DAILY_OPERATIONS_COMPLETE"
+}
