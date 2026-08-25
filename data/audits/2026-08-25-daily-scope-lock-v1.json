@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "yang-edge-daily-scope-lock-v1",
+  "dateKst": "2026-08-25",
+  "scopeLockStatus": "EVIDENCE_INCOMPLETE",
+  "scopeLockMode": "EVIDENCE_INCOMPLETE_LOCK_RECORD",
+  "scopeLockedAt": null,
+  "lockRecordCreatedAt": "2026-08-25T02:40:00.000Z",
+  "lockRecordCreatedAtPrecision": "MINUTE",
+  "sameDayEvidenceRecovery": false,
+  "sourceOperatorObservationRel": null,
+  "sourceOperatorObservationHash": null,
+  "sports": [],
+  "observedScope": null,
+  "scopeShrinkAfterLockForbidden": true,
+  "researchOnly": true,
+  "prediction": "NONE",
+  "engine": "NONE",
+  "recommendation": "NONE",
+  "predictionInput": false,
+  "engineAdmission": "PROHIBITED",
+  "independentModelSample": 0,
+  "officialMandatoryCompletionPercentage": null,
+  "provable": {
+    "footballRegisteredCompetitionSchedule": true,
+    "mlbOperatingScope": false,
+    "operatorObservedScope": false,
+    "domesticOperatorScope": false,
+    "fullDailyOperatingDenominator": false
+  },
+  "missingEvidence": {
+    "operatorObservation20260825": true,
+    "operatorInput20260825": true,
+    "mlbSchedule20260825": true,
+    "priorDailyScopeLock20260825": true,
+    "prediction20260825": true
+  },
+  "footballRegisteredCompetitionSchedule": {
+    "rel": "data/research/football/2026-08-25-schedule-v1.json",
+    "artifactHash": "071ce2f28755e944ab90a54ac853f32334fc0cb8a3054655b0b52e81a5c3dc16",
+    "scheduleGames": 8,
+    "identityMatched": 6,
+    "identityBlocked": 2,
+    "formatEligible": 6,
+    "droppedUnregisteredCompetition": 143,
+    "blockedProviderMatchIds": ["1507040", "1507041"],
+    "note": "Registered-competition research rows only. Not proven as the daily operating denominator."
+  },
+  "relatedFootballResearch": {
+    "originalZeroEligibleOddsRel": "data/research/football/2026-08-25-1x2-odds-v1.json",
+    "originalZeroEligibleOddsArtifactHash": "617e29e4fbe397f0db73fe586bd452fa314153b7e699d60aeeb50f05d554d68f",
+    "candidateIntakeRel": "data/research/football/2026-08-25-odds-bridge-candidate-intake-v1.json",
+    "candidateIntakeArtifactHash": "869ad8949c8f584a3528ec680d9e0bb343537e2f7bd85af214f1d80564da77c8",
+    "identityBridgeReviewRel": "data/audits/2026-08-25-football-identity-bridge-review-v1.json",
+    "doesNotEqualDailyOperatingScope": true,
+    "doesNotAwardCategoryBAutomatically": true
+  },
+  "mandatoryCompletion": {
+    "officialMandatoryCompletionPercentage": null,
+    "reason": "EVIDENCE_INCOMPLETE_DENOMINATOR",
+    "note": "Evidence-incomplete lock record is not permission to invent or shrink the denominator.",
+    "categories": {
+      "A_slateScheduleConfirmation": {
+        "maxWeight": 10,
+        "earnedWeight": 0,
+        "status": "NOT_PROVABLE"
+      },
+      "B_pregameInputsIdentityOdds": {
+        "maxWeight": 20,
+        "earnedWeight": 0,
+        "status": "NOT_PROVABLE"
+      },
+      "C_predictionSnapshotPassSeal": {
+        "maxWeight": 20,
+        "earnedWeight": 0,
+        "status": "NOT_STARTED"
+      },
+      "D_pregameGitRemoteSeal": {
+        "maxWeight": 10,
+        "earnedWeight": 0,
+        "status": "NOT_PROVABLE"
+      },
+      "E_resultGrade": {
+        "maxWeight": 15,
+        "earnedWeight": 0,
+        "status": "NOT_STARTED"
+      },
+      "F_reviewScorecard": {
+        "maxWeight": 20,
+        "earnedWeight": 0,
+        "status": "NOT_STARTED"
+      },
+      "G_dailyCloseAuditGitSync": {
+        "maxWeight": 5,
+        "earnedWeight": 0,
+        "status": "NOT_PROVABLE"
+      }
+    }
+  },
+  "note": "No 2026-08-25 operator observation, operator-input, or MLB schedule exists in the repository. The football schedule artifact proves 8 registered-competition research rows (6 MATCHED / 2 BLOCKED) after dropping 143 unregistered competitions, but that is not a proven operating slate. Official mandatory completion percentage cannot be calculated. Evidence-incomplete lock record is not permission to invent or shrink the denominator."
+}
