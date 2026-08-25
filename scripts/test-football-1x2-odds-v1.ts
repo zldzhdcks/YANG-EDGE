@@ -961,6 +961,27 @@ async function main() {
   assert.equal(shaFile(schedule12), hash12Before);
   assert.equal(shaFile(schedule14), hash14Before);
 
+  const firstZeroEligible = parseFootball1x2OddsJsonText(
+    readFileSync(
+      path.join(
+        process.cwd(),
+        "data/research/football/2026-08-25-1x2-odds-v1.json",
+      ),
+      "utf8",
+    ),
+  );
+  assert.equal(firstZeroEligible.meta.scheduleEligibleGames, 0);
+  assert.equal(firstZeroEligible.meta.providerCalled, false);
+  assert.equal(firstZeroEligible.observations.length, 0);
+  assert.equal(
+    firstZeroEligible.meta.artifactHash,
+    "617e29e4fbe397f0db73fe586bd452fa314153b7e699d60aeeb50f05d554d68f",
+  );
+  assert.equal(
+    firstZeroEligible.meta.sourceScheduleArtifactHash,
+    "06595340bc162ad31fba9e6dea2131bc76cbe76dddc1c9d88a938650d6e3f608",
+  );
+
   console.log("test:football-1x2-odds-v1 PASS");
 }
 

@@ -32,6 +32,8 @@ export {
 } from "./sport-keys";
 export {
   FOOTBALL_ODDS_TEAM_BRIDGE_V1,
+  INTAKE_2026_08_25_OBSERVED_AT,
+  MANUAL_REVIEW_2026_08_25_VERIFIED_AT,
   assertOddsTeamBridgeIntegrity,
   getOddsTeamNames,
   oddsNameMatchesCanonical,

@@ -63,10 +63,14 @@ export function normalizeFixtureToScheduleRow(input: {
     fixtureId: providerMatchId,
   });
   const matchFormat = resolveMatchFormat(profile);
+  const homeTeamName = String(fx.teams?.home?.name ?? "").trim();
+  const awayTeamName = String(fx.teams?.away?.name ?? "").trim();
   const identity = resolveScheduleIdentityFields({
     provider: input.provider,
     homeProviderTeamId,
     awayProviderTeamId,
+    homeProviderReportedName: homeTeamName,
+    awayProviderReportedName: awayTeamName,
     seasonId,
     kickoffTimeUtc,
     matchFormat,
@@ -86,8 +90,8 @@ export function normalizeFixtureToScheduleRow(input: {
     matchFormat,
     homeProviderTeamId,
     awayProviderTeamId,
-    homeTeamName: String(fx.teams?.home?.name ?? "").trim(),
-    awayTeamName: String(fx.teams?.away?.name ?? "").trim(),
+    homeTeamName,
+    awayTeamName,
     kickoffTimeUtc,
     status: normalizeFootballScheduleStatus(fx.fixture?.status?.short),
     venue: venueName,

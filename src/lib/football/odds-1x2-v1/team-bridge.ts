@@ -22,9 +22,19 @@ const LA_LIGA_2026_08_18_EVIDENCE =
   "data/research/football/2026-08-18-la-liga-odds-identity-evidence-v0.json";
 const LA_LIGA_2026_08_18_EVENT_ID = "7b9f4d89d66c48e0c496aab1679e4ae4";
 const LA_LIGA_2026_08_18_VERIFIED_AT = "2026-08-17T14:17:15.455Z";
+const INTAKE_2026_08_25 =
+  "data/research/football/2026-08-25-odds-bridge-candidate-intake-v1.json";
+/** Provider candidate /events observation time. Not human verification. */
+export const INTAKE_2026_08_25_OBSERVED_AT = "2026-08-24T03:03:10.888Z";
+/** Official owner manual review of candidate evidence. Minute precision. */
+export const MANUAL_REVIEW_2026_08_25_VERIFIED_AT = "2026-08-25T02:20:00.000Z";
 
 function comparisonEventSource(oddsProviderEventId: string): string {
   return `${CMP_V0} the-odds-api event id=${oddsProviderEventId}`;
+}
+
+function intake20260825EventSource(oddsProviderEventId: string): string {
+  return `${INTAKE_2026_08_25} the-odds-api event id=${oddsProviderEventId}`;
 }
 
 export const FOOTBALL_ODDS_TEAM_BRIDGE_V1: FootballOddsTeamBridgeEntry[] = [
@@ -139,6 +149,76 @@ export const FOOTBALL_ODDS_TEAM_BRIDGE_V1: FootballOddsTeamBridgeEntry[] = [
     oddsTeamNames: ["Elche CF"],
     source: `${LA_LIGA_2026_08_18_EVIDENCE} the-odds-api event id=${LA_LIGA_2026_08_18_EVENT_ID}`,
     verifiedAt: LA_LIGA_2026_08_18_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-497",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["AS Roma"],
+    source: intake20260825EventSource("4164b325d120b7310921429a21496210"),
+    verifiedAt: MANUAL_REVIEW_2026_08_25_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-502",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Fiorentina"],
+    source: intake20260825EventSource("4164b325d120b7310921429a21496210"),
+    verifiedAt: MANUAL_REVIEW_2026_08_25_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-500",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Bologna"],
+    source: intake20260825EventSource("c23c70e25e6253ea30f33add6c73d299"),
+    verifiedAt: MANUAL_REVIEW_2026_08_25_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-487",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Lazio"],
+    source: intake20260825EventSource("c23c70e25e6253ea30f33add6c73d299"),
+    verifiedAt: MANUAL_REVIEW_2026_08_25_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-36",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Fulham"],
+    source: intake20260825EventSource("4e4a813bf4218cc527e6f8ef2351170d"),
+    verifiedAt: MANUAL_REVIEW_2026_08_25_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-49",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Chelsea"],
+    source: intake20260825EventSource("4e4a813bf4218cc527e6f8ef2351170d"),
+    verifiedAt: MANUAL_REVIEW_2026_08_25_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-535",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Málaga"],
+    source: intake20260825EventSource("030285b126b6a2f7e022261006ed770e"),
+    verifiedAt: MANUAL_REVIEW_2026_08_25_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-727",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["CA Osasuna"],
+    source: intake20260825EventSource("b86f1854fe9f0915d4f9ee47f23a14bf"),
+    verifiedAt: MANUAL_REVIEW_2026_08_25_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-2766",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["FC Seoul"],
+    source: intake20260825EventSource("d59c12d88d59e5a665b3fd8f626628d5"),
+    verifiedAt: MANUAL_REVIEW_2026_08_25_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-2745",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Bucheon FC 1995"],
+    source: intake20260825EventSource("d59c12d88d59e5a665b3fd8f626628d5"),
+    verifiedAt: MANUAL_REVIEW_2026_08_25_VERIFIED_AT,
   },
 ];
 

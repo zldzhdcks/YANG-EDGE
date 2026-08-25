@@ -45,6 +45,7 @@ export {
   FOOTBALL_TEAM_CATALOG_V1,
   FOOTBALL_TEAM_CONFLICTS_V1,
   getMatchedTeam,
+  normalizeFootballProviderReportedName,
   resolveProviderTeam,
   type FootballTeamCatalogEntry,
 } from "./team-catalog";
@@ -53,6 +54,7 @@ export {
   FOOTBALL_SLATE_2026_08_14_TEAMS,
   FOOTBALL_SLATE_2026_08_17_TEAMS,
   FOOTBALL_SLATE_2026_08_18_TEAMS,
+  FOOTBALL_SLATE_2026_08_25_TEAMS,
 } from "./team-catalog-slate-2026-08";
 export {
   assertResearchFixtureInput,

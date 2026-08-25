@@ -17,6 +17,8 @@ export function resolveScheduleIdentityFields(input: {
   provider: FootballProviderId;
   homeProviderTeamId: string;
   awayProviderTeamId: string;
+  homeProviderReportedName: string;
+  awayProviderReportedName: string;
   seasonId: string | null;
   kickoffTimeUtc: string | null;
   matchFormat: FootballMatchFormat;
@@ -31,8 +33,16 @@ export function resolveScheduleIdentityFields(input: {
   identityReasons: string[];
   predictionEligibility: FootballPredictionEligibility;
 } {
-  const home = resolveProviderTeam(input.provider, input.homeProviderTeamId);
-  const away = resolveProviderTeam(input.provider, input.awayProviderTeamId);
+  const home = resolveProviderTeam(
+    input.provider,
+    input.homeProviderTeamId,
+    input.homeProviderReportedName,
+  );
+  const away = resolveProviderTeam(
+    input.provider,
+    input.awayProviderTeamId,
+    input.awayProviderReportedName,
+  );
   const reasons = [...home.reasons, ...away.reasons];
 
   if (input.seasonId == null) {
@@ -89,6 +99,8 @@ export function rejoinFootballScheduleRow(
     provider: row.provider,
     homeProviderTeamId: row.homeProviderTeamId,
     awayProviderTeamId: row.awayProviderTeamId,
+    homeProviderReportedName: row.homeTeamName,
+    awayProviderReportedName: row.awayTeamName,
     seasonId: row.seasonId,
     kickoffTimeUtc,
     matchFormat,

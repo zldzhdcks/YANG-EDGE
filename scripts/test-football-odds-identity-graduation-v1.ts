@@ -20,6 +20,8 @@ import {
   FOOTBALL_ODDS_KICKOFF_TOLERANCE_MINUTES,
   FOOTBALL_ODDS_SPORT_KEY_MAP_V1,
   FOOTBALL_ODDS_TEAM_BRIDGE_V1,
+  INTAKE_2026_08_25_OBSERVED_AT,
+  MANUAL_REVIEW_2026_08_25_VERIFIED_AT,
   assertOddsTeamBridgeIntegrity,
   getOddsSportKey,
   getOddsTeamNames,
@@ -383,6 +385,324 @@ async function main() {
   assert.equal(plan17.wouldCallProvider, true);
   assert.deepEqual(plan17.sportKeysToFetch, ["soccer_usa_mls"]);
   assert.equal(plan17.skipped.identityBlocked, 2);
+
+  const INTAKE_REL =
+    "data/research/football/2026-08-25-odds-bridge-candidate-intake-v1.json";
+  const AUDIT_REL =
+    "data/audits/2026-08-25-football-identity-bridge-review-v1.json";
+  const ODDS_REL = "data/research/football/2026-08-25-1x2-odds-v1.json";
+  const intake = JSON.parse(
+    readFileSync(path.join(process.cwd(), INTAKE_REL), "utf8"),
+  ) as {
+    meta: { artifactHash: string; generatedAt: string; observedAt: string };
+    rows: Array<{
+      schedule: { providerMatchId: string };
+      candidateStatus: string;
+      candidateEvents: Array<{
+        externalEventId: string;
+        homeTeamExact: string;
+        awayTeamExact: string;
+      }>;
+    }>;
+  };
+  assert.equal(
+    intake.meta.artifactHash,
+    "869ad8949c8f584a3528ec680d9e0bb343537e2f7bd85af214f1d80564da77c8",
+  );
+  assert.equal(intake.meta.observedAt, INTAKE_2026_08_25_OBSERVED_AT);
+  const byMatch = new Map(
+    intake.rows.map((r) => [r.schedule.providerMatchId, r] as const),
+  );
+  const roma = byMatch.get("1550087")!.candidateEvents[0]!;
+  const bologna = byMatch.get("1550089")!.candidateEvents[0]!;
+  const fulham = byMatch.get("1557376")!.candidateEvents[0]!;
+  const malaga = byMatch.get("1570349")!.candidateEvents[0]!;
+  const osasuna = byMatch.get("1570350")!.candidateEvents[0]!;
+  const seoulRow = byMatch.get("1507042")!;
+  assert.equal(seoulRow.candidateStatus, "AMBIGUOUS_EVENT_CANDIDATES");
+  const seoul = seoulRow.candidateEvents.find(
+    (e) => e.externalEventId === "d59c12d88d59e5a665b3fd8f626628d5",
+  )!;
+  assert.ok(seoul);
+  assert.equal(roma.externalEventId, "4164b325d120b7310921429a21496210");
+  assert.equal(bologna.externalEventId, "c23c70e25e6253ea30f33add6c73d299");
+  assert.equal(fulham.externalEventId, "4e4a813bf4218cc527e6f8ef2351170d");
+  assert.equal(malaga.externalEventId, "030285b126b6a2f7e022261006ed770e");
+  assert.equal(osasuna.externalEventId, "b86f1854fe9f0915d4f9ee47f23a14bf");
+  assert.equal(seoul.externalEventId, "d59c12d88d59e5a665b3fd8f626628d5");
+  assert.deepEqual(getOddsTeamNames("fb-team-v1-api-football-497"), [
+    roma.homeTeamExact,
+  ]);
+  assert.deepEqual(getOddsTeamNames("fb-team-v1-api-football-502"), [
+    roma.awayTeamExact,
+  ]);
+  assert.deepEqual(getOddsTeamNames("fb-team-v1-api-football-500"), [
+    bologna.homeTeamExact,
+  ]);
+  assert.deepEqual(getOddsTeamNames("fb-team-v1-api-football-487"), [
+    bologna.awayTeamExact,
+  ]);
+  assert.deepEqual(getOddsTeamNames("fb-team-v1-api-football-36"), [
+    fulham.homeTeamExact,
+  ]);
+  assert.deepEqual(getOddsTeamNames("fb-team-v1-api-football-49"), [
+    fulham.awayTeamExact,
+  ]);
+  assert.deepEqual(getOddsTeamNames("fb-team-v1-api-football-535"), [
+    malaga.homeTeamExact,
+  ]);
+  assert.equal(malaga.homeTeamExact, "Málaga");
+  assert.deepEqual(getOddsTeamNames("fb-team-v1-api-football-727"), [
+    osasuna.homeTeamExact,
+  ]);
+  assert.equal(osasuna.homeTeamExact, "CA Osasuna");
+  assert.deepEqual(getOddsTeamNames("fb-team-v1-api-football-2766"), [
+    seoul.homeTeamExact,
+  ]);
+  assert.deepEqual(getOddsTeamNames("fb-team-v1-api-football-2745"), [
+    seoul.awayTeamExact,
+  ]);
+  assert.deepEqual(getOddsTeamNames("fb-team-v1-api-football-544"), [
+    "Deportivo La Coruña",
+  ]);
+  assert.deepEqual(getOddsTeamNames("fb-team-v1-api-football-539"), ["Levante"]);
+  assert.equal(malaga.awayTeamExact, "Deportivo La Coruña");
+  assert.equal(osasuna.awayTeamExact, "Levante");
+
+  const approvedCanonicals = [
+    "fb-team-v1-api-football-497",
+    "fb-team-v1-api-football-502",
+    "fb-team-v1-api-football-500",
+    "fb-team-v1-api-football-487",
+    "fb-team-v1-api-football-36",
+    "fb-team-v1-api-football-49",
+    "fb-team-v1-api-football-535",
+    "fb-team-v1-api-football-727",
+    "fb-team-v1-api-football-2766",
+    "fb-team-v1-api-football-2745",
+  ] as const;
+  for (const id of approvedCanonicals) {
+    const entry = FOOTBALL_ODDS_TEAM_BRIDGE_V1.find(
+      (e) => e.canonicalTeamId === id,
+    );
+    assert.ok(entry, id);
+    assert.equal(entry!.verifiedAt, MANUAL_REVIEW_2026_08_25_VERIFIED_AT, id);
+    assert.notEqual(entry!.verifiedAt, INTAKE_2026_08_25_OBSERVED_AT, id);
+    assert.ok(entry!.source.includes(INTAKE_REL), id);
+  }
+  assert.equal(
+    FOOTBALL_ODDS_TEAM_BRIDGE_V1.find(
+      (e) => e.canonicalTeamId === "fb-team-v1-api-football-544",
+    )?.verifiedAt,
+    "2026-08-17T14:17:15.455Z",
+  );
+  assert.equal(
+    FOOTBALL_ODDS_TEAM_BRIDGE_V1.find(
+      (e) => e.canonicalTeamId === "fb-team-v1-api-football-539",
+    )?.verifiedAt,
+    "2026-08-16T14:27:47.334Z",
+  );
+
+  const forbiddenBridgeIds = [
+    "fb-team-v1-api-football-2768",
+    "fb-team-v1-api-football-2761",
+    "fb-team-v1-api-football-2762",
+    "fb-team-v1-api-football-2764",
+  ] as const;
+  for (const id of forbiddenBridgeIds) {
+    assert.equal(
+      FOOTBALL_ODDS_TEAM_BRIDGE_V1.some((e) => e.canonicalTeamId === id),
+      false,
+      id,
+    );
+    assert.equal(getOddsTeamNames(id).length, 0, id);
+  }
+
+  const malagaJoin = joinScheduleRowToOddsEvent({
+    row: row({
+      dateKst: "2026-08-25",
+      matchId: "soccer-api-football-1570349",
+      providerMatchId: "1570349",
+      competitionId: "fb-comp-api-football-140",
+      homeTeamId: "fb-team-v1-api-football-535",
+      awayTeamId: "fb-team-v1-api-football-544",
+      kickoffTimeUtc: "2026-08-24T19:30:00.000Z",
+    }),
+    events: [
+      oddsEvent({
+        id: malaga.externalEventId,
+        sportKey: "soccer_spain_la_liga",
+        home: malaga.homeTeamExact,
+        away: malaga.awayTeamExact,
+        commence: "2026-08-24T19:30:00Z",
+      }),
+    ],
+    teamBridge: FOOTBALL_ODDS_TEAM_BRIDGE_V1,
+  });
+  assert.equal(malagaJoin.status, "JOINED");
+
+  const malagaScheduleNameRejected = joinScheduleRowToOddsEvent({
+    row: row({
+      dateKst: "2026-08-25",
+      matchId: "soccer-api-football-1570349",
+      providerMatchId: "1570349",
+      competitionId: "fb-comp-api-football-140",
+      homeTeamId: "fb-team-v1-api-football-535",
+      awayTeamId: "fb-team-v1-api-football-544",
+      kickoffTimeUtc: "2026-08-24T19:30:00.000Z",
+    }),
+    events: [
+      oddsEvent({
+        id: "fake-malaga-schedule-name",
+        sportKey: "soccer_spain_la_liga",
+        home: "Malaga",
+        away: "Deportivo La Coruña",
+        commence: "2026-08-24T19:30:00Z",
+      }),
+    ],
+    teamBridge: FOOTBALL_ODDS_TEAM_BRIDGE_V1,
+  });
+  assert.equal(malagaScheduleNameRejected.status, "NOT_JOINED");
+
+  const osasunaJoin = joinScheduleRowToOddsEvent({
+    row: row({
+      dateKst: "2026-08-25",
+      matchId: "soccer-api-football-1570350",
+      providerMatchId: "1570350",
+      competitionId: "fb-comp-api-football-140",
+      homeTeamId: "fb-team-v1-api-football-727",
+      awayTeamId: "fb-team-v1-api-football-539",
+      kickoffTimeUtc: "2026-08-24T17:30:00.000Z",
+    }),
+    events: [
+      oddsEvent({
+        id: osasuna.externalEventId,
+        sportKey: "soccer_spain_la_liga",
+        home: osasuna.homeTeamExact,
+        away: osasuna.awayTeamExact,
+        commence: "2026-08-24T17:30:00Z",
+      }),
+    ],
+    teamBridge: FOOTBALL_ODDS_TEAM_BRIDGE_V1,
+  });
+  assert.equal(osasunaJoin.status, "JOINED");
+
+  const seoulJoin = joinScheduleRowToOddsEvent({
+    row: row({
+      dateKst: "2026-08-25",
+      matchId: "soccer-api-football-1507042",
+      providerMatchId: "1507042",
+      competitionId: "fb-comp-api-football-292",
+      homeTeamId: "fb-team-v1-api-football-2766",
+      awayTeamId: "fb-team-v1-api-football-2745",
+      kickoffTimeUtc: "2026-08-25T10:30:00.000Z",
+    }),
+    events: [
+      oddsEvent({
+        id: seoul.externalEventId,
+        sportKey: "soccer_korea_kleague1",
+        home: seoul.homeTeamExact,
+        away: seoul.awayTeamExact,
+        commence: "2026-08-25T10:30:00Z",
+      }),
+    ],
+    teamBridge: FOOTBALL_ODDS_TEAM_BRIDGE_V1,
+  });
+  assert.equal(seoulJoin.status, "JOINED");
+
+  const gimcheonRejected = joinScheduleRowToOddsEvent({
+    row: row({
+      dateKst: "2026-08-25",
+      matchId: "soccer-api-football-1507040",
+      providerMatchId: "1507040",
+      competitionId: "fb-comp-api-football-292",
+      homeTeamId: "fb-team-v1-api-football-2768",
+      awayTeamId: "fb-team-v1-api-football-2762",
+      kickoffTimeUtc: "2026-08-25T10:30:00.000Z",
+    }),
+    events: [
+      oddsEvent({
+        id: "9d3d2d6e8c36c82f72a287bf11d93c63",
+        sportKey: "soccer_korea_kleague1",
+        home: "Sangju Sangmu FC",
+        away: "Jeonbuk Hyundai Motors",
+        commence: "2026-08-25T10:30:00Z",
+      }),
+    ],
+    teamBridge: FOOTBALL_ODDS_TEAM_BRIDGE_V1,
+  });
+  assert.equal(gimcheonRejected.status, "ODDS_EVENT_IDENTITY_REVIEW_REQUIRED");
+
+  const canonicals25 = FOOTBALL_ODDS_TEAM_BRIDGE_V1.map((e) => e.canonicalTeamId);
+  assert.equal(canonicals25.length, new Set(canonicals25).size);
+  const names25 = FOOTBALL_ODDS_TEAM_BRIDGE_V1.flatMap((e) => e.oddsTeamNames);
+  assert.equal(names25.length, new Set(names25).size);
+  assert.equal(
+    FOOTBALL_ODDS_TEAM_BRIDGE_V1.filter(
+      (e) => e.canonicalTeamId === "fb-team-v1-api-football-544",
+    ).length,
+    1,
+  );
+  assert.equal(
+    FOOTBALL_ODDS_TEAM_BRIDGE_V1.filter(
+      (e) => e.canonicalTeamId === "fb-team-v1-api-football-539",
+    ).length,
+    1,
+  );
+
+  const audit = JSON.parse(
+    readFileSync(path.join(process.cwd(), AUDIT_REL), "utf8"),
+  ) as {
+    candidateObservedAt: string;
+    manualReviewedAt: string;
+    manualReviewedAtPrecision: string;
+    reviewMethod: string;
+    predictionInput: boolean;
+    engineAdmission: string;
+    independentModelSample: number;
+    oddsPriceCollectionPerformed: boolean;
+    fcSeoulBucheon: {
+      promotionClass: string;
+      autoApproveForbidden: boolean;
+      candidateStatusAtIntake: string;
+      evidenceEventId: string;
+    };
+    sourceArtifacts: {
+      originalBlockedStateOdds: { artifactHash: string };
+    };
+  };
+  assert.equal(audit.candidateObservedAt, INTAKE_2026_08_25_OBSERVED_AT);
+  assert.equal(audit.manualReviewedAt, MANUAL_REVIEW_2026_08_25_VERIFIED_AT);
+  assert.notEqual(audit.candidateObservedAt, audit.manualReviewedAt);
+  assert.equal(audit.manualReviewedAtPrecision, "MINUTE");
+  assert.equal(audit.reviewMethod, "MANUAL_EVENT_IDENTITY_REVIEW");
+  assert.equal(audit.predictionInput, false);
+  assert.equal(audit.engineAdmission, "PROHIBITED");
+  assert.equal(audit.independentModelSample, 0);
+  assert.equal(audit.oddsPriceCollectionPerformed, false);
+  assert.equal(audit.fcSeoulBucheon.promotionClass, "MANUAL_EVENT_IDENTITY_REVIEW");
+  assert.equal(audit.fcSeoulBucheon.autoApproveForbidden, true);
+  assert.equal(
+    audit.fcSeoulBucheon.candidateStatusAtIntake,
+    "AMBIGUOUS_EVENT_CANDIDATES",
+  );
+  assert.equal(
+    audit.fcSeoulBucheon.evidenceEventId,
+    "d59c12d88d59e5a665b3fd8f626628d5",
+  );
+  assert.equal(
+    audit.sourceArtifacts.originalBlockedStateOdds.artifactHash,
+    "617e29e4fbe397f0db73fe586bd452fa314153b7e699d60aeeb50f05d554d68f",
+  );
+  const firstOdds = JSON.parse(
+    readFileSync(path.join(process.cwd(), ODDS_REL), "utf8"),
+  ) as { meta: { artifactHash: string; scheduleEligibleGames: number; providerCalled: boolean } };
+  assert.equal(
+    firstOdds.meta.artifactHash,
+    "617e29e4fbe397f0db73fe586bd452fa314153b7e699d60aeeb50f05d554d68f",
+  );
+  assert.equal(firstOdds.meta.scheduleEligibleGames, 0);
+  assert.equal(firstOdds.meta.providerCalled, false);
 
   const cmpHashBefore = sha256File(CMP_REL);
   const schedHashBefore = sha256File(SCHED17_REL);

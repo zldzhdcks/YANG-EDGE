@@ -1,0 +1,454 @@
+{
+  "meta": {
+    "schemaVersion": "football-odds-bridge-candidate-intake-v1",
+    "builderVersion": "football-odds-bridge-candidate-intake-builder-v1",
+    "dateKst": "2026-08-25",
+    "generatedAt": "2026-08-24T03:03:10.888Z",
+    "observedAt": "2026-08-24T03:03:10.888Z",
+    "researchOnly": true,
+    "legalStatus": "NEEDS_LEGAL_REVIEW",
+    "predictionInput": false,
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "sourceScheduleRel": "data/research/football/2026-08-25-schedule-v1.json",
+    "sourceScheduleArtifactHash": "f34251482f7c817d0862879119ed8b5cbe6610ebe0c0d51a2218c0ef64386e07",
+    "oddsProvider": "THE_ODDS_API",
+    "providerMethod": "listEvents",
+    "providerCalls": 4,
+    "uniqueSportKeysRequested": [
+      "soccer_epl",
+      "soccer_italy_serie_a",
+      "soccer_korea_kleague1",
+      "soccer_spain_la_liga"
+    ],
+    "eventsObserved": 61,
+    "candidateRows": 5,
+    "reviewRequired": 5,
+    "blockedRows": 3,
+    "kickoffToleranceMinutes": 15,
+    "counts": {
+      "noCandidateNeeded": 0,
+      "canonicalIdentityBlocked": 1,
+      "notSupported": 0,
+      "candidateIntakeTarget": 7,
+      "sportKeyNotMapped": 0,
+      "sportKeyEndpointFailed": 0,
+      "noEventCandidate": 0,
+      "ambiguousEventCandidates": 2,
+      "orientationConflict": 0,
+      "pendingReviewSingleSideAnchored": 2,
+      "pendingReviewSingleEventUnanchored": 3
+    },
+    "artifactHash": "869ad8949c8f584a3528ec680d9e0bb343537e2f7bd85af214f1d80564da77c8"
+  },
+  "rows": [
+    {
+      "matchId": "soccer-api-football-1507040",
+      "competitionId": "fb-comp-api-football-292",
+      "sportKey": "soccer_korea_kleague1",
+      "schedule": {
+        "providerMatchId": "1507040",
+        "kickoffTimeUtc": "2026-08-25T10:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "2768",
+        "canonicalTeamId": "fb-team-v1-api-football-2768",
+        "scheduleDisplayName": "Gimcheon Sangmu FC",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "2762",
+        "canonicalTeamId": "fb-team-v1-api-football-2762",
+        "scheduleDisplayName": "Jeonbuk Motors",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "d59c12d88d59e5a665b3fd8f626628d5",
+          "sportKey": "soccer_korea_kleague1",
+          "homeTeamExact": "FC Seoul",
+          "awayTeamExact": "Bucheon FC 1995",
+          "commenceTime": "2026-08-25T10:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "794a1d28faf01225195c960716c16b09",
+          "sportKey": "soccer_korea_kleague1",
+          "homeTeamExact": "Jeju United FC",
+          "awayTeamExact": "Pohang Steelers",
+          "commenceTime": "2026-08-25T10:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "9d3d2d6e8c36c82f72a287bf11d93c63",
+          "sportKey": "soccer_korea_kleague1",
+          "homeTeamExact": "Sangju Sangmu FC",
+          "awayTeamExact": "Jeonbuk Hyundai Motors",
+          "commenceTime": "2026-08-25T10:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1507041",
+      "competitionId": "fb-comp-api-football-292",
+      "sportKey": "soccer_korea_kleague1",
+      "schedule": {
+        "providerMatchId": "1507041",
+        "kickoffTimeUtc": "2026-08-25T10:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "2761",
+        "canonicalTeamId": "fb-team-v1-api-football-2761",
+        "scheduleDisplayName": "Jeju United FC",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "2764",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Pohang Steelers",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1507042",
+      "competitionId": "fb-comp-api-football-292",
+      "sportKey": "soccer_korea_kleague1",
+      "schedule": {
+        "providerMatchId": "1507042",
+        "kickoffTimeUtc": "2026-08-25T10:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "2766",
+        "canonicalTeamId": "fb-team-v1-api-football-2766",
+        "scheduleDisplayName": "FC Seoul",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "2745",
+        "canonicalTeamId": "fb-team-v1-api-football-2745",
+        "scheduleDisplayName": "Bucheon FC 1995",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "d59c12d88d59e5a665b3fd8f626628d5",
+          "sportKey": "soccer_korea_kleague1",
+          "homeTeamExact": "FC Seoul",
+          "awayTeamExact": "Bucheon FC 1995",
+          "commenceTime": "2026-08-25T10:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "794a1d28faf01225195c960716c16b09",
+          "sportKey": "soccer_korea_kleague1",
+          "homeTeamExact": "Jeju United FC",
+          "awayTeamExact": "Pohang Steelers",
+          "commenceTime": "2026-08-25T10:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "9d3d2d6e8c36c82f72a287bf11d93c63",
+          "sportKey": "soccer_korea_kleague1",
+          "homeTeamExact": "Sangju Sangmu FC",
+          "awayTeamExact": "Jeonbuk Hyundai Motors",
+          "commenceTime": "2026-08-25T10:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1550087",
+      "competitionId": "fb-comp-api-football-135",
+      "sportKey": "soccer_italy_serie_a",
+      "schedule": {
+        "providerMatchId": "1550087",
+        "kickoffTimeUtc": "2026-08-24T18:45:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "497",
+        "canonicalTeamId": "fb-team-v1-api-football-497",
+        "scheduleDisplayName": "AS Roma",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "502",
+        "canonicalTeamId": "fb-team-v1-api-football-502",
+        "scheduleDisplayName": "Fiorentina",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "4164b325d120b7310921429a21496210",
+          "sportKey": "soccer_italy_serie_a",
+          "homeTeamExact": "AS Roma",
+          "awayTeamExact": "Fiorentina",
+          "commenceTime": "2026-08-24T18:45:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_EVENT_UNANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-497",
+          "side": "home",
+          "oddsExactName": "AS Roma",
+          "anchorType": "KICKOFF_SPORT_KEY_ONLY",
+          "confidenceClass": "MANUAL_REVIEW_REQUIRED"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-502",
+          "side": "away",
+          "oddsExactName": "Fiorentina",
+          "anchorType": "KICKOFF_SPORT_KEY_ONLY",
+          "confidenceClass": "MANUAL_REVIEW_REQUIRED"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": true,
+      "reasonCodes": [
+        "BOTH_SIDES_UNBRIDGED_SINGLE_EVENT",
+        "AUTO_APPROVE_FORBIDDEN"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1550089",
+      "competitionId": "fb-comp-api-football-135",
+      "sportKey": "soccer_italy_serie_a",
+      "schedule": {
+        "providerMatchId": "1550089",
+        "kickoffTimeUtc": "2026-08-24T16:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "500",
+        "canonicalTeamId": "fb-team-v1-api-football-500",
+        "scheduleDisplayName": "Bologna",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "487",
+        "canonicalTeamId": "fb-team-v1-api-football-487",
+        "scheduleDisplayName": "Lazio",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "c23c70e25e6253ea30f33add6c73d299",
+          "sportKey": "soccer_italy_serie_a",
+          "homeTeamExact": "Bologna",
+          "awayTeamExact": "Lazio",
+          "commenceTime": "2026-08-24T16:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_EVENT_UNANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-500",
+          "side": "home",
+          "oddsExactName": "Bologna",
+          "anchorType": "KICKOFF_SPORT_KEY_ONLY",
+          "confidenceClass": "MANUAL_REVIEW_REQUIRED"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-487",
+          "side": "away",
+          "oddsExactName": "Lazio",
+          "anchorType": "KICKOFF_SPORT_KEY_ONLY",
+          "confidenceClass": "MANUAL_REVIEW_REQUIRED"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": true,
+      "reasonCodes": [
+        "BOTH_SIDES_UNBRIDGED_SINGLE_EVENT",
+        "AUTO_APPROVE_FORBIDDEN"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1557376",
+      "competitionId": "fb-comp-api-football-39",
+      "sportKey": "soccer_epl",
+      "schedule": {
+        "providerMatchId": "1557376",
+        "kickoffTimeUtc": "2026-08-24T19:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "36",
+        "canonicalTeamId": "fb-team-v1-api-football-36",
+        "scheduleDisplayName": "Fulham",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "49",
+        "canonicalTeamId": "fb-team-v1-api-football-49",
+        "scheduleDisplayName": "Chelsea",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "4e4a813bf4218cc527e6f8ef2351170d",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Fulham",
+          "awayTeamExact": "Chelsea",
+          "commenceTime": "2026-08-24T19:00:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_EVENT_UNANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-36",
+          "side": "home",
+          "oddsExactName": "Fulham",
+          "anchorType": "KICKOFF_SPORT_KEY_ONLY",
+          "confidenceClass": "MANUAL_REVIEW_REQUIRED"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-49",
+          "side": "away",
+          "oddsExactName": "Chelsea",
+          "anchorType": "KICKOFF_SPORT_KEY_ONLY",
+          "confidenceClass": "MANUAL_REVIEW_REQUIRED"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": true,
+      "reasonCodes": [
+        "BOTH_SIDES_UNBRIDGED_SINGLE_EVENT",
+        "AUTO_APPROVE_FORBIDDEN"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1570349",
+      "competitionId": "fb-comp-api-football-140",
+      "sportKey": "soccer_spain_la_liga",
+      "schedule": {
+        "providerMatchId": "1570349",
+        "kickoffTimeUtc": "2026-08-24T19:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "535",
+        "canonicalTeamId": "fb-team-v1-api-football-535",
+        "scheduleDisplayName": "Malaga",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "544",
+        "canonicalTeamId": "fb-team-v1-api-football-544",
+        "scheduleDisplayName": "Deportivo La Coruna",
+        "existingBridgeNames": [
+          "Deportivo La Coruña"
+        ]
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "030285b126b6a2f7e022261006ed770e",
+          "sportKey": "soccer_spain_la_liga",
+          "homeTeamExact": "Málaga",
+          "awayTeamExact": "Deportivo La Coruña",
+          "commenceTime": "2026-08-24T19:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_SIDE_ANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-535",
+          "side": "home",
+          "oddsExactName": "Málaga",
+          "anchorType": "EXISTING_BRIDGE_AWAY",
+          "confidenceClass": "HIGH_CONFIDENCE_REVIEW_CANDIDATE"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": true,
+      "reasonCodes": [
+        "SINGLE_SIDE_ANCHORED",
+        "AUTO_APPROVE_FORBIDDEN"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1570350",
+      "competitionId": "fb-comp-api-football-140",
+      "sportKey": "soccer_spain_la_liga",
+      "schedule": {
+        "providerMatchId": "1570350",
+        "kickoffTimeUtc": "2026-08-24T17:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "727",
+        "canonicalTeamId": "fb-team-v1-api-football-727",
+        "scheduleDisplayName": "Osasuna",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "539",
+        "canonicalTeamId": "fb-team-v1-api-football-539",
+        "scheduleDisplayName": "Levante",
+        "existingBridgeNames": [
+          "Levante"
+        ]
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "b86f1854fe9f0915d4f9ee47f23a14bf",
+          "sportKey": "soccer_spain_la_liga",
+          "homeTeamExact": "CA Osasuna",
+          "awayTeamExact": "Levante",
+          "commenceTime": "2026-08-24T17:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_SIDE_ANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-727",
+          "side": "home",
+          "oddsExactName": "CA Osasuna",
+          "anchorType": "EXISTING_BRIDGE_AWAY",
+          "confidenceClass": "HIGH_CONFIDENCE_REVIEW_CANDIDATE"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": true,
+      "reasonCodes": [
+        "SINGLE_SIDE_ANCHORED",
+        "AUTO_APPROVE_FORBIDDEN"
+      ]
+    }
+  ]
+}

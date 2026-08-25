@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "yang-edge-2026-08-25-football-identity-bridge-review-v1",
+  "researchOnly": true,
+  "legalStatus": "NEEDS_LEGAL_REVIEW",
+  "predictionInput": false,
+  "engineAdmission": "PROHIBITED",
+  "engineConnected": false,
+  "independentModelSample": 0,
+  "oddsPriceCollectionPerformed": false,
+  "candidateObservedAt": "2026-08-24T03:03:10.888Z",
+  "manualReviewedAt": "2026-08-25T02:20:00.000Z",
+  "manualReviewedAtPrecision": "MINUTE",
+  "reviewMethod": "MANUAL_EVENT_IDENTITY_REVIEW",
+  "providerCallsThisMission": {
+    "apiFootball": 0,
+    "theOddsApi": 0,
+    "researchFootball1x2OddsCommandRun": false,
+    "scheduleRejoinProviderFetch": false
+  },
+  "sourceArtifacts": {
+    "originalBlockedStateOdds": {
+      "rel": "data/research/football/2026-08-25-1x2-odds-v1.json",
+      "artifactHash": "617e29e4fbe397f0db73fe586bd452fa314153b7e699d60aeeb50f05d554d68f",
+      "sourceScheduleArtifactHash": "06595340bc162ad31fba9e6dea2131bc76cbe76dddc1c9d88a938650d6e3f608",
+      "generatedAt": "2026-08-24T02:32:08.589Z",
+      "observedAt": "2026-08-24T02:32:08.589Z",
+      "scheduleEligibleGames": 0,
+      "providerCalled": false,
+      "identityBlockedAtObservation": 8,
+      "observations": 0
+    },
+    "currentSchedule": {
+      "rel": "data/research/football/2026-08-25-schedule-v1.json",
+      "artifactHash": "071ce2f28755e944ab90a54ac853f32334fc0cb8a3054655b0b52e81a5c3dc16",
+      "generatedAt": "2026-08-25T02:05:33.884Z",
+      "scheduleGames": 8,
+      "identityMatched": 6,
+      "identityBlocked": 2,
+      "formatEligible": 6
+    },
+    "candidateIntake": {
+      "rel": "data/research/football/2026-08-25-odds-bridge-candidate-intake-v1.json",
+      "artifactHash": "869ad8949c8f584a3528ec680d9e0bb343537e2f7bd85af214f1d80564da77c8",
+      "generatedAt": "2026-08-24T03:03:10.888Z",
+      "observedAt": "2026-08-24T03:03:10.888Z",
+      "providerCallsAtIntake": 4
+    }
+  },
+  "approvedFixtureIds": [
+    "1550087",
+    "1550089",
+    "1557376",
+    "1570349",
+    "1570350",
+    "1507042"
+  ],
+  "blockedFixtureIds": [
+    "1507040",
+    "1507041"
+  ],
+  "approvedBridgeCanonicalIds": [
+    "fb-team-v1-api-football-497",
+    "fb-team-v1-api-football-502",
+    "fb-team-v1-api-football-500",
+    "fb-team-v1-api-football-487",
+    "fb-team-v1-api-football-36",
+    "fb-team-v1-api-football-49",
+    "fb-team-v1-api-football-535",
+    "fb-team-v1-api-football-727",
+    "fb-team-v1-api-football-2766",
+    "fb-team-v1-api-football-2745"
+  ],
+  "preservedExistingBridgeCanonicalIds": [
+    "fb-team-v1-api-football-544",
+    "fb-team-v1-api-football-539"
+  ],
+  "noBridgeCanonicalIds": [
+    "fb-team-v1-api-football-2768",
+    "fb-team-v1-api-football-2761",
+    "fb-team-v1-api-football-2762",
+    "fb-team-v1-api-football-2764"
+  ],
+  "manualReviewEvidenceEventIds": {
+    "1550087": "4164b325d120b7310921429a21496210",
+    "1550089": "c23c70e25e6253ea30f33add6c73d299",
+    "1557376": "4e4a813bf4218cc527e6f8ef2351170d",
+    "1570349": "030285b126b6a2f7e022261006ed770e",
+    "1570350": "b86f1854fe9f0915d4f9ee47f23a14bf",
+    "1507042": "d59c12d88d59e5a665b3fd8f626628d5"
+  },
+  "fcSeoulBucheon": {
+    "fixtureId": "1507042",
+    "promotionClass": "MANUAL_EVENT_IDENTITY_REVIEW",
+    "autoApproveForbidden": true,
+    "candidateStatusAtIntake": "AMBIGUOUS_EVENT_CANDIDATES",
+    "evidenceEventId": "d59c12d88d59e5a665b3fd8f626628d5",
+    "homeExact": "FC Seoul",
+    "awayExact": "Bucheon FC 1995"
+  },
+  "seedCorrection": {
+    "removedFromMatchedPromotion": [
+      {
+        "providerTeamId": "2768",
+        "scheduleName": "Gimcheon Sangmu FC"
+      }
+    ],
+    "kept": [
+      {
+        "providerTeamId": "2745",
+        "scheduleName": "Bucheon FC 1995"
+      },
+      {
+        "providerTeamId": "497",
+        "scheduleName": "AS Roma"
+      },
+      {
+        "providerTeamId": "502",
+        "scheduleName": "Fiorentina"
+      },
+      {
+        "providerTeamId": "500",
+        "scheduleName": "Bologna"
+      },
+      {
+        "providerTeamId": "487",
+        "scheduleName": "Lazio"
+      },
+      {
+        "providerTeamId": "36",
+        "scheduleName": "Fulham"
+      },
+      {
+        "providerTeamId": "49",
+        "scheduleName": "Chelsea"
+      },
+      {
+        "providerTeamId": "535",
+        "scheduleName": "Malaga"
+      },
+      {
+        "providerTeamId": "727",
+        "scheduleName": "Osasuna"
+      }
+    ],
+    "identityHistoryNotModified": ["2761", "2762", "2764"]
+  },
+  "timing": {
+    "europeanApprovedFixturesPastKickoff": [
+      "1550087",
+      "1550089",
+      "1557376",
+      "1570349",
+      "1570350"
+    ],
+    "noNewPregameOddsCallForPastKickoffFixtures": true,
+    "kLeagueKickoffUtc": "2026-08-25T10:30:00.000Z",
+    "candidateObservedAtIsNotManualVerifiedAt": true
+  }
+}

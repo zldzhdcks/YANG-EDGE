@@ -20,6 +20,7 @@ import {
   FOOTBALL_SLATE_2026_08_14_TEAMS,
   FOOTBALL_SLATE_2026_08_17_TEAMS,
   FOOTBALL_SLATE_2026_08_18_TEAMS,
+  FOOTBALL_SLATE_2026_08_25_TEAMS,
   FOOTBALL_TEAM_CATALOG_V1,
   FOOTBALL_TEAM_CONFLICTS_V1,
   getMatchedTeam,
@@ -122,8 +123,18 @@ async function main() {
   });
   assert.equal(a.document.rows[0]!.matchId, "soccer-api-football-111");
   assert.equal(a.document.rows[0]!.matchId, b.document.rows[0]!.matchId);
-  assert.equal(a.document.rows[0]!.homeTeamId, b.document.rows[0]!.homeTeamId);
-  assert.equal(a.document.rows[0]!.awayTeamId, b.document.rows[0]!.awayTeamId);
+  assert.equal(a.document.rows[0]!.identityStatus, "MATCHED");
+  assert.equal(a.document.rows[0]!.homeTeamId, "fb-team-v1-api-football-42");
+  assert.equal(a.document.rows[0]!.awayTeamId, "fb-team-v1-api-football-40");
+  assert.equal(b.document.rows[0]!.identityStatus, "IDENTITY_REVIEW_REQUIRED");
+  assert.equal(b.document.rows[0]!.homeTeamId, null);
+  assert.equal(b.document.rows[0]!.awayTeamId, "fb-team-v1-api-football-40");
+  assert.ok(
+    b.document.rows[0]!.identityReasons.includes("PROVIDER_TEAM_NAME_CONFLICT"),
+  );
+  assert.ok(
+    b.document.rows[0]!.identityReasons.includes("OBSERVED_NAME:The Arsenal"),
+  );
   assert.equal(a.document.rows[0]!.homeProviderTeamId, "42");
   assert.equal(a.document.rows[0]!.awayProviderTeamId, "40");
   assert.notEqual(a.document.rows[0]!.homeTeamName, b.document.rows[0]!.homeTeamName);
@@ -148,6 +159,8 @@ async function main() {
         season: 2026,
         homeId: 42,
         awayId: 999001,
+        homeName: "Arsenal",
+        awayName: "Unknown Away",
       }),
     ],
   });
@@ -197,6 +210,8 @@ async function main() {
         season: 2026,
         homeId: 42,
         awayId: 40,
+        homeName: "Arsenal",
+        awayName: "Liverpool",
       }),
     ],
   });
@@ -431,6 +446,57 @@ async function main() {
   assert.equal(FOOTBALL_BLOCKED_PROVIDER_TEAM_IDS.has("2769"), true);
   assert.equal(FOOTBALL_TEAM_CONFLICTS_V1.length, 2);
 
+  const jejuCatalog = resolveProviderTeam("api-football", "2762", "Jeju United");
+  assert.equal(jejuCatalog.status, "MATCHED");
+  assert.equal(jejuCatalog.canonicalTeamId, "fb-team-v1-api-football-2762");
+  const incheonCatalog = resolveProviderTeam(
+    "api-football",
+    "2761",
+    "Incheon United",
+  );
+  assert.equal(incheonCatalog.status, "MATCHED");
+  assert.equal(incheonCatalog.canonicalTeamId, "fb-team-v1-api-football-2761");
+  const jejuIdOnly = resolveProviderTeam("api-football", "2762");
+  assert.equal(jejuIdOnly.status, "MATCHED");
+  const jeonbukOnJeju = resolveProviderTeam(
+    "api-football",
+    "2762",
+    "Jeonbuk Motors",
+  );
+  assert.equal(jeonbukOnJeju.status, "IDENTITY_REVIEW_REQUIRED");
+  assert.equal(jeonbukOnJeju.canonicalTeamId, null);
+  assert.deepEqual(jeonbukOnJeju.reasons, [
+    "PROVIDER_TEAM_NAME_CONFLICT",
+    "PROVIDER_TEAM_ID:2762",
+    "CATALOG_NAME:Jeju United",
+    "OBSERVED_NAME:Jeonbuk Motors",
+  ]);
+  const jejuOnIncheon = resolveProviderTeam(
+    "api-football",
+    "2761",
+    "Jeju United FC",
+  );
+  assert.equal(jejuOnIncheon.status, "IDENTITY_REVIEW_REQUIRED");
+  assert.equal(jejuOnIncheon.canonicalTeamId, null);
+  assert.deepEqual(jejuOnIncheon.reasons, [
+    "PROVIDER_TEAM_NAME_CONFLICT",
+    "PROVIDER_TEAM_ID:2761",
+    "CATALOG_NAME:Incheon United",
+    "OBSERVED_NAME:Jeju United FC",
+  ]);
+  assert.equal(
+    resolveProviderTeam("api-football", "2762", "  Jeju   United ").status,
+    "MATCHED",
+  );
+  assert.equal(
+    resolveProviderTeam("api-football", "40", "Liverpool FC").status,
+    "MATCHED",
+  );
+  assert.notEqual(
+    resolveProviderTeam("api-football", "2762", "Jeju United").status,
+    resolveProviderTeam("api-football", "2762", "Jeonbuk Motors").status,
+  );
+
   const kConflict = assembleFootballScheduleArtifact({
     dateKst: "2026-08-15",
     generatedAt: "2026-08-13T00:00:00.000Z",
@@ -441,6 +507,8 @@ async function main() {
         season: 2026,
         homeId: 2769,
         awayId: 2766,
+        homeName: "Jeonbuk Motors",
+        awayName: "FC Seoul",
       }),
     ],
   });
@@ -450,6 +518,52 @@ async function main() {
   assert.equal(
     kConflict.document.rows[0]!.awayTeamId,
     "fb-team-v1-api-football-2766",
+  );
+
+  const observedNameConflict = assembleFootballScheduleArtifact({
+    dateKst: "2026-08-25",
+    generatedAt: "2026-08-24T00:00:00.000Z",
+    fixtures: [
+      fixture({
+        id: 1507040,
+        leagueId: 292,
+        season: 2026,
+        homeId: 2768,
+        awayId: 2762,
+        homeName: "Gimcheon Sangmu FC",
+        awayName: "Jeonbuk Motors",
+        date: "2026-08-25T10:30:00.000Z",
+      }),
+      fixture({
+        id: 1507041,
+        leagueId: 292,
+        season: 2026,
+        homeId: 2761,
+        awayId: 2764,
+        homeName: "Jeju United FC",
+        awayName: "Pohang Steelers",
+        date: "2026-08-25T10:30:00.000Z",
+      }),
+    ],
+  });
+  const observed2762 = observedNameConflict.document.rows.find(
+    (r) => r.providerMatchId === "1507040",
+  );
+  const observed2761 = observedNameConflict.document.rows.find(
+    (r) => r.providerMatchId === "1507041",
+  );
+  assert.ok(observed2762);
+  assert.ok(observed2761);
+  assert.equal(observed2762!.identityStatus, "IDENTITY_REVIEW_REQUIRED");
+  assert.equal(observed2762!.awayTeamId, null);
+  assert.ok(observed2762!.identityReasons.includes("PROVIDER_TEAM_NAME_CONFLICT"));
+  assert.ok(observed2762!.identityReasons.includes("OBSERVED_NAME:Jeonbuk Motors"));
+  assert.equal(observed2761!.identityStatus, "IDENTITY_REVIEW_REQUIRED");
+  assert.equal(observed2761!.homeTeamId, null);
+  assert.ok(observed2761!.identityReasons.includes("PROVIDER_TEAM_NAME_CONFLICT"));
+  assert.ok(observed2761!.identityReasons.includes("OBSERVED_NAME:Jeju United FC"));
+  assert.ok(
+    observed2761!.identityReasons.includes("K_LEAGUE_PROVIDER_ID_CONFLICT"),
   );
 
   const unregistered = assembleFootballScheduleArtifact({
@@ -499,9 +613,10 @@ async function main() {
     ...FOOTBALL_SLATE_2026_08_14_TEAMS,
     ...FOOTBALL_SLATE_2026_08_17_TEAMS,
     ...FOOTBALL_SLATE_2026_08_18_TEAMS,
+    ...FOOTBALL_SLATE_2026_08_25_TEAMS,
   ];
-  assert.equal(slateIds.length, 54);
-  assert.equal(new Set(slateIds.map(([id]) => id)).size, 54);
+  assert.equal(slateIds.length, 63);
+  assert.equal(new Set(slateIds.map(([id]) => id)).size, 63);
   for (const [id] of slateIds) {
     const hit = resolveProviderTeam("api-football", id);
     assert.equal(hit.status, "MATCHED", `slate ${id}`);
@@ -582,6 +697,8 @@ async function main() {
         season: 2026,
         homeId: 254,
         awayId: 211,
+        homeName: "Heart Of Midlothian",
+        awayName: "Benfica",
         date: "2026-08-14T03:45:00+09:00",
       }),
     ],
@@ -596,6 +713,8 @@ async function main() {
         season: 2026,
         homeId: 254,
         awayId: 211,
+        homeName: "Heart Of Midlothian",
+        awayName: "Benfica",
       }),
     ],
   });

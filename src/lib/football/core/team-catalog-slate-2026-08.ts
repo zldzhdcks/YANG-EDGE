@@ -15,6 +15,8 @@ export const SLATE_SRC_2026_08_17 =
   "data/research/football/2026-08-17-schedule-v1.json" as const;
 export const SLATE_SRC_2026_08_18 =
   "data/research/football/2026-08-18-schedule-v1.json" as const;
+export const SLATE_SRC_2026_08_25 =
+  "data/research/football/2026-08-25-schedule-v1.json" as const;
 
 /** [providerTeamId, providerReportedName] */
 export type SlateTeamSeed = readonly [string, string];
@@ -95,4 +97,22 @@ export const FOOTBALL_SLATE_2026_08_17_TEAMS: SlateTeamSeed[] = [
 export const FOOTBALL_SLATE_2026_08_18_TEAMS: SlateTeamSeed[] = [
   ["544", "Deportivo La Coruna"],
   ["797", "Elche"],
+];
+
+/**
+ * Registered-competition IDENTITY_REVIEW_REQUIRED rows on 2026-08-25 schedule.
+ * Seed only missing exact [providerTeamId, providerReportedName] pairs stored
+ * on that artifact. Already-cataloged IDs and conflict-blocked IDs are omitted.
+ * 2768 Gimcheon Sangmu FC is withheld: repo already maps Gimcheon to 7002.
+ */
+export const FOOTBALL_SLATE_2026_08_25_TEAMS: SlateTeamSeed[] = [
+  ["2745", "Bucheon FC 1995"],
+  ["497", "AS Roma"],
+  ["502", "Fiorentina"],
+  ["500", "Bologna"],
+  ["487", "Lazio"],
+  ["36", "Fulham"],
+  ["49", "Chelsea"],
+  ["535", "Malaga"],
+  ["727", "Osasuna"],
 ];

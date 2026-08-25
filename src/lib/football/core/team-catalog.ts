@@ -9,6 +9,10 @@
  *
  * K League Jeonbuk / Ulsan: two repo sources disagree. Do NOT guess.
  * Those provider IDs are blocked (IDENTITY_REVIEW_REQUIRED).
+ *
+ * Current fixture observations also fail closed when the provider-reported
+ * name is materially incompatible with the catalog entry for that same ID.
+ * Historical canonical names/IDs are not rewritten.
  */
 import type {
   FootballIdentityScope,
@@ -21,10 +25,12 @@ import {
   FOOTBALL_SLATE_2026_08_14_TEAMS,
   FOOTBALL_SLATE_2026_08_17_TEAMS,
   FOOTBALL_SLATE_2026_08_18_TEAMS,
+  FOOTBALL_SLATE_2026_08_25_TEAMS,
   SLATE_SRC_2026_08_12,
   SLATE_SRC_2026_08_14,
   SLATE_SRC_2026_08_17,
   SLATE_SRC_2026_08_18,
+  SLATE_SRC_2026_08_25,
 } from "./team-catalog-slate-2026-08";
 
 export { FOOTBALL_IDENTITY_SCOPE_V1 } from "./team-catalog-slate-2026-08";
@@ -172,6 +178,9 @@ export const FOOTBALL_TEAM_CATALOG_V1: FootballTeamCatalogEntry[] = [
   ...FOOTBALL_SLATE_2026_08_18_TEAMS.map(([id, name]) =>
     matched(id, name, "UNKNOWN", [name], SLATE_SRC_2026_08_18),
   ),
+  ...FOOTBALL_SLATE_2026_08_25_TEAMS.map(([id, name]) =>
+    matched(id, name, "UNKNOWN", [name], SLATE_SRC_2026_08_25),
+  ),
 ];
 
 export type FootballTeamResolveResult = {
@@ -234,9 +243,43 @@ export function getMatchedTeam(
   return BY_PROVIDER_TEAM.get(`${provider}:${providerTeamId}`) ?? null;
 }
 
+/**
+ * Conservative observation compare. Tolerates case, spacing, and punctuation.
+ * Uses NFKC (same family as existing team-name normalize). Does not strip
+ * FC/United tokens. Does not fold semantically different club names.
+ * Does not use fuzzy similarity.
+ */
+export function normalizeFootballProviderReportedName(name: string): string {
+  return name
+    .normalize("NFKC")
+    .trim()
+    .toLowerCase()
+    .replace(/[.\-_/']/g, " ")
+    .replace(/\s+/g, " ");
+}
+
+function observedNameMatchesCatalog(
+  observedName: string,
+  entry: FootballTeamCatalogEntry,
+): boolean {
+  const observedKey = normalizeFootballProviderReportedName(observedName);
+  if (!observedKey) return false;
+  const candidates = [entry.canonicalName, ...entry.aliases];
+  return candidates.some(
+    (candidate) =>
+      normalizeFootballProviderReportedName(candidate) === observedKey,
+  );
+}
+
+/**
+ * Provider ID is the primary key.
+ * Optional providerReportedName is a current-observation safety check only.
+ * Omit the name for catalog-only lookups. Never name-first.
+ */
 export function resolveProviderTeam(
   provider: string,
   providerTeamId: string,
+  providerReportedName?: string | null,
 ): FootballTeamResolveResult {
   const id = String(providerTeamId);
   if (!id) {
@@ -259,6 +302,33 @@ export function resolveProviderTeam(
       status: "IDENTITY_REVIEW_REQUIRED",
       canonicalTeamId: null,
       reasons: ["UNKNOWN_PROVIDER_TEAM_ID", `PROVIDER_TEAM_ID:${id}`],
+    };
+  }
+  if (providerReportedName == null) {
+    return {
+      status: "MATCHED",
+      canonicalTeamId: hit.canonicalTeamId,
+      reasons: [],
+    };
+  }
+  const observed = String(providerReportedName);
+  if (!normalizeFootballProviderReportedName(observed)) {
+    return {
+      status: "IDENTITY_REVIEW_REQUIRED",
+      canonicalTeamId: null,
+      reasons: ["PROVIDER_TEAM_NAME_MISSING", `PROVIDER_TEAM_ID:${id}`],
+    };
+  }
+  if (!observedNameMatchesCatalog(observed, hit)) {
+    return {
+      status: "IDENTITY_REVIEW_REQUIRED",
+      canonicalTeamId: null,
+      reasons: [
+        "PROVIDER_TEAM_NAME_CONFLICT",
+        `PROVIDER_TEAM_ID:${id}`,
+        `CATALOG_NAME:${hit.canonicalName}`,
+        `OBSERVED_NAME:${observed.trim()}`,
+      ],
     };
   }
   return {
