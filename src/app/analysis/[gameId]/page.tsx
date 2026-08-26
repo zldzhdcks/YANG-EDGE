@@ -1,30 +1,35 @@
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import ResearchAnalysisViewer from "@/components/analysis/ResearchAnalysisViewer";
-import SampleAnalysisNotice from "@/components/home/SampleAnalysisNotice";
+import PublicAnalysisViewer from "@/components/analysis/public/PublicAnalysisViewer";
 import { buildGamesBackPath } from "@/lib/datetime/games-date";
-import { loadResearchAnalysisView } from "@/lib/research/load-research-analysis-view";
+import { loadPublicGameAnalysis } from "@/lib/public-analysis/load-public-game-analysis";
 
 type AnalysisPageProps = {
   params: Promise<{ gameId: string }>;
   searchParams: Promise<{ fromDate?: string }>;
 };
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
+  searchParams,
 }: AnalysisPageProps): Promise<Metadata> {
   const { gameId } = await params;
-  const view = await loadResearchAnalysisView(gameId);
+  const { fromDate } = await searchParams;
+  const { view } = await loadPublicGameAnalysis({
+    publicGameId: gameId,
+    fromDate,
+  });
   const titleBase =
-    view.gameInfo.availability === "COLLECTED"
-      ? view.gameInfo.matchLabel
-      : gameId;
+    view.game.homeTeam && view.game.awayTeam
+      ? `${view.game.homeTeam} vs ${view.game.awayTeam}`
+      : "경기 분석";
 
   return {
-    title: `${titleBase} · 경기 연구 보기 | YANG EDGE`,
-    description:
-      "경기 연구 보기 — 읽기 전용 연구 artifact. 실추천이 아닙니다.",
+    title: `${titleBase} · 경기 분석 | YANG EDGE`,
+    description: "이 경기를 어떻게 봐야 하는가 — YANG EDGE 경기 분석",
     robots: { index: false, follow: false },
   };
 }
@@ -35,20 +40,17 @@ export default async function AnalysisPage({
 }: AnalysisPageProps) {
   const { gameId } = await params;
   const { fromDate } = await searchParams;
-  const view = await loadResearchAnalysisView(gameId);
-  const gamesBackHref = buildGamesBackPath(
+  const { view } = await loadPublicGameAnalysis({
+    publicGameId: gameId,
     fromDate,
-    view.gameInfo.dateKst,
-  );
+  });
+  const gamesBackHref = buildGamesBackPath(fromDate, view.game.dateKst);
 
   return (
     <>
       <Header />
       <main>
-        <div className="mx-auto max-w-5xl px-4 pt-6 sm:px-6">
-          <SampleAnalysisNotice />
-        </div>
-        <ResearchAnalysisViewer view={view} gamesBackHref={gamesBackHref} />
+        <PublicAnalysisViewer view={view} gamesBackHref={gamesBackHref} />
       </main>
       <Footer />
     </>

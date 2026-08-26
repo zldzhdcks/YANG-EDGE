@@ -164,7 +164,13 @@ function main() {
   }
 
   const analysis = readSrc("src/app/analysis/[gameId]/page.tsx");
-  assert.match(analysis, /ResearchAnalysisViewer/);
+  assert.match(analysis, /PublicAnalysisViewer/);
+  assert.equal(analysis.includes("ResearchAnalysisViewer"), false);
+  assert.equal(analysis.includes("SampleAnalysisNotice"), false);
+
+  const internalGame = readSrc("src/app/internal/research/game/[gameId]/page.tsx");
+  assert.match(internalGame, /ResearchAnalysisViewer/);
+  assert.match(internalGame, /OsShell/);
 
   const forbiddenResearchTouch = [
     "data/audits/2026-08-26-daily-scope-lock-v1.json",
