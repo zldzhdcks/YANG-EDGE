@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "yang-edge-football-pregame-player-xi-foundation-audit-v1",
+  "foundationVersion": "football-pregame-player-xi-foundation-v1",
+  "generatedAt": "2026-08-26T04:30:00.000Z",
+  "researchOnly": true,
+  "predictionInput": false,
+  "engineInput": false,
+  "engineConnected": false,
+  "predictionConnected": false,
+  "mandatoryCompletionUnchanged": true,
+  "mandatoryCompletionRemainsPct": 60,
+  "reusedArchitecture": {
+    "providerClient": "src/lib/football/api-football-provider.ts",
+    "providerMethodsReused": [
+      "getInjuries",
+      "getLineups"
+    ],
+    "providerMethodsNotCalledThisMission": [
+      "getInjuries",
+      "getLineups",
+      "getStandings",
+      "getTeamStatistics",
+      "getFixtures"
+    ],
+    "identityGate": "src/lib/football/foundation/identity-gate.ts evaluateFootballIdentityGate",
+    "teamResolve": "src/lib/football/core/team-catalog.ts resolveProviderTeam",
+    "competitionRegistry": "src/lib/football/foundation/competition-registry.ts",
+    "rawVsNormalizedSeparation": true
+  },
+  "normalizedContracts": {
+    "playerIdentity": "FootballPlayerIdentityV1",
+    "availability": "FootballAvailabilityRowV1 / FootballAvailabilityDatasetV1",
+    "confirmedOrUnclassifiedXi": "FootballXiObservationV1 / FootballXiDatasetV1",
+    "expectedXi": "FootballExpectedXiContractV1 (schema only, no rows)",
+    "playerFeature": "FootballPlayerFeatureContractV1 (unfilled)",
+    "rawObservation": "FootballRawPointInTimeObservationV1"
+  },
+  "rawToNormalizedFlow": [
+    "API-FOOTBALL",
+    "TIMESTAMPED IMMUTABLE RAW OBSERVATION",
+    "NORMALIZE / REPLAY (network-free)",
+    "PLAYER AVAILABILITY DATASET / XI OBSERVATION DATASET",
+    "future Player Feature / XI Strength (not built)"
+  ],
+  "replayNetworkSeparation": {
+    "liveProvider": "collect raw observation only (not invoked this mission)",
+    "normalizeReplay": "normalizeApiFootballInjuries / normalizeApiFootballLineups / replayNormalize*",
+    "rebuildRequiresLiveProvider": false,
+    "overwriteForbidden": true
+  },
+  "temporalGate": {
+    "rule": "observedAt < fixtureKickoff => PRE_GAME / pregameEligible=true",
+    "equalOrAfterKickoff": "POST_KICKOFF_INVALID_FOR_PREGAME / pregameEligible=false",
+    "noDateNowInsideNormalizers": true
+  },
+  "fixtureTeamIdentityGate": {
+    "module": "evaluateFootballIdentityGate + resolveProviderTeam",
+    "unresolvedAttachment": "PROVIDER_FIXTURE_RESEARCH_ONLY",
+    "operatorGameAttachedIfUnresolved": false,
+    "cannotForceBlockedTeamIdsToMatched": true
+  },
+  "playerIdentityPolicy": {
+    "canonicalPlayerRegistry": "NOT_BUILT",
+    "providerPlayerIdPreserved": true,
+    "providerPlayerIdIsNotYangCanonical": true,
+    "fuzzyNameMatch": false,
+    "v1StatusesUsed": [
+      "PROVIDER_ID_ONLY",
+      "PLAYER_IDENTITY_REVIEW_REQUIRED"
+    ],
+    "matchedReservedUntilRegistryExists": true
+  },
+  "confirmedVsExpectedXiSemantics": {
+    "apiFootballFixturesLineupsDefault": "UNCLASSIFIED_PROVIDER_LINEUP",
+    "confirmedRequiresCollectorSemanticOFFICIAL_CONFIRMED": true,
+    "lineupsAreNotAutomaticallyExpectedXi": true,
+    "expectedXiSourcesAllowed": [
+      "OFFICIAL_PROVIDER_EXPECTED",
+      "LICENSED_PROVIDER_EXPECTED",
+      "MANUAL_OPERATOR_EXPECTED"
+    ],
+    "modelInferredExpectedXi": "PROHIBITED"
+  },
+  "knownDataGaps": [
+    "EXPECTED_XI_PROVIDER_NOT_CONFIRMED",
+    "PLAYER_CANONICAL_REGISTRY_INCOMPLETE",
+    "PLAYER_FEATURE_DATASET_NOT_BUILT",
+    "XI_STRENGTH_NOT_BUILT"
+  ],
+  "prohibitedThisMission": [
+    "XI strength calculation",
+    "player importance weighting",
+    "injury penalty weighting",
+    "replacement-player penalty",
+    "probability adjustment",
+    "Football Prediction engine",
+    "market odds as model input",
+    "backfill postgame lineups as pregame"
+  ],
+  "futureResearchCandidates": [
+    "Confirm API-Football /fixtures/lineups official-vs-expected semantics before labeling CONFIRMED vs EXPECTED_XI.",
+    "Build a canonical player registry without fuzzy name matching.",
+    "Fill Player Feature Dataset from lawful as-of completed matches only.",
+    "Research XI strength only after sufficient samples; do not invent weights."
+  ],
+  "syntheticTestDataLocation": "src/lib/football/pregame-player-xi-foundation-v1/test-fixtures.ts",
+  "syntheticTestDataIsNotResearchEvidence": true,
+  "sealed20260826ArtifactsUntouched": true,
+  "moduleRoot": "src/lib/football/pregame-player-xi-foundation-v1/"
+}

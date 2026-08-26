@@ -1,5 +1,9 @@
 /**
  * Football Identity Foundation v0 — public exports.
+ *
+ * Player / availability / XI normalization lives in
+ * `src/lib/football/pregame-player-xi-foundation-v1/` (P0 data foundation;
+ * not a Prediction engine).
  */
 export * from "./types";
 export * from "./competition-registry";
