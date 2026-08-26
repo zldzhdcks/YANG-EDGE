@@ -1,0 +1,144 @@
+{
+  "schemaVersion": "yang-edge-football-player-stats-squad-coach-foundation-audit-v1",
+  "foundationVersion": "football-player-stats-squad-coach-foundation-v1",
+  "generatedAt": "2026-08-26T13:21:00.000Z",
+  "researchOnly": true,
+  "predictionInput": false,
+  "engineInput": false,
+  "engineConnected": false,
+  "predictionConnected": false,
+  "providerPredictionEndpointUsed": false,
+  "rebuildRequiresLiveProvider": false,
+  "mandatoryCompletionUnchanged": true,
+  "mandatoryCompletionRemainsPct": 60,
+  "provider": "API_FOOTBALL",
+  "endpointsImplemented": [
+    "/players",
+    "/players/squads",
+    "/coachs"
+  ],
+  "paginationHandled": true,
+  "playerCanonicalRegistryComplete": false,
+  "coachCanonicalRegistryComplete": false,
+  "tacticalFeaturesBuilt": false,
+  "predictionConnectedExplicit": false,
+  "engineConnectedExplicit": false,
+  "reusedArchitecture": {
+    "pipeline": [
+      "PROVIDER",
+      "RAW POINT-IN-TIME OBSERVATION",
+      "OFFLINE NORMALIZATION",
+      "IDENTITY GATE",
+      "RESEARCH DATASET",
+      "future Public projection"
+    ],
+    "providerClient": "src/lib/football/api-football-provider.ts",
+    "providerMethodsAdded": [
+      "getPlayers",
+      "getPlayerSquad",
+      "getCoaches"
+    ],
+    "identityGate": "src/lib/football/foundation/identity-gate.ts evaluateFootballIdentityGate",
+    "teamResolve": "src/lib/football/core/team-catalog.ts resolveProviderTeam",
+    "playerIdentity": "src/lib/football/pregame-player-xi-foundation-v1/player-identity.ts resolveFootballPlayerIdentity",
+    "temporal": "src/lib/football/pregame-player-xi-foundation-v1/temporal.ts classifyFootballObservationPhase",
+    "rawVsNormalizedSeparation": true,
+    "secondParallelFootballArchitecture": false
+  },
+  "cachePolicy": {
+    "playersSeasonStatsTtl": "PLAYERS_STATS_CACHE_TTL_MS = 1h (medium-lived, same class as team statistics)",
+    "squadTtl": "SQUAD_CACHE_TTL_MS = 1h (medium-lived)",
+    "coachTtl": "COACH_CACHE_TTL_MS = 1h (medium-lived)",
+    "noPublicPageLiveRefetch": true
+  },
+  "rawObservationContract": {
+    "type": "FootballRawPlayerContextObservationV1",
+    "conceptualRoot": "data/research/football/raw/player-context-v1/",
+    "subdirectories": [
+      "players/",
+      "squads/",
+      "coaches/"
+    ],
+    "overwriteForbidden": true,
+    "syntheticFixturesLocation": "src/lib/football/player-context-foundation-v1/test-fixtures.ts",
+    "syntheticTestDataIsNotResearchEvidence": true,
+    "testsDoNotWriteLiveRawFiles": true
+  },
+  "playerIdentityPolicy": {
+    "providerPlayerIdIsNotYangCanonical": true,
+    "canonicalPlayerId": null,
+    "fuzzyNameMatch": false,
+    "v1StatusesUsed": [
+      "PROVIDER_ID_ONLY",
+      "PLAYER_IDENTITY_REVIEW_REQUIRED"
+    ],
+    "matchedReservedUntilRegistryExists": true
+  },
+  "coachIdentityPolicy": {
+    "providerCoachIdIsNotYangCanonical": true,
+    "canonicalCoachId": null,
+    "fuzzyNameMatch": false,
+    "tacticalScoreProduced": false
+  },
+  "squadSemantics": {
+    "rosterSemantics": "CURRENT_AT_OBSERVED_AT",
+    "impliesStarter": false,
+    "impliesAvailability": false,
+    "impliesExpectedXi": false,
+    "historicalAsOf": false
+  },
+  "temporalGate": {
+    "observedAtRequired": true,
+    "pregameRequiresObservedAtBeforeKickoff": true,
+    "postKickoffNotRelabeledAsPregame": true,
+    "doNotAttachToSealed20260826Pregame": true,
+    "noDateNowInsideNormalizers": true
+  },
+  "identityGateSafeguards": {
+    "blockedProviderTeamIdsStayFailClosed": true,
+    "playerOrCoachDataCannotRepairBlockedTeamIdentity": true,
+    "unresolvedCanonicalAttachment": false,
+    "unresolvedOperatorGameAttachment": false
+  },
+  "replayNetworkSeparation": {
+    "liveProvider": "collect raw observation only (not invoked this mission)",
+    "normalizeReplay": "replayNormalizeFootballPlayers / replayNormalizeFootballSquad / replayNormalizeFootballCoaches",
+    "rebuildRequiresLiveProvider": false,
+    "overwriteForbidden": true
+  },
+  "providerLivePolicyThisMission": {
+    "defaultLiveCalls": 0,
+    "maxAllowedSchemaSmokeCalls": 3,
+    "actualLiveCalls": 0,
+    "schemaValidationResearchOnly": false,
+    "reasonLiveCallsNotRequired": "API-Football /players /players/squads /coachs contracts are implemented against documented envelopes and synthetic fixtures."
+  },
+  "knownDataGaps": [
+    "PLAYER_CANONICAL_REGISTRY_INCOMPLETE",
+    "COACH_CANONICAL_REGISTRY_INCOMPLETE",
+    "TACTICAL_FEATURES_NOT_BUILT",
+    "PLAYER_IMPACT_MODEL_NOT_BUILT",
+    "HISTORICAL_ASOF_COVERAGE_NOT_AVAILABLE"
+  ],
+  "prohibitedThisMission": [
+    "API-Football /predictions",
+    "provider predicted winner / win probability / advice",
+    "coach strength score",
+    "tactical score",
+    "formation score",
+    "manager rating",
+    "Engine admission",
+    "Prediction connection",
+    "public /analysis/[gameId] wiring",
+    "retroactive attach to sealed 2026-08-26 Pregame"
+  ],
+  "futureResearchCandidates": [
+    "PUBLIC ANALYSIS v0.2 PLAYER / SQUAD / COACH DATA WIRING after owner review/seal",
+    "Canonical player registry without fuzzy name matching",
+    "Canonical coach registry without fuzzy name matching",
+    "Pregame-safe as-of player stats captured before kickoff",
+    "Tactical features from formation usage / lineup continuity / substitution patterns after sufficient evidence"
+  ],
+  "sealed20260826ArtifactsUntouched": true,
+  "moduleRoot": "src/lib/football/player-context-foundation-v1/"
+}

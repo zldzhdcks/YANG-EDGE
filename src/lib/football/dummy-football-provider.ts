@@ -1,11 +1,22 @@
 import { emptyFootballUsage } from "./football-provider";
 import { mapFixtureToGame, mapFixturesToGames } from "./map-fixture-to-game";
+import {
+  buildApiFootballCoachesQuery,
+  buildApiFootballPlayersQuery,
+  buildApiFootballSquadsQuery,
+} from "./player-context-foundation-v1/provider-query";
 import type {
   FootballAccountStatus,
   FootballProvider,
+  GetCoachesParams,
+  GetCoachesResult,
   GetFixturesParams,
   GetFixturesResult,
   GetInjuriesParams,
+  GetPlayerSquadParams,
+  GetPlayerSquadResult,
+  GetPlayersParams,
+  GetPlayersResult,
   GetStandingsParams,
   GetTeamStatisticsParams,
 } from "./types";
@@ -58,6 +69,48 @@ export class DummyFootballProvider implements FootballProvider {
   async getLineups(params: { fixtureId: number }) {
     void params;
     return { raw: [], usage: emptyFootballUsage(), cached: false };
+  }
+
+  async getPlayers(params: GetPlayersParams): Promise<GetPlayersResult> {
+    const query = buildApiFootballPlayersQuery(params);
+    return {
+      raw: [],
+      pages: [],
+      paging: {
+        current: 1,
+        total: 1,
+        pagesFetched: 0,
+        truncated: false,
+        complete: true,
+        pagingPresent: true,
+        maxPages: params.maxPages ?? 8,
+        reason: "DUMMY_PROVIDER_NO_FETCH",
+      },
+      query,
+      endpoint: "/players",
+      usage: emptyFootballUsage(),
+      cached: false,
+    };
+  }
+
+  async getPlayerSquad(params: GetPlayerSquadParams): Promise<GetPlayerSquadResult> {
+    return {
+      raw: [],
+      query: buildApiFootballSquadsQuery(params),
+      endpoint: "/players/squads",
+      usage: emptyFootballUsage(),
+      cached: false,
+    };
+  }
+
+  async getCoaches(params: GetCoachesParams): Promise<GetCoachesResult> {
+    return {
+      raw: [],
+      query: buildApiFootballCoachesQuery(params),
+      endpoint: "/coachs",
+      usage: emptyFootballUsage(),
+      cached: false,
+    };
   }
 
   async getStatus(): Promise<{

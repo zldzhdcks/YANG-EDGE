@@ -1,6 +1,9 @@
 import {
+  COACH_CACHE_TTL_MS,
   FIXTURES_CACHE_TTL_MS,
+  PLAYERS_STATS_CACHE_TTL_MS,
   SHORT_CACHE_TTL_MS,
+  SQUAD_CACHE_TTL_MS,
   STANDINGS_CACHE_TTL_MS,
   TEAM_STATS_CACHE_TTL_MS,
   footballFixturesCacheKey,
@@ -13,14 +16,34 @@ import {
   parseFootballUsageHeaders,
 } from "./football-provider";
 import { mapFixtureToGame, mapFixturesToGames } from "./map-fixture-to-game";
+import {
+  clampPlayersMaxPages,
+  parseApiFootballPaging,
+  planPlayerPagination,
+} from "./player-context-foundation-v1/pagination";
+import {
+  API_FOOTBALL_COACHES_ENDPOINT,
+  API_FOOTBALL_PLAYERS_ENDPOINT,
+  API_FOOTBALL_SQUADS_ENDPOINT,
+  assertNotPredictionsEndpoint,
+  buildApiFootballCoachesQuery,
+  buildApiFootballPlayersQuery,
+  buildApiFootballSquadsQuery,
+} from "./player-context-foundation-v1/provider-query";
 import type {
   FootballAccountStatus,
   FootballProvider,
   FootballUsageMeta,
   FixtureRaw,
+  GetCoachesParams,
+  GetCoachesResult,
   GetFixturesParams,
   GetFixturesResult,
   GetInjuriesParams,
+  GetPlayerSquadParams,
+  GetPlayerSquadResult,
+  GetPlayersParams,
+  GetPlayersResult,
   GetStandingsParams,
   GetTeamStatisticsParams,
 } from "./types";
@@ -302,10 +325,210 @@ export class ApiFootballProvider implements FootballProvider {
     return result;
   }
 
+  async getPlayers(params: GetPlayersParams): Promise<GetPlayersResult> {
+    const maxPages = clampPlayersMaxPages(params.maxPages);
+    const query = buildApiFootballPlayersQuery({
+      teamId: params.teamId,
+      leagueId: params.leagueId,
+      playerId: params.playerId,
+      season: params.season,
+      page: params.page,
+    });
+
+    if (params.page != null) {
+      const page = await this.fetchPlayersEnvelope(query);
+      const parsed = parseApiFootballPaging(page.json);
+      const response = Array.isArray(page.json.response) ? page.json.response : [];
+      const current = parsed.current ?? params.page;
+      const total = parsed.total ?? 1;
+      return {
+        raw: response,
+        pages: [
+          {
+            page: params.page,
+            raw: response,
+            paging: { current, total },
+          },
+        ],
+        paging: {
+          current,
+          total,
+          pagesFetched: 1,
+          truncated: parsed.pagingPresent ? total > 1 : true,
+          complete: parsed.pagingPresent && total === 1,
+          pagingPresent: parsed.pagingPresent,
+          maxPages,
+          reason: parsed.pagingPresent
+            ? total > 1
+              ? "SINGLE_PAGE_REQUEST"
+              : null
+            : "PAGING_METADATA_MISSING",
+        },
+        query,
+        endpoint: API_FOOTBALL_PLAYERS_ENDPOINT,
+        usage: page.usage,
+        cached: page.cached,
+      };
+    }
+
+    const assembledKey = [
+      "players-all",
+      query.team ?? "",
+      query.league ?? "",
+      query.id ?? "",
+      query.season ?? "",
+      "maxPages",
+      maxPages,
+    ].join("|");
+    const cached = getFootballCache<GetPlayersResult>(assembledKey);
+    if (cached) return { ...cached, cached: true };
+
+    const page1Query = { ...query, page: "1" };
+    const page1 = await this.fetchPlayersEnvelope(page1Query);
+    const parsed = parseApiFootballPaging(page1.json);
+    const plan = planPlayerPagination({
+      current: parsed.current,
+      total: parsed.total,
+      pagingPresent: parsed.pagingPresent,
+      maxPages,
+    });
+    const pages: GetPlayersResult["pages"] = [
+      {
+        page: 1,
+        raw: Array.isArray(page1.json.response) ? page1.json.response : [],
+        paging: {
+          current: parsed.current ?? 1,
+          total: parsed.total ?? 1,
+        },
+      },
+    ];
+    let usage = page1.usage;
+
+    for (const pageNum of plan.pagesToFetch) {
+      if (pageNum === 1) continue;
+      const pageN = await this.fetchPlayersEnvelope({
+        ...query,
+        page: String(pageNum),
+      });
+      const pagePaging = parseApiFootballPaging(pageN.json);
+      pages.push({
+        page: pageNum,
+        raw: Array.isArray(pageN.json.response) ? pageN.json.response : [],
+        paging: {
+          current: pagePaging.current ?? pageNum,
+          total: pagePaging.total ?? plan.totalPages,
+        },
+      });
+      usage = pageN.usage;
+    }
+
+    const raw = pages.flatMap((p) => (Array.isArray(p.raw) ? p.raw : []));
+    const result: GetPlayersResult = {
+      raw,
+      pages,
+      paging: {
+        current: pages[pages.length - 1]?.paging.current ?? 1,
+        total: plan.totalPages,
+        pagesFetched: pages.length,
+        truncated: plan.truncated,
+        complete: plan.complete && pages.length === plan.pagesToFetch.length,
+        pagingPresent: plan.pagingPresent,
+        maxPages,
+        reason: plan.reason,
+      },
+      query,
+      endpoint: API_FOOTBALL_PLAYERS_ENDPOINT,
+      usage,
+      cached: false,
+    };
+    setFootballCache(assembledKey, result, PLAYERS_STATS_CACHE_TTL_MS);
+    logUsageSafe("players", usage, raw.length);
+    return result;
+  }
+
+  async getPlayerSquad(params: GetPlayerSquadParams): Promise<GetPlayerSquadResult> {
+    const query = buildApiFootballSquadsQuery(params);
+    const cacheKey = `squads|${query.team}`;
+    const cached = getFootballCache<GetPlayerSquadResult>(cacheKey);
+    if (cached) return { ...cached, cached: true };
+
+    const { json, usage } = await this.getJson<ApiFootballEnvelope<unknown>>(
+      API_FOOTBALL_SQUADS_ENDPOINT,
+      query,
+    );
+    assertNoApiErrors(json.errors, API_FOOTBALL_SQUADS_ENDPOINT);
+    const result: GetPlayerSquadResult = {
+      raw: json.response ?? [],
+      query,
+      endpoint: API_FOOTBALL_SQUADS_ENDPOINT,
+      usage,
+      cached: false,
+    };
+    setFootballCache(cacheKey, result, SQUAD_CACHE_TTL_MS);
+    logUsageSafe("squads", usage, Array.isArray(result.raw) ? result.raw.length : 0);
+    return result;
+  }
+
+  async getCoaches(params: GetCoachesParams): Promise<GetCoachesResult> {
+    const query = buildApiFootballCoachesQuery(params);
+    const cacheKey = `coachs|${query.team}`;
+    const cached = getFootballCache<GetCoachesResult>(cacheKey);
+    if (cached) return { ...cached, cached: true };
+
+    const { json, usage } = await this.getJson<ApiFootballEnvelope<unknown>>(
+      API_FOOTBALL_COACHES_ENDPOINT,
+      query,
+    );
+    assertNoApiErrors(json.errors, API_FOOTBALL_COACHES_ENDPOINT);
+    const result: GetCoachesResult = {
+      raw: json.response ?? [],
+      query,
+      endpoint: API_FOOTBALL_COACHES_ENDPOINT,
+      usage,
+      cached: false,
+    };
+    setFootballCache(cacheKey, result, COACH_CACHE_TTL_MS);
+    logUsageSafe("coachs", usage, Array.isArray(result.raw) ? result.raw.length : 0);
+    return result;
+  }
+
+  private async fetchPlayersEnvelope(query: Record<string, string>): Promise<{
+    json: ApiFootballEnvelope<unknown[]>;
+    usage: FootballUsageMeta;
+    cached: boolean;
+  }> {
+    const page = query.page ?? "1";
+    const cacheKey = [
+      "players",
+      query.team ?? "",
+      query.league ?? "",
+      query.id ?? "",
+      query.season ?? "",
+      "page",
+      page,
+    ].join("|");
+    const cached = getFootballCache<{
+      json: ApiFootballEnvelope<unknown[]>;
+      usage: FootballUsageMeta;
+      cached: boolean;
+    }>(cacheKey);
+    if (cached) return { ...cached, cached: true };
+
+    const { json, usage } = await this.getJson<ApiFootballEnvelope<unknown[]>>(
+      API_FOOTBALL_PLAYERS_ENDPOINT,
+      query,
+    );
+    assertNoApiErrors(json.errors, API_FOOTBALL_PLAYERS_ENDPOINT);
+    const result = { json, usage, cached: false as const };
+    setFootballCache(cacheKey, result, PLAYERS_STATS_CACHE_TTL_MS);
+    return result;
+  }
+
   private async getJson<T>(
     path: string,
     query: Record<string, string>,
   ): Promise<{ json: T; usage: FootballUsageMeta }> {
+    assertNotPredictionsEndpoint(path);
     if (!this.apiKey) {
       throw new FootballApiError(
         "FOOTBALL_API_KEY is not configured",

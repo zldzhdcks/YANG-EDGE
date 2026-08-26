@@ -18,6 +18,12 @@ export const STANDINGS_CACHE_TTL_MS = 60 * 60 * 1000;
 export const TEAM_STATS_CACHE_TTL_MS = 60 * 60 * 1000;
 /** injuries / lineups — TODO: 짧은 TTL (예: 5분) 적용 예정 */
 export const SHORT_CACHE_TTL_MS = 5 * 60 * 1000;
+/** player season stats — medium-lived, same class as team statistics */
+export const PLAYERS_STATS_CACHE_TTL_MS = TEAM_STATS_CACHE_TTL_MS;
+/** current squad snapshot — medium-lived */
+export const SQUAD_CACHE_TTL_MS = TEAM_STATS_CACHE_TTL_MS;
+/** coach profile/career — medium-lived */
+export const COACH_CACHE_TTL_MS = TEAM_STATS_CACHE_TTL_MS;
 
 export function getFootballCache<T>(key: string): T | null {
   const entry = store.get(key);

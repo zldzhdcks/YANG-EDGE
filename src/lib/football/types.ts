@@ -37,6 +37,67 @@ export type GetInjuriesParams = {
   teamId?: number;
 };
 
+/** API-Football GET /players. Primary P1 query: team + season. */
+export type GetPlayersParams = {
+  teamId?: number;
+  leagueId?: number;
+  playerId?: number;
+  season: number;
+  /** If set, fetch that single page only. */
+  page?: number;
+  /** Fail-closed pagination cap. Provider clamps to a hard maximum. */
+  maxPages?: number;
+};
+
+export type GetPlayerSquadParams = {
+  teamId: number;
+};
+
+export type GetCoachesParams = {
+  teamId: number;
+};
+
+export type FootballProviderPagingMeta = {
+  current: number;
+  total: number;
+  pagesFetched: number;
+  truncated: boolean;
+  complete: boolean;
+  pagingPresent: boolean;
+  maxPages: number;
+  reason: string | null;
+};
+
+export type GetPlayersResult = {
+  raw: unknown[];
+  pages: Array<{
+    page: number;
+    raw: unknown;
+    paging: { current: number; total: number };
+  }>;
+  paging: FootballProviderPagingMeta;
+  query: Record<string, string>;
+  endpoint: "/players";
+  usage: FootballUsageMeta;
+  cached: boolean;
+};
+
+export type GetPlayerSquadResult = {
+  raw: unknown;
+  query: Record<string, string>;
+  endpoint: "/players/squads";
+  usage: FootballUsageMeta;
+  cached: boolean;
+};
+
+export type GetCoachesResult = {
+  raw: unknown;
+  query: Record<string, string>;
+  endpoint: "/coachs";
+  usage: FootballUsageMeta;
+  cached: boolean;
+};
+
 /** API-Football 사용량 메타 (키 값 포함 금지) */
 export type FootballUsageMeta = {
   requestsRemaining: number | null;
@@ -155,6 +216,12 @@ export type FootballProvider = {
     usage: FootballUsageMeta;
     cached: boolean;
   }>;
+
+  getPlayers(params: GetPlayersParams): Promise<GetPlayersResult>;
+
+  getPlayerSquad(params: GetPlayerSquadParams): Promise<GetPlayerSquadResult>;
+
+  getCoaches(params: GetCoachesParams): Promise<GetCoachesResult>;
 
   /** /status — 계정·일일 한도 확인 (가능 시) */
   getStatus?(): Promise<{
