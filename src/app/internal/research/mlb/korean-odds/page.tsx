@@ -45,7 +45,7 @@ export default async function MlbKoreanMarketOddsPage(props: {
             href={`/internal/research?date=${encodeURIComponent(dateKst)}`}
             className="text-sky-400 hover:underline"
           >
-            ← Research Lab
+            ← 연구실
           </a>
           <a
             href={`/internal/research/mlb?date=${encodeURIComponent(dateKst)}`}

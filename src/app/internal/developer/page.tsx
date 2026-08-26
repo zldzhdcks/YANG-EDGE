@@ -9,7 +9,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Developer Console | YANG EDGE OS",
+  title: "개발자 진단 | YANG EDGE OS",
   robots: { index: false, follow: false },
 };
 
@@ -24,8 +24,8 @@ export default async function DeveloperConsolePage(props: {
     <OsShell
       active="developer"
       dateKst={dateKst}
-      title="Developer Console"
-      subtitle="개발자 전용 · Hash / Artifact / Runtime / Logs"
+      title="개발자 진단"
+      subtitle="Hash / Artifact / Runtime / Logs · 개발 전용 상세"
     >
       <DeveloperConsoleView data={data} dateKst={dateKst} />
     </OsShell>

@@ -10,7 +10,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Research Lab | YANG EDGE OS",
+  title: "연구실 | YANG EDGE OS",
   robots: { index: false, follow: false },
 };
 
@@ -39,8 +39,8 @@ export default async function ResearchLabPage(props: {
     <OsShell
       active="research"
       dateKst={dateKst}
-      title="Research Lab"
-      subtitle="연구 전용 · Pipeline · Coverage · Dataset · Review · Prediction · Analysis"
+      title="연구실"
+      subtitle="연구 전용 · 파이프라인 · 커버리지 · 데이터셋 · 복기 · 예측 · 분석"
     >
       {data.waitingStates.length > 0 && data.errors.length === 0 ? (
         <div className="rounded-lg border border-amber-800/60 bg-amber-950/20 p-4">

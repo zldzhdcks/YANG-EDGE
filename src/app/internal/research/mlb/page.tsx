@@ -41,7 +41,7 @@ export default async function MlbResearchUxPage(props: {
           href={`/internal/research?date=${encodeURIComponent(dateKst)}`}
           className="text-sky-400 hover:underline"
         >
-          ← Research Lab
+          ← 연구실
         </a>
         <span className="text-zinc-600">·</span>
         <a

@@ -21,7 +21,7 @@ export default function SettingsView({
 
       <section className="rounded-xl border border-zinc-800 bg-zinc-900/50 px-5 py-4">
         <h2 className="mb-2 text-lg font-semibold text-white">날짜</h2>
-        <p className="text-sm text-zinc-300">현재 보고 있는 날짜: {dateKst} (KST)</p>
+        <p className="text-sm text-zinc-300">현재 보고 있는 날짜: {dateKst} (한국시간)</p>
         <p className="mt-1 text-xs text-zinc-500">
           URL의 <code className="text-zinc-400">?date=YYYY-MM-DD</code> 로 변경합니다.
         </p>

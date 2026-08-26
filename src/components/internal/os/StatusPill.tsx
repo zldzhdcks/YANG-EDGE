@@ -1,4 +1,5 @@
 import type { OsLevel } from "@/lib/internal/yang-edge-os-presenter";
+import { koreanStatusLabel } from "@/lib/internal/korean-status-display";
 
 const LEVEL_CLASS: Record<OsLevel, string> = {
   READY: "border-emerald-700 bg-emerald-950/40 text-emerald-300",
@@ -14,11 +15,15 @@ export function StatusPill({
   level: OsLevel;
   label: string;
 }) {
+  const display = koreanStatusLabel(label);
+  const showRaw = display !== label;
+
   return (
     <span
-      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold tracking-wide ${LEVEL_CLASS[level]}`}
+      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${LEVEL_CLASS[level]}`}
+      title={showRaw ? label : undefined}
     >
-      {label}
+      {display}
     </span>
   );
 }

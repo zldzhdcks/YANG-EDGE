@@ -51,7 +51,7 @@ export default async function NpbStarterIntakePage(props: {
           href={`/internal/research?date=${encodeURIComponent(dateKst)}`}
           className="mt-3 inline-block text-xs text-sky-400 hover:underline"
         >
-          ← Research Lab
+          ← 연구실
         </a>
       </header>
 

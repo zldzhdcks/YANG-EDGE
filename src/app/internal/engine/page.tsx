@@ -9,7 +9,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Engine Center | YANG EDGE OS",
+  title: "엔진 상태 | YANG EDGE OS",
   robots: { index: false, follow: false },
 };
 
@@ -24,8 +24,8 @@ export default async function EngineCenterPage(props: {
     <OsShell
       active="engine"
       dateKst={dateKst}
-      title="Engine Center"
-      subtitle="엔진 변수 상태 · Weight 수정 없음"
+      title="엔진 상태"
+      subtitle="엔진 변수 상태 · 가중치 수정 없음"
     >
       <EngineCenterView os={os} />
     </OsShell>

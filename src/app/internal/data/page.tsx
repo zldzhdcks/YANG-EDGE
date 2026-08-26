@@ -9,7 +9,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Data Center | YANG EDGE OS",
+  title: "데이터 현황 | YANG EDGE OS",
   robots: { index: false, follow: false },
 };
 
@@ -24,7 +24,7 @@ export default async function DataCenterPage(props: {
     <OsShell
       active="data"
       dateKst={dateKst}
-      title="Data Center"
+      title="데이터 현황"
       subtitle="종목별 데이터 누적 현황"
     >
       <DataCenterView os={os} />

@@ -9,7 +9,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Mission Control | YANG EDGE OS",
+  title: "작업 관리 | YANG EDGE OS",
   robots: { index: false, follow: false },
 };
 
@@ -24,7 +24,7 @@ export default async function MissionPage(props: {
     <OsShell
       active="mission"
       dateKst={dateKst}
-      title="Mission Control"
+      title="작업 관리"
       subtitle="오늘 해야 하는 작업만 보여줍니다"
     >
       <MissionControlView os={os} memory={memory} />

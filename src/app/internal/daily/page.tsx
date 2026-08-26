@@ -12,7 +12,7 @@ import { loadGoodPickLearningTrackerV1 } from "@/lib/mlb/good-pick-learning-trac
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Daily Picks | YANG EDGE OS",
+  title: "오늘 운영 | YANG EDGE OS",
   robots: { index: false, follow: false },
 };
 
@@ -38,24 +38,24 @@ export default async function DailyPicksPage(props: {
 
   return (
     <OsShell
-      active="research"
+      active="daily"
       dateKst={dateKst}
-      title="Daily Picks"
-      subtitle="아침 30초 브리핑 · Prediction 읽기 전용 · Engine 변경 없음"
+      title="오늘 운영"
+      subtitle="아침 브리핑 · 예측 읽기 전용 · 엔진 변경 없음"
     >
       <div className="mb-4 flex flex-wrap gap-3 text-sm">
         <a
           href={`/internal/research?date=${encodeURIComponent(dateKst)}`}
           className="text-sky-400 hover:underline"
         >
-          ← Research Lab
+          ← 연구실
         </a>
         <span className="text-zinc-600">·</span>
         <a
           href={`/internal/research/mlb?date=${encodeURIComponent(dateKst)}`}
           className="text-sky-400 hover:underline"
         >
-          MLB Research UX
+          MLB 연구 화면
         </a>
         <span className="text-zinc-600">·</span>
         <a
@@ -69,7 +69,7 @@ export default async function DailyPicksPage(props: {
           href={`/internal/feedback/mlb/tracker?date=${encodeURIComponent(dateKst)}`}
           className="text-sky-400 hover:underline"
         >
-          Learning Tracker
+          학습 기록
         </a>
       </div>
       <div className="mb-6 grid gap-3 lg:grid-cols-2">

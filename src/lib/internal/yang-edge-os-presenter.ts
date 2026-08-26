@@ -10,6 +10,7 @@ import { buildFootballIdentityOperationSlice } from "@/lib/football/foundation";
 import { buildDefaultFootballOddsView } from "@/lib/football/odds-foundation-v0";
 import { buildDefaultFootballResultView } from "@/lib/football/result-foundation-v0";
 import { buildDefaultFootballReviewScorecardView } from "@/lib/football/review-scorecard-foundation-v0";
+import { koreanStatusLabel } from "@/lib/internal/korean-status-display";
 import type { PredictionContinuityAssessment } from "@/lib/mlb/prediction-continuity-guard-v1";
 import type {
   MlbDailyOpsDayAssessment,
@@ -553,7 +554,7 @@ export function buildYangEdgeOsPresentation(
   const cto = {
     sampleGrowth:
       rs.gradedGames != null
-        ? `오늘 채점 표본 ${rs.gradedGames}경기 (누적 집계는 Data Center에서 확인)`
+        ? `오늘 채점 표본 ${rs.gradedGames}경기 (누적 집계는 데이터 현황에서 확인)`
         : "오늘 채점 표본 없음 — 주간 누적은 데이터가 쌓이면 표시됩니다.",
     accuracy:
       rs.accuracy != null
@@ -571,11 +572,11 @@ export function buildYangEdgeOsPresentation(
       rs.hits != null && rs.hits > 0
         ? [`적중 ${rs.hits}경기 관찰`, "시장·선발 정렬 패턴은 Review Detail에서 확인"]
         : ["아직 성공 패턴 요약 없음"],
-    footballProgress: `Review ${footballReview.slice.reviewStage} · Scorecard ${footballReview.slice.scorecardStage} · Prediction NONE`,
+    footballProgress: `복기 ${koreanStatusLabel(footballReview.slice.reviewStage)} · 스코어카드 ${koreanStatusLabel(footballReview.slice.scorecardStage)} · 예측 ${koreanStatusLabel(footballReview.slice.prediction)}`,
     nextWeekGoals: [
       "매일 경기 전 Prediction Freeze",
-      "대표 Dashboard 30초 루틴 정착",
-      "Developer Console은 개발자만 사용",
+      "대시보드 5초 루틴 정착",
+      "개발자 진단은 개발자만 사용",
     ],
   };
 
@@ -732,14 +733,14 @@ export function buildYangEdgeOsPresentation(
   const deprecated: OsDeprecatedItem[] = [
     {
       id: "operator-home-tab",
-      label: "Research Lab › 운영 홈 탭",
-      reason: "대표는 Dashboard / Mission Control을 사용",
+      label: "연구실 › 운영 홈 탭",
+      reason: "대표는 대시보드 / 작업 관리를 사용",
       movedTo: "/internal/dashboard",
     },
     {
       id: "system-detail-tab",
-      label: "Research Lab › 시스템 상세 탭",
-      reason: "개발자 전용 정보를 Developer Console로 이동",
+      label: "연구실 › 시스템 상세 탭",
+      reason: "개발자 전용 정보를 개발자 진단으로 이동",
       movedTo: "/internal/developer",
     },
     {
@@ -783,7 +784,7 @@ export function buildYangEdgeOsPresentation(
     engines,
     researchFocus,
     developerNotes: [
-      "Hash / Artifact / Provider / Runtime / Logs / Replay / Raw / Cache는 Developer Console에서만 기본 노출",
+      "Hash / Artifact / Provider / Runtime / Logs / Replay / Raw / Cache는 개발자 진단에서만 기본 노출",
       "대표 모드에서는 고급 정보 토글로만 표시",
     ],
     deprecated,

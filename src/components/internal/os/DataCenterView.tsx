@@ -23,15 +23,15 @@ export default function DataCenterView({ os }: { os: YangEdgeOsPresentation }) {
                 <dd className="text-zinc-200">{s.games ?? "—"}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500">Dataset</dt>
+                <dt className="text-zinc-500">데이터셋</dt>
                 <dd className="mt-0.5 text-zinc-300">{s.dataset}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500">Prediction</dt>
+                <dt className="text-zinc-500">예측</dt>
                 <dd className="mt-0.5 text-zinc-300">{s.prediction}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500">Review</dt>
+                <dt className="text-zinc-500">복기</dt>
                 <dd className="mt-0.5 text-zinc-300">{s.review}</dd>
               </div>
               <div>

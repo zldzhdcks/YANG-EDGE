@@ -58,19 +58,19 @@ export default function ReleaseStatusCard({
   return (
     <section
       className={`rounded-xl border px-5 py-4 ${levelSurface(overallLevel)}`}
-      aria-label="Release Status"
+      aria-label="제품 준비 현황"
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
-            Release Status
+          <p className="text-xs font-medium tracking-wide text-zinc-500">
+            제품 준비 현황
           </p>
           <h2 className="mt-1 text-lg font-semibold text-white">
             YANG EDGE {release.currentVersion}
           </h2>
           <p className="mt-1 text-xs text-zinc-500">
-            SoT (읽기 전용): {release.sourcePath}
-            {release.readOnly ? " · read-only" : ""}
+            읽기 전용 기준 문서: {release.sourcePath}
+            {release.readOnly ? " · 수정 없음" : ""}
           </p>
         </div>
         <StatusPill
@@ -87,19 +87,19 @@ export default function ReleaseStatusCard({
 
       <dl className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div>
-          <dt className="text-xs text-zinc-500">Current Version</dt>
+          <dt className="text-xs text-zinc-500">현재 버전</dt>
           <dd className="mt-0.5 text-base font-semibold text-zinc-100">
             {release.currentVersion}
           </dd>
         </div>
         <div>
-          <dt className="text-xs text-zinc-500">Target Release</dt>
+          <dt className="text-xs text-zinc-500">목표 단계</dt>
           <dd className="mt-0.5 text-base font-semibold text-zinc-100">
             {release.targetRelease}
           </dd>
         </div>
         <div>
-          <dt className="text-xs text-zinc-500">Overall Status</dt>
+          <dt className="text-xs text-zinc-500">전체 상태</dt>
           <dd className="mt-0.5 text-base font-semibold text-zinc-100">
             {release.overallStatus}
           </dd>
@@ -108,7 +108,7 @@ export default function ReleaseStatusCard({
 
       <div className="mt-4">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h3 className="text-sm font-semibold text-zinc-200">Overall Progress</h3>
+          <h3 className="text-sm font-semibold text-zinc-200">출시 준비도</h3>
           <span className="text-2xl font-bold tabular-nums text-white">
             {release.overallProgressPercent}%
           </span>
@@ -121,13 +121,13 @@ export default function ReleaseStatusCard({
         </p>
         <p className="mt-1 text-xs text-zinc-500">
           Private Beta 조건 {release.privateBetaMet}/{release.privateBetaTotal}{" "}
-          충족 (체크리스트 기준)
+          충족 (출시 체크리스트 · 오늘 운영 완료율 아님)
         </p>
       </div>
 
       <div className="mt-5 grid gap-4 lg:grid-cols-2">
         <div>
-          <h3 className="text-sm font-semibold text-zinc-200">Current Focus</h3>
+          <h3 className="text-sm font-semibold text-zinc-200">현재 우선 작업</h3>
           <p className="mt-0.5 text-xs text-zinc-500">이번 주 집중 · 문서 다음 액션</p>
           {release.currentFocus.length === 0 ? (
             <p className="mt-2 text-sm text-zinc-500">표시할 Focus 없음</p>
@@ -146,7 +146,7 @@ export default function ReleaseStatusCard({
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold text-zinc-200">Critical Issues</h3>
+          <h3 className="text-sm font-semibold text-zinc-200">주요 준비 과제</h3>
           <p className="mt-0.5 text-xs text-zinc-500">체크리스트 Critical Issues</p>
           {criticals.length === 0 ? (
             <p className="mt-2 text-sm text-zinc-500">표시할 Critical 없음</p>
@@ -171,7 +171,7 @@ export default function ReleaseStatusCard({
       </div>
 
       <div className="mt-5">
-        <h3 className="text-sm font-semibold text-zinc-200">Release Sections</h3>
+        <h3 className="text-sm font-semibold text-zinc-200">준비 영역</h3>
         <div className="mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {release.sections.map((s) => (
             <div

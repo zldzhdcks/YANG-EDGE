@@ -27,7 +27,7 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
             <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-400/90">
               YANG EDGE
             </p>
-            <h2 className="text-xl font-bold text-white">Daily Picks</h2>
+            <h2 className="text-xl font-bold text-white">오늘 추천</h2>
             <p className="mt-1 text-sm text-zinc-400">
               오늘 아침 추천 · Strong / Good / PASS · 30초 브리핑
             </p>
@@ -36,7 +36,7 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
             href={`/internal/daily?date=${encodeURIComponent(dateKst)}`}
             className="rounded-lg bg-amber-500/90 px-4 py-2 text-sm font-semibold text-zinc-950 hover:bg-amber-400"
           >
-            Daily Picks 열기 →
+            오늘 운영 보기 →
           </a>
         </div>
       </section>
@@ -47,7 +47,7 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
             <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-sky-400/90">
               NPB · MANUAL VERIFIED
             </p>
-            <h2 className="text-lg font-bold text-white">NPB Starter Input</h2>
+            <h2 className="text-lg font-bold text-white">NPB 선발 입력</h2>
             <p className="mt-1 text-sm text-zinc-400">
               예고 선발 수동 확인 · Provider처럼 보이지 않음 · 원문 보존
             </p>
@@ -56,7 +56,7 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
             href={`/internal/research/npb/starter?date=${encodeURIComponent(dateKst)}`}
             className="rounded-lg border border-sky-700 bg-sky-900/40 px-4 py-2 text-sm font-semibold text-sky-100 hover:bg-sky-800/50"
           >
-            Starter 입력 →
+            선발 입력 →
           </a>
         </div>
       </section>
@@ -67,7 +67,7 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
             <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-violet-300/90">
               NPB · MONEYLINE · MANUAL VERIFIED
             </p>
-            <h2 className="text-lg font-bold text-white">NPB Market Odds Input</h2>
+            <h2 className="text-lg font-bold text-white">NPB 시장 배당 입력</h2>
             <p className="mt-1 text-sm text-zinc-400">
               승패(Moneyline)만 · Provider Odds와 별도 보존 · Market ≠ Model
             </p>
@@ -76,7 +76,7 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
             href={`/internal/research/npb/odds?date=${encodeURIComponent(dateKst)}`}
             className="rounded-lg border border-violet-700 bg-violet-900/40 px-4 py-2 text-sm font-semibold text-violet-100 hover:bg-violet-800/50"
           >
-            Odds 입력 →
+            배당 입력 →
           </a>
         </div>
       </section>
@@ -88,7 +88,7 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
               MLB · LINEUP REFRESH · NORMAL PATH
             </p>
             <h2 className="text-lg font-bold text-white">
-              MLB Lineup Auto Refresh
+              MLB 라인업 자동 갱신
             </h2>
             <p className="mt-1 text-sm text-zinc-400">
               Provider snapshots · per-game cutoff · 수동 붙여넣기 불필요
@@ -98,7 +98,7 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
             href={`/internal/research/mlb/lineup-refresh?date=${encodeURIComponent(dateKst)}`}
             className="rounded-lg border border-sky-700 bg-sky-900/40 px-4 py-2 text-sm font-semibold text-sky-100 hover:bg-sky-800/50"
           >
-            Lineup Refresh →
+            라인업 갱신 →
           </a>
         </div>
       </section>
@@ -110,17 +110,17 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
               MLB · EXPECTED LINEUP · FALLBACK / EXCEPTION
             </p>
             <h2 className="text-lg font-bold text-white">
-              MLB Expected Lineup Observation
+              MLB 예상 라인업 관찰
             </h2>
             <p className="mt-1 text-sm text-zinc-400">
-              예외 도구 · 확정 아님 · 정상 운영은 Lineup Auto Refresh
+              예외 도구 · 확정 아님 · 정상 운영은 라인업 자동 갱신
             </p>
           </div>
           <a
             href={`/internal/research/mlb/expected-lineup?date=${encodeURIComponent(dateKst)}`}
             className="rounded-lg border border-teal-700 bg-teal-900/40 px-4 py-2 text-sm font-semibold text-teal-100 hover:bg-teal-800/50"
           >
-            Expected Lineup →
+            예상 라인업 →
           </a>
         </div>
       </section>
@@ -132,7 +132,7 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
               MLB · KOREAN MARKET · MONEYLINE
             </p>
             <h2 className="text-lg font-bold text-white">
-              MLB Korean Market Odds
+              MLB 한국 시장 배당
             </h2>
             <p className="mt-1 text-sm text-zinc-400">
               한국 시장 기본 승패 · Provider Odds와 별도 · Prediction 불변
@@ -142,7 +142,7 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
             href={`/internal/research/mlb/korean-odds?date=${encodeURIComponent(dateKst)}`}
             className="rounded-lg border border-rose-700 bg-rose-900/40 px-4 py-2 text-sm font-semibold text-rose-100 hover:bg-rose-800/50"
           >
-            Korean Odds →
+            한국 배당 →
           </a>
         </div>
       </section>
@@ -154,15 +154,15 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
       <NpbOfficialResultPanel dateKst={dateKst} />
 
       <p className="text-sm text-zinc-500">
-        Research Lab은 연구만 담당합니다. Hash·Artifact·Runtime은{" "}
+        연구실은 연구만 담당합니다. Hash·Artifact·Runtime은{" "}
         <a href={`/internal/developer?date=${dateKst}`} className="text-sky-400 hover:underline">
-          Developer Console
+          개발자 진단
         </a>
-        로 이동했습니다.
+        에서 확인할 수 있습니다.
       </p>
 
       <section className={`rounded-xl border px-5 py-4 ${levelSurface(os.overallLevel)}`}>
-        <h2 className="mb-2 text-lg font-semibold text-white">Prediction</h2>
+        <h2 className="mb-2 text-lg font-semibold text-white">예측</h2>
         <p className="text-sm text-zinc-300">{os.researchFocus.predictionNote}</p>
         <p className="mt-2 text-xs text-zinc-500">
           YES/NO는 운영 판단용 요약이며, 공식 성적에 자동 반영하지 않습니다.
@@ -170,7 +170,7 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
       </section>
 
       <section>
-        <h2 className="mb-3 text-lg font-semibold text-white">Pipeline</h2>
+        <h2 className="mb-3 text-lg font-semibold text-white">파이프라인</h2>
         <div className="grid gap-2 sm:grid-cols-2">
           {os.researchFocus.pipelines.map((p) => (
             <div
@@ -188,12 +188,12 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
       </section>
 
       <section className="rounded-xl border border-zinc-800 bg-zinc-900/50 px-5 py-4">
-        <h2 className="mb-2 text-lg font-semibold text-white">Coverage</h2>
+        <h2 className="mb-2 text-lg font-semibold text-white">커버리지</h2>
         <p className="text-sm text-zinc-300">{os.researchFocus.coverageNote}</p>
       </section>
 
       <section className="rounded-xl border border-zinc-800 bg-zinc-900/50 px-5 py-4">
-        <h2 className="mb-2 text-lg font-semibold text-white">Dataset</h2>
+        <h2 className="mb-2 text-lg font-semibold text-white">데이터셋</h2>
         <ul className="space-y-2 text-sm text-zinc-300">
           {os.dataCenter
             .filter((s) => s.sport === "MLB" || s.sport === "KBO")
@@ -206,7 +206,7 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
       </section>
 
       <section className="rounded-xl border border-zinc-800 bg-zinc-900/50 px-5 py-4">
-        <h2 className="mb-2 text-lg font-semibold text-white">Review</h2>
+        <h2 className="mb-2 text-lg font-semibold text-white">복기</h2>
         <p className="text-sm text-zinc-300">
           대기 중 리뷰:{" "}
           {os.researchFocus.reviewPending != null
@@ -218,16 +218,16 @@ export default function ResearchLabView({ data, os, dateKst }: Props) {
             href={`/internal/research/mlb?date=${encodeURIComponent(dateKst)}`}
             className="font-medium text-sky-400 hover:underline"
           >
-            MLB Research UX →
+            MLB 연구 화면 →
           </a>
           <span className="ml-2 text-xs text-zinc-500">
-            Card viewer · Daily dashboard · AI commentary
+            카드 보기 · 일일 현황 · 해설
           </span>
         </p>
       </section>
 
       <section className="rounded-xl border border-zinc-800 bg-zinc-900/50 px-5 py-4">
-        <h2 className="mb-2 text-lg font-semibold text-white">Analysis</h2>
+        <h2 className="mb-2 text-lg font-semibold text-white">분석</h2>
         <p className="text-sm text-zinc-400">
           경기별 분석은 공개 Analysis 뷰어와 Review Detail artifact를 사용합니다.
         </p>

@@ -9,7 +9,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Settings | YANG EDGE OS",
+  title: "설정 | YANG EDGE OS",
   robots: { index: false, follow: false },
 };
 
@@ -24,7 +24,7 @@ export default async function SettingsPage(props: {
     <OsShell
       active="settings"
       dateKst={dateKst}
-      title="Settings"
+      title="설정"
       subtitle="대표 모드와 표시 설정"
     >
       <SettingsView os={os} dateKst={dateKst} />

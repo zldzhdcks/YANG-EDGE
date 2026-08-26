@@ -20,7 +20,7 @@ export default function DecisionCenterSection({
       className="space-y-4 rounded-xl border border-sky-900/40 bg-sky-950/10 px-5 py-4"
     >
       <div>
-        <h2 className="text-lg font-semibold text-white">Decision Center</h2>
+        <h2 className="text-lg font-semibold text-white">결정 기록</h2>
         <p className="mt-1 text-xs text-zinc-500">
           확인된 사실 · AI 제안 · 대표 승인 필요 · 이미 승인된 결정을 분리합니다. AI가 결정을
           내리지 않습니다.
@@ -72,7 +72,7 @@ export default function DecisionCenterSection({
         </ul>
       </div>
 
-      <AdvancedDisclosure title="고급 정보 · Decision sourceRefs">
+      <AdvancedDisclosure title="고급 정보 · 결정 출처">
         <ul className="space-y-1 font-mono text-[11px] text-zinc-500">
           {memory.recentDecisions.map((d) => (
             <li key={d.id}>

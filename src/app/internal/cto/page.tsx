@@ -9,7 +9,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "CTO Room | YANG EDGE OS",
+  title: "운영 보고 | YANG EDGE OS",
   robots: { index: false, follow: false },
 };
 
@@ -24,8 +24,8 @@ export default async function CtoPage(props: {
     <OsShell
       active="cto"
       dateKst={dateKst}
-      title="CTO Room"
-      subtitle="주간 운영 보고 · Decision Center"
+      title="운영 보고"
+      subtitle="주간 운영 보고 · 결정 기록"
     >
       <CtoRoomView os={os} memory={memory} />
     </OsShell>

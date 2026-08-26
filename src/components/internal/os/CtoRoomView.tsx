@@ -107,7 +107,7 @@ export default function CtoRoomView({
       </section>
 
       <section className="rounded-xl border border-zinc-800 bg-zinc-900/50 px-5 py-4">
-        <h2 className="mb-2 text-lg font-semibold text-white">Engine 변경 여부</h2>
+        <h2 className="mb-2 text-lg font-semibold text-white">엔진 변경 여부</h2>
         <p className="text-sm text-zinc-300">{memory.engineChangeNote}</p>
       </section>
 
@@ -120,7 +120,7 @@ export default function CtoRoomView({
             ["연구 관찰 · Accuracy", c.accuracy],
             ["연구 관찰 · Brier", c.brier],
             ["연구 관찰 · LogLoss", c.logLoss],
-            ["Football 진행률", c.footballProgress],
+            ["축구 진행", c.footballProgress],
           ] as [string, string][]
         ).map(([label, val]) => (
           <div

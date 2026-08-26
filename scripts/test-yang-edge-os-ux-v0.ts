@@ -3,30 +3,37 @@
  * Run: npx tsx scripts/test-yang-edge-os-ux-v0.ts
  */
 import assert from "node:assert/strict";
-import { YANG_EDGE_OS_NAV } from "../src/constants/yang-edge-os-nav";
+import {
+  YANG_EDGE_OS_NAV,
+  YANG_EDGE_OS_PRIMARY_NAV,
+  YANG_EDGE_OS_SECONDARY_NAV,
+} from "../src/constants/yang-edge-os-nav";
 import { plainLanguageForCode } from "../src/lib/internal/operation-memory-v0/build-operation-memory-view";
 import { naturalizePipelineMessage } from "../src/lib/internal/yang-edge-os-presenter";
 
 function main() {
-  assert.equal(YANG_EDGE_OS_NAV.length, 8);
+  assert.equal(YANG_EDGE_OS_PRIMARY_NAV.length, 4);
+  assert.equal(YANG_EDGE_OS_SECONDARY_NAV.length, 6);
+  assert.equal(YANG_EDGE_OS_NAV.length, 10);
   assert.deepEqual(
     YANG_EDGE_OS_NAV.map((n) => n.id),
     [
       "dashboard",
+      "daily",
+      "research",
+      "admin",
       "mission",
       "cto",
       "data",
-      "research",
       "engine",
       "developer",
       "settings",
     ],
   );
-  // Decision Center stays inside CTO — no 9th top-nav item
-  assert.equal(YANG_EDGE_OS_NAV.length, 8);
   assert.equal(
     YANG_EDGE_OS_NAV.map((n) => n.id as string).includes("decisions"),
     false,
+    "Decision Center stays inside 운영 보고 — no top-nav item",
   );
 
   const starter = naturalizePipelineMessage(

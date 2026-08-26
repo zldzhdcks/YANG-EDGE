@@ -50,9 +50,9 @@ export default function SystemDetail({ data, dateKst }: Props) {
       <div className="rounded border border-zinc-700 bg-zinc-900/40 px-4 py-2 text-xs text-zinc-500">
         개발자 전용 기술 화면 · 일상 운영은{" "}
         <a href={`/internal/dashboard?date=${dateKst}`} className="text-blue-400 hover:underline">
-          Dashboard
+          대시보드
         </a>
-        를 먼저 확인하세요. (이전 시스템 상세 탭은 Developer Console로 이동 · deprecated)
+        를 먼저 확인하세요. (이전 시스템 상세 탭은 개발자 진단으로 이동 · deprecated)
       </div>
 
       {/* Summary Cards */}

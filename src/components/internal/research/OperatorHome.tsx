@@ -345,20 +345,20 @@ export default function OperatorHome({ data, op, dateKst }: Props) {
       {/* C-6: legacy system detail → Developer Console */}
       <section className="rounded-lg border border-zinc-700 bg-zinc-900/40 px-4 py-3 text-center">
         <p className="mb-2 text-[10px] uppercase tracking-wide text-zinc-600">
-          deprecated · 운영 홈은 Dashboard로 이동
+          deprecated · 운영 홈은 대시보드로 이동
         </p>
         <a
           href={`/internal/developer?date=${dateKst}`}
           className="text-sm font-medium text-blue-400 hover:text-blue-300"
         >
-          Developer Console 보기 →
+          개발자 진단 보기 →
         </a>
         <span className="mx-2 text-zinc-600">·</span>
         <a
           href={`/internal/dashboard?date=${dateKst}`}
           className="text-sm font-medium text-emerald-400 hover:text-emerald-300"
         >
-          Dashboard →
+          대시보드 →
         </a>
         <p className="mt-1 text-xs text-zinc-600">
           Pipeline별 기술 상태, Review Queue, 명령어, Artifact 정보
