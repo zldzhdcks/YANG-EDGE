@@ -1,0 +1,2423 @@
+{
+  "schemaVersion": "yang-edge-pregame-input-odds-coverage-v1",
+  "dateKst": "2026-08-26",
+  "generatedAt": "2026-08-26T03:57:14.993Z",
+  "classifiedAt": "2026-08-26T03:43:18.739Z",
+  "replayedAt": "2026-08-26T03:57:14.993Z",
+  "rebuildMode": "REPLAY_STORED_OBSERVATION",
+  "sourceDailyScopeLockRel": "data/audits/2026-08-26-daily-scope-lock-v1.json",
+  "sourceDailyScopeLockHash": "97d04ce464c6e062264f20ea3de323a3e60eeac2e410c9ed6cf59c77d8a6c501",
+  "sourceB1ReconciliationRel": "data/audits/2026-08-26-schedule-identity-reconciliation-v1.json",
+  "sourceB1ReconciliationHash": "405c7f659edc21c9330d65c1bb61289776f8fd4e369b24a07101032105dd20b5",
+  "sourceManualOperatorObservationRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+  "sourceManualOperatorObservationKind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+  "sourceProviderOddsObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json",
+  "sourceProviderOddsObservationHash": "9ab79ebba53a9cfa45aba05f66b089709044c408d2b7d24db7018547e6904322",
+  "sourceProviderOddsObservationObservedAt": "2026-08-26T03:42:29.127Z",
+  "sourceProviderOddsImmutableCaptureRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-2026-08-26T03-43-18-739Z-v1.json",
+  "sourceProviderOddsImmutableCaptureHash": "fadd7d0690318514e08a2cc2d2d33be55d8b8cd3c1d314412721348d6a1a72b1",
+  "lockedScope": 26,
+  "accountedFor": 26,
+  "researchOnly": true,
+  "predictionInput": false,
+  "engineInput": false,
+  "marketBenchmarkOnly": true,
+  "engineAdmission": "PROHIBITED",
+  "prediction": "NONE",
+  "engine": "NONE",
+  "note": "B2 pregame input + market benchmark. Odds are not YANG model input. Independent probability vs market implied probability only. B2.1 rebuilds from the stored The Odds API observation; classification must not call the live provider.",
+  "temporalCounts": {
+    "PRE_GAME_OPEN": 11,
+    "MISSED_PRE_GAME_WINDOW": 1,
+    "IDENTITY_BLOCKED": 13,
+    "PROVIDER_NOT_SUPPORTED": 1
+  },
+  "oddsCounts": {
+    "ODDS_COLLECTED": 11,
+    "ODDS_PROVIDER_NO_EVENT": 0,
+    "ODDS_IDENTITY_BLOCKED": 13,
+    "ODDS_NOT_SUPPORTED": 1,
+    "MISSED_PRE_GAME_WINDOW": 1
+  },
+  "b1StatusCounts": {
+    "MATCHED": 11,
+    "IDENTITY_REVIEW_REQUIRED": 14,
+    "PROVIDER_NOT_SUPPORTED": 1,
+    "PROVIDER_NOT_FOUND": 0,
+    "FORMAT_UNSUPPORTED": 0,
+    "PASS": 0
+  },
+  "missedPreGameWindowCount": 2,
+  "leakage": {
+    "predictionCalls": 0,
+    "engineCalls": 0,
+    "resultCalls": 0,
+    "postgameCalls": 0,
+    "unauthorizedCrawling": 0,
+    "oddsUsedAsModelFeatures": false,
+    "denominatorChanged": false,
+    "gamesDropped": false,
+    "gamesInvented": false,
+    "historicalCanonicalRewrite": false,
+    "liveOddsCallsDuringReplay": 0
+  },
+  "providerUtilization": [
+    {
+      "provider": "API_BASEBALL",
+      "subscriptionRole": "schedule/identity + raw standings/form evidence",
+      "liveCallsThisMission": 0,
+      "liveCallsThisRebuild": 0,
+      "cacheHits": 4,
+      "quotaBefore": "NOT_EXPOSED",
+      "quotaAfter": "NOT_EXPOSED",
+      "dataCategoriesCollected": [
+        "fixture/game identity",
+        "scheduled start time",
+        "team identity",
+        "league standings raw",
+        "kbo recent completed form as-of"
+      ],
+      "operatorGamesCovered": 11,
+      "usefulRows": 11,
+      "blockedRows": 0,
+      "reasonForBlockedRows": null
+    },
+    {
+      "provider": "THE_ODDS_API",
+      "subscriptionRole": "current pregame market benchmark",
+      "liveCallsThisMission": 4,
+      "liveCallsThisRebuild": 0,
+      "actualLiveCallsDuringOriginalB2": 4,
+      "intendedCollectionCalls": 2,
+      "unintendedRebuildCalls": 2,
+      "rebuildRequiresLiveProvider": false,
+      "futureExpectedCallsForEquivalentCollection": 2,
+      "cacheHits": 0,
+      "quotaBefore": 180,
+      "quotaAfter": 176,
+      "dataCategoriesCollected": [
+        "h2h moneyline"
+      ],
+      "operatorGamesCovered": 11,
+      "usefulRows": 11,
+      "blockedRows": 15,
+      "reasonForBlockedRows": "Football identity unresolved; volleyball unsupported; missed windows not backdated.",
+      "sportKeys": {
+        "kbo": "baseball_kbo",
+        "npb": "baseball_npb"
+      },
+      "calls": [
+        {
+          "sportKey": "baseball_kbo",
+          "requestedMarket": "h2h",
+          "requestedRegion": "eu",
+          "requestTime": "2026-08-26T03:42:30.929Z",
+          "responseTime": "2026-08-26T03:42:31.501Z",
+          "cached": false,
+          "usage": {
+            "requestsRemaining": 179,
+            "requestsUsed": 321,
+            "requestsLast": 1
+          },
+          "eventsReturned": 5
+        },
+        {
+          "sportKey": "baseball_npb",
+          "requestedMarket": "h2h",
+          "requestedRegion": "eu",
+          "requestTime": "2026-08-26T03:42:31.503Z",
+          "responseTime": "2026-08-26T03:42:31.730Z",
+          "cached": false,
+          "usage": {
+            "requestsRemaining": 178,
+            "requestsUsed": 322,
+            "requestsLast": 1
+          },
+          "eventsReturned": 6
+        },
+        {
+          "sportKey": "baseball_kbo",
+          "requestedMarket": "h2h",
+          "requestedRegion": "eu",
+          "requestTime": "2026-08-26T03:43:19.416Z",
+          "responseTime": "2026-08-26T03:43:19.994Z",
+          "cached": false,
+          "usage": {
+            "requestsRemaining": 177,
+            "requestsUsed": 323,
+            "requestsLast": 1
+          },
+          "eventsReturned": 5
+        },
+        {
+          "sportKey": "baseball_npb",
+          "requestedMarket": "h2h",
+          "requestedRegion": "eu",
+          "requestTime": "2026-08-26T03:43:19.995Z",
+          "responseTime": "2026-08-26T03:43:20.593Z",
+          "cached": false,
+          "usage": {
+            "requestsRemaining": 176,
+            "requestsUsed": 324,
+            "requestsLast": 1
+          },
+          "eventsReturned": 6
+        }
+      ],
+      "observationRels": [
+        "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json",
+        "data/research/odds/2026-08-26-the-odds-api-h2h-observation-2026-08-26T03-43-18-739Z-v1.json"
+      ],
+      "replaySourceRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json",
+      "note": "Historical truth: 4 live h2h calls during original B2 (2 intended collection + 2 unintended classification rebuild). B2.1 replays the stored index and must not add live calls. Neither observation was overwritten."
+    },
+    {
+      "provider": "API_FOOTBALL",
+      "subscriptionRole": "fixtures already captured in B1.1; extra pregame raw unused",
+      "liveCallsThisMission": 0,
+      "liveCallsThisRebuild": 0,
+      "cacheHits": 1,
+      "quotaBefore": "NOT_EXPOSED",
+      "quotaAfter": "NOT_EXPOSED",
+      "dataCategoriesCollected": [
+        "reused date fixtures dump",
+        "reused schedule-v1"
+      ],
+      "operatorGamesCovered": 0,
+      "usefulRows": 0,
+      "blockedRows": 14,
+      "reasonForBlockedRows": "B1 football identity fail-closed. Injuries/lineups/standings clients exist raw-only and were not called.",
+      "reusedCaptureRel": "data/research/football/2026-08-26-fixtures-captured-v1.json"
+    },
+    {
+      "provider": "THESPORTSDB",
+      "subscriptionRole": "NPB schedule already collected in B1",
+      "liveCallsThisMission": 0,
+      "liveCallsThisRebuild": 0,
+      "cacheHits": 0,
+      "quotaBefore": "NOT_EXPOSED",
+      "quotaAfter": "NOT_EXPOSED",
+      "dataCategoriesCollected": [],
+      "operatorGamesCovered": 6,
+      "usefulRows": 6,
+      "blockedRows": 0,
+      "reasonForBlockedRows": "No additional B2 call. B1 NPB schedule reused."
+    }
+  ],
+  "games": [
+    {
+      "operatorGameId": "VOLLEYBALL|2026-08-26|11:00|여배아선|한국W|홍콩W",
+      "sport": "VOLLEYBALL",
+      "rawLeagueLabel": "여배아선",
+      "rawHome": "한국W",
+      "rawAway": "홍콩W",
+      "canonicalHome": null,
+      "canonicalAway": null,
+      "displayedStartKst": "11:00",
+      "displayedKickoffUtc": "2026-08-26T02:00:00.000Z",
+      "temporalState": "PROVIDER_NOT_SUPPORTED",
+      "missedPreGameWindow": true,
+      "classifiedAsPreGame": false,
+      "b1IdentityState": "PROVIDER_NOT_SUPPORTED",
+      "scheduleState": "PROVIDER_NOT_SUPPORTED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "PROVIDER_NOT_SUPPORTED",
+          "note": "No lawful schedule provider."
+        },
+        "identity": {
+          "status": "PROVIDER_NOT_SUPPORTED",
+          "note": "B1 status=PROVIDER_NOT_SUPPORTED"
+        },
+        "starter": {
+          "status": "PROVIDER_NOT_SUPPORTED",
+          "note": "No volleyball provider."
+        },
+        "teamSeasonStats": {
+          "status": "PROVIDER_NOT_SUPPORTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": ""
+        },
+        "standings": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": ""
+        },
+        "rosterOrInjury": {
+          "status": "PROVIDER_NOT_SUPPORTED",
+          "note": "API-BASEBALL does not expose injuries/roster."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_NOT_SUPPORTED",
+      "oddsCandidates": 0,
+      "oddsProviderEventId": null,
+      "oddsHomeTeam": null,
+      "oddsAwayTeam": null,
+      "oddsBestHome": null,
+      "oddsBestAway": null,
+      "impliedHomeProbability": null,
+      "impliedAwayProbability": null,
+      "providers": [],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": false,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_NOT_SUPPORTED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": [
+        "B1:PROVIDER_NOT_SUPPORTED",
+        "ODDS:ODDS_NOT_SUPPORTED",
+        "MISSED_PRE_GAME_WINDOW"
+      ]
+    },
+    {
+      "operatorGameId": "NPB|2026-08-26|18:00|NPB|야쿠르트|요미우리",
+      "sport": "NPB",
+      "rawLeagueLabel": "NPB",
+      "rawHome": "야쿠르트",
+      "rawAway": "요미우리",
+      "canonicalHome": "야쿠르트",
+      "canonicalAway": "요미우리",
+      "displayedStartKst": "18:00",
+      "displayedKickoffUtc": "2026-08-26T09:00:00.000Z",
+      "temporalState": "PRE_GAME_OPEN",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": true,
+      "b1IdentityState": "MATCHED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 schedule artifact reused. No extra schedule fetch."
+        },
+        "identity": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 status=MATCHED"
+        },
+        "starter": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL has no players/lineups/injuries endpoints (coverage probe)."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "NPB B1 schedule is date-filtered. No cached season dump; extra season fetch skipped."
+        },
+        "standings": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Raw league standings stored. YANG standings adapter not implemented."
+        },
+        "rosterOrInjury": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL does not expose injuries/roster."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_COLLECTED",
+      "oddsCandidates": 1,
+      "oddsProviderEventId": "172e8d5ff53992ecaeddb9aeeac32e27",
+      "oddsHomeTeam": "Tokyo Yakult Swallows",
+      "oddsAwayTeam": "Yomiuri Giants",
+      "oddsBestHome": 2.27,
+      "oddsBestAway": 1.71,
+      "impliedHomeProbability": 0.44052863436123346,
+      "impliedAwayProbability": 0.5847953216374269,
+      "providers": [
+        "API_BASEBALL",
+        "THE_ODDS_API"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": true,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_COLLECTED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": null
+    },
+    {
+      "operatorGameId": "NPB|2026-08-26|18:00|NPB|주니치|한신",
+      "sport": "NPB",
+      "rawLeagueLabel": "NPB",
+      "rawHome": "주니치",
+      "rawAway": "한신",
+      "canonicalHome": "주니치",
+      "canonicalAway": "한신",
+      "displayedStartKst": "18:00",
+      "displayedKickoffUtc": "2026-08-26T09:00:00.000Z",
+      "temporalState": "PRE_GAME_OPEN",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": true,
+      "b1IdentityState": "MATCHED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 schedule artifact reused. No extra schedule fetch."
+        },
+        "identity": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 status=MATCHED"
+        },
+        "starter": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL has no players/lineups/injuries endpoints (coverage probe)."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "NPB B1 schedule is date-filtered. No cached season dump; extra season fetch skipped."
+        },
+        "standings": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Raw league standings stored. YANG standings adapter not implemented."
+        },
+        "rosterOrInjury": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL does not expose injuries/roster."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_COLLECTED",
+      "oddsCandidates": 1,
+      "oddsProviderEventId": "6129653dac90f9c7b4e87a2653c1f1fe",
+      "oddsHomeTeam": "Chunichi Dragons",
+      "oddsAwayTeam": "Hanshin Tigers",
+      "oddsBestHome": 2.04,
+      "oddsBestAway": 1.85,
+      "impliedHomeProbability": 0.49019607843137253,
+      "impliedAwayProbability": 0.5405405405405405,
+      "providers": [
+        "API_BASEBALL",
+        "THE_ODDS_API"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": true,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_COLLECTED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": null
+    },
+    {
+      "operatorGameId": "NPB|2026-08-26|18:00|NPB|히로카프|요코베이",
+      "sport": "NPB",
+      "rawLeagueLabel": "NPB",
+      "rawHome": "히로카프",
+      "rawAway": "요코베이",
+      "canonicalHome": "히로시마",
+      "canonicalAway": "요코하마",
+      "displayedStartKst": "18:00",
+      "displayedKickoffUtc": "2026-08-26T09:00:00.000Z",
+      "temporalState": "PRE_GAME_OPEN",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": true,
+      "b1IdentityState": "MATCHED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 schedule artifact reused. No extra schedule fetch."
+        },
+        "identity": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 status=MATCHED"
+        },
+        "starter": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL has no players/lineups/injuries endpoints (coverage probe)."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "NPB B1 schedule is date-filtered. No cached season dump; extra season fetch skipped."
+        },
+        "standings": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Raw league standings stored. YANG standings adapter not implemented."
+        },
+        "rosterOrInjury": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL does not expose injuries/roster."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_COLLECTED",
+      "oddsCandidates": 1,
+      "oddsProviderEventId": "0800bd4be0f858f22256c2fe925f412c",
+      "oddsHomeTeam": "Hiroshima Toyo Carp",
+      "oddsAwayTeam": "Yokohama DeNA BayStars",
+      "oddsBestHome": 2.77,
+      "oddsBestAway": 1.53,
+      "impliedHomeProbability": 0.36101083032490977,
+      "impliedAwayProbability": 0.6535947712418301,
+      "providers": [
+        "API_BASEBALL",
+        "THE_ODDS_API"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": true,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_COLLECTED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": null
+    },
+    {
+      "operatorGameId": "NPB|2026-08-26|18:00|NPB|세이부|닛폰햄",
+      "sport": "NPB",
+      "rawLeagueLabel": "NPB",
+      "rawHome": "세이부",
+      "rawAway": "닛폰햄",
+      "canonicalHome": "세이부",
+      "canonicalAway": "닛폰햄",
+      "displayedStartKst": "18:00",
+      "displayedKickoffUtc": "2026-08-26T09:00:00.000Z",
+      "temporalState": "PRE_GAME_OPEN",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": true,
+      "b1IdentityState": "MATCHED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 schedule artifact reused. No extra schedule fetch."
+        },
+        "identity": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 status=MATCHED"
+        },
+        "starter": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL has no players/lineups/injuries endpoints (coverage probe)."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "NPB B1 schedule is date-filtered. No cached season dump; extra season fetch skipped."
+        },
+        "standings": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Raw league standings stored. YANG standings adapter not implemented."
+        },
+        "rosterOrInjury": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL does not expose injuries/roster."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_COLLECTED",
+      "oddsCandidates": 1,
+      "oddsProviderEventId": "6ced86cf472ea24c707761ae8ffae943",
+      "oddsHomeTeam": "Saitama Seibu Lions",
+      "oddsAwayTeam": "Hokkaido Nippon-Ham Fighters",
+      "oddsBestHome": 2.35,
+      "oddsBestAway": 1.74,
+      "impliedHomeProbability": 0.425531914893617,
+      "impliedAwayProbability": 0.5747126436781609,
+      "providers": [
+        "API_BASEBALL",
+        "THE_ODDS_API"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": true,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_COLLECTED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": null
+    },
+    {
+      "operatorGameId": "NPB|2026-08-26|18:00|NPB|지바롯데|소프트뱅",
+      "sport": "NPB",
+      "rawLeagueLabel": "NPB",
+      "rawHome": "지바롯데",
+      "rawAway": "소프트뱅",
+      "canonicalHome": "롯데",
+      "canonicalAway": "소프트뱅크",
+      "displayedStartKst": "18:00",
+      "displayedKickoffUtc": "2026-08-26T09:00:00.000Z",
+      "temporalState": "PRE_GAME_OPEN",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": true,
+      "b1IdentityState": "MATCHED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 schedule artifact reused. No extra schedule fetch."
+        },
+        "identity": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 status=MATCHED"
+        },
+        "starter": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL has no players/lineups/injuries endpoints (coverage probe)."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "NPB B1 schedule is date-filtered. No cached season dump; extra season fetch skipped."
+        },
+        "standings": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Raw league standings stored. YANG standings adapter not implemented."
+        },
+        "rosterOrInjury": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL does not expose injuries/roster."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_COLLECTED",
+      "oddsCandidates": 1,
+      "oddsProviderEventId": "159efce9151901394567555a7884e6a1",
+      "oddsHomeTeam": "Chiba Lotte Marines",
+      "oddsAwayTeam": "Fukuoka SoftBank Hawks",
+      "oddsBestHome": 2.61,
+      "oddsBestAway": 1.59,
+      "impliedHomeProbability": 0.3831417624521073,
+      "impliedAwayProbability": 0.6289308176100629,
+      "providers": [
+        "API_BASEBALL",
+        "THE_ODDS_API"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": true,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_COLLECTED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": null
+    },
+    {
+      "operatorGameId": "NPB|2026-08-26|18:00|NPB|오릭스|라쿠텐",
+      "sport": "NPB",
+      "rawLeagueLabel": "NPB",
+      "rawHome": "오릭스",
+      "rawAway": "라쿠텐",
+      "canonicalHome": "오릭스",
+      "canonicalAway": "라쿠텐",
+      "displayedStartKst": "18:00",
+      "displayedKickoffUtc": "2026-08-26T09:00:00.000Z",
+      "temporalState": "PRE_GAME_OPEN",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": true,
+      "b1IdentityState": "MATCHED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 schedule artifact reused. No extra schedule fetch."
+        },
+        "identity": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 status=MATCHED"
+        },
+        "starter": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL has no players/lineups/injuries endpoints (coverage probe)."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "NPB B1 schedule is date-filtered. No cached season dump; extra season fetch skipped."
+        },
+        "standings": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Raw league standings stored. YANG standings adapter not implemented."
+        },
+        "rosterOrInjury": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL does not expose injuries/roster."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_COLLECTED",
+      "oddsCandidates": 1,
+      "oddsProviderEventId": "59cd511b4e106a36a8c93b1f245c8d7b",
+      "oddsHomeTeam": "Orix Buffaloes",
+      "oddsAwayTeam": "Tohoku Rakuten Golden Eagles",
+      "oddsBestHome": 1.93,
+      "oddsBestAway": 1.95,
+      "impliedHomeProbability": 0.5181347150259068,
+      "impliedAwayProbability": 0.5128205128205129,
+      "providers": [
+        "API_BASEBALL",
+        "THE_ODDS_API"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": true,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_COLLECTED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": null
+    },
+    {
+      "operatorGameId": "KBO|2026-08-26|18:30|KBO|LG|NC",
+      "sport": "KBO",
+      "rawLeagueLabel": "KBO",
+      "rawHome": "LG",
+      "rawAway": "NC",
+      "canonicalHome": "LG",
+      "canonicalAway": "NC",
+      "displayedStartKst": "18:30",
+      "displayedKickoffUtc": "2026-08-26T09:30:00.000Z",
+      "temporalState": "PRE_GAME_OPEN",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": true,
+      "b1IdentityState": "MATCHED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 schedule artifact reused. No extra schedule fetch."
+        },
+        "identity": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 status=MATCHED"
+        },
+        "starter": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL has no players/lineups/injuries endpoints (coverage probe)."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Derived from cached API-BASEBALL season games. Target and later games excluded. Cache hit."
+        },
+        "standings": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Raw league standings stored. YANG standings adapter not implemented."
+        },
+        "rosterOrInjury": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL does not expose injuries/roster."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_COLLECTED",
+      "oddsCandidates": 1,
+      "oddsProviderEventId": "a79033035ccb0d0a17761f0b268f6216",
+      "oddsHomeTeam": "LG Twins",
+      "oddsAwayTeam": "NC Dinos",
+      "oddsBestHome": 1.85,
+      "oddsBestAway": 2.07,
+      "impliedHomeProbability": 0.5405405405405405,
+      "impliedAwayProbability": 0.48309178743961356,
+      "providers": [
+        "API_BASEBALL",
+        "THE_ODDS_API"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": true,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_COLLECTED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": null
+    },
+    {
+      "operatorGameId": "KBO|2026-08-26|18:30|KBO|SSG|한화",
+      "sport": "KBO",
+      "rawLeagueLabel": "KBO",
+      "rawHome": "SSG",
+      "rawAway": "한화",
+      "canonicalHome": "SSG",
+      "canonicalAway": "한화",
+      "displayedStartKst": "18:30",
+      "displayedKickoffUtc": "2026-08-26T09:30:00.000Z",
+      "temporalState": "PRE_GAME_OPEN",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": true,
+      "b1IdentityState": "MATCHED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 schedule artifact reused. No extra schedule fetch."
+        },
+        "identity": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 status=MATCHED"
+        },
+        "starter": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL has no players/lineups/injuries endpoints (coverage probe)."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Derived from cached API-BASEBALL season games. Target and later games excluded. Cache hit."
+        },
+        "standings": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Raw league standings stored. YANG standings adapter not implemented."
+        },
+        "rosterOrInjury": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL does not expose injuries/roster."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_COLLECTED",
+      "oddsCandidates": 1,
+      "oddsProviderEventId": "40b5021e0b914e9d9bac436a7ce28886",
+      "oddsHomeTeam": "SSG Landers",
+      "oddsAwayTeam": "Hanwha Eagles",
+      "oddsBestHome": 2.57,
+      "oddsBestAway": 1.57,
+      "impliedHomeProbability": 0.38910505836575876,
+      "impliedAwayProbability": 0.6369426751592356,
+      "providers": [
+        "API_BASEBALL",
+        "THE_ODDS_API"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": true,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_COLLECTED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": null
+    },
+    {
+      "operatorGameId": "KBO|2026-08-26|18:30|KBO|KIA|롯데",
+      "sport": "KBO",
+      "rawLeagueLabel": "KBO",
+      "rawHome": "KIA",
+      "rawAway": "롯데",
+      "canonicalHome": "KIA",
+      "canonicalAway": "롯데",
+      "displayedStartKst": "18:30",
+      "displayedKickoffUtc": "2026-08-26T09:30:00.000Z",
+      "temporalState": "PRE_GAME_OPEN",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": true,
+      "b1IdentityState": "MATCHED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 schedule artifact reused. No extra schedule fetch."
+        },
+        "identity": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 status=MATCHED"
+        },
+        "starter": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL has no players/lineups/injuries endpoints (coverage probe)."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Derived from cached API-BASEBALL season games. Target and later games excluded. Cache hit."
+        },
+        "standings": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Raw league standings stored. YANG standings adapter not implemented."
+        },
+        "rosterOrInjury": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL does not expose injuries/roster."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_COLLECTED",
+      "oddsCandidates": 1,
+      "oddsProviderEventId": "36cb8879f70305714faf3ebc16a251ef",
+      "oddsHomeTeam": "Kia Tigers",
+      "oddsAwayTeam": "Lotte Giants",
+      "oddsBestHome": 1.95,
+      "oddsBestAway": 1.95,
+      "impliedHomeProbability": 0.5128205128205129,
+      "impliedAwayProbability": 0.5128205128205129,
+      "providers": [
+        "API_BASEBALL",
+        "THE_ODDS_API"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": true,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_COLLECTED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": null
+    },
+    {
+      "operatorGameId": "KBO|2026-08-26|18:30|KBO|KT|두산",
+      "sport": "KBO",
+      "rawLeagueLabel": "KBO",
+      "rawHome": "KT",
+      "rawAway": "두산",
+      "canonicalHome": "KT",
+      "canonicalAway": "두산",
+      "displayedStartKst": "18:30",
+      "displayedKickoffUtc": "2026-08-26T09:30:00.000Z",
+      "temporalState": "PRE_GAME_OPEN",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": true,
+      "b1IdentityState": "MATCHED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 schedule artifact reused. No extra schedule fetch."
+        },
+        "identity": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 status=MATCHED"
+        },
+        "starter": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL has no players/lineups/injuries endpoints (coverage probe)."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Derived from cached API-BASEBALL season games. Target and later games excluded. Cache hit."
+        },
+        "standings": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Raw league standings stored. YANG standings adapter not implemented."
+        },
+        "rosterOrInjury": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL does not expose injuries/roster."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_COLLECTED",
+      "oddsCandidates": 1,
+      "oddsProviderEventId": "65be1a7bc9ab079ca4ca3f4478fc9dc9",
+      "oddsHomeTeam": "KT Wiz",
+      "oddsAwayTeam": "Doosan Bears",
+      "oddsBestHome": 1.99,
+      "oddsBestAway": 1.91,
+      "impliedHomeProbability": 0.5025125628140703,
+      "impliedAwayProbability": 0.5235602094240838,
+      "providers": [
+        "API_BASEBALL",
+        "THE_ODDS_API"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": true,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_COLLECTED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": null
+    },
+    {
+      "operatorGameId": "KBO|2026-08-26|18:30|KBO|키움|삼성",
+      "sport": "KBO",
+      "rawLeagueLabel": "KBO",
+      "rawHome": "키움",
+      "rawAway": "삼성",
+      "canonicalHome": "키움",
+      "canonicalAway": "삼성",
+      "displayedStartKst": "18:30",
+      "displayedKickoffUtc": "2026-08-26T09:30:00.000Z",
+      "temporalState": "PRE_GAME_OPEN",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": true,
+      "b1IdentityState": "MATCHED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 schedule artifact reused. No extra schedule fetch."
+        },
+        "identity": {
+          "status": "AVAILABLE_CACHED",
+          "note": "B1 status=MATCHED"
+        },
+        "starter": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL has no players/lineups/injuries endpoints (coverage probe)."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Derived from cached API-BASEBALL season games. Target and later games excluded. Cache hit."
+        },
+        "standings": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Raw league standings stored. YANG standings adapter not implemented."
+        },
+        "rosterOrInjury": {
+          "status": "NOT_AVAILABLE_FROM_PROVIDER",
+          "note": "API-BASEBALL does not expose injuries/roster."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_COLLECTED",
+      "oddsCandidates": 1,
+      "oddsProviderEventId": "1536018ca2792d1b9813e0adb6b57fee",
+      "oddsHomeTeam": "Kiwoom Heroes",
+      "oddsAwayTeam": "Samsung Lions",
+      "oddsBestHome": 2.78,
+      "oddsBestAway": 1.51,
+      "impliedHomeProbability": 0.3597122302158274,
+      "impliedAwayProbability": 0.6622516556291391,
+      "providers": [
+        "API_BASEBALL",
+        "THE_ODDS_API"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": true,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_COLLECTED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": null
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|11:30|리그스컵|레온|레알솔트",
+      "sport": "FOOTBALL",
+      "rawLeagueLabel": "리그스컵",
+      "rawHome": "레온",
+      "rawAway": "레알솔트",
+      "canonicalHome": null,
+      "canonicalAway": null,
+      "displayedStartKst": "11:30",
+      "displayedKickoffUtc": "2026-08-26T02:30:00.000Z",
+      "temporalState": "MISSED_PRE_GAME_WINDOW",
+      "missedPreGameWindow": true,
+      "classifiedAsPreGame": false,
+      "b1IdentityState": "IDENTITY_REVIEW_REQUIRED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Reused captured API-Football dump / schedule artifact. Not attached unless B1 MATCHED."
+        },
+        "identity": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "B1 status=IDENTITY_REVIEW_REQUIRED"
+        },
+        "starter": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "FootballProvider.getLineups exists raw-only; not collected because operator identity is unresolved."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "MISSED_PRE_GAME_WINDOW",
+          "note": "Kickoff already passed. Fresh pregame stats not labeled PRE_GAME."
+        },
+        "standings": {
+          "status": "MISSED_PRE_GAME_WINDOW",
+          "note": "Kickoff already passed."
+        },
+        "rosterOrInjury": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "getInjuries is raw-only. Not called: cannot attach to operator games."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "MISSED_PRE_GAME_WINDOW",
+      "oddsCandidates": 0,
+      "oddsProviderEventId": null,
+      "oddsHomeTeam": null,
+      "oddsAwayTeam": null,
+      "oddsBestHome": null,
+      "oddsBestAway": null,
+      "impliedHomeProbability": null,
+      "impliedAwayProbability": null,
+      "providers": [
+        "API_FOOTBALL"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": false,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "MISSED_PRE_GAME_WINDOW",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": [
+        "B1:IDENTITY_REVIEW_REQUIRED",
+        "ODDS:MISSED_PRE_GAME_WINDOW",
+        "MISSED_PRE_GAME_WINDOW"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|18:30|호주FA컵|프레라이|사우스멜",
+      "sport": "FOOTBALL",
+      "rawLeagueLabel": "호주FA컵",
+      "rawHome": "프레라이",
+      "rawAway": "사우스멜",
+      "canonicalHome": null,
+      "canonicalAway": null,
+      "displayedStartKst": "18:30",
+      "displayedKickoffUtc": "2026-08-26T09:30:00.000Z",
+      "temporalState": "IDENTITY_BLOCKED",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": false,
+      "b1IdentityState": "IDENTITY_REVIEW_REQUIRED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Reused data/research/football/2026-08-26-fixtures-captured-v1.json. operatorGameAttached=false"
+        },
+        "identity": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "B1 status=IDENTITY_REVIEW_REQUIRED"
+        },
+        "starter": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "FootballProvider.getLineups exists raw-only; not collected because operator identity is unresolved."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "Football operator identity unresolved. Provider form not attached."
+        },
+        "standings": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "getStandings exists raw-only. Not called: cannot attach to operator games."
+        },
+        "rosterOrInjury": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "getInjuries is raw-only. Not called: cannot attach to operator games."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_IDENTITY_BLOCKED",
+      "oddsCandidates": 0,
+      "oddsProviderEventId": null,
+      "oddsHomeTeam": null,
+      "oddsAwayTeam": null,
+      "oddsBestHome": null,
+      "oddsBestAway": null,
+      "impliedHomeProbability": null,
+      "impliedAwayProbability": null,
+      "providers": [
+        "API_FOOTBALL"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": false,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_IDENTITY_BLOCKED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": [
+        "B1:IDENTITY_REVIEW_REQUIRED",
+        "ODDS:ODDS_IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|C삿포로|V고후",
+      "sport": "FOOTBALL",
+      "rawLeagueLabel": "일본FA컵",
+      "rawHome": "C삿포로",
+      "rawAway": "V고후",
+      "canonicalHome": null,
+      "canonicalAway": null,
+      "displayedStartKst": "19:00",
+      "displayedKickoffUtc": "2026-08-26T10:00:00.000Z",
+      "temporalState": "IDENTITY_BLOCKED",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": false,
+      "b1IdentityState": "IDENTITY_REVIEW_REQUIRED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Reused data/research/football/2026-08-26-fixtures-captured-v1.json. operatorGameAttached=false"
+        },
+        "identity": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "B1 status=IDENTITY_REVIEW_REQUIRED"
+        },
+        "starter": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "FootballProvider.getLineups exists raw-only; not collected because operator identity is unresolved."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "Football operator identity unresolved. Provider form not attached."
+        },
+        "standings": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "getStandings exists raw-only. Not called: cannot attach to operator games."
+        },
+        "rosterOrInjury": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "getInjuries is raw-only. Not called: cannot attach to operator games."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_IDENTITY_BLOCKED",
+      "oddsCandidates": 0,
+      "oddsProviderEventId": null,
+      "oddsHomeTeam": null,
+      "oddsAwayTeam": null,
+      "oddsBestHome": null,
+      "oddsBestAway": null,
+      "impliedHomeProbability": null,
+      "impliedAwayProbability": null,
+      "providers": [
+        "API_FOOTBALL"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": false,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_IDENTITY_BLOCKED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": [
+        "B1:IDENTITY_REVIEW_REQUIRED",
+        "ODDS:ODDS_IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|J이와타|미야자키",
+      "sport": "FOOTBALL",
+      "rawLeagueLabel": "일본FA컵",
+      "rawHome": "J이와타",
+      "rawAway": "미야자키",
+      "canonicalHome": null,
+      "canonicalAway": null,
+      "displayedStartKst": "19:00",
+      "displayedKickoffUtc": "2026-08-26T10:00:00.000Z",
+      "temporalState": "IDENTITY_BLOCKED",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": false,
+      "b1IdentityState": "IDENTITY_REVIEW_REQUIRED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Reused data/research/football/2026-08-26-fixtures-captured-v1.json. operatorGameAttached=false"
+        },
+        "identity": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "B1 status=IDENTITY_REVIEW_REQUIRED"
+        },
+        "starter": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "FootballProvider.getLineups exists raw-only; not collected because operator identity is unresolved."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "Football operator identity unresolved. Provider form not attached."
+        },
+        "standings": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "getStandings exists raw-only. Not called: cannot attach to operator games."
+        },
+        "rosterOrInjury": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "getInjuries is raw-only. Not called: cannot attach to operator games."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_IDENTITY_BLOCKED",
+      "oddsCandidates": 0,
+      "oddsProviderEventId": null,
+      "oddsHomeTeam": null,
+      "oddsAwayTeam": null,
+      "oddsBestHome": null,
+      "oddsBestAway": null,
+      "impliedHomeProbability": null,
+      "impliedAwayProbability": null,
+      "providers": [
+        "API_FOOTBALL"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": false,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_IDENTITY_BLOCKED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": [
+        "B1:IDENTITY_REVIEW_REQUIRED",
+        "ODDS:ODDS_IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|이와키|오이타T",
+      "sport": "FOOTBALL",
+      "rawLeagueLabel": "일본FA컵",
+      "rawHome": "이와키",
+      "rawAway": "오이타T",
+      "canonicalHome": null,
+      "canonicalAway": null,
+      "displayedStartKst": "19:00",
+      "displayedKickoffUtc": "2026-08-26T10:00:00.000Z",
+      "temporalState": "IDENTITY_BLOCKED",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": false,
+      "b1IdentityState": "IDENTITY_REVIEW_REQUIRED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Reused data/research/football/2026-08-26-fixtures-captured-v1.json. operatorGameAttached=false"
+        },
+        "identity": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "B1 status=IDENTITY_REVIEW_REQUIRED"
+        },
+        "starter": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "FootballProvider.getLineups exists raw-only; not collected because operator identity is unresolved."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "Football operator identity unresolved. Provider form not attached."
+        },
+        "standings": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "getStandings exists raw-only. Not called: cannot attach to operator games."
+        },
+        "rosterOrInjury": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "getInjuries is raw-only. Not called: cannot attach to operator games."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_IDENTITY_BLOCKED",
+      "oddsCandidates": 0,
+      "oddsProviderEventId": null,
+      "oddsHomeTeam": null,
+      "oddsAwayTeam": null,
+      "oddsBestHome": null,
+      "oddsBestAway": null,
+      "impliedHomeProbability": null,
+      "impliedAwayProbability": null,
+      "providers": [
+        "API_FOOTBALL"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": false,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_IDENTITY_BLOCKED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": [
+        "B1:IDENTITY_REVIEW_REQUIRED",
+        "ODDS:ODDS_IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|사간도스|K도야마",
+      "sport": "FOOTBALL",
+      "rawLeagueLabel": "일본FA컵",
+      "rawHome": "사간도스",
+      "rawAway": "K도야마",
+      "canonicalHome": null,
+      "canonicalAway": null,
+      "displayedStartKst": "19:00",
+      "displayedKickoffUtc": "2026-08-26T10:00:00.000Z",
+      "temporalState": "IDENTITY_BLOCKED",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": false,
+      "b1IdentityState": "IDENTITY_REVIEW_REQUIRED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Reused data/research/football/2026-08-26-fixtures-captured-v1.json. operatorGameAttached=false"
+        },
+        "identity": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "B1 status=IDENTITY_REVIEW_REQUIRED"
+        },
+        "starter": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "FootballProvider.getLineups exists raw-only; not collected because operator identity is unresolved."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "Football operator identity unresolved. Provider form not attached."
+        },
+        "standings": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "getStandings exists raw-only. Not called: cannot attach to operator games."
+        },
+        "rosterOrInjury": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "getInjuries is raw-only. Not called: cannot attach to operator games."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_IDENTITY_BLOCKED",
+      "oddsCandidates": 0,
+      "oddsProviderEventId": null,
+      "oddsHomeTeam": null,
+      "oddsAwayTeam": null,
+      "oddsBestHome": null,
+      "oddsBestAway": null,
+      "impliedHomeProbability": null,
+      "impliedAwayProbability": null,
+      "providers": [
+        "API_FOOTBALL"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": false,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_IDENTITY_BLOCKED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": [
+        "B1:IDENTITY_REVIEW_REQUIRED",
+        "ODDS:ODDS_IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|이마바리|B아키타",
+      "sport": "FOOTBALL",
+      "rawLeagueLabel": "일본FA컵",
+      "rawHome": "이마바리",
+      "rawAway": "B아키타",
+      "canonicalHome": null,
+      "canonicalAway": null,
+      "displayedStartKst": "19:00",
+      "displayedKickoffUtc": "2026-08-26T10:00:00.000Z",
+      "temporalState": "IDENTITY_BLOCKED",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": false,
+      "b1IdentityState": "IDENTITY_REVIEW_REQUIRED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Reused data/research/football/2026-08-26-fixtures-captured-v1.json. operatorGameAttached=false"
+        },
+        "identity": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "B1 status=IDENTITY_REVIEW_REQUIRED"
+        },
+        "starter": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "FootballProvider.getLineups exists raw-only; not collected because operator identity is unresolved."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "Football operator identity unresolved. Provider form not attached."
+        },
+        "standings": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "getStandings exists raw-only. Not called: cannot attach to operator games."
+        },
+        "rosterOrInjury": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "getInjuries is raw-only. Not called: cannot attach to operator games."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_IDENTITY_BLOCKED",
+      "oddsCandidates": 0,
+      "oddsProviderEventId": null,
+      "oddsHomeTeam": null,
+      "oddsAwayTeam": null,
+      "oddsBestHome": null,
+      "oddsBestAway": null,
+      "impliedHomeProbability": null,
+      "impliedAwayProbability": null,
+      "providers": [
+        "API_FOOTBALL"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": false,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_IDENTITY_BLOCKED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": [
+        "B1:IDENTITY_REVIEW_REQUIRED",
+        "ODDS:ODDS_IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|RB오미야|하치노헤",
+      "sport": "FOOTBALL",
+      "rawLeagueLabel": "일본FA컵",
+      "rawHome": "RB오미야",
+      "rawAway": "하치노헤",
+      "canonicalHome": null,
+      "canonicalAway": null,
+      "displayedStartKst": "19:00",
+      "displayedKickoffUtc": "2026-08-26T10:00:00.000Z",
+      "temporalState": "IDENTITY_BLOCKED",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": false,
+      "b1IdentityState": "IDENTITY_REVIEW_REQUIRED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Reused data/research/football/2026-08-26-fixtures-captured-v1.json. operatorGameAttached=false"
+        },
+        "identity": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "B1 status=IDENTITY_REVIEW_REQUIRED"
+        },
+        "starter": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "FootballProvider.getLineups exists raw-only; not collected because operator identity is unresolved."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "Football operator identity unresolved. Provider form not attached."
+        },
+        "standings": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "getStandings exists raw-only. Not called: cannot attach to operator games."
+        },
+        "rosterOrInjury": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "getInjuries is raw-only. Not called: cannot attach to operator games."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_IDENTITY_BLOCKED",
+      "oddsCandidates": 0,
+      "oddsProviderEventId": null,
+      "oddsHomeTeam": null,
+      "oddsAwayTeam": null,
+      "oddsBestHome": null,
+      "oddsBestAway": null,
+      "impliedHomeProbability": null,
+      "impliedAwayProbability": null,
+      "providers": [
+        "API_FOOTBALL"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": false,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_IDENTITY_BLOCKED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": [
+        "B1:IDENTITY_REVIEW_REQUIRED",
+        "ODDS:ODDS_IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|야마가타|후지에다",
+      "sport": "FOOTBALL",
+      "rawLeagueLabel": "일본FA컵",
+      "rawHome": "야마가타",
+      "rawAway": "후지에다",
+      "canonicalHome": null,
+      "canonicalAway": null,
+      "displayedStartKst": "19:00",
+      "displayedKickoffUtc": "2026-08-26T10:00:00.000Z",
+      "temporalState": "IDENTITY_BLOCKED",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": false,
+      "b1IdentityState": "IDENTITY_REVIEW_REQUIRED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Reused data/research/football/2026-08-26-fixtures-captured-v1.json. operatorGameAttached=false"
+        },
+        "identity": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "B1 status=IDENTITY_REVIEW_REQUIRED"
+        },
+        "starter": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "FootballProvider.getLineups exists raw-only; not collected because operator identity is unresolved."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "Football operator identity unresolved. Provider form not attached."
+        },
+        "standings": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "getStandings exists raw-only. Not called: cannot attach to operator games."
+        },
+        "rosterOrInjury": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "getInjuries is raw-only. Not called: cannot attach to operator games."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_IDENTITY_BLOCKED",
+      "oddsCandidates": 0,
+      "oddsProviderEventId": null,
+      "oddsHomeTeam": null,
+      "oddsAwayTeam": null,
+      "oddsBestHome": null,
+      "oddsBestAway": null,
+      "impliedHomeProbability": null,
+      "impliedAwayProbability": null,
+      "providers": [
+        "API_FOOTBALL"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": false,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_IDENTITY_BLOCKED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": [
+        "B1:IDENTITY_REVIEW_REQUIRED",
+        "ODDS:ODDS_IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|V센다이|도치기SC",
+      "sport": "FOOTBALL",
+      "rawLeagueLabel": "일본FA컵",
+      "rawHome": "V센다이",
+      "rawAway": "도치기SC",
+      "canonicalHome": null,
+      "canonicalAway": null,
+      "displayedStartKst": "19:00",
+      "displayedKickoffUtc": "2026-08-26T10:00:00.000Z",
+      "temporalState": "IDENTITY_BLOCKED",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": false,
+      "b1IdentityState": "IDENTITY_REVIEW_REQUIRED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Reused data/research/football/2026-08-26-fixtures-captured-v1.json. operatorGameAttached=false"
+        },
+        "identity": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "B1 status=IDENTITY_REVIEW_REQUIRED"
+        },
+        "starter": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "FootballProvider.getLineups exists raw-only; not collected because operator identity is unresolved."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "Football operator identity unresolved. Provider form not attached."
+        },
+        "standings": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "getStandings exists raw-only. Not called: cannot attach to operator games."
+        },
+        "rosterOrInjury": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "getInjuries is raw-only. Not called: cannot attach to operator games."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_IDENTITY_BLOCKED",
+      "oddsCandidates": 0,
+      "oddsProviderEventId": null,
+      "oddsHomeTeam": null,
+      "oddsAwayTeam": null,
+      "oddsBestHome": null,
+      "oddsBestAway": null,
+      "impliedHomeProbability": null,
+      "impliedAwayProbability": null,
+      "providers": [
+        "API_FOOTBALL"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": false,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_IDENTITY_BLOCKED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": [
+        "B1:IDENTITY_REVIEW_REQUIRED",
+        "ODDS:ODDS_IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:30|K리그1|FC안양|인천유나",
+      "sport": "FOOTBALL",
+      "rawLeagueLabel": "K리그1",
+      "rawHome": "FC안양",
+      "rawAway": "인천유나",
+      "canonicalHome": null,
+      "canonicalAway": null,
+      "displayedStartKst": "19:30",
+      "displayedKickoffUtc": "2026-08-26T10:30:00.000Z",
+      "temporalState": "IDENTITY_BLOCKED",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": false,
+      "b1IdentityState": "IDENTITY_REVIEW_REQUIRED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Reused data/research/football/2026-08-26-fixtures-captured-v1.json. operatorGameAttached=false"
+        },
+        "identity": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "B1 status=IDENTITY_REVIEW_REQUIRED"
+        },
+        "starter": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "FootballProvider.getLineups exists raw-only; not collected because operator identity is unresolved."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "Football operator identity unresolved. Provider form not attached."
+        },
+        "standings": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "getStandings exists raw-only. Not called: cannot attach to operator games."
+        },
+        "rosterOrInjury": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "getInjuries is raw-only. Not called: cannot attach to operator games."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_IDENTITY_BLOCKED",
+      "oddsCandidates": 0,
+      "oddsProviderEventId": null,
+      "oddsHomeTeam": null,
+      "oddsAwayTeam": null,
+      "oddsBestHome": null,
+      "oddsBestAway": null,
+      "impliedHomeProbability": null,
+      "impliedAwayProbability": null,
+      "providers": [
+        "API_FOOTBALL"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": false,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_IDENTITY_BLOCKED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": [
+        "B1:IDENTITY_REVIEW_REQUIRED",
+        "ODDS:ODDS_IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:30|K리그1|대전하나|울산HDFC",
+      "sport": "FOOTBALL",
+      "rawLeagueLabel": "K리그1",
+      "rawHome": "대전하나",
+      "rawAway": "울산HDFC",
+      "canonicalHome": null,
+      "canonicalAway": null,
+      "displayedStartKst": "19:30",
+      "displayedKickoffUtc": "2026-08-26T10:30:00.000Z",
+      "temporalState": "IDENTITY_BLOCKED",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": false,
+      "b1IdentityState": "IDENTITY_REVIEW_REQUIRED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Reused data/research/football/2026-08-26-fixtures-captured-v1.json. operatorGameAttached=false"
+        },
+        "identity": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "B1 status=IDENTITY_REVIEW_REQUIRED"
+        },
+        "starter": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "FootballProvider.getLineups exists raw-only; not collected because operator identity is unresolved."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "Football operator identity unresolved. Provider form not attached."
+        },
+        "standings": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "getStandings exists raw-only. Not called: cannot attach to operator games."
+        },
+        "rosterOrInjury": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "getInjuries is raw-only. Not called: cannot attach to operator games."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_IDENTITY_BLOCKED",
+      "oddsCandidates": 0,
+      "oddsProviderEventId": null,
+      "oddsHomeTeam": null,
+      "oddsAwayTeam": null,
+      "oddsBestHome": null,
+      "oddsBestAway": null,
+      "impliedHomeProbability": null,
+      "impliedAwayProbability": null,
+      "providers": [
+        "API_FOOTBALL"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": false,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_IDENTITY_BLOCKED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": [
+        "B1:IDENTITY_REVIEW_REQUIRED",
+        "ODDS:ODDS_IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:30|K리그1|강원FC|광주FC",
+      "sport": "FOOTBALL",
+      "rawLeagueLabel": "K리그1",
+      "rawHome": "강원FC",
+      "rawAway": "광주FC",
+      "canonicalHome": null,
+      "canonicalAway": null,
+      "displayedStartKst": "19:30",
+      "displayedKickoffUtc": "2026-08-26T10:30:00.000Z",
+      "temporalState": "IDENTITY_BLOCKED",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": false,
+      "b1IdentityState": "IDENTITY_REVIEW_REQUIRED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Reused data/research/football/2026-08-26-fixtures-captured-v1.json. operatorGameAttached=false"
+        },
+        "identity": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "B1 status=IDENTITY_REVIEW_REQUIRED"
+        },
+        "starter": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "FootballProvider.getLineups exists raw-only; not collected because operator identity is unresolved."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "Football operator identity unresolved. Provider form not attached."
+        },
+        "standings": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "getStandings exists raw-only. Not called: cannot attach to operator games."
+        },
+        "rosterOrInjury": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "getInjuries is raw-only. Not called: cannot attach to operator games."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_IDENTITY_BLOCKED",
+      "oddsCandidates": 0,
+      "oddsProviderEventId": null,
+      "oddsHomeTeam": null,
+      "oddsAwayTeam": null,
+      "oddsBestHome": null,
+      "oddsBestAway": null,
+      "impliedHomeProbability": null,
+      "impliedAwayProbability": null,
+      "providers": [
+        "API_FOOTBALL"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": false,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_IDENTITY_BLOCKED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": [
+        "B1:IDENTITY_REVIEW_REQUIRED",
+        "ODDS:ODDS_IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|22:00|축ASEA챔|베트남|태국",
+      "sport": "FOOTBALL",
+      "rawLeagueLabel": "축ASEA챔",
+      "rawHome": "베트남",
+      "rawAway": "태국",
+      "canonicalHome": null,
+      "canonicalAway": null,
+      "displayedStartKst": "22:00",
+      "displayedKickoffUtc": "2026-08-26T13:00:00.000Z",
+      "temporalState": "IDENTITY_BLOCKED",
+      "missedPreGameWindow": false,
+      "classifiedAsPreGame": false,
+      "b1IdentityState": "IDENTITY_REVIEW_REQUIRED",
+      "scheduleState": "AVAILABLE_CACHED",
+      "pregameDataCoverage": {
+        "schedule": {
+          "status": "AVAILABLE_CACHED",
+          "note": "Reused data/research/football/2026-08-26-fixtures-captured-v1.json. operatorGameAttached=false"
+        },
+        "identity": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "B1 status=IDENTITY_REVIEW_REQUIRED"
+        },
+        "starter": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "FootballProvider.getLineups exists raw-only; not collected because operator identity is unresolved."
+        },
+        "teamSeasonStats": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "Endpoint exists on the client/probe. No YANG adapter. Per-team calls skipped for quota."
+        },
+        "recentForm": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "Football operator identity unresolved. Provider form not attached."
+        },
+        "standings": {
+          "status": "IDENTITY_BLOCKED",
+          "note": "getStandings exists raw-only. Not called: cannot attach to operator games."
+        },
+        "rosterOrInjury": {
+          "status": "ADAPTER_NOT_IMPLEMENTED",
+          "note": "getInjuries is raw-only. Not called: cannot attach to operator games."
+        },
+        "otherAvailablePregame": {
+          "status": "NOT_COLLECTED_REASON",
+          "note": "No additional implemented adapters for weather/venue depth."
+        }
+      },
+      "oddsState": "ODDS_IDENTITY_BLOCKED",
+      "oddsCandidates": 0,
+      "oddsProviderEventId": null,
+      "oddsHomeTeam": null,
+      "oddsAwayTeam": null,
+      "oddsBestHome": null,
+      "oddsBestAway": null,
+      "impliedHomeProbability": null,
+      "impliedAwayProbability": null,
+      "providers": [
+        "API_FOOTBALL"
+      ],
+      "marketBenchmarkOnly": true,
+      "predictionInput": false,
+      "engineInput": false,
+      "operatorGameAttached": false,
+      "manualOperatorMarketObservation": {
+        "kind": "MANUAL_OPERATOR_MARKET_OBSERVATION",
+        "sourceRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+        "predictionInput": false,
+        "engineInput": false,
+        "mergedWithProviderOdds": false
+      },
+      "providerMarketObservation": {
+        "kind": "PROVIDER_MARKET_OBSERVATION",
+        "provider": "THE_ODDS_API",
+        "status": "ODDS_IDENTITY_BLOCKED",
+        "predictionInput": false,
+        "engineInput": false,
+        "marketBenchmarkOnly": true,
+        "sourceObservationRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json"
+      },
+      "blockingReason": [
+        "B1:IDENTITY_REVIEW_REQUIRED",
+        "ODDS:ODDS_IDENTITY_BLOCKED"
+      ]
+    }
+  ]
+}

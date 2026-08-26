@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "yang-edge-provider-coverage-gap-v1",
+  "dateKst": "2026-08-26",
+  "generatedAt": "2026-08-26T03:57:14.993Z",
+  "researchOnly": true,
+  "predictionInput": false,
+  "engineInput": false,
+  "currentlyPaidOrUsed": [
+    {
+      "provider": "API_BASEBALL",
+      "role": "KBO/NPB schedule identity + raw standings"
+    },
+    {
+      "provider": "THE_ODDS_API",
+      "role": "KBO/NPB h2h market benchmark"
+    },
+    {
+      "provider": "API_FOOTBALL",
+      "role": "football fixtures already captured; unused extra pregame"
+    },
+    {
+      "provider": "THESPORTSDB",
+      "role": "NPB schedule already collected in B1"
+    }
+  ],
+  "usefulDataActuallyProvided": [
+    "KBO/NPB fixture identity and kickoff",
+    "KBO cached season games for as-of recent form",
+    "KBO/NPB league standings raw snapshots",
+    "The Odds API h2h events for baseball sport keys"
+  ],
+  "gaps": [
+    {
+      "gap": "Football 14/14 operator rows not MATCHED",
+      "cause": "identity mapping / competition registry / truncated aliases / K League ID conflicts",
+      "classification": "FIX_REPOSITORY_FIRST",
+      "notAReasonToBuyAnotherApi": true
+    },
+    {
+      "gap": "Football injuries/lineups/standings not attached",
+      "cause": "adapter not implemented for YANG + operator identity unresolved",
+      "classification": "USE_EXISTING_API_MORE",
+      "notAReasonToBuyAnotherApi": true
+    },
+    {
+      "gap": "API-BASEBALL starters/injuries/lineups",
+      "cause": "provider missing coverage (no players/injuries/lineups endpoints)",
+      "classification": "NO_ACTION",
+      "notAReasonToBuyAnotherApi": true
+    },
+    {
+      "gap": "NPB recent form / team season stats not normalized",
+      "cause": "adapter not implemented; extra per-team calls avoided",
+      "classification": "USE_EXISTING_API_MORE",
+      "notAReasonToBuyAnotherApi": true
+    },
+    {
+      "gap": "리그스컵 already started",
+      "cause": "temporal miss",
+      "classification": "NO_ACTION",
+      "notAReasonToBuyAnotherApi": true
+    },
+    {
+      "gap": "한국W : 홍콩W volleyball",
+      "cause": "unsupported sport / no lawful volleyball provider",
+      "classification": "CONSIDER_NEW_API",
+      "purchaseDecision": "NONE",
+      "candidate": "API_VOLLEYBALL",
+      "noIntegrationThisMission": true
+    }
+  ],
+  "oddsReplayArchitecture": {
+    "defect": "B2 builder mixed COLLECT (TheOddsApiProvider.getOdds) with CLASSIFY/BUILD; a coverage rebuild spent 2 extra live units",
+    "classification": "FIX_REPOSITORY_FIRST",
+    "actualLiveCallsDuringOriginalB2": 4,
+    "intendedCollectionCalls": 2,
+    "unintendedRebuildCalls": 2,
+    "rebuildRequiresLiveProvider": false,
+    "futureExpectedCallsForEquivalentCollection": 2,
+    "replaySourceRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-v1.json",
+    "immutableCaptureRel": "data/research/odds/2026-08-26-the-odds-api-h2h-observation-2026-08-26T03-43-18-739Z-v1.json"
+  },
+  "footballUnresolvedMustNotAttachProviderInput": true,
+  "oddsAreBenchmarkNotModelInput": true
+}

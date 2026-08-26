@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "yang-edge-the-odds-api-h2h-observation-v1",
+  "dateKst": "2026-08-26",
+  "observationId": "the-odds-api-h2h-2026-08-26-2026-08-26T03:42:29.127Z",
+  "observedAt": "2026-08-26T03:42:29.127Z",
+  "appendOnly": true,
+  "overwriteForbidden": true,
+  "marketBenchmarkOnly": true,
+  "predictionInput": false,
+  "engineInput": false,
+  "kind": "PROVIDER_MARKET_OBSERVATION",
+  "notMergedWithManualOperatorObservation": true,
+  "manualOperatorObservationRel": "data/operator-observations/structured/2026-08-26/batch-1047-next-pregame-v0.json",
+  "provider": "THE_ODDS_API",
+  "requestedMarkets": "h2h",
+  "requestedRegions": "eu",
+  "commenceTimeFrom": "2026-08-25T15:00:00Z",
+  "commenceTimeTo": "2026-08-26T15:00:00Z",
+  "sportKeys": {
+    "kbo": "baseball_kbo",
+    "npb": "baseball_npb"
+  },
+  "calls": [
+    {
+      "sportKey": "baseball_kbo",
+      "requestedMarket": "h2h",
+      "requestedRegion": "eu",
+      "requestTime": "2026-08-26T03:42:30.929Z",
+      "responseTime": "2026-08-26T03:42:31.501Z",
+      "cached": false,
+      "usage": {
+        "requestsRemaining": 179,
+        "requestsUsed": 321,
+        "requestsLast": 1
+      },
+      "eventsReturned": 5
+    },
+    {
+      "sportKey": "baseball_npb",
+      "requestedMarket": "h2h",
+      "requestedRegion": "eu",
+      "requestTime": "2026-08-26T03:42:31.503Z",
+      "responseTime": "2026-08-26T03:42:31.730Z",
+      "cached": false,
+      "usage": {
+        "requestsRemaining": 178,
+        "requestsUsed": 322,
+        "requestsLast": 1
+      },
+      "eventsReturned": 6
+    }
+  ],
+  "kboEvents": [
+    {
+      "externalEventId": "65be1a7bc9ab079ca4ca3f4478fc9dc9",
+      "homeTeam": "KT Wiz",
+      "awayTeam": "Doosan Bears",
+      "commenceTime": "2026-08-26T09:30:00Z",
+      "bestHomeOdds": 1.99,
+      "bestAwayOdds": 1.91,
+      "impliedHomeProbability": 0.5025125628140703,
+      "impliedAwayProbability": 0.5235602094240838,
+      "bookmakerCount": 12
+    },
+    {
+      "externalEventId": "40b5021e0b914e9d9bac436a7ce28886",
+      "homeTeam": "SSG Landers",
+      "awayTeam": "Hanwha Eagles",
+      "commenceTime": "2026-08-26T09:30:00Z",
+      "bestHomeOdds": 2.57,
+      "bestAwayOdds": 1.57,
+      "impliedHomeProbability": 0.38910505836575876,
+      "impliedAwayProbability": 0.6369426751592356,
+      "bookmakerCount": 12
+    },
+    {
+      "externalEventId": "36cb8879f70305714faf3ebc16a251ef",
+      "homeTeam": "Kia Tigers",
+      "awayTeam": "Lotte Giants",
+      "commenceTime": "2026-08-26T09:30:00Z",
+      "bestHomeOdds": 1.95,
+      "bestAwayOdds": 1.95,
+      "impliedHomeProbability": 0.5128205128205129,
+      "impliedAwayProbability": 0.5128205128205129,
+      "bookmakerCount": 12
+    },
+    {
+      "externalEventId": "1536018ca2792d1b9813e0adb6b57fee",
+      "homeTeam": "Kiwoom Heroes",
+      "awayTeam": "Samsung Lions",
+      "commenceTime": "2026-08-26T09:30:00Z",
+      "bestHomeOdds": 2.78,
+      "bestAwayOdds": 1.51,
+      "impliedHomeProbability": 0.3597122302158274,
+      "impliedAwayProbability": 0.6622516556291391,
+      "bookmakerCount": 12
+    },
+    {
+      "externalEventId": "a79033035ccb0d0a17761f0b268f6216",
+      "homeTeam": "LG Twins",
+      "awayTeam": "NC Dinos",
+      "commenceTime": "2026-08-26T09:30:00Z",
+      "bestHomeOdds": 1.85,
+      "bestAwayOdds": 2.07,
+      "impliedHomeProbability": 0.5405405405405405,
+      "impliedAwayProbability": 0.48309178743961356,
+      "bookmakerCount": 12
+    }
+  ],
+  "npbEvents": [
+    {
+      "externalEventId": "159efce9151901394567555a7884e6a1",
+      "homeTeam": "Chiba Lotte Marines",
+      "awayTeam": "Fukuoka SoftBank Hawks",
+      "commenceTime": "2026-08-26T09:00:00Z",
+      "bestHomeOdds": 2.61,
+      "bestAwayOdds": 1.59,
+      "impliedHomeProbability": 0.3831417624521073,
+      "impliedAwayProbability": 0.6289308176100629,
+      "bookmakerCount": 14
+    },
+    {
+      "externalEventId": "6129653dac90f9c7b4e87a2653c1f1fe",
+      "homeTeam": "Chunichi Dragons",
+      "awayTeam": "Hanshin Tigers",
+      "commenceTime": "2026-08-26T09:00:00Z",
+      "bestHomeOdds": 2.04,
+      "bestAwayOdds": 1.85,
+      "impliedHomeProbability": 0.49019607843137253,
+      "impliedAwayProbability": 0.5405405405405405,
+      "bookmakerCount": 14
+    },
+    {
+      "externalEventId": "0800bd4be0f858f22256c2fe925f412c",
+      "homeTeam": "Hiroshima Toyo Carp",
+      "awayTeam": "Yokohama DeNA BayStars",
+      "commenceTime": "2026-08-26T09:00:00Z",
+      "bestHomeOdds": 2.77,
+      "bestAwayOdds": 1.53,
+      "impliedHomeProbability": 0.36101083032490977,
+      "impliedAwayProbability": 0.6535947712418301,
+      "bookmakerCount": 14
+    },
+    {
+      "externalEventId": "6ced86cf472ea24c707761ae8ffae943",
+      "homeTeam": "Saitama Seibu Lions",
+      "awayTeam": "Hokkaido Nippon-Ham Fighters",
+      "commenceTime": "2026-08-26T09:00:00Z",
+      "bestHomeOdds": 2.35,
+      "bestAwayOdds": 1.74,
+      "impliedHomeProbability": 0.425531914893617,
+      "impliedAwayProbability": 0.5747126436781609,
+      "bookmakerCount": 14
+    },
+    {
+      "externalEventId": "59cd511b4e106a36a8c93b1f245c8d7b",
+      "homeTeam": "Orix Buffaloes",
+      "awayTeam": "Tohoku Rakuten Golden Eagles",
+      "commenceTime": "2026-08-26T09:00:00Z",
+      "bestHomeOdds": 1.93,
+      "bestAwayOdds": 1.95,
+      "impliedHomeProbability": 0.5181347150259068,
+      "impliedAwayProbability": 0.5128205128205129,
+      "bookmakerCount": 14
+    },
+    {
+      "externalEventId": "172e8d5ff53992ecaeddb9aeeac32e27",
+      "homeTeam": "Tokyo Yakult Swallows",
+      "awayTeam": "Yomiuri Giants",
+      "commenceTime": "2026-08-26T09:00:00Z",
+      "bestHomeOdds": 2.27,
+      "bestAwayOdds": 1.71,
+      "impliedHomeProbability": 0.44052863436123346,
+      "impliedAwayProbability": 0.5847953216374269,
+      "bookmakerCount": 14
+    }
+  ]
+}
