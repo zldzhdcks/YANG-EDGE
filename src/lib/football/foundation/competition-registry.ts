@@ -127,6 +127,19 @@ export const FOOTBALL_COMPETITION_REGISTRY_V0: FootballCompetition[] = [
     betmanSupported: false,
     researchSupported: true,
   },
+  {
+    competitionId: "fb-comp-api-football-24",
+    provider: "api-football",
+    providerCompetitionId: "24",
+    officialName: "ASEAN Championship",
+    displayName: "축ASEA챔",
+    country: "World",
+    season: "2025",
+    competitionType: "INTERNATIONAL",
+    status: "RESEARCH_ONLY",
+    betmanSupported: false,
+    researchSupported: true,
+  },
 ];
 
 export function listCompetitions(): FootballCompetition[] {

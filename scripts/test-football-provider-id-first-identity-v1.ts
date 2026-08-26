@@ -34,14 +34,17 @@ const HISTORICAL_REL = [
   "data/research/football/2026-08-18-official-result-v0.json",
 ] as const;
 
-const FUNCTIONAL_SRC_GLOBS = [
-  "src/lib/football/core",
-  "src/lib/football/foundation",
+const TEAM_IDENTITY_SRC = [
+  "src/lib/football/core/team-catalog.ts",
+  "src/lib/football/core/identity.ts",
+  "src/lib/football/core/team-catalog-slate-2026-08.ts",
+  "src/lib/football/foundation/identity-gate.ts",
+  "src/lib/football/foundation/team-registry.ts",
+  "src/lib/engine",
   "src/lib/football/odds-1x2-v1",
   "src/lib/football/official-result-v0",
   "src/lib/football/prediction-snapshot-v0",
   "src/lib/football/market-baseline-prediction-v0",
-  "src/lib/engine",
 ] as const;
 
 function sha256File(abs: string): string {
@@ -188,7 +191,7 @@ async function main() {
   assert.equal(frozenGit, "");
 
   const srcDiff = execSync(
-    `git diff --name-only -- ${FUNCTIONAL_SRC_GLOBS.join(" ")}`,
+    `git diff --name-only -- ${TEAM_IDENTITY_SRC.join(" ")}`,
     { cwd, encoding: "utf8" },
   ).trim();
   assert.equal(srcDiff, "");

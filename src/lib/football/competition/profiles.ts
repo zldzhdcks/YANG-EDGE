@@ -203,6 +203,23 @@ export const FOOTBALL_COMPETITION_PROFILES_V1: FootballCompetitionProfile[] = [
     predictionEligibility: "NOT_SUPPORTED_FORMAT",
     idSources: ID_SOURCES,
   }),
+  profile({
+    competitionId: "fb-comp-api-football-24",
+    canonicalName: "ASEAN Championship",
+    displayNameKo: "축ASEA챔",
+    country: "World",
+    providerCompetitionId: "24",
+    competitionType: "INTERNATIONAL",
+    defaultMatchFormat: "UNKNOWN",
+    seasonCalendar: "EUROPEAN_SPLIT",
+    researchStatus: "RESEARCH_ONLY",
+    predictionEligibility: "NOT_SUPPORTED_FORMAT",
+    idSources: [
+      "data/research/football/2026-08-26-fixtures-captured-v1.json",
+      "data/research/football/2026-08-16-observed-slate-v0.json",
+      "data/research/football/2026-08-16-manual-observation-fixture-mapping-v1.json",
+    ],
+  }),
 ];
 
 export function listCompetitionProfiles(): FootballCompetitionProfile[] {

@@ -181,7 +181,16 @@ async function main() {
   const mls = getCompetitionProfileByProviderId("api-football", "253");
   assert.ok(mls);
   assert.equal(mls!.canonicalName, "Major League Soccer");
-  assert.equal(listCompetitionProfiles().length, 10);
+  assert.equal(listCompetitionProfiles().length, 11);
+  const asean = getCompetitionProfileByProviderId("api-football", "24");
+  assert.ok(asean);
+  assert.equal(asean!.canonicalName, "ASEAN Championship");
+  assert.equal(asean!.displayNameKo, "축ASEA챔");
+  assert.equal(asean!.competitionType, "INTERNATIONAL");
+  assert.equal(asean!.predictionEligibility, "NOT_SUPPORTED_FORMAT");
+  assert.equal(getCompetitionProfileByProviderId("api-football", "102"), null);
+  assert.equal(getCompetitionProfileByProviderId("api-football", "772"), null);
+  assert.equal(getCompetitionProfileByProviderId("api-football", "874"), null);
   assert.equal(
     listCompetitionProfiles().every((p) => p.seasonIdAuthoritative === "FIXTURE"),
     true,
@@ -220,6 +229,32 @@ async function main() {
     uclDoc.document.rows[0]!.predictionEligibility,
     "NOT_SUPPORTED_FORMAT",
   );
+
+  const aseanDoc = assembleFootballScheduleArtifact({
+    dateKst: "2026-08-26",
+    generatedAt: "2026-08-26T03:00:20.974Z",
+    fixtures: [
+      fixture({
+        id: 1630226,
+        leagueId: 24,
+        season: 2025,
+        homeId: 1542,
+        awayId: 1564,
+        homeName: "Vietnam",
+        awayName: "Thailand",
+        date: "2026-08-26T22:00:00+09:00",
+      }),
+    ],
+  });
+  assert.equal(aseanDoc.droppedUnregisteredCompetition, 0);
+  assert.equal(aseanDoc.document.meta.scheduleGames, 1);
+  assert.equal(aseanDoc.document.rows[0]!.competitionId, "fb-comp-api-football-24");
+  assert.equal(aseanDoc.document.rows[0]!.identityStatus, "IDENTITY_REVIEW_REQUIRED");
+  assert.equal(
+    aseanDoc.document.rows[0]!.predictionEligibility,
+    "IDENTITY_BLOCKED",
+  );
+
   assert.equal(
     resolvePredictionEligibility({
       identityOk: true,

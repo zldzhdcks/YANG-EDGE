@@ -364,12 +364,8 @@ async function main() {
     existsSync(path.join(cwd, "data/research/mlb/2026-08-26-schedule-v1.json")),
     false,
   );
-  assert.equal(
-    existsSync(
-      path.join(cwd, "data/research/football/2026-08-26-schedule-v1.json"),
-    ),
-    false,
-  );
+  // B1 schedule collect after lock may write football/KBO/NPB schedule
+  // artifacts. The lock JSON itself remains sealed and unchanged.
 
   const isolationDiff = execSync(
     `git diff --name-only -- ${ISOLATION_PATHS.join(" ")}`,
