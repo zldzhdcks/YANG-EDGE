@@ -1,0 +1,223 @@
+{
+  "schemaVersion": "yang-edge-daily-stage-g-daily-close-git-sync-v1",
+  "dateKst": "2026-08-26",
+  "mandatoryStage": "G_DAILY_CLOSE",
+  "weight": 5,
+  "closeAuditRunAt": "2026-08-27T13:13:09.709Z",
+  "architecture": {
+    "existingDailyCloseArtifact": "data/audits/2026-08-22-daily-close-v1.json",
+    "existingDailyCloseSchema": "yang-edge-daily-close-v1",
+    "existingCapableOfThisDayIntegrityAudit": false,
+    "extensionRequired": true,
+    "historicalArtifactsRewritten": false
+  },
+  "sources": [
+    {
+      "stage": "A",
+      "path": "data/audits/2026-08-26-daily-scope-lock-v1.json",
+      "expectedSha256": "97d04ce464c6e062264f20ea3de323a3e60eeac2e410c9ed6cf59c77d8a6c501",
+      "workingTreeSha256": "97d04ce464c6e062264f20ea3de323a3e60eeac2e410c9ed6cf59c77d8a6c501",
+      "matchesExpected": true,
+      "byteIdenticalToHead": true
+    },
+    {
+      "stage": "B1",
+      "path": "data/audits/2026-08-26-schedule-identity-reconciliation-v1.json",
+      "expectedSha256": "405c7f659edc21c9330d65c1bb61289776f8fd4e369b24a07101032105dd20b5",
+      "workingTreeSha256": "405c7f659edc21c9330d65c1bb61289776f8fd4e369b24a07101032105dd20b5",
+      "matchesExpected": true,
+      "byteIdenticalToHead": true
+    },
+    {
+      "stage": "B2",
+      "path": "data/audits/2026-08-26-pregame-input-odds-coverage-v1.json",
+      "expectedSha256": "8bea8a2890dd6f62adb490a362daea0edc3b505649e768de5bf10a64382c7d0e",
+      "workingTreeSha256": "8bea8a2890dd6f62adb490a362daea0edc3b505649e768de5bf10a64382c7d0e",
+      "matchesExpected": true,
+      "byteIdenticalToHead": true
+    },
+    {
+      "stage": "C",
+      "path": "data/audits/2026-08-26-prediction-pass-reconciliation-v1.json",
+      "expectedSha256": "236e8b99f63eb94236422e7ea5a09f392a3a20b36d9018f7919961bf718e728d",
+      "workingTreeSha256": "236e8b99f63eb94236422e7ea5a09f392a3a20b36d9018f7919961bf718e728d",
+      "matchesExpected": true,
+      "byteIdenticalToHead": true
+    },
+    {
+      "stage": "SNAPSHOT",
+      "path": "data/audits/2026-08-26-pregame-prediction-snapshot-v1.json",
+      "expectedSha256": "a9cf5201441ce72e2a6428534357701e251c7da616e63ef3458c8da0f078070e",
+      "workingTreeSha256": "a9cf5201441ce72e2a6428534357701e251c7da616e63ef3458c8da0f078070e",
+      "matchesExpected": true,
+      "byteIdenticalToHead": true
+    },
+    {
+      "stage": "E",
+      "path": "data/audits/2026-08-26-stage-e-result-grade-close-v1.json",
+      "expectedSha256": "0a81f3a2b05c67851593491ed8dc683e05b836c6da3e354c1204c62d15875ec3",
+      "workingTreeSha256": "0a81f3a2b05c67851593491ed8dc683e05b836c6da3e354c1204c62d15875ec3",
+      "matchesExpected": true,
+      "byteIdenticalToHead": true
+    },
+    {
+      "stage": "F",
+      "path": "data/audits/2026-08-26-stage-f-success-failure-review-scorecard-v1.json",
+      "expectedSha256": "08bb1859ab46f0ec6a1f10e28163a4083ad1bec8266bcddde575ca45ee137683",
+      "workingTreeSha256": "08bb1859ab46f0ec6a1f10e28163a4083ad1bec8266bcddde575ca45ee137683",
+      "matchesExpected": true,
+      "byteIdenticalToHead": true
+    }
+  ],
+  "gitLineage": {
+    "head": "fc2f3591d8492f474cb56f55b6e188739aebfa8d",
+    "originMain": "fc2f3591d8492f474cb56f55b6e188739aebfa8d",
+    "headEqualsOriginMain": true,
+    "statusSbAtCandidateBuild": "## main...origin/main\n M package.json\n?? scripts/audit-2026-08-26-stage-g-daily-close-v1.ts\n?? scripts/test-2026-08-26-stage-g-daily-close-v1.ts\n?? src/lib/daily-ops/stage-g-daily-close-v1/",
+    "aCommit": "48ffb4cd6f3d20558f2011b28813a9c913620783",
+    "b1Commit": "e12edabe4b8c46eeab4653ff6426f799075b64fe",
+    "b2Commit": "3f1ef7ac014d8edb32edbca3d640b54ba4829108",
+    "cAndDEquivalentCommit": "2efa2c219b59ab797ec244e1319dffa9dc1d814a",
+    "eCommit": "ef5859abdb354f78a56c2ed158a40ab46694cc37",
+    "fCommit": "fc2f3591d8492f474cb56f55b6e188739aebfa8d",
+    "fParent": "ef5859abdb354f78a56c2ed158a40ab46694cc37",
+    "forceRewriteDetected": false
+  },
+  "dEvidence": {
+    "kind": "PREGAME_GIT_REMOTE_SEAL_EQUIVALENT",
+    "commit": "2efa2c219b59ab797ec244e1319dffa9dc1d814a",
+    "message": "research: seal 2026-08-26 prediction pass snapshot",
+    "separateStageDArtifact": false
+  },
+  "credits": {
+    "A": {
+      "awarded": 10,
+      "of": 10
+    },
+    "B": {
+      "awarded": 20,
+      "of": 20
+    },
+    "C": {
+      "awarded": 20,
+      "of": 20
+    },
+    "D": {
+      "awarded": 10,
+      "of": 10
+    },
+    "E": {
+      "awarded": 15,
+      "of": 15
+    },
+    "F": {
+      "awarded": 20,
+      "of": 20
+    },
+    "G": {
+      "awarded": 0,
+      "of": 5
+    },
+    "preGTotal": 95,
+    "officialCompletionBeforeSeal": 95,
+    "targetCompletionAfterSeal": 100
+  },
+  "scope": {
+    "scopeTotal": 26,
+    "baseball": 11,
+    "kbo": 5,
+    "npb": 6,
+    "football": 14,
+    "volleyball": 1,
+    "mlb": 0,
+    "laterGamesAdded": false
+  },
+  "predictionPass": {
+    "predictionCount": 0,
+    "passCount": 26,
+    "passEngineNotApproved": 11,
+    "passIdentityReviewRequired": 13,
+    "passMissedPreGameWindow": 1,
+    "passProviderNotSupported": 1,
+    "passReasonTotal": 26,
+    "gradedPredictionCount": 0,
+    "predictionPerformanceStatus": "NO_GRADABLE_PREDICTIONS",
+    "predictionPerformanceSemantics": "NOT_APPLICABLE",
+    "accuracy": {
+      "value": null,
+      "semantics": "NOT_APPLICABLE"
+    },
+    "hitRate": {
+      "value": null,
+      "semantics": "NOT_APPLICABLE"
+    },
+    "roi": {
+      "value": null,
+      "semantics": "NOT_APPLICABLE"
+    },
+    "yield": {
+      "value": null,
+      "semantics": "NOT_APPLICABLE"
+    },
+    "passAssignedSuccessFailureCount": 0,
+    "passConvertedToGradedOutcome": 0,
+    "retroactivePrediction": false
+  },
+  "resultGrade": {
+    "operationallyClosedCount": 26,
+    "finalResultCount": 13,
+    "terminalCoverageGapCount": 13,
+    "identityCoverageGapCount": 12,
+    "unsupportedCoverageGapCount": 1,
+    "activePendingCount": 0,
+    "resultCoverage": "13_OF_26",
+    "fullFinalClaim": false,
+    "operationalCloseIsNotFullFinalCoverage": true,
+    "resultRequiresCanonical": false,
+    "fabricatedScoreCount": 0
+  },
+  "fReview": {
+    "hygieneControlCount": 15,
+    "hygieneAllPass": true,
+    "validatedHypothesisCreated": 0,
+    "enginePromotion": 0,
+    "hindsightRerun": false
+  },
+  "leakageAudit": {
+    "status": "PASS",
+    "resultMutatedScope": false,
+    "resultMutatedB1": false,
+    "resultMutatedB2": false,
+    "resultMutatedC": false,
+    "resultMutatedSnapshot": false,
+    "stageFMutatedPregame": false,
+    "stageFCreatedPrediction": false,
+    "postgameBecamePregameInput": false,
+    "passChangedAfterResult": false
+  },
+  "marketOddsFirewall": {
+    "status": "PASS",
+    "marketBenchmarkOnly": true,
+    "predictionInput": false,
+    "engineInput": false
+  },
+  "engineWeightAudit": {
+    "engineModified": false,
+    "weightsModified": false,
+    "interveningFoundationSeparatedFromDayPredictionInputs": true
+  },
+  "identityAudit": {
+    "fuzzyMatchingUsed": false,
+    "forcedCanonicalApproval": false,
+    "resultIdentityTerminalGapsRemain": 12,
+    "predictionIdentityEqualsResultIdentity": false,
+    "resultRequiresCanonical": false,
+    "identityRepairedInStageG": false
+  },
+  "providerNetworkCallCount": 0,
+  "providerPredictionsEndpointUsed": false,
+  "dayContribution": "OPERATIONS_AND_DATA_QUALITY_EVIDENCE_NOT_PREDICTION_ACCURACY",
+  "credit": 0,
+  "gStatus": "CANDIDATE_COMPLETE",
+  "stageResult": "READY_FOR_OWNER_REMOTE_SEAL"
+}
