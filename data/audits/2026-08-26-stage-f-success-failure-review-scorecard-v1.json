@@ -1,0 +1,854 @@
+{
+  "schemaVersion": "yang-edge-daily-stage-f-success-failure-review-scorecard-v1",
+  "dateKst": "2026-08-26",
+  "mandatoryStage": "F_SUCCESS_FAILURE_REVIEW_SCORECARD",
+  "weight": 20,
+  "reviewRunAt": "2026-08-27T12:48:26.080Z",
+  "lockedScope": 26,
+  "scopeTotal": 26,
+  "accountedFor": 26,
+  "sources": {
+    "scopeArtifact": "data/audits/2026-08-26-daily-scope-lock-v1.json",
+    "scopeHash": "97d04ce464c6e062264f20ea3de323a3e60eeac2e410c9ed6cf59c77d8a6c501",
+    "b1Artifact": "data/audits/2026-08-26-schedule-identity-reconciliation-v1.json",
+    "b1Hash": "405c7f659edc21c9330d65c1bb61289776f8fd4e369b24a07101032105dd20b5",
+    "b2Artifact": "data/audits/2026-08-26-pregame-input-odds-coverage-v1.json",
+    "b2Hash": "8bea8a2890dd6f62adb490a362daea0edc3b505649e768de5bf10a64382c7d0e",
+    "cArtifact": "data/audits/2026-08-26-prediction-pass-reconciliation-v1.json",
+    "cHash": "236e8b99f63eb94236422e7ea5a09f392a3a20b36d9018f7919961bf718e728d",
+    "snapshotArtifact": "data/audits/2026-08-26-pregame-prediction-snapshot-v1.json",
+    "snapshotHash": "a9cf5201441ce72e2a6428534357701e251c7da616e63ef3458c8da0f078070e",
+    "eArtifact": "data/audits/2026-08-26-stage-e-result-grade-close-v1.json",
+    "eHash": "0a81f3a2b05c67851593491ed8dc683e05b836c6da3e354c1204c62d15875ec3"
+  },
+  "architecture": {
+    "existingDailyStageFArtifact": "data/audits/2026-08-22-stage-f-review-close-v1.json",
+    "existingDailyStageFSchema": "yang-edge-daily-stage-f-review-close-v1",
+    "existingCapableOfPassOnlyNa": true,
+    "existingCapableOfOperationalProcessReview": false,
+    "footballPickLevelScorecardApplied": false,
+    "mlbPickLevelScorecardApplied": false,
+    "passOnlyExtensionRequired": true,
+    "historicalArtifactsRewritten": false
+  },
+  "predictionPerformance": {
+    "status": "NO_GRADABLE_PREDICTIONS",
+    "predictionCount": 0,
+    "passCount": 26,
+    "gradedPredictionCount": 0,
+    "correct": 0,
+    "incorrect": 0,
+    "accuracy": {
+      "value": null,
+      "semantics": "NOT_APPLICABLE"
+    },
+    "hitRate": {
+      "value": null,
+      "semantics": "NOT_APPLICABLE"
+    },
+    "roi": {
+      "value": null,
+      "semantics": "NOT_APPLICABLE"
+    },
+    "yield": {
+      "value": null,
+      "semantics": "NOT_APPLICABLE"
+    },
+    "passAssignedSuccessFailureCount": 0,
+    "passHitMissCount": 0,
+    "passWinLossCount": 0,
+    "perGameSuccessFailureReviews": 0,
+    "hindsightCounterfactualGrading": false
+  },
+  "cStateCounts": {
+    "PREDICTION": 0,
+    "PASS_ENGINE_NOT_APPROVED": 11,
+    "PASS_IDENTITY_REVIEW_REQUIRED": 13,
+    "PASS_MISSED_PRE_GAME_WINDOW": 1,
+    "PASS_PROVIDER_NOT_SUPPORTED": 1
+  },
+  "resultCoverage": {
+    "operationallyClosedCount": 26,
+    "finalResultCount": 13,
+    "finalOfScope": "13_OF_26",
+    "operationallyClosedOfScope": "26_OF_26",
+    "fullFinalClaim": false,
+    "terminalCoverageGapCount": 13,
+    "identityCoverageGapCount": 12,
+    "unsupportedCoverageGapCount": 1,
+    "activePendingCount": 0,
+    "operationalCloseIsNotFullFinalCoverage": true,
+    "resultRequiresCanonical": false
+  },
+  "marketOddsIsolation": {
+    "marketBenchmarkOnly": true,
+    "predictionInput": false,
+    "engineInput": false,
+    "baseballMarketObservationCount": 11,
+    "oddsGraded": false,
+    "hypotheticalYangPickFromOdds": false
+  },
+  "sportFindings": {
+    "baseball": {
+      "scopedCount": 11,
+      "kboCount": 5,
+      "npbCount": 6,
+      "b1MatchedCount": 11,
+      "b2OddsCollectedCount": 11,
+      "passEngineNotApprovedCount": 11,
+      "interpretation": "MODEL_RESEARCH_GOVERNANCE_BOTTLENECK",
+      "dataLossFailure": false,
+      "engineActivationRecommended": false
+    },
+    "football": {
+      "scopedCount": 14,
+      "passIdentityReviewRequiredCount": 13,
+      "resultIdentityUnresolvedTerminalCount": 12,
+      "predictionIdentityEqualsResultIdentity": false,
+      "unregisteredCompetitionPassCount": 9,
+      "registeredCompetitionIdentityConflictCount": 4,
+      "exactResultLookupDespitePredictionIdentityGapCount": 2
+    },
+    "volleyball": {
+      "scopedCount": 1,
+      "passProviderNotSupportedCount": 1,
+      "resultProviderUnsupportedTerminalCount": 1,
+      "providerPurchased": false,
+      "providerImplemented": false
+    },
+    "missedPregameWindow": {
+      "officialCPassCount": 1,
+      "operatorGameId": "FOOTBALL|2026-08-26|11:30|리그스컵|레온|레알솔트",
+      "retroactiveRepair": false
+    }
+  },
+  "researchProcessSuccesses": [
+    {
+      "id": "SCOPE_26_OF_26",
+      "statement": "26/26 locked scope accounted for",
+      "evidence": [
+        "C.lockedScope=26",
+        "E.accountedFor=26"
+      ]
+    },
+    {
+      "id": "PREDICTION_ZERO_PRESERVED",
+      "statement": "Prediction 0 preserved honestly; accuracy is NOT_APPLICABLE, not 0%",
+      "evidence": [
+        "C.predictionCount=0",
+        "E.gradedPredictionCount=0"
+      ]
+    },
+    {
+      "id": "PASS_26_PRESERVED",
+      "statement": "PASS 26 preserved; no PASS→hit/miss conversion",
+      "evidence": [
+        "C.passCount=26",
+        "E.passHitMissCount=0"
+      ]
+    },
+    {
+      "id": "NO_RETROACTIVE_PREDICTION",
+      "statement": "No retroactive prediction created after Results",
+      "evidence": [
+        "E.retroactivePredictionAllowed=false"
+      ]
+    },
+    {
+      "id": "NO_FUZZY_IDENTITY",
+      "statement": "No fuzzy identity resolution",
+      "evidence": [
+        "E.fuzzyResultMatching=false"
+      ]
+    },
+    {
+      "id": "MARKET_ODDS_ISOLATED",
+      "statement": "Market odds isolated from prediction/engine (research hygiene success)",
+      "evidence": [
+        "B2.marketBenchmarkOnly=true",
+        "B2.predictionInput=false",
+        "B2.engineInput=false"
+      ]
+    },
+    {
+      "id": "RESULT_DID_NOT_MUTATE_PREGAME",
+      "statement": "Result did not mutate Pregame / C / Snapshot",
+      "evidence": [
+        "E.leakage.pregameArtifactsWritten=false",
+        "E.leakage.cArtifactMutated=false"
+      ]
+    },
+    {
+      "id": "NO_FALSE_26_OF_26_FINAL",
+      "statement": "Operational close without a fake 26/26 FINAL claim",
+      "evidence": [
+        "operationallyClosedCount=26",
+        "finalOfScope=13_OF_26",
+        "fullFinalClaim=false"
+      ]
+    },
+    {
+      "id": "TERMINAL_COVERAGE_GAP_SEMANTICS",
+      "statement": "Terminal coverage gap semantics used for unresolved/unsupported Result rows",
+      "evidence": [
+        "terminalCoverageGapCount=13",
+        "identityCoverageGapCount=12",
+        "unsupportedCoverageGapCount=1"
+      ]
+    },
+    {
+      "id": "OFFICIAL_RESULT_1630226",
+      "statement": "Official Result pipeline used for exact fixture 1630226",
+      "evidence": [
+        "E fixture 1630226 FT FINAL 2-2 PROVIDER_CONFIRMED_TERMINAL"
+      ]
+    },
+    {
+      "id": "NO_ENGINE_WEIGHT_CHANGE",
+      "statement": "No Engine/Weight changes",
+      "evidence": [
+        "E.engineConnected=false",
+        "C.footballEngineRun=false"
+      ]
+    }
+  ],
+  "researchProcessGaps": [
+    {
+      "id": "KBO_NPB_MODEL_NOT_APPROVED",
+      "statement": "KBO/NPB pregame identity and market observations existed, but no approved prediction engine was allowed to produce picks",
+      "count": 11,
+      "rootCauseClass": "MODEL_NOT_APPROVED",
+      "evidence": [
+        "C.PASS_ENGINE_NOT_APPROVED",
+        "B1 MATCHED baseball",
+        "B2 ODDS_COLLECTED baseball"
+      ],
+      "notAPredictionFailure": true
+    },
+    {
+      "id": "FOOTBALL_PREDICTION_IDENTITY_REVIEW",
+      "statement": "Football Prediction identity/competition/exact fixture binding was a bottleneck",
+      "count": 13,
+      "rootCauseClass": "IDENTITY_COVERAGE",
+      "evidence": [
+        "C.PASS_IDENTITY_REVIEW_REQUIRED"
+      ],
+      "notAPredictionFailure": true
+    },
+    {
+      "id": "FOOTBALL_RESULT_IDENTITY_TERMINAL_GAPS",
+      "statement": "Football Result identity terminal coverage gaps are a separate Result-domain limitation",
+      "count": 12,
+      "rootCauseClass": "RESULT_COVERAGE",
+      "evidence": [
+        "E.RESULT_IDENTITY_UNRESOLVED_TERMINAL",
+        "predictionIdentityEqualsResultIdentity=false"
+      ],
+      "notAPredictionFailure": true
+    },
+    {
+      "id": "VOLLEYBALL_PROVIDER_UNSUPPORTED",
+      "statement": "Volleyball provider coverage gap; no provider purchased or implemented in F",
+      "count": 1,
+      "rootCauseClass": "PROVIDER_COVERAGE",
+      "evidence": [
+        "C.PASS_PROVIDER_NOT_SUPPORTED",
+        "E.RESULT_PROVIDER_UNSUPPORTED_TERMINAL"
+      ],
+      "notAPredictionFailure": true
+    },
+    {
+      "id": "MISSED_PREGAME_WINDOW",
+      "statement": "One official PASS_MISSED_PRE_GAME_WINDOW operational timing/capture gap",
+      "count": 1,
+      "rootCauseClass": "TIMING_CAPTURE",
+      "evidence": [
+        "FOOTBALL|2026-08-26|11:30|리그스컵|레온|레알솔트"
+      ],
+      "notAPredictionFailure": true
+    },
+    {
+      "id": "FINAL_RESULT_COVERAGE_13_OF_26",
+      "statement": "Actual final Result coverage 13/26 is a material data coverage limitation, while operational close was 26/26",
+      "count": 13,
+      "rootCauseClass": "RESULT_COVERAGE",
+      "evidence": [
+        "E.resultCoverage.finalOfScope",
+        "OPERATIONAL_CLOSE_IS_NOT_FULL_FINAL_COVERAGE"
+      ],
+      "notAPredictionFailure": true
+    }
+  ],
+  "researchHygieneControls": [
+    {
+      "id": "LOCKED_SCOPE_ACCOUNTABILITY",
+      "status": "PASS",
+      "evidence": [
+        "scopeTotal=26",
+        "accountedFor=26"
+      ]
+    },
+    {
+      "id": "PREGAME_POSTGAME_SEPARATION",
+      "status": "PASS",
+      "evidence": [
+        "C snapshotKind=PRE_GAME_C_PASS_SNAPSHOT",
+        "Stage F reads sealed E without rewriting Pregame"
+      ]
+    },
+    {
+      "id": "RETROACTIVE_PREDICTION_PROHIBITION",
+      "status": "PASS",
+      "evidence": [
+        "predictionCount=0",
+        "e.retroactivePredictionAllowed=false"
+      ]
+    },
+    {
+      "id": "PASS_PRESERVATION",
+      "status": "PASS",
+      "evidence": [
+        "passCount=26",
+        "gradedPredictionCount=0",
+        "passHitMissCount=0"
+      ]
+    },
+    {
+      "id": "NO_FUZZY_IDENTITY_MATCHING",
+      "status": "PASS",
+      "evidence": [
+        "e.fuzzyResultMatching=false"
+      ]
+    },
+    {
+      "id": "MARKET_ODDS_ISOLATION",
+      "status": "PASS",
+      "evidence": [
+        "b2.marketBenchmarkOnly=true",
+        "b2.predictionInput=false",
+        "b2.engineInput=false"
+      ]
+    },
+    {
+      "id": "RESULT_TO_PREGAME_FIREWALL",
+      "status": "PASS",
+      "evidence": [
+        "e.leakage.pregameArtifactsWritten=false"
+      ]
+    },
+    {
+      "id": "RESULT_TO_PREDICTION_FIREWALL",
+      "status": "PASS",
+      "evidence": [
+        "e.leakage.predictionArtifactsWritten=false",
+        "e.predictionConnected=false"
+      ]
+    },
+    {
+      "id": "ENGINE_WEIGHT_IMMUTABILITY",
+      "status": "PASS",
+      "evidence": [
+        "e.engineConnected=false",
+        "c.kboEngineApproved=false",
+        "c.npbEngineApproved=false",
+        "c.footballEngineRun=false"
+      ]
+    },
+    {
+      "id": "TERMINAL_COVERAGE_GAPS_EXPLICIT",
+      "status": "PASS",
+      "evidence": [
+        "terminalCoverageGapCount=13",
+        "fullFinalClaim=false"
+      ]
+    },
+    {
+      "id": "UNSUPPORTED_ROWS_IN_DENOMINATOR",
+      "status": "PASS",
+      "evidence": [
+        "unsupportedCoverageGapCount=1",
+        "volleyball retained in lockedScope=26"
+      ]
+    },
+    {
+      "id": "NO_FABRICATED_SCORES",
+      "status": "PASS",
+      "evidence": [
+        "non-FINAL E rows have null scores (Stage E invariant)"
+      ]
+    },
+    {
+      "id": "NO_FABRICATED_PREDICTION_PERFORMANCE",
+      "status": "PASS",
+      "evidence": [
+        "accuracy/hitRate/ROI/yield = NOT_APPLICABLE",
+        "PASS not assigned SUCCESS/FAILURE"
+      ]
+    },
+    {
+      "id": "PROVIDER_NETWORK_DISCIPLINE",
+      "status": "PASS",
+      "evidence": [
+        "Stage F provider/network calls=0",
+        "repository-only retrospective"
+      ]
+    },
+    {
+      "id": "SEALED_ARTIFACT_INTEGRITY",
+      "status": "PASS",
+      "evidence": [
+        "hashesMatch=true",
+        "scopeOk=true"
+      ]
+    }
+  ],
+  "futureResearchCandidates": [
+    {
+      "kind": "FOLLOW_UP_CANDIDATE",
+      "id": "KBO_NPB_APPROVED_MODEL_PATH",
+      "title": "KBO/NPB approved-model research path: sample accumulation, feature validation, backtest, approval gate",
+      "evidence": [
+        "PASS_ENGINE_NOT_APPROVED=11",
+        "B1 MATCHED",
+        "B2 ODDS_COLLECTED"
+      ],
+      "implemented": false,
+      "hypothesisValidated": false,
+      "enginePromotion": false,
+      "weightChange": false
+    },
+    {
+      "kind": "FOLLOW_UP_CANDIDATE",
+      "id": "FOOTBALL_IDENTITY_COVERAGE",
+      "title": "Football identity coverage: team registry, aliases, competition registration, deterministic fixture binding",
+      "evidence": [
+        "PASS_IDENTITY_REVIEW_REQUIRED=13",
+        "RESULT_IDENTITY_UNRESOLVED_TERMINAL=12",
+        "domains remain semantically distinct"
+      ],
+      "implemented": false,
+      "hypothesisValidated": false,
+      "enginePromotion": false,
+      "weightChange": false
+    },
+    {
+      "kind": "FOLLOW_UP_CANDIDATE",
+      "id": "VOLLEYBALL_PROVIDER_COVERAGE_DECISION",
+      "title": "Volleyball provider coverage decision only if repeated operational demand justifies it; lawful/provider-license review first",
+      "evidence": [
+        "PASS_PROVIDER_NOT_SUPPORTED=1"
+      ],
+      "implemented": false,
+      "hypothesisValidated": false,
+      "enginePromotion": false,
+      "weightChange": false
+    },
+    {
+      "kind": "FOLLOW_UP_CANDIDATE",
+      "id": "PREGAME_TIMING_RELIABILITY",
+      "title": "Pregame timing reliability: earlier intake, scheduled capture, missed-window monitoring",
+      "evidence": [
+        "PASS_MISSED_PRE_GAME_WINDOW=1"
+      ],
+      "implemented": false,
+      "hypothesisValidated": false,
+      "enginePromotion": false,
+      "weightChange": false
+    }
+  ],
+  "games": [
+    {
+      "operatorGameId": "VOLLEYBALL|2026-08-26|11:00|여배아선|한국W|홍콩W",
+      "sport": "VOLLEYBALL",
+      "league": "여배아선",
+      "cState": "PASS_PROVIDER_NOT_SUPPORTED",
+      "eCloseClass": "RESULT_PROVIDER_UNSUPPORTED_TERMINAL",
+      "eResultState": "UNSUPPORTED",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "PROVIDER_COVERAGE",
+      "additionalRootCauseClasses": []
+    },
+    {
+      "operatorGameId": "NPB|2026-08-26|18:00|NPB|야쿠르트|요미우리",
+      "sport": "NPB",
+      "league": "NPB",
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "eCloseClass": "PROVIDER_CONFIRMED_TERMINAL",
+      "eResultState": "FINAL",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "MODEL_NOT_APPROVED",
+      "additionalRootCauseClasses": []
+    },
+    {
+      "operatorGameId": "NPB|2026-08-26|18:00|NPB|주니치|한신",
+      "sport": "NPB",
+      "league": "NPB",
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "eCloseClass": "PROVIDER_CONFIRMED_TERMINAL",
+      "eResultState": "FINAL",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "MODEL_NOT_APPROVED",
+      "additionalRootCauseClasses": []
+    },
+    {
+      "operatorGameId": "NPB|2026-08-26|18:00|NPB|히로카프|요코베이",
+      "sport": "NPB",
+      "league": "NPB",
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "eCloseClass": "PROVIDER_CONFIRMED_TERMINAL",
+      "eResultState": "FINAL",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "MODEL_NOT_APPROVED",
+      "additionalRootCauseClasses": []
+    },
+    {
+      "operatorGameId": "NPB|2026-08-26|18:00|NPB|세이부|닛폰햄",
+      "sport": "NPB",
+      "league": "NPB",
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "eCloseClass": "PROVIDER_CONFIRMED_TERMINAL",
+      "eResultState": "FINAL",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "MODEL_NOT_APPROVED",
+      "additionalRootCauseClasses": []
+    },
+    {
+      "operatorGameId": "NPB|2026-08-26|18:00|NPB|지바롯데|소프트뱅",
+      "sport": "NPB",
+      "league": "NPB",
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "eCloseClass": "PROVIDER_CONFIRMED_TERMINAL",
+      "eResultState": "FINAL",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "MODEL_NOT_APPROVED",
+      "additionalRootCauseClasses": []
+    },
+    {
+      "operatorGameId": "NPB|2026-08-26|18:00|NPB|오릭스|라쿠텐",
+      "sport": "NPB",
+      "league": "NPB",
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "eCloseClass": "PROVIDER_CONFIRMED_TERMINAL",
+      "eResultState": "FINAL",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "MODEL_NOT_APPROVED",
+      "additionalRootCauseClasses": []
+    },
+    {
+      "operatorGameId": "KBO|2026-08-26|18:30|KBO|LG|NC",
+      "sport": "KBO",
+      "league": "KBO",
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "eCloseClass": "PROVIDER_CONFIRMED_TERMINAL",
+      "eResultState": "FINAL",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "MODEL_NOT_APPROVED",
+      "additionalRootCauseClasses": []
+    },
+    {
+      "operatorGameId": "KBO|2026-08-26|18:30|KBO|SSG|한화",
+      "sport": "KBO",
+      "league": "KBO",
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "eCloseClass": "PROVIDER_CONFIRMED_TERMINAL",
+      "eResultState": "FINAL",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "MODEL_NOT_APPROVED",
+      "additionalRootCauseClasses": []
+    },
+    {
+      "operatorGameId": "KBO|2026-08-26|18:30|KBO|KIA|롯데",
+      "sport": "KBO",
+      "league": "KBO",
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "eCloseClass": "PROVIDER_CONFIRMED_TERMINAL",
+      "eResultState": "FINAL",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "MODEL_NOT_APPROVED",
+      "additionalRootCauseClasses": []
+    },
+    {
+      "operatorGameId": "KBO|2026-08-26|18:30|KBO|KT|두산",
+      "sport": "KBO",
+      "league": "KBO",
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "eCloseClass": "PROVIDER_CONFIRMED_TERMINAL",
+      "eResultState": "FINAL",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "MODEL_NOT_APPROVED",
+      "additionalRootCauseClasses": []
+    },
+    {
+      "operatorGameId": "KBO|2026-08-26|18:30|KBO|키움|삼성",
+      "sport": "KBO",
+      "league": "KBO",
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "eCloseClass": "PROVIDER_CONFIRMED_TERMINAL",
+      "eResultState": "FINAL",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "MODEL_NOT_APPROVED",
+      "additionalRootCauseClasses": []
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|11:30|리그스컵|레온|레알솔트",
+      "sport": "FOOTBALL",
+      "league": "리그스컵",
+      "cState": "PASS_MISSED_PRE_GAME_WINDOW",
+      "eCloseClass": "RESULT_IDENTITY_UNRESOLVED_TERMINAL",
+      "eResultState": "IDENTITY_UNRESOLVED",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "TIMING_CAPTURE",
+      "additionalRootCauseClasses": [
+        "IDENTITY_COVERAGE",
+        "COMPETITION_REGISTRY",
+        "RESULT_COVERAGE"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|18:30|호주FA컵|프레라이|사우스멜",
+      "sport": "FOOTBALL",
+      "league": "호주FA컵",
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "eCloseClass": "RESULT_IDENTITY_UNRESOLVED_TERMINAL",
+      "eResultState": "IDENTITY_UNRESOLVED",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "IDENTITY_COVERAGE",
+      "additionalRootCauseClasses": [
+        "COMPETITION_REGISTRY",
+        "RESULT_COVERAGE"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|C삿포로|V고후",
+      "sport": "FOOTBALL",
+      "league": "일본FA컵",
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "eCloseClass": "RESULT_IDENTITY_UNRESOLVED_TERMINAL",
+      "eResultState": "IDENTITY_UNRESOLVED",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "IDENTITY_COVERAGE",
+      "additionalRootCauseClasses": [
+        "COMPETITION_REGISTRY",
+        "RESULT_COVERAGE"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|J이와타|미야자키",
+      "sport": "FOOTBALL",
+      "league": "일본FA컵",
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "eCloseClass": "RESULT_IDENTITY_UNRESOLVED_TERMINAL",
+      "eResultState": "IDENTITY_UNRESOLVED",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "IDENTITY_COVERAGE",
+      "additionalRootCauseClasses": [
+        "COMPETITION_REGISTRY",
+        "RESULT_COVERAGE"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|이와키|오이타T",
+      "sport": "FOOTBALL",
+      "league": "일본FA컵",
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "eCloseClass": "RESULT_IDENTITY_UNRESOLVED_TERMINAL",
+      "eResultState": "IDENTITY_UNRESOLVED",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "IDENTITY_COVERAGE",
+      "additionalRootCauseClasses": [
+        "COMPETITION_REGISTRY",
+        "RESULT_COVERAGE"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|사간도스|K도야마",
+      "sport": "FOOTBALL",
+      "league": "일본FA컵",
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "eCloseClass": "RESULT_IDENTITY_UNRESOLVED_TERMINAL",
+      "eResultState": "IDENTITY_UNRESOLVED",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "IDENTITY_COVERAGE",
+      "additionalRootCauseClasses": [
+        "COMPETITION_REGISTRY",
+        "RESULT_COVERAGE"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|이마바리|B아키타",
+      "sport": "FOOTBALL",
+      "league": "일본FA컵",
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "eCloseClass": "RESULT_IDENTITY_UNRESOLVED_TERMINAL",
+      "eResultState": "IDENTITY_UNRESOLVED",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "IDENTITY_COVERAGE",
+      "additionalRootCauseClasses": [
+        "COMPETITION_REGISTRY",
+        "RESULT_COVERAGE"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|RB오미야|하치노헤",
+      "sport": "FOOTBALL",
+      "league": "일본FA컵",
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "eCloseClass": "RESULT_IDENTITY_UNRESOLVED_TERMINAL",
+      "eResultState": "IDENTITY_UNRESOLVED",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "IDENTITY_COVERAGE",
+      "additionalRootCauseClasses": [
+        "COMPETITION_REGISTRY",
+        "RESULT_COVERAGE"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|야마가타|후지에다",
+      "sport": "FOOTBALL",
+      "league": "일본FA컵",
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "eCloseClass": "RESULT_IDENTITY_UNRESOLVED_TERMINAL",
+      "eResultState": "IDENTITY_UNRESOLVED",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "IDENTITY_COVERAGE",
+      "additionalRootCauseClasses": [
+        "COMPETITION_REGISTRY",
+        "RESULT_COVERAGE"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:00|일본FA컵|V센다이|도치기SC",
+      "sport": "FOOTBALL",
+      "league": "일본FA컵",
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "eCloseClass": "RESULT_IDENTITY_UNRESOLVED_TERMINAL",
+      "eResultState": "IDENTITY_UNRESOLVED",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "IDENTITY_COVERAGE",
+      "additionalRootCauseClasses": [
+        "COMPETITION_REGISTRY",
+        "RESULT_COVERAGE"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:30|K리그1|FC안양|인천유나",
+      "sport": "FOOTBALL",
+      "league": "K리그1",
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "eCloseClass": "RESULT_IDENTITY_UNRESOLVED_TERMINAL",
+      "eResultState": "IDENTITY_UNRESOLVED",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "IDENTITY_COVERAGE",
+      "additionalRootCauseClasses": [
+        "RESULT_COVERAGE"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:30|K리그1|대전하나|울산HDFC",
+      "sport": "FOOTBALL",
+      "league": "K리그1",
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "eCloseClass": "RESULT_IDENTITY_UNRESOLVED_TERMINAL",
+      "eResultState": "IDENTITY_UNRESOLVED",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "IDENTITY_COVERAGE",
+      "additionalRootCauseClasses": [
+        "RESULT_COVERAGE"
+      ]
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|19:30|K리그1|강원FC|광주FC",
+      "sport": "FOOTBALL",
+      "league": "K리그1",
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "eCloseClass": "PROVIDER_CONFIRMED_TERMINAL",
+      "eResultState": "FINAL",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "IDENTITY_COVERAGE",
+      "additionalRootCauseClasses": []
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-26|22:00|축ASEA챔|베트남|태국",
+      "sport": "FOOTBALL",
+      "league": "축ASEA챔",
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "eCloseClass": "PROVIDER_CONFIRMED_TERMINAL",
+      "eResultState": "FINAL",
+      "predictionCreated": false,
+      "predictionPerformanceAssignment": "NOT_APPLICABLE",
+      "successFailureAssigned": false,
+      "primaryRootCauseClass": "IDENTITY_COVERAGE",
+      "additionalRootCauseClasses": []
+    }
+  ],
+  "leakage": {
+    "retroactivePredictionAllowed": false,
+    "retroactivePredictionCreated": false,
+    "fuzzyMatchingUsed": false,
+    "engineModified": false,
+    "weightsModified": false,
+    "predictionModified": false,
+    "pregameArtifactsWritten": false,
+    "cArtifactMutated": false,
+    "eArtifactMutated": false,
+    "footballPickLevelScorecardApplied": false
+  },
+  "providerNetworkCallCount": 0,
+  "providerPredictionsEndpointUsed": false,
+  "validatedHypothesisCount": 0,
+  "enginePromotionCount": 0,
+  "credit": 0,
+  "officialMandatoryCompletionRemainsPct": 75,
+  "fStatus": "CANDIDATE_COMPLETE",
+  "stageResult": "COMPLETED_PROCESS_REVIEW_NO_GRADABLE_PREDICTIONS"
+}
