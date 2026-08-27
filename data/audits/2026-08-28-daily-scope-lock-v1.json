@@ -1,0 +1,171 @@
+{
+  "schemaVersion": "yang-edge-daily-scope-lock-v1",
+  "dateKst": "2026-08-28",
+  "lockStatus": "CANDIDATE",
+  "scopeLockStatus": "CANDIDATE_COMPLETE",
+  "scopeStatus": "CANDIDATE_COMPLETE",
+  "scopeLockedAt": "2026-08-27T14:30:40.538Z",
+  "ownerSealedAt": null,
+  "creditSeal": false,
+  "researchOnly": true,
+  "marketBenchmarkOnly": true,
+  "prediction": "NONE",
+  "engine": "NONE",
+  "recommendation": "NONE",
+  "predictionInput": false,
+  "engineInput": false,
+  "engineAdmission": "PROHIBITED",
+  "predictionCreated": 0,
+  "predictionCalls": 0,
+  "resultCalls": 0,
+  "engineModified": false,
+  "weightsModified": false,
+  "fuzzyMatchingUsed": false,
+  "formalObservedAt": "2026-08-27T22:31:14.162+09:00",
+  "formalObservedAtChanged": false,
+  "baseCommit": "616afdc32d4a1d963777209d962bebbaa3e392f9",
+  "sourceOperatorObservationRel": "data/operator-observations/structured/2026-08-28/batch-2228-next-pregame-v0.json",
+  "sourceOperatorObservationHash": "6607a02e438551b9c18cf641db8f296becee1d27789497186ef98ba9de97a7ea",
+  "scheduleRecoveryRel": "data/audits/2026-08-28-scope-slate-recovery-v1.json",
+  "scheduleRecoveryHash": "9e2e6627b8b4cfc1ecad9780cec04a7b4e68adc55bf2024a71c3c3be7fdc0fd6",
+  "currentStateRecoveryRel": "data/audits/2026-08-28-pregame-current-state-recovery-v1.json",
+  "currentStateRecoveryHash": "cd36be5f6865d92a70cd56bbe01835be6d9f3d48536b1d9320795fdbcb12d7b5",
+  "scheduleArtifacts": {
+    "mlb": "data/research/mlb/2026-08-28-schedule-v1.json",
+    "mlbSha256": "3896bb8a12b714f43123496cce82cc46ad68547a711a8ea0822a10279712fe32",
+    "footballCapture": "data/research/football/2026-08-28-fixtures-captured-v1.json",
+    "footballCaptureSha256": "8b402b8574f557f00094906b03d76658ed739cc56b19d7f5fde3cb1273dbb51d",
+    "footballSchedule": "data/research/football/2026-08-28-schedule-v1.json",
+    "footballScheduleSha256": "b53443901371cd1e72f382795d0a46c3096cb976f79a71074ce35bf98cf5c73d",
+    "basketball": null
+  },
+  "sports": [
+    "FOOTBALL",
+    "BASKETBALL",
+    "MLB"
+  ],
+  "observedScope": {
+    "FOOTBALL": 14,
+    "BASKETBALL": 15,
+    "MLB": 7,
+    "footballByLeague": {
+      "UEL": 12,
+      "라리가": 2
+    },
+    "total": 36
+  },
+  "officialDenominator": 36,
+  "scopeTotal": 36,
+  "accountedFor": 36,
+  "rowsAccountedFor": 36,
+  "supportedScheduleMatchedCount": 9,
+  "providerUnsupportedCount": 15,
+  "identityReviewCount": 12,
+  "ownerConfirmedCount": 2,
+  "bySportReconciliation": {
+    "FOOTBALL": {
+      "observed": 14,
+      "scheduleMatched": 2,
+      "identityReviewRequired": 12,
+      "pregameEligible": 2
+    },
+    "MLB": {
+      "observed": 7,
+      "scheduleMatched": 7,
+      "unresolved": 0,
+      "pregameEligible": 7
+    },
+    "BASKETBALL": {
+      "observed": 15,
+      "scheduleMatched": 0,
+      "providerUnsupported": 15,
+      "ownerConfirmed": 2,
+      "pregameEligible": 0,
+      "pregameEligibilityUnresolved": 15,
+      "droppedFromDenominator": 0
+    }
+  },
+  "ownerConfirmedBasketballMatchups": [
+    {
+      "displayedStartKst": "10:40",
+      "rawHomeLabel": "파나마",
+      "rawAwayLabel": "캐나다",
+      "marketIds": [
+        7023,
+        7024,
+        7025,
+        7026
+      ]
+    },
+    {
+      "displayedStartKst": "11:10",
+      "rawHomeLabel": "멕시코",
+      "rawAwayLabel": "콜롬비아",
+      "marketIds": [
+        7019,
+        7020,
+        7021,
+        7022
+      ]
+    }
+  ],
+  "operatorReviewItems": [
+    {
+      "reviewState": "OWNER_EXPLICIT_CONFIRMATION",
+      "priorStatesResolved": [
+        "FIELD_REVIEW_REQUIRED",
+        "OWNER_CONFIRMATION_REQUIRED"
+      ],
+      "resolvedBy": "OWNER_EXPLICIT_CONFIRMATION",
+      "screenshotFile": "screenshot_2026-08-27_211857.png",
+      "originalInboxName": "스크린샷 2026-08-27 211857.png",
+      "marketIdRange": [
+        7023,
+        7024,
+        7025,
+        7026
+      ],
+      "displayedDateKst": "2026-08-28",
+      "displayedStartKst": "10:40",
+      "rawLeagueGlyph": "남농월예",
+      "rawHomeLabel": "파나마",
+      "rawAwayLabel": "캐나다",
+      "unreadableCharacterPositions": null,
+      "candidateProviderFixtures": [],
+      "reviewNote": "OWNER_EXPLICIT_CONFIRMATION applied exactly: 08.28 10:40 파나마 vs 캐나다. Labels are not translated. No lawful basketball schedule provider exists, so no fixture IDs are bound."
+    },
+    {
+      "reviewState": "OWNER_EXPLICIT_CONFIRMATION",
+      "priorStatesResolved": [
+        "FIELD_REVIEW_REQUIRED",
+        "OWNER_CONFIRMATION_REQUIRED"
+      ],
+      "resolvedBy": "OWNER_EXPLICIT_CONFIRMATION",
+      "screenshotFile": "screenshot_2026-08-27_211857.png",
+      "originalInboxName": "스크린샷 2026-08-27 211857.png",
+      "marketIdRange": [
+        7019,
+        7020,
+        7021,
+        7022
+      ],
+      "displayedDateKst": "2026-08-28",
+      "displayedStartKst": "11:10",
+      "rawLeagueGlyph": "남농월예",
+      "rawHomeLabel": "멕시코",
+      "rawAwayLabel": "콜롬비아",
+      "unreadableCharacterPositions": null,
+      "candidateProviderFixtures": [],
+      "reviewNote": "OWNER_EXPLICIT_CONFIRMATION applied exactly: 08.28 11:10 멕시코 vs 콜롬비아. Labels are not translated. No lawful basketball schedule provider exists, so no fixture IDs are bound."
+    }
+  ],
+  "pregameEligibleObservedMatchups": 9,
+  "postStartObservedMatchups": 0,
+  "pregameEligibilityUnresolved": 27,
+  "providerCallCount": 2,
+  "providerCallsThisRun": 0,
+  "nextCalendarDateVisibleExcludedFromDenominator": 0,
+  "scopeShrinkAfterLockForbidden": true,
+  "note": "CANDIDATE only. Official denominator is the explicit 36-matchup operator-observed slate plus supported-sport schedule reconciliation. Provider-unsupported basketball rows remain in the denominator. UEL competition alias and La Liga team aliases are OWNER-approved exact aliases only. No credit/seal until OWNER review. Not a Prediction input.",
+  "nextRecommendedStep": "OWNER review then 2026-08-28 Scope FINAL SEAL, then B1. Do not start B1."
+}

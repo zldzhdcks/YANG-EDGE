@@ -100,6 +100,7 @@ export const FOOTBALL_COMPETITION_REGISTRY_V0: FootballCompetition[] = [
     status: "RESEARCH_ONLY",
     betmanSupported: false,
     researchSupported: true,
+    operatorDisplayAliases: ["UEL"],
   },
   {
     competitionId: "fb-comp-api-football-292",
@@ -164,6 +165,21 @@ export function getCompetitionByProviderId(
       (c) =>
         c.provider === provider &&
         c.providerCompetitionId === String(providerCompetitionId),
+    ) ?? null
+  );
+}
+
+export function findCompetitionByOperatorLabel(
+  label: string,
+): FootballCompetition | null {
+  const n = label.trim();
+  if (!n) return null;
+  return (
+    FOOTBALL_COMPETITION_REGISTRY_V0.find(
+      (c) =>
+        c.displayName === n ||
+        c.officialName === n ||
+        (c.operatorDisplayAliases ?? []).includes(n),
     ) ?? null
   );
 }

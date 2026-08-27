@@ -41,6 +41,8 @@ export type FootballCompetition = {
   status: CompetitionRegistryStatus;
   betmanSupported: boolean;
   researchSupported: boolean;
+  /** Exact OWNER-approved operator screenshot labels. Not a new competition. */
+  operatorDisplayAliases?: string[];
 };
 
 export type FootballTeam = {

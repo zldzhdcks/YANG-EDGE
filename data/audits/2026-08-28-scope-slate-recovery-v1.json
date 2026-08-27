@@ -1,0 +1,609 @@
+{
+  "schemaVersion": "yang-edge-scope-slate-recovery-v1",
+  "dateKst": "2026-08-28",
+  "recoveryRunAt": "2026-08-27T14:30:40.510Z",
+  "baseCommit": "616afdc32d4a1d963777209d962bebbaa3e392f9",
+  "formalObservedAt": "2026-08-27T22:31:14.162+09:00",
+  "formalObservedAtChanged": false,
+  "rawEvidenceStorage": "LOCAL_ONLY_OWNER_PROVIDED_SCREENSHOT",
+  "repositoryEvidence": "HASH_AND_STRUCTURED_OBSERVATION",
+  "originalInboxPath": "C:\\Users\\TCTCTC\\YANG-EDGE\\YANG-EDGE-INBOX\\2026-08-28",
+  "pngGitTracking": "LOCAL_EXCLUDE_NOT_PUBLIC_GITHUB",
+  "pngGitExcludeRule": "data/operator-observations/raw/2026-08-28/batch-2228/*.png",
+  "researchOnly": true,
+  "marketBenchmarkOnly": true,
+  "predictionInput": false,
+  "engineInput": false,
+  "predictionCreated": 0,
+  "fuzzyMatchingUsed": false,
+  "ownerApprovedFootballAliasesApplied": {
+    "competition": [
+      {
+        "operatorLabel": "UEL",
+        "canonicalDisplayName": "UEFA 유로파리그"
+      }
+    ],
+    "teams": [
+      {
+        "operatorLabel": "셀타비고",
+        "canonicalDisplayName": "셀타비고"
+      },
+      {
+        "operatorLabel": "오사수나",
+        "canonicalDisplayName": "오사수나"
+      },
+      {
+        "operatorLabel": "바르셀로",
+        "canonicalDisplayName": "바르셀로나"
+      },
+      {
+        "operatorLabel": "A빌바오",
+        "canonicalDisplayName": "A빌바오"
+      }
+    ]
+  },
+  "scheduleProvidersUsed": [
+    "mlb-stats-api",
+    "api-football"
+  ],
+  "providerCallCount": 2,
+  "providerCalls": [
+    {
+      "sport": "MLB",
+      "provider": "mlb-stats-api",
+      "endpoint": "/api/v1/schedule?sportId=1&startDate=2026-08-27&endDate=2026-08-28&hydrate=probablePitcher",
+      "callCount": 1,
+      "callCountThisRun": 0,
+      "cached": true,
+      "resultCount": 7,
+      "note": "Minimal schedule-only Stats API window including previous UTC calendar date for early-morning KST. Subsequent recovery loads reuse the artifact."
+    },
+    {
+      "sport": "FOOTBALL",
+      "provider": "api-football",
+      "endpoint": "/fixtures?date=2026-08-28&timezone=Asia/Seoul",
+      "callCount": 1,
+      "callCountThisRun": 0,
+      "cached": true,
+      "resultCount": 169,
+      "note": "One date-window getFixtures call persisted to capture. Result/predictions/odds endpoints were not used. Subsequent recovery loads reuse the capture."
+    },
+    {
+      "sport": "BASKETBALL",
+      "provider": null,
+      "endpoint": null,
+      "callCount": 0,
+      "cached": null,
+      "resultCount": 0,
+      "note": "No lawful basketball schedule provider is wired in this repository."
+    }
+  ],
+  "predictionCalls": 0,
+  "resultCalls": 0,
+  "engineCalls": 0,
+  "scheduleArtifacts": {
+    "mlb": "data/research/mlb/2026-08-28-schedule-v1.json",
+    "footballCapture": "data/research/football/2026-08-28-fixtures-captured-v1.json",
+    "footballSchedule": "data/research/football/2026-08-28-schedule-v1.json",
+    "basketball": null
+  },
+  "candidateScheduleGames": [
+    {
+      "sport": "MLB",
+      "provider": "mlb-stats-api",
+      "providerFixtureId": "824879",
+      "homeTeam": "Atlanta Braves",
+      "awayTeam": "Los Angeles Dodgers",
+      "scheduledStartAt": "2026-08-28T08:15:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T23:15:00Z",
+      "startTimeKst": "08:15",
+      "joinedToOperator": true
+    },
+    {
+      "sport": "MLB",
+      "provider": "mlb-stats-api",
+      "providerFixtureId": "823581",
+      "homeTeam": "New York Mets",
+      "awayTeam": "Milwaukee Brewers",
+      "scheduledStartAt": "2026-08-28T08:10:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T23:10:00Z",
+      "startTimeKst": "08:10",
+      "joinedToOperator": true
+    },
+    {
+      "sport": "MLB",
+      "provider": "mlb-stats-api",
+      "providerFixtureId": "823503",
+      "homeTeam": "New York Yankees",
+      "awayTeam": "Houston Astros",
+      "scheduledStartAt": "2026-08-28T08:05:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T23:05:00Z",
+      "startTimeKst": "08:05",
+      "joinedToOperator": true
+    },
+    {
+      "sport": "MLB",
+      "provider": "mlb-stats-api",
+      "providerFixtureId": "823179",
+      "homeTeam": "San Francisco Giants",
+      "awayTeam": "Arizona Diamondbacks",
+      "scheduledStartAt": "2026-08-28T10:45:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-28T01:45:00Z",
+      "startTimeKst": "10:45",
+      "joinedToOperator": true
+    },
+    {
+      "sport": "MLB",
+      "provider": "mlb-stats-api",
+      "providerFixtureId": "823014",
+      "homeTeam": "St. Louis Cardinals",
+      "awayTeam": "Baltimore Orioles",
+      "scheduledStartAt": "2026-08-28T03:15:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T18:15:00Z",
+      "startTimeKst": "03:15",
+      "joinedToOperator": true
+    },
+    {
+      "sport": "MLB",
+      "provider": "mlb-stats-api",
+      "providerFixtureId": "822771",
+      "homeTeam": "Toronto Blue Jays",
+      "awayTeam": "Kansas City Royals",
+      "scheduledStartAt": "2026-08-28T08:07:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T23:07:00Z",
+      "startTimeKst": "08:07",
+      "joinedToOperator": true
+    },
+    {
+      "sport": "MLB",
+      "provider": "mlb-stats-api",
+      "providerFixtureId": "822694",
+      "homeTeam": "Washington Nationals",
+      "awayTeam": "Colorado Rockies",
+      "scheduledStartAt": "2026-08-28T02:05:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T17:05:00Z",
+      "startTimeKst": "02:05",
+      "joinedToOperator": true
+    },
+    {
+      "sport": "FOOTBALL",
+      "provider": "api-football",
+      "providerFixtureId": "1570335",
+      "competitionId": "fb-comp-api-football-140",
+      "homeTeam": "Barcelona",
+      "awayTeam": "Athletic Club",
+      "scheduledStartAt": "2026-08-28T04:00:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T19:00:00.000Z",
+      "startTimeKst": "04:00",
+      "joinedToOperator": true
+    },
+    {
+      "sport": "FOOTBALL",
+      "provider": "api-football",
+      "providerFixtureId": "1570336",
+      "competitionId": "fb-comp-api-football-140",
+      "homeTeam": "Celta Vigo",
+      "awayTeam": "Osasuna",
+      "scheduledStartAt": "2026-08-28T03:30:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T18:30:00.000Z",
+      "startTimeKst": "03:30",
+      "joinedToOperator": true
+    },
+    {
+      "sport": "FOOTBALL",
+      "provider": "api-football",
+      "providerFixtureId": "1622633",
+      "competitionId": "fb-comp-api-football-3",
+      "homeTeam": "Plzen",
+      "awayTeam": "FK Crvena Zvezda",
+      "scheduledStartAt": "2026-08-28T02:00:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T17:00:00.000Z",
+      "startTimeKst": "02:00",
+      "joinedToOperator": false
+    },
+    {
+      "sport": "FOOTBALL",
+      "provider": "api-football",
+      "providerFixtureId": "1623441",
+      "competitionId": "fb-comp-api-football-3",
+      "homeTeam": "Aarhus",
+      "awayTeam": "Benfica",
+      "scheduledStartAt": "2026-08-28T03:00:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T18:00:00.000Z",
+      "startTimeKst": "03:00",
+      "joinedToOperator": false
+    },
+    {
+      "sport": "FOOTBALL",
+      "provider": "api-football",
+      "providerFixtureId": "1623442",
+      "competitionId": "fb-comp-api-football-3",
+      "homeTeam": "Anderlecht",
+      "awayTeam": "Kairat Almaty",
+      "scheduledStartAt": "2026-08-28T03:30:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T18:30:00.000Z",
+      "startTimeKst": "03:30",
+      "joinedToOperator": false
+    },
+    {
+      "sport": "FOOTBALL",
+      "provider": "api-football",
+      "providerFixtureId": "1623443",
+      "competitionId": "fb-comp-api-football-3",
+      "homeTeam": "Ararat-Armenia",
+      "awayTeam": "Universitatea Craiova",
+      "scheduledStartAt": "2026-08-28T01:00:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T16:00:00.000Z",
+      "startTimeKst": "01:00",
+      "joinedToOperator": false
+    },
+    {
+      "sport": "FOOTBALL",
+      "provider": "api-football",
+      "providerFixtureId": "1623444",
+      "competitionId": "fb-comp-api-football-3",
+      "homeTeam": "CSKA Sofia",
+      "awayTeam": "OFI",
+      "scheduledStartAt": "2026-08-28T03:00:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T18:00:00.000Z",
+      "startTimeKst": "03:00",
+      "joinedToOperator": false
+    },
+    {
+      "sport": "FOOTBALL",
+      "provider": "api-football",
+      "providerFixtureId": "1623445",
+      "competitionId": "fb-comp-api-football-3",
+      "homeTeam": "Ferencvarosi TC",
+      "awayTeam": "Trabzonspor",
+      "scheduledStartAt": "2026-08-28T03:30:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T18:30:00.000Z",
+      "startTimeKst": "03:30",
+      "joinedToOperator": false
+    },
+    {
+      "sport": "FOOTBALL",
+      "provider": "api-football",
+      "providerFixtureId": "1623446",
+      "competitionId": "fb-comp-api-football-3",
+      "homeTeam": "FC Iberia 1999",
+      "awayTeam": "Jagiellonia",
+      "scheduledStartAt": "2026-08-28T01:00:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T16:00:00.000Z",
+      "startTimeKst": "01:00",
+      "joinedToOperator": false
+    },
+    {
+      "sport": "FOOTBALL",
+      "provider": "api-football",
+      "providerFixtureId": "1623447",
+      "competitionId": "fb-comp-api-football-3",
+      "homeTeam": "Kauno Žalgiris",
+      "awayTeam": "Beşiktaş",
+      "scheduledStartAt": "2026-08-28T02:00:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T17:00:00.000Z",
+      "startTimeKst": "02:00",
+      "joinedToOperator": false
+    },
+    {
+      "sport": "FOOTBALL",
+      "provider": "api-football",
+      "providerFixtureId": "1623448",
+      "competitionId": "fb-comp-api-football-3",
+      "homeTeam": "Lillestrom",
+      "awayTeam": "Egnatia Rrogozhinë",
+      "scheduledStartAt": "2026-08-28T02:00:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T17:00:00.000Z",
+      "startTimeKst": "02:00",
+      "joinedToOperator": false
+    },
+    {
+      "sport": "FOOTBALL",
+      "provider": "api-football",
+      "providerFixtureId": "1623449",
+      "competitionId": "fb-comp-api-football-3",
+      "homeTeam": "Omonia Nicosia",
+      "awayTeam": "St. Truiden",
+      "scheduledStartAt": "2026-08-28T02:00:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T17:00:00.000Z",
+      "startTimeKst": "02:00",
+      "joinedToOperator": false
+    },
+    {
+      "sport": "FOOTBALL",
+      "provider": "api-football",
+      "providerFixtureId": "1623450",
+      "competitionId": "fb-comp-api-football-3",
+      "homeTeam": "Red Bull Salzburg",
+      "awayTeam": "Mjallby AIF",
+      "scheduledStartAt": "2026-08-28T02:00:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T17:00:00.000Z",
+      "startTimeKst": "02:00",
+      "joinedToOperator": false
+    },
+    {
+      "sport": "FOOTBALL",
+      "provider": "api-football",
+      "providerFixtureId": "1627596",
+      "competitionId": "fb-comp-api-football-3",
+      "homeTeam": "FC Thun",
+      "awayTeam": "Lech Poznan",
+      "scheduledStartAt": "2026-08-28T03:00:00.000+09:00",
+      "scheduledStartAtUtc": "2026-08-27T18:00:00.000Z",
+      "startTimeKst": "03:00",
+      "joinedToOperator": false
+    }
+  ],
+  "bySport": {
+    "MLB": {
+      "recoveredScheduleGames": 7,
+      "operatorObserved": 7,
+      "matched": 7,
+      "unresolved": 0,
+      "scopeAccountingState": "SCHEDULE_MATCHED"
+    },
+    "FOOTBALL": {
+      "recoveredRawFixtures": 169,
+      "recoveredRegisteredScheduleGames": 14,
+      "droppedUnregisteredCompetition": 155,
+      "uelRegistered": 12,
+      "laLigaRegistered": 2,
+      "operatorObserved": 14,
+      "matched": 2,
+      "unresolved": 12,
+      "competitionReviewRequired": 0,
+      "identityReviewRequired": 12,
+      "uelOperatorAliasApplied": true,
+      "laLigaOperatorAliasesApplied": 4,
+      "unresolvedBlockers": [
+        {
+          "displayedStartKst": "01:00",
+          "rawHomeLabel": "아라라트",
+          "rawAwayLabel": "U크라이",
+          "rawLeagueLabel": "UEL",
+          "scheduleJoinStatus": "IDENTITY_REVIEW_REQUIRED",
+          "joinReasons": [
+            "OPERATOR_LABEL_NOT_IN_APPROVED_ALIAS",
+            "HOME_ALIAS_MISSING:아라라트",
+            "AWAY_ALIAS_MISSING:U크라이"
+          ],
+          "scopeAccountingState": "IDENTITY_REVIEW_REQUIRED"
+        },
+        {
+          "displayedStartKst": "01:00",
+          "rawHomeLabel": "이베리아",
+          "rawAwayLabel": "야기엘로",
+          "rawLeagueLabel": "UEL",
+          "scheduleJoinStatus": "IDENTITY_REVIEW_REQUIRED",
+          "joinReasons": [
+            "OPERATOR_LABEL_NOT_IN_APPROVED_ALIAS",
+            "HOME_ALIAS_MISSING:이베리아",
+            "AWAY_ALIAS_MISSING:야기엘로"
+          ],
+          "scopeAccountingState": "IDENTITY_REVIEW_REQUIRED"
+        },
+        {
+          "displayedStartKst": "02:00",
+          "rawHomeLabel": "오모니아",
+          "rawAwayLabel": "신트트라",
+          "rawLeagueLabel": "UEL",
+          "scheduleJoinStatus": "IDENTITY_REVIEW_REQUIRED",
+          "joinReasons": [
+            "OPERATOR_LABEL_NOT_IN_APPROVED_ALIAS",
+            "HOME_ALIAS_MISSING:오모니아",
+            "AWAY_ALIAS_MISSING:신트트라"
+          ],
+          "scopeAccountingState": "IDENTITY_REVIEW_REQUIRED"
+        },
+        {
+          "displayedStartKst": "02:00",
+          "rawHomeLabel": "플젠",
+          "rawAwayLabel": "츠르베나",
+          "rawLeagueLabel": "UEL",
+          "scheduleJoinStatus": "IDENTITY_REVIEW_REQUIRED",
+          "joinReasons": [
+            "OPERATOR_LABEL_NOT_IN_APPROVED_ALIAS",
+            "HOME_ALIAS_MISSING:플젠",
+            "AWAY_ALIAS_MISSING:츠르베나"
+          ],
+          "scopeAccountingState": "IDENTITY_REVIEW_REQUIRED"
+        },
+        {
+          "displayedStartKst": "02:00",
+          "rawHomeLabel": "릴레스트",
+          "rawAwayLabel": "에그나티",
+          "rawLeagueLabel": "UEL",
+          "scheduleJoinStatus": "IDENTITY_REVIEW_REQUIRED",
+          "joinReasons": [
+            "OPERATOR_LABEL_NOT_IN_APPROVED_ALIAS",
+            "HOME_ALIAS_MISSING:릴레스트",
+            "AWAY_ALIAS_MISSING:에그나티"
+          ],
+          "scopeAccountingState": "IDENTITY_REVIEW_REQUIRED"
+        },
+        {
+          "displayedStartKst": "02:00",
+          "rawHomeLabel": "잘츠부르",
+          "rawAwayLabel": "미엘뷔",
+          "rawLeagueLabel": "UEL",
+          "scheduleJoinStatus": "IDENTITY_REVIEW_REQUIRED",
+          "joinReasons": [
+            "OPERATOR_LABEL_NOT_IN_APPROVED_ALIAS",
+            "HOME_ALIAS_MISSING:잘츠부르",
+            "AWAY_ALIAS_MISSING:미엘뷔"
+          ],
+          "scopeAccountingState": "IDENTITY_REVIEW_REQUIRED"
+        },
+        {
+          "displayedStartKst": "02:00",
+          "rawHomeLabel": "카우노잘",
+          "rawAwayLabel": "베식타시",
+          "rawLeagueLabel": "UEL",
+          "scheduleJoinStatus": "IDENTITY_REVIEW_REQUIRED",
+          "joinReasons": [
+            "OPERATOR_LABEL_NOT_IN_APPROVED_ALIAS",
+            "HOME_ALIAS_MISSING:카우노잘",
+            "AWAY_ALIAS_MISSING:베식타시"
+          ],
+          "scopeAccountingState": "IDENTITY_REVIEW_REQUIRED"
+        },
+        {
+          "displayedStartKst": "03:00",
+          "rawHomeLabel": "FC툰",
+          "rawAwayLabel": "L포즈난",
+          "rawLeagueLabel": "UEL",
+          "scheduleJoinStatus": "IDENTITY_REVIEW_REQUIRED",
+          "joinReasons": [
+            "OPERATOR_LABEL_NOT_IN_APPROVED_ALIAS",
+            "HOME_ALIAS_MISSING:FC툰",
+            "AWAY_ALIAS_MISSING:L포즈난"
+          ],
+          "scopeAccountingState": "IDENTITY_REVIEW_REQUIRED"
+        },
+        {
+          "displayedStartKst": "03:00",
+          "rawHomeLabel": "오르후스",
+          "rawAwayLabel": "SL벤피카",
+          "rawLeagueLabel": "UEL",
+          "scheduleJoinStatus": "IDENTITY_REVIEW_REQUIRED",
+          "joinReasons": [
+            "OPERATOR_LABEL_NOT_IN_APPROVED_ALIAS",
+            "HOME_ALIAS_MISSING:오르후스",
+            "AWAY_ALIAS_MISSING:SL벤피카"
+          ],
+          "scopeAccountingState": "IDENTITY_REVIEW_REQUIRED"
+        },
+        {
+          "displayedStartKst": "03:00",
+          "rawHomeLabel": "C소피아",
+          "rawAwayLabel": "OFI크레",
+          "rawLeagueLabel": "UEL",
+          "scheduleJoinStatus": "IDENTITY_REVIEW_REQUIRED",
+          "joinReasons": [
+            "OPERATOR_LABEL_NOT_IN_APPROVED_ALIAS",
+            "HOME_ALIAS_MISSING:C소피아",
+            "AWAY_ALIAS_MISSING:OFI크레"
+          ],
+          "scopeAccountingState": "IDENTITY_REVIEW_REQUIRED"
+        },
+        {
+          "displayedStartKst": "03:30",
+          "rawHomeLabel": "페렌츠바",
+          "rawAwayLabel": "트라브존",
+          "rawLeagueLabel": "UEL",
+          "scheduleJoinStatus": "IDENTITY_REVIEW_REQUIRED",
+          "joinReasons": [
+            "OPERATOR_LABEL_NOT_IN_APPROVED_ALIAS",
+            "HOME_ALIAS_MISSING:페렌츠바",
+            "AWAY_ALIAS_MISSING:트라브존"
+          ],
+          "scopeAccountingState": "IDENTITY_REVIEW_REQUIRED"
+        },
+        {
+          "displayedStartKst": "03:30",
+          "rawHomeLabel": "안더레흐",
+          "rawAwayLabel": "카이라트",
+          "rawLeagueLabel": "UEL",
+          "scheduleJoinStatus": "IDENTITY_REVIEW_REQUIRED",
+          "joinReasons": [
+            "OPERATOR_LABEL_NOT_IN_APPROVED_ALIAS",
+            "HOME_ALIAS_MISSING:안더레흐",
+            "AWAY_ALIAS_MISSING:카이라트"
+          ],
+          "scopeAccountingState": "IDENTITY_REVIEW_REQUIRED"
+        }
+      ],
+      "byRegisteredCompetition": {
+        "fb-comp-api-football-140": 2,
+        "fb-comp-api-football-3": 12
+      }
+    },
+    "BASKETBALL": {
+      "recoveredScheduleGames": 0,
+      "operatorObserved": 15,
+      "matched": 0,
+      "unresolved": 15,
+      "ownerConfirmationRequired": 0,
+      "ownerExplicitConfirmation": 2,
+      "provider": "NOT_WIRED",
+      "scopeAccountingState": "SCOPE_OBSERVED_PROVIDER_UNSUPPORTED",
+      "droppedFromDenominator": 0
+    }
+  },
+  "operatorObservedMatchups": 36,
+  "operatorMatchupsMatched": 9,
+  "operatorIdentityReviewRequired": 12,
+  "operatorConfirmationRequired": 0,
+  "operatorOwnerExplicitConfirmation": 2,
+  "scopeAccounting": {
+    "scopeTotal": 36,
+    "accountedFor": 36,
+    "scheduleMatched": 9,
+    "providerUnsupported": 15,
+    "identityReviewRequired": 12
+  },
+  "scheduleGamesWithNoOperatorOdds": 12,
+  "operatorOddsWithNoScheduleMatch": 27,
+  "pregameEligibleObservedMatchups": 9,
+  "postStartObservedMatchups": 0,
+  "pregameEligibilityUnresolved": 27,
+  "operatorReviewItems": [
+    {
+      "reviewState": "OWNER_EXPLICIT_CONFIRMATION",
+      "priorStatesResolved": [
+        "FIELD_REVIEW_REQUIRED",
+        "OWNER_CONFIRMATION_REQUIRED"
+      ],
+      "resolvedBy": "OWNER_EXPLICIT_CONFIRMATION",
+      "screenshotFile": "screenshot_2026-08-27_211857.png",
+      "originalInboxName": "스크린샷 2026-08-27 211857.png",
+      "marketIdRange": [
+        7023,
+        7024,
+        7025,
+        7026
+      ],
+      "displayedDateKst": "2026-08-28",
+      "displayedStartKst": "10:40",
+      "rawLeagueGlyph": "남농월예",
+      "rawHomeLabel": "파나마",
+      "rawAwayLabel": "캐나다",
+      "unreadableCharacterPositions": null,
+      "candidateProviderFixtures": [],
+      "reviewNote": "OWNER_EXPLICIT_CONFIRMATION applied exactly: 08.28 10:40 파나마 vs 캐나다. Labels are not translated. No lawful basketball schedule provider exists, so no fixture IDs are bound."
+    },
+    {
+      "reviewState": "OWNER_EXPLICIT_CONFIRMATION",
+      "priorStatesResolved": [
+        "FIELD_REVIEW_REQUIRED",
+        "OWNER_CONFIRMATION_REQUIRED"
+      ],
+      "resolvedBy": "OWNER_EXPLICIT_CONFIRMATION",
+      "screenshotFile": "screenshot_2026-08-27_211857.png",
+      "originalInboxName": "스크린샷 2026-08-27 211857.png",
+      "marketIdRange": [
+        7019,
+        7020,
+        7021,
+        7022
+      ],
+      "displayedDateKst": "2026-08-28",
+      "displayedStartKst": "11:10",
+      "rawLeagueGlyph": "남농월예",
+      "rawHomeLabel": "멕시코",
+      "rawAwayLabel": "콜롬비아",
+      "unreadableCharacterPositions": null,
+      "candidateProviderFixtures": [],
+      "reviewNote": "OWNER_EXPLICIT_CONFIRMATION applied exactly: 08.28 11:10 멕시코 vs 콜롬비아. Labels are not translated. No lawful basketball schedule provider exists, so no fixture IDs are bound."
+    }
+  ],
+  "priorStructuredObservationSha256": "7fe06148be3199b0ff06922e9d7513295c3b84d41856fc9f82d754e8f580670b",
+  "priorCurrentStateRecoverySha256": "a762e19e76f330ddd28bea05a38f7f947b365d8956489b99b238e9f8e2b2c33a",
+  "scopeLockReady": true,
+  "scopeLockBlockers": [],
+  "dailyScopeLockCreated": true,
+  "status": "SCOPE_LOCK_CANDIDATE_COMPLETE",
+  "statusReason": "All 36 operator-observed matchups are accounted. OWNER basketball labels applied exactly. OWNER-approved football aliases applied without duplication or extra fuzzy names. MLB 7/7 exact. La Liga 2/2 exact. UEL 12 remain IDENTITY_REVIEW_REQUIRED because no OWNER-approved team aliases exist. Basketball 15 retained as SCOPE_OBSERVED_PROVIDER_UNSUPPORTED. Denominator can freeze without guessing. Candidate lock is allowed; FINAL SEAL is OWNER-only.",
+  "dailyScopeLockRel": "data/audits/2026-08-28-daily-scope-lock-v1.json",
+  "dailyScopeLockStatus": "CANDIDATE_COMPLETE"
+}
