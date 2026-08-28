@@ -1,0 +1,904 @@
+{
+  "schemaVersion": "yang-edge-pregame-input-coverage-v1",
+  "dateKst": "2026-08-29",
+  "stage": "B2",
+  "candidateStatus": "OWNER_REVIEW_CANDIDATE",
+  "b1Rel": "data/audits/2026-08-29-schedule-identity-reconciliation-v1.json",
+  "b1Sha256": "c6baf2466302b2f57d3864fb1c048944cbc74611bbc5a4016d01e3648a7aaf1f",
+  "sealedLockRel": "data/audits/2026-08-29-daily-scope-lock-v1.json",
+  "sealedLockSha256": "c6a898ad16dbde921bc5ace9c086d5e3ccd9c5907d00c2d420ed088638e64e53",
+  "formalObservedAt": "2026-08-28T21:30:45.648+09:00",
+  "researchOnly": true,
+  "marketFirewall": {
+    "marketBenchmarkOnly": true,
+    "predictionInput": false,
+    "engineInput": false,
+    "marketPriorUsed": false,
+    "marketImpliedProbabilityUsed": false,
+    "favoriteStatusUsed": false,
+    "oddsApiLiveCalls": 0,
+    "note": "Operator odds remain marketBenchmarkOnly. Market is comparison-only after Prediction. Not collected as model input."
+  },
+  "resultCalls": 0,
+  "predictionProviderCalls": 0,
+  "engineModified": false,
+  "weightsModified": false,
+  "coverageByDataset": {
+    "schedule": {
+      "state": "COLLECTED",
+      "gamesCovered": 15,
+      "reason": "Stored lawful pregame artifact exists."
+    },
+    "starter": {
+      "state": "NOT_COLLECTED",
+      "gamesCovered": 0,
+      "reason": "No 2026-08-29 starter-dataset-v1.json. Schedule artifact also has no probablePitcher fields."
+    },
+    "bullpen": {
+      "state": "NOT_COLLECTED",
+      "gamesCovered": 0,
+      "reason": "No 2026-08-29 bullpen-role dataset."
+    },
+    "lineup": {
+      "state": "NOT_COLLECTED",
+      "gamesCovered": 0,
+      "reason": "No 2026-08-29 lineup-dataset-v1.json. Operator batch had 0 lineup screenshots."
+    },
+    "injury": {
+      "state": "NOT_COLLECTED",
+      "gamesCovered": 0,
+      "reason": "No 2026-08-29 injury dataset."
+    },
+    "weather": {
+      "state": "NOT_COLLECTED",
+      "gamesCovered": 0,
+      "reason": "No 2026-08-29 weather dataset."
+    },
+    "travelRest": {
+      "state": "NOT_COLLECTED",
+      "gamesCovered": 0,
+      "reason": "No 2026-08-29 travel/rest dataset."
+    },
+    "lineupRefresh": {
+      "state": "NOT_COLLECTED",
+      "gamesCovered": 0,
+      "reason": "No 2026-08-29 lineup-refresh manifest."
+    }
+  },
+  "mlbDatasetProbes": [
+    {
+      "dataset": "schedule",
+      "rel": "data/research/mlb/2026-08-29-schedule-v1.json",
+      "state": "COLLECTED",
+      "reason": "Stored lawful pregame artifact exists."
+    },
+    {
+      "dataset": "starter",
+      "rel": "data/research/mlb/2026-08-29-starter-dataset-v1.json",
+      "state": "NOT_COLLECTED",
+      "reason": "No 2026-08-29 starter-dataset-v1.json. Schedule artifact also has no probablePitcher fields."
+    },
+    {
+      "dataset": "bullpen",
+      "rel": "data/research/mlb/2026-08-29-bullpen-role-dataset-v1_1.json",
+      "state": "NOT_COLLECTED",
+      "reason": "No 2026-08-29 bullpen-role dataset."
+    },
+    {
+      "dataset": "lineup",
+      "rel": "data/research/mlb/2026-08-29-lineup-dataset-v1.json",
+      "state": "NOT_COLLECTED",
+      "reason": "No 2026-08-29 lineup-dataset-v1.json. Operator batch had 0 lineup screenshots."
+    },
+    {
+      "dataset": "injury",
+      "rel": "data/research/mlb/2026-08-29-injury-dataset-v1.json",
+      "state": "NOT_COLLECTED",
+      "reason": "No 2026-08-29 injury dataset."
+    },
+    {
+      "dataset": "weather",
+      "rel": "data/research/mlb/2026-08-29-weather-dataset-v1.json",
+      "state": "NOT_COLLECTED",
+      "reason": "No 2026-08-29 weather dataset."
+    },
+    {
+      "dataset": "travelRest",
+      "rel": "data/research/mlb/2026-08-29-travel-rest-dataset-v1.json",
+      "state": "NOT_COLLECTED",
+      "reason": "No 2026-08-29 travel/rest dataset."
+    },
+    {
+      "dataset": "lineupRefresh",
+      "rel": "data/research/mlb/lineup-refresh/2026-08-29/manifest-v1.json",
+      "state": "NOT_COLLECTED",
+      "reason": "No 2026-08-29 lineup-refresh manifest."
+    }
+  ],
+  "football": {
+    "official": 8,
+    "coverageState": "BLOCKED",
+    "reason": "Identity/competition review required. Existing approved aliases were not sufficient. No new aliases added."
+  },
+  "basketball": {
+    "official": 6,
+    "coverageState": "BLOCKED",
+    "reason": "PROVIDER_NOT_SUPPORTED. Games retained, not dropped."
+  },
+  "games": [
+    {
+      "operatorGameId": "MLB|2026-08-29|03:20|시카컵스|신시레즈",
+      "sport": "MLB",
+      "rawMatchup": "시카컵스 : 신시레즈",
+      "b1Status": "MATCHED",
+      "coverageState": "PARTIAL",
+      "blockReason": null,
+      "schedule": "COLLECTED",
+      "datasets": {
+        "starter": "NOT_COLLECTED",
+        "bullpen": "NOT_COLLECTED",
+        "lineup": "NOT_COLLECTED",
+        "injury": "NOT_COLLECTED",
+        "weather": "NOT_COLLECTED",
+        "travelRest": "NOT_COLLECTED"
+      },
+      "missingDatasets": [
+        "starter",
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest"
+      ],
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input. No Odds API collection this run."
+      }
+    },
+    {
+      "operatorGameId": "MLB|2026-08-29|07:40|디트타이|LA다저스",
+      "sport": "MLB",
+      "rawMatchup": "디트타이 : LA다저스",
+      "b1Status": "MATCHED",
+      "coverageState": "PARTIAL",
+      "blockReason": null,
+      "schedule": "COLLECTED",
+      "datasets": {
+        "starter": "NOT_COLLECTED",
+        "bullpen": "NOT_COLLECTED",
+        "lineup": "NOT_COLLECTED",
+        "injury": "NOT_COLLECTED",
+        "weather": "NOT_COLLECTED",
+        "travelRest": "NOT_COLLECTED"
+      },
+      "missingDatasets": [
+        "starter",
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest"
+      ],
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input. No Odds API collection this run."
+      }
+    },
+    {
+      "operatorGameId": "MLB|2026-08-29|07:45|워싱내셔|마이말린",
+      "sport": "MLB",
+      "rawMatchup": "워싱내셔 : 마이말린",
+      "b1Status": "MATCHED",
+      "coverageState": "PARTIAL",
+      "blockReason": null,
+      "schedule": "COLLECTED",
+      "datasets": {
+        "starter": "NOT_COLLECTED",
+        "bullpen": "NOT_COLLECTED",
+        "lineup": "NOT_COLLECTED",
+        "injury": "NOT_COLLECTED",
+        "weather": "NOT_COLLECTED",
+        "travelRest": "NOT_COLLECTED"
+      },
+      "missingDatasets": [
+        "starter",
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest"
+      ],
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input. No Odds API collection this run."
+      }
+    },
+    {
+      "operatorGameId": "MLB|2026-08-29|08:10|탬파레이|샌디파드",
+      "sport": "MLB",
+      "rawMatchup": "탬파레이 : 샌디파드",
+      "b1Status": "MATCHED",
+      "coverageState": "PARTIAL",
+      "blockReason": null,
+      "schedule": "COLLECTED",
+      "datasets": {
+        "starter": "NOT_COLLECTED",
+        "bullpen": "NOT_COLLECTED",
+        "lineup": "NOT_COLLECTED",
+        "injury": "NOT_COLLECTED",
+        "weather": "NOT_COLLECTED",
+        "travelRest": "NOT_COLLECTED"
+      },
+      "missingDatasets": [
+        "starter",
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest"
+      ],
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input. No Odds API collection this run."
+      }
+    },
+    {
+      "operatorGameId": "MLB|2026-08-29|08:10|뉴욕메츠|휴스애스",
+      "sport": "MLB",
+      "rawMatchup": "뉴욕메츠 : 휴스애스",
+      "b1Status": "MATCHED",
+      "coverageState": "PARTIAL",
+      "blockReason": null,
+      "schedule": "COLLECTED",
+      "datasets": {
+        "starter": "NOT_COLLECTED",
+        "bullpen": "NOT_COLLECTED",
+        "lineup": "NOT_COLLECTED",
+        "injury": "NOT_COLLECTED",
+        "weather": "NOT_COLLECTED",
+        "travelRest": "NOT_COLLECTED"
+      },
+      "missingDatasets": [
+        "starter",
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest"
+      ],
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input. No Odds API collection this run."
+      }
+    },
+    {
+      "operatorGameId": "MLB|2026-08-29|08:10|클리가디|캔자로얄",
+      "sport": "MLB",
+      "rawMatchup": "클리가디 : 캔자로얄",
+      "b1Status": "MATCHED",
+      "coverageState": "PARTIAL",
+      "blockReason": null,
+      "schedule": "COLLECTED",
+      "datasets": {
+        "starter": "NOT_COLLECTED",
+        "bullpen": "NOT_COLLECTED",
+        "lineup": "NOT_COLLECTED",
+        "injury": "NOT_COLLECTED",
+        "weather": "NOT_COLLECTED",
+        "travelRest": "NOT_COLLECTED"
+      },
+      "missingDatasets": [
+        "starter",
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest"
+      ],
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input. No Odds API collection this run."
+      }
+    },
+    {
+      "operatorGameId": "MLB|2026-08-29|08:15|토론블루|시애매리",
+      "sport": "MLB",
+      "rawMatchup": "토론블루 : 시애매리",
+      "b1Status": "MATCHED",
+      "coverageState": "PARTIAL",
+      "blockReason": null,
+      "schedule": "COLLECTED",
+      "datasets": {
+        "starter": "NOT_COLLECTED",
+        "bullpen": "NOT_COLLECTED",
+        "lineup": "NOT_COLLECTED",
+        "injury": "NOT_COLLECTED",
+        "weather": "NOT_COLLECTED",
+        "travelRest": "NOT_COLLECTED"
+      },
+      "missingDatasets": [
+        "starter",
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest"
+      ],
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input. No Odds API collection this run."
+      }
+    },
+    {
+      "operatorGameId": "MLB|2026-08-29|08:15|뉴욕양키|보스레드",
+      "sport": "MLB",
+      "rawMatchup": "뉴욕양키 : 보스레드",
+      "b1Status": "MATCHED",
+      "coverageState": "PARTIAL",
+      "blockReason": null,
+      "schedule": "COLLECTED",
+      "datasets": {
+        "starter": "NOT_COLLECTED",
+        "bullpen": "NOT_COLLECTED",
+        "lineup": "NOT_COLLECTED",
+        "injury": "NOT_COLLECTED",
+        "weather": "NOT_COLLECTED",
+        "travelRest": "NOT_COLLECTED"
+      },
+      "missingDatasets": [
+        "starter",
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest"
+      ],
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input. No Odds API collection this run."
+      }
+    },
+    {
+      "operatorGameId": "MLB|2026-08-29|08:15|애틀브레|콜로로키",
+      "sport": "MLB",
+      "rawMatchup": "애틀브레 : 콜로로키",
+      "b1Status": "MATCHED",
+      "coverageState": "PARTIAL",
+      "blockReason": null,
+      "schedule": "COLLECTED",
+      "datasets": {
+        "starter": "NOT_COLLECTED",
+        "bullpen": "NOT_COLLECTED",
+        "lineup": "NOT_COLLECTED",
+        "injury": "NOT_COLLECTED",
+        "weather": "NOT_COLLECTED",
+        "travelRest": "NOT_COLLECTED"
+      },
+      "missingDatasets": [
+        "starter",
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest"
+      ],
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input. No Odds API collection this run."
+      }
+    },
+    {
+      "operatorGameId": "MLB|2026-08-29|08:40|밀워브루|텍사레인",
+      "sport": "MLB",
+      "rawMatchup": "밀워브루 : 텍사레인",
+      "b1Status": "MATCHED",
+      "coverageState": "PARTIAL",
+      "blockReason": null,
+      "schedule": "COLLECTED",
+      "datasets": {
+        "starter": "NOT_COLLECTED",
+        "bullpen": "NOT_COLLECTED",
+        "lineup": "NOT_COLLECTED",
+        "injury": "NOT_COLLECTED",
+        "weather": "NOT_COLLECTED",
+        "travelRest": "NOT_COLLECTED"
+      },
+      "missingDatasets": [
+        "starter",
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest"
+      ],
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input. No Odds API collection this run."
+      }
+    },
+    {
+      "operatorGameId": "MLB|2026-08-29|09:10|미네트윈|시카화이",
+      "sport": "MLB",
+      "rawMatchup": "미네트윈 : 시카화이",
+      "b1Status": "MATCHED",
+      "coverageState": "PARTIAL",
+      "blockReason": null,
+      "schedule": "COLLECTED",
+      "datasets": {
+        "starter": "NOT_COLLECTED",
+        "bullpen": "NOT_COLLECTED",
+        "lineup": "NOT_COLLECTED",
+        "injury": "NOT_COLLECTED",
+        "weather": "NOT_COLLECTED",
+        "travelRest": "NOT_COLLECTED"
+      },
+      "missingDatasets": [
+        "starter",
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest"
+      ],
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input. No Odds API collection this run."
+      }
+    },
+    {
+      "operatorGameId": "MLB|2026-08-29|09:15|세인카디|피츠파이",
+      "sport": "MLB",
+      "rawMatchup": "세인카디 : 피츠파이",
+      "b1Status": "MATCHED",
+      "coverageState": "PARTIAL",
+      "blockReason": null,
+      "schedule": "COLLECTED",
+      "datasets": {
+        "starter": "NOT_COLLECTED",
+        "bullpen": "NOT_COLLECTED",
+        "lineup": "NOT_COLLECTED",
+        "injury": "NOT_COLLECTED",
+        "weather": "NOT_COLLECTED",
+        "travelRest": "NOT_COLLECTED"
+      },
+      "missingDatasets": [
+        "starter",
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest"
+      ],
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input. No Odds API collection this run."
+      }
+    },
+    {
+      "operatorGameId": "MLB|2026-08-29|10:38|LA에인절|필라필리",
+      "sport": "MLB",
+      "rawMatchup": "LA에인절 : 필라필리",
+      "b1Status": "MATCHED",
+      "coverageState": "PARTIAL",
+      "blockReason": null,
+      "schedule": "COLLECTED",
+      "datasets": {
+        "starter": "NOT_COLLECTED",
+        "bullpen": "NOT_COLLECTED",
+        "lineup": "NOT_COLLECTED",
+        "injury": "NOT_COLLECTED",
+        "weather": "NOT_COLLECTED",
+        "travelRest": "NOT_COLLECTED"
+      },
+      "missingDatasets": [
+        "starter",
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest"
+      ],
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input. No Odds API collection this run."
+      }
+    },
+    {
+      "operatorGameId": "MLB|2026-08-29|10:40|애슬레틱|볼티오리",
+      "sport": "MLB",
+      "rawMatchup": "애슬레틱 : 볼티오리",
+      "b1Status": "MATCHED",
+      "coverageState": "PARTIAL",
+      "blockReason": null,
+      "schedule": "COLLECTED",
+      "datasets": {
+        "starter": "NOT_COLLECTED",
+        "bullpen": "NOT_COLLECTED",
+        "lineup": "NOT_COLLECTED",
+        "injury": "NOT_COLLECTED",
+        "weather": "NOT_COLLECTED",
+        "travelRest": "NOT_COLLECTED"
+      },
+      "missingDatasets": [
+        "starter",
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest"
+      ],
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input. No Odds API collection this run."
+      }
+    },
+    {
+      "operatorGameId": "MLB|2026-08-29|11:15|샌프자이|애리다이",
+      "sport": "MLB",
+      "rawMatchup": "샌프자이 : 애리다이",
+      "b1Status": "MATCHED",
+      "coverageState": "PARTIAL",
+      "blockReason": null,
+      "schedule": "COLLECTED",
+      "datasets": {
+        "starter": "NOT_COLLECTED",
+        "bullpen": "NOT_COLLECTED",
+        "lineup": "NOT_COLLECTED",
+        "injury": "NOT_COLLECTED",
+        "weather": "NOT_COLLECTED",
+        "travelRest": "NOT_COLLECTED"
+      },
+      "missingDatasets": [
+        "starter",
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest"
+      ],
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input. No Odds API collection this run."
+      }
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-29|02:00|라싱산탄|엘체",
+      "sport": "FOOTBALL",
+      "rawMatchup": "라싱산탄 : 엘체",
+      "b1Status": "IDENTITY_REVIEW_REQUIRED",
+      "coverageState": "BLOCKED",
+      "blockReason": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "datasets": {
+        "starter": "BLOCKED",
+        "bullpen": "BLOCKED",
+        "lineup": "BLOCKED",
+        "injury": "BLOCKED",
+        "weather": "BLOCKED",
+        "travelRest": "BLOCKED"
+      },
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input."
+      }
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-29|03:00|흐로닝언|F시타르",
+      "sport": "FOOTBALL",
+      "rawMatchup": "흐로닝언 : F시타르",
+      "b1Status": "COMPETITION_REVIEW_REQUIRED",
+      "coverageState": "BLOCKED",
+      "blockReason": "PASS_COMPETITION_REVIEW_REQUIRED",
+      "datasets": {
+        "starter": "BLOCKED",
+        "bullpen": "BLOCKED",
+        "lineup": "BLOCKED",
+        "injury": "BLOCKED",
+        "weather": "BLOCKED",
+        "travelRest": "BLOCKED"
+      },
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input."
+      }
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-29|03:30|바이뮌헨|슈투트가",
+      "sport": "FOOTBALL",
+      "rawMatchup": "바이뮌헨 : 슈투트가",
+      "b1Status": "COMPETITION_REVIEW_REQUIRED",
+      "coverageState": "BLOCKED",
+      "blockReason": "PASS_COMPETITION_REVIEW_REQUIRED",
+      "datasets": {
+        "starter": "BLOCKED",
+        "bullpen": "BLOCKED",
+        "lineup": "BLOCKED",
+        "injury": "BLOCKED",
+        "weather": "BLOCKED",
+        "travelRest": "BLOCKED"
+      },
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input."
+      }
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-29|03:45|AC밀란|베네치아",
+      "sport": "FOOTBALL",
+      "rawMatchup": "AC밀란 : 베네치아",
+      "b1Status": "COMPETITION_REVIEW_REQUIRED",
+      "coverageState": "BLOCKED",
+      "blockReason": "PASS_COMPETITION_REVIEW_REQUIRED",
+      "datasets": {
+        "starter": "BLOCKED",
+        "bullpen": "BLOCKED",
+        "lineup": "BLOCKED",
+        "injury": "BLOCKED",
+        "weather": "BLOCKED",
+        "travelRest": "BLOCKED"
+      },
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input."
+      }
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-29|03:45|릴OSC|PSG",
+      "sport": "FOOTBALL",
+      "rawMatchup": "릴OSC : PSG",
+      "b1Status": "COMPETITION_REVIEW_REQUIRED",
+      "coverageState": "BLOCKED",
+      "blockReason": "PASS_COMPETITION_REVIEW_REQUIRED",
+      "datasets": {
+        "starter": "BLOCKED",
+        "bullpen": "BLOCKED",
+        "lineup": "BLOCKED",
+        "injury": "BLOCKED",
+        "weather": "BLOCKED",
+        "travelRest": "BLOCKED"
+      },
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input."
+      }
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-29|04:00|렉섬|버밍엄C",
+      "sport": "FOOTBALL",
+      "rawMatchup": "렉섬 : 버밍엄C",
+      "b1Status": "COMPETITION_REVIEW_REQUIRED",
+      "coverageState": "BLOCKED",
+      "blockReason": "PASS_COMPETITION_REVIEW_REQUIRED",
+      "datasets": {
+        "starter": "BLOCKED",
+        "bullpen": "BLOCKED",
+        "lineup": "BLOCKED",
+        "injury": "BLOCKED",
+        "weather": "BLOCKED",
+        "travelRest": "BLOCKED"
+      },
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input."
+      }
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-29|04:00|크리스털|맨체스C",
+      "sport": "FOOTBALL",
+      "rawMatchup": "크리스털 : 맨체스C",
+      "b1Status": "COMPETITION_REVIEW_REQUIRED",
+      "coverageState": "BLOCKED",
+      "blockReason": "PASS_COMPETITION_REVIEW_REQUIRED",
+      "datasets": {
+        "starter": "BLOCKED",
+        "bullpen": "BLOCKED",
+        "lineup": "BLOCKED",
+        "injury": "BLOCKED",
+        "weather": "BLOCKED",
+        "travelRest": "BLOCKED"
+      },
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input."
+      }
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-29|04:30|알라베스|비야레알",
+      "sport": "FOOTBALL",
+      "rawMatchup": "알라베스 : 비야레알",
+      "b1Status": "IDENTITY_REVIEW_REQUIRED",
+      "coverageState": "BLOCKED",
+      "blockReason": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "datasets": {
+        "starter": "BLOCKED",
+        "bullpen": "BLOCKED",
+        "lineup": "BLOCKED",
+        "injury": "BLOCKED",
+        "weather": "BLOCKED",
+        "travelRest": "BLOCKED"
+      },
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input."
+      }
+    },
+    {
+      "operatorGameId": "BASKETBALL|2026-08-29|00:30|조지아M|몬테네M",
+      "sport": "BASKETBALL",
+      "rawMatchup": "조지아M : 몬테네M",
+      "b1Status": "PROVIDER_NOT_SUPPORTED",
+      "coverageState": "BLOCKED",
+      "blockReason": "PASS_PROVIDER_NOT_SUPPORTED",
+      "datasets": {
+        "starter": "BLOCKED",
+        "bullpen": "BLOCKED",
+        "lineup": "BLOCKED",
+        "injury": "BLOCKED",
+        "weather": "BLOCKED",
+        "travelRest": "BLOCKED"
+      },
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input."
+      }
+    },
+    {
+      "operatorGameId": "BASKETBALL|2026-08-29|01:00|우크라M|그리스M",
+      "sport": "BASKETBALL",
+      "rawMatchup": "우크라M : 그리스M",
+      "b1Status": "PROVIDER_NOT_SUPPORTED",
+      "coverageState": "BLOCKED",
+      "blockReason": "PASS_PROVIDER_NOT_SUPPORTED",
+      "datasets": {
+        "starter": "BLOCKED",
+        "bullpen": "BLOCKED",
+        "lineup": "BLOCKED",
+        "injury": "BLOCKED",
+        "weather": "BLOCKED",
+        "travelRest": "BLOCKED"
+      },
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input."
+      }
+    },
+    {
+      "operatorGameId": "BASKETBALL|2026-08-29|03:00|튀르키M|리투아M",
+      "sport": "BASKETBALL",
+      "rawMatchup": "튀르키M : 리투아M",
+      "b1Status": "PROVIDER_NOT_SUPPORTED",
+      "coverageState": "BLOCKED",
+      "blockReason": "PASS_PROVIDER_NOT_SUPPORTED",
+      "datasets": {
+        "starter": "BLOCKED",
+        "bullpen": "BLOCKED",
+        "lineup": "BLOCKED",
+        "injury": "BLOCKED",
+        "weather": "BLOCKED",
+        "travelRest": "BLOCKED"
+      },
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input."
+      }
+    },
+    {
+      "operatorGameId": "BASKETBALL|2026-08-29|03:00|세르비M|아이슬M",
+      "sport": "BASKETBALL",
+      "rawMatchup": "세르비M : 아이슬M",
+      "b1Status": "PROVIDER_NOT_SUPPORTED",
+      "coverageState": "BLOCKED",
+      "blockReason": "PASS_PROVIDER_NOT_SUPPORTED",
+      "datasets": {
+        "starter": "BLOCKED",
+        "bullpen": "BLOCKED",
+        "lineup": "BLOCKED",
+        "injury": "BLOCKED",
+        "weather": "BLOCKED",
+        "travelRest": "BLOCKED"
+      },
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input."
+      }
+    },
+    {
+      "operatorGameId": "BASKETBALL|2026-08-29|03:00|보스니M|이탈리M",
+      "sport": "BASKETBALL",
+      "rawMatchup": "보스니M : 이탈리M",
+      "b1Status": "PROVIDER_NOT_SUPPORTED",
+      "coverageState": "BLOCKED",
+      "blockReason": "PASS_PROVIDER_NOT_SUPPORTED",
+      "datasets": {
+        "starter": "BLOCKED",
+        "bullpen": "BLOCKED",
+        "lineup": "BLOCKED",
+        "injury": "BLOCKED",
+        "weather": "BLOCKED",
+        "travelRest": "BLOCKED"
+      },
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input."
+      }
+    },
+    {
+      "operatorGameId": "BASKETBALL|2026-08-29|04:00|스페인M|포르투M",
+      "sport": "BASKETBALL",
+      "rawMatchup": "스페인M : 포르투M",
+      "b1Status": "PROVIDER_NOT_SUPPORTED",
+      "coverageState": "BLOCKED",
+      "blockReason": "PASS_PROVIDER_NOT_SUPPORTED",
+      "datasets": {
+        "starter": "BLOCKED",
+        "bullpen": "BLOCKED",
+        "lineup": "BLOCKED",
+        "injury": "BLOCKED",
+        "weather": "BLOCKED",
+        "travelRest": "BLOCKED"
+      },
+      "marketOddsRole": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "note": "Operator odds are comparison-only. Not a model input."
+      }
+    }
+  ],
+  "note": "B2 candidate. Replay/inspect only. No live Odds API. No Result. Do not commit until OWNER review."
+}
