@@ -29,6 +29,8 @@ export type TeamLeagueTag =
   | "리그 1"
   | "UEFA 챔피언스리그"
   | "UEFA 유로파리그"
+  | "에레디비시에"
+  | "EFL 챔피언십"
   | "기타";
 
 export type TeamAliasEntry = {
