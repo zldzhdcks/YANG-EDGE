@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "yang-edge-daily-scope-lock-v1",
+  "dateKst": "2026-08-29",
+  "lockStatus": "LOCKED",
+  "scopeLockStatus": "COMPLETE",
+  "scopeStatus": "COMPLETE",
+  "scopeLockedAt": "2026-08-28T13:26:53.421Z",
+  "ownerSealedAt": "2026-08-28T13:26:53.421Z",
+  "creditSeal": false,
+  "researchOnly": true,
+  "marketBenchmarkOnly": true,
+  "prediction": "NONE",
+  "engine": "NONE",
+  "recommendation": "NONE",
+  "predictionInput": false,
+  "engineInput": false,
+  "engineAdmission": "PROHIBITED",
+  "predictionCreated": 0,
+  "predictionCalls": 0,
+  "resultCalls": 0,
+  "engineModified": false,
+  "weightsModified": false,
+  "fuzzyMatchingUsed": false,
+  "formalObservedAt": "2026-08-28T21:30:45.648+09:00",
+  "formalObservedAtChanged": false,
+  "baseCommit": "4cde41bc32935b780f1115d0a56dca4b99e591af",
+  "sourceOperatorObservationRel": "data/operator-observations/structured/2026-08-29/batch-2130-next-pregame-v0.json",
+  "sourceOperatorObservationHash": "d652b158494ab7824402e90c000c966691512a32ae3d3a7efae17adc935a52d7",
+  "scheduleRecoveryRel": "data/audits/2026-08-29-scope-slate-recovery-v1.json",
+  "scheduleRecoveryHash": "5bc05300d2234590c804f5c13043517dad2ca0cd8bf9a17f939bf7a97785b24b",
+  "currentStateRecoveryRel": "data/audits/2026-08-29-pregame-current-state-recovery-v1.json",
+  "currentStateRecoveryHash": "8602de81e52a8e85199b8a64e33f02bf70c4c6a74b33793fd47ff4cf986a0cc6",
+  "scheduleArtifacts": {
+    "mlb": "data/research/mlb/2026-08-29-schedule-v1.json",
+    "mlbSha256": "cbc7edfc513e8a203b9bf1ab8e2d4d8be19c9aa1d0d75992d6a5549e2398911e",
+    "footballCapture": "data/research/football/2026-08-29-fixtures-captured-v1.json",
+    "footballCaptureSha256": "ffd4ac0c4d1450d9bca395e9fbe03d10d9e1820aada3e7063b3a861b4cbb3a09",
+    "footballSchedule": "data/research/football/2026-08-29-schedule-v1.json",
+    "footballScheduleSha256": "c52be4c8ea599e2b6a34dc584f3adb692c386404710ec0a53a053b9dd7ba8b67",
+    "basketball": null
+  },
+  "sports": [
+    "FOOTBALL",
+    "BASKETBALL",
+    "MLB"
+  ],
+  "observedBatchCount": 30,
+  "officialTargetDateScopeCount": 29,
+  "observedScope": {
+    "FOOTBALL": 8,
+    "BASKETBALL": 6,
+    "MLB": 15,
+    "footballByLeague": {
+      "라리가": 2,
+      "에레디비": 1,
+      "분데스리": 1,
+      "세리에A": 1,
+      "프리그1": 1,
+      "EFL챔": 1,
+      "EPL": 1
+    },
+    "basketballObservedBatch": 7,
+    "total": 29
+  },
+  "officialDenominator": 29,
+  "scopeTotal": 29,
+  "accountedFor": 29,
+  "rowsAccountedFor": 29,
+  "supportedScheduleMatchedCount": 15,
+  "providerUnsupportedCount": 6,
+  "identityReviewCount": 2,
+  "competitionReviewCount": 6,
+  "ownerConfirmedCount": 0,
+  "bySportReconciliation": {
+    "FOOTBALL": {
+      "observed": 8,
+      "scheduleMatched": 0,
+      "identityReviewRequired": 2,
+      "competitionReviewRequired": 6,
+      "pregameEligible": 0
+    },
+    "MLB": {
+      "observed": 15,
+      "scheduleMatched": 15,
+      "unresolved": 0,
+      "pregameEligible": 15
+    },
+    "BASKETBALL": {
+      "observed": 6,
+      "observedBatch": 7,
+      "scheduleMatched": 0,
+      "providerUnsupported": 6,
+      "ownerConfirmed": 0,
+      "pregameEligible": 0,
+      "pregameEligibilityUnresolved": 6,
+      "droppedFromDenominator": 0,
+      "excludedCrossDateCount": 1,
+      "offDateDisplayedMatchups": 1
+    }
+  },
+  "excludedCrossDateCount": 1,
+  "excludedCrossDateRows": [
+    {
+      "displayedDateKst": "2026-08-28",
+      "displayedStartKst": "21:30",
+      "rawMatchup": "요르단M : 필리핀M",
+      "rawHomeLabel": "요르단M",
+      "rawAwayLabel": "필리핀M",
+      "sport": "BASKETBALL",
+      "marketIds": [
+        7121,
+        7122,
+        7123,
+        7124
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    }
+  ],
+  "operatorReviewItems": [
+    {
+      "reviewState": "OPERATOR_REVIEW_REQUIRED",
+      "section": "BASKETBALL_LEAGUE_GLYPH_원예_VS_월예",
+      "reviewNote": "Screenshot 1 league glyph read 남농원예. Screenshots 2-3 read 남농월예. Labels stored as displayed. Not silently unified. No lawful basketball schedule provider exists."
+    },
+    {
+      "reviewState": "OPERATOR_REVIEW_REQUIRED",
+      "section": "FOOTBALL_UNREGISTERED_OR_TRUNCATED_COMPETITION_LABELS",
+      "reviewNote": "Displayed football labels 분데스리, 세리에A, 프리그1, EFL챔, EPL, 에레디비 are not exact competition-registry display names. Aliases were not auto-added. 라리가 is registered; team labels 라싱산탄/엘체/알라베스/비야레알 are not in approved aliases."
+    },
+    {
+      "reviewState": "OPERATOR_REVIEW_REQUIRED",
+      "section": "OFF_DATE_08_28_BASKETBALL_LEFTOVER",
+      "displayedDateKst": "2026-08-28",
+      "displayedStartKst": "21:30",
+      "rawHomeLabel": "요르단M",
+      "rawAwayLabel": "필리핀M",
+      "marketIdRange": [
+        7121,
+        7122,
+        7123,
+        7124
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "reviewNote": "Visible leftover 08.28(금) 21:30 basketball matchup is preserved in operator observations and excluded from the 2026-08-29 official Daily Scope denominator. Not used to reopen sealed 2026-08-28 artifacts."
+    }
+  ],
+  "pregameEligibleObservedMatchups": 15,
+  "postStartObservedMatchups": 0,
+  "pregameEligibilityUnresolved": 14,
+  "providerCallCount": 2,
+  "providerCallsThisRun": 0,
+  "previousCalendarDateVisibleInDenominator": 0,
+  "previousCalendarDateVisibleExcludedFromDenominator": 1,
+  "nextCalendarDateVisibleExcludedFromDenominator": 0,
+  "scopeShrinkAfterLockForbidden": true,
+  "note": "FINAL SEAL. Official 2026-08-29 Daily Scope denominator is target-date rows only. One 08.28 leftover basketball matchup (요르단M : 필리핀M, IDs 7121-7124) remains in structured operator observations with scopeMembership=EXCLUDED_NON_TARGET_DATE and is excluded from this denominator. Sealed 2026-08-28 artifacts were not reopened. Provider-unsupported target-date basketball rows remain in the official denominator. Football truncated/unregistered competition labels remain COMPETITION_REVIEW_REQUIRED. La Liga team aliases remain IDENTITY_REVIEW_REQUIRED. Not a Prediction input.",
+  "nextRecommendedStep": "B1 schedule/identity on sealed 2026-08-29 Scope."
+}
