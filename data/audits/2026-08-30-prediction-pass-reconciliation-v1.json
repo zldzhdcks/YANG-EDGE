@@ -1,0 +1,2076 @@
+{
+  "schemaVersion": "yang-edge-prediction-pass-reconciliation-v1",
+  "dateKst": "2026-08-30",
+  "stage": "C",
+  "candidateStatus": "SEALED",
+  "decisionAt": "2026-08-29T13:35:41.131Z",
+  "predictedAt": "2026-08-29T13:35:41.131Z",
+  "formalObservedAt": "2026-08-29T21:19:31.776+09:00",
+  "scopeLockRel": "data/audits/2026-08-30-daily-scope-lock-v1.json",
+  "scopeLockSha256": "71fe9d14a1b7a16d6e09e591a74013752617de59255eac2b2bb7bb3fde80d539",
+  "sealedLockRel": "data/audits/2026-08-30-daily-scope-lock-v1.json",
+  "sealedLockSha256": "71fe9d14a1b7a16d6e09e591a74013752617de59255eac2b2bb7bb3fde80d539",
+  "b1Rel": "data/audits/2026-08-30-schedule-identity-reconciliation-v1.json",
+  "b1Sha256": "98c25b0cf626285c21ba6601f7fcd3479c086f9b166404c43d866678a4b514eb",
+  "b2Rel": "data/audits/2026-08-30-pregame-input-coverage-v1.json",
+  "b2Sha256": "78c8a98d12df9b5284530408cfa2006ca138062d63f6db353c6c4b0869f2b118",
+  "snapshotRel": "data/audits/2026-08-30-pregame-prediction-snapshot-v1.json",
+  "officialScopeTotal": 44,
+  "predictionCount": 0,
+  "passCount": 44,
+  "passBreakdown": {
+    "PASS_ENGINE_NOT_APPROVED": 31,
+    "PASS_IDENTITY_REVIEW_REQUIRED": 13
+  },
+  "officialRecommendationCount": 0,
+  "officialRecommendations": [],
+  "modelGovernance": {
+    "inspected": "mlb-baseline-prediction-v0.1.0 + football official model search",
+    "mlb": {
+      "modelId": "mlb-baseline-prediction-v0.1.0",
+      "modelStatus": "RESEARCH_BASELINE_V0",
+      "enableOfficialPick": false,
+      "marketPriorStatus": "BASELINE_ASSUMPTION",
+      "marketPriorValue": 0.25,
+      "marketPriorActive": true,
+      "dummyEngineUsed": false,
+      "approvedForOfficialRecommendation": false,
+      "rejectionReasons": [
+        "enableOfficialPick=false",
+        "RESEARCH_BASELINE_V0_NOT_OFFICIAL_CURRENT_MODEL",
+        "RESEARCH_BASELINE_USES_MARKET_PRIOR"
+      ]
+    },
+    "footballOfficialModel": "NONE",
+    "dummyEngineUsed": false,
+    "legacyV1Used": false,
+    "researchBaselineUsedAsOfficial": false,
+    "apiFootballPredictionsUsed": false,
+    "approvedCurrentIndependentMarketFreeModel": false
+  },
+  "modelActuallyUsed": "NONE",
+  "modelApprovalStatus": "NOT_APPROVED_FOR_OFFICIAL_RECOMMENDATION",
+  "inspectedModel": {
+    "modelId": "mlb-baseline-prediction-v0.1.0",
+    "modelStatus": "RESEARCH_BASELINE_V0",
+    "enableOfficialPick": false,
+    "marketPriorStatus": "BASELINE_ASSUMPTION",
+    "marketPriorValue": 0.25,
+    "marketPriorActive": true,
+    "dummyEngineUsed": false,
+    "approvedForOfficialRecommendation": false,
+    "rejectionReasons": [
+      "enableOfficialPick=false",
+      "RESEARCH_BASELINE_V0_NOT_OFFICIAL_CURRENT_MODEL",
+      "RESEARCH_BASELINE_USES_MARKET_PRIOR"
+    ]
+  },
+  "dummyEngineUsed": false,
+  "legacyMarketAssistedModelUsed": false,
+  "marketFirewall": {
+    "marketBenchmarkOnly": true,
+    "predictionInput": false,
+    "engineInput": false,
+    "marketPriorUsed": false,
+    "marketImpliedProbabilityUsed": false,
+    "favoriteStatusUsed": false,
+    "oddsApiLiveCalls": 0,
+    "note": "Operator odds remain marketBenchmarkOnly. Coverage was not prioritized by favorite status."
+  },
+  "resultCalls": 0,
+  "predictionProviderCalls": 0,
+  "engineCalls": 0,
+  "engineModified": false,
+  "weightsModified": false,
+  "resultDataUsed": false,
+  "fuzzyMatchingUsed": false,
+  "leakageStatus": "NO_RESULT_NO_PREDICTIONS_PROVIDER_NO_MARKET_IN_FORMULA",
+  "rows": [
+    {
+      "operatorGameId": "MLB|2026-08-30|02:05|뉴욕양키|보스레드",
+      "sport": "MLB",
+      "league": "MLB",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "02:05",
+      "rawMatchup": "뉴욕양키 : 보스레드",
+      "providerGameId": "823539",
+      "scheduledStartAt": "2026-08-30T02:05:00.000+09:00",
+      "b1Status": "MATCHED",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest",
+        "lineupRefresh"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "MLB|2026-08-30|02:10|디트타이|LA다저스",
+      "sport": "MLB",
+      "league": "MLB",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "02:10",
+      "rawMatchup": "디트타이 : LA다저스",
+      "providerGameId": "824230",
+      "scheduledStartAt": "2026-08-30T02:10:00.000+09:00",
+      "b1Status": "MATCHED",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest",
+        "lineupRefresh"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "MLB|2026-08-30|03:10|미네트윈|시카화이",
+      "sport": "MLB",
+      "league": "MLB",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "03:10",
+      "rawMatchup": "미네트윈 : 시카화이",
+      "providerGameId": "823665",
+      "scheduledStartAt": "2026-08-30T03:10:00.000+09:00",
+      "b1Status": "MATCHED",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest",
+        "lineupRefresh"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "MLB|2026-08-30|03:15|세인카디|피츠파이",
+      "sport": "MLB",
+      "league": "MLB",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "03:15",
+      "rawMatchup": "세인카디 : 피츠파이",
+      "providerGameId": "823011",
+      "scheduledStartAt": "2026-08-30T03:15:00.000+09:00",
+      "b1Status": "MATCHED",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest",
+        "lineupRefresh"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "MLB|2026-08-30|03:20|시카컵스|신시레즈",
+      "sport": "MLB",
+      "league": "MLB",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "03:20",
+      "rawMatchup": "시카컵스 : 신시레즈",
+      "providerGameId": "824637",
+      "scheduledStartAt": "2026-08-30T03:20:00.000+09:00",
+      "b1Status": "MATCHED",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest",
+        "lineupRefresh"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "MLB|2026-08-30|04:07|토론블루|시애매리",
+      "sport": "MLB",
+      "league": "MLB",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "04:07",
+      "rawMatchup": "토론블루 : 시애매리",
+      "providerGameId": "822770",
+      "scheduledStartAt": "2026-08-30T04:07:00.000+09:00",
+      "b1Status": "MATCHED",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest",
+        "lineupRefresh"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "MLB|2026-08-30|05:05|워싱내셔|마이말린",
+      "sport": "MLB",
+      "league": "MLB",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "05:05",
+      "rawMatchup": "워싱내셔 : 마이말린",
+      "providerGameId": "822690",
+      "scheduledStartAt": "2026-08-30T05:05:00.000+09:00",
+      "b1Status": "MATCHED",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest",
+        "lineupRefresh"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "MLB|2026-08-30|05:05|샌프자이|애리다이",
+      "sport": "MLB",
+      "league": "MLB",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "05:05",
+      "rawMatchup": "샌프자이 : 애리다이",
+      "providerGameId": "823177",
+      "scheduledStartAt": "2026-08-30T05:05:00.000+09:00",
+      "b1Status": "MATCHED",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest",
+        "lineupRefresh"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "MLB|2026-08-30|05:10|탬파레이|샌디파드",
+      "sport": "MLB",
+      "league": "MLB",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "05:10",
+      "rawMatchup": "탬파레이 : 샌디파드",
+      "providerGameId": "822936",
+      "scheduledStartAt": "2026-08-30T05:10:00.000+09:00",
+      "b1Status": "MATCHED",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest",
+        "lineupRefresh"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "MLB|2026-08-30|05:10|뉴욕메츠|휴스애스",
+      "sport": "MLB",
+      "league": "MLB",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "05:10",
+      "rawMatchup": "뉴욕메츠 : 휴스애스",
+      "providerGameId": "823582",
+      "scheduledStartAt": "2026-08-30T05:10:00.000+09:00",
+      "b1Status": "MATCHED",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest",
+        "lineupRefresh"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "MLB|2026-08-30|05:10|클리가디|캔자로얄",
+      "sport": "MLB",
+      "league": "MLB",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "05:10",
+      "rawMatchup": "클리가디 : 캔자로얄",
+      "providerGameId": "824392",
+      "scheduledStartAt": "2026-08-30T05:10:00.000+09:00",
+      "b1Status": "MATCHED",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest",
+        "lineupRefresh"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "MLB|2026-08-30|05:10|애틀브레|콜로로키",
+      "sport": "MLB",
+      "league": "MLB",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "05:10",
+      "rawMatchup": "애틀브레 : 콜로로키",
+      "providerGameId": "824874",
+      "scheduledStartAt": "2026-08-30T05:10:00.000+09:00",
+      "b1Status": "MATCHED",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest",
+        "lineupRefresh"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "MLB|2026-08-30|08:15|밀워브루|텍사레인",
+      "sport": "MLB",
+      "league": "MLB",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "08:15",
+      "rawMatchup": "밀워브루 : 텍사레인",
+      "providerGameId": "823741",
+      "scheduledStartAt": "2026-08-30T08:15:00.000+09:00",
+      "b1Status": "MATCHED",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest",
+        "lineupRefresh"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "MLB|2026-08-30|11:05|애슬레틱|볼티오리",
+      "sport": "MLB",
+      "league": "MLB",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "11:05",
+      "rawMatchup": "애슬레틱 : 볼티오리",
+      "providerGameId": "824961",
+      "scheduledStartAt": "2026-08-30T11:05:00.000+09:00",
+      "b1Status": "MATCHED",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest",
+        "lineupRefresh"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "MLB|2026-08-30|11:07|LA에인절|필라필리",
+      "sport": "MLB",
+      "league": "MLB",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "11:07",
+      "rawMatchup": "LA에인절 : 필라필리",
+      "providerGameId": "823986",
+      "scheduledStartAt": "2026-08-30T11:07:00.000+09:00",
+      "b1Status": "MATCHED",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "bullpen",
+        "lineup",
+        "injury",
+        "weather",
+        "travelRest",
+        "lineupRefresh"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|00:00|레반테|베티스",
+      "sport": "FOOTBALL",
+      "league": "라리가",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "00:00",
+      "rawMatchup": "레반테 : 베티스",
+      "providerGameId": "1570357",
+      "scheduledStartAt": "2026-08-30T00:00:00.000+09:00",
+      "b1Status": "MATCHED_UNIQUE_COMPETITION_KICKOFF_SLOT",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|00:15|RC스트라|RC랑스",
+      "sport": "FOOTBALL",
+      "league": "프리그1",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "00:15",
+      "rawMatchup": "RC스트라 : RC랑스",
+      "providerGameId": "1552745",
+      "scheduledStartAt": "2026-08-30T00:15:00.000+09:00",
+      "b1Status": "MATCHED_UNIQUE_COMPETITION_KICKOFF_SLOT",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|01:30|토트넘|뉴캐슬U",
+      "sport": "FOOTBALL",
+      "league": "EPL",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "01:30",
+      "rawMatchup": "토트넘 : 뉴캐슬U",
+      "providerGameId": "1557386",
+      "scheduledStartAt": "2026-08-30T01:30:00.000+09:00",
+      "b1Status": "MATCHED_UNIQUE_COMPETITION_KICKOFF_SLOT",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|01:30|도르트문|함부르크",
+      "sport": "FOOTBALL",
+      "league": "분데스리",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "01:30",
+      "rawMatchup": "도르트문 : 함부르크",
+      "providerGameId": "1575142",
+      "scheduledStartAt": "2026-08-30T01:30:00.000+09:00",
+      "b1Status": "MATCHED_UNIQUE_COMPETITION_KICKOFF_SLOT",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|01:45|알크마르|고어헤드",
+      "sport": "FOOTBALL",
+      "league": "에레디비",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "01:45",
+      "rawMatchup": "알크마르 : 고어헤드",
+      "providerGameId": "1552146",
+      "scheduledStartAt": "2026-08-30T01:45:00.000+09:00",
+      "b1Status": "MATCHED_UNIQUE_COMPETITION_KICKOFF_SLOT",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|02:00|소시에다|에스피뇰",
+      "sport": "FOOTBALL",
+      "league": "라리가",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "02:00",
+      "rawMatchup": "소시에다 : 에스피뇰",
+      "providerGameId": "1570361",
+      "scheduledStartAt": "2026-08-30T02:00:00.000+09:00",
+      "b1Status": "MATCHED_UNIQUE_COMPETITION_KICKOFF_SLOT",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|03:45|유벤투스|파르마",
+      "sport": "FOOTBALL",
+      "league": "세리에A",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "03:45",
+      "rawMatchup": "유벤투스 : 파르마",
+      "providerGameId": "1550101",
+      "scheduledStartAt": "2026-08-30T03:45:00.000+09:00",
+      "b1Status": "MATCHED_UNIQUE_COMPETITION_KICKOFF_SLOT",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|04:00|즈볼러|네이메헌",
+      "sport": "FOOTBALL",
+      "league": "에레디비",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "04:00",
+      "rawMatchup": "즈볼러 : 네이메헌",
+      "providerGameId": "1552147",
+      "scheduledStartAt": "2026-08-30T04:00:00.000+09:00",
+      "b1Status": "MATCHED_UNIQUE_COMPETITION_KICKOFF_SLOT",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|04:30|세비야|AT마드",
+      "sport": "FOOTBALL",
+      "league": "라리가",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "04:30",
+      "rawMatchup": "세비야 : AT마드",
+      "providerGameId": "1570362",
+      "scheduledStartAt": "2026-08-30T04:30:00.000+09:00",
+      "b1Status": "MATCHED_UNIQUE_COMPETITION_KICKOFF_SLOT",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|05:30|시애사운|시카파이",
+      "sport": "FOOTBALL",
+      "league": "MLS",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "05:30",
+      "rawMatchup": "시애사운 : 시카파이",
+      "providerGameId": "1490421",
+      "scheduledStartAt": "2026-08-30T05:30:00.000+09:00",
+      "b1Status": "MATCHED_SEALED_ALIAS",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|08:30|DC유나이|LAFC",
+      "sport": "FOOTBALL",
+      "league": "MLS",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "08:30",
+      "rawMatchup": "DC유나이 : LAFC",
+      "providerGameId": "1490423",
+      "scheduledStartAt": "2026-08-30T08:30:00.000+09:00",
+      "b1Status": "MATCHED_PREVIOUS_DETERMINISTIC_EVIDENCE",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|08:30|뉴욕레드|필라유니",
+      "sport": "FOOTBALL",
+      "league": "MLS",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "08:30",
+      "rawMatchup": "뉴욕레드 : 필라유니",
+      "providerGameId": "1490424",
+      "scheduledStartAt": "2026-08-30T08:30:00.000+09:00",
+      "b1Status": "MATCHED_PREVIOUS_DETERMINISTIC_EVIDENCE",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|08:30|토론토FC|뉴욕시티",
+      "sport": "FOOTBALL",
+      "league": "MLS",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "08:30",
+      "rawMatchup": "토론토FC : 뉴욕시티",
+      "providerGameId": "1490425",
+      "scheduledStartAt": "2026-08-30T08:30:00.000+09:00",
+      "b1Status": "MATCHED_PREVIOUS_DETERMINISTIC_EVIDENCE",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|09:30|스포캔자|밴쿠화이",
+      "sport": "FOOTBALL",
+      "league": "MLS",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "09:30",
+      "rawMatchup": "스포캔자 : 밴쿠화이",
+      "providerGameId": "1490429",
+      "scheduledStartAt": "2026-08-30T09:30:00.000+09:00",
+      "b1Status": "MATCHED_PREVIOUS_DETERMINISTIC_EVIDENCE",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|10:30|콜로래피|레알솔트",
+      "sport": "FOOTBALL",
+      "league": "MLS",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "10:30",
+      "rawMatchup": "콜로래피 : 레알솔트",
+      "providerGameId": "1490432",
+      "scheduledStartAt": "2026-08-30T10:30:00.000+09:00",
+      "b1Status": "MATCHED_UNIQUE_COMPETITION_KICKOFF_SLOT",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|11:30|포틀팀버|오스틴FC",
+      "sport": "FOOTBALL",
+      "league": "MLS",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "11:30",
+      "rawMatchup": "포틀팀버 : 오스틴FC",
+      "providerGameId": "1490434",
+      "scheduledStartAt": "2026-08-30T11:30:00.000+09:00",
+      "b1Status": "MATCHED_SEALED_ALIAS",
+      "b2CoverageState": "PARTIAL",
+      "missingDatasets": [
+        "lineup",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_ENGINE_NOT_APPROVED",
+      "passReasons": [
+        "PASS_ENGINE_NOT_APPROVED",
+        "PASS_REQUIRED_PREGAME_DATA_MISSING"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|01:30|피오렌티|프로시노",
+      "sport": "FOOTBALL",
+      "league": "세리에A",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "01:30",
+      "rawMatchup": "피오렌티 : 프로시노",
+      "providerGameId": null,
+      "scheduledStartAt": "2026-08-30T01:30:00.000+09:00",
+      "b1Status": "IDENTITY_REVIEW_REQUIRED",
+      "b2CoverageState": "BLOCKED_IDENTITY_REVIEW_REQUIRED",
+      "missingDatasets": [
+        "fixture",
+        "lineup",
+        "injury",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "passReasons": [
+        "PASS_IDENTITY_REVIEW_REQUIRED"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|01:30|AC몬차|우디네세",
+      "sport": "FOOTBALL",
+      "league": "세리에A",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "01:30",
+      "rawMatchup": "AC몬차 : 우디네세",
+      "providerGameId": null,
+      "scheduledStartAt": "2026-08-30T01:30:00.000+09:00",
+      "b1Status": "IDENTITY_REVIEW_REQUIRED",
+      "b2CoverageState": "BLOCKED_IDENTITY_REVIEW_REQUIRED",
+      "missingDatasets": [
+        "fixture",
+        "lineup",
+        "injury",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "passReasons": [
+        "PASS_IDENTITY_REVIEW_REQUIRED"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|01:30|사수올로|토리노",
+      "sport": "FOOTBALL",
+      "league": "세리에A",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "01:30",
+      "rawMatchup": "사수올로 : 토리노",
+      "providerGameId": null,
+      "scheduledStartAt": "2026-08-30T01:30:00.000+09:00",
+      "b1Status": "IDENTITY_REVIEW_REQUIRED",
+      "b2CoverageState": "BLOCKED_IDENTITY_REVIEW_REQUIRED",
+      "missingDatasets": [
+        "fixture",
+        "lineup",
+        "injury",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "passReasons": [
+        "PASS_IDENTITY_REVIEW_REQUIRED"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|03:45|AJ오세르|앙제SCO",
+      "sport": "FOOTBALL",
+      "league": "프리그1",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "03:45",
+      "rawMatchup": "AJ오세르 : 앙제SCO",
+      "providerGameId": null,
+      "scheduledStartAt": "2026-08-30T03:45:00.000+09:00",
+      "b1Status": "IDENTITY_REVIEW_REQUIRED",
+      "b2CoverageState": "BLOCKED_IDENTITY_REVIEW_REQUIRED",
+      "missingDatasets": [
+        "fixture",
+        "lineup",
+        "injury",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "passReasons": [
+        "PASS_IDENTITY_REVIEW_REQUIRED"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|03:45|브레스트|툴루즈",
+      "sport": "FOOTBALL",
+      "league": "프리그1",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "03:45",
+      "rawMatchup": "브레스트 : 툴루즈",
+      "providerGameId": null,
+      "scheduledStartAt": "2026-08-30T03:45:00.000+09:00",
+      "b1Status": "IDENTITY_REVIEW_REQUIRED",
+      "b2CoverageState": "BLOCKED_IDENTITY_REVIEW_REQUIRED",
+      "missingDatasets": [
+        "fixture",
+        "lineup",
+        "injury",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "passReasons": [
+        "PASS_IDENTITY_REVIEW_REQUIRED"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|03:45|로리앙|트루아AC",
+      "sport": "FOOTBALL",
+      "league": "프리그1",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "03:45",
+      "rawMatchup": "로리앙 : 트루아AC",
+      "providerGameId": null,
+      "scheduledStartAt": "2026-08-30T03:45:00.000+09:00",
+      "b1Status": "IDENTITY_REVIEW_REQUIRED",
+      "b2CoverageState": "BLOCKED_IDENTITY_REVIEW_REQUIRED",
+      "missingDatasets": [
+        "fixture",
+        "lineup",
+        "injury",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "passReasons": [
+        "PASS_IDENTITY_REVIEW_REQUIRED"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|03:45|리옹|르아브르",
+      "sport": "FOOTBALL",
+      "league": "프리그1",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "03:45",
+      "rawMatchup": "리옹 : 르아브르",
+      "providerGameId": null,
+      "scheduledStartAt": "2026-08-30T03:45:00.000+09:00",
+      "b1Status": "IDENTITY_REVIEW_REQUIRED",
+      "b2CoverageState": "BLOCKED_IDENTITY_REVIEW_REQUIRED",
+      "missingDatasets": [
+        "fixture",
+        "lineup",
+        "injury",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "passReasons": [
+        "PASS_IDENTITY_REVIEW_REQUIRED"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|08:30|애틀유나|샬럿FC",
+      "sport": "FOOTBALL",
+      "league": "MLS",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "08:30",
+      "rawMatchup": "애틀유나 : 샬럿FC",
+      "providerGameId": null,
+      "scheduledStartAt": "2026-08-30T08:30:00.000+09:00",
+      "b1Status": "IDENTITY_REVIEW_REQUIRED",
+      "b2CoverageState": "BLOCKED_IDENTITY_REVIEW_REQUIRED",
+      "missingDatasets": [
+        "fixture",
+        "lineup",
+        "injury",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "passReasons": [
+        "PASS_IDENTITY_REVIEW_REQUIRED"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|08:30|인터마이|CF몽레알",
+      "sport": "FOOTBALL",
+      "league": "MLS",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "08:30",
+      "rawMatchup": "인터마이 : CF몽레알",
+      "providerGameId": null,
+      "scheduledStartAt": "2026-08-30T08:30:00.000+09:00",
+      "b1Status": "IDENTITY_REVIEW_REQUIRED",
+      "b2CoverageState": "BLOCKED_IDENTITY_REVIEW_REQUIRED",
+      "missingDatasets": [
+        "fixture",
+        "lineup",
+        "injury",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "passReasons": [
+        "PASS_IDENTITY_REVIEW_REQUIRED"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|09:30|휴스다이|새너어스",
+      "sport": "FOOTBALL",
+      "league": "MLS",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "09:30",
+      "rawMatchup": "휴스다이 : 새너어스",
+      "providerGameId": null,
+      "scheduledStartAt": "2026-08-30T09:30:00.000+09:00",
+      "b1Status": "IDENTITY_REVIEW_REQUIRED",
+      "b2CoverageState": "BLOCKED_IDENTITY_REVIEW_REQUIRED",
+      "missingDatasets": [
+        "fixture",
+        "lineup",
+        "injury",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "passReasons": [
+        "PASS_IDENTITY_REVIEW_REQUIRED"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|09:30|미네유나|올랜시티",
+      "sport": "FOOTBALL",
+      "league": "MLS",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "09:30",
+      "rawMatchup": "미네유나 : 올랜시티",
+      "providerGameId": null,
+      "scheduledStartAt": "2026-08-30T09:30:00.000+09:00",
+      "b1Status": "IDENTITY_REVIEW_REQUIRED",
+      "b2CoverageState": "BLOCKED_IDENTITY_REVIEW_REQUIRED",
+      "missingDatasets": [
+        "fixture",
+        "lineup",
+        "injury",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "passReasons": [
+        "PASS_IDENTITY_REVIEW_REQUIRED"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|09:30|내슈빌SC|FC신시내",
+      "sport": "FOOTBALL",
+      "league": "MLS",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "09:30",
+      "rawMatchup": "내슈빌SC : FC신시내",
+      "providerGameId": null,
+      "scheduledStartAt": "2026-08-30T09:30:00.000+09:00",
+      "b1Status": "IDENTITY_REVIEW_REQUIRED",
+      "b2CoverageState": "BLOCKED_IDENTITY_REVIEW_REQUIRED",
+      "missingDatasets": [
+        "fixture",
+        "lineup",
+        "injury",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "passReasons": [
+        "PASS_IDENTITY_REVIEW_REQUIRED"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    },
+    {
+      "operatorGameId": "FOOTBALL|2026-08-30|11:30|샌디에FC|LA갤럭시",
+      "sport": "FOOTBALL",
+      "league": "MLS",
+      "displayedDateKst": "2026-08-30",
+      "startTimeKst": "11:30",
+      "rawMatchup": "샌디에FC : LA갤럭시",
+      "providerGameId": null,
+      "scheduledStartAt": "2026-08-30T11:30:00.000+09:00",
+      "b1Status": "IDENTITY_REVIEW_REQUIRED",
+      "b2CoverageState": "BLOCKED_IDENTITY_REVIEW_REQUIRED",
+      "missingDatasets": [
+        "fixture",
+        "lineup",
+        "injury",
+        "player",
+        "squad",
+        "coach"
+      ],
+      "cState": "PASS_IDENTITY_REVIEW_REQUIRED",
+      "passReasons": [
+        "PASS_IDENTITY_REVIEW_REQUIRED"
+      ],
+      "predictedSide": null,
+      "modelProbability": null,
+      "confidence": null,
+      "modelVersion": null,
+      "marketComparison": {
+        "marketBenchmarkOnly": true,
+        "predictionInput": false,
+        "engineInput": false,
+        "attachedAsModelInput": false,
+        "note": "Operator odds are comparison-only. Not used to derive side, probability, or confidence."
+      },
+      "independentPrediction": {
+        "created": false,
+        "predictedSide": null,
+        "independentProbability": null,
+        "confidence": null,
+        "engineName": null,
+        "engineVersion": null
+      },
+      "dummyEngineUsed": false,
+      "resultDataPresent": false
+    }
+  ],
+  "historicalFirewall": {
+    "stageAUnchanged": true,
+    "b1Unchanged": true,
+    "b2Unchanged": true,
+    "sealed20260829Unchanged": true
+  },
+  "note": "No qualifying current approved independent YANG EDGE model exists. Official Recommendation count is 0. PASS is evidence-based."
+}
