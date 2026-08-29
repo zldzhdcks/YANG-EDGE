@@ -1,0 +1,473 @@
+{
+  "schemaVersion": "yang-edge-daily-scope-lock-v1",
+  "dateKst": "2026-08-30",
+  "lockStatus": "LOCKED",
+  "scopeLockStatus": "COMPLETE",
+  "scopeStatus": "COMPLETE",
+  "scopeLockedAt": "2026-08-29T12:39:32.201Z",
+  "ownerSealedAt": "2026-08-29T12:49:01.442Z",
+  "creditSeal": false,
+  "researchOnly": true,
+  "marketBenchmarkOnly": true,
+  "prediction": "NONE",
+  "engine": "NONE",
+  "recommendation": "NONE",
+  "predictionInput": false,
+  "engineInput": false,
+  "engineAdmission": "PROHIBITED",
+  "predictionCreated": 0,
+  "predictionCalls": 0,
+  "resultCalls": 0,
+  "engineModified": false,
+  "weightsModified": false,
+  "fuzzyMatchingUsed": false,
+  "formalObservedAt": "2026-08-29T21:19:31.776+09:00",
+  "formalObservedAtChanged": false,
+  "baseCommit": "84cc91a2fcb8ab1485e1ac359b64b4398d034b6a",
+  "sourceOperatorObservationRel": "data/operator-observations/structured/2026-08-30/batch-2118-next-pregame-v0.json",
+  "sourceOperatorObservationHash": "2f4a67e94d75d59b280b429da0ae5c79db393dc374216220e8b32d1a012db46d",
+  "scheduleRecoveryRel": "data/audits/2026-08-30-scope-slate-recovery-v1.json",
+  "scheduleRecoveryHash": "a62a117d034bb49aaeabe84cb43c9564b143e261e5dd0e27a9c8610fc274eb1f",
+  "currentStateRecoveryRel": "data/audits/2026-08-30-pregame-current-state-recovery-v1.json",
+  "currentStateRecoveryHash": "d56036fbafe8c6e58d24464cd2e47845bbf7140fab1ef8c39963b73168fa87a0",
+  "scheduleArtifacts": {
+    "mlb": "data/research/mlb/2026-08-30-schedule-v1.json",
+    "mlbSha256": "a1cd72867724603c39aa0ef8e91a31ecb7e4ba089d34e26e6508e8c0c5932e2d",
+    "footballCapture": "data/research/football/2026-08-30-fixtures-captured-v1.json",
+    "footballCaptureSha256": "6c11136f36c62b36639132678c18082a4d8abb227101243db3f0811bd4e2351e",
+    "footballSchedule": "data/research/football/2026-08-30-schedule-v1.json",
+    "footballScheduleSha256": "c93ca29c4eff8d12b5dab7c7061ca207e01a9b01b4d9af7bda21960c6903e7dc",
+    "basketball": null
+  },
+  "sports": [
+    "FOOTBALL",
+    "BASKETBALL",
+    "MLB"
+  ],
+  "observedBatchCount": 64,
+  "officialTargetDateScopeCount": 44,
+  "observedScope": {
+    "FOOTBALL": 29,
+    "BASKETBALL": 0,
+    "MLB": 15,
+    "footballByLeague": {
+      "라리가": 3,
+      "프리그1": 5,
+      "EPL": 1,
+      "분데스리": 1,
+      "세리에A": 4,
+      "에레디비": 2,
+      "MLS": 13
+    },
+    "basketballObservedBatch": 0,
+    "total": 44
+  },
+  "officialDenominator": 44,
+  "scopeTotal": 44,
+  "accountedFor": 44,
+  "rowsAccountedFor": 44,
+  "supportedScheduleMatchedCount": 17,
+  "providerUnsupportedCount": 0,
+  "identityReviewCount": 27,
+  "competitionReviewCount": 0,
+  "ownerConfirmedCount": 0,
+  "bySportReconciliation": {
+    "FOOTBALL": {
+      "observed": 29,
+      "scheduleMatched": 2,
+      "identityReviewRequired": 27,
+      "competitionReviewRequired": 0,
+      "pregameEligible": 2
+    },
+    "MLB": {
+      "observed": 15,
+      "scheduleMatched": 15,
+      "unresolved": 0,
+      "pregameEligible": 15
+    },
+    "BASKETBALL": {
+      "observed": 0,
+      "observedBatch": 0,
+      "scheduleMatched": 0,
+      "providerUnsupported": 0,
+      "ownerConfirmed": 0,
+      "pregameEligible": 0,
+      "pregameEligibilityUnresolved": 0,
+      "droppedFromDenominator": 0,
+      "excludedCrossDateCount": 0,
+      "offDateDisplayedMatchups": 0
+    }
+  },
+  "excludedCrossDateCount": 20,
+  "excludedCrossDateRows": [
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "20:30",
+      "rawMatchup": "더비카운 : 스완지C",
+      "rawHomeLabel": "더비카운",
+      "rawAwayLabel": "스완지C",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7449,
+        7450,
+        7451,
+        7452
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "20:30",
+      "rawMatchup": "미들즈브 : 웨스브로",
+      "rawHomeLabel": "미들즈브",
+      "rawAwayLabel": "웨스브로",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7453,
+        7454,
+        7455,
+        7456
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "20:30",
+      "rawMatchup": "울버햄튼 : 스토크C",
+      "rawHomeLabel": "울버햄튼",
+      "rawAwayLabel": "스토크C",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7457,
+        7458,
+        7459,
+        7460
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "20:30",
+      "rawMatchup": "리버풀 : 노팅엄F",
+      "rawHomeLabel": "리버풀",
+      "rawAwayLabel": "노팅엄F",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7461,
+        7462,
+        7463,
+        7464,
+        7465,
+        7466
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "22:30",
+      "rawMatchup": "라이프치 : 뮌헨글라",
+      "rawHomeLabel": "라이프치",
+      "rawAwayLabel": "뮌헨글라",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7467,
+        7468,
+        7469,
+        7470,
+        7471
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "22:30",
+      "rawMatchup": "마인츠05 : 파더보른",
+      "rawHomeLabel": "마인츠05",
+      "rawAwayLabel": "파더보른",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7472,
+        7473,
+        7474,
+        7475,
+        7476
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "22:30",
+      "rawMatchup": "U베를린 : 프랑크푸",
+      "rawHomeLabel": "U베를린",
+      "rawAwayLabel": "프랑크푸",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7477,
+        7478,
+        7479,
+        7480,
+        7481
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "22:30",
+      "rawMatchup": "쾰른 : 호펜하임",
+      "rawHomeLabel": "쾰른",
+      "rawAwayLabel": "호펜하임",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7482,
+        7483,
+        7484,
+        7485,
+        7486
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "22:30",
+      "rawMatchup": "엘버스베 : 레버쿠젠",
+      "rawHomeLabel": "엘버스베",
+      "rawAwayLabel": "레버쿠젠",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7487,
+        7488,
+        7489,
+        7490,
+        7491
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "23:00",
+      "rawMatchup": "블랙번R : 퀸즈파크",
+      "rawHomeLabel": "블랙번R",
+      "rawAwayLabel": "퀸즈파크",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7492,
+        7493,
+        7494,
+        7495
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "23:00",
+      "rawMatchup": "볼턴W : 링컨시티",
+      "rawHomeLabel": "볼턴W",
+      "rawAwayLabel": "링컨시티",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7496,
+        7497,
+        7498,
+        7499
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "23:00",
+      "rawMatchup": "브리스C : 포츠머스",
+      "rawHomeLabel": "브리스C",
+      "rawAwayLabel": "포츠머스",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7500,
+        7501,
+        7502,
+        7503
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "23:00",
+      "rawMatchup": "카디프C : 셰필드U",
+      "rawHomeLabel": "카디프C",
+      "rawAwayLabel": "셰필드U",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7504,
+        7505,
+        7506,
+        7507
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "23:00",
+      "rawMatchup": "찰턴A : 프레스턴",
+      "rawHomeLabel": "찰턴A",
+      "rawAwayLabel": "프레스턴",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7508,
+        7509,
+        7510,
+        7511
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "23:00",
+      "rawMatchup": "노리치C : 번리",
+      "rawHomeLabel": "노리치C",
+      "rawAwayLabel": "번리",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7512,
+        7513,
+        7514,
+        7515
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "23:00",
+      "rawMatchup": "사우샘프 : 밀월",
+      "rawHomeLabel": "사우샘프",
+      "rawAwayLabel": "밀월",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7516,
+        7517,
+        7518,
+        7519
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "23:00",
+      "rawMatchup": "왓포드 : 웨스트햄",
+      "rawHomeLabel": "왓포드",
+      "rawAwayLabel": "웨스트햄",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7520,
+        7521,
+        7522,
+        7523
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "23:00",
+      "rawMatchup": "본머스 : 에버턴",
+      "rawHomeLabel": "본머스",
+      "rawAwayLabel": "에버턴",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7524,
+        7525,
+        7526,
+        7527,
+        7528
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "23:00",
+      "rawMatchup": "코번트리 : 헐시티",
+      "rawHomeLabel": "코번트리",
+      "rawAwayLabel": "헐시티",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7529,
+        7530,
+        7531,
+        7532,
+        7533
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    },
+    {
+      "displayedDateKst": "2026-08-29",
+      "displayedStartKst": "23:30",
+      "rawMatchup": "엑셀시오 : 스파로테",
+      "rawHomeLabel": "엑셀시오",
+      "rawAwayLabel": "스파로테",
+      "sport": "FOOTBALL",
+      "marketIds": [
+        7534,
+        7535,
+        7536,
+        7537
+      ],
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "scopeAccountingState": "EXCLUDED_NON_TARGET_DATE"
+    }
+  ],
+  "operatorReviewItems": [
+    {
+      "reviewState": "OPERATOR_REVIEW_REQUIRED",
+      "section": "OFF_DATE_08_29_FOOTBALL_LEFTOVER",
+      "displayedDateKst": "2026-08-29",
+      "scopeMembership": "EXCLUDED_NON_TARGET_DATE",
+      "reviewNote": "Screenshots 1-3 display leftover 08.29(토) football matchups. Preserved in operator observations with scopeMembership=EXCLUDED_NON_TARGET_DATE. Excluded from the 2026-08-30 official Daily Scope denominator. Not used to reopen sealed 2026-08-29 artifacts."
+    },
+    {
+      "reviewState": "OPERATOR_REVIEW_REQUIRED",
+      "section": "MARKET_ID_GAPS_NOT_INVENTED",
+      "marketIdRange": [
+        7538,
+        7539,
+        7540,
+        7541,
+        7686,
+        7687,
+        7688,
+        7689
+      ],
+      "reviewNote": "IDs 7538-7541 and 7686-7689 were not on any screenshot and were not invented."
+    },
+    {
+      "reviewState": "OPERATOR_REVIEW_REQUIRED",
+      "section": "FOOTBALL_RAW_GLYPH_에스피뇰",
+      "reviewNote": "라리가 away label stored as 에스피뇰 exactly as displayed. Not silently unified to registered alias 에스파뇰."
+    }
+  ],
+  "pregameEligibleObservedMatchups": 17,
+  "postStartObservedMatchups": 0,
+  "pregameEligibilityUnresolved": 27,
+  "providerCallCount": 2,
+  "providerCallsThisRun": 0,
+  "previousCalendarDateVisibleInDenominator": 0,
+  "previousCalendarDateVisibleExcludedFromDenominator": 20,
+  "nextCalendarDateVisibleExcludedFromDenominator": 0,
+  "scopeShrinkAfterLockForbidden": true,
+  "note": "FINAL SEAL. Official 2026-08-30 Daily Scope denominator is target-date rows only. Twenty 08.29 leftover football matchups remain in structured operator observations with scopeMembership=EXCLUDED_NON_TARGET_DATE and are excluded from this denominator. Sealed 2026-08-29 artifacts were not reopened. Football competition aliases resolved 29/29. Twenty-seven official football rows remain IDENTITY_REVIEW_REQUIRED and stay in the denominator. Not a Prediction input.",
+  "nextRecommendedStep": "B1 schedule/identity on sealed 2026-08-30 Scope."
+}
