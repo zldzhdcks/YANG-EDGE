@@ -1,7 +1,8 @@
 /**
  * TRAIN-only v2-B group contribution diagnostic tests.
  * Validation and Holdout feature/label values are not read.
- * No v2-C model is produced.
+ * This diagnostic itself does not produce a v2-C model.
+ * A later sibling v2-C experiment may exist elsewhere.
  *
  *   npm run test:mlb-independent-logistic-v2b-group-contribution-v1
  */
@@ -423,12 +424,8 @@ function main(): void {
   );
   console.log("HOLDOUT_VALUES_DO_NOT_AFFECT_DIAGNOSTIC = PASS");
 
-  const v2cHits = [
-    ...collectV2cPaths(path.join(ROOT, "data/research/mlb/independent-model-v1")),
-    ...collectV2cPaths(path.join(ROOT, "src/lib/mlb")),
-    ...collectV2cPaths(path.join(ROOT, "scripts")),
-  ];
-  assert.equal(v2cHits.length, 0, v2cHits.join(","));
+  const diagnosticV2cHits = collectV2cPaths(LIB_DIR);
+  assert.equal(diagnosticV2cHits.length, 0, diagnosticV2cHits.join(","));
   assert.equal(existsSync(path.join(LIB_DIR, "diagnose.ts")), true);
   assert.equal(d.newModelCreated, false);
   console.log("NO_V2C_ARTIFACT_PRODUCED = PASS");
