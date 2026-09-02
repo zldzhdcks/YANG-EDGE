@@ -1,0 +1,62 @@
+{
+  "generatedAt": "2026-09-02T10:49:16.740Z",
+  "sourcePath": "data/research/mlb/independent-model-v1/historical-source/2024-regular-season-v1.json",
+  "sourceRows": 2430,
+  "labelRows": 2429,
+  "excludedRows": 1,
+  "winnerDistribution": {
+    "HOME": 1267,
+    "AWAY": 1162
+  },
+  "targetDistribution": {
+    "0": 1162,
+    "1": 1267
+  },
+  "exclusionReasonCounts": {
+    "CANCELLED": 1
+  },
+  "identity": {
+    "uniqueGamePk": 2429,
+    "duplicateGamePk": 0,
+    "sourceIdentityMismatch": 0
+  },
+  "resumeLabelCases": [
+    {
+      "gamePk": 745180,
+      "officialDate": "2024-05-21",
+      "winner": "HOME",
+      "target": 1,
+      "provenanceStatus": "CROSS_DATE_RESUME_RESOLVED",
+      "safeResultApplyDate": "2024-05-22"
+    },
+    {
+      "gamePk": 746942,
+      "officialDate": "2024-06-26",
+      "winner": "AWAY",
+      "target": 0,
+      "provenanceStatus": "CROSS_DATE_RESUME_RESOLVED",
+      "safeResultApplyDate": "2024-08-26"
+    },
+    {
+      "gamePk": 746755,
+      "officialDate": "2024-08-27",
+      "winner": "AWAY",
+      "target": 0,
+      "provenanceStatus": "CROSS_DATE_RESUME_RESOLVED",
+      "safeResultApplyDate": "2024-08-28"
+    }
+  ],
+  "cancelled": {
+    "gamePk": 746577,
+    "labelCount": 0,
+    "excluded": true
+  },
+  "contractChecks": {
+    "allLabelRowsValid": true,
+    "labelArtifactValid": true
+  },
+  "researchState": {
+    "DATASET_READY": false,
+    "INDEPENDENT_MODEL_SAMPLE": 0
+  }
+}
