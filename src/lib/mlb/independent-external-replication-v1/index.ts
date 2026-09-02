@@ -62,3 +62,27 @@ export type {
   ExternalReplicationSafeAAudit2025,
   ExternalReplicationSafeAResult2025,
 } from "./materialize-safe-a-2025";
+
+export {
+  MLB_INDEPENDENT_2025_COEXISTING_SAFE_A_FEATURE_SHA256,
+  MLB_INDEPENDENT_2025_LABEL_CROSS_DATE_RESUME_GAME_PKS,
+  MLB_INDEPENDENT_2025_LABEL_STAGE,
+  ExternalReplicationLabelError,
+  assertExternalReplication2025LabelSourcePin,
+  disposeExternalReplicationLabelGame2025,
+  findExternalReplicationLabelRow2025,
+  hashExternalReplicationLabelArtifact2025,
+  independentExternalReplication2025LabelAuditPath,
+  independentExternalReplication2025LabelAuditRel,
+  independentExternalReplication2025LabelPath,
+  independentExternalReplication2025LabelRel,
+  materializeExternalReplicationLabels2025,
+} from "./materialize-labels-2025";
+
+export type {
+  ExternalReplicationCrossDateResumeLabelCase,
+  ExternalReplicationExcludedLabel,
+  ExternalReplicationLabelAudit2025,
+  ExternalReplicationLabelExclusionReason,
+  ExternalReplicationLabelResult2025,
+} from "./materialize-labels-2025";

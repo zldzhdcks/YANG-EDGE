@@ -1,0 +1,78 @@
+{
+  "generatedAt": "2026-09-02T16:15:43.626Z",
+  "researchOnly": true,
+  "track": "2025_EXTERNAL_REPLICATION_TRACK",
+  "stage": "LABELS",
+  "season": 2025,
+  "engineAdmission": "PROHIBITED",
+  "modelEvaluated": false,
+  "modelCandidate": false,
+  "marketUsed": false,
+  "networkUsed": false,
+  "engineChanged": false,
+  "featuresExist": true,
+  "featureArtifactRead": false,
+  "labelsCreated": true,
+  "joinCreated": false,
+  "modelProbabilitiesCreated": false,
+  "sourceArtifactRel": "data/research/mlb/independent-model-v1/external-replication/2025/historical-source/2025-regular-season-source-v1.json",
+  "sourceArtifactSha256": "4388e62e9e8d91d43cfbc3f1dbdd0a38cb6f13006e4444d44ae88f595ce3ea77",
+  "labelArtifactRel": "data/research/mlb/independent-model-v1/external-replication/2025/labels/2025-home-win-label-artifact-v1.json",
+  "labelArtifactSha256": "39d88058daf062d9fa1713d105070c085c0cab7ad481f7d68c30491e33ffe202",
+  "featureArtifactSha256": "a6ac441c646bf5ad8e5d5d7cb9664388a90454a13e64e9b7413a55001a3dc61d",
+  "sourceRowCount": 2430,
+  "labelRowCount": 2430,
+  "excludedRowCount": 0,
+  "winnerDistribution": {
+    "HOME": 1319,
+    "AWAY": 1111
+  },
+  "targetDistribution": {
+    "0": 1111,
+    "1": 1319
+  },
+  "exclusionReasonCounts": {},
+  "uniqueGamePk": 2430,
+  "duplicateGamePk": 0,
+  "sourceIdentityMismatch": 0,
+  "sourceWithoutLabelCount": 0,
+  "labelWithoutSourceCount": 0,
+  "crossDateResumeLabelCases": [
+    {
+      "gamePk": 777861,
+      "officialDate": "2025-05-19",
+      "winner": "HOME",
+      "target": 1,
+      "resultProvenanceStatus": "CROSS_DATE_RESUME_RESOLVED",
+      "safeResultApplyDate": "2025-05-21"
+    },
+    {
+      "gamePk": 777623,
+      "officialDate": "2025-06-06",
+      "winner": "HOME",
+      "target": 1,
+      "resultProvenanceStatus": "CROSS_DATE_RESUME_RESOLVED",
+      "safeResultApplyDate": "2025-06-07"
+    },
+    {
+      "gamePk": 777294,
+      "officialDate": "2025-07-01",
+      "winner": "HOME",
+      "target": 1,
+      "resultProvenanceStatus": "CROSS_DATE_RESUME_RESOLVED",
+      "safeResultApplyDate": "2025-07-02"
+    },
+    {
+      "gamePk": 776907,
+      "officialDate": "2025-08-02",
+      "winner": "AWAY",
+      "target": 0,
+      "resultProvenanceStatus": "CROSS_DATE_RESUME_RESOLVED",
+      "safeResultApplyDate": "2025-08-03"
+    }
+  ],
+  "contractChecks": {
+    "allLabelRowsValid": true,
+    "labelArtifactValid": true
+  }
+}
