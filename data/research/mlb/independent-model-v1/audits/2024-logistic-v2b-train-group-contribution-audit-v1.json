@@ -1,0 +1,420 @@
+{
+  "generatedAt": "2026-09-02T14:43:26.291Z",
+  "researchOnly": true,
+  "engineAdmission": "PROHIBITED",
+  "modelCandidate": false,
+  "newModelCreated": false,
+  "featureSelectionPerformed": false,
+  "validationNewAnalysisPerformed": false,
+  "holdoutEvaluated": false,
+  "marketUsed": false,
+  "networkUsed": false,
+  "engineChanged": false,
+  "recommendationChanged": false,
+  "sourceJoinArtifactHash": "6f9e0875d453fe52de8d56fef0a25427270989123df568020c8e1d0fdd417127",
+  "sourceSplitManifestHash": "a72b8586971ee81a04e119c7d860f226abb503b5cc2341bb370d49d2fb47e71d",
+  "v1BaselineModelCoreHash": "7cb5253c824de514c25b1715e6f339b0f35c6942fa25c178423a415ec820430e",
+  "v2aBaselineModelCoreHash": "bef2104957768a40cbfecbeb3ff99946dce80a7155ab93a29248cc6fab576c9b",
+  "v2bBaselineModelCoreHash": "f601594dcac1ae266424cf1a1503ecc1228099c2b1e090c634d54868f379c24e",
+  "trainingSampleCount": 1463,
+  "validationMembershipCount": 483,
+  "holdoutMembershipCount": 483,
+  "VALIDATION_FEATURE_ROWS_READ": 0,
+  "VALIDATION_LABEL_ROWS_READ": 0,
+  "VALIDATION_TRANSFORMED_ROWS": 0,
+  "VALIDATION_PROBABILITIES_CREATED": 0,
+  "VALIDATION_EVALUATED": false,
+  "HOLDOUT_FEATURE_ROWS_READ": 0,
+  "HOLDOUT_LABEL_ROWS_READ": 0,
+  "HOLDOUT_TRANSFORMED_ROWS": 0,
+  "HOLDOUT_PROBABILITIES_CREATED": 0,
+  "HOLDOUT_EVALUATED": false,
+  "VALIDATION_HAS_BEEN_USED_FOR_MODEL_RESEARCH": true,
+  "VALIDATION_NEW_ANALYSIS_PERFORMED": false,
+  "LATE_ONLY_FEATURE_ADDED": false,
+  "T3H_COMPATIBILITY_CHANGED": false,
+  "groupCoverage": {
+    "GROUP_FEATURE_COUNT": 45,
+    "GROUP_OVERLAP": 0,
+    "GROUP_MISSING": 0
+  },
+  "variantExpectedDimensions": {
+    "BASELINE": 45,
+    "RATE_STRENGTH": 39,
+    "RECENT_FORM": 35,
+    "SEASON_RUN_QUALITY": 41,
+    "HEAD_TO_HEAD": 42,
+    "MISSING_INDICATORS": 23
+  },
+  "V2B_ROLLING_FOLD_1_REPLAY": "PASS",
+  "V2B_ROLLING_FOLD_2_REPLAY": "PASS",
+  "V2B_ROLLING_FOLD_3_REPLAY": "PASS",
+  "groupAggregates": {
+    "RATE_STRENGTH": {
+      "group": "RATE_STRENGTH",
+      "removedFeatureCount": 6,
+      "remainingDimensions": 39,
+      "meanAucDelta": -0.012015569855436318,
+      "medianAucDelta": -0.01069015444015442,
+      "meanLogLossDelta": -0.001030265698461541,
+      "medianLogLossDelta": -0.0014952521757528592,
+      "meanBrierDelta": -0.00048500763297822563,
+      "medianBrierDelta": -0.0007330600055701908,
+      "foldsWhereRemovalLowersAuc": 3,
+      "foldsWhereRemovalRaisesAuc": 0,
+      "foldsWhereRemovalWorsensLogLoss": 1,
+      "foldsWhereRemovalImprovesLogLoss": 2,
+      "foldsWhereRemovalWorsensBrier": 1,
+      "foldsWhereRemovalImprovesBrier": 2,
+      "AUC_REMOVAL_EFFECT_CONSISTENT": "YES",
+      "LOGLOSS_REMOVAL_EFFECT_CONSISTENT": "NO",
+      "BRIER_REMOVAL_EFFECT_CONSISTENT": "NO",
+      "helpfulAucFoldCount": 3,
+      "helpfulLogLossFoldCount": 1,
+      "helpfulBrierFoldCount": 1,
+      "foldDeltas": [
+        {
+          "foldId": "FOLD_1",
+          "minusGroupAucMinusBaselineAuc": -0.01069015444015442,
+          "minusGroupLogLossMinusBaselineLogLoss": -0.0031283922296164723,
+          "minusGroupBrierMinusBaselineBrier": -0.0015312801841908252,
+          "minusGroupAbsBiasMinusBaselineAbsBias": -0.020898022848382825
+        },
+        {
+          "foldId": "FOLD_2",
+          "minusGroupAucMinusBaselineAuc": -0.005653584829124814,
+          "minusGroupLogLossMinusBaselineLogLoss": -0.0014952521757528592,
+          "minusGroupBrierMinusBaselineBrier": -0.0007330600055701908,
+          "minusGroupAbsBiasMinusBaselineAbsBias": -0.0137188050303243
+        },
+        {
+          "foldId": "FOLD_3",
+          "minusGroupAucMinusBaselineAuc": -0.01970297029702972,
+          "minusGroupLogLossMinusBaselineLogLoss": 0.0015328473099847084,
+          "minusGroupBrierMinusBaselineBrier": 0.0008093172908263391,
+          "minusGroupAbsBiasMinusBaselineAbsBias": 0.003733639525875576
+        }
+      ]
+    },
+    "RECENT_FORM": {
+      "group": "RECENT_FORM",
+      "removedFeatureCount": 10,
+      "remainingDimensions": 35,
+      "meanAucDelta": 0.0031306622480373005,
+      "medianAucDelta": 0.010396039603960405,
+      "meanLogLossDelta": -0.0025529677634954875,
+      "medianLogLossDelta": -0.004381561219759744,
+      "meanBrierDelta": -0.0011906320680437898,
+      "medianBrierDelta": -0.002088250216145948,
+      "foldsWhereRemovalLowersAuc": 1,
+      "foldsWhereRemovalRaisesAuc": 2,
+      "foldsWhereRemovalWorsensLogLoss": 1,
+      "foldsWhereRemovalImprovesLogLoss": 2,
+      "foldsWhereRemovalWorsensBrier": 1,
+      "foldsWhereRemovalImprovesBrier": 2,
+      "AUC_REMOVAL_EFFECT_CONSISTENT": "NO",
+      "LOGLOSS_REMOVAL_EFFECT_CONSISTENT": "NO",
+      "BRIER_REMOVAL_EFFECT_CONSISTENT": "NO",
+      "helpfulAucFoldCount": 1,
+      "helpfulLogLossFoldCount": 1,
+      "helpfulBrierFoldCount": 1,
+      "foldDeltas": [
+        {
+          "foldId": "FOLD_1",
+          "minusGroupAucMinusBaselineAuc": -0.044787644787644854,
+          "minusGroupLogLossMinusBaselineLogLoss": 0.005716128914126317,
+          "minusGroupBrierMinusBaselineBrier": 0.0029780959227792003,
+          "minusGroupAbsBiasMinusBaselineAbsBias": -0.0032623613313889632
+        },
+        {
+          "foldId": "FOLD_2",
+          "minusGroupAucMinusBaselineAuc": 0.04378359192779635,
+          "minusGroupLogLossMinusBaselineLogLoss": -0.008993470984853036,
+          "minusGroupBrierMinusBaselineBrier": -0.004461741910764622,
+          "minusGroupAbsBiasMinusBaselineAbsBias": 0.0026235793368468707
+        },
+        {
+          "foldId": "FOLD_3",
+          "minusGroupAucMinusBaselineAuc": 0.010396039603960405,
+          "minusGroupLogLossMinusBaselineLogLoss": -0.004381561219759744,
+          "minusGroupBrierMinusBaselineBrier": -0.002088250216145948,
+          "minusGroupAbsBiasMinusBaselineAbsBias": -0.003955791648758811
+        }
+      ]
+    },
+    "SEASON_RUN_QUALITY": {
+      "group": "SEASON_RUN_QUALITY",
+      "removedFeatureCount": 4,
+      "remainingDimensions": 41,
+      "meanAucDelta": -0.004694024053758035,
+      "medianAucDelta": 0.0035493357671635417,
+      "meanLogLossDelta": -0.002159546000870353,
+      "medianLogLossDelta": -0.001801155784752817,
+      "meanBrierDelta": -0.0010136845634389768,
+      "medianBrierDelta": -0.0008785480799040624,
+      "foldsWhereRemovalLowersAuc": 1,
+      "foldsWhereRemovalRaisesAuc": 2,
+      "foldsWhereRemovalWorsensLogLoss": 0,
+      "foldsWhereRemovalImprovesLogLoss": 3,
+      "foldsWhereRemovalWorsensBrier": 0,
+      "foldsWhereRemovalImprovesBrier": 3,
+      "AUC_REMOVAL_EFFECT_CONSISTENT": "NO",
+      "LOGLOSS_REMOVAL_EFFECT_CONSISTENT": "YES",
+      "BRIER_REMOVAL_EFFECT_CONSISTENT": "YES",
+      "helpfulAucFoldCount": 1,
+      "helpfulLogLossFoldCount": 0,
+      "helpfulBrierFoldCount": 0,
+      "foldDeltas": [
+        {
+          "foldId": "FOLD_1",
+          "minusGroupAucMinusBaselineAuc": -0.0227799227799228,
+          "minusGroupLogLossMinusBaselineLogLoss": -0.0012530828200790767,
+          "minusGroupBrierMinusBaselineBrier": -0.0004910316815951166,
+          "minusGroupAbsBiasMinusBaselineAbsBias": -0.016187807024052425
+        },
+        {
+          "foldId": "FOLD_2",
+          "minusGroupAucMinusBaselineAuc": 0.0035493357671635417,
+          "minusGroupLogLossMinusBaselineLogLoss": -0.0034243993977791654,
+          "minusGroupBrierMinusBaselineBrier": -0.0016714739288177516,
+          "minusGroupAbsBiasMinusBaselineAbsBias": -0.005912860709426426
+        },
+        {
+          "foldId": "FOLD_3",
+          "minusGroupAucMinusBaselineAuc": 0.005148514851485153,
+          "minusGroupLogLossMinusBaselineLogLoss": -0.001801155784752817,
+          "minusGroupBrierMinusBaselineBrier": -0.0008785480799040624,
+          "minusGroupAbsBiasMinusBaselineAbsBias": 0.00003318502034210802
+        }
+      ]
+    },
+    "HEAD_TO_HEAD": {
+      "group": "HEAD_TO_HEAD",
+      "removedFeatureCount": 3,
+      "remainingDimensions": 42,
+      "meanAucDelta": 0.0008032943062176168,
+      "medianAucDelta": 0.0002970297029702973,
+      "meanLogLossDelta": -0.0008171235361232135,
+      "medianLogLossDelta": -0.0005360088003365515,
+      "meanBrierDelta": -0.0003651540871588051,
+      "medianBrierDelta": -0.0002512299150444486,
+      "foldsWhereRemovalLowersAuc": 0,
+      "foldsWhereRemovalRaisesAuc": 3,
+      "foldsWhereRemovalWorsensLogLoss": 0,
+      "foldsWhereRemovalImprovesLogLoss": 3,
+      "foldsWhereRemovalWorsensBrier": 0,
+      "foldsWhereRemovalImprovesBrier": 3,
+      "AUC_REMOVAL_EFFECT_CONSISTENT": "YES",
+      "LOGLOSS_REMOVAL_EFFECT_CONSISTENT": "YES",
+      "BRIER_REMOVAL_EFFECT_CONSISTENT": "YES",
+      "helpfulAucFoldCount": 0,
+      "helpfulLogLossFoldCount": 0,
+      "helpfulBrierFoldCount": 0,
+      "foldDeltas": [
+        {
+          "foldId": "FOLD_1",
+          "minusGroupAucMinusBaselineAuc": 0.0018339768339767915,
+          "minusGroupLogLossMinusBaselineLogLoss": -0.0018068963754317435,
+          "minusGroupBrierMinusBaselineBrier": -0.0007921650866003216,
+          "minusGroupAbsBiasMinusBaselineAbsBias": 0.0033950477718276417
+        },
+        {
+          "foldId": "FOLD_2",
+          "minusGroupAucMinusBaselineAuc": 0.00027887638170576157,
+          "minusGroupLogLossMinusBaselineLogLoss": -0.0005360088003365515,
+          "minusGroupBrierMinusBaselineBrier": -0.0002512299150444486,
+          "minusGroupAbsBiasMinusBaselineAbsBias": -0.0019881546637413594
+        },
+        {
+          "foldId": "FOLD_3",
+          "minusGroupAucMinusBaselineAuc": 0.0002970297029702973,
+          "minusGroupLogLossMinusBaselineLogLoss": -0.00010846543260134567,
+          "minusGroupBrierMinusBaselineBrier": -0.000052067259831645174,
+          "minusGroupAbsBiasMinusBaselineAbsBias": 0.0012307815962022683
+        }
+      ]
+    },
+    "MISSING_INDICATORS": {
+      "group": "MISSING_INDICATORS",
+      "removedFeatureCount": 22,
+      "remainingDimensions": 23,
+      "meanAucDelta": 0.0027059921955279176,
+      "medianAucDelta": 0.0034653465346534684,
+      "meanLogLossDelta": 0.0006204927261821794,
+      "medianLogLossDelta": 0.00043858447009781365,
+      "meanBrierDelta": 0.00028863631021043096,
+      "medianBrierDelta": 0.00020330203106871947,
+      "foldsWhereRemovalLowersAuc": 0,
+      "foldsWhereRemovalRaisesAuc": 3,
+      "foldsWhereRemovalWorsensLogLoss": 2,
+      "foldsWhereRemovalImprovesLogLoss": 1,
+      "foldsWhereRemovalWorsensBrier": 2,
+      "foldsWhereRemovalImprovesBrier": 1,
+      "AUC_REMOVAL_EFFECT_CONSISTENT": "YES",
+      "LOGLOSS_REMOVAL_EFFECT_CONSISTENT": "NO",
+      "BRIER_REMOVAL_EFFECT_CONSISTENT": "NO",
+      "helpfulAucFoldCount": 0,
+      "helpfulLogLossFoldCount": 2,
+      "helpfulBrierFoldCount": 2,
+      "foldDeltas": [
+        {
+          "foldId": "FOLD_1",
+          "minusGroupAucMinusBaselineAuc": 0.00024131274131267144,
+          "minusGroupLogLossMinusBaselineLogLoss": 0.0021601980846644997,
+          "minusGroupBrierMinusBaselineBrier": 0.0010287846362522501,
+          "minusGroupAbsBiasMinusBaselineAbsBias": 0.0070310013751608835
+        },
+        {
+          "foldId": "FOLD_2",
+          "minusGroupAucMinusBaselineAuc": 0.004411317310617613,
+          "minusGroupLogLossMinusBaselineLogLoss": 0.00043858447009781365,
+          "minusGroupBrierMinusBaselineBrier": 0.00020330203106871947,
+          "minusGroupAbsBiasMinusBaselineAbsBias": 0.004716631377623126
+        },
+        {
+          "foldId": "FOLD_3",
+          "minusGroupAucMinusBaselineAuc": 0.0034653465346534684,
+          "minusGroupLogLossMinusBaselineLogLoss": -0.0007373043762157749,
+          "minusGroupBrierMinusBaselineBrier": -0.0003661777366896768,
+          "minusGroupAbsBiasMinusBaselineAbsBias": -0.0009172548218642218
+        }
+      ]
+    }
+  },
+  "rollingGroupContributionDiagnostic": {
+    "mostCostlyGroupToRemoveByMeanAucDelta": [
+      {
+        "group": "RATE_STRENGTH",
+        "meanAucDelta": -0.012015569855436318
+      },
+      {
+        "group": "SEASON_RUN_QUALITY",
+        "meanAucDelta": -0.004694024053758035
+      },
+      {
+        "group": "HEAD_TO_HEAD",
+        "meanAucDelta": 0.0008032943062176168
+      },
+      {
+        "group": "MISSING_INDICATORS",
+        "meanAucDelta": 0.0027059921955279176
+      },
+      {
+        "group": "RECENT_FORM",
+        "meanAucDelta": 0.0031306622480373005
+      }
+    ],
+    "mostCostlyGroupToRemoveByMeanLogLossDelta": [
+      {
+        "group": "MISSING_INDICATORS",
+        "meanLogLossDelta": 0.0006204927261821794
+      },
+      {
+        "group": "HEAD_TO_HEAD",
+        "meanLogLossDelta": -0.0008171235361232135
+      },
+      {
+        "group": "RATE_STRENGTH",
+        "meanLogLossDelta": -0.001030265698461541
+      },
+      {
+        "group": "SEASON_RUN_QUALITY",
+        "meanLogLossDelta": -0.002159546000870353
+      },
+      {
+        "group": "RECENT_FORM",
+        "meanLogLossDelta": -0.0025529677634954875
+      }
+    ],
+    "mostCostlyGroupToRemoveByMeanBrierDelta": [
+      {
+        "group": "MISSING_INDICATORS",
+        "meanBrierDelta": 0.00028863631021043096
+      },
+      {
+        "group": "HEAD_TO_HEAD",
+        "meanBrierDelta": -0.0003651540871588051
+      },
+      {
+        "group": "RATE_STRENGTH",
+        "meanBrierDelta": -0.00048500763297822563
+      },
+      {
+        "group": "SEASON_RUN_QUALITY",
+        "meanBrierDelta": -0.0010136845634389768
+      },
+      {
+        "group": "RECENT_FORM",
+        "meanBrierDelta": -0.0011906320680437898
+      }
+    ],
+    "mostBeneficialGroupToRemoveByMeanAucDelta": [
+      {
+        "group": "RECENT_FORM",
+        "meanAucDelta": 0.0031306622480373005
+      },
+      {
+        "group": "MISSING_INDICATORS",
+        "meanAucDelta": 0.0027059921955279176
+      },
+      {
+        "group": "HEAD_TO_HEAD",
+        "meanAucDelta": 0.0008032943062176168
+      },
+      {
+        "group": "SEASON_RUN_QUALITY",
+        "meanAucDelta": -0.004694024053758035
+      },
+      {
+        "group": "RATE_STRENGTH",
+        "meanAucDelta": -0.012015569855436318
+      }
+    ],
+    "mostBeneficialGroupToRemoveByMeanLogLossDelta": [
+      {
+        "group": "RECENT_FORM",
+        "meanLogLossDelta": -0.0025529677634954875
+      },
+      {
+        "group": "SEASON_RUN_QUALITY",
+        "meanLogLossDelta": -0.002159546000870353
+      },
+      {
+        "group": "RATE_STRENGTH",
+        "meanLogLossDelta": -0.001030265698461541
+      },
+      {
+        "group": "HEAD_TO_HEAD",
+        "meanLogLossDelta": -0.0008171235361232135
+      },
+      {
+        "group": "MISSING_INDICATORS",
+        "meanLogLossDelta": 0.0006204927261821794
+      }
+    ],
+    "mostBeneficialGroupToRemoveByMeanBrierDelta": [
+      {
+        "group": "RECENT_FORM",
+        "meanBrierDelta": -0.0011906320680437898
+      },
+      {
+        "group": "SEASON_RUN_QUALITY",
+        "meanBrierDelta": -0.0010136845634389768
+      },
+      {
+        "group": "RATE_STRENGTH",
+        "meanBrierDelta": -0.00048500763297822563
+      },
+      {
+        "group": "HEAD_TO_HEAD",
+        "meanBrierDelta": -0.0003651540871588051
+      },
+      {
+        "group": "MISSING_INDICATORS",
+        "meanBrierDelta": 0.00028863631021043096
+      }
+    ]
+  },
+  "collinearityWarning": "Group removal retrains coefficients, so the measured change includes redistribution among correlated features. This is not causal importance.",
+  "sealedRollingRel": "data/research/mlb/independent-model-v1/diagnostics/2024-logistic-streak-rest-ablation-v2b-train-rolling-v1.json"
+}
