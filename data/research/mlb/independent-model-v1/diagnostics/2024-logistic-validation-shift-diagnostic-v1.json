@@ -1,0 +1,1684 @@
+{
+  "schemaVersion": "mlb-independent-logistic-validation-shift-diagnostic-v1",
+  "builderVersion": "mlb-independent-logistic-diagnostic-v1",
+  "researchOnly": true,
+  "engineAdmission": "PROHIBITED",
+  "modelPrototype": true,
+  "engineApproved": false,
+  "holdoutEvaluated": false,
+  "modelCoreHash": "7cb5253c824de514c25b1715e6f339b0f35c6942fa25c178423a415ec820430e",
+  "sourceJoinArtifactHash": "6f9e0875d453fe52de8d56fef0a25427270989123df568020c8e1d0fdd417127",
+  "sourceSplitManifestHash": "a72b8586971ee81a04e119c7d860f226abb503b5cc2341bb370d49d2fb47e71d",
+  "trainingSampleCount": 1463,
+  "validationSampleCount": 483,
+  "holdoutMembershipCount": 483,
+  "holdoutFeatureRowsReadForDiagnostic": 0,
+  "holdoutLabelRowsReadForDiagnostic": 0,
+  "holdoutProbabilitiesCreated": 0,
+  "intercept": 0.1400439676413606,
+  "trainMeanLogit": 0.12364073442306868,
+  "validationMeanLogit": 0.3653590071427856,
+  "trainMeanLogitFromFeatureMeans": 0.12364073442306857,
+  "validationMeanLogitFromFeatureMeans": 0.3653590071427852,
+  "logitShift": 0.2417182727197169,
+  "sumFeatureShiftContributions": 0.2417182727197166,
+  "logitShiftReconciliation": "PASS",
+  "trainProbabilityReplayMatch": "PASS",
+  "validationProbabilityReplayMatch": "PASS",
+  "trainMeanProbability": 0.5304169522258906,
+  "validationMeanProbability": 0.5886773359042299,
+  "sigmoidOfTrainMeanLogit": 0.5308708666302029,
+  "sigmoidOfValidationMeanLogit": 0.5903370767498398,
+  "trainActualHomeRate": 0.530416951469583,
+  "validationActualHomeRate": 0.5072463768115942,
+  "actualHomeRateShift": -0.023170574657988774,
+  "predictedMeanProbabilityShift": 0.0582603836783393,
+  "featureDrift": [
+    {
+      "featureName": "home.gamesPlayedBefore",
+      "coefficient": -0.01824180920217527,
+      "trainMean": 2.261424889530394e-16,
+      "validationMean": 2.3008816851552667,
+      "deltaMean": 2.3008816851552663,
+      "trainMeanLogitContribution": -4.1252481359863734e-18,
+      "validationMeanLogitContribution": -0.04197224469738189,
+      "shiftContribution": -0.04197224469738188,
+      "absShiftContribution": 0.04197224469738188
+    },
+    {
+      "featureName": "home.winsBefore",
+      "coefficient": 0.02712812331701353,
+      "trainMean": 1.296145540710709e-15,
+      "validationMean": 2.1754623056565676,
+      "deltaMean": 2.1754623056565663,
+      "trainMeanLogitContribution": 3.5161996065197296e-17,
+      "validationMeanLogitContribution": 0.05901620969936595,
+      "shiftContribution": 0.05901620969936591,
+      "absShiftContribution": 0.05901620969936591
+    },
+    {
+      "featureName": "home.lossesBefore",
+      "coefficient": -0.060599048553487196,
+      "trainMean": 2.0378625497801747e-15,
+      "validationMean": 2.118823673803845,
+      "deltaMean": 2.118823673803843,
+      "trainMeanLogitContribution": -1.2349253159946203e-16,
+      "validationMeanLogitContribution": -0.12839869868511733,
+      "shiftContribution": -0.1283986986851172,
+      "absShiftContribution": 0.1283986986851172
+    },
+    {
+      "featureName": "home.winRateBefore",
+      "coefficient": -0.009514829215662057,
+      "trainMean": 2.034068212717204e-15,
+      "validationMean": 0.03706873966818858,
+      "deltaMean": 0.037068739668186544,
+      "trainMeanLogitContribution": -1.9353811657011154e-17,
+      "validationMeanLogitContribution": -0.0003527027271826517,
+      "shiftContribution": -0.00035270272718263235,
+      "absShiftContribution": 0.00035270272718263235
+    },
+    {
+      "featureName": "home.last5WinsBefore",
+      "coefficient": 0.027382765603814224,
+      "trainMean": -3.3572294333162626e-16,
+      "validationMean": 0.03378623509288797,
+      "deltaMean": 0.033786235092888306,
+      "trainMeanLogitContribution": -9.193022665072527e-18,
+      "validationMeanLogitContribution": 0.0009251605561839139,
+      "shiftContribution": 0.000925160556183923,
+      "absShiftContribution": 0.000925160556183923
+    },
+    {
+      "featureName": "home.last5LossesBefore",
+      "coefficient": -0.03690336436333856,
+      "trainMean": -1.3750677516204946e-16,
+      "validationMean": 0.061230588924876476,
+      "deltaMean": 0.061230588924876615,
+      "trainMeanLogitContribution": 5.074462626232784e-18,
+      "validationMeanLogitContribution": -0.0022596147332765194,
+      "shiftContribution": -0.0022596147332765246,
+      "absShiftContribution": 0.0022596147332765246
+    },
+    {
+      "featureName": "home.last5WinRateBefore",
+      "coefficient": -0.029653119345499898,
+      "trainMean": 4.6882828750063e-16,
+      "validationMean": -0.006069452186489348,
+      "deltaMean": -0.006069452186489817,
+      "trainMeanLogitContribution": -1.3902221161802518e-17,
+      "validationMeanLogitContribution": 0.00017997819004777392,
+      "shiftContribution": 0.00017997819004778785,
+      "absShiftContribution": 0.00017997819004778785
+    },
+    {
+      "featureName": "home.runsScoredAverageBefore",
+      "coefficient": 0.03944187290012969,
+      "trainMean": 7.834547167621405e-16,
+      "validationMean": 0.0008954683747133441,
+      "deltaMean": 0.0008954683747125606,
+      "trainMeanLogitContribution": 3.090092136153945e-17,
+      "validationMeanLogitContribution": 0.00003531894982152942,
+      "shiftContribution": 0.00003531894982149852,
+      "absShiftContribution": 0.00003531894982149852
+    },
+    {
+      "featureName": "home.runsAllowedAverageBefore",
+      "coefficient": -0.04605297462795787,
+      "trainMean": -2.8855174496477752e-15,
+      "validationMean": -0.03774274934271647,
+      "deltaMean": -0.037742749342713586,
+      "trainMeanLogitContribution": 1.328866618971587e-16,
+      "validationMeanLogitContribution": 0.0017381658778694953,
+      "shiftContribution": 0.0017381658778693623,
+      "absShiftContribution": 0.0017381658778693623
+    },
+    {
+      "featureName": "home.last5RunsScoredAverageBefore",
+      "coefficient": 0.05845237642352996,
+      "trainMean": 6.465740072154812e-16,
+      "validationMean": 0.04475380381427949,
+      "deltaMean": 0.04475380381427885,
+      "trainMeanLogitContribution": 3.7793787255429487e-17,
+      "validationMeanLogitContribution": 0.002615966186937076,
+      "shiftContribution": 0.0026159661869370383,
+      "absShiftContribution": 0.0026159661869370383
+    },
+    {
+      "featureName": "home.last5RunsAllowedAverageBefore",
+      "coefficient": 0.029267319509893964,
+      "trainMean": 8.297911609751358e-15,
+      "validationMean": 0.006441169601345168,
+      "deltaMean": 0.00644116960133687,
+      "trainMeanLogitContribution": 2.4285763034745157e-16,
+      "validationMeanLogitContribution": 0.00018851576873998537,
+      "shiftContribution": 0.0001885157687397425,
+      "absShiftContribution": 0.0001885157687397425
+    },
+    {
+      "featureName": "home.homeWinRateBefore",
+      "coefficient": -0.024337522685724745,
+      "trainMean": -4.9324105216378195e-15,
+      "validationMean": 0.16534555522220196,
+      "deltaMean": 0.1653455552222069,
+      "trainMeanLogitContribution": 1.2004265296566786e-16,
+      "validationMeanLogitContribution": -0.004024101201204094,
+      "shiftContribution": -0.004024101201204214,
+      "absShiftContribution": 0.004024101201204214
+    },
+    {
+      "featureName": "home.awayWinRateBefore",
+      "coefficient": 0.1106970953247375,
+      "trainMean": 1.2026151321084872e-15,
+      "validationMean": -0.16202239207424518,
+      "deltaMean": -0.16202239207424637,
+      "trainMeanLogitContribution": 1.33126001917985e-16,
+      "validationMeanLogitContribution": -0.01793540818018471,
+      "shiftContribution": -0.017935408180184843,
+      "absShiftContribution": 0.017935408180184843
+    },
+    {
+      "featureName": "home.currentWinStreakBefore",
+      "coefficient": -0.03180500222890245,
+      "trainMean": 3.10073224785946e-16,
+      "validationMean": -0.025489956084499613,
+      "deltaMean": -0.025489956084499922,
+      "trainMeanLogitContribution": -9.861879605439984e-18,
+      "validationMeanLogitContribution": 0.0008107081100821358,
+      "shiftContribution": 0.0008107081100821456,
+      "absShiftContribution": 0.0008107081100821456
+    },
+    {
+      "featureName": "home.currentLossStreakBefore",
+      "coefficient": 0.08836391737126621,
+      "trainMean": 4.333132925912265e-17,
+      "validationMean": 0.05959687587483688,
+      "deltaMean": 0.059596875874836835,
+      "trainMeanLogitContribution": 3.828925998240244e-18,
+      "validationMeanLogitContribution": 0.0052662134153896945,
+      "shiftContribution": 0.005266213415389691,
+      "absShiftContribution": 0.005266213415389691
+    },
+    {
+      "featureName": "home.restDaysBefore",
+      "coefficient": 0.029310471553494182,
+      "trainMean": -5.913094878933164e-16,
+      "validationMean": -0.03776701781858855,
+      "deltaMean": -0.03776701781858796,
+      "trainMeanLogitContribution": -1.7331559924208265e-17,
+      "validationMeanLogitContribution": -0.0011069691014320476,
+      "shiftContribution": -0.0011069691014320303,
+      "absShiftContribution": 0.0011069691014320303
+    },
+    {
+      "featureName": "away.gamesPlayedBefore",
+      "coefficient": 0.05789842273727498,
+      "trainMean": 1.3204292979137201e-17,
+      "validationMean": 2.3023584889296504,
+      "deltaMean": 2.3023584889296504,
+      "trainMeanLogitContribution": 7.6450773685291775e-19,
+      "validationMeanLogitContribution": 0.13330292508480254,
+      "shiftContribution": 0.13330292508480254,
+      "absShiftContribution": 0.13330292508480254
+    },
+    {
+      "featureName": "away.winsBefore",
+      "coefficient": -0.020862886244181613,
+      "trainMean": 3.516591589961022e-16,
+      "validationMean": 2.140862658116755,
+      "deltaMean": 2.1408626581167547,
+      "trainMeanLogitContribution": -7.336625030860256e-18,
+      "validationMeanLogitContribution": -0.044664574100706136,
+      "shiftContribution": -0.04466457410070612,
+      "absShiftContribution": 0.04466457410070612
+    },
+    {
+      "featureName": "away.lossesBefore",
+      "coefficient": 0.12891916856536054,
+      "trainMean": -1.0794130076738363e-15,
+      "validationMean": 2.1501008856594592,
+      "deltaMean": 2.15010088565946,
+      "trainMeanLogitContribution": -1.391570274879461e-16,
+      "validationMeanLogitContribution": 0.2771892185108628,
+      "shiftContribution": 0.2771892185108629,
+      "absShiftContribution": 0.2771892185108629
+    },
+    {
+      "featureName": "away.winRateBefore",
+      "coefficient": -0.07688649460496401,
+      "trainMean": 2.0174490163813934e-16,
+      "validationMean": -0.020795814030033933,
+      "deltaMean": -0.020795814030034134,
+      "trainMeanLogitContribution": -1.5511458291379795e-17,
+      "validationMeanLogitContribution": 0.0015989172432260387,
+      "shiftContribution": 0.0015989172432260544,
+      "absShiftContribution": 0.0015989172432260544
+    },
+    {
+      "featureName": "away.last5WinsBefore",
+      "coefficient": 0.09323004506047453,
+      "trainMean": 4.3012604945833134e-16,
+      "validationMean": 0.05649407112679133,
+      "deltaMean": 0.0564940711267909,
+      "trainMeanLogitContribution": 4.0100670972684124e-17,
+      "validationMeanLogitContribution": 0.005266944796800409,
+      "shiftContribution": 0.005266944796800368,
+      "absShiftContribution": 0.005266944796800368
+    },
+    {
+      "featureName": "away.last5LossesBefore",
+      "coefficient": 0.1453731731257327,
+      "trainMean": -2.530063953588703e-16,
+      "validationMean": 0.04554633051121047,
+      "deltaMean": 0.04554633051121072,
+      "trainMeanLogitContribution": -3.6780342514422624e-17,
+      "validationMeanLogitContribution": 0.006621214590648041,
+      "shiftContribution": 0.006621214590648078,
+      "absShiftContribution": 0.006621214590648078
+    },
+    {
+      "featureName": "away.last5WinRateBefore",
+      "coefficient": 0.08194890776359362,
+      "trainMean": 3.771571040592637e-17,
+      "validationMean": 0.001158774247597203,
+      "deltaMean": 0.0011587742475971652,
+      "trainMeanLogitContribution": 3.0907612732936683e-18,
+      "validationMeanLogitContribution": 0.00009496028393517078,
+      "shiftContribution": 0.0000949602839351677,
+      "absShiftContribution": 0.0000949602839351677
+    },
+    {
+      "featureName": "away.runsScoredAverageBefore",
+      "coefficient": 0.05314105832990037,
+      "trainMean": -3.649848707612545e-15,
+      "validationMean": 0.01694937125941259,
+      "deltaMean": 0.01694937125941624,
+      "trainMeanLogitContribution": -1.9395682306654973e-16,
+      "validationMeanLogitContribution": 0.0009007075267515813,
+      "shiftContribution": 0.0009007075267517753,
+      "absShiftContribution": 0.0009007075267517753
+    },
+    {
+      "featureName": "away.runsAllowedAverageBefore",
+      "coefficient": 0.11625037441883418,
+      "trainMean": -6.32861273069906e-15,
+      "validationMean": 0.03416689820523545,
+      "deltaMean": 0.034166898205241776,
+      "trainMeanLogitContribution": -7.357035994955663e-16,
+      "validationMeanLogitContribution": 0.003971914709088815,
+      "shiftContribution": 0.00397191470908955,
+      "absShiftContribution": 0.00397191470908955
+    },
+    {
+      "featureName": "away.last5RunsScoredAverageBefore",
+      "coefficient": -0.1375110064005982,
+      "trainMean": 4.091926918819233e-15,
+      "validationMean": 0.06909930650993933,
+      "deltaMean": 0.06909930650993523,
+      "trainMeanLogitContribution": -5.626849887245316e-16,
+      "validationMeanLogitContribution": -0.009501915179765164,
+      "shiftContribution": -0.009501915179764602,
+      "absShiftContribution": 0.009501915179764602
+    },
+    {
+      "featureName": "away.last5RunsAllowedAverageBefore",
+      "coefficient": -0.07229296821893812,
+      "trainMean": -5.724136893197235e-16,
+      "validationMean": 0.10840480762790702,
+      "deltaMean": 0.10840480762790759,
+      "trainMeanLogitContribution": 4.138148465007589e-17,
+      "validationMeanLogitContribution": -0.007836905312624383,
+      "shiftContribution": -0.007836905312624425,
+      "absShiftContribution": 0.007836905312624425
+    },
+    {
+      "featureName": "away.homeWinRateBefore",
+      "coefficient": -0.06639472149596536,
+      "trainMean": -1.8679815422125952e-14,
+      "validationMean": 0.14643261776187158,
+      "deltaMean": 0.14643261776189026,
+      "trainMeanLogitContribution": 1.2402411425480911e-15,
+      "validationMeanLogitContribution": -0.009722352874224613,
+      "shiftContribution": -0.009722352874225853,
+      "absShiftContribution": 0.009722352874225853
+    },
+    {
+      "featureName": "away.awayWinRateBefore",
+      "coefficient": 0.02447840889920496,
+      "trainMean": -3.802532831026476e-15,
+      "validationMean": -0.1248270930929627,
+      "deltaMean": -0.12482709309295889,
+      "trainMeanLogitContribution": -9.307995349051753e-17,
+      "validationMeanLogitContribution": -0.003055568626428664,
+      "shiftContribution": -0.003055568626428571,
+      "absShiftContribution": 0.003055568626428571
+    },
+    {
+      "featureName": "away.currentWinStreakBefore",
+      "coefficient": 0.060972330120227396,
+      "trainMean": -7.09541030775476e-17,
+      "validationMean": 0.0358572018164646,
+      "deltaMean": 0.03585720181646467,
+      "trainMeanLogitContribution": -4.326236996228875e-18,
+      "validationMeanLogitContribution": 0.002186297146341097,
+      "shiftContribution": 0.0021862971463411014,
+      "absShiftContribution": 0.0021862971463411014
+    },
+    {
+      "featureName": "away.currentLossStreakBefore",
+      "coefficient": 0.002854780763477722,
+      "trainMean": -5.603476974594775e-16,
+      "validationMean": 0.15051494278734487,
+      "deltaMean": 0.15051494278734542,
+      "trainMeanLogitContribution": -1.5996698275663509e-18,
+      "validationMeanLogitContribution": 0.00042968716328526204,
+      "shiftContribution": 0.0004296871632852636,
+      "absShiftContribution": 0.0004296871632852636
+    },
+    {
+      "featureName": "away.restDaysBefore",
+      "coefficient": -0.014222082641880521,
+      "trainMean": 1.5626597760137542e-15,
+      "validationMean": -0.012694365478330657,
+      "deltaMean": -0.01269436547833222,
+      "trainMeanLogitContribution": -2.2224276475610118e-17,
+      "validationMeanLogitContribution": 0.00018054031491905375,
+      "shiftContribution": 0.00018054031491907598,
+      "absShiftContribution": 0.00018054031491907598
+    },
+    {
+      "featureName": "headToHeadGamesBefore",
+      "coefficient": -0.0025760712133512604,
+      "trainMean": 5.219186516857127e-15,
+      "validationMean": 1.1212175890306892,
+      "deltaMean": 1.121217589030684,
+      "trainMeanLogitContribution": -1.3444996143186677e-17,
+      "validationMeanLogitContribution": -0.0028883363550050623,
+      "shiftContribution": -0.002888336355005049,
+      "absShiftContribution": 0.002888336355005049
+    },
+    {
+      "featureName": "headToHeadHomeWinsBefore",
+      "coefficient": -0.006835083882127226,
+      "trainMean": 1.414301196851609e-15,
+      "validationMean": 0.8812818730359341,
+      "deltaMean": 0.8812818730359326,
+      "trainMeanLogitContribution": -9.666867315073678e-18,
+      "validationMeanLogitContribution": -0.0060236355259988055,
+      "shiftContribution": -0.006023635525998795,
+      "absShiftContribution": 0.006023635525998795
+    },
+    {
+      "featureName": "headToHeadAwayWinsBefore",
+      "coefficient": 0.0028475882982789465,
+      "trainMean": -9.37125367812444e-16,
+      "validationMean": 0.8914570545161191,
+      "deltaMean": 0.89145705451612,
+      "trainMeanLogitContribution": -2.6685472314030696e-18,
+      "validationMeanLogitContribution": 0.002538502676858318,
+      "shiftContribution": 0.00253850267685832,
+      "absShiftContribution": 0.00253850267685832
+    },
+    {
+      "featureName": "home.winRateBefore.missing",
+      "coefficient": -0.03502593325623901,
+      "trainMean": 0.009569377990430622,
+      "validationMean": 0,
+      "deltaMean": -0.009569377990430622,
+      "trainMeanLogitContribution": -0.00033517639479654557,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": 0.00033517639479654557,
+      "absShiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.last5WinsBefore.missing",
+      "coefficient": -0.03502593325623901,
+      "trainMean": 0.009569377990430622,
+      "validationMean": 0,
+      "deltaMean": -0.009569377990430622,
+      "trainMeanLogitContribution": -0.00033517639479654557,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": 0.00033517639479654557,
+      "absShiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.last5LossesBefore.missing",
+      "coefficient": -0.03502593325623901,
+      "trainMean": 0.009569377990430622,
+      "validationMean": 0,
+      "deltaMean": -0.009569377990430622,
+      "trainMeanLogitContribution": -0.00033517639479654557,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": 0.00033517639479654557,
+      "absShiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.last5WinRateBefore.missing",
+      "coefficient": -0.03502593325623901,
+      "trainMean": 0.009569377990430622,
+      "validationMean": 0,
+      "deltaMean": -0.009569377990430622,
+      "trainMeanLogitContribution": -0.00033517639479654557,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": 0.00033517639479654557,
+      "absShiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.runsScoredAverageBefore.missing",
+      "coefficient": -0.03502593325623901,
+      "trainMean": 0.009569377990430622,
+      "validationMean": 0,
+      "deltaMean": -0.009569377990430622,
+      "trainMeanLogitContribution": -0.00033517639479654557,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": 0.00033517639479654557,
+      "absShiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.runsAllowedAverageBefore.missing",
+      "coefficient": -0.03502593325623901,
+      "trainMean": 0.009569377990430622,
+      "validationMean": 0,
+      "deltaMean": -0.009569377990430622,
+      "trainMeanLogitContribution": -0.00033517639479654557,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": 0.00033517639479654557,
+      "absShiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.last5RunsScoredAverageBefore.missing",
+      "coefficient": -0.03502593325623901,
+      "trainMean": 0.009569377990430622,
+      "validationMean": 0,
+      "deltaMean": -0.009569377990430622,
+      "trainMeanLogitContribution": -0.00033517639479654557,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": 0.00033517639479654557,
+      "absShiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.last5RunsAllowedAverageBefore.missing",
+      "coefficient": -0.03502593325623901,
+      "trainMean": 0.009569377990430622,
+      "validationMean": 0,
+      "deltaMean": -0.009569377990430622,
+      "trainMeanLogitContribution": -0.00033517639479654557,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": 0.00033517639479654557,
+      "absShiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.homeWinRateBefore.missing",
+      "coefficient": -0.013377957681244054,
+      "trainMean": 0.02050580997949419,
+      "validationMean": 0,
+      "deltaMean": -0.02050580997949419,
+      "trainMeanLogitContribution": -0.00027432585812530526,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": 0.00027432585812530526,
+      "absShiftContribution": 0.00027432585812530526
+    },
+    {
+      "featureName": "home.awayWinRateBefore.missing",
+      "coefficient": -0.14978010330777095,
+      "trainMean": 0.05126452494873548,
+      "validationMean": 0,
+      "deltaMean": -0.05126452494873548,
+      "trainMeanLogitContribution": -0.007678405842845401,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": 0.007678405842845401,
+      "absShiftContribution": 0.007678405842845401
+    },
+    {
+      "featureName": "home.restDaysBefore.missing",
+      "coefficient": -0.03502593325623901,
+      "trainMean": 0.009569377990430622,
+      "validationMean": 0,
+      "deltaMean": -0.009569377990430622,
+      "trainMeanLogitContribution": -0.00033517639479654557,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": 0.00033517639479654557,
+      "absShiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "away.winRateBefore.missing",
+      "coefficient": 0.009521192268681884,
+      "trainMean": 0.010936431989063569,
+      "validationMean": 0,
+      "deltaMean": -0.010936431989063569,
+      "trainMeanLogitContribution": 0.00010412787170123729,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": -0.00010412787170123729,
+      "absShiftContribution": 0.00010412787170123729
+    },
+    {
+      "featureName": "away.last5WinsBefore.missing",
+      "coefficient": 0.009521192268681884,
+      "trainMean": 0.010936431989063569,
+      "validationMean": 0,
+      "deltaMean": -0.010936431989063569,
+      "trainMeanLogitContribution": 0.00010412787170123729,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": -0.00010412787170123729,
+      "absShiftContribution": 0.00010412787170123729
+    },
+    {
+      "featureName": "away.last5LossesBefore.missing",
+      "coefficient": 0.009521192268681884,
+      "trainMean": 0.010936431989063569,
+      "validationMean": 0,
+      "deltaMean": -0.010936431989063569,
+      "trainMeanLogitContribution": 0.00010412787170123729,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": -0.00010412787170123729,
+      "absShiftContribution": 0.00010412787170123729
+    },
+    {
+      "featureName": "away.last5WinRateBefore.missing",
+      "coefficient": 0.009521192268681884,
+      "trainMean": 0.010936431989063569,
+      "validationMean": 0,
+      "deltaMean": -0.010936431989063569,
+      "trainMeanLogitContribution": 0.00010412787170123729,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": -0.00010412787170123729,
+      "absShiftContribution": 0.00010412787170123729
+    },
+    {
+      "featureName": "away.runsScoredAverageBefore.missing",
+      "coefficient": 0.009521192268681884,
+      "trainMean": 0.010936431989063569,
+      "validationMean": 0,
+      "deltaMean": -0.010936431989063569,
+      "trainMeanLogitContribution": 0.00010412787170123729,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": -0.00010412787170123729,
+      "absShiftContribution": 0.00010412787170123729
+    },
+    {
+      "featureName": "away.runsAllowedAverageBefore.missing",
+      "coefficient": 0.009521192268681884,
+      "trainMean": 0.010936431989063569,
+      "validationMean": 0,
+      "deltaMean": -0.010936431989063569,
+      "trainMeanLogitContribution": 0.00010412787170123729,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": -0.00010412787170123729,
+      "absShiftContribution": 0.00010412787170123729
+    },
+    {
+      "featureName": "away.last5RunsScoredAverageBefore.missing",
+      "coefficient": 0.009521192268681884,
+      "trainMean": 0.010936431989063569,
+      "validationMean": 0,
+      "deltaMean": -0.010936431989063569,
+      "trainMeanLogitContribution": 0.00010412787170123729,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": -0.00010412787170123729,
+      "absShiftContribution": 0.00010412787170123729
+    },
+    {
+      "featureName": "away.last5RunsAllowedAverageBefore.missing",
+      "coefficient": 0.009521192268681884,
+      "trainMean": 0.010936431989063569,
+      "validationMean": 0,
+      "deltaMean": -0.010936431989063569,
+      "trainMeanLogitContribution": 0.00010412787170123729,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": -0.00010412787170123729,
+      "absShiftContribution": 0.00010412787170123729
+    },
+    {
+      "featureName": "away.homeWinRateBefore.missing",
+      "coefficient": -0.10489520464184507,
+      "trainMean": 0.06561859193438141,
+      "validationMean": 0,
+      "deltaMean": -0.06561859193438141,
+      "trainMeanLogitContribution": -0.006883075629266662,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": 0.006883075629266662,
+      "absShiftContribution": 0.006883075629266662
+    },
+    {
+      "featureName": "away.awayWinRateBefore.missing",
+      "coefficient": 0.02496906097906165,
+      "trainMean": 0.02050580997949419,
+      "validationMean": 0,
+      "deltaMean": -0.02050580997949419,
+      "trainMeanLogitContribution": 0.0005120108198030413,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": -0.0005120108198030413,
+      "absShiftContribution": 0.0005120108198030413
+    },
+    {
+      "featureName": "away.restDaysBefore.missing",
+      "coefficient": 0.009521192268681884,
+      "trainMean": 0.010936431989063569,
+      "validationMean": 0,
+      "deltaMean": -0.010936431989063569,
+      "trainMeanLogitContribution": 0.00010412787170123729,
+      "validationMeanLogitContribution": 0,
+      "shiftContribution": -0.00010412787170123729,
+      "absShiftContribution": 0.00010412787170123729
+    }
+  ],
+  "driftCoefficientTop15": [
+    {
+      "rank": 1,
+      "feature": "away.lossesBefore",
+      "coefficient": 0.12891916856536054,
+      "trainMean": -1.0794130076738363e-15,
+      "validationMean": 2.1501008856594592,
+      "deltaMean": 2.15010088565946,
+      "shiftContribution": 0.2771892185108629
+    },
+    {
+      "rank": 2,
+      "feature": "away.gamesPlayedBefore",
+      "coefficient": 0.05789842273727498,
+      "trainMean": 1.3204292979137201e-17,
+      "validationMean": 2.3023584889296504,
+      "deltaMean": 2.3023584889296504,
+      "shiftContribution": 0.13330292508480254
+    },
+    {
+      "rank": 3,
+      "feature": "home.lossesBefore",
+      "coefficient": -0.060599048553487196,
+      "trainMean": 2.0378625497801747e-15,
+      "validationMean": 2.118823673803845,
+      "deltaMean": 2.118823673803843,
+      "shiftContribution": -0.1283986986851172
+    },
+    {
+      "rank": 4,
+      "feature": "home.winsBefore",
+      "coefficient": 0.02712812331701353,
+      "trainMean": 1.296145540710709e-15,
+      "validationMean": 2.1754623056565676,
+      "deltaMean": 2.1754623056565663,
+      "shiftContribution": 0.05901620969936591
+    },
+    {
+      "rank": 5,
+      "feature": "away.winsBefore",
+      "coefficient": -0.020862886244181613,
+      "trainMean": 3.516591589961022e-16,
+      "validationMean": 2.140862658116755,
+      "deltaMean": 2.1408626581167547,
+      "shiftContribution": -0.04466457410070612
+    },
+    {
+      "rank": 6,
+      "feature": "home.gamesPlayedBefore",
+      "coefficient": -0.01824180920217527,
+      "trainMean": 2.261424889530394e-16,
+      "validationMean": 2.3008816851552667,
+      "deltaMean": 2.3008816851552663,
+      "shiftContribution": -0.04197224469738188
+    },
+    {
+      "rank": 7,
+      "feature": "home.awayWinRateBefore",
+      "coefficient": 0.1106970953247375,
+      "trainMean": 1.2026151321084872e-15,
+      "validationMean": -0.16202239207424518,
+      "deltaMean": -0.16202239207424637,
+      "shiftContribution": -0.017935408180184843
+    },
+    {
+      "rank": 8,
+      "feature": "away.homeWinRateBefore",
+      "coefficient": -0.06639472149596536,
+      "trainMean": -1.8679815422125952e-14,
+      "validationMean": 0.14643261776187158,
+      "deltaMean": 0.14643261776189026,
+      "shiftContribution": -0.009722352874225853
+    },
+    {
+      "rank": 9,
+      "feature": "away.last5RunsScoredAverageBefore",
+      "coefficient": -0.1375110064005982,
+      "trainMean": 4.091926918819233e-15,
+      "validationMean": 0.06909930650993933,
+      "deltaMean": 0.06909930650993523,
+      "shiftContribution": -0.009501915179764602
+    },
+    {
+      "rank": 10,
+      "feature": "away.last5RunsAllowedAverageBefore",
+      "coefficient": -0.07229296821893812,
+      "trainMean": -5.724136893197235e-16,
+      "validationMean": 0.10840480762790702,
+      "deltaMean": 0.10840480762790759,
+      "shiftContribution": -0.007836905312624425
+    },
+    {
+      "rank": 11,
+      "feature": "home.awayWinRateBefore.missing",
+      "coefficient": -0.14978010330777095,
+      "trainMean": 0.05126452494873548,
+      "validationMean": 0,
+      "deltaMean": -0.05126452494873548,
+      "shiftContribution": 0.007678405842845401
+    },
+    {
+      "rank": 12,
+      "feature": "away.homeWinRateBefore.missing",
+      "coefficient": -0.10489520464184507,
+      "trainMean": 0.06561859193438141,
+      "validationMean": 0,
+      "deltaMean": -0.06561859193438141,
+      "shiftContribution": 0.006883075629266662
+    },
+    {
+      "rank": 13,
+      "feature": "away.last5LossesBefore",
+      "coefficient": 0.1453731731257327,
+      "trainMean": -2.530063953588703e-16,
+      "validationMean": 0.04554633051121047,
+      "deltaMean": 0.04554633051121072,
+      "shiftContribution": 0.006621214590648078
+    },
+    {
+      "rank": 14,
+      "feature": "headToHeadHomeWinsBefore",
+      "coefficient": -0.006835083882127226,
+      "trainMean": 1.414301196851609e-15,
+      "validationMean": 0.8812818730359341,
+      "deltaMean": 0.8812818730359326,
+      "shiftContribution": -0.006023635525998795
+    },
+    {
+      "rank": 15,
+      "feature": "away.last5WinsBefore",
+      "coefficient": 0.09323004506047453,
+      "trainMean": 4.3012604945833134e-16,
+      "validationMean": 0.05649407112679133,
+      "deltaMean": 0.0564940711267909,
+      "shiftContribution": 0.005266944796800368
+    }
+  ],
+  "semanticGroupContributions": [
+    {
+      "group": "SEASON_VOLUME",
+      "featureCount": 6,
+      "trainMeanContribution": -2.3818492845220457e-16,
+      "validationMeanContribution": 0.25447283581182595,
+      "shiftContribution": 0.25447283581182617,
+      "absShiftContribution": 0.25447283581182617,
+      "shareOfNetShiftDescriptive": 1.0527662346276103
+    },
+    {
+      "group": "RATE_STRENGTH",
+      "featureCount": 6,
+      "trainMeanContribution": 1.3654645739928355e-15,
+      "validationMeanContribution": -0.033491216365998694,
+      "shiftContribution": -0.03349121636600006,
+      "absShiftContribution": 0.03349121636600006,
+      "shareOfNetShiftDescriptive": -0.1385547562837114
+    },
+    {
+      "group": "RECENT_FORM",
+      "featureCount": 10,
+      "trainMeanContribution": -2.522617779406618e-16,
+      "validationMeanContribution": -0.0037056948523736966,
+      "shiftContribution": -0.003705694852373447,
+      "absShiftContribution": 0.003705694852373447,
+      "shareOfNetShiftDescriptive": -0.015330635994864835
+    },
+    {
+      "group": "SEASON_RUN_QUALITY",
+      "featureCount": 4,
+      "trainMeanContribution": -7.658728393034179e-16,
+      "validationMeanContribution": 0.006646107063531421,
+      "shiftContribution": 0.0066461070635321865,
+      "absShiftContribution": 0.0066461070635321865,
+      "shareOfNetShiftDescriptive": 0.027495261275669643
+    },
+    {
+      "group": "STREAK_REST",
+      "featureCount": 6,
+      "trainMeanContribution": -5.151469683081335e-17,
+      "validationMeanContribution": 0.007766477048585195,
+      "shiftContribution": 0.007766477048585247,
+      "absShiftContribution": 0.007766477048585247,
+      "shareOfNetShiftDescriptive": 0.032130285233300596
+    },
+    {
+      "group": "HEAD_TO_HEAD",
+      "featureCount": 3,
+      "trainMeanContribution": -2.5780410689663424e-17,
+      "validationMeanContribution": -0.006373469204145551,
+      "shiftContribution": -0.006373469204145524,
+      "absShiftContribution": 0.006373469204145524,
+      "shareOfNetShiftDescriptive": -0.026367345473860163
+    },
+    {
+      "group": "MISSING_INDICATORS",
+      "featureCount": 22,
+      "trainMeanContribution": -0.016403233218292096,
+      "validationMeanContribution": 0,
+      "shiftContribution": 0.016403233218292096,
+      "absShiftContribution": 0.016403233218292096,
+      "shareOfNetShiftDescriptive": 0.06786095661585491
+    }
+  ],
+  "seasonVolumeDetail": [
+    {
+      "featureName": "home.gamesPlayedBefore",
+      "trainRawMean": 48.25768967874231,
+      "validationRawMean": 113.04347826086956,
+      "validationStandardizedMean": 2.3008816851552663,
+      "coefficient": -0.01824180920217527,
+      "shiftContribution": -0.04197224469738188
+    },
+    {
+      "featureName": "home.winsBefore",
+      "trainRawMean": 24.024606971975395,
+      "validationRawMean": 56.63354037267081,
+      "validationStandardizedMean": 2.1754623056565676,
+      "coefficient": 0.02712812331701353,
+      "shiftContribution": 0.05901620969936591
+    },
+    {
+      "featureName": "home.lossesBefore",
+      "trainRawMean": 24.23308270676692,
+      "validationRawMean": 56.409937888198755,
+      "validationStandardizedMean": 2.1188236738038446,
+      "coefficient": -0.060599048553487196,
+      "shiftContribution": -0.1283986986851172
+    },
+    {
+      "featureName": "away.gamesPlayedBefore",
+      "trainRawMean": 48.2406015037594,
+      "validationRawMean": 113.0351966873706,
+      "validationStandardizedMean": 2.302358488929644,
+      "coefficient": 0.05789842273727498,
+      "shiftContribution": 0.13330292508480254
+    },
+    {
+      "featureName": "away.winsBefore",
+      "trainRawMean": 24.182501708817497,
+      "validationRawMean": 56.542443064182194,
+      "validationStandardizedMean": 2.140862658116754,
+      "coefficient": -0.020862886244181613,
+      "shiftContribution": -0.04466457410070612
+    },
+    {
+      "featureName": "away.lossesBefore",
+      "trainRawMean": 24.0580997949419,
+      "validationRawMean": 56.492753623188406,
+      "validationStandardizedMean": 2.1501008856594637,
+      "coefficient": 0.12891916856536054,
+      "shiftContribution": 0.2771892185108629
+    }
+  ],
+  "seasonVolumeTotalShiftContribution": 0.25447283581182617,
+  "missingnessShift": [
+    {
+      "featureName": "home.winRateBefore.missing",
+      "trainMissingRate": 0.009569377990430622,
+      "validationMissingRate": 0,
+      "coefficient": -0.03502593325623901,
+      "shiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.last5WinsBefore.missing",
+      "trainMissingRate": 0.009569377990430622,
+      "validationMissingRate": 0,
+      "coefficient": -0.03502593325623901,
+      "shiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.last5LossesBefore.missing",
+      "trainMissingRate": 0.009569377990430622,
+      "validationMissingRate": 0,
+      "coefficient": -0.03502593325623901,
+      "shiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.last5WinRateBefore.missing",
+      "trainMissingRate": 0.009569377990430622,
+      "validationMissingRate": 0,
+      "coefficient": -0.03502593325623901,
+      "shiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.runsScoredAverageBefore.missing",
+      "trainMissingRate": 0.009569377990430622,
+      "validationMissingRate": 0,
+      "coefficient": -0.03502593325623901,
+      "shiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.runsAllowedAverageBefore.missing",
+      "trainMissingRate": 0.009569377990430622,
+      "validationMissingRate": 0,
+      "coefficient": -0.03502593325623901,
+      "shiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.last5RunsScoredAverageBefore.missing",
+      "trainMissingRate": 0.009569377990430622,
+      "validationMissingRate": 0,
+      "coefficient": -0.03502593325623901,
+      "shiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.last5RunsAllowedAverageBefore.missing",
+      "trainMissingRate": 0.009569377990430622,
+      "validationMissingRate": 0,
+      "coefficient": -0.03502593325623901,
+      "shiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "home.homeWinRateBefore.missing",
+      "trainMissingRate": 0.02050580997949419,
+      "validationMissingRate": 0,
+      "coefficient": -0.013377957681244054,
+      "shiftContribution": 0.00027432585812530526
+    },
+    {
+      "featureName": "home.awayWinRateBefore.missing",
+      "trainMissingRate": 0.05126452494873548,
+      "validationMissingRate": 0,
+      "coefficient": -0.14978010330777095,
+      "shiftContribution": 0.007678405842845401
+    },
+    {
+      "featureName": "home.restDaysBefore.missing",
+      "trainMissingRate": 0.009569377990430622,
+      "validationMissingRate": 0,
+      "coefficient": -0.03502593325623901,
+      "shiftContribution": 0.00033517639479654557
+    },
+    {
+      "featureName": "away.winRateBefore.missing",
+      "trainMissingRate": 0.010936431989063569,
+      "validationMissingRate": 0,
+      "coefficient": 0.009521192268681884,
+      "shiftContribution": -0.00010412787170123729
+    },
+    {
+      "featureName": "away.last5WinsBefore.missing",
+      "trainMissingRate": 0.010936431989063569,
+      "validationMissingRate": 0,
+      "coefficient": 0.009521192268681884,
+      "shiftContribution": -0.00010412787170123729
+    },
+    {
+      "featureName": "away.last5LossesBefore.missing",
+      "trainMissingRate": 0.010936431989063569,
+      "validationMissingRate": 0,
+      "coefficient": 0.009521192268681884,
+      "shiftContribution": -0.00010412787170123729
+    },
+    {
+      "featureName": "away.last5WinRateBefore.missing",
+      "trainMissingRate": 0.010936431989063569,
+      "validationMissingRate": 0,
+      "coefficient": 0.009521192268681884,
+      "shiftContribution": -0.00010412787170123729
+    },
+    {
+      "featureName": "away.runsScoredAverageBefore.missing",
+      "trainMissingRate": 0.010936431989063569,
+      "validationMissingRate": 0,
+      "coefficient": 0.009521192268681884,
+      "shiftContribution": -0.00010412787170123729
+    },
+    {
+      "featureName": "away.runsAllowedAverageBefore.missing",
+      "trainMissingRate": 0.010936431989063569,
+      "validationMissingRate": 0,
+      "coefficient": 0.009521192268681884,
+      "shiftContribution": -0.00010412787170123729
+    },
+    {
+      "featureName": "away.last5RunsScoredAverageBefore.missing",
+      "trainMissingRate": 0.010936431989063569,
+      "validationMissingRate": 0,
+      "coefficient": 0.009521192268681884,
+      "shiftContribution": -0.00010412787170123729
+    },
+    {
+      "featureName": "away.last5RunsAllowedAverageBefore.missing",
+      "trainMissingRate": 0.010936431989063569,
+      "validationMissingRate": 0,
+      "coefficient": 0.009521192268681884,
+      "shiftContribution": -0.00010412787170123729
+    },
+    {
+      "featureName": "away.homeWinRateBefore.missing",
+      "trainMissingRate": 0.06561859193438141,
+      "validationMissingRate": 0,
+      "coefficient": -0.10489520464184507,
+      "shiftContribution": 0.006883075629266662
+    },
+    {
+      "featureName": "away.awayWinRateBefore.missing",
+      "trainMissingRate": 0.02050580997949419,
+      "validationMissingRate": 0,
+      "coefficient": 0.02496906097906165,
+      "shiftContribution": -0.0005120108198030413
+    },
+    {
+      "featureName": "away.restDaysBefore.missing",
+      "trainMissingRate": 0.010936431989063569,
+      "validationMissingRate": 0,
+      "coefficient": 0.009521192268681884,
+      "shiftContribution": -0.00010412787170123729
+    }
+  ],
+  "missingIndicatorTotalShiftContribution": 0.016403233218292096,
+  "rawBaseFeatureDrift": [
+    {
+      "featureName": "home.gamesPlayedBefore",
+      "trainMedian": 49,
+      "trainScale": 28.15694044596449,
+      "trainRawImputedMean": 48.25768967874231,
+      "validationRawImputedMean": 113.04347826086956,
+      "validationStandardizedMean": 2.3008816851552663,
+      "absStandardizedMeanDrift": 2.300881685155266
+    },
+    {
+      "featureName": "home.winsBefore",
+      "trainMedian": 23,
+      "trainScale": 14.989426990257062,
+      "trainRawImputedMean": 24.024606971975395,
+      "validationRawImputedMean": 56.63354037267081,
+      "validationStandardizedMean": 2.1754623056565676,
+      "absStandardizedMeanDrift": 2.1754623056565663
+    },
+    {
+      "featureName": "home.lossesBefore",
+      "trainMedian": 24,
+      "trainScale": 15.186188251175206,
+      "trainRawImputedMean": 24.23308270676692,
+      "validationRawImputedMean": 56.409937888198755,
+      "validationStandardizedMean": 2.1188236738038446,
+      "absStandardizedMeanDrift": 2.1188236738038424
+    },
+    {
+      "featureName": "home.winRateBefore",
+      "trainMedian": 0.5,
+      "trainScale": 0.14370402595839785,
+      "trainRawImputedMean": 0.4958225915077449,
+      "validationRawImputedMean": 0.501149518635268,
+      "validationStandardizedMean": 0.03706873966819329,
+      "absStandardizedMeanDrift": 0.037068739668191256
+    },
+    {
+      "featureName": "home.last5WinsBefore",
+      "trainMedian": 2,
+      "trainScale": 1.1731008105221583,
+      "trainRawImputedMean": 2.45933014354067,
+      "validationRawImputedMean": 2.4989648033126293,
+      "validationStandardizedMean": 0.03378623509288811,
+      "absStandardizedMeanDrift": 0.033786235092888445
+    },
+    {
+      "featureName": "home.last5LossesBefore",
+      "trainMedian": 2,
+      "trainScale": 1.1499674975261502,
+      "trainRawImputedMean": 2.430622009569378,
+      "validationRawImputedMean": 2.5010351966873707,
+      "validationStandardizedMean": 0.06123058892487676,
+      "absStandardizedMeanDrift": 0.0612305889248769
+    },
+    {
+      "featureName": "home.last5WinRateBefore",
+      "trainMedian": 0.6,
+      "trainScale": 0.23682333958298674,
+      "trainRawImputedMean": 0.5012303485987696,
+      "validationRawImputedMean": 0.4997929606625258,
+      "validationStandardizedMean": -0.0060694521864897415,
+      "absStandardizedMeanDrift": 0.006069452186490211
+    },
+    {
+      "featureName": "home.runsScoredAverageBefore",
+      "trainMedian": 4.343283582089552,
+      "trainScale": 0.9427629339773479,
+      "trainRawImputedMean": 4.4073964687032445,
+      "validationRawImputedMean": 4.408240683095473,
+      "validationStandardizedMean": 0.0008954683747128988,
+      "absStandardizedMeanDrift": 0.0008954683747121154
+    },
+    {
+      "featureName": "home.runsAllowedAverageBefore",
+      "trainMedian": 4.373134328358209,
+      "trainScale": 0.8302859881663965,
+      "trainRawImputedMean": 4.430573786872296,
+      "validationRawImputedMean": 4.399236510938162,
+      "validationStandardizedMean": -0.037742749342716445,
+      "absStandardizedMeanDrift": 0.03774274934271356
+    },
+    {
+      "featureName": "home.last5RunsScoredAverageBefore",
+      "trainMedian": 4.2,
+      "trainScale": 1.4999793370135117,
+      "trainRawImputedMean": 4.361027568922305,
+      "validationRawImputedMean": 4.428157349896476,
+      "validationStandardizedMean": 0.04475380381427641,
+      "absStandardizedMeanDrift": 0.04475380381427577
+    },
+    {
+      "featureName": "home.last5RunsAllowedAverageBefore",
+      "trainMedian": 4.333333333333333,
+      "trainScale": 1.4510545956720595,
+      "trainRawImputedMean": 4.44117110959215,
+      "validationRawImputedMean": 4.450517598343684,
+      "validationStandardizedMean": 0.006441169601344573,
+      "absStandardizedMeanDrift": 0.006441169601336275
+    },
+    {
+      "featureName": "home.homeWinRateBefore",
+      "trainMedian": 0.5,
+      "trainScale": 0.16724782699639204,
+      "trainRawImputedMean": 0.5005400121720361,
+      "validationRawImputedMean": 0.5281936969864613,
+      "validationStandardizedMean": 0.16534555522220187,
+      "absStandardizedMeanDrift": 0.1653455552222068
+    },
+    {
+      "featureName": "home.awayWinRateBefore",
+      "trainMedian": 0.4857142857142857,
+      "trainScale": 0.14722139687574387,
+      "trainRawImputedMean": 0.49882664743542177,
+      "validationRawImputedMean": 0.47497348454910165,
+      "validationStandardizedMean": -0.1620223920742471,
+      "absStandardizedMeanDrift": 0.1620223920742483
+    },
+    {
+      "featureName": "home.currentWinStreakBefore",
+      "trainMedian": 1,
+      "trainScale": 1.4212237496086835,
+      "trainRawImputedMean": 1.036226930963773,
+      "validationRawImputedMean": 1,
+      "validationStandardizedMean": -0.0254899560844995,
+      "absStandardizedMeanDrift": 0.025489956084499808
+    },
+    {
+      "featureName": "home.currentLossStreakBefore",
+      "trainMedian": 0,
+      "trainScale": 1.4009015502072566,
+      "trainRawImputedMean": 0.9268626110731374,
+      "validationRawImputedMean": 1.010351966873706,
+      "validationStandardizedMean": 0.059596875874836995,
+      "absStandardizedMeanDrift": 0.05959687587483695
+    },
+    {
+      "featureName": "home.restDaysBefore",
+      "trainMedian": 0,
+      "trainScale": 0.5702344218999204,
+      "trainRawImputedMean": 0.19958988380041012,
+      "validationRawImputedMean": 0.17805383022774326,
+      "validationStandardizedMean": -0.03776701781858859,
+      "absStandardizedMeanDrift": 0.037767017818588
+    },
+    {
+      "featureName": "away.gamesPlayedBefore",
+      "trainMedian": 48,
+      "trainScale": 28.142704750437847,
+      "trainRawImputedMean": 48.2406015037594,
+      "validationRawImputedMean": 113.0351966873706,
+      "validationStandardizedMean": 2.302358488929644,
+      "absStandardizedMeanDrift": 2.302358488929644
+    },
+    {
+      "featureName": "away.winsBefore",
+      "trainMedian": 23,
+      "trainScale": 15.115374745164955,
+      "trainRawImputedMean": 24.182501708817497,
+      "validationRawImputedMean": 56.542443064182194,
+      "validationStandardizedMean": 2.140862658116754,
+      "absStandardizedMeanDrift": 2.1408626581167534
+    },
+    {
+      "featureName": "away.lossesBefore",
+      "trainMedian": 23,
+      "trainScale": 15.085177651233042,
+      "trainRawImputedMean": 24.0580997949419,
+      "validationRawImputedMean": 56.492753623188406,
+      "validationStandardizedMean": 2.1501008856594637,
+      "absStandardizedMeanDrift": 2.1501008856594646
+    },
+    {
+      "featureName": "away.winRateBefore",
+      "trainMedian": 0.5,
+      "trainScale": 0.1445734579393932,
+      "trainRawImputedMean": 0.5034042292479776,
+      "validationRawImputedMean": 0.5003977065029913,
+      "validationStandardizedMean": -0.020795814030031837,
+      "absStandardizedMeanDrift": 0.02079581403003204
+    },
+    {
+      "featureName": "away.last5WinsBefore",
+      "trainMedian": 2,
+      "trainScale": 1.1360872625541807,
+      "trainRawImputedMean": 2.4285714285714284,
+      "validationRawImputedMean": 2.4927536231884058,
+      "validationStandardizedMean": 0.056494071126791195,
+      "absStandardizedMeanDrift": 0.056494071126790765
+    },
+    {
+      "featureName": "away.last5LossesBefore",
+      "trainMedian": 2,
+      "trainScale": 1.1570838237598067,
+      "trainRawImputedMean": 2.4545454545454546,
+      "validationRawImputedMean": 2.5072463768115942,
+      "validationStandardizedMean": 0.04554633051121072,
+      "absStandardizedMeanDrift": 0.04554633051121097
+    },
+    {
+      "featureName": "away.last5WinRateBefore",
+      "trainMedian": 0.4,
+      "trainScale": 0.23381107509896107,
+      "trainRawImputedMean": 0.4982797903850535,
+      "validationRawImputedMean": 0.4985507246376809,
+      "validationStandardizedMean": 0.0011587742475960383,
+      "absStandardizedMeanDrift": 0.0011587742475960006
+    },
+    {
+      "featureName": "away.runsScoredAverageBefore",
+      "trainMedian": 4.35,
+      "trainScale": 0.8506500881452853,
+      "trainRawImputedMean": 4.4060898253386345,
+      "validationRawImputedMean": 4.420507809494465,
+      "validationStandardizedMean": 0.016949371259417322,
+      "absStandardizedMeanDrift": 0.016949371259420972
+    },
+    {
+      "featureName": "away.runsAllowedAverageBefore",
+      "trainMedian": 4.35,
+      "trainScale": 0.8928667235555399,
+      "trainRawImputedMean": 4.390360045786124,
+      "validationRawImputedMean": 4.420866532240689,
+      "validationStandardizedMean": 0.0341668982052368,
+      "absStandardizedMeanDrift": 0.03416689820524313
+    },
+    {
+      "featureName": "away.last5RunsScoredAverageBefore",
+      "trainMedian": 4.4,
+      "trainScale": 1.4822802830180024,
+      "trainRawImputedMean": 4.435463659147864,
+      "validationRawImputedMean": 4.537888198757766,
+      "validationStandardizedMean": 0.06909930650994071,
+      "absStandardizedMeanDrift": 0.06909930650993662
+    },
+    {
+      "featureName": "away.last5RunsAllowedAverageBefore",
+      "trainMedian": 4.2,
+      "trainScale": 1.4565060697027483,
+      "trainRawImputedMean": 4.359706083390295,
+      "validationRawImputedMean": 4.517598343685299,
+      "validationStandardizedMean": 0.10840480762790648,
+      "absStandardizedMeanDrift": 0.10840480762790705
+    },
+    {
+      "featureName": "away.homeWinRateBefore",
+      "trainMedian": 0.5,
+      "trainScale": 0.13540725775930193,
+      "trainRawImputedMean": 0.5057658728941183,
+      "validationRawImputedMean": 0.5255939121117694,
+      "validationStandardizedMean": 0.1464326177618716,
+      "absStandardizedMeanDrift": 0.1464326177618903
+    },
+    {
+      "featureName": "away.awayWinRateBefore",
+      "trainMedian": 0.5,
+      "trainScale": 0.16803694114626694,
+      "trainRawImputedMean": 0.4964961170817422,
+      "validationRawImputedMean": 0.4755205541862203,
+      "validationStandardizedMean": -0.12482709309296344,
+      "absStandardizedMeanDrift": 0.12482709309295964
+    },
+    {
+      "featureName": "away.currentWinStreakBefore",
+      "trainMedian": 0,
+      "trainScale": 1.3854827562864032,
+      "trainRawImputedMean": 0.9275461380724539,
+      "validationRawImputedMean": 0.9772256728778468,
+      "validationStandardizedMean": 0.03585720181646438,
+      "absStandardizedMeanDrift": 0.03585720181646445
+    },
+    {
+      "featureName": "away.currentLossStreakBefore",
+      "trainMedian": 1,
+      "trainScale": 1.4655096226754727,
+      "trainRawImputedMean": 1.0444292549555707,
+      "validationRawImputedMean": 1.2650103519668736,
+      "validationStandardizedMean": 0.1505149427873454,
+      "absStandardizedMeanDrift": 0.15051494278734595
+    },
+    {
+      "featureName": "away.restDaysBefore",
+      "trainMedian": 0,
+      "trainScale": 0.5165990162544374,
+      "trainRawImputedMean": 0.17840054682159945,
+      "validationRawImputedMean": 0.17184265010351968,
+      "validationStandardizedMean": -0.01269436547833039,
+      "absStandardizedMeanDrift": 0.012694365478331953
+    },
+    {
+      "featureName": "headToHeadGamesBefore",
+      "trainMedian": 2,
+      "trainScale": 1.9725746023515518,
+      "trainRawImputedMean": 2.1237183868762814,
+      "validationRawImputedMean": 4.3354037267080745,
+      "validationStandardizedMean": 1.1212175890306972,
+      "absStandardizedMeanDrift": 1.121217589030692
+    },
+    {
+      "featureName": "headToHeadHomeWinsBefore",
+      "trainMedian": 1,
+      "trainScale": 1.2586614718628912,
+      "trainRawImputedMean": 1.0915926179084074,
+      "validationRawImputedMean": 2.2008281573498967,
+      "validationStandardizedMean": 0.88128187303593,
+      "absStandardizedMeanDrift": 0.8812818730359285
+    },
+    {
+      "featureName": "headToHeadAwayWinsBefore",
+      "trainMedian": 1,
+      "trainScale": 1.2366830177688226,
+      "trainRawImputedMean": 1.0321257689678742,
+      "validationRawImputedMean": 2.1345755693581783,
+      "validationStandardizedMean": 0.8914570545161223,
+      "absStandardizedMeanDrift": 0.8914570545161232
+    }
+  ],
+  "structuralRedundancy": {
+    "homeGamesEqualsWinsPlusLossesViolations": 0,
+    "awayGamesEqualsWinsPlusLossesViolations": 0,
+    "headToHeadGamesEqualsWinsPlusWinsViolations": 0,
+    "homeLast5SumViolations": 0,
+    "awayLast5SumViolations": 0
+  },
+  "trainTopCorrelations": [
+    {
+      "featureA": "home.gamesPlayedBefore",
+      "featureB": "away.gamesPlayedBefore",
+      "correlation": 0.9981237477594078
+    },
+    {
+      "featureA": "home.last5WinsBefore",
+      "featureB": "home.last5WinRateBefore",
+      "correlation": 0.9634047972728098
+    },
+    {
+      "featureA": "away.last5LossesBefore",
+      "featureB": "away.last5WinRateBefore",
+      "correlation": -0.9533621823395427
+    },
+    {
+      "featureA": "home.last5LossesBefore",
+      "featureB": "home.last5WinRateBefore",
+      "correlation": -0.9381148187206523
+    },
+    {
+      "featureA": "away.last5WinsBefore",
+      "featureB": "away.last5WinRateBefore",
+      "correlation": 0.9372445307053171
+    },
+    {
+      "featureA": "home.gamesPlayedBefore",
+      "featureB": "home.lossesBefore",
+      "correlation": 0.9340002829342011
+    },
+    {
+      "featureA": "home.gamesPlayedBefore",
+      "featureB": "home.winsBefore",
+      "correlation": 0.9321928271012008
+    },
+    {
+      "featureA": "away.gamesPlayedBefore",
+      "featureB": "away.winsBefore",
+      "correlation": 0.9320016998533127
+    },
+    {
+      "featureA": "home.winsBefore",
+      "featureB": "away.gamesPlayedBefore",
+      "correlation": 0.9318600574838318
+    },
+    {
+      "featureA": "away.gamesPlayedBefore",
+      "featureB": "away.lossesBefore",
+      "correlation": 0.9317192093442469
+    },
+    {
+      "featureA": "home.gamesPlayedBefore",
+      "featureB": "away.winsBefore",
+      "correlation": 0.9316628911167595
+    },
+    {
+      "featureA": "home.lossesBefore",
+      "featureB": "away.gamesPlayedBefore",
+      "correlation": 0.9308499534423952
+    },
+    {
+      "featureA": "home.gamesPlayedBefore",
+      "featureB": "away.lossesBefore",
+      "correlation": 0.9285583853269999
+    },
+    {
+      "featureA": "home.last5WinsBefore",
+      "featureB": "home.last5LossesBefore",
+      "correlation": -0.8909370351110095
+    },
+    {
+      "featureA": "away.last5WinsBefore",
+      "featureB": "away.last5LossesBefore",
+      "correlation": -0.8797910097377359
+    },
+    {
+      "featureA": "home.lossesBefore",
+      "featureB": "away.winsBefore",
+      "correlation": 0.8771694922295407
+    },
+    {
+      "featureA": "home.winsBefore",
+      "featureB": "away.lossesBefore",
+      "correlation": 0.8753397326801783
+    },
+    {
+      "featureA": "home.winsBefore",
+      "featureB": "away.winsBefore",
+      "correlation": 0.8614015407057716
+    },
+    {
+      "featureA": "home.lossesBefore",
+      "featureB": "away.lossesBefore",
+      "correlation": 0.8576557807759765
+    },
+    {
+      "featureA": "away.winRateBefore",
+      "featureB": "away.awayWinRateBefore",
+      "correlation": 0.8369467814163697
+    }
+  ],
+  "highCorrelationPairCount": 13,
+  "coefficientTop15": [
+    {
+      "featureName": "home.awayWinRateBefore.missing",
+      "coefficient": -0.14978010330777095,
+      "absCoefficient": 0.14978010330777095
+    },
+    {
+      "featureName": "away.last5LossesBefore",
+      "coefficient": 0.1453731731257327,
+      "absCoefficient": 0.1453731731257327
+    },
+    {
+      "featureName": "away.last5RunsScoredAverageBefore",
+      "coefficient": -0.1375110064005982,
+      "absCoefficient": 0.1375110064005982
+    },
+    {
+      "featureName": "away.lossesBefore",
+      "coefficient": 0.12891916856536054,
+      "absCoefficient": 0.12891916856536054
+    },
+    {
+      "featureName": "away.runsAllowedAverageBefore",
+      "coefficient": 0.11625037441883418,
+      "absCoefficient": 0.11625037441883418
+    },
+    {
+      "featureName": "home.awayWinRateBefore",
+      "coefficient": 0.1106970953247375,
+      "absCoefficient": 0.1106970953247375
+    },
+    {
+      "featureName": "away.homeWinRateBefore.missing",
+      "coefficient": -0.10489520464184507,
+      "absCoefficient": 0.10489520464184507
+    },
+    {
+      "featureName": "away.last5WinsBefore",
+      "coefficient": 0.09323004506047453,
+      "absCoefficient": 0.09323004506047453
+    },
+    {
+      "featureName": "home.currentLossStreakBefore",
+      "coefficient": 0.08836391737126621,
+      "absCoefficient": 0.08836391737126621
+    },
+    {
+      "featureName": "away.last5WinRateBefore",
+      "coefficient": 0.08194890776359362,
+      "absCoefficient": 0.08194890776359362
+    },
+    {
+      "featureName": "away.winRateBefore",
+      "coefficient": -0.07688649460496401,
+      "absCoefficient": 0.07688649460496401
+    },
+    {
+      "featureName": "away.last5RunsAllowedAverageBefore",
+      "coefficient": -0.07229296821893812,
+      "absCoefficient": 0.07229296821893812
+    },
+    {
+      "featureName": "away.homeWinRateBefore",
+      "coefficient": -0.06639472149596536,
+      "absCoefficient": 0.06639472149596536
+    },
+    {
+      "featureName": "away.currentWinStreakBefore",
+      "coefficient": 0.060972330120227396,
+      "absCoefficient": 0.060972330120227396
+    },
+    {
+      "featureName": "home.lossesBefore",
+      "coefficient": -0.060599048553487196,
+      "absCoefficient": 0.060599048553487196
+    }
+  ],
+  "coefficientNote": "Large absolute coefficient is not causal importance. Features may be correlated or contractually redundant.",
+  "validationChronologicalBins": [
+    {
+      "id": "BIN_1",
+      "start": "2024-07-20",
+      "end": "2024-07-26",
+      "n": 96,
+      "actualHomeRate": 0.4791666666666667,
+      "meanPredictedProbability": 0.5764997511621633,
+      "predictedHomeClassRate": 0.8541666666666666,
+      "accuracy": 0.4791666666666667,
+      "logLoss": 0.7221063834032999,
+      "brierScore": 0.26405033188229843,
+      "meanLogit": 0.3142270207733625
+    },
+    {
+      "id": "BIN_2",
+      "start": "2024-07-27",
+      "end": "2024-08-02",
+      "n": 92,
+      "actualHomeRate": 0.5,
+      "meanPredictedProbability": 0.5908135110035732,
+      "predictedHomeClassRate": 0.967391304347826,
+      "accuracy": 0.4891304347826087,
+      "logLoss": 0.7225465106090254,
+      "brierScore": 0.26389880801146826,
+      "meanLogit": 0.37194254488479045
+    },
+    {
+      "id": "BIN_3",
+      "start": "2024-08-03",
+      "end": "2024-08-09",
+      "n": 94,
+      "actualHomeRate": 0.44680851063829785,
+      "meanPredictedProbability": 0.5851700898678415,
+      "predictedHomeClassRate": 0.8723404255319149,
+      "accuracy": 0.5106382978723404,
+      "logLoss": 0.7169403929009126,
+      "brierScore": 0.2613226047786395,
+      "meanLogit": 0.3517835536619009
+    },
+    {
+      "id": "BIN_4",
+      "start": "2024-08-10",
+      "end": "2024-08-16",
+      "n": 91,
+      "actualHomeRate": 0.5604395604395604,
+      "meanPredictedProbability": 0.5869294838339971,
+      "predictedHomeClassRate": 0.9120879120879121,
+      "accuracy": 0.5824175824175825,
+      "logLoss": 0.6911006690443188,
+      "brierScore": 0.24836042935641572,
+      "meanLogit": 0.3583014466416065
+    },
+    {
+      "id": "BIN_5",
+      "start": "2024-08-17",
+      "end": "2024-08-24",
+      "n": 110,
+      "actualHomeRate": 0.5454545454545454,
+      "meanPredictedProbability": 0.6019614785579599,
+      "predictedHomeClassRate": 0.9272727272727272,
+      "accuracy": 0.5818181818181818,
+      "logLoss": 0.6743527739874853,
+      "brierScore": 0.2406511392508767,
+      "meanLogit": 0.42191642397924495
+    }
+  ],
+  "conclusionEvidence": {
+    "dominantPositiveShiftFeatures": [
+      "away.lossesBefore",
+      "away.gamesPlayedBefore",
+      "home.winsBefore",
+      "home.awayWinRateBefore.missing",
+      "away.homeWinRateBefore.missing"
+    ],
+    "dominantNegativeShiftFeatures": [
+      "home.lossesBefore",
+      "away.winsBefore",
+      "home.gamesPlayedBefore",
+      "home.awayWinRateBefore",
+      "away.homeWinRateBefore"
+    ],
+    "dominantPositiveShiftGroups": [
+      "SEASON_VOLUME",
+      "MISSING_INDICATORS",
+      "STREAK_REST",
+      "SEASON_RUN_QUALITY"
+    ],
+    "dominantNegativeShiftGroups": [
+      "RATE_STRENGTH",
+      "HEAD_TO_HEAD",
+      "RECENT_FORM"
+    ],
+    "seasonVolumeShiftContribution": 0.25447283581182617,
+    "missingIndicatorShiftContribution": 0.016403233218292096,
+    "totalLogitShift": 0.2417182727197169,
+    "seasonVolumeShareOfNetShift": 1.0527662346276103,
+    "structuralRedundancyPresent": true,
+    "highCorrelationPairCount": 13,
+    "coefficientNote": "Large absolute coefficient is not causal importance. Features may be correlated or contractually redundant.",
+    "classificationRule": "Descriptive only: a group is dominant if it accounts for >= 50% of the sum of absolute group shift contributions. Not an Engine decision and not a feature-removal rule.",
+    "diagnosticClassification": "SEASON_VOLUME_DOMINANT"
+  },
+  "diagnosticClassification": "SEASON_VOLUME_DOMINANT"
+}
