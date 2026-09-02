@@ -1,0 +1,598 @@
+{
+  "generatedAt": "2026-09-02T11:34:09.070Z",
+  "sourceJoinPath": "data/research/mlb/independent-model-v1/join/2024-feature-label-join-v1.json",
+  "sourceJoinHash": "6f9e0875d453fe52de8d56fef0a25427270989123df568020c8e1d0fdd417127",
+  "totalRows": 2429,
+  "targetRatio": {
+    "train": 0.6,
+    "validation": 0.2,
+    "holdout": 0.2
+  },
+  "actualCounts": {
+    "train": 1463,
+    "validation": 483,
+    "holdout": 483,
+    "total": 2429
+  },
+  "actualRatios": {
+    "train": 0.6023054755043228,
+    "validation": 0.1988472622478386,
+    "holdout": 0.1988472622478386
+  },
+  "boundaries": {
+    "trainStartDate": "2024-03-20",
+    "trainEndDate": "2024-07-19",
+    "validationStartDate": "2024-07-20",
+    "validationEndDate": "2024-08-24",
+    "holdoutStartDate": "2024-08-25",
+    "holdoutEndDate": "2024-09-30"
+  },
+  "sameDateSplitCount": 0,
+  "overlapCounts": {
+    "trainValidation": 0,
+    "trainHoldout": 0,
+    "validationHoldout": 0
+  },
+  "unionMissingCount": 0,
+  "unionExtraCount": 0,
+  "chronologicalViolationCount": 0,
+  "partitionLabelDistribution": {
+    "train": {
+      "HOME": 776,
+      "AWAY": 687,
+      "HOME_RATE": 0.530416951469583
+    },
+    "validation": {
+      "HOME": 245,
+      "AWAY": 238,
+      "HOME_RATE": 0.5072463768115942
+    },
+    "holdout": {
+      "HOME": 246,
+      "AWAY": 237,
+      "HOME_RATE": 0.5093167701863354
+    },
+    "total": {
+      "HOME": 1267,
+      "AWAY": 1162,
+      "HOME_RATE": 0.521613832853026
+    }
+  },
+  "partitionFeatureNullAudit": {
+    "train": {
+      "home.gamesPlayedBefore": {
+        "nullCount": 0,
+        "nonNullCount": 1463,
+        "nullRate": 0
+      },
+      "home.winsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 1463,
+        "nullRate": 0
+      },
+      "home.lossesBefore": {
+        "nullCount": 0,
+        "nonNullCount": 1463,
+        "nullRate": 0
+      },
+      "home.winRateBefore": {
+        "nullCount": 14,
+        "nonNullCount": 1449,
+        "nullRate": 0.009569377990430622
+      },
+      "home.last5WinsBefore": {
+        "nullCount": 14,
+        "nonNullCount": 1449,
+        "nullRate": 0.009569377990430622
+      },
+      "home.last5LossesBefore": {
+        "nullCount": 14,
+        "nonNullCount": 1449,
+        "nullRate": 0.009569377990430622
+      },
+      "home.last5WinRateBefore": {
+        "nullCount": 14,
+        "nonNullCount": 1449,
+        "nullRate": 0.009569377990430622
+      },
+      "home.runsScoredAverageBefore": {
+        "nullCount": 14,
+        "nonNullCount": 1449,
+        "nullRate": 0.009569377990430622
+      },
+      "home.runsAllowedAverageBefore": {
+        "nullCount": 14,
+        "nonNullCount": 1449,
+        "nullRate": 0.009569377990430622
+      },
+      "home.last5RunsScoredAverageBefore": {
+        "nullCount": 14,
+        "nonNullCount": 1449,
+        "nullRate": 0.009569377990430622
+      },
+      "home.last5RunsAllowedAverageBefore": {
+        "nullCount": 14,
+        "nonNullCount": 1449,
+        "nullRate": 0.009569377990430622
+      },
+      "home.homeWinRateBefore": {
+        "nullCount": 30,
+        "nonNullCount": 1433,
+        "nullRate": 0.02050580997949419
+      },
+      "home.awayWinRateBefore": {
+        "nullCount": 75,
+        "nonNullCount": 1388,
+        "nullRate": 0.05126452494873548
+      },
+      "home.currentWinStreakBefore": {
+        "nullCount": 0,
+        "nonNullCount": 1463,
+        "nullRate": 0
+      },
+      "home.currentLossStreakBefore": {
+        "nullCount": 0,
+        "nonNullCount": 1463,
+        "nullRate": 0
+      },
+      "home.restDaysBefore": {
+        "nullCount": 14,
+        "nonNullCount": 1449,
+        "nullRate": 0.009569377990430622
+      },
+      "away.gamesPlayedBefore": {
+        "nullCount": 0,
+        "nonNullCount": 1463,
+        "nullRate": 0
+      },
+      "away.winsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 1463,
+        "nullRate": 0
+      },
+      "away.lossesBefore": {
+        "nullCount": 0,
+        "nonNullCount": 1463,
+        "nullRate": 0
+      },
+      "away.winRateBefore": {
+        "nullCount": 16,
+        "nonNullCount": 1447,
+        "nullRate": 0.010936431989063569
+      },
+      "away.last5WinsBefore": {
+        "nullCount": 16,
+        "nonNullCount": 1447,
+        "nullRate": 0.010936431989063569
+      },
+      "away.last5LossesBefore": {
+        "nullCount": 16,
+        "nonNullCount": 1447,
+        "nullRate": 0.010936431989063569
+      },
+      "away.last5WinRateBefore": {
+        "nullCount": 16,
+        "nonNullCount": 1447,
+        "nullRate": 0.010936431989063569
+      },
+      "away.runsScoredAverageBefore": {
+        "nullCount": 16,
+        "nonNullCount": 1447,
+        "nullRate": 0.010936431989063569
+      },
+      "away.runsAllowedAverageBefore": {
+        "nullCount": 16,
+        "nonNullCount": 1447,
+        "nullRate": 0.010936431989063569
+      },
+      "away.last5RunsScoredAverageBefore": {
+        "nullCount": 16,
+        "nonNullCount": 1447,
+        "nullRate": 0.010936431989063569
+      },
+      "away.last5RunsAllowedAverageBefore": {
+        "nullCount": 16,
+        "nonNullCount": 1447,
+        "nullRate": 0.010936431989063569
+      },
+      "away.homeWinRateBefore": {
+        "nullCount": 96,
+        "nonNullCount": 1367,
+        "nullRate": 0.06561859193438141
+      },
+      "away.awayWinRateBefore": {
+        "nullCount": 30,
+        "nonNullCount": 1433,
+        "nullRate": 0.02050580997949419
+      },
+      "away.currentWinStreakBefore": {
+        "nullCount": 0,
+        "nonNullCount": 1463,
+        "nullRate": 0
+      },
+      "away.currentLossStreakBefore": {
+        "nullCount": 0,
+        "nonNullCount": 1463,
+        "nullRate": 0
+      },
+      "away.restDaysBefore": {
+        "nullCount": 16,
+        "nonNullCount": 1447,
+        "nullRate": 0.010936431989063569
+      },
+      "headToHeadGamesBefore": {
+        "nullCount": 0,
+        "nonNullCount": 1463,
+        "nullRate": 0
+      },
+      "headToHeadHomeWinsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 1463,
+        "nullRate": 0
+      },
+      "headToHeadAwayWinsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 1463,
+        "nullRate": 0
+      }
+    },
+    "validation": {
+      "home.gamesPlayedBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.winsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.lossesBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.winRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.last5WinsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.last5LossesBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.last5WinRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.runsScoredAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.runsAllowedAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.last5RunsScoredAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.last5RunsAllowedAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.homeWinRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.awayWinRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.currentWinStreakBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.currentLossStreakBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.restDaysBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.gamesPlayedBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.winsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.lossesBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.winRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.last5WinsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.last5LossesBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.last5WinRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.runsScoredAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.runsAllowedAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.last5RunsScoredAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.last5RunsAllowedAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.homeWinRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.awayWinRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.currentWinStreakBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.currentLossStreakBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.restDaysBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "headToHeadGamesBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "headToHeadHomeWinsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "headToHeadAwayWinsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      }
+    },
+    "holdout": {
+      "home.gamesPlayedBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.winsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.lossesBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.winRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.last5WinsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.last5LossesBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.last5WinRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.runsScoredAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.runsAllowedAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.last5RunsScoredAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.last5RunsAllowedAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.homeWinRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.awayWinRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.currentWinStreakBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.currentLossStreakBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "home.restDaysBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.gamesPlayedBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.winsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.lossesBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.winRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.last5WinsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.last5LossesBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.last5WinRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.runsScoredAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.runsAllowedAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.last5RunsScoredAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.last5RunsAllowedAverageBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.homeWinRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.awayWinRateBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.currentWinStreakBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.currentLossStreakBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "away.restDaysBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "headToHeadGamesBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "headToHeadHomeWinsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      },
+      "headToHeadAwayWinsBefore": {
+        "nullCount": 0,
+        "nonNullCount": 483,
+        "nullRate": 0
+      }
+    }
+  },
+  "splitManifestHash": "a72b8586971ee81a04e119c7d860f226abb503b5cc2341bb370d49d2fb47e71d",
+  "independentModelSample": 2429,
+  "splitReady": true,
+  "datasetReady": true
+}
