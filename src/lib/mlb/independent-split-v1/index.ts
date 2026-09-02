@@ -1,5 +1,6 @@
 export {
   IndependentSplitError,
+  MLB_INDEPENDENT_2024_SEALED_JOIN_SHA256_V1,
   MLB_INDEPENDENT_SPLIT_BUILDER_VERSION,
   MLB_INDEPENDENT_SPLIT_POLICY_V1,
   MLB_INDEPENDENT_SPLIT_SCHEMA_V1,
@@ -7,13 +8,16 @@ export {
   MLB_INDEPENDENT_SPLIT_TARGET_TRAIN_RATIO,
   MLB_INDEPENDENT_SPLIT_TARGET_VALIDATION_RATIO,
   assertChronologicalSplitInvariantsV1,
+  assertSealedJoinArtifactBytesV1,
   assignChronologicalPartitionsV1,
   hashIndependentSplitManifestV1,
   independentSplitArtifactPath,
   independentSplitArtifactRel,
   independentSplitAuditPath,
   independentSplitAuditRel,
+  sha256JoinBytesV1,
   splitIndependentJoinV1,
+  splitSealedIndependentJoinBytesV1,
   verifyIndependentJoinArtifactForSplitV1,
 } from "./split";
 

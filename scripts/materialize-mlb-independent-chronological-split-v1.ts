@@ -4,8 +4,8 @@
  *   npm run materialize:mlb-independent-chronological-split-v1
  *
  * NO NETWORK. Does not mutate join / feature / label artifacts. No trainer.
+ * Pins Join bytes against MLB_INDEPENDENT_2024_SEALED_JOIN_SHA256_V1 before parse.
  */
-import { createHash } from "node:crypto";
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { independentJoinArtifactPath } from "../src/lib/mlb/independent-join-v1";
@@ -14,7 +14,7 @@ import {
   independentSplitArtifactRel,
   independentSplitAuditPath,
   independentSplitAuditRel,
-  splitIndependentJoinV1,
+  splitSealedIndependentJoinBytesV1,
 } from "../src/lib/mlb/independent-split-v1";
 
 async function writeJsonAtomic(filePath: string, value: unknown): Promise<void> {
@@ -24,20 +24,11 @@ async function writeJsonAtomic(filePath: string, value: unknown): Promise<void> 
   await rename(tmp, filePath);
 }
 
-function sha256Bytes(buf: Buffer): string {
-  return createHash("sha256").update(buf).digest("hex");
-}
-
 async function main(): Promise<void> {
   console.log("=== Chronological Split MLB Independent Join v1 ===");
   const joinPath = independentJoinArtifactPath();
   const joinBuf = await readFile(joinPath);
-  const joinHash = sha256Bytes(joinBuf);
-  const join = JSON.parse(joinBuf.toString("utf8"));
-
-  const result = splitIndependentJoinV1(join, {
-    sourceJoinArtifactHash: joinHash,
-    expectedSourceJoinHash: joinHash,
+  const result = splitSealedIndependentJoinBytesV1(joinBuf, {
     sourceJoinPath:
       "data/research/mlb/independent-model-v1/join/2024-feature-label-join-v1.json",
   });
@@ -46,7 +37,7 @@ async function main(): Promise<void> {
   await writeJsonAtomic(independentSplitAuditPath(), result.audit);
 
   const { counts, boundaries } = result.artifact;
-  console.log(`JOINED_ROWS=${join.rows.length}`);
+  console.log(`JOINED_ROWS=${result.artifact.independentModelSample}`);
   console.log(`INDEPENDENT_MODEL_SAMPLE=${result.artifact.independentModelSample}`);
   console.log(`TRAIN=${counts.train}`);
   console.log(`VALIDATION=${counts.validation}`);
@@ -57,6 +48,7 @@ async function main(): Promise<void> {
   console.log(`holdoutStartDate=${boundaries.holdoutStartDate}`);
   console.log(`holdoutEndDate=${boundaries.holdoutEndDate}`);
   console.log(`splitManifestHash=${result.artifact.splitManifestHash}`);
+  console.log(`sourceJoinArtifactHash=${result.artifact.sourceJoinArtifactHash}`);
   console.log(`SPLIT_READY=true`);
   console.log(`DATASET_READY=true`);
   console.log(`split artifact=${independentSplitArtifactRel()}`);

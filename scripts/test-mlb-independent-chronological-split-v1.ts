@@ -17,23 +17,26 @@ import {
 } from "../src/lib/mlb/independent-safe-a-v1/historical-source";
 import { hashIndependentFeatureRowV1 } from "../src/lib/mlb/independent-safe-a-v1/materialize";
 import {
+  MLB_INDEPENDENT_2024_SEALED_JOIN_SHA256_V1,
   assertChronologicalSplitInvariantsV1,
   assignChronologicalPartitionsV1,
   independentSplitArtifactPath,
   independentSplitAuditPath,
   splitIndependentJoinV1,
+  splitSealedIndependentJoinBytesV1,
 } from "../src/lib/mlb/independent-split-v1";
 
 const ROOT = process.cwd();
 const LIB_DIR = path.join(ROOT, "src/lib/mlb/independent-split-v1");
-const JOIN_BEFORE =
-  "6f9e0875d453fe52de8d56fef0a25427270989123df568020c8e1d0fdd417127";
+const JOIN_BEFORE = MLB_INDEPENDENT_2024_SEALED_JOIN_SHA256_V1;
 const FEATURE_BEFORE =
   "5f0cf297ebc9e5a1e0b10aad136632f51ddbc9f6b1560c676f3df2aa2ea8c753";
 const LABEL_BEFORE =
   "9f52cd1de57567819dd7f6fea245baad1365a6eae12dadeafec76ead02d7a3da";
 const SOURCE_BEFORE =
   "7a637e182a91a0b20e399ed2a4d98824c3a5916ac61cb6903e504a919a514e7d";
+const SPLIT_MANIFEST_BEFORE =
+  "a72b8586971ee81a04e119c7d860f226abb503b5cc2341bb370d49d2fb47e71d";
 
 function sha256File(filePath: string): string {
   return createHash("sha256").update(readFileSync(filePath)).digest("hex");
@@ -52,6 +55,22 @@ function shuffle<T>(items: T[]): T[] {
     out[j] = tmp;
   }
   return out;
+}
+
+function sealedJoinHashOpts(extra?: {
+  generatedAt?: string;
+  sourceJoinPath?: string;
+}): {
+  sourceJoinArtifactHash: string;
+  expectedSourceJoinHash: string;
+  generatedAt?: string;
+  sourceJoinPath?: string;
+} {
+  return {
+    sourceJoinArtifactHash: JOIN_BEFORE,
+    expectedSourceJoinHash: JOIN_BEFORE,
+    ...extra,
+  };
 }
 
 function loadJoin(): IndependentJoinArtifactV1 {
@@ -93,17 +112,50 @@ function assertThrowsCode(fn: () => unknown, code: string, label: string): void 
 function main(): void {
   const joinHash = sha256File(independentJoinArtifactPath());
   assert.equal(joinHash, JOIN_BEFORE);
+  assert.equal(joinHash, MLB_INDEPENDENT_2024_SEALED_JOIN_SHA256_V1);
+  console.log("REAL_JOIN_HASH_PIN_MATCH = PASS");
+
+  const joinBuf = readFileSync(independentJoinArtifactPath());
+  const fromSealedBytes = splitSealedIndependentJoinBytesV1(joinBuf, {
+    generatedAt: "2026-09-02T00:00:00.000Z",
+  });
+  assert.equal(fromSealedBytes.artifact.counts.train, 1463);
+  assert.equal(fromSealedBytes.artifact.counts.validation, 483);
+  assert.equal(fromSealedBytes.artifact.counts.holdout, 483);
+  assert.equal(fromSealedBytes.artifact.splitManifestHash, SPLIT_MANIFEST_BEFORE);
+  assert.equal(fromSealedBytes.artifact.sourceJoinArtifactHash, JOIN_BEFORE);
+
+  const tamperedBuf = Buffer.from(joinBuf);
+  tamperedBuf[0] = tamperedBuf[0]! ^ 0x01;
+  assert.notEqual(
+    createHash("sha256").update(tamperedBuf).digest("hex"),
+    JOIN_BEFORE,
+  );
+  assertThrowsCode(
+    () => splitSealedIndependentJoinBytesV1(tamperedBuf),
+    "SEALED_JOIN_ARTIFACT_HASH_MISMATCH",
+    "tampered sealed join bytes",
+  );
+  console.log("TAMPERED_SEALED_JOIN_BYTES_BLOCK = PASS");
+
+  const materializer = readFileSync(
+    path.join(ROOT, "scripts/materialize-mlb-independent-chronological-split-v1.ts"),
+    "utf8",
+  );
+  assert.equal(materializer.includes("splitSealedIndependentJoinBytesV1"), true);
+  assert.equal(materializer.includes("expectedSourceJoinHash: joinHash"), false);
+  assert.equal(materializer.includes("expectedSourceJoinHash: actualJoinHash"), false);
+
   const sealed = loadJoin();
   assert.equal(sealed.joinReady, true);
   assert.equal(sealed.datasetReady, false);
   assert.equal(sealed.independentModelSample, sealed.rows.length);
   assert.equal(sealed.rows.length, 2429);
 
-  const full = splitIndependentJoinV1(sealed, {
-    sourceJoinArtifactHash: joinHash,
-    expectedSourceJoinHash: joinHash,
-    generatedAt: "2026-09-02T00:00:00.000Z",
-  });
+  const full = splitIndependentJoinV1(
+    sealed,
+    sealedJoinHashOpts({ generatedAt: "2026-09-02T00:00:00.000Z" }),
+  );
   assert.equal(full.artifact.splitReady, true);
   assert.equal(full.artifact.datasetReady, true);
   assert.equal(full.artifact.researchOnly, true);
@@ -145,14 +197,23 @@ function main(): void {
       full.audit.partitionLabelDistribution.holdout.AWAY,
     1162,
   );
-  assert.match(full.artifact.splitManifestHash, /^[a-f0-9]{64}$/);
+  assert.equal(full.artifact.splitManifestHash, SPLIT_MANIFEST_BEFORE);
+  assert.equal(full.artifact.counts.train, 1463);
+  assert.equal(full.artifact.counts.validation, 483);
+  assert.equal(full.artifact.counts.holdout, 483);
+  assert.equal(full.artifact.boundaries.trainStartDate, "2024-03-20");
+  assert.equal(full.artifact.boundaries.trainEndDate, "2024-07-19");
+  assert.equal(full.artifact.boundaries.validationStartDate, "2024-07-20");
+  assert.equal(full.artifact.boundaries.validationEndDate, "2024-08-24");
+  assert.equal(full.artifact.boundaries.holdoutStartDate, "2024-08-25");
+  assert.equal(full.artifact.boundaries.holdoutEndDate, "2024-09-30");
 
   const shuffledJoin = clone(sealed);
   shuffledJoin.rows = shuffle(shuffledJoin.rows);
-  const fromShuffled = splitIndependentJoinV1(shuffledJoin, {
-    sourceJoinArtifactHash: joinHash,
-    generatedAt: "2026-09-02T00:00:00.000Z",
-  });
+  const fromShuffled = splitIndependentJoinV1(
+    shuffledJoin,
+    sealedJoinHashOpts({ generatedAt: "2026-09-02T00:00:00.000Z" }),
+  );
   assert.deepEqual(fromShuffled.artifact.boundaries, full.artifact.boundaries);
   assert.deepEqual(fromShuffled.artifact.trainGamePks, full.artifact.trainGamePks);
   assert.deepEqual(
@@ -174,10 +235,10 @@ function main(): void {
       row.label.target = 1;
     }
   }
-  const fromLabels = splitIndependentJoinV1(labelMutated, {
-    sourceJoinArtifactHash: joinHash,
-    generatedAt: "2026-09-02T00:00:00.000Z",
-  });
+  const fromLabels = splitIndependentJoinV1(
+    labelMutated,
+    sealedJoinHashOpts({ generatedAt: "2026-09-02T00:00:00.000Z" }),
+  );
   assert.deepEqual(fromLabels.artifact.boundaries, full.artifact.boundaries);
   assert.deepEqual(fromLabels.artifact.trainGamePks, full.artifact.trainGamePks);
   assert.deepEqual(
@@ -195,10 +256,10 @@ function main(): void {
       : target.feature.home.restDaysBefore + 1;
   target.feature.featureHash = hashIndependentFeatureRowV1(target.feature);
   target.featureHash = target.feature.featureHash;
-  const fromFeatures = splitIndependentJoinV1(featureMutated, {
-    sourceJoinArtifactHash: joinHash,
-    generatedAt: "2026-09-02T00:00:00.000Z",
-  });
+  const fromFeatures = splitIndependentJoinV1(
+    featureMutated,
+    sealedJoinHashOpts({ generatedAt: "2026-09-02T00:00:00.000Z" }),
+  );
   assert.deepEqual(fromFeatures.artifact.boundaries, full.artifact.boundaries);
   assert.deepEqual(fromFeatures.artifact.trainGamePks, full.artifact.trainGamePks);
   assert.deepEqual(
@@ -211,8 +272,7 @@ function main(): void {
   const notReady = clone(sealed);
   (notReady as { joinReady: boolean }).joinReady = false;
   assertThrowsCode(
-    () =>
-      splitIndependentJoinV1(notReady, { sourceJoinArtifactHash: joinHash }),
+    () => splitIndependentJoinV1(notReady, sealedJoinHashOpts()),
     "JOIN_NOT_READY",
     "joinReady != true",
   );
@@ -220,10 +280,7 @@ function main(): void {
   const countMismatch = clone(sealed);
   countMismatch.independentModelSample = sealed.rows.length - 1;
   assertThrowsCode(
-    () =>
-      splitIndependentJoinV1(countMismatch, {
-        sourceJoinArtifactHash: joinHash,
-      }),
+    () => splitIndependentJoinV1(countMismatch, sealedJoinHashOpts()),
     "JOIN_SAMPLE_COUNT_MISMATCH",
     "rows.length != independentModelSample",
   );
@@ -232,7 +289,7 @@ function main(): void {
   dup.rows.push(clone(dup.rows[0]!));
   dup.independentModelSample = dup.rows.length;
   assertThrowsCode(
-    () => splitIndependentJoinV1(dup, { sourceJoinArtifactHash: joinHash }),
+    () => splitIndependentJoinV1(dup, sealedJoinHashOpts()),
     "DUPLICATE_GAMEPK",
     "duplicate gamePk",
   );
@@ -240,8 +297,7 @@ function main(): void {
   const missingPk = clone(fixtureJoin(5));
   (missingPk.rows[0]!.identity as { gamePk: number | null }).gamePk = null;
   assertThrowsCode(
-    () =>
-      splitIndependentJoinV1(missingPk, { sourceJoinArtifactHash: joinHash }),
+    () => splitIndependentJoinV1(missingPk, sealedJoinHashOpts()),
     "MISSING_GAMEPK",
     "missing gamePk",
   );
@@ -342,16 +398,17 @@ function main(): void {
   if (existsSync(splitPath) && existsSync(auditPath)) {
     const persisted = JSON.parse(readFileSync(splitPath, "utf8"));
     const persistedAudit = JSON.parse(readFileSync(auditPath, "utf8"));
-    const replay = splitIndependentJoinV1(sealed, {
-      sourceJoinArtifactHash: JOIN_BEFORE,
-      expectedSourceJoinHash: JOIN_BEFORE,
-      generatedAt: persistedAudit.generatedAt,
-    });
+    const replay = splitIndependentJoinV1(
+      sealed,
+      sealedJoinHashOpts({ generatedAt: persistedAudit.generatedAt }),
+    );
     assert.deepEqual(replay.artifact.boundaries, persisted.boundaries);
     assert.deepEqual(replay.artifact.trainGamePks, persisted.trainGamePks);
     assert.deepEqual(replay.artifact.validationGamePks, persisted.validationGamePks);
     assert.deepEqual(replay.artifact.holdoutGamePks, persisted.holdoutGamePks);
     assert.equal(replay.artifact.splitManifestHash, persisted.splitManifestHash);
+    assert.equal(persisted.splitManifestHash, SPLIT_MANIFEST_BEFORE);
+    assert.equal(full.artifact.splitManifestHash, SPLIT_MANIFEST_BEFORE);
     assert.equal(persisted.datasetReady, true);
     assert.equal(persisted.splitReady, true);
     assert.equal(persisted.independentModelSample, 2429);

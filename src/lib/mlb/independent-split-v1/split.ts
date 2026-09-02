@@ -31,7 +31,15 @@ export const MLB_INDEPENDENT_SPLIT_TARGET_TRAIN_RATIO = 0.6;
 export const MLB_INDEPENDENT_SPLIT_TARGET_VALIDATION_RATIO = 0.2;
 export const MLB_INDEPENDENT_SPLIT_TARGET_HOLDOUT_RATIO = 0.2;
 
+/** Official sealed 2024 Feature↔Label join artifact SHA-256. Production pin only. */
+export const MLB_INDEPENDENT_2024_SEALED_JOIN_SHA256_V1 =
+  "6f9e0875d453fe52de8d56fef0a25427270989123df568020c8e1d0fdd417127";
+
 const SHA256_HEX = /^[a-f0-9]{64}$/;
+
+export function sha256JoinBytesV1(joinBuf: Buffer): string {
+  return createHash("sha256").update(joinBuf).digest("hex");
+}
 
 export function independentSplitArtifactRel(): string {
   return "data/research/mlb/independent-model-v1/split/2024-chronological-split-v1.json";
@@ -579,11 +587,41 @@ export function verifyIndependentJoinArtifactForSplitV1(
   }
 }
 
+export function assertSealedJoinArtifactBytesV1(joinBuf: Buffer): string {
+  const actualJoinHash = sha256JoinBytesV1(joinBuf);
+  if (actualJoinHash !== MLB_INDEPENDENT_2024_SEALED_JOIN_SHA256_V1) {
+    throw new IndependentSplitError(
+      "SEALED_JOIN_ARTIFACT_HASH_MISMATCH",
+      `actualJoinHash=${actualJoinHash} sealed=${MLB_INDEPENDENT_2024_SEALED_JOIN_SHA256_V1}`,
+    );
+  }
+  return actualJoinHash;
+}
+
+export function splitSealedIndependentJoinBytesV1(
+  joinBuf: Buffer,
+  options?: {
+    sourceJoinPath?: string;
+    generatedAt?: string;
+  },
+): IndependentSplitResultV1 {
+  const actualJoinHash = assertSealedJoinArtifactBytesV1(joinBuf);
+  const join = JSON.parse(joinBuf.toString("utf8")) as IndependentJoinArtifactV1;
+  return splitIndependentJoinV1(join, {
+    sourceJoinArtifactHash: actualJoinHash,
+    expectedSourceJoinHash: MLB_INDEPENDENT_2024_SEALED_JOIN_SHA256_V1,
+    sourceJoinPath:
+      options?.sourceJoinPath ??
+      "data/research/mlb/independent-model-v1/join/2024-feature-label-join-v1.json",
+    generatedAt: options?.generatedAt,
+  });
+}
+
 export function splitIndependentJoinV1(
   join: IndependentJoinArtifactV1,
   options: {
     sourceJoinArtifactHash: string;
-    expectedSourceJoinHash?: string;
+    expectedSourceJoinHash: string;
     sourceJoinPath?: string;
     generatedAt?: string;
     verifyJoinIntegrity?: boolean;
@@ -599,9 +637,15 @@ export function splitIndependentJoinV1(
     );
   }
   if (
-    options.expectedSourceJoinHash != null &&
-    options.expectedSourceJoinHash !== options.sourceJoinArtifactHash
+    typeof options.expectedSourceJoinHash !== "string" ||
+    !SHA256_HEX.test(options.expectedSourceJoinHash)
   ) {
+    throw new IndependentSplitError(
+      "EXPECTED_SOURCE_JOIN_HASH_REQUIRED",
+      "expectedSourceJoinHash is required 64 lowercase hex",
+    );
+  }
+  if (options.expectedSourceJoinHash !== options.sourceJoinArtifactHash) {
     throw new IndependentSplitError(
       "TAMPERED_SOURCE_JOIN_HASH",
       "expectedSourceJoinHash does not match sourceJoinArtifactHash",
