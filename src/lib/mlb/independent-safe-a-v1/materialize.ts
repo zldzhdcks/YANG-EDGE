@@ -13,6 +13,7 @@ import {
   MLB_INDEPENDENT_FEATURE_BUILDER_VERSION,
   MLB_INDEPENDENT_FEATURE_ROW_SCHEMA_V1,
   MLB_INDEPENDENT_FEATURE_SCHEMA_V1,
+  isProhibitedFeatureKey,
   previousOfficialDate,
   validateIndependentFeatureArtifactV1,
   validateIndependentFeatureRowV1,
@@ -84,10 +85,11 @@ export type SafeAMaterializationAuditV1 = {
     finalRollingStateMatchesSource: boolean;
   };
   leakageChecks: {
-    sameDayResultUsed: false;
-    targetResultUsed: false;
-    marketFieldsPresent: false;
-    crossDateResultAppliedToOriginalDate: false;
+    sameDayResultUsed: boolean;
+    targetResultUsed: boolean;
+    marketFieldsPresent: boolean;
+    crossDateResultAppliedToOriginalDate: boolean;
+    temporalResultApplyViolationCount: number;
   };
   contractChecks: {
     allFeatureRowsValid: boolean;
@@ -427,9 +429,18 @@ export function disposeHistoricalGame(
   return { kind: "FEATURE_TARGET", applyResult: true };
 }
 
-function isSafeCompletedResult(
+export function isSafeCompletedResult(
   game: MlbIndependentSafeAHistoricalGameV1,
 ): boolean {
+  if (
+    game.safeResultApplyDate != null &&
+    game.safeResultApplyDate < game.officialDate
+  ) {
+    throw new SafeAMaterializationError(
+      "RESULT_APPLY_DATE_BEFORE_OFFICIAL_DATE",
+      `gamePk ${game.gamePk} safeResultApplyDate ${game.safeResultApplyDate} is before officialDate ${game.officialDate}`,
+    );
+  }
   if (game.resultProvenanceStatus === "UNPROVEN_COMPLETION") return false;
   if (game.resultProvenanceStatus === "NOT_APPLICABLE") return false;
   if (game.safeResultApplyDate == null) return false;
@@ -469,6 +480,53 @@ function compareResultEvents(
 
 function incrementCount(map: Record<string, number>, key: string): void {
   map[key] = (map[key] ?? 0) + 1;
+}
+
+function walkKeys(value: unknown, visit: (key: string) => void): void {
+  if (Array.isArray(value)) {
+    value.forEach((item) => walkKeys(item, visit));
+    return;
+  }
+  if (typeof value !== "object" || value === null) return;
+  for (const [key, child] of Object.entries(value as Record<string, unknown>)) {
+    visit(key);
+    walkKeys(child, visit);
+  }
+}
+
+function artifactHasMarketFields(
+  artifact: MlbIndependentFeatureArtifactV1,
+): boolean {
+  let found = false;
+  walkKeys(artifact, (key) => {
+    if (isProhibitedFeatureKey(key)) found = true;
+    const token = key.toLowerCase();
+    if (
+      token === "market" ||
+      token === "odds" ||
+      token.includes("implied") ||
+      token.includes("closingline") ||
+      token === "favorite" ||
+      token === "edge"
+    ) {
+      found = true;
+    }
+  });
+  return found;
+}
+
+function countSourceResultsAppliedBefore(
+  sourceGames: MlbIndependentSafeAHistoricalGameV1[],
+  teamId: number,
+  beforeDate: string,
+): number {
+  return sourceGames.filter((g) => {
+    if (g.safeResultApplyDate == null || g.safeResultApplyDate >= beforeDate) {
+      return false;
+    }
+    if (g.homeTeamId !== teamId && g.awayTeamId !== teamId) return false;
+    return isSafeCompletedResult(g);
+  }).length;
 }
 
 function emptyStatusDistribution(): Record<SafeASourceStatusClass, number> {
@@ -514,6 +572,12 @@ export function materializeIndependentSafeAFeaturesV1(
     targetList.push(game);
     targetsByDate.set(game.officialDate, targetList);
     if (isSafeCompletedResult(game) && game.safeResultApplyDate) {
+      if (game.safeResultApplyDate < game.officialDate) {
+        throw new SafeAMaterializationError(
+          "RESULT_APPLY_DATE_BEFORE_OFFICIAL_DATE",
+          `gamePk ${game.gamePk} apply date before officialDate`,
+        );
+      }
       dateSet.add(game.safeResultApplyDate);
       const applyList = applyByDate.get(game.safeResultApplyDate) ?? [];
       applyList.push(game);
@@ -558,6 +622,12 @@ export function materializeIndependentSafeAFeaturesV1(
       doubleHeaderGameCount += 1;
     }
   }
+
+  const appliedResults: MlbIndependentSafeAHistoricalGameV1[] = [];
+  let sameDayResultUsed = false;
+  let targetResultUsed = false;
+  let crossDateResultAppliedToOriginalDate = false;
+  let temporalResultApplyViolationCount = 0;
 
   for (const officialDate of dates) {
     const dayGames = targetsByDate.get(officialDate) ?? [];
@@ -607,6 +677,29 @@ export function materializeIndependentSafeAFeaturesV1(
         continue;
       }
 
+      if (appliedResults.some((g) => g.safeResultApplyDate === officialDate)) {
+        sameDayResultUsed = true;
+      }
+      if (appliedResults.some((g) => g.gamePk === game.gamePk)) {
+        targetResultUsed = true;
+      }
+      const homeExpectedApplied = countSourceResultsAppliedBefore(
+        games,
+        game.homeTeamId,
+        officialDate,
+      );
+      const awayExpectedApplied = countSourceResultsAppliedBefore(
+        games,
+        game.awayTeamId,
+        officialDate,
+      );
+      if (home.games !== homeExpectedApplied) {
+        temporalResultApplyViolationCount += 1;
+      }
+      if (away.games !== awayExpectedApplied) {
+        temporalResultApplyViolationCount += 1;
+      }
+
       const sealed = sealFeatureRow({
         schemaVersion: MLB_INDEPENDENT_FEATURE_ROW_SCHEMA_V1,
         identity: {
@@ -641,7 +734,29 @@ export function materializeIndependentSafeAFeaturesV1(
       compareResultEvents,
     );
     for (const game of pendingApply) {
+      if (
+        game.safeResultApplyDate == null ||
+        game.safeResultApplyDate !== officialDate
+      ) {
+        throw new SafeAMaterializationError(
+          "RESULT_APPLY_DATE_MISALIGNED",
+          `gamePk ${game.gamePk} apply date ${String(game.safeResultApplyDate)} != batch ${officialDate}`,
+        );
+      }
+      if (game.safeResultApplyDate < game.officialDate) {
+        throw new SafeAMaterializationError(
+          "RESULT_APPLY_DATE_BEFORE_OFFICIAL_DATE",
+          `gamePk ${game.gamePk} apply date before officialDate`,
+        );
+      }
+      if (
+        game.resultProvenanceStatus === "CROSS_DATE_RESUME_RESOLVED" &&
+        game.officialDate === officialDate
+      ) {
+        crossDateResultAppliedToOriginalDate = true;
+      }
       applyCompletedGame(teams, h2h, game);
+      appliedResults.push(game);
     }
     for (const teamId of pendingTaint) {
       teamState(teams, teamId).tainted = true;
@@ -754,10 +869,11 @@ export function materializeIndependentSafeAFeaturesV1(
       finalRollingStateMatchesSource,
     },
     leakageChecks: {
-      sameDayResultUsed: false,
-      targetResultUsed: false,
-      marketFieldsPresent: false,
-      crossDateResultAppliedToOriginalDate: false,
+      sameDayResultUsed,
+      targetResultUsed,
+      marketFieldsPresent: artifactHasMarketFields(artifact),
+      crossDateResultAppliedToOriginalDate,
+      temporalResultApplyViolationCount,
     },
     contractChecks: {
       allFeatureRowsValid: true,

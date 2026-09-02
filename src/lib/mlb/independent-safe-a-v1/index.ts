@@ -27,6 +27,7 @@ export {
   parseMlbScheduleBodyToHistoricalGames,
   validateHistoricalSourceArtifact,
   validateHistoricalSourceIdentity,
+  validateHistoricalSourceResultProvenance,
 } from "./historical-source";
 
 export type {
@@ -41,6 +42,7 @@ export {
   disposeHistoricalGame,
   findFeatureRow,
   hashIndependentFeatureRowV1,
+  isSafeCompletedResult,
   materializeIndependentSafeAFeaturesV1,
 } from "./materialize";
 

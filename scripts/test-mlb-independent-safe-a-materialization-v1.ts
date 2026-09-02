@@ -21,7 +21,9 @@ import {
   independentSafeAAuditArtifactPath,
   independentSafeAFeatureArtifactPath,
   independentSafeAHistoricalSourcePath,
+  isSafeCompletedResult,
   materializeIndependentSafeAFeaturesV1,
+  validateHistoricalSourceArtifact,
   type MlbIndependentSafeAHistoricalGameV1,
   type MlbIndependentSafeAHistoricalSourceV1,
 } from "../src/lib/mlb/independent-safe-a-v1";
@@ -802,6 +804,219 @@ function main(): void {
     "conflicting FINAL scores",
   );
 
+  const standardOk = sourceFrom([
+    game({
+      gamePk: 9200,
+      officialDate: "2024-06-10",
+      homeTeamId: 101,
+      awayTeamId: 102,
+      homeScore: 3,
+      awayScore: 1,
+    }),
+  ]);
+  validateHistoricalSourceArtifact(standardOk);
+  assert.equal(standardOk.games[0]!.safeResultApplyDate, "2024-06-10");
+  assert.equal(standardOk.games[0]!.resultProvenanceStatus, "STANDARD");
+  materializeIndependentSafeAFeaturesV1(standardOk);
+
+  const earlierApply = patchGame(standardOk, 9200, {
+    safeResultApplyDate: "2024-06-09",
+  });
+  assertThrowsCode(
+    () => validateHistoricalSourceArtifact(earlierApply),
+    "RESULT_APPLY_DATE_BEFORE_OFFICIAL_DATE",
+    "STANDARD earlier apply date",
+  );
+  assertThrowsCode(
+    () => materializeIndependentSafeAFeaturesV1(earlierApply),
+    "RESULT_APPLY_DATE_BEFORE_OFFICIAL_DATE",
+    "materializer blocks STANDARD earlier apply",
+  );
+  assertThrowsCode(
+    () => isSafeCompletedResult(earlierApply.games[0]!),
+    "RESULT_APPLY_DATE_BEFORE_OFFICIAL_DATE",
+    "isSafeCompletedResult defense-in-depth",
+  );
+
+  assertThrowsCode(
+    () =>
+      validateHistoricalSourceArtifact(
+        patchGame(standardOk, 9200, { safeResultApplyDate: "2024-06-11" }),
+      ),
+    "STANDARD_APPLY_DATE_MISMATCH",
+    "STANDARD future apply date",
+  );
+  assertThrowsCode(
+    () =>
+      validateHistoricalSourceArtifact(
+        patchGame(standardOk, 9200, { safeResultApplyDate: null }),
+      ),
+    "STANDARD_NULL_APPLY_DATE",
+    "STANDARD FINAL null apply date",
+  );
+
+  const crossOk = sourceFrom([
+    game({
+      gamePk: 9300,
+      officialDate: "2024-06-01",
+      homeTeamId: 111,
+      awayTeamId: 141,
+      homeScore: 1,
+      awayScore: 4,
+      commenceTimeUtc: "2024-08-01T18:05:00.000Z",
+      resumeDate: "2024-08-01T18:05:00.000Z",
+      resumeGameDate: "2024-08-01",
+      resumedFrom: "2024-06-01T23:10:00.000Z",
+      resumedFromDate: "2024-06-01",
+      safeResultApplyDate: "2024-08-01",
+      resultProvenanceStatus: "CROSS_DATE_RESUME_RESOLVED",
+    }),
+  ]);
+  validateHistoricalSourceArtifact(crossOk);
+  assert.equal(crossOk.games[0]!.resultProvenanceStatus, "CROSS_DATE_RESUME_RESOLVED");
+  assert.equal(crossOk.games[0]!.safeResultApplyDate, "2024-08-01");
+
+  assertThrowsCode(
+    () =>
+      validateHistoricalSourceArtifact(
+        patchGame(crossOk, 9300, { safeResultApplyDate: "2024-08-02" }),
+      ),
+    "CROSS_DATE_RESUME_APPLY_DATE_MISMATCH",
+    "cross-date apply != resumeGameDate",
+  );
+  assertThrowsCode(
+    () =>
+      validateHistoricalSourceArtifact(
+        patchGame(crossOk, 9300, { safeResultApplyDate: "2024-06-01" }),
+      ),
+    "CROSS_DATE_RESUME_APPLY_DATE_INVALID",
+    "cross-date apply == officialDate",
+  );
+  assertThrowsCode(
+    () =>
+      validateHistoricalSourceArtifact(
+        patchGame(crossOk, 9300, { safeResultApplyDate: "2024-05-31" }),
+      ),
+    "RESULT_APPLY_DATE_BEFORE_OFFICIAL_DATE",
+    "cross-date apply before officialDate",
+  );
+  assertThrowsCode(
+    () =>
+      validateHistoricalSourceArtifact(
+        patchGame(crossOk, 9300, { resumedFromDate: "2024-05-01" }),
+      ),
+    "RESUME_PROVENANCE_CONFLICT",
+    "resumedFromDate != officialDate",
+  );
+  const missingResume = cloneSource(crossOk);
+  delete missingResume.games[0]!.resumeGameDate;
+  assertThrowsCode(
+    () => validateHistoricalSourceArtifact(missingResume),
+    "CROSS_DATE_RESUME_PROVENANCE_INCOMPLETE",
+    "missing resumeGameDate",
+  );
+
+  const unprovenApply = sourceFrom([
+    game({
+      gamePk: 9400,
+      officialDate: "2024-04-03",
+      homeTeamId: 301,
+      awayTeamId: 302,
+      homeScore: 7,
+      awayScore: 2,
+      resumedFrom: "2024-04-02T17:00:00.000Z",
+      resumedFromDate: "2024-04-02",
+    }),
+  ]);
+  assert.equal(unprovenApply.games[0]!.resultProvenanceStatus, "UNPROVEN_COMPLETION");
+  assertThrowsCode(
+    () =>
+      validateHistoricalSourceArtifact(
+        patchGame(unprovenApply, 9400, { safeResultApplyDate: "2024-04-03" }),
+      ),
+    "UNPROVEN_APPLY_DATE_PRESENT",
+    "UNPROVEN_COMPLETION + apply date",
+  );
+  assertThrowsCode(
+    () =>
+      validateHistoricalSourceArtifact(
+        patchGame(standardOk, 9200, {
+          resultProvenanceStatus: "UNPROVEN_COMPLETION",
+        }),
+      ),
+    "UNPROVEN_APPLY_DATE_PRESENT",
+    "UNPROVEN_COMPLETION on completed FINAL with apply date",
+  );
+  assertThrowsCode(
+    () =>
+      validateHistoricalSourceArtifact(
+        patchGame(standardOk, 9200, {
+          resultProvenanceStatus: "NOT_APPLICABLE",
+        }),
+      ),
+    "NOT_APPLICABLE_APPLY_DATE_PRESENT",
+    "NOT_APPLICABLE + apply date",
+  );
+
+  const cancelledSrc = sourceFrom([
+    game({
+      gamePk: 9401,
+      officialDate: "2024-09-29",
+      homeTeamId: 114,
+      awayTeamId: 117,
+      homeScore: null,
+      awayScore: null,
+      abstractGameState: "Final",
+      detailedState: "Cancelled",
+      codedGameState: "C",
+      statusCode: "C",
+    }),
+  ]);
+  assert.equal(cancelledSrc.games[0]!.resultProvenanceStatus, "NOT_APPLICABLE");
+  assertThrowsCode(
+    () =>
+      validateHistoricalSourceArtifact(
+        patchGame(cancelledSrc, 9401, { safeResultApplyDate: "2024-09-29" }),
+      ),
+    "UNSAFE_RESULT_APPLY_ON_NON_FINAL",
+    "CANCELLED + apply date",
+  );
+  assertThrowsCode(
+    () =>
+      validateHistoricalSourceArtifact(
+        patchGame(cancelledSrc, 9401, {
+          resultProvenanceStatus: "NOT_APPLICABLE",
+          safeResultApplyDate: "2024-09-29",
+        }),
+      ),
+    "UNSAFE_RESULT_APPLY_ON_NON_FINAL",
+    "NOT_APPLICABLE + apply date on cancelled",
+  );
+
+  const postponedSrc = sourceFrom([
+    game({
+      gamePk: 9402,
+      officialDate: "2024-04-01",
+      homeTeamId: 101,
+      awayTeamId: 102,
+      homeScore: null,
+      awayScore: null,
+      abstractGameState: "Final",
+      detailedState: "Postponed",
+      codedGameState: "N",
+      statusCode: "N",
+    }),
+  ]);
+  assert.equal(postponedSrc.games[0]!.resultProvenanceStatus, "NOT_APPLICABLE");
+  assertThrowsCode(
+    () =>
+      validateHistoricalSourceArtifact(
+        patchGame(postponedSrc, 9402, { safeResultApplyDate: "2024-04-01" }),
+      ),
+    "UNSAFE_RESULT_APPLY_ON_NON_FINAL",
+    "POSTPONED + apply date",
+  );
+
   const makeup = sourceFrom([
     game({
       gamePk: 8001,
@@ -892,6 +1107,7 @@ function main(): void {
   assert.equal(audit.leakageChecks.targetResultUsed, false);
   assert.equal(audit.leakageChecks.sameDayResultUsed, false);
   assert.equal(audit.leakageChecks.crossDateResultAppliedToOriginalDate, false);
+  assert.equal(audit.leakageChecks.temporalResultApplyViolationCount, 0);
   assert.equal(audit.unusualProvenance.finalRollingStateMatchesSource, true);
   assert.equal(audit.contractChecks.allFeatureRowsValid, true);
   assert.equal(audit.contractChecks.featureArtifactValid, true);
@@ -1197,6 +1413,12 @@ function main(): void {
     assert.equal(realAudit.leakageChecks.sameDayResultUsed, false);
     assert.equal(realAudit.leakageChecks.targetResultUsed, false);
     assert.equal(realAudit.leakageChecks.marketFieldsPresent, false);
+    assert.equal(realAudit.leakageChecks.temporalResultApplyViolationCount, 0);
+    assert.equal(replay.audit.leakageChecks.temporalResultApplyViolationCount, 0);
+    assert.equal(replay.audit.leakageChecks.sameDayResultUsed, false);
+    assert.equal(replay.audit.leakageChecks.targetResultUsed, false);
+    assert.equal(replay.audit.leakageChecks.crossDateResultAppliedToOriginalDate, false);
+    assert.equal(replay.audit.leakageChecks.marketFieldsPresent, false);
     assert.equal(realAudit.unusualProvenance.finalRollingStateMatchesSource, true);
     const resumeByPk = new Map(
       realAudit.unusualProvenance.resumeCases.map(
@@ -1232,11 +1454,16 @@ function main(): void {
     }
     assert.equal(realTemporal, 0, "TEMPORAL_RESULT_APPLY_VIOLATIONS real 2024");
     console.log(`TEMPORAL_RESULT_APPLY_VIOLATIONS=${realTemporal}`);
+    console.log(
+      `AUDIT_TEMPORAL_RESULT_APPLY_VIOLATION_COUNT=${realAudit.leakageChecks.temporalResultApplyViolationCount}`,
+    );
     console.log(`REAL_2024_FEATURE_ROWS=${realFeatures.rows.length}`);
     console.log(`SOURCE_MINUS_FEATURE=${sourceMinusFeature.join(",")}`);
     console.log(
       `FINAL_ROLLING_STATE_MATCHES_SOURCE=${realAudit.unusualProvenance.finalRollingStateMatchesSource ? "YES" : "NO"}`,
     );
+    console.log(`MARKET_FIELDS_PRESENT=${realAudit.leakageChecks.marketFieldsPresent}`);
+    console.log(`RESULT_FIELDS_PRESENT_IN_FEATURES=false`);
   }
 
   console.log("test:mlb-independent-safe-a-materialization-v1 PASS");

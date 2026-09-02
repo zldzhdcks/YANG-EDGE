@@ -187,10 +187,207 @@ export function compareHistoricalGames(
   return a.gamePk - b.gamePk;
 }
 
-function officialDateToken(value: string | undefined): string | null {
+export const SAFE_A_RESULT_PROVENANCE_STATUSES_V1 = [
+  "STANDARD",
+  "CROSS_DATE_RESUME_RESOLVED",
+  "UNPROVEN_COMPLETION",
+  "NOT_APPLICABLE",
+] as const;
+
+function officialDateToken(value: string | undefined | null): string | null {
   if (!value) return null;
   const day = value.slice(0, 10);
   return /^\d{4}-\d{2}-\d{2}$/.test(day) ? day : null;
+}
+
+function isApplyableCompletedFinal(
+  game: MlbIndependentSafeAHistoricalGameV1,
+): boolean {
+  if (classifySourceStatus(game) !== "FINAL_STANDARD") return false;
+  if (
+    !isNonNegativeIntScore(game.homeScore) ||
+    !isNonNegativeIntScore(game.awayScore)
+  ) {
+    return false;
+  }
+  return game.homeScore !== game.awayScore;
+}
+
+function throwProvenance(
+  code: string,
+  gamePk: number,
+  detail: string,
+): never {
+  throw new SafeAHistoricalSourceError(
+    code,
+    `gamePk ${gamePk} ${detail}`,
+  );
+}
+
+/**
+ * Persisted source-row temporal integrity. Does not reconstruct snapshot
+ * groups. Blocks unsafe apply dates even if a collector never emitted them.
+ */
+export function validateHistoricalSourceResultProvenance(
+  games: MlbIndependentSafeAHistoricalGameV1[],
+): void {
+  for (const game of games) {
+    const status = game.resultProvenanceStatus;
+    if (
+      status !== "STANDARD" &&
+      status !== "CROSS_DATE_RESUME_RESOLVED" &&
+      status !== "UNPROVEN_COMPLETION" &&
+      status !== "NOT_APPLICABLE"
+    ) {
+      throwProvenance(
+        "INVALID_RESULT_PROVENANCE_STATUS",
+        game.gamePk,
+        `resultProvenanceStatus invalid: ${String(status)}`,
+      );
+    }
+
+    const apply = game.safeResultApplyDate;
+    if (apply != null) {
+      if (typeof apply !== "string" || !isRealCalendarDate(apply)) {
+        throwProvenance(
+          "MALFORMED_SAFE_RESULT_APPLY_DATE",
+          game.gamePk,
+          "safeResultApplyDate is not a real YYYY-MM-DD",
+        );
+      }
+      if (apply < game.officialDate) {
+        throwProvenance(
+          "RESULT_APPLY_DATE_BEFORE_OFFICIAL_DATE",
+          game.gamePk,
+          `safeResultApplyDate ${apply} is before officialDate ${game.officialDate}`,
+        );
+      }
+    }
+
+    const classStatus = classifySourceStatus(game);
+    if (
+      apply != null &&
+      (classStatus === "CANCELLED" ||
+        classStatus === "POSTPONED" ||
+        classStatus === "SUSPENDED" ||
+        classStatus === "UNKNOWN" ||
+        classStatus === "OTHER")
+    ) {
+      throwProvenance(
+        "UNSAFE_RESULT_APPLY_ON_NON_FINAL",
+        game.gamePk,
+        `${classStatus} row must not have safeResultApplyDate`,
+      );
+    }
+
+    if (status === "STANDARD") {
+      if (!isApplyableCompletedFinal(game)) {
+        throwProvenance(
+          "APPLYABLE_RESULT_NOT_FINAL",
+          game.gamePk,
+          "STANDARD requires FINAL_STANDARD with valid non-tied scores",
+        );
+      }
+      if (apply == null) {
+        throwProvenance(
+          "STANDARD_NULL_APPLY_DATE",
+          game.gamePk,
+          "STANDARD completed FINAL must have safeResultApplyDate",
+        );
+      }
+      if (apply !== game.officialDate) {
+        throwProvenance(
+          "STANDARD_APPLY_DATE_MISMATCH",
+          game.gamePk,
+          `STANDARD safeResultApplyDate ${apply} must equal officialDate ${game.officialDate}`,
+        );
+      }
+      continue;
+    }
+
+    if (status === "CROSS_DATE_RESUME_RESOLVED") {
+      if (!isApplyableCompletedFinal(game)) {
+        throwProvenance(
+          "APPLYABLE_RESULT_NOT_FINAL",
+          game.gamePk,
+          "CROSS_DATE_RESUME_RESOLVED requires FINAL_STANDARD with valid non-tied scores",
+        );
+      }
+      if (apply == null) {
+        throwProvenance(
+          "CROSS_DATE_RESUME_PROVENANCE_INCOMPLETE",
+          game.gamePk,
+          "CROSS_DATE_RESUME_RESOLVED requires safeResultApplyDate",
+        );
+      }
+      if (apply <= game.officialDate) {
+        throwProvenance(
+          "CROSS_DATE_RESUME_APPLY_DATE_INVALID",
+          game.gamePk,
+          `CROSS_DATE_RESUME_RESOLVED safeResultApplyDate ${apply} must be after officialDate ${game.officialDate}`,
+        );
+      }
+      const resumeGameDate = officialDateToken(game.resumeGameDate);
+      if (!game.resumeGameDate || resumeGameDate == null) {
+        throwProvenance(
+          "CROSS_DATE_RESUME_PROVENANCE_INCOMPLETE",
+          game.gamePk,
+          "missing resumeGameDate",
+        );
+      }
+      if (resumeGameDate !== apply) {
+        throwProvenance(
+          "CROSS_DATE_RESUME_APPLY_DATE_MISMATCH",
+          game.gamePk,
+          `safeResultApplyDate ${apply} != resumeGameDate ${resumeGameDate}`,
+        );
+      }
+      const resumedFromDate = officialDateToken(game.resumedFromDate);
+      if (!game.resumedFromDate || resumedFromDate == null) {
+        throwProvenance(
+          "CROSS_DATE_RESUME_PROVENANCE_INCOMPLETE",
+          game.gamePk,
+          "missing resumedFromDate",
+        );
+      }
+      if (resumedFromDate !== game.officialDate) {
+        throwProvenance(
+          "RESUME_PROVENANCE_CONFLICT",
+          game.gamePk,
+          `resumedFromDate ${resumedFromDate} != officialDate ${game.officialDate}`,
+        );
+      }
+      const resumeDay = officialDateToken(game.resumeDate);
+      const commenceDay = officialDateToken(game.commenceTimeUtc);
+      if (resumeDay !== apply && commenceDay !== apply) {
+        throwProvenance(
+          "CROSS_DATE_RESUME_TIMING_EVIDENCE_MISSING",
+          game.gamePk,
+          "resumeDate/commenceTimeUtc do not evidence safeResultApplyDate",
+        );
+      }
+      continue;
+    }
+
+    if (status === "UNPROVEN_COMPLETION") {
+      if (apply != null) {
+        throwProvenance(
+          "UNPROVEN_APPLY_DATE_PRESENT",
+          game.gamePk,
+          "UNPROVEN_COMPLETION must have null safeResultApplyDate",
+        );
+      }
+      continue;
+    }
+
+    if (apply != null) {
+      throwProvenance(
+        "NOT_APPLICABLE_APPLY_DATE_PRESENT",
+        game.gamePk,
+        "NOT_APPLICABLE must have null safeResultApplyDate",
+      );
+    }
+  }
 }
 
 export function hasResumeProvenance(
@@ -515,6 +712,14 @@ function resolveResultProvenance(
     };
   }
 
+  if (!isApplyableCompletedFinal(merged)) {
+    return {
+      ...merged,
+      safeResultApplyDate: null,
+      resultProvenanceStatus: "NOT_APPLICABLE",
+    };
+  }
+
   const resumeGameDate = officialDateToken(merged.resumeGameDate);
   const hasResumeEvidence = Boolean(
     merged.resumeDate ||
@@ -789,6 +994,7 @@ export function buildHistoricalSourceArtifact(input: {
   const normalized = normalizeHistoricalSourceGames(input.games);
   const collapsed = collapseSameGamePkSnapshots(normalized);
   validateHistoricalSourceIdentity(collapsed.games);
+  validateHistoricalSourceResultProvenance(collapsed.games);
   return {
     schemaVersion: MLB_INDEPENDENT_SAFE_A_SOURCE_SCHEMA_V1,
     source: MLB_INDEPENDENT_SAFE_A_SOURCE_ORIGIN,
@@ -852,6 +1058,9 @@ export function validateHistoricalSourceArtifact(
     );
   }
   validateHistoricalSourceIdentity(
+    rec.games as MlbIndependentSafeAHistoricalGameV1[],
+  );
+  validateHistoricalSourceResultProvenance(
     rec.games as MlbIndependentSafeAHistoricalGameV1[],
   );
 }
