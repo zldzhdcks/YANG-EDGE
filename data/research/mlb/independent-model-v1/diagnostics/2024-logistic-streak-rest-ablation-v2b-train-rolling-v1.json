@@ -1,0 +1,200 @@
+{
+  "schemaVersion": "mlb-independent-logistic-streak-rest-ablation-v2b-train-rolling-v1",
+  "builderVersion": "mlb-independent-logistic-v2b",
+  "researchOnly": true,
+  "modelCandidate": false,
+  "holdoutEvaluated": false,
+  "TRAIN_INTERNAL_ROLLING_COMPLETE": true,
+  "V2B_SPEC_FROZEN": true,
+  "frozenFeatureNames": [
+    "home.winRateBefore",
+    "home.last5WinsBefore",
+    "home.last5LossesBefore",
+    "home.last5WinRateBefore",
+    "home.runsScoredAverageBefore",
+    "home.runsAllowedAverageBefore",
+    "home.last5RunsScoredAverageBefore",
+    "home.last5RunsAllowedAverageBefore",
+    "home.homeWinRateBefore",
+    "home.awayWinRateBefore",
+    "away.winRateBefore",
+    "away.last5WinsBefore",
+    "away.last5LossesBefore",
+    "away.last5WinRateBefore",
+    "away.runsScoredAverageBefore",
+    "away.runsAllowedAverageBefore",
+    "away.last5RunsScoredAverageBefore",
+    "away.last5RunsAllowedAverageBefore",
+    "away.homeWinRateBefore",
+    "away.awayWinRateBefore",
+    "headToHeadGamesBefore",
+    "headToHeadHomeWinsBefore",
+    "headToHeadAwayWinsBefore",
+    "home.winRateBefore.missing",
+    "home.last5WinsBefore.missing",
+    "home.last5LossesBefore.missing",
+    "home.last5WinRateBefore.missing",
+    "home.runsScoredAverageBefore.missing",
+    "home.runsAllowedAverageBefore.missing",
+    "home.last5RunsScoredAverageBefore.missing",
+    "home.last5RunsAllowedAverageBefore.missing",
+    "home.homeWinRateBefore.missing",
+    "home.awayWinRateBefore.missing",
+    "home.restDaysBefore.missing",
+    "away.winRateBefore.missing",
+    "away.last5WinsBefore.missing",
+    "away.last5LossesBefore.missing",
+    "away.last5WinRateBefore.missing",
+    "away.runsScoredAverageBefore.missing",
+    "away.runsAllowedAverageBefore.missing",
+    "away.last5RunsScoredAverageBefore.missing",
+    "away.last5RunsAllowedAverageBefore.missing",
+    "away.homeWinRateBefore.missing",
+    "away.awayWinRateBefore.missing",
+    "away.restDaysBefore.missing"
+  ],
+  "windowCounts": [
+    {
+      "id": "TRAIN_T1",
+      "n": 452
+    },
+    {
+      "id": "TRAIN_T2",
+      "n": 409
+    },
+    {
+      "id": "TRAIN_T3",
+      "n": 401
+    },
+    {
+      "id": "TRAIN_T4",
+      "n": 201
+    }
+  ],
+  "folds": [
+    {
+      "id": "FOLD_1",
+      "fitWindows": [
+        "TRAIN_T1"
+      ],
+      "evalWindow": "TRAIN_T2",
+      "v2a": {
+        "spec": "v2a",
+        "fitN": 452,
+        "evalN": 409,
+        "actualHomeRate": 0.5476772616136919,
+        "rocAuc": 0.5634893822393823,
+        "accuracy": 0.511002444987775,
+        "logLoss": 0.6928298534206229,
+        "brierScore": 0.2495736986570718,
+        "meanProbability": 0.4912941376684997,
+        "meanProbabilityBias": -0.05638312394519218,
+        "predictedHomeClassRate": 0.45965770171149145
+      },
+      "v2b": {
+        "spec": "v2b",
+        "fitN": 452,
+        "evalN": 409,
+        "actualHomeRate": 0.5476772616136919,
+        "rocAuc": 0.5957770270270271,
+        "accuracy": 0.5574572127139364,
+        "logLoss": 0.6855846738367725,
+        "brierScore": 0.2461056788075124,
+        "meanProbability": 0.4882786028071807,
+        "meanProbabilityBias": -0.059398658806511184,
+        "predictedHomeClassRate": 0.4180929095354523
+      },
+      "v2bMinusV2aAuc": 0.03228764478764479,
+      "v2bMinusV2aLogLoss": -0.007245179583850403,
+      "v2bMinusV2aBrier": -0.003468019849559384,
+      "v2bMinusV2aAbsProbabilityBias": 0.0030155348613190025
+    },
+    {
+      "id": "FOLD_2",
+      "fitWindows": [
+        "TRAIN_T1",
+        "TRAIN_T2"
+      ],
+      "evalWindow": "TRAIN_T3",
+      "v2a": {
+        "spec": "v2a",
+        "fitN": 861,
+        "evalN": 401,
+        "actualHomeRate": 0.5685785536159601,
+        "rocAuc": 0.533376432410506,
+        "accuracy": 0.5236907730673317,
+        "logLoss": 0.6943868792412534,
+        "brierScore": 0.25053294820553884,
+        "meanProbability": 0.5142421505698125,
+        "meanProbabilityBias": -0.05433640304614762,
+        "predictedHomeClassRate": 0.5760598503740648
+      },
+      "v2b": {
+        "spec": "v2b",
+        "fitN": 861,
+        "evalN": 401,
+        "actualHomeRate": 0.5685785536159601,
+        "rocAuc": 0.5333510800121691,
+        "accuracy": 0.543640897755611,
+        "logLoss": 0.6916440188702387,
+        "brierScore": 0.24923198300527846,
+        "meanProbability": 0.5152300412328679,
+        "meanProbabilityBias": -0.05334851238309224,
+        "predictedHomeClassRate": 0.5760598503740648
+      },
+      "v2bMinusV2aAuc": -0.000025352398336897508,
+      "v2bMinusV2aLogLoss": -0.002742860371014677,
+      "v2bMinusV2aBrier": -0.0013009652002603789,
+      "v2bMinusV2aAbsProbabilityBias": -0.0009878906630553796
+    },
+    {
+      "id": "FOLD_3",
+      "fitWindows": [
+        "TRAIN_T1",
+        "TRAIN_T2",
+        "TRAIN_T3"
+      ],
+      "evalWindow": "TRAIN_T4",
+      "v2a": {
+        "spec": "v2a",
+        "fitN": 1262,
+        "evalN": 201,
+        "actualHomeRate": 0.5024875621890548,
+        "rocAuc": 0.5067821782178218,
+        "accuracy": 0.4975124378109453,
+        "logLoss": 0.7042298124822916,
+        "brierScore": 0.255334994661731,
+        "meanProbability": 0.5263037836858124,
+        "meanProbabilityBias": 0.02381622149675766,
+        "predictedHomeClassRate": 0.6268656716417911
+      },
+      "v2b": {
+        "spec": "v2b",
+        "fitN": 1262,
+        "evalN": 201,
+        "actualHomeRate": 0.5024875621890548,
+        "rocAuc": 0.5174752475247525,
+        "accuracy": 0.5024875621890548,
+        "logLoss": 0.6993048420476887,
+        "brierScore": 0.25296232036446564,
+        "meanProbability": 0.5370927732900417,
+        "meanProbabilityBias": 0.03460521110098691,
+        "predictedHomeClassRate": 0.7412935323383084
+      },
+      "v2bMinusV2aAuc": 0.010693069306930703,
+      "v2bMinusV2aLogLoss": -0.004924970434602827,
+      "v2bMinusV2aBrier": -0.0023726742972653425,
+      "v2bMinusV2aAbsProbabilityBias": 0.010788989604229249
+    }
+  ],
+  "aggregate": {
+    "meanAucDelta": 0.014318453898746197,
+    "medianAucDelta": 0.010693069306930703,
+    "meanLogLossDelta": -0.004971003463155969,
+    "meanBrierDelta": -0.0023805531156950352,
+    "foldsWithHigherAuc": 2,
+    "foldsWithLowerLogLoss": 3,
+    "foldsWithLowerBrier": 3
+  },
+  "note": "Rolling folds are entirely inside official TRAIN. They do not replace the sealed full-TRAIN v2-A model. Fold eval did not change the pre-registered v2-B spec."
+}
