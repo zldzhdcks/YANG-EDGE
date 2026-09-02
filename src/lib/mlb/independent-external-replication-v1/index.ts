@@ -1,4 +1,5 @@
 export {
+  MLB_INDEPENDENT_2025_SEALED_SOURCE_SHA256,
   MLB_INDEPENDENT_EXTERNAL_REPLICATION_GAME_TYPE_V1,
   MLB_INDEPENDENT_EXTERNAL_REPLICATION_SEASON_2025,
   MLB_INDEPENDENT_EXTERNAL_REPLICATION_SOURCE_ENDPOINT_2025,
@@ -40,3 +41,24 @@ export {
   validateHistoricalSourceIdentity,
   validateHistoricalSourceResultProvenance,
 } from "../independent-safe-a-v1/historical-source";
+
+export {
+  MLB_INDEPENDENT_2025_SAFE_A_STAGE,
+  MLB_INDEPENDENT_2025_SEALED_CROSS_DATE_RESUME_GAME_PKS,
+  SafeAMaterializationError,
+  assertExternalReplication2025SourcePin,
+  findExternalReplicationFeatureRow2025,
+  hashExternalReplicationFeatureArtifact2025,
+  hashIndependentFeatureRowV1,
+  independentExternalReplication2025FeatureAuditPath,
+  independentExternalReplication2025FeatureAuditRel,
+  independentExternalReplication2025FeaturePath,
+  independentExternalReplication2025FeatureRel,
+  materializeExternalReplicationSafeAFeatures2025,
+  verifyFeatureHashes2025,
+} from "./materialize-safe-a-2025";
+
+export type {
+  ExternalReplicationSafeAAudit2025,
+  ExternalReplicationSafeAResult2025,
+} from "./materialize-safe-a-2025";
