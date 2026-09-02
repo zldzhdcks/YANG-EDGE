@@ -86,3 +86,30 @@ export type {
   ExternalReplicationLabelExclusionReason,
   ExternalReplicationLabelResult2025,
 } from "./materialize-labels-2025";
+
+export {
+  MLB_INDEPENDENT_2025_JOIN_BUILDER_VERSION,
+  MLB_INDEPENDENT_2025_JOIN_RESUME_GAME_PKS,
+  MLB_INDEPENDENT_2025_JOIN_ROW_SCHEMA_V1,
+  MLB_INDEPENDENT_2025_JOIN_SCHEMA_V1,
+  MLB_INDEPENDENT_2025_JOIN_STAGE,
+  MLB_INDEPENDENT_2025_SEALED_FEATURE_SHA256,
+  MLB_INDEPENDENT_2025_SEALED_LABEL_SHA256,
+  ExternalReplicationJoinError,
+  assertExternalReplication2025JoinFeaturePin,
+  assertExternalReplication2025JoinLabelPin,
+  hashExternalReplicationJoinArtifact2025,
+  independentExternalReplication2025JoinAuditPath,
+  independentExternalReplication2025JoinAuditRel,
+  independentExternalReplication2025JoinPath,
+  independentExternalReplication2025JoinRel,
+  joinExternalReplicationFeatureLabel2025,
+} from "./join-feature-label-2025";
+
+export type {
+  ExternalReplicationJoinArtifact2025,
+  ExternalReplicationJoinAudit2025,
+  ExternalReplicationJoinResult2025,
+  ExternalReplicationJoinRow2025,
+  ExternalReplicationResumeJoinCase2025,
+} from "./join-feature-label-2025";
