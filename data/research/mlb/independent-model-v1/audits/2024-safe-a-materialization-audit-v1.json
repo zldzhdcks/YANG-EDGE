@@ -1,0 +1,70 @@
+{
+  "generatedAt": "2026-09-02T10:09:00.949Z",
+  "sourceSchemaVersion": "mlb-independent-safe-a-historical-source-v1",
+  "sourcePath": "data/research/mlb/independent-model-v1/historical-source/2024-regular-season-v1.json",
+  "sourceRowCount": 2430,
+  "featureRowCount": 2429,
+  "excludedTargetCount": 1,
+  "firstOfficialDate": "2024-03-20",
+  "lastOfficialDate": "2024-09-30",
+  "uniqueGamePkCount": 2430,
+  "statusDistribution": {
+    "FINAL_STANDARD": 2429,
+    "POSTPONED": 0,
+    "CANCELLED": 1,
+    "SUSPENDED": 0,
+    "UNKNOWN": 0,
+    "OTHER": 0
+  },
+  "exclusionReasonCounts": {
+    "CANCELLED": 1
+  },
+  "unusualProvenance": {
+    "resumeFieldCount": 3,
+    "rescheduleFieldCount": 34,
+    "suspendedStatusCount": 0,
+    "otherFinalCount": 0,
+    "tiedFinalCount": 0,
+    "doubleHeaderGameCount": 59,
+    "taintedTeamCount": 0,
+    "crossDateResumeCount": 3,
+    "resolvedCrossDateResumeCount": 3,
+    "unprovenCrossDateResumeCount": 0,
+    "resultApplyDatePolicy": "SAFE_RESULT_APPLY_DATE_V1",
+    "resumeCases": [
+      {
+        "gamePk": 745180,
+        "officialDate": "2024-05-21",
+        "safeResultApplyDate": "2024-05-22",
+        "provenanceStatus": "CROSS_DATE_RESUME_RESOLVED"
+      },
+      {
+        "gamePk": 746942,
+        "officialDate": "2024-06-26",
+        "safeResultApplyDate": "2024-08-26",
+        "provenanceStatus": "CROSS_DATE_RESUME_RESOLVED"
+      },
+      {
+        "gamePk": 746755,
+        "officialDate": "2024-08-27",
+        "safeResultApplyDate": "2024-08-28",
+        "provenanceStatus": "CROSS_DATE_RESUME_RESOLVED"
+      }
+    ],
+    "finalRollingStateMatchesSource": true
+  },
+  "leakageChecks": {
+    "sameDayResultUsed": false,
+    "targetResultUsed": false,
+    "marketFieldsPresent": false,
+    "crossDateResultAppliedToOriginalDate": false
+  },
+  "contractChecks": {
+    "allFeatureRowsValid": true,
+    "featureArtifactValid": true
+  },
+  "researchState": {
+    "DATASET_READY": false,
+    "INDEPENDENT_MODEL_SAMPLE": 0
+  }
+}
