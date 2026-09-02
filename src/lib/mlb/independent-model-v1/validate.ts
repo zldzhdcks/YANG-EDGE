@@ -109,6 +109,8 @@ function isNonNegInt(value: unknown): value is number {
   return typeof value === "number" && Number.isInteger(value) && value >= 0;
 }
 
+const RATE_ABS_TOLERANCE = 1e-6;
+
 function isRate(value: unknown): boolean {
   return (
     value === null ||
@@ -119,10 +121,19 @@ function isRate(value: unknown): boolean {
   );
 }
 
-function isFiniteNumOrNull(value: unknown): boolean {
+function isNonNegFiniteOrNull(value: unknown): boolean {
   return (
-    value === null || (typeof value === "number" && Number.isFinite(value))
+    value === null ||
+    (typeof value === "number" && Number.isFinite(value) && value >= 0)
   );
+}
+
+function isNullOrNonNegInt(value: unknown): boolean {
+  return value === null || isNonNegInt(value);
+}
+
+function ratesMatch(actual: number, expected: number): boolean {
+  return Math.abs(actual - expected) <= RATE_ABS_TOLERANCE;
 }
 
 function walkProhibitedKeys(
@@ -216,31 +227,93 @@ function validateTeamSide(
   assertAllowlist(raw, TEAM_SIDE_KEY_SET, path, errors);
   walkProhibitedKeys(raw, path, errors);
 
-  if (!isNonNegInt(raw.gamesPlayedBefore)) {
-    errors.push(`${path}.gamesPlayedBefore:INVALID`);
+  const gamesOk = isNonNegInt(raw.gamesPlayedBefore);
+  const winsOk = isNonNegInt(raw.winsBefore);
+  const lossesOk = isNonNegInt(raw.lossesBefore);
+  if (!gamesOk) errors.push(`${path}.gamesPlayedBefore:INVALID`);
+  if (!winsOk) errors.push(`${path}.winsBefore:INVALID`);
+  if (!lossesOk) errors.push(`${path}.lossesBefore:INVALID`);
+
+  if (gamesOk && winsOk && lossesOk) {
+    if (raw.winsBefore + raw.lossesBefore !== raw.gamesPlayedBefore) {
+      errors.push(`${path}:FEATURE_SEASON_RECORD_MISMATCH`);
+    }
   }
-  if (!isNonNegInt(raw.winsBefore)) errors.push(`${path}.winsBefore:INVALID`);
-  if (!isNonNegInt(raw.lossesBefore)) errors.push(`${path}.lossesBefore:INVALID`);
-  if (!isRate(raw.winRateBefore)) errors.push(`${path}.winRateBefore:INVALID`);
-  if (!isFiniteNumOrNull(raw.last5WinsBefore)) {
-    errors.push(`${path}.last5WinsBefore:INVALID`);
+
+  if (!isRate(raw.winRateBefore)) {
+    errors.push(`${path}.winRateBefore:INVALID`);
+  } else if (gamesOk && winsOk) {
+    if (raw.gamesPlayedBefore === 0) {
+      if (raw.winRateBefore !== null) {
+        errors.push(`${path}:FEATURE_WIN_RATE_MUST_BE_NULL`);
+      }
+    } else if (raw.winRateBefore === null) {
+      errors.push(`${path}:FEATURE_WIN_RATE_REQUIRED`);
+    } else if (
+      !ratesMatch(raw.winRateBefore, raw.winsBefore / raw.gamesPlayedBefore)
+    ) {
+      errors.push(`${path}:FEATURE_WIN_RATE_INCONSISTENT`);
+    }
   }
-  if (!isFiniteNumOrNull(raw.last5LossesBefore)) {
-    errors.push(`${path}.last5LossesBefore:INVALID`);
+
+  const last5WinsOk = isNullOrNonNegInt(raw.last5WinsBefore);
+  const last5LossesOk = isNullOrNonNegInt(raw.last5LossesBefore);
+  if (!last5WinsOk) errors.push(`${path}.last5WinsBefore:INVALID`);
+  if (!last5LossesOk) errors.push(`${path}.last5LossesBefore:INVALID`);
+
+  let last5RateChecked = false;
+  if (last5WinsOk && last5LossesOk) {
+    const last5WinsNull = raw.last5WinsBefore === null;
+    const last5LossesNull = raw.last5LossesBefore === null;
+    if (last5WinsNull !== last5LossesNull) {
+      errors.push(`${path}:FEATURE_LAST5_PARTIAL_PAIR`);
+    } else if (last5WinsNull && last5LossesNull) {
+      last5RateChecked = true;
+      if (!isRate(raw.last5WinRateBefore)) {
+        errors.push(`${path}.last5WinRateBefore:INVALID`);
+      } else if (raw.last5WinRateBefore !== null) {
+        errors.push(`${path}:FEATURE_LAST5_RATE_MUST_BE_NULL`);
+      }
+    } else if (gamesOk) {
+      last5RateChecked = true;
+      const last5Total =
+        (raw.last5WinsBefore as number) + (raw.last5LossesBefore as number);
+      const expectedLast5 = Math.min(5, raw.gamesPlayedBefore);
+      if (last5Total !== expectedLast5) {
+        errors.push(`${path}:FEATURE_LAST5_COUNT_SUM`);
+      }
+      if (!isRate(raw.last5WinRateBefore)) {
+        errors.push(`${path}.last5WinRateBefore:INVALID`);
+      } else if (last5Total === 0) {
+        if (raw.last5WinRateBefore !== null) {
+          errors.push(`${path}:FEATURE_LAST5_RATE_MUST_BE_NULL`);
+        }
+      } else if (raw.last5WinRateBefore === null) {
+        errors.push(`${path}:FEATURE_LAST5_RATE_REQUIRED`);
+      } else if (
+        !ratesMatch(
+          raw.last5WinRateBefore,
+          (raw.last5WinsBefore as number) / last5Total,
+        )
+      ) {
+        errors.push(`${path}:FEATURE_LAST5_RATE_INCONSISTENT`);
+      }
+    }
   }
-  if (!isRate(raw.last5WinRateBefore)) {
+  if (!last5RateChecked && !isRate(raw.last5WinRateBefore)) {
     errors.push(`${path}.last5WinRateBefore:INVALID`);
   }
-  if (!isFiniteNumOrNull(raw.runsScoredAverageBefore)) {
+
+  if (!isNonNegFiniteOrNull(raw.runsScoredAverageBefore)) {
     errors.push(`${path}.runsScoredAverageBefore:INVALID`);
   }
-  if (!isFiniteNumOrNull(raw.runsAllowedAverageBefore)) {
+  if (!isNonNegFiniteOrNull(raw.runsAllowedAverageBefore)) {
     errors.push(`${path}.runsAllowedAverageBefore:INVALID`);
   }
-  if (!isFiniteNumOrNull(raw.last5RunsScoredAverageBefore)) {
+  if (!isNonNegFiniteOrNull(raw.last5RunsScoredAverageBefore)) {
     errors.push(`${path}.last5RunsScoredAverageBefore:INVALID`);
   }
-  if (!isFiniteNumOrNull(raw.last5RunsAllowedAverageBefore)) {
+  if (!isNonNegFiniteOrNull(raw.last5RunsAllowedAverageBefore)) {
     errors.push(`${path}.last5RunsAllowedAverageBefore:INVALID`);
   }
   if (!isRate(raw.homeWinRateBefore)) {
@@ -249,13 +322,32 @@ function validateTeamSide(
   if (!isRate(raw.awayWinRateBefore)) {
     errors.push(`${path}.awayWinRateBefore:INVALID`);
   }
-  if (!isNonNegInt(raw.currentWinStreakBefore)) {
-    errors.push(`${path}.currentWinStreakBefore:INVALID`);
+
+  const winStreakOk = isNonNegInt(raw.currentWinStreakBefore);
+  const lossStreakOk = isNonNegInt(raw.currentLossStreakBefore);
+  if (!winStreakOk) errors.push(`${path}.currentWinStreakBefore:INVALID`);
+  if (!lossStreakOk) errors.push(`${path}.currentLossStreakBefore:INVALID`);
+  if (winStreakOk && lossStreakOk) {
+    if (raw.currentWinStreakBefore > 0 && raw.currentLossStreakBefore > 0) {
+      errors.push(`${path}:FEATURE_STREAK_MUTUAL_EXCLUSION`);
+    }
+    if (gamesOk) {
+      if (
+        raw.currentWinStreakBefore > raw.gamesPlayedBefore ||
+        raw.currentLossStreakBefore > raw.gamesPlayedBefore
+      ) {
+        errors.push(`${path}:FEATURE_STREAK_EXCEEDS_GAMES`);
+      }
+      if (
+        raw.gamesPlayedBefore === 0 &&
+        (raw.currentWinStreakBefore !== 0 || raw.currentLossStreakBefore !== 0)
+      ) {
+        errors.push(`${path}:FEATURE_STREAK_ZERO_SAMPLE`);
+      }
+    }
   }
-  if (!isNonNegInt(raw.currentLossStreakBefore)) {
-    errors.push(`${path}.currentLossStreakBefore:INVALID`);
-  }
-  if (!isFiniteNumOrNull(raw.restDaysBefore)) {
+
+  if (!isNullOrNonNegInt(raw.restDaysBefore)) {
     errors.push(`${path}.restDaysBefore:INVALID`);
   }
 }
@@ -324,14 +416,20 @@ export function validateIndependentFeatureRowV1(
   validateTeamSide(value.home, "home", errors);
   validateTeamSide(value.away, "away", errors);
 
-  if (!isNonNegInt(value.headToHeadGamesBefore)) {
-    errors.push("headToHeadGamesBefore:INVALID");
-  }
-  if (!isNonNegInt(value.headToHeadHomeWinsBefore)) {
-    errors.push("headToHeadHomeWinsBefore:INVALID");
-  }
-  if (!isNonNegInt(value.headToHeadAwayWinsBefore)) {
-    errors.push("headToHeadAwayWinsBefore:INVALID");
+  const h2hGamesOk = isNonNegInt(value.headToHeadGamesBefore);
+  const h2hHomeOk = isNonNegInt(value.headToHeadHomeWinsBefore);
+  const h2hAwayOk = isNonNegInt(value.headToHeadAwayWinsBefore);
+  if (!h2hGamesOk) errors.push("headToHeadGamesBefore:INVALID");
+  if (!h2hHomeOk) errors.push("headToHeadHomeWinsBefore:INVALID");
+  if (!h2hAwayOk) errors.push("headToHeadAwayWinsBefore:INVALID");
+  if (
+    h2hGamesOk &&
+    h2hHomeOk &&
+    h2hAwayOk &&
+    value.headToHeadHomeWinsBefore + value.headToHeadAwayWinsBefore !==
+      value.headToHeadGamesBefore
+  ) {
+    errors.push("FEATURE_H2H_RECORD_MISMATCH");
   }
 
   if (value.featureHash != null) {

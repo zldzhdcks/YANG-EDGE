@@ -353,6 +353,245 @@ function main(): void {
     "asOf reconstruction wall-clock",
   );
 
+  const zeroSample = {
+    gamesPlayedBefore: 0,
+    winsBefore: 0,
+    lossesBefore: 0,
+    winRateBefore: null,
+    last5WinsBefore: null,
+    last5LossesBefore: null,
+    last5WinRateBefore: null,
+    currentWinStreakBefore: 0,
+    currentLossStreakBefore: 0,
+  } as const;
+
+  // Numeric integrity — required PASS
+  assertPass(
+    validateIndependentFeatureRowV1(validFeatureRow()),
+    "A season 40/22/18 winRate 0.55",
+  );
+  assertPass(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        home: teamSide({
+          gamesPlayedBefore: 2,
+          winsBefore: 1,
+          lossesBefore: 1,
+          winRateBefore: 0.5,
+          last5WinsBefore: 1,
+          last5LossesBefore: 1,
+          last5WinRateBefore: 0.5,
+          currentWinStreakBefore: 0,
+          currentLossStreakBefore: 1,
+        }),
+      }),
+    ),
+    "B games=2 last5 complete window",
+  );
+  assertPass(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({ home: teamSide(zeroSample) }),
+    ),
+    "C zero-sample null rates",
+  );
+  assertPass(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        home: teamSide({
+          gamesPlayedBefore: 3,
+          winsBefore: 2,
+          lossesBefore: 1,
+          winRateBefore: 0.666667,
+          last5WinsBefore: 2,
+          last5LossesBefore: 1,
+          last5WinRateBefore: 0.666667,
+          currentWinStreakBefore: 2,
+          currentLossStreakBefore: 0,
+        }),
+      }),
+    ),
+    "D 2/3 rate stored as 0.666667",
+  );
+  assertPass(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        home: teamSide({ runsScoredAverageBefore: 0, runsAllowedAverageBefore: 0 }),
+      }),
+    ),
+    "E run average 0",
+  );
+  for (const rest of [null, 0, 1, 3] as const) {
+    assertPass(
+      validateIndependentFeatureRowV1(
+        validFeatureRow({ home: teamSide({ restDaysBefore: rest }) }),
+      ),
+      `F restDaysBefore=${String(rest)}`,
+    );
+  }
+  assertPass(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        headToHeadGamesBefore: 6,
+        headToHeadHomeWinsBefore: 4,
+        headToHeadAwayWinsBefore: 2,
+      }),
+    ),
+    "G H2H 6/4/2",
+  );
+
+  // Numeric integrity — required FAIL
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        home: teamSide({ winsBefore: 30, lossesBefore: 30, winRateBefore: 0.5 }),
+      }),
+    ),
+    "FEATURE_SEASON_RECORD_MISMATCH",
+    "1 games=40 wins=30 losses=30",
+  );
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        home: teamSide({ ...zeroSample, winsBefore: 1 }),
+      }),
+    ),
+    "FEATURE_SEASON_RECORD_MISMATCH",
+    "2 games=0 wins=1",
+  );
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        home: teamSide({ ...zeroSample, winRateBefore: 0.5 }),
+      }),
+    ),
+    "FEATURE_WIN_RATE_MUST_BE_NULL",
+    "3 games=0 winRate=0.5",
+  );
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        home: teamSide({ winRateBefore: 0.9 }),
+      }),
+    ),
+    "FEATURE_WIN_RATE_INCONSISTENT",
+    "4 games>0 winRate inconsistent",
+  );
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        home: teamSide({ last5WinsBefore: 2.5 }),
+      }),
+    ),
+    "last5WinsBefore:INVALID",
+    "5 last5Wins=2.5",
+  );
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        home: teamSide({ last5WinsBefore: null, last5LossesBefore: 2, last5WinRateBefore: null }),
+      }),
+    ),
+    "FEATURE_LAST5_PARTIAL_PAIR",
+    "6 last5 partial pair",
+  );
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        home: teamSide({
+          last5WinsBefore: 2,
+          last5LossesBefore: 1,
+          last5WinRateBefore: 2 / 3,
+        }),
+      }),
+    ),
+    "FEATURE_LAST5_COUNT_SUM",
+    "7 games=40 last5 2+1",
+  );
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        home: teamSide({ last5WinRateBefore: 0.2 }),
+      }),
+    ),
+    "FEATURE_LAST5_RATE_INCONSISTENT",
+    "8 last5 rate inconsistent",
+  );
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        home: teamSide({ runsScoredAverageBefore: -1.2 }),
+      }),
+    ),
+    "runsScoredAverageBefore:INVALID",
+    "9 negative runsScoredAverageBefore",
+  );
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        home: teamSide({ runsAllowedAverageBefore: -0.1 }),
+      }),
+    ),
+    "runsAllowedAverageBefore:INVALID",
+    "10 negative runsAllowedAverageBefore",
+  );
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        home: teamSide({
+          currentWinStreakBefore: 3,
+          currentLossStreakBefore: 2,
+        }),
+      }),
+    ),
+    "FEATURE_STREAK_MUTUAL_EXCLUSION",
+    "11 winStreak>0 AND lossStreak>0",
+  );
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        home: teamSide({ currentWinStreakBefore: 41, currentLossStreakBefore: 0 }),
+      }),
+    ),
+    "FEATURE_STREAK_EXCEEDS_GAMES",
+    "12 streak > gamesPlayedBefore",
+  );
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({ home: teamSide({ restDaysBefore: -1 }) }),
+    ),
+    "restDaysBefore:INVALID",
+    "13 restDaysBefore=-1",
+  );
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({ home: teamSide({ restDaysBefore: 1.5 }) }),
+    ),
+    "restDaysBefore:INVALID",
+    "14 restDaysBefore=1.5",
+  );
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        headToHeadGamesBefore: 4,
+        headToHeadHomeWinsBefore: 5,
+        headToHeadAwayWinsBefore: 1,
+      }),
+    ),
+    "FEATURE_H2H_RECORD_MISMATCH",
+    "15 H2H wins sum > games",
+  );
+  assertFail(
+    validateIndependentFeatureRowV1(
+      validFeatureRow({
+        headToHeadGamesBefore: 4,
+        headToHeadHomeWinsBefore: 1,
+        headToHeadAwayWinsBefore: 1,
+      }),
+    ),
+    "FEATURE_H2H_RECORD_MISMATCH",
+    "16 H2H wins sum < games",
+  );
+
   // PASS: label FINAL HOME / AWAY
   const homeLabel = validLabelRow("HOME");
   const awayLabel = validLabelRow("AWAY");
