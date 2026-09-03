@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "mlb-independent-2025-v2c-model-candidate-review-v1",
+  "generatedAt": "2026-09-03T03:12:00.000Z",
+  "researchOnly": true,
+  "track": "2025_EXTERNAL_REPLICATION_TRACK",
+  "stage": "MODEL_CANDIDATE_REVIEW",
+  "evaluationArtifactSha256": "c361045407fde88688859e1e127f0c19c2f520b36fdec438862b208326fd55ee",
+  "v2cModelCoreHash": "5412b6bae88e5d7fad53f8962950e4c9846470b14433e73edd9cbfe96631d126",
+  "externalVerdict": "MIXED_EXTERNAL_REPLICATION",
+  "primaryChecks": {
+    "AUC_PASS": true,
+    "LOGLOSS_PASS": false,
+    "BRIER_PASS": false,
+    "passCount": 1,
+    "primaryEndpointCount": 3
+  },
+  "primaryMetrics": {
+    "rocAuc": 0.5413553485750394,
+    "logLoss": 0.6899889316799483,
+    "brierScore": 0.24836896331906277
+  },
+  "constantBaselineMetrics": {
+    "probability": 0.530416951469583,
+    "rocAuc": 0.5,
+    "accuracy": 0.5427983539094651,
+    "logLoss": 0.6897873751844317,
+    "brierScore": 0.24832160002901463
+  },
+  "secondaryContext": {
+    "v2cAccuracy": 0.5469135802469136,
+    "constantHomeBaselineAccuracy": 0.5427983539094651,
+    "v2cCorrect": 1329,
+    "constantHomeBaselineCorrect": 1319,
+    "absoluteCorrectGameAdvantage": 10,
+    "secondaryDoesNotOverridePrimary": true
+  },
+  "candidateDecision": "NOT_ADMITTED",
+  "candidate": false,
+  "primaryReason": "EXTERNAL_PROBABILITY_QUALITY_NOT_REPLICATED",
+  "supportingReason": "MIXED_EXTERNAL_REPLICATION",
+  "researchBaseline": "SEALED",
+  "hasReplicatedRankingSignal": true,
+  "hasReplicatedProbabilityQuality": false,
+  "holdoutOpen": false,
+  "holdoutMembershipCount": 483,
+  "holdoutFeatureRowsRead": 0,
+  "holdoutLabelRowsRead": 0,
+  "holdoutTransformedRows": 0,
+  "holdoutLogitsCreated": 0,
+  "holdoutProbabilitiesCreated": 0,
+  "holdoutEvaluated": false,
+  "2025ExternalState": "EXTERNAL_REPLICATION_EXPOSED",
+  "2025ModelUnseen": false,
+  "rerun2025AsUntouchedExternalAllowed": false,
+  "postExposureDiagnosticPerformed": false,
+  "engineAdmission": "PROHIBITED"
+}
