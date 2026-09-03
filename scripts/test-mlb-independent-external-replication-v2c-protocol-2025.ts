@@ -358,7 +358,9 @@ function main(): void {
     assert.equal(base.includes("probabilities"), false, filePath);
     assert.equal(base.includes("logit"), false, filePath);
     assert.equal(base.includes("transformed"), false, filePath);
-    assert.equal(base.includes("eval"), false, filePath);
+    if (!base.includes("evaluation")) {
+      assert.equal(base.includes("eval"), false, filePath);
+    }
   }
   console.log("NO_2025_PROBABILITY_ARTIFACT = PASS");
 

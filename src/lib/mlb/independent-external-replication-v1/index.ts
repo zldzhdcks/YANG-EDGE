@@ -157,3 +157,35 @@ export type {
   FrozenV2cExternalReplicationProtocolResult2025,
   FrozenV2cModelProtocolView,
 } from "./preregister-v2c-evaluation-2025";
+
+export {
+  MLB_INDEPENDENT_2025_SEALED_V2C_MODEL_ARTIFACT_SHA256,
+  MLB_INDEPENDENT_2025_SEALED_V2C_PROTOCOL_SHA256,
+  MLB_INDEPENDENT_2025_V2C_EVALUATION_SCHEMA_V1,
+  MLB_INDEPENDENT_2025_V2C_EVALUATION_STAGE,
+  ExternalReplicationEvaluationError,
+  assertExternalReplication2025ModelArtifactShaPin,
+  assertExternalReplication2025ProtocolShaPin,
+  assertFrozenV2cEvaluationModelContract2025,
+  assertPreOpenV2cExternalReplicationGates2025,
+  classifyHomeWinProbability2025,
+  directionalVerdictFromChecks2025,
+  evaluateV2cExternalReplication2025,
+  hashExternalReplicationEvaluationArtifact2025,
+  independentExternalReplication2025V2cEvaluationAuditPath,
+  independentExternalReplication2025V2cEvaluationAuditRel,
+  independentExternalReplication2025V2cEvaluationPath,
+  independentExternalReplication2025V2cEvaluationRel,
+  percentileLinear2025,
+  rocAucMannWhitney2025,
+  transformExternalReplicationFeatureWithFrozenPrep2025,
+} from "./evaluate-v2c-2025";
+
+export type {
+  ExternalReplicationDirectionalVerdict2025,
+  ExternalReplicationEvaluationArtifact2025,
+  ExternalReplicationEvaluationAudit2025,
+  ExternalReplicationEvaluationResult2025,
+  ExternalReplicationEvaluationRow2025,
+  FrozenV2cEvaluationModel2025,
+} from "./evaluate-v2c-2025";
