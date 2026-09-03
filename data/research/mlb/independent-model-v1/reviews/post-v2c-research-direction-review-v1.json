@@ -1,0 +1,144 @@
+{
+  "schemaVersion": "mlb-independent-post-v2c-research-direction-review-v1",
+  "generatedAt": "2026-09-03T03:35:00.000Z",
+  "researchOnly": true,
+  "stage": "POST_V2C_RESEARCH_DIRECTION_REVIEW",
+  "v2cCycleStatus": "CLOSED",
+  "v2cCandidateDecision": "NOT_ADMITTED",
+  "externalReplicationVerdict": "MIXED_EXTERNAL_REPLICATION",
+  "replicatedRankingSignal": true,
+  "replicatedProbabilityQuality": false,
+  "currentProbabilityModelQuality": "NOT_SUFFICIENT",
+  "weakIndependentRankingSignalExists": "SUPPORTED",
+  "rankingSignalWording": "weak",
+  "rankingSignalProductionGrade": false,
+  "rankingSignalSufficientAloneForCandidate": false,
+  "repeatedSafeAFeaturePruning": "DIMINISHING_RESEARCH_VALUE",
+  "doNotDefaultToV2dFeatureDeletion": true,
+  "immediateV2d": false,
+  "immediateCalibration": false,
+  "immediateComplexModel": false,
+  "calibrateV2cOn2025": false,
+  "immediateXgboostRandomForestNn": false,
+  "recommendedStrategy": "MULTI_SEASON_EVIDENCE_PLUS_PREGAME_SAFE_FEATURE_EXPANSION",
+  "nextSourceFoundationCandidate": "2023_MLB_REGULAR_SEASON",
+  "nextSourceFoundationStatus": "PROPOSED_NOT_STARTED",
+  "newModelTrainingAllowedNow": false,
+  "holdoutEvaluated": false,
+  "holdoutOpen": false,
+  "holdoutMembershipCount": 483,
+  "2025ExternalState": "EXTERNAL_REPLICATION_EXPOSED",
+  "2025ModelUnseen": false,
+  "2025RowLevelDiagnosticAllowed": false,
+  "postExposureDiagnosticPerformed": false,
+  "v2cResearchBaseline": "SEALED",
+  "engineAdmission": "PROHIBITED",
+  "sealedExternalEvidence": {
+    "sampleCount": 2430,
+    "rocAuc": 0.5413553485750394,
+    "logLoss": 0.6899889316799483,
+    "brierScore": 0.24836896331906277,
+    "constantBaselineAuc": 0.5,
+    "constantBaselineLogLoss": 0.6897873751844317,
+    "constantBaselineBrier": 0.24832160002901463,
+    "AUC_PASS": true,
+    "LOGLOSS_PASS": false,
+    "BRIER_PASS": false,
+    "modelCandidate": false
+  },
+  "rankingSignalEvidence": {
+    "v2cTrainAuc2024": 0.5991226984198442,
+    "v2cValidationAuc2024": 0.5553249871377123,
+    "v2cExternalAuc2025": 0.5413553485750394
+  },
+  "lessons": {
+    "lesson1": "SUPPORTED",
+    "lesson2": "NOT_SUFFICIENT",
+    "lesson3": "DIMINISHING_RESEARCH_VALUE",
+    "lesson4OmittedInformationFamiliesAreHypotheses": true
+  },
+  "rejectedImmediateDirections": {
+    "continuePruningCurrentSafeAAsDefault": true,
+    "postHocCalibrateV2cOn2025": true,
+    "moveImmediatelyToMoreComplexMlModel": true
+  },
+  "omittedInformationFamilyHypotheses": [
+    "STARTER",
+    "BULLPEN",
+    "LINEUP",
+    "INJURY_AVAILABILITY",
+    "PARK_VENUE_CONTEXT",
+    "WEATHER_WHERE_LEGALLY_RELIABLY_AVAILABLE",
+    "PLAYER_LEVEL_CONTEXT"
+  ],
+  "classBFeatureProgram": {
+    "status": "PROPOSED_NOT_STARTED",
+    "candidateFamilies": [
+      "STARTER_CONTEXT",
+      "BULLPEN_CONTEXT",
+      "LINEUP_CONTEXT",
+      "PLAYER_AVAILABILITY",
+      "PARK_CONTEXT",
+      "WEATHER_CONTEXT"
+    ],
+    "requiredContractFields": [
+      "sourceLegality",
+      "sourceProvider",
+      "availableAt",
+      "asOf",
+      "pregameDeadline",
+      "historicalReconstructability",
+      "missingnessPolicy",
+      "currentDayAvailability",
+      "earlyVsLateOnlyClassification",
+      "leakageRisk"
+    ],
+    "noFeatureEntersModelBeforeContract": true
+  },
+  "productTiming": {
+    "preserveEarlyAnalysis": true,
+    "preserveLateUpdate": true,
+    "preserveFinalSnapshot": true,
+    "initialUsefulAnalysisTarget": "NEAR_T_MINUS_3H",
+    "laterExpansionTarget": "TOWARD_T_MINUS_6H_WHERE_EVIDENCE_SUPPORTS",
+    "featureAvailabilityClasses": [
+      "EARLY_SAFE",
+      "LATE_ONLY",
+      "NOT_RELIABLY_RECONSTRUCTABLE"
+    ]
+  },
+  "researchOrder": [
+    "PHASE_A_2023_HISTORICAL_SOURCE_FOUNDATION",
+    "PHASE_B_2023_SAFE_A_FEATURE_LABEL_JOIN",
+    "PHASE_C_MULTI_SEASON_SAFE_A_STABILITY_DISTRIBUTION_AUDIT",
+    "PHASE_D_CLASS_B_PREGAME_FEATURE_CONTRACT_V1",
+    "PHASE_E_HISTORICAL_CLASS_B_FEASIBILITY_COVERAGE_AUDIT",
+    "PHASE_F_NEW_MODEL_HYPOTHESIS_PREREGISTRATION",
+    "PHASE_G_NEW_PROTOTYPE_TRAINING"
+  ],
+  "noModelBeforePhaseF": true,
+  "nextModelStartGates": {
+    "additionalHistoricalSeasonFoundationSealed": false,
+    "multiSeasonIdentityLeakageChecksPass": false,
+    "featureAvailabilityContractsDefined": false,
+    "candidateNewFeatureGroupsJustified": false,
+    "trainingValidationChronologyPredefined": false,
+    "futureUntouchedEvaluationStrategyDefined": false,
+    "holdoutPolicyExplicitlyResolved": false
+  },
+  "holdoutGovernance": {
+    "remainsSealed": true,
+    "automaticAssignmentToFutureSuccessor": false,
+    "successorRequiresFormalLineageBeforeHoldoutProtocol": true
+  },
+  "exposed2025Governance": {
+    "state": "EXTERNAL_REPLICATION_EXPOSED",
+    "mayBeUsedLaterOnlyAsLabeledExploratoryPostExposureResearch": true,
+    "mustNeverBeDescribedAsIndependentValidation": true,
+    "immediateRowLevelDiagnosticAllowed": false
+  },
+  "candidateReviewPrimaryReason": "EXTERNAL_PROBABILITY_QUALITY_NOT_REPLICATED",
+  "evaluationArtifactSha256": "c361045407fde88688859e1e127f0c19c2f520b36fdec438862b208326fd55ee",
+  "candidateReviewArtifactSha256": "b44d39c8d4927750b00ca7c52f3454756aa144282957b30f3b026e8db9ee67fb",
+  "v2cModelCoreHash": "5412b6bae88e5d7fad53f8962950e4c9846470b14433e73edd9cbfe96631d126"
+}
