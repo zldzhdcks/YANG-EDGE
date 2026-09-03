@@ -43,3 +43,28 @@ export {
   validateHistoricalSourceIdentity,
   validateHistoricalSourceResultProvenance,
 } from "../independent-safe-a-v1/historical-source";
+
+export {
+  MLB_INDEPENDENT_2023_SEALED_CROSS_DATE_RESUME_CASES,
+  MLB_INDEPENDENT_2023_SEALED_CROSS_DATE_RESUME_GAME_PKS,
+  MLB_INDEPENDENT_2023_SEALED_SOURCE_SHA256,
+  MLB_INDEPENDENT_MULTISEASON_STAGE_SAFE_A,
+  SafeAMaterializationError,
+  assertFeatureSourceIdentity2023,
+  assertMultiseasonDevelopment2023SourcePin,
+  findMultiseasonDevelopmentFeatureRow2023,
+  hashIndependentFeatureRowV1,
+  hashMultiseasonDevelopmentFeatureArtifact2023,
+  independentMultiseasonDevelopment2023FeatureAuditPath,
+  independentMultiseasonDevelopment2023FeatureAuditRel,
+  independentMultiseasonDevelopment2023FeaturePath,
+  independentMultiseasonDevelopment2023FeatureRel,
+  materializeMultiseasonDevelopmentSafeAFeatures2023,
+  sha256FileBytes,
+  verifyFeatureHashes2023,
+} from "./materialize-safe-a-2023";
+
+export type {
+  MultiseasonDevelopmentSafeAAudit2023,
+  MultiseasonDevelopmentSafeAResult2023,
+} from "./materialize-safe-a-2023";
