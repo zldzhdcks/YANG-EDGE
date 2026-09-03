@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "mlb-independent-multiseason-development-label-audit-v1",
+  "generatedAt": "2026-09-03T04:42:22.266Z",
+  "researchOnly": true,
+  "track": "MULTI_SEASON_DEVELOPMENT_TRACK",
+  "stage": "LABELS",
+  "season": 2023,
+  "developmentEvidence": true,
+  "externalReplication": false,
+  "modelEvaluationAllowed": false,
+  "engineAdmission": "PROHIBITED",
+  "sourceShaVerified": true,
+  "sourceRows": 2430,
+  "labelRows": 2430,
+  "excludedRows": 0,
+  "duplicateLabelGamePkCount": 0,
+  "identityMismatchCount": 0,
+  "winnerTargetMismatchCount": 0,
+  "sourceScoreLabelMismatchCount": 0,
+  "featureArtifactRead": false,
+  "featureRowsRead": 0,
+  "featureShaUsedForLabelDerivation": false,
+  "joinCreated": false,
+  "splitCreated": false,
+  "modelRead": false,
+  "modelUsed": false,
+  "holdoutEvaluated": false,
+  "holdoutFeatureRowsRead": 0,
+  "holdoutLabelRowsRead": 0,
+  "2025RowsInspected": false,
+  "networkUsed": false,
+  "engineChanged": false,
+  "sourceArtifactRel": "data/research/mlb/independent-model-v1/multi-season-development/2023/historical-source/2023-regular-season-source-v1.json",
+  "sourceArtifactSha256": "0bd8526907a9023047e10ed5e3292487982f98915a1c9a50f816fec62ea80862",
+  "labelArtifactRel": "data/research/mlb/independent-model-v1/multi-season-development/2023/labels/2023-home-win-label-artifact-v1.json",
+  "labelArtifactSha256": "7050b14b70a656db779a3ffaa81336abf192ac42f8ce5e32deed7a6a27adf5e7",
+  "coexistingSafeAFeatureSha256": "9926c918ee1b1317d4dd5100ba55ae700c815bdf17ee99caf9af63f5899fdde8",
+  "sourceRowCount": 2430,
+  "labelRowCount": 2430,
+  "excludedCount": 0,
+  "excludedRowCount": 0,
+  "homeWinLabelCount": 1266,
+  "awayWinLabelCount": 1164,
+  "homeWinRate": 0.5209876543209877,
+  "winnerDistribution": {
+    "HOME": 1266,
+    "AWAY": 1164
+  },
+  "targetDistribution": {
+    "0": 1164,
+    "1": 1266
+  },
+  "exclusionReasonCounts": {},
+  "uniqueGamePk": 2430,
+  "crossDateResumeLabelCases": [
+    {
+      "gamePk": 718203,
+      "officialDate": "2023-05-13",
+      "homeTeamId": 120,
+      "awayTeamId": 121,
+      "winner": "HOME",
+      "target": 1,
+      "resultProvenanceStatus": "CROSS_DATE_RESUME_RESOLVED",
+      "safeResultApplyDate": "2023-05-14"
+    },
+    {
+      "gamePk": 717407,
+      "officialDate": "2023-07-14",
+      "homeTeamId": 138,
+      "awayTeamId": 120,
+      "winner": "AWAY",
+      "target": 0,
+      "resultProvenanceStatus": "CROSS_DATE_RESUME_RESOLVED",
+      "safeResultApplyDate": "2023-07-15"
+    },
+    {
+      "gamePk": 717375,
+      "officialDate": "2023-07-17",
+      "homeTeamId": 113,
+      "awayTeamId": 137,
+      "winner": "AWAY",
+      "target": 0,
+      "resultProvenanceStatus": "CROSS_DATE_RESUME_RESOLVED",
+      "safeResultApplyDate": "2023-07-18"
+    },
+    {
+      "gamePk": 717324,
+      "officialDate": "2023-07-21",
+      "homeTeamId": 111,
+      "awayTeamId": 121,
+      "winner": "AWAY",
+      "target": 0,
+      "resultProvenanceStatus": "CROSS_DATE_RESUME_RESOLVED",
+      "safeResultApplyDate": "2023-07-22"
+    },
+    {
+      "gamePk": 716875,
+      "officialDate": "2023-08-23",
+      "homeTeamId": 114,
+      "awayTeamId": 119,
+      "winner": "AWAY",
+      "target": 0,
+      "resultProvenanceStatus": "CROSS_DATE_RESUME_RESOLVED",
+      "safeResultApplyDate": "2023-08-24"
+    },
+    {
+      "gamePk": 716414,
+      "officialDate": "2023-09-27",
+      "homeTeamId": 116,
+      "awayTeamId": 118,
+      "winner": "HOME",
+      "target": 1,
+      "resultProvenanceStatus": "CROSS_DATE_RESUME_RESOLVED",
+      "safeResultApplyDate": "2023-09-28"
+    },
+    {
+      "gamePk": 716404,
+      "officialDate": "2023-09-28",
+      "homeTeamId": 121,
+      "awayTeamId": 146,
+      "winner": "HOME",
+      "target": 1,
+      "resultProvenanceStatus": "CROSS_DATE_RESUME_RESOLVED",
+      "safeResultApplyDate": "2023-10-02"
+    }
+  ],
+  "contractChecks": {
+    "allLabelRowsValid": true,
+    "labelArtifactValid": true
+  }
+}

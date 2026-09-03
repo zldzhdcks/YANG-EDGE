@@ -68,3 +68,28 @@ export type {
   MultiseasonDevelopmentSafeAAudit2023,
   MultiseasonDevelopmentSafeAResult2023,
 } from "./materialize-safe-a-2023";
+
+export {
+  MLB_INDEPENDENT_2023_COEXISTING_SAFE_A_FEATURE_SHA256,
+  MLB_INDEPENDENT_2023_LABEL_CROSS_DATE_RESUME_GAME_PKS,
+  MLB_INDEPENDENT_2023_LABEL_SOURCE_SHA256,
+  MLB_INDEPENDENT_MULTISEASON_STAGE_LABELS,
+  MultiseasonDevelopmentLabelError,
+  assertMultiseasonDevelopment2023LabelSourcePin,
+  disposeMultiseasonDevelopmentLabelGame2023,
+  findMultiseasonDevelopmentLabelRow2023,
+  hashMultiseasonDevelopmentLabelArtifact2023,
+  independentMultiseasonDevelopment2023LabelAuditPath,
+  independentMultiseasonDevelopment2023LabelAuditRel,
+  independentMultiseasonDevelopment2023LabelPath,
+  independentMultiseasonDevelopment2023LabelRel,
+  materializeMultiseasonDevelopmentLabels2023,
+} from "./materialize-labels-2023";
+
+export type {
+  MultiseasonDevelopmentCrossDateResumeLabelCase,
+  MultiseasonDevelopmentExcludedLabel,
+  MultiseasonDevelopmentLabelAudit2023,
+  MultiseasonDevelopmentLabelExclusionReason,
+  MultiseasonDevelopmentLabelResult2023,
+} from "./materialize-labels-2023";
