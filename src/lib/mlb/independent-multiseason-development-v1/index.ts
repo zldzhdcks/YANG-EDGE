@@ -93,3 +93,29 @@ export type {
   MultiseasonDevelopmentLabelExclusionReason,
   MultiseasonDevelopmentLabelResult2023,
 } from "./materialize-labels-2023";
+
+export {
+  MLB_INDEPENDENT_2023_JOIN_CROSS_DATE_RESUME_CASES,
+  MLB_INDEPENDENT_2023_JOIN_CROSS_DATE_RESUME_GAME_PKS,
+  MLB_INDEPENDENT_2023_JOIN_FEATURE_SHA256,
+  MLB_INDEPENDENT_2023_JOIN_LABEL_SHA256,
+  MLB_INDEPENDENT_2023_JOIN_SOURCE_SHA256,
+  MLB_INDEPENDENT_MULTISEASON_STAGE_STRICT_JOIN,
+  MultiseasonDevelopmentJoinError,
+  assertMultiseasonDevelopment2023JoinFeaturePin,
+  assertMultiseasonDevelopment2023JoinLabelPin,
+  assertMultiseasonDevelopment2023JoinSourcePin,
+  findMultiseasonDevelopmentJoinRow2023,
+  hashMultiseasonDevelopmentJoinArtifact2023,
+  independentMultiseasonDevelopment2023JoinAuditPath,
+  independentMultiseasonDevelopment2023JoinAuditRel,
+  independentMultiseasonDevelopment2023JoinPath,
+  independentMultiseasonDevelopment2023JoinRel,
+  joinMultiseasonDevelopmentFeatureLabel2023,
+} from "./join-feature-label-2023";
+
+export type {
+  MultiseasonDevelopmentCrossDateJoinCase2023,
+  MultiseasonDevelopmentJoinAudit2023,
+  MultiseasonDevelopmentJoinResult2023,
+} from "./join-feature-label-2023";
