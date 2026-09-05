@@ -1,0 +1,1327 @@
+{
+  "meta": {
+    "schemaVersion": "football-odds-bridge-candidate-intake-v1",
+    "builderVersion": "football-odds-bridge-candidate-intake-builder-v1",
+    "dateKst": "2026-09-05",
+    "generatedAt": "2026-09-05T01:26:19.118Z",
+    "observedAt": "2026-09-05T01:26:19.118Z",
+    "researchOnly": true,
+    "legalStatus": "NEEDS_LEGAL_REVIEW",
+    "predictionInput": false,
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "sourceScheduleRel": "data/research/football/2026-09-05-schedule-v1.json",
+    "sourceScheduleArtifactHash": "3af85c29804e6ed4af8b9301888d3f1c3a2a3f4d620b0aec78a4305021385a81",
+    "oddsProvider": "THE_ODDS_API",
+    "providerMethod": "listEvents",
+    "providerCalls": 6,
+    "uniqueSportKeysRequested": [
+      "soccer_epl",
+      "soccer_germany_bundesliga",
+      "soccer_italy_serie_a",
+      "soccer_japan_j_league",
+      "soccer_spain_la_liga",
+      "soccer_usa_mls"
+    ],
+    "eventsObserved": 131,
+    "candidateRows": 6,
+    "reviewRequired": 6,
+    "blockedRows": 19,
+    "kickoffToleranceMinutes": 15,
+    "counts": {
+      "noCandidateNeeded": 0,
+      "canonicalIdentityBlocked": 10,
+      "notSupported": 0,
+      "candidateIntakeTarget": 15,
+      "sportKeyNotMapped": 0,
+      "sportKeyEndpointFailed": 0,
+      "noEventCandidate": 0,
+      "ambiguousEventCandidates": 9,
+      "orientationConflict": 0,
+      "pendingReviewSingleSideAnchored": 3,
+      "pendingReviewSingleEventUnanchored": 3
+    },
+    "artifactHash": "ec206690b4799029aad369eb2a82c70108aa8856142eca02d637d100f7aab1a1"
+  },
+  "rows": [
+    {
+      "matchId": "soccer-api-football-1490436",
+      "competitionId": "fb-comp-api-football-253",
+      "sportKey": "soccer_usa_mls",
+      "schedule": {
+        "providerMatchId": "1490436",
+        "kickoffTimeUtc": "2026-09-04T23:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "1604",
+        "canonicalTeamId": "fb-team-v1-api-football-1604",
+        "scheduleDisplayName": "New York City FC",
+        "existingBridgeNames": [
+          "New York City FC"
+        ]
+      },
+      "away": {
+        "providerTeamId": "9569",
+        "canonicalTeamId": "fb-team-v1-api-football-9569",
+        "scheduleDisplayName": "Nashville SC",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "6b5aa4cdc3e4394a2ba8b106d48947d5",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "New York City FC",
+          "awayTeamExact": "Nashville SC",
+          "commenceTime": "2026-09-04T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_SIDE_ANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-9569",
+          "side": "away",
+          "oddsExactName": "Nashville SC",
+          "anchorType": "EXISTING_BRIDGE_HOME",
+          "confidenceClass": "HIGH_CONFIDENCE_REVIEW_CANDIDATE"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "SINGLE_SIDE_ANCHORED",
+        "AUTO_APPROVE_FORBIDDEN",
+        "LATE_IDENTITY_EVIDENCE",
+        "NOT_PREGAME"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1507052",
+      "competitionId": "fb-comp-api-football-292",
+      "sportKey": "soccer_korea_kleague1",
+      "schedule": {
+        "providerMatchId": "1507052",
+        "kickoffTimeUtc": "2026-09-05T10:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "2745",
+        "canonicalTeamId": "fb-team-v1-api-football-2745",
+        "scheduleDisplayName": "Bucheon FC 1995",
+        "existingBridgeNames": [
+          "Bucheon FC 1995"
+        ]
+      },
+      "away": {
+        "providerTeamId": "2750",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Daejeon Citizen",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1507053",
+      "competitionId": "fb-comp-api-football-292",
+      "sportKey": "soccer_korea_kleague1",
+      "schedule": {
+        "providerMatchId": "1507053",
+        "kickoffTimeUtc": "2026-09-05T10:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "2761",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Jeju United FC",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "2767",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Ulsan Hyundai FC",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1507054",
+      "competitionId": "fb-comp-api-football-292",
+      "sportKey": "soccer_korea_kleague1",
+      "schedule": {
+        "providerMatchId": "1507054",
+        "kickoffTimeUtc": "2026-09-05T10:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "2762",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Jeonbuk Motors",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "2764",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Pohang Steelers",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1507055",
+      "competitionId": "fb-comp-api-football-292",
+      "sportKey": "soccer_korea_kleague1",
+      "schedule": {
+        "providerMatchId": "1507055",
+        "kickoffTimeUtc": "2026-09-05T10:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "2766",
+        "canonicalTeamId": "fb-team-v1-api-football-2766",
+        "scheduleDisplayName": "FC Seoul",
+        "existingBridgeNames": [
+          "FC Seoul"
+        ]
+      },
+      "away": {
+        "providerTeamId": "2763",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Incheon United",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1550110",
+      "competitionId": "fb-comp-api-football-135",
+      "sportKey": "soccer_italy_serie_a",
+      "schedule": {
+        "providerMatchId": "1550110",
+        "kickoffTimeUtc": "2026-09-05T13:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "502",
+        "canonicalTeamId": "fb-team-v1-api-football-502",
+        "scheduleDisplayName": "Fiorentina",
+        "existingBridgeNames": [
+          "Fiorentina"
+        ]
+      },
+      "away": {
+        "providerTeamId": "503",
+        "canonicalTeamId": "fb-team-v1-api-football-503",
+        "scheduleDisplayName": "Torino",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "cf4132fe69a1fb7d83fe0b38ae612076",
+          "sportKey": "soccer_italy_serie_a",
+          "homeTeamExact": "Fiorentina",
+          "awayTeamExact": "Torino",
+          "commenceTime": "2026-09-05T13:00:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_SIDE_ANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-503",
+          "side": "away",
+          "oddsExactName": "Torino",
+          "anchorType": "EXISTING_BRIDGE_HOME",
+          "confidenceClass": "HIGH_CONFIDENCE_REVIEW_CANDIDATE"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": true,
+      "reasonCodes": [
+        "SINGLE_SIDE_ANCHORED",
+        "AUTO_APPROVE_FORBIDDEN"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1550112",
+      "competitionId": "fb-comp-api-football-135",
+      "sportKey": "soccer_italy_serie_a",
+      "schedule": {
+        "providerMatchId": "1550112",
+        "kickoffTimeUtc": "2026-09-04T18:45:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "495",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Genoa",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "895",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Como",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1552750",
+      "competitionId": "fb-comp-api-football-61",
+      "sportKey": "soccer_france_ligue_one",
+      "schedule": {
+        "providerMatchId": "1552750",
+        "kickoffTimeUtc": "2026-09-04T17:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "80",
+        "canonicalTeamId": "fb-team-v1-api-football-80",
+        "scheduleDisplayName": "Lyon",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "108",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Auxerre",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1552753",
+      "competitionId": "fb-comp-api-football-61",
+      "sportKey": "soccer_france_ligue_one",
+      "schedule": {
+        "providerMatchId": "1552753",
+        "kickoffTimeUtc": "2026-09-04T19:05:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "85",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Paris Saint Germain",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "91",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Monaco",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1556051",
+      "competitionId": "fb-comp-api-football-98",
+      "sportKey": "soccer_japan_j_league",
+      "schedule": {
+        "providerMatchId": "1556051",
+        "kickoffTimeUtc": "2026-09-05T10:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "316",
+        "canonicalTeamId": "fb-team-v1-api-football-316",
+        "scheduleDisplayName": "Avispa Fukuoka",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "305",
+        "canonicalTeamId": "fb-team-v1-api-football-305",
+        "scheduleDisplayName": "Mito Hollyhock",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "7ccec28ed7bd8fb5d12888def80a18fd",
+          "sportKey": "soccer_japan_j_league",
+          "homeTeamExact": "Avispa Fukuoka",
+          "awayTeamExact": "Mito HollyHock",
+          "commenceTime": "2026-09-05T10:00:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_EVENT_UNANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-316",
+          "side": "home",
+          "oddsExactName": "Avispa Fukuoka",
+          "anchorType": "KICKOFF_SPORT_KEY_ONLY",
+          "confidenceClass": "MANUAL_REVIEW_REQUIRED"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-305",
+          "side": "away",
+          "oddsExactName": "Mito HollyHock",
+          "anchorType": "KICKOFF_SPORT_KEY_ONLY",
+          "confidenceClass": "MANUAL_REVIEW_REQUIRED"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": true,
+      "reasonCodes": [
+        "BOTH_SIDES_UNBRIDGED_SINGLE_EVENT",
+        "AUTO_APPROVE_FORBIDDEN"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1557388",
+      "competitionId": "fb-comp-api-football-39",
+      "sportKey": "soccer_epl",
+      "schedule": {
+        "providerMatchId": "1557388",
+        "kickoffTimeUtc": "2026-09-05T14:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "55",
+        "canonicalTeamId": "fb-team-v1-api-football-55",
+        "scheduleDisplayName": "Brentford",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "746",
+        "canonicalTeamId": "fb-team-v1-api-football-746",
+        "scheduleDisplayName": "Sunderland",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "29f81160baf6a97d6391d7172fad2425",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Brentford",
+          "awayTeamExact": "Sunderland",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "3b81531990da7ea3e461c43e8827672b",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Brighton and Hove Albion",
+          "awayTeamExact": "Leeds United",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "3db5f919507eb8ab0c8c72bddaca8f08",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Manchester City",
+          "awayTeamExact": "Coventry City",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "8f68612bf47c3193e7fa2d8783e79373",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Fulham",
+          "awayTeamExact": "Crystal Palace",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "a6f2622727548c33369cc15c88b2aabd",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Nottingham Forest",
+          "awayTeamExact": "Tottenham Hotspur",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1557389",
+      "competitionId": "fb-comp-api-football-39",
+      "sportKey": "soccer_epl",
+      "schedule": {
+        "providerMatchId": "1557389",
+        "kickoffTimeUtc": "2026-09-05T14:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "51",
+        "canonicalTeamId": "fb-team-v1-api-football-51",
+        "scheduleDisplayName": "Brighton",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "63",
+        "canonicalTeamId": "fb-team-v1-api-football-63",
+        "scheduleDisplayName": "Leeds",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "29f81160baf6a97d6391d7172fad2425",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Brentford",
+          "awayTeamExact": "Sunderland",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "3b81531990da7ea3e461c43e8827672b",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Brighton and Hove Albion",
+          "awayTeamExact": "Leeds United",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "3db5f919507eb8ab0c8c72bddaca8f08",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Manchester City",
+          "awayTeamExact": "Coventry City",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "8f68612bf47c3193e7fa2d8783e79373",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Fulham",
+          "awayTeamExact": "Crystal Palace",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "a6f2622727548c33369cc15c88b2aabd",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Nottingham Forest",
+          "awayTeamExact": "Tottenham Hotspur",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1557391",
+      "competitionId": "fb-comp-api-football-39",
+      "sportKey": "soccer_epl",
+      "schedule": {
+        "providerMatchId": "1557391",
+        "kickoffTimeUtc": "2026-09-05T14:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "36",
+        "canonicalTeamId": "fb-team-v1-api-football-36",
+        "scheduleDisplayName": "Fulham",
+        "existingBridgeNames": [
+          "Fulham"
+        ]
+      },
+      "away": {
+        "providerTeamId": "52",
+        "canonicalTeamId": "fb-team-v1-api-football-52",
+        "scheduleDisplayName": "Crystal Palace",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "8f68612bf47c3193e7fa2d8783e79373",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Fulham",
+          "awayTeamExact": "Crystal Palace",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_SIDE_ANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-52",
+          "side": "away",
+          "oddsExactName": "Crystal Palace",
+          "anchorType": "EXISTING_BRIDGE_HOME",
+          "confidenceClass": "HIGH_CONFIDENCE_REVIEW_CANDIDATE"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": true,
+      "reasonCodes": [
+        "SINGLE_SIDE_ANCHORED",
+        "AUTO_APPROVE_FORBIDDEN"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1557393",
+      "competitionId": "fb-comp-api-football-39",
+      "sportKey": "soccer_epl",
+      "schedule": {
+        "providerMatchId": "1557393",
+        "kickoffTimeUtc": "2026-09-04T19:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "57",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Ipswich",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "40",
+        "canonicalTeamId": "fb-team-v1-api-football-40",
+        "scheduleDisplayName": "Liverpool",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1557394",
+      "competitionId": "fb-comp-api-football-39",
+      "sportKey": "soccer_epl",
+      "schedule": {
+        "providerMatchId": "1557394",
+        "kickoffTimeUtc": "2026-09-05T14:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "50",
+        "canonicalTeamId": "fb-team-v1-api-football-50",
+        "scheduleDisplayName": "Manchester City",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "1346",
+        "canonicalTeamId": "fb-team-v1-api-football-1346",
+        "scheduleDisplayName": "Coventry",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "29f81160baf6a97d6391d7172fad2425",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Brentford",
+          "awayTeamExact": "Sunderland",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "3b81531990da7ea3e461c43e8827672b",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Brighton and Hove Albion",
+          "awayTeamExact": "Leeds United",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "3db5f919507eb8ab0c8c72bddaca8f08",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Manchester City",
+          "awayTeamExact": "Coventry City",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "8f68612bf47c3193e7fa2d8783e79373",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Fulham",
+          "awayTeamExact": "Crystal Palace",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "a6f2622727548c33369cc15c88b2aabd",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Nottingham Forest",
+          "awayTeamExact": "Tottenham Hotspur",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1557395",
+      "competitionId": "fb-comp-api-football-39",
+      "sportKey": "soccer_epl",
+      "schedule": {
+        "providerMatchId": "1557395",
+        "kickoffTimeUtc": "2026-09-05T11:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "34",
+        "canonicalTeamId": "fb-team-v1-api-football-34",
+        "scheduleDisplayName": "Newcastle",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "35",
+        "canonicalTeamId": "fb-team-v1-api-football-35",
+        "scheduleDisplayName": "Bournemouth",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "686358c484cc44fe8e617674c335d531",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Newcastle United",
+          "awayTeamExact": "Bournemouth",
+          "commenceTime": "2026-09-05T11:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_EVENT_UNANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-34",
+          "side": "home",
+          "oddsExactName": "Newcastle United",
+          "anchorType": "KICKOFF_SPORT_KEY_ONLY",
+          "confidenceClass": "MANUAL_REVIEW_REQUIRED"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-35",
+          "side": "away",
+          "oddsExactName": "Bournemouth",
+          "anchorType": "KICKOFF_SPORT_KEY_ONLY",
+          "confidenceClass": "MANUAL_REVIEW_REQUIRED"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": true,
+      "reasonCodes": [
+        "BOTH_SIDES_UNBRIDGED_SINGLE_EVENT",
+        "AUTO_APPROVE_FORBIDDEN"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1557396",
+      "competitionId": "fb-comp-api-football-39",
+      "sportKey": "soccer_epl",
+      "schedule": {
+        "providerMatchId": "1557396",
+        "kickoffTimeUtc": "2026-09-05T14:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "65",
+        "canonicalTeamId": "fb-team-v1-api-football-65",
+        "scheduleDisplayName": "Nottingham Forest",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "47",
+        "canonicalTeamId": "fb-team-v1-api-football-47",
+        "scheduleDisplayName": "Tottenham",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "29f81160baf6a97d6391d7172fad2425",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Brentford",
+          "awayTeamExact": "Sunderland",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "3b81531990da7ea3e461c43e8827672b",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Brighton and Hove Albion",
+          "awayTeamExact": "Leeds United",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "3db5f919507eb8ab0c8c72bddaca8f08",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Manchester City",
+          "awayTeamExact": "Coventry City",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "8f68612bf47c3193e7fa2d8783e79373",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Fulham",
+          "awayTeamExact": "Crystal Palace",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "a6f2622727548c33369cc15c88b2aabd",
+          "sportKey": "soccer_epl",
+          "homeTeamExact": "Nottingham Forest",
+          "awayTeamExact": "Tottenham Hotspur",
+          "commenceTime": "2026-09-05T14:00:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1570364",
+      "competitionId": "fb-comp-api-football-140",
+      "sportKey": "soccer_spain_la_liga",
+      "schedule": {
+        "providerMatchId": "1570364",
+        "kickoffTimeUtc": "2026-09-05T14:15:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "531",
+        "canonicalTeamId": "fb-team-v1-api-football-531",
+        "scheduleDisplayName": "Athletic Club",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "530",
+        "canonicalTeamId": "fb-team-v1-api-football-530",
+        "scheduleDisplayName": "Atletico Madrid",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "3a2b53cf7ad98755cf07c3eac948b056",
+          "sportKey": "soccer_spain_la_liga",
+          "homeTeamExact": "Athletic Bilbao",
+          "awayTeamExact": "Atlético Madrid",
+          "commenceTime": "2026-09-05T14:15:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_EVENT_UNANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-531",
+          "side": "home",
+          "oddsExactName": "Athletic Bilbao",
+          "anchorType": "KICKOFF_SPORT_KEY_ONLY",
+          "confidenceClass": "MANUAL_REVIEW_REQUIRED"
+        },
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-530",
+          "side": "away",
+          "oddsExactName": "Atlético Madrid",
+          "anchorType": "KICKOFF_SPORT_KEY_ONLY",
+          "confidenceClass": "MANUAL_REVIEW_REQUIRED"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": true,
+      "reasonCodes": [
+        "BOTH_SIDES_UNBRIDGED_SINGLE_EVENT",
+        "AUTO_APPROVE_FORBIDDEN"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1570365",
+      "competitionId": "fb-comp-api-football-140",
+      "sportKey": "soccer_spain_la_liga",
+      "schedule": {
+        "providerMatchId": "1570365",
+        "kickoffTimeUtc": "2026-09-04T19:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "543",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Real Betis",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "541",
+        "canonicalTeamId": "fb-team-v1-api-football-541",
+        "scheduleDisplayName": "Real Madrid",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1575149",
+      "competitionId": "fb-comp-api-football-78",
+      "sportKey": "soccer_germany_bundesliga",
+      "schedule": {
+        "providerMatchId": "1575149",
+        "kickoffTimeUtc": "2026-09-04T18:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "172",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "VfB Stuttgart",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "192",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "1. FC Köln",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1575150",
+      "competitionId": "fb-comp-api-football-78",
+      "sportKey": "soccer_germany_bundesliga",
+      "schedule": {
+        "providerMatchId": "1575150",
+        "kickoffTimeUtc": "2026-09-05T13:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "167",
+        "canonicalTeamId": "fb-team-v1-api-football-167",
+        "scheduleDisplayName": "1899 Hoffenheim",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "165",
+        "canonicalTeamId": "fb-team-v1-api-football-165",
+        "scheduleDisplayName": "Borussia Dortmund",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "11ad11baf8085245daffc75714d90b54",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "Bayer Leverkusen",
+          "awayTeamExact": "Union Berlin",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "da7576d88856817ab0e8d8b71cb4a89a",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "TSG Hoffenheim",
+          "awayTeamExact": "Borussia Dortmund",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "2240f9dbb1e05544f66815ec3e372e40",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "Borussia Monchengladbach",
+          "awayTeamExact": "Elversberg",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "1a1967df9869d19688686be9b5cad1ed",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "Werder Bremen",
+          "awayTeamExact": "RB Leipzig",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "1c52480330edcfb14490761a57928281",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "SC Paderborn",
+          "awayTeamExact": "SC Freiburg",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1575151",
+      "competitionId": "fb-comp-api-football-78",
+      "sportKey": "soccer_germany_bundesliga",
+      "schedule": {
+        "providerMatchId": "1575151",
+        "kickoffTimeUtc": "2026-09-05T13:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "168",
+        "canonicalTeamId": "fb-team-v1-api-football-168",
+        "scheduleDisplayName": "Bayer Leverkusen",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "182",
+        "canonicalTeamId": "fb-team-v1-api-football-182",
+        "scheduleDisplayName": "Union Berlin",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "11ad11baf8085245daffc75714d90b54",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "Bayer Leverkusen",
+          "awayTeamExact": "Union Berlin",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "da7576d88856817ab0e8d8b71cb4a89a",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "TSG Hoffenheim",
+          "awayTeamExact": "Borussia Dortmund",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "2240f9dbb1e05544f66815ec3e372e40",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "Borussia Monchengladbach",
+          "awayTeamExact": "Elversberg",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "1a1967df9869d19688686be9b5cad1ed",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "Werder Bremen",
+          "awayTeamExact": "RB Leipzig",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "1c52480330edcfb14490761a57928281",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "SC Paderborn",
+          "awayTeamExact": "SC Freiburg",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1575153",
+      "competitionId": "fb-comp-api-football-78",
+      "sportKey": "soccer_germany_bundesliga",
+      "schedule": {
+        "providerMatchId": "1575153",
+        "kickoffTimeUtc": "2026-09-05T13:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "163",
+        "canonicalTeamId": "fb-team-v1-api-football-163",
+        "scheduleDisplayName": "Borussia Mönchengladbach",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "1660",
+        "canonicalTeamId": "fb-team-v1-api-football-1660",
+        "scheduleDisplayName": "SV Elversberg",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "11ad11baf8085245daffc75714d90b54",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "Bayer Leverkusen",
+          "awayTeamExact": "Union Berlin",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "da7576d88856817ab0e8d8b71cb4a89a",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "TSG Hoffenheim",
+          "awayTeamExact": "Borussia Dortmund",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "2240f9dbb1e05544f66815ec3e372e40",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "Borussia Monchengladbach",
+          "awayTeamExact": "Elversberg",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "1a1967df9869d19688686be9b5cad1ed",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "Werder Bremen",
+          "awayTeamExact": "RB Leipzig",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "1c52480330edcfb14490761a57928281",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "SC Paderborn",
+          "awayTeamExact": "SC Freiburg",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1575155",
+      "competitionId": "fb-comp-api-football-78",
+      "sportKey": "soccer_germany_bundesliga",
+      "schedule": {
+        "providerMatchId": "1575155",
+        "kickoffTimeUtc": "2026-09-05T13:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "162",
+        "canonicalTeamId": "fb-team-v1-api-football-162",
+        "scheduleDisplayName": "Werder Bremen",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "173",
+        "canonicalTeamId": "fb-team-v1-api-football-173",
+        "scheduleDisplayName": "RB Leipzig",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "11ad11baf8085245daffc75714d90b54",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "Bayer Leverkusen",
+          "awayTeamExact": "Union Berlin",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "da7576d88856817ab0e8d8b71cb4a89a",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "TSG Hoffenheim",
+          "awayTeamExact": "Borussia Dortmund",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "2240f9dbb1e05544f66815ec3e372e40",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "Borussia Monchengladbach",
+          "awayTeamExact": "Elversberg",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "1a1967df9869d19688686be9b5cad1ed",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "Werder Bremen",
+          "awayTeamExact": "RB Leipzig",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "1c52480330edcfb14490761a57928281",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "SC Paderborn",
+          "awayTeamExact": "SC Freiburg",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1575157",
+      "competitionId": "fb-comp-api-football-78",
+      "sportKey": "soccer_germany_bundesliga",
+      "schedule": {
+        "providerMatchId": "1575157",
+        "kickoffTimeUtc": "2026-09-05T13:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "185",
+        "canonicalTeamId": "fb-team-v1-api-football-185",
+        "scheduleDisplayName": "SC Paderborn 07",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "160",
+        "canonicalTeamId": "fb-team-v1-api-football-160",
+        "scheduleDisplayName": "SC Freiburg",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "11ad11baf8085245daffc75714d90b54",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "Bayer Leverkusen",
+          "awayTeamExact": "Union Berlin",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "da7576d88856817ab0e8d8b71cb4a89a",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "TSG Hoffenheim",
+          "awayTeamExact": "Borussia Dortmund",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "2240f9dbb1e05544f66815ec3e372e40",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "Borussia Monchengladbach",
+          "awayTeamExact": "Elversberg",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "1a1967df9869d19688686be9b5cad1ed",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "Werder Bremen",
+          "awayTeamExact": "RB Leipzig",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "1c52480330edcfb14490761a57928281",
+          "sportKey": "soccer_germany_bundesliga",
+          "homeTeamExact": "SC Paderborn",
+          "awayTeamExact": "SC Freiburg",
+          "commenceTime": "2026-09-05T13:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE"
+      ]
+    }
+  ]
+}

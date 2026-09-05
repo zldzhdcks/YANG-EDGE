@@ -28,6 +28,15 @@ const INTAKE_2026_08_25 =
 export const INTAKE_2026_08_25_OBSERVED_AT = "2026-08-24T03:03:10.888Z";
 /** Official owner manual review of candidate evidence. Minute precision. */
 export const MANUAL_REVIEW_2026_08_25_VERIFIED_AT = "2026-08-25T02:20:00.000Z";
+const INTAKE_2026_09_05 =
+  "data/research/football/2026-09-05-odds-bridge-candidate-intake-v1.json";
+/** Provider candidate /events observation time. Not human verification. */
+export const INTAKE_2026_09_05_OBSERVED_AT = "2026-09-05T01:26:19.118Z";
+/**
+ * CTO/human review of 2026-09-05 candidate evidence. Frozen once.
+ * Not a generic auto-approval of unanchored kickoff-window events.
+ */
+export const MANUAL_REVIEW_2026_09_05_VERIFIED_AT = "2026-09-05T01:31:58.382Z";
 
 function comparisonEventSource(oddsProviderEventId: string): string {
   return `${CMP_V0} the-odds-api event id=${oddsProviderEventId}`;
@@ -35,6 +44,10 @@ function comparisonEventSource(oddsProviderEventId: string): string {
 
 function intake20260825EventSource(oddsProviderEventId: string): string {
   return `${INTAKE_2026_08_25} the-odds-api event id=${oddsProviderEventId}`;
+}
+
+function intake20260905EventSource(oddsProviderEventId: string): string {
+  return `${INTAKE_2026_09_05} the-odds-api event id=${oddsProviderEventId}`;
 }
 
 export const FOOTBALL_ODDS_TEAM_BRIDGE_V1: FootballOddsTeamBridgeEntry[] = [
@@ -219,6 +232,62 @@ export const FOOTBALL_ODDS_TEAM_BRIDGE_V1: FootballOddsTeamBridgeEntry[] = [
     oddsTeamNames: ["Bucheon FC 1995"],
     source: intake20260825EventSource("d59c12d88d59e5a665b3fd8f626628d5"),
     verifiedAt: MANUAL_REVIEW_2026_08_25_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-503",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Torino"],
+    source: intake20260905EventSource("cf4132fe69a1fb7d83fe0b38ae612076"),
+    verifiedAt: MANUAL_REVIEW_2026_09_05_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-52",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Crystal Palace"],
+    source: intake20260905EventSource("8f68612bf47c3193e7fa2d8783e79373"),
+    verifiedAt: MANUAL_REVIEW_2026_09_05_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-316",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Avispa Fukuoka"],
+    source: intake20260905EventSource("7ccec28ed7bd8fb5d12888def80a18fd"),
+    verifiedAt: MANUAL_REVIEW_2026_09_05_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-305",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Mito HollyHock"],
+    source: intake20260905EventSource("7ccec28ed7bd8fb5d12888def80a18fd"),
+    verifiedAt: MANUAL_REVIEW_2026_09_05_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-34",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Newcastle United"],
+    source: intake20260905EventSource("686358c484cc44fe8e617674c335d531"),
+    verifiedAt: MANUAL_REVIEW_2026_09_05_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-35",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Bournemouth"],
+    source: intake20260905EventSource("686358c484cc44fe8e617674c335d531"),
+    verifiedAt: MANUAL_REVIEW_2026_09_05_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-531",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Athletic Bilbao"],
+    source: intake20260905EventSource("3a2b53cf7ad98755cf07c3eac948b056"),
+    verifiedAt: MANUAL_REVIEW_2026_09_05_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-530",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Atlético Madrid"],
+    source: intake20260905EventSource("3a2b53cf7ad98755cf07c3eac948b056"),
+    verifiedAt: MANUAL_REVIEW_2026_09_05_VERIFIED_AT,
   },
 ];
 

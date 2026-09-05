@@ -30,6 +30,10 @@ import {
   parseFootballScheduleArtifact,
   planOddsFetches,
 } from "../src/lib/football/odds-1x2-v1";
+import {
+  INTAKE_2026_09_05_OBSERVED_AT,
+  MANUAL_REVIEW_2026_09_05_VERIFIED_AT,
+} from "../src/lib/football/odds-1x2-v1/team-bridge";
 import type { FootballScheduleRowV1 } from "../src/lib/football/core";
 import type { OddsData } from "../src/lib/odds/types";
 
@@ -703,6 +707,314 @@ async function main() {
   );
   assert.equal(firstOdds.meta.scheduleEligibleGames, 0);
   assert.equal(firstOdds.meta.providerCalled, false);
+
+  const INTAKE_0905_REL =
+    "data/research/football/2026-09-05-odds-bridge-candidate-intake-v1.json";
+  const intake0905 = JSON.parse(
+    readFileSync(path.join(process.cwd(), INTAKE_0905_REL), "utf8"),
+  ) as {
+    meta: {
+      artifactHash: string;
+      sourceScheduleArtifactHash: string;
+      oddsProvider: string;
+      providerMethod: string;
+      providerCalls: number;
+      observedAt: string;
+    };
+    rows: Array<{
+      schedule: { providerMatchId: string; kickoffTimeUtc: string | null };
+      candidateStatus: string;
+      reasonCodes: string[];
+      candidateEvents: Array<{
+        externalEventId: string;
+        sportKey: string;
+        homeTeamExact: string;
+        awayTeamExact: string;
+        commenceTime: string;
+        kickoffDeltaMinutes: number | null;
+      }>;
+    }>;
+  };
+  assert.equal(
+    intake0905.meta.artifactHash,
+    "ec206690b4799029aad369eb2a82c70108aa8856142eca02d637d100f7aab1a1",
+  );
+  assert.equal(
+    intake0905.meta.sourceScheduleArtifactHash,
+    "3af85c29804e6ed4af8b9301888d3f1c3a2a3f4d620b0aec78a4305021385a81",
+  );
+  assert.equal(intake0905.meta.oddsProvider, "THE_ODDS_API");
+  assert.equal(intake0905.meta.providerMethod, "listEvents");
+  assert.equal(intake0905.meta.providerCalls, 6);
+  assert.equal(intake0905.meta.observedAt, INTAKE_2026_09_05_OBSERVED_AT);
+  assert.notEqual(
+    MANUAL_REVIEW_2026_09_05_VERIFIED_AT,
+    INTAKE_2026_09_05_OBSERVED_AT,
+  );
+
+  const byMatch0905 = new Map(
+    intake0905.rows.map((r) => [r.schedule.providerMatchId, r] as const),
+  );
+  const approved0905: Array<{
+    fixtureId: string;
+    competitionId: string;
+    sportKey: string;
+    homeId: string;
+    awayId: string;
+    homeOdds: string;
+    awayOdds: string;
+    eventId: string;
+    kickoff: string;
+  }> = [
+    {
+      fixtureId: "1550110",
+      competitionId: "fb-comp-api-football-135",
+      sportKey: "soccer_italy_serie_a",
+      homeId: "fb-team-v1-api-football-502",
+      awayId: "fb-team-v1-api-football-503",
+      homeOdds: "Fiorentina",
+      awayOdds: "Torino",
+      eventId: "cf4132fe69a1fb7d83fe0b38ae612076",
+      kickoff: "2026-09-05T13:00:00.000Z",
+    },
+    {
+      fixtureId: "1557391",
+      competitionId: "fb-comp-api-football-39",
+      sportKey: "soccer_epl",
+      homeId: "fb-team-v1-api-football-36",
+      awayId: "fb-team-v1-api-football-52",
+      homeOdds: "Fulham",
+      awayOdds: "Crystal Palace",
+      eventId: "8f68612bf47c3193e7fa2d8783e79373",
+      kickoff: "2026-09-05T14:00:00.000Z",
+    },
+    {
+      fixtureId: "1556051",
+      competitionId: "fb-comp-api-football-98",
+      sportKey: "soccer_japan_j_league",
+      homeId: "fb-team-v1-api-football-316",
+      awayId: "fb-team-v1-api-football-305",
+      homeOdds: "Avispa Fukuoka",
+      awayOdds: "Mito HollyHock",
+      eventId: "7ccec28ed7bd8fb5d12888def80a18fd",
+      kickoff: "2026-09-05T10:00:00.000Z",
+    },
+    {
+      fixtureId: "1557395",
+      competitionId: "fb-comp-api-football-39",
+      sportKey: "soccer_epl",
+      homeId: "fb-team-v1-api-football-34",
+      awayId: "fb-team-v1-api-football-35",
+      homeOdds: "Newcastle United",
+      awayOdds: "Bournemouth",
+      eventId: "686358c484cc44fe8e617674c335d531",
+      kickoff: "2026-09-05T11:30:00.000Z",
+    },
+    {
+      fixtureId: "1570364",
+      competitionId: "fb-comp-api-football-140",
+      sportKey: "soccer_spain_la_liga",
+      homeId: "fb-team-v1-api-football-531",
+      awayId: "fb-team-v1-api-football-530",
+      homeOdds: "Athletic Bilbao",
+      awayOdds: "Atlético Madrid",
+      eventId: "3a2b53cf7ad98755cf07c3eac948b056",
+      kickoff: "2026-09-05T14:15:00.000Z",
+    },
+  ];
+  for (const game of approved0905) {
+    const intakeRow = byMatch0905.get(game.fixtureId);
+    assert.ok(intakeRow, game.fixtureId);
+    const event = intakeRow!.candidateEvents.find(
+      (e) => e.externalEventId === game.eventId,
+    );
+    assert.ok(event, game.fixtureId);
+    assert.equal(event!.homeTeamExact, game.homeOdds, game.fixtureId);
+    assert.equal(event!.awayTeamExact, game.awayOdds, game.fixtureId);
+    assert.equal(event!.kickoffDeltaMinutes, 0, game.fixtureId);
+    assert.deepEqual(getOddsTeamNames(game.homeId), [game.homeOdds]);
+    assert.deepEqual(getOddsTeamNames(game.awayId), [game.awayOdds]);
+    const joined = joinScheduleRowToOddsEvent({
+      row: row({
+        dateKst: "2026-09-05",
+        matchId: `soccer-api-football-${game.fixtureId}`,
+        providerMatchId: game.fixtureId,
+        competitionId: game.competitionId,
+        homeTeamId: game.homeId,
+        awayTeamId: game.awayId,
+        kickoffTimeUtc: game.kickoff,
+      }),
+      events: [
+        oddsEvent({
+          id: game.eventId,
+          sportKey: game.sportKey,
+          home: game.homeOdds,
+          away: game.awayOdds,
+          commence: game.kickoff.replace(".000Z", "Z"),
+        }),
+      ],
+      teamBridge: FOOTBALL_ODDS_TEAM_BRIDGE_V1,
+    });
+    assert.equal(joined.status, "JOINED", game.fixtureId);
+    if (joined.status === "JOINED") {
+      assert.equal(joined.event.externalEventId, game.eventId, game.fixtureId);
+      assert.equal(joined.event.homeTeam, game.homeOdds, game.fixtureId);
+      assert.equal(joined.event.awayTeam, game.awayOdds, game.fixtureId);
+      assert.equal(
+        Math.abs(joined.kickoffDeltaMinutes) <=
+          FOOTBALL_ODDS_KICKOFF_TOLERANCE_MINUTES,
+        true,
+        game.fixtureId,
+      );
+    }
+  }
+
+  const mitoScheduleSpellingRejected = joinScheduleRowToOddsEvent({
+    row: row({
+      dateKst: "2026-09-05",
+      matchId: "soccer-api-football-1556051",
+      providerMatchId: "1556051",
+      competitionId: "fb-comp-api-football-98",
+      homeTeamId: "fb-team-v1-api-football-316",
+      awayTeamId: "fb-team-v1-api-football-305",
+      kickoffTimeUtc: "2026-09-05T10:00:00.000Z",
+    }),
+    events: [
+      oddsEvent({
+        id: "7ccec28ed7bd8fb5d12888def80a18fd",
+        sportKey: "soccer_japan_j_league",
+        home: "Avispa Fukuoka",
+        away: "Mito Hollyhock",
+        commence: "2026-09-05T10:00:00Z",
+      }),
+    ],
+    teamBridge: FOOTBALL_ODDS_TEAM_BRIDGE_V1,
+  });
+  assert.equal(mitoScheduleSpellingRejected.status, "NOT_JOINED");
+
+  const atleticoUnaccentedRejected = joinScheduleRowToOddsEvent({
+    row: row({
+      dateKst: "2026-09-05",
+      matchId: "soccer-api-football-1570364",
+      providerMatchId: "1570364",
+      competitionId: "fb-comp-api-football-140",
+      homeTeamId: "fb-team-v1-api-football-531",
+      awayTeamId: "fb-team-v1-api-football-530",
+      kickoffTimeUtc: "2026-09-05T14:15:00.000Z",
+    }),
+    events: [
+      oddsEvent({
+        id: "3a2b53cf7ad98755cf07c3eac948b056",
+        sportKey: "soccer_spain_la_liga",
+        home: "Athletic Bilbao",
+        away: "Atletico Madrid",
+        commence: "2026-09-05T14:15:00Z",
+      }),
+    ],
+    teamBridge: FOOTBALL_ODDS_TEAM_BRIDGE_V1,
+  });
+  assert.equal(atleticoUnaccentedRejected.status, "NOT_JOINED");
+
+  const newcastleScheduleNameRejected = joinScheduleRowToOddsEvent({
+    row: row({
+      dateKst: "2026-09-05",
+      matchId: "soccer-api-football-1557395",
+      providerMatchId: "1557395",
+      competitionId: "fb-comp-api-football-39",
+      homeTeamId: "fb-team-v1-api-football-34",
+      awayTeamId: "fb-team-v1-api-football-35",
+      kickoffTimeUtc: "2026-09-05T11:30:00.000Z",
+    }),
+    events: [
+      oddsEvent({
+        id: "686358c484cc44fe8e617674c335d531",
+        sportKey: "soccer_epl",
+        home: "Newcastle",
+        away: "Bournemouth",
+        commence: "2026-09-05T11:30:00Z",
+      }),
+    ],
+    teamBridge: FOOTBALL_ODDS_TEAM_BRIDGE_V1,
+  });
+  assert.equal(newcastleScheduleNameRejected.status, "NOT_JOINED");
+
+  const approved0905Canonicals = [
+    "fb-team-v1-api-football-503",
+    "fb-team-v1-api-football-52",
+    "fb-team-v1-api-football-316",
+    "fb-team-v1-api-football-305",
+    "fb-team-v1-api-football-34",
+    "fb-team-v1-api-football-35",
+    "fb-team-v1-api-football-531",
+    "fb-team-v1-api-football-530",
+  ] as const;
+  for (const id of approved0905Canonicals) {
+    const entry = FOOTBALL_ODDS_TEAM_BRIDGE_V1.find(
+      (e) => e.canonicalTeamId === id,
+    );
+    assert.ok(entry, id);
+    assert.equal(entry!.verifiedAt, MANUAL_REVIEW_2026_09_05_VERIFIED_AT, id);
+    assert.notEqual(entry!.verifiedAt, INTAKE_2026_09_05_OBSERVED_AT, id);
+    assert.ok(entry!.source.includes(INTAKE_0905_REL), id);
+  }
+  assert.equal(
+    FOOTBALL_ODDS_TEAM_BRIDGE_V1.find(
+      (e) => e.canonicalTeamId === "fb-team-v1-api-football-502",
+    )?.verifiedAt,
+    MANUAL_REVIEW_2026_08_25_VERIFIED_AT,
+  );
+  assert.equal(
+    FOOTBALL_ODDS_TEAM_BRIDGE_V1.find(
+      (e) => e.canonicalTeamId === "fb-team-v1-api-football-36",
+    )?.verifiedAt,
+    MANUAL_REVIEW_2026_08_25_VERIFIED_AT,
+  );
+
+  const ambiguous0905 = [
+    "1575150",
+    "1575151",
+    "1575153",
+    "1575155",
+    "1575157",
+    "1557388",
+    "1557389",
+    "1557394",
+    "1557396",
+  ] as const;
+  for (const fixtureId of ambiguous0905) {
+    const intakeRow = byMatch0905.get(fixtureId);
+    assert.ok(intakeRow, fixtureId);
+    assert.equal(intakeRow!.candidateStatus, "AMBIGUOUS_EVENT_CANDIDATES");
+    assert.ok(intakeRow!.reasonCodes.includes("NON_ACTIONABLE"), fixtureId);
+  }
+  const forbidden0905BridgeIds = [
+    "fb-team-v1-api-football-167",
+    "fb-team-v1-api-football-165",
+    "fb-team-v1-api-football-168",
+    "fb-team-v1-api-football-182",
+    "fb-team-v1-api-football-163",
+    "fb-team-v1-api-football-1660",
+    "fb-team-v1-api-football-162",
+    "fb-team-v1-api-football-173",
+    "fb-team-v1-api-football-185",
+    "fb-team-v1-api-football-160",
+    "fb-team-v1-api-football-55",
+    "fb-team-v1-api-football-746",
+    "fb-team-v1-api-football-51",
+    "fb-team-v1-api-football-63",
+    "fb-team-v1-api-football-50",
+    "fb-team-v1-api-football-1346",
+    "fb-team-v1-api-football-65",
+    "fb-team-v1-api-football-47",
+  ] as const;
+  for (const id of forbidden0905BridgeIds) {
+    assert.equal(
+      FOOTBALL_ODDS_TEAM_BRIDGE_V1.some((e) => e.canonicalTeamId === id),
+      false,
+      id,
+    );
+    assert.equal(getOddsTeamNames(id).length, 0, id);
+  }
 
   const cmpHashBefore = sha256File(CMP_REL);
   const schedHashBefore = sha256File(SCHED17_REL);
