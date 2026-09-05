@@ -21,6 +21,7 @@ import {
   FOOTBALL_SLATE_2026_08_17_TEAMS,
   FOOTBALL_SLATE_2026_08_18_TEAMS,
   FOOTBALL_SLATE_2026_08_25_TEAMS,
+  FOOTBALL_SLATE_2026_09_05_TEAMS,
   FOOTBALL_TEAM_CATALOG_V1,
   FOOTBALL_TEAM_CONFLICTS_V1,
   getMatchedTeam,
@@ -532,6 +533,54 @@ async function main() {
     resolveProviderTeam("api-football", "2762", "Jeonbuk Motors").status,
   );
 
+  assert.equal(FOOTBALL_SLATE_2026_09_05_TEAMS.length, 25);
+  assert.equal(
+    FOOTBALL_SLATE_2026_09_05_TEAMS.some(([id]) => id === "2750"),
+    false,
+  );
+  assert.equal(
+    FOOTBALL_SLATE_2026_09_05_TEAMS.some(([id]) => id === "2767"),
+    false,
+  );
+  assert.equal(
+    resolveProviderTeam("api-football", "503", "Torino").status,
+    "MATCHED",
+  );
+  assert.equal(
+    resolveProviderTeam("api-football", "503").canonicalTeamId,
+    "fb-team-v1-api-football-503",
+  );
+  assert.equal(
+    resolveProviderTeam("api-football", "503", "Juventus").status,
+    "IDENTITY_REVIEW_REQUIRED",
+  );
+  assert.equal(
+    resolveProviderTeam("api-football", "999999").status,
+    "IDENTITY_REVIEW_REQUIRED",
+  );
+  assert.ok(
+    resolveProviderTeam("api-football", "999999").reasons.includes(
+      "UNKNOWN_PROVIDER_TEAM_ID",
+    ),
+  );
+  assert.equal(
+    resolveProviderTeam("api-football", "2764").status,
+    "IDENTITY_REVIEW_REQUIRED",
+  );
+  assert.ok(
+    resolveProviderTeam("api-football", "2764").reasons.includes(
+      "K_LEAGUE_PROVIDER_ID_CONFLICT",
+    ),
+  );
+  assert.equal(
+    resolveProviderTeam("api-football", "2761", "Jeju United FC").status,
+    "IDENTITY_REVIEW_REQUIRED",
+  );
+  assert.equal(
+    resolveProviderTeam("api-football", "2750", "Daejeon Citizen").status,
+    "IDENTITY_REVIEW_REQUIRED",
+  );
+
   const kConflict = assembleFootballScheduleArtifact({
     dateKst: "2026-08-15",
     generatedAt: "2026-08-13T00:00:00.000Z",
@@ -649,9 +698,10 @@ async function main() {
     ...FOOTBALL_SLATE_2026_08_17_TEAMS,
     ...FOOTBALL_SLATE_2026_08_18_TEAMS,
     ...FOOTBALL_SLATE_2026_08_25_TEAMS,
+    ...FOOTBALL_SLATE_2026_09_05_TEAMS,
   ];
-  assert.equal(slateIds.length, 63);
-  assert.equal(new Set(slateIds.map(([id]) => id)).size, 63);
+  assert.equal(slateIds.length, 88);
+  assert.equal(new Set(slateIds.map(([id]) => id)).size, 88);
   for (const [id] of slateIds) {
     const hit = resolveProviderTeam("api-football", id);
     assert.equal(hit.status, "MATCHED", `slate ${id}`);

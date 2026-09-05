@@ -1,6 +1,6 @@
 {
   "schemaVersion": "yang-edge-football-provider-id-first-identity-gate-audit-v1",
-  "generatedAt": "2026-08-25T02:27:40.401Z",
+  "generatedAt": "2026-09-05T01:18:37.143Z",
   "researchOnly": true,
   "networkCalls": 0,
   "predictionCalls": 0,
@@ -228,7 +228,7 @@
     "doesItInvalidateFixtureProviderIdentity": "NO",
     "catalogBlockedIdCount": 4,
     "foundationRegistrySize": 6,
-    "coreCatalogSize": 110,
+    "coreCatalogSize": 135,
     "conflictsDeclared": 2
   },
   "caseStudy20260820": {
@@ -278,8 +278,8 @@
       "blocked": 2
     },
     "providerIdFirstHypothetical": {
-      "providerIdentified": 18,
-      "canonicalPending": 2,
+      "providerIdentified": 19,
+      "canonicalPending": 1,
       "invalidProviderIdentity": 0
     },
     "rows": [
@@ -440,8 +440,8 @@
         "away": "Malaga",
         "currentIdentityStatus": "IDENTITY_REVIEW_REQUIRED",
         "currentEligibility": "IDENTITY_BLOCKED",
-        "hypothetical": "CANONICAL_ENRICHMENT_PENDING",
-        "note": "provider fixture complete; one or both teams lack catalog enrichment"
+        "hypothetical": "PROVIDER_IDENTIFIED",
+        "note": "provider fixture complete and both teams already catalog-matched"
       },
       {
         "matchId": "soccer-api-football-1610923",
@@ -1082,7 +1082,7 @@
     }
   },
   "catalogCounts": {
-    "coreCatalog": 110,
+    "coreCatalog": 135,
     "foundationRegistry": 6,
     "blockedProviderTeamIds": [
       "275",

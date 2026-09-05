@@ -32,6 +32,10 @@ import {
   SLATE_SRC_2026_08_18,
   SLATE_SRC_2026_08_25,
 } from "./team-catalog-slate-2026-08";
+import {
+  FOOTBALL_SLATE_2026_09_05_TEAMS,
+  SLATE_SRC_2026_09_05,
+} from "./team-catalog-slate-2026-09";
 
 export { FOOTBALL_IDENTITY_SCOPE_V1 } from "./team-catalog-slate-2026-08";
 
@@ -180,6 +184,9 @@ export const FOOTBALL_TEAM_CATALOG_V1: FootballTeamCatalogEntry[] = [
   ),
   ...FOOTBALL_SLATE_2026_08_25_TEAMS.map(([id, name]) =>
     matched(id, name, "UNKNOWN", [name], SLATE_SRC_2026_08_25),
+  ),
+  ...FOOTBALL_SLATE_2026_09_05_TEAMS.map(([id, name]) =>
+    matched(id, name, "UNKNOWN", [name], SLATE_SRC_2026_09_05),
   ),
 ];
 

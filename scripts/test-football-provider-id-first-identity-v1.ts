@@ -38,6 +38,7 @@ const TEAM_IDENTITY_SRC = [
   "src/lib/football/core/team-catalog.ts",
   "src/lib/football/core/identity.ts",
   "src/lib/football/core/team-catalog-slate-2026-08.ts",
+  "src/lib/football/core/team-catalog-slate-2026-09.ts",
   "src/lib/football/foundation/identity-gate.ts",
   "src/lib/football/foundation/team-registry.ts",
   "src/lib/engine",
@@ -59,6 +60,11 @@ async function main() {
   for (const [rel, expected] of Object.entries(EXPECTED_FROZEN_SHA256)) {
     assert.equal(before[rel], expected, `frozen hash mismatch: ${rel}`);
   }
+
+  const identitySrcDiffBefore = execSync(
+    `git diff --name-only -- ${TEAM_IDENTITY_SRC.join(" ")}`,
+    { cwd, encoding: "utf8" },
+  ).trim();
 
   const { document } = await writeFootballProviderIdFirstIdentityAudit(cwd);
 
@@ -107,8 +113,8 @@ async function main() {
   assert.equal(hypo.artifactModified, false);
   assert.equal(hypo.current.matched, 18);
   assert.equal(hypo.current.blocked, 2);
-  assert.equal(hypo.providerIdFirstHypothetical.providerIdentified, 18);
-  assert.equal(hypo.providerIdFirstHypothetical.canonicalPending, 2);
+  assert.equal(hypo.providerIdFirstHypothetical.providerIdentified, 19);
+  assert.equal(hypo.providerIdFirstHypothetical.canonicalPending, 1);
   assert.equal(hypo.providerIdFirstHypothetical.invalidProviderIdentity, 0);
 
   const stages = document.stageDependencyMatrix.map((s) => s.stage);
@@ -194,7 +200,11 @@ async function main() {
     `git diff --name-only -- ${TEAM_IDENTITY_SRC.join(" ")}`,
     { cwd, encoding: "utf8" },
   ).trim();
-  assert.equal(srcDiff, "");
+  assert.equal(
+    srcDiff,
+    identitySrcDiffBefore,
+    "provider-id-first audit must not mutate identity sources",
+  );
 
   assert.equal(existsSync(path.join(cwd, AUDIT_REL)), true);
   console.log("PASS football-provider-id-first-identity-v1");

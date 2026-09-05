@@ -57,6 +57,10 @@ export {
   FOOTBALL_SLATE_2026_08_25_TEAMS,
 } from "./team-catalog-slate-2026-08";
 export {
+  FOOTBALL_SLATE_2026_09_05_TEAMS,
+  SLATE_SRC_2026_09_05,
+} from "./team-catalog-slate-2026-09";
+export {
   assertResearchFixtureInput,
   normalizeFixtureToScheduleRow,
 } from "./normalize";
