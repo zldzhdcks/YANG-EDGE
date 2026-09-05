@@ -1,0 +1,223 @@
+{
+  "meta": {
+    "schemaVersion": "football-independent-standings-pregame-v0",
+    "dateKst": "2026-09-05",
+    "capturedAt": "2026-09-05T10:11:09.469Z",
+    "researchOnly": true,
+    "provider": "api-football",
+    "providerEndpoint": "standings",
+    "marketDataUsed": false,
+    "prediction": "NONE",
+    "engine": "NONE",
+    "sourceSnapshotRel": "data/research/football/2026-09-05-prediction-snapshot-v0.json",
+    "sourceSnapshotHash": "a8577c1342a8031adffa9554923cc8bedda8b2b0abc1a218657449c570a5267a",
+    "sourceScheduleRel": "data/research/football/2026-09-05-schedule-v1.json",
+    "backdated": false,
+    "providerPredictionEndpointUsed": false,
+    "oddsUsed": false,
+    "resultDataUsed": false,
+    "postgameDataUsed": false,
+    "fuzzyIdentityUsed": false,
+    "nameFirstIdentityUsed": false
+  },
+  "execution": {
+    "excludedStarted": [
+      {
+        "fixtureId": 1556051,
+        "reason": "EXCLUDED_FROM_NEW_PREGAME_EVIDENCE",
+        "kickoffTimeUtc": "2026-09-05T10:00:00.000Z",
+        "homeTeamName": "Avispa Fukuoka",
+        "awayTeamName": "Mito Hollyhock"
+      }
+    ],
+    "providerCallCount": 3,
+    "providerCalls": [
+      {
+        "leagueId": 39,
+        "season": 2026,
+        "cached": false,
+        "standingRowCount": 0,
+        "leagueName": null,
+        "error": "Football API error on /standings: {\"plan\":\"Free plans do not have access to this season, try from 2022 to 2024.\"}"
+      },
+      {
+        "leagueId": 135,
+        "season": 2026,
+        "cached": false,
+        "standingRowCount": 0,
+        "leagueName": null,
+        "error": "Football API error on /standings: {\"plan\":\"Free plans do not have access to this season, try from 2022 to 2024.\"}"
+      },
+      {
+        "leagueId": 140,
+        "season": 2026,
+        "cached": false,
+        "standingRowCount": 0,
+        "leagueName": null,
+        "error": "Football API error on /standings: {\"plan\":\"Free plans do not have access to this season, try from 2022 to 2024.\"}"
+      }
+    ]
+  },
+  "teams": [
+    {
+      "fixtureId": 1557395,
+      "side": "home",
+      "canonicalTeamId": "fb-team-v1-api-football-34",
+      "providerTeamId": 34,
+      "scheduleTeamName": "Newcastle",
+      "identity": "MISSING",
+      "identityJoin": "PROVIDER_TEAM_ID_EXACT",
+      "standing": null
+    },
+    {
+      "fixtureId": 1557395,
+      "side": "away",
+      "canonicalTeamId": "fb-team-v1-api-football-35",
+      "providerTeamId": 35,
+      "scheduleTeamName": "Bournemouth",
+      "identity": "MISSING",
+      "identityJoin": "PROVIDER_TEAM_ID_EXACT",
+      "standing": null
+    },
+    {
+      "fixtureId": 1550110,
+      "side": "home",
+      "canonicalTeamId": "fb-team-v1-api-football-502",
+      "providerTeamId": 502,
+      "scheduleTeamName": "Fiorentina",
+      "identity": "MISSING",
+      "identityJoin": "PROVIDER_TEAM_ID_EXACT",
+      "standing": null
+    },
+    {
+      "fixtureId": 1550110,
+      "side": "away",
+      "canonicalTeamId": "fb-team-v1-api-football-503",
+      "providerTeamId": 503,
+      "scheduleTeamName": "Torino",
+      "identity": "MISSING",
+      "identityJoin": "PROVIDER_TEAM_ID_EXACT",
+      "standing": null
+    },
+    {
+      "fixtureId": 1557391,
+      "side": "home",
+      "canonicalTeamId": "fb-team-v1-api-football-36",
+      "providerTeamId": 36,
+      "scheduleTeamName": "Fulham",
+      "identity": "MISSING",
+      "identityJoin": "PROVIDER_TEAM_ID_EXACT",
+      "standing": null
+    },
+    {
+      "fixtureId": 1557391,
+      "side": "away",
+      "canonicalTeamId": "fb-team-v1-api-football-52",
+      "providerTeamId": 52,
+      "scheduleTeamName": "Crystal Palace",
+      "identity": "MISSING",
+      "identityJoin": "PROVIDER_TEAM_ID_EXACT",
+      "standing": null
+    },
+    {
+      "fixtureId": 1570364,
+      "side": "home",
+      "canonicalTeamId": "fb-team-v1-api-football-531",
+      "providerTeamId": 531,
+      "scheduleTeamName": "Athletic Club",
+      "identity": "MISSING",
+      "identityJoin": "PROVIDER_TEAM_ID_EXACT",
+      "standing": null
+    },
+    {
+      "fixtureId": 1570364,
+      "side": "away",
+      "canonicalTeamId": "fb-team-v1-api-football-530",
+      "providerTeamId": 530,
+      "scheduleTeamName": "Atletico Madrid",
+      "identity": "MISSING",
+      "identityJoin": "PROVIDER_TEAM_ID_EXACT",
+      "standing": null
+    }
+  ],
+  "matches": [
+    {
+      "fixtureId": 1557395,
+      "homeCanonicalTeamId": "fb-team-v1-api-football-34",
+      "awayCanonicalTeamId": "fb-team-v1-api-football-35",
+      "competition": "fb-comp-api-football-39",
+      "competitionName": null,
+      "leagueId": 39,
+      "season": 2026,
+      "kickoffTimeUtc": "2026-09-05T11:30:00.000Z",
+      "kickoffKst": "2026-09-05 20:30",
+      "admitted": true,
+      "capturedAtBeforeKickoff": true,
+      "homeStandingsExactFound": "NO",
+      "awayStandingsExactFound": "NO",
+      "homeIdentity": "MISSING",
+      "awayIdentity": "MISSING",
+      "INDEPENDENT_STANDINGS_READY": "NO"
+    },
+    {
+      "fixtureId": 1550110,
+      "homeCanonicalTeamId": "fb-team-v1-api-football-502",
+      "awayCanonicalTeamId": "fb-team-v1-api-football-503",
+      "competition": "fb-comp-api-football-135",
+      "competitionName": null,
+      "leagueId": 135,
+      "season": 2026,
+      "kickoffTimeUtc": "2026-09-05T13:00:00.000Z",
+      "kickoffKst": "2026-09-05 22:00",
+      "admitted": true,
+      "capturedAtBeforeKickoff": true,
+      "homeStandingsExactFound": "NO",
+      "awayStandingsExactFound": "NO",
+      "homeIdentity": "MISSING",
+      "awayIdentity": "MISSING",
+      "INDEPENDENT_STANDINGS_READY": "NO"
+    },
+    {
+      "fixtureId": 1557391,
+      "homeCanonicalTeamId": "fb-team-v1-api-football-36",
+      "awayCanonicalTeamId": "fb-team-v1-api-football-52",
+      "competition": "fb-comp-api-football-39",
+      "competitionName": null,
+      "leagueId": 39,
+      "season": 2026,
+      "kickoffTimeUtc": "2026-09-05T14:00:00.000Z",
+      "kickoffKst": "2026-09-05 23:00",
+      "admitted": true,
+      "capturedAtBeforeKickoff": true,
+      "homeStandingsExactFound": "NO",
+      "awayStandingsExactFound": "NO",
+      "homeIdentity": "MISSING",
+      "awayIdentity": "MISSING",
+      "INDEPENDENT_STANDINGS_READY": "NO"
+    },
+    {
+      "fixtureId": 1570364,
+      "homeCanonicalTeamId": "fb-team-v1-api-football-531",
+      "awayCanonicalTeamId": "fb-team-v1-api-football-530",
+      "competition": "fb-comp-api-football-140",
+      "competitionName": null,
+      "leagueId": 140,
+      "season": 2026,
+      "kickoffTimeUtc": "2026-09-05T14:15:00.000Z",
+      "kickoffKst": "2026-09-05 23:15",
+      "admitted": true,
+      "capturedAtBeforeKickoff": true,
+      "homeStandingsExactFound": "NO",
+      "awayStandingsExactFound": "NO",
+      "homeIdentity": "MISSING",
+      "awayIdentity": "MISSING",
+      "INDEPENDENT_STANDINGS_READY": "NO"
+    }
+  ],
+  "featureFamilyRawAvailability": {
+    "STANDINGS_RANK": "RAW_MISSING",
+    "POINTS_PER_GAME": "RAW_MISSING",
+    "GOAL_DIFFERENCE_PER_GAME": "RAW_MISSING",
+    "PROVIDER_FORM": "RAW_MISSING"
+  }
+}
