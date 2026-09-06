@@ -20,21 +20,29 @@ import {
   DISCOVERED_BANDS_ARE_PRODUCTION_CONTRACT,
   GEOMETRY_BASIS,
   FIELD_BOUNDARY_OUTCOME_TUNING,
+  INVALID_GEOMETRY_AFFECTS_LAYOUT_DISCOVERY,
   INVALID_NORMALIZED_GEOMETRY_SILENTLY_BANDED,
   INVALID_X_DEFAULT_BAND,
+  HISTOGRAM_INVALID_X_DEFAULT_BIN,
   LAYOUT_DISCOVERY_BIN_WIDTH,
   LAYOUT_DISCOVERY_MIN_MODE_SHARE,
+  MODE_SHARE_DENOMINATOR_INCLUDES_INVALID_GEOMETRY,
   REGION_SEMANTIC_ROLE_ASSIGNED,
   ROUND_105_COUNT_SPECIAL_CASE,
   SEMANTIC_REGION_CONTRACT_FROZEN,
+  accumulateHistogram,
   bandIndexForCenter,
+  binIndexForNormalizedX,
   buildColumnLayoutAuditDocumentV0,
   classifyNumericRawShape,
   classifyTokenShape,
+  emptyHistogram,
+  histogramBinCount,
   isValidNormalizedFragmentGeometry,
   joinVisualAndAnchorRows,
   layoutFragmentFromVisual,
   looksLikeUnrepairedOddsRaw,
+  modesFromHistogram,
   normalizeX,
   regionsFromRemainder,
   rowKey,
@@ -242,6 +250,9 @@ async function main() {
   assert.equal(FIELD_BOUNDARY_OUTCOME_TUNING, false);
   assert.equal(INVALID_NORMALIZED_GEOMETRY_SILENTLY_BANDED, false);
   assert.equal(INVALID_X_DEFAULT_BAND, "NONE");
+  assert.equal(HISTOGRAM_INVALID_X_DEFAULT_BIN, "NONE");
+  assert.equal(INVALID_GEOMETRY_AFFECTS_LAYOUT_DISCOVERY, false);
+  assert.equal(MODE_SHARE_DENOMINATOR_INCLUDES_INVALID_GEOMETRY, false);
 
   // A. normalized X independent of image width
   assert.equal(normalizeX(400, 800), 0.5);
@@ -491,6 +502,96 @@ async function main() {
   );
   assert.equal(
     grouped.some((r) => r.occupiedBandIndex == null && r.joinedRawText === "U2.5"),
+    true,
+  );
+
+  const lastBin = histogramBinCount() - 1;
+  assert.equal(binIndexForNormalizedX(0), 0);
+  assert.equal(binIndexForNormalizedX(1), lastBin);
+  assert.equal(binIndexForNormalizedX(-0.1), null);
+  assert.equal(binIndexForNormalizedX(1.2), null);
+  assert.equal(binIndexForNormalizedX(Number.NaN), null);
+  assert.equal(binIndexForNormalizedX(Number.POSITIVE_INFINITY), null);
+  assert.equal(binIndexForNormalizedX(Number.NEGATIVE_INFINITY), null);
+
+  function histFrag(rawText: string, left: number, right: number) {
+    return {
+      ...layoutFragmentFromVisual(frag(rawText, left * 800, (right - left) * 800, 0), 800),
+      normalizedLeftX: left,
+      normalizedCenterX: (left + right) / 2,
+      normalizedRightX: right,
+    };
+  }
+  const bins = emptyHistogram();
+  const seen = bins.map(() => new Set<string>());
+  const validCluster = histFrag("한화", 0.28, 0.32);
+  for (let i = 0; i < 40; i++) {
+    accumulateHistogram(bins, validCluster, seen, `valid-${i}`);
+  }
+  const overflowHist = layoutFragmentFromVisual(frag("U2.5", 900, 200, 0), 800);
+  const nanHist = histFrag("1 79", 0.6, 0.7);
+  nanHist.normalizedLeftX = Number.NaN;
+  nanHist.normalizedCenterX = Number.NaN;
+  nanHist.normalizedRightX = Number.NaN;
+  const infHist = histFrag("320", 0.7, 0.8);
+  infHist.normalizedLeftX = Number.POSITIVE_INFINITY;
+  infHist.normalizedCenterX = Number.POSITIVE_INFINITY;
+  infHist.normalizedRightX = Number.POSITIVE_INFINITY;
+  const negHist = histFrag("한화", -0.2, -0.1);
+  negHist.normalizedLeftX = -0.2;
+  negHist.normalizedCenterX = -0.15;
+  negHist.normalizedRightX = -0.1;
+  for (let i = 0; i < 200; i++) {
+    accumulateHistogram(bins, overflowHist, seen, `overflow-${i}`);
+    accumulateHistogram(bins, nanHist, seen, `nan-${i}`);
+    accumulateHistogram(bins, infHist, seen, `inf-${i}`);
+    accumulateHistogram(bins, negHist, seen, `neg-${i}`);
+  }
+  assert.equal(bins[lastBin]!.fragmentCount, 0);
+  assert.equal(bins[0]!.exampleRawTexts.includes("U2.5"), false);
+  const modes = modesFromHistogram(bins, 40);
+  assert.equal(modes.some((m) => m.binIndex === lastBin), false);
+  assert.equal(
+    modes.some((m) => m.center > 0.28 && m.center < 0.34),
+    true,
+  );
+
+  const leakRow = visualRow({
+    sha: "sha-leak",
+    fileName: "leak.png",
+    index: 0,
+    fragments: [
+      frag("9413", 16, 24, 0),
+      frag("09-06(일) 11 30", 80, 80, 1),
+      frag("한화", 0.44 * 800, 0.06 * 800, 2),
+      frag("U2.5", 900, 200, 3),
+    ],
+  });
+  const leakDoc = buildColumnLayoutAuditDocumentV0({
+    visual: visualDoc([{ sha: "sha-leak", fileName: "leak.png", width: 800, rows: [leakRow] }]),
+    semantic: semanticDoc([semanticRow(leakRow, { sourceImageSha256: "sha-leak", sourceFileName: "leak.png" })], 1),
+  });
+  assert.equal(
+    leakDoc.rows[0]!.semanticRemainderFragments.some((f) => f.rawText === "U2.5"),
+    true,
+  );
+  assert.equal(
+    leakDoc.rows[0]!.semanticRemainderFragments.some((f) => f.rawText === "한화"),
+    true,
+  );
+  assert.equal(
+    leakDoc.remainderHistogram.some((b) => b.exampleRawTexts.includes("U2.5")),
+    false,
+  );
+  assert.equal(
+    leakDoc.candidateBands.some((b) => b.exampleRawTexts.includes("U2.5")),
+    false,
+  );
+  const uDecimal = leakDoc.marketSignalAudit.find((a) => a.className === "U_DECIMAL");
+  assert.equal(uDecimal?.count, 0);
+  assert.equal(uDecimal?.normalizedCenterX.count, 0);
+  assert.equal(
+    leakDoc.rows[0]!.regions.some((r) => r.occupiedBandIndex == null && r.joinedRawText.includes("U2.5")),
     true,
   );
 

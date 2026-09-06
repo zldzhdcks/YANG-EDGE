@@ -7,6 +7,7 @@ import {
   bandEdgesFromModeCenters,
   distribution,
   emptyHistogram,
+  isValidNormalizedFragmentGeometry,
   modesFromHistogram,
 } from "./geometry";
 import { joinVisualAndAnchorRows, rowKey } from "./lineage";
@@ -55,21 +56,24 @@ export function buildColumnLayoutAuditDocumentV0(input: {
 
   for (const { row, geo } of located) {
     const key = rowKey(row.visual.sourceImageSha256, row.visual.visualRowIndex);
-    if (geo.identifierFragment) {
+    if (geo.identifierFragment && isValidNormalizedFragmentGeometry(geo.identifierFragment)) {
       identifierCenters.push(geo.identifierFragment.normalizedCenterX);
     }
     for (const f of geo.dateTimeFragments) {
+      if (!isValidNormalizedFragmentGeometry(f)) continue;
       dateTimeCenters.push(f.normalizedCenterX);
     }
     if (
       row.semantic.timeParseStatus === "PARSED_EXACT" &&
       geo.dateTimeFragments.length > 0
     ) {
-      exactClockCenters.push(
-        geo.dateTimeFragments[geo.dateTimeFragments.length - 1]!.normalizedCenterX,
-      );
+      const clock = geo.dateTimeFragments[geo.dateTimeFragments.length - 1]!;
+      if (isValidNormalizedFragmentGeometry(clock)) {
+        exactClockCenters.push(clock.normalizedCenterX);
+      }
     }
     for (const f of geo.semanticRemainderFragments) {
+      if (!isValidNormalizedFragmentGeometry(f)) continue;
       remainderFragmentTotal += 1;
       accumulateHistogram(remainderHist, f, remainderRowSets, key);
       remainderTagged.push(
@@ -95,6 +99,7 @@ export function buildColumnLayoutAuditDocumentV0(input: {
   for (const { row, geo } of located) {
     const key = rowKey(row.visual.sourceImageSha256, row.visual.visualRowIndex);
     for (const f of geo.semanticRemainderFragments) {
+      if (!isValidNormalizedFragmentGeometry(f)) continue;
       const regions = regionsFromRemainder({
         remainder: [f],
         bands: edges,

@@ -1,6 +1,6 @@
 import type { LayoutFragmentV0 } from "./types";
 import type { MarketSignalAuditV0, NumericShapeAuditV0 } from "./types";
-import { distribution } from "./geometry";
+import { distribution, isValidNormalizedFragmentGeometry } from "./geometry";
 import { classifyNumericRawShape } from "./token-shape";
 import { rowKey } from "./lineage";
 
@@ -48,17 +48,24 @@ function examples(items: Tagged[]): string[] {
   return out;
 }
 
+function geometryAuditCenters(items: Tagged[]): number[] {
+  return items
+    .filter((it) => isValidNormalizedFragmentGeometry(it.frag))
+    .map((it) => it.frag.normalizedCenterX);
+}
+
 export function auditMarketSignals(items: Tagged[]): MarketSignalAuditV0[] {
   return MARKET_CLASSES.map((cls) => {
     const hit = items.filter((it) => cls.test(it.frag.rawText));
-    const rows = new Set(hit.map((h) => h.rowKey));
+    const geoHit = hit.filter((it) => isValidNormalizedFragmentGeometry(it.frag));
+    const rows = new Set(geoHit.map((h) => h.rowKey));
     return {
       className: cls.className,
       pattern: cls.pattern,
-      count: hit.length,
+      count: geoHit.length,
       rowCoverage: rows.size,
-      normalizedCenterX: distribution(hit.map((h) => h.frag.normalizedCenterX)),
-      exampleRawTexts: examples(hit),
+      normalizedCenterX: distribution(geometryAuditCenters(geoHit)),
+      exampleRawTexts: examples(geoHit),
     };
   });
 }
@@ -82,12 +89,13 @@ export function auditNumericShapes(items: Tagged[]): NumericShapeAuditV0[] {
   ];
   return order.map((className) => {
     const hit = groups.get(className) ?? [];
+    const geoHit = hit.filter((it) => isValidNormalizedFragmentGeometry(it.frag));
     return {
       className,
-      count: hit.length,
-      rowCoverage: new Set(hit.map((h) => h.rowKey)).size,
-      normalizedCenterX: distribution(hit.map((h) => h.frag.normalizedCenterX)),
-      exampleRawTexts: examples(hit),
+      count: geoHit.length,
+      rowCoverage: new Set(geoHit.map((h) => h.rowKey)).size,
+      normalizedCenterX: distribution(geometryAuditCenters(geoHit)),
+      exampleRawTexts: examples(geoHit),
     };
   });
 }

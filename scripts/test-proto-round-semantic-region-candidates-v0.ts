@@ -28,6 +28,7 @@ import {
   TEXT_BEARING_RAW_IS_TEAM,
   assignRawEvidenceTags,
   assertColumnLayoutAuditSource,
+  auditRawEvidenceTags,
   buildSemanticRegionCandidatesDocumentV0,
   isExactMarketMarkerRaw,
   isNumericLikeRaw,
@@ -391,6 +392,45 @@ async function main() {
   assert.equal(invalidRegion.fragments[0]!.rawText, "U2.5");
   assert.equal(invalidRegion.rawEvidenceTags.includes("EXACT_MARKET_MARKER_RAW"), false);
   assert.equal(invalidRegion.geometryStatus, "INVALID_NORMALIZED_GEOMETRY");
+
+  const mixedGeo = taggedRegionFromSource(
+    sourceRegion({
+      regionIndex: 0,
+      band: 0,
+      left: 0.2,
+      right: 1.2,
+      fragments: [layoutFrag("한화", 0.4, 0.5), overflow],
+    }),
+  );
+  assert.equal(mixedGeo.geometryStatus, "MIXED");
+  assert.deepEqual(mixedGeo.rawEvidenceTags, ["TEXT_BEARING_RAW"]);
+  assert.equal(mixedGeo.fragments.some((f) => f.rawText === "U2.5"), true);
+  const mixedAuditRow = {
+    sourceImageSha256: "sha-mix",
+    sourceFileName: "mix.png",
+    visualRowIndex: 0,
+    rowIdentifierCandidate: 9413,
+    scheduledLocalCandidate: null,
+    layoutPatternId: "LAYOUT_PATTERN_A",
+    visualJoinedTextCandidate: "한화 U2.5",
+    regions: [mixedGeo],
+    rowRawEvidenceSignature: "T",
+    teamParsingStatus: "NOT_PERFORMED" as const,
+    leagueParsingStatus: "NOT_PERFORMED" as const,
+    marketParsingStatus: "NOT_PERFORMED" as const,
+    oddsParsingStatus: "NOT_PERFORMED" as const,
+    gameMatchingStatus: "NOT_PERFORMED" as const,
+    acceptedObservationTime: null,
+  };
+  const tagAudit = auditRawEvidenceTags([mixedAuditRow]);
+  const textAudit = tagAudit.find((t) => t.tag === "TEXT_BEARING_RAW")!;
+  assert.equal(textAudit.normalizedCenterX.count, 1);
+  assert.equal((textAudit.normalizedCenterX.max ?? 0) <= 1, true);
+  assert.equal((textAudit.normalizedCenterX.min ?? 1) >= 0, true);
+  assert.equal(Number.isFinite(textAudit.normalizedCenterX.median), true);
+  const marketAudit = tagAudit.find((t) => t.tag === "EXACT_MARKET_MARKER_RAW")!;
+  assert.equal(marketAudit.regionCount, 0);
+  assert.equal(marketAudit.normalizedCenterX.count, 0);
 
   const frozen = layoutDoc([]);
   frozen.meta.semanticRegionContractFrozen = true as unknown as false;

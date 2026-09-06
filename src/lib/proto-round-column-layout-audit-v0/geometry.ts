@@ -52,7 +52,7 @@ export function percentile(sorted: number[], p: number): number | null {
 }
 
 export function distribution(values: number[]): PercentileDistribution {
-  const sorted = [...values].sort((a, b) => a - b);
+  const sorted = values.filter((v) => Number.isFinite(v)).sort((a, b) => a - b);
   return {
     count: sorted.length,
     min: sorted.length ? sorted[0]! : null,
@@ -67,10 +67,18 @@ export function histogramBinCount(): number {
   return Math.round(1 / LAYOUT_DISCOVERY_BIN_WIDTH);
 }
 
-export function binIndexForNormalizedX(x: number): number {
+export const HISTOGRAM_INVALID_X_DEFAULT_BIN = "NONE" as const;
+export const INVALID_GEOMETRY_AFFECTS_LAYOUT_DISCOVERY = false as const;
+export const MODE_SHARE_DENOMINATOR_INCLUDES_INVALID_GEOMETRY = false as const;
+
+/**
+ * Histogram bin for a valid normalized center X.
+ * x === 1 maps to the last bin. Out-of-range / non-finite → null.
+ */
+export function binIndexForNormalizedX(x: number): number | null {
   const n = histogramBinCount();
-  if (x >= 1) return n - 1;
-  if (x < 0) return 0;
+  if (!Number.isFinite(x) || x < 0 || x > 1) return null;
+  if (x === 1) return n - 1;
   return Math.min(n - 1, Math.floor(x / LAYOUT_DISCOVERY_BIN_WIDTH));
 }
 
@@ -97,10 +105,13 @@ export function accumulateHistogram(
   rowKeysSeen: Array<Set<string>>,
   rowKey: string,
 ): void {
+  if (!isValidNormalizedFragmentGeometry(frag)) return;
   const i = binIndexForNormalizedX(frag.normalizedCenterX);
-  const bin = bins[i]!;
+  if (i == null) return;
+  const bin = bins[i];
+  const set = rowKeysSeen[i];
+  if (!bin || !set) return;
   bin.fragmentCount += 1;
-  const set = rowKeysSeen[i]!;
   set.add(rowKey);
   bin.rowCoverage = set.size;
   if (bin.exampleRawTexts.length < 8 && !bin.exampleRawTexts.includes(frag.rawText)) {

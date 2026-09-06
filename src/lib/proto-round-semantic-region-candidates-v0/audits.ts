@@ -1,4 +1,4 @@
-import { distribution } from "../proto-round-column-layout-audit-v0/geometry";
+import { distribution, isValidNormalizedFragmentGeometry } from "../proto-round-column-layout-audit-v0/geometry";
 import type { LayoutFragmentV0 } from "../proto-round-column-layout-audit-v0/types";
 import {
   assignRawEvidenceTags,
@@ -52,8 +52,9 @@ export function auditRawEvidenceTags(
       const key = region.occupiedBandIndex == null ? "null" : String(region.occupiedBandIndex);
       bandCounts[key] = (bandCounts[key] ?? 0) + 1;
       for (const frag of region.fragments) {
-        centers.push((frag.normalizedLeftX + frag.normalizedRightX) / 2);
         texts.push(frag.rawText);
+        if (!isValidNormalizedFragmentGeometry(frag)) continue;
+        centers.push((frag.normalizedLeftX + frag.normalizedRightX) / 2);
       }
     }
     return {
