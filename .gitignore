@@ -33,6 +33,10 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# Local proto-round operator inbox (raw screenshots + local manifests).
+# Do not whitelist screenshots. All files under this root stay untracked.
+/PROTO_ROUNDS/
+
 # Research raw provider caches (regenerable; do not commit)
 # Tracked caches under data/cache/mlb-game-results/ are NOT covered here.
 /data/cache/research/mlb/raw/
