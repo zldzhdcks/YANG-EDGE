@@ -1,5 +1,5 @@
 import type { LayoutFragmentV0, RawFieldRegionCandidateV0 } from "./types";
-import { bandIndexForCenter } from "./geometry";
+import { bandIndexForCenter, isValidNormalizedFragmentGeometry } from "./geometry";
 
 export function regionsFromRemainder(input: {
   remainder: LayoutFragmentV0[];
@@ -21,14 +21,23 @@ export function regionsFromRemainder(input: {
   }
 
   const grouped = new Map<number, LayoutFragmentV0[]>();
+  const invalidGeometry: LayoutFragmentV0[] = [];
   for (const frag of input.remainder) {
-    const idx = bandIndexForCenter(frag.normalizedCenterX, input.bands) ?? 0;
+    if (!isValidNormalizedFragmentGeometry(frag)) {
+      invalidGeometry.push(frag);
+      continue;
+    }
+    const idx = bandIndexForCenter(frag.normalizedCenterX, input.bands);
+    if (idx == null) {
+      invalidGeometry.push(frag);
+      continue;
+    }
     const list = grouped.get(idx) ?? [];
     list.push(frag);
     grouped.set(idx, list);
   }
   const bandIndexes = [...grouped.keys()].sort((a, b) => a - b);
-  return bandIndexes.map((bandIndex, regionIndex) => {
+  const regions = bandIndexes.map((bandIndex, regionIndex) => {
     const frags = grouped.get(bandIndex)!;
     return {
       regionIndex,
@@ -40,6 +49,18 @@ export function regionsFromRemainder(input: {
       occupiedBandIndex: bandIndex,
     };
   });
+  if (invalidGeometry.length > 0) {
+    regions.push({
+      regionIndex: regions.length,
+      normalizedLeft: Math.min(...invalidGeometry.map((f) => f.normalizedLeftX)),
+      normalizedRight: Math.max(...invalidGeometry.map((f) => f.normalizedRightX)),
+      fragments: invalidGeometry,
+      joinedRawText: invalidGeometry.map((f) => f.rawText).join(" "),
+      semanticRole: "UNASSIGNED" as const,
+      occupiedBandIndex: null,
+    });
+  }
+  return regions;
 }
 
 export function occupancyKey(bandIndexes: number[]): string {

@@ -169,16 +169,52 @@ export function bandEdgesFromModeCenters(modeCenters: number[]): Array<{
   return edges;
 }
 
+export const INVALID_NORMALIZED_GEOMETRY_SILENTLY_BANDED = false as const;
+export const INVALID_X_DEFAULT_BAND = "NONE" as const;
+
+export function isFiniteNormalizedX(value: number): boolean {
+  return Number.isFinite(value);
+}
+
+/**
+ * Fail closed for fragment geometry. Never silently map invalid X onto a band.
+ * Valid Round-105 fragments already satisfy this; invalid input is rejected.
+ */
+export function isValidNormalizedFragmentGeometry(frag: {
+  normalizedLeftX: number;
+  normalizedCenterX: number;
+  normalizedRightX: number;
+}): boolean {
+  const left = frag.normalizedLeftX;
+  const center = frag.normalizedCenterX;
+  const right = frag.normalizedRightX;
+  if (
+    !isFiniteNormalizedX(left) ||
+    !isFiniteNormalizedX(center) ||
+    !isFiniteNormalizedX(right)
+  ) {
+    return false;
+  }
+  return (
+    left >= 0 &&
+    left <= center &&
+    center <= right &&
+    right <= 1
+  );
+}
+
 export function bandIndexForCenter(
   centerX: number,
   bands: Array<{ left: number; right: number }>,
 ): number | null {
   if (bands.length === 0) return null;
+  if (!Number.isFinite(centerX) || centerX < 0 || centerX > 1) return null;
   for (let i = 0; i < bands.length; i++) {
     const b = bands[i]!;
-    if (centerX >= b.left && (centerX < b.right || i === bands.length - 1)) {
+    const last = i === bands.length - 1;
+    if (centerX >= b.left && (centerX < b.right || (last && centerX <= b.right))) {
       return i;
     }
   }
-  return bands.length - 1;
+  return null;
 }

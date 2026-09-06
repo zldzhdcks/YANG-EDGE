@@ -20,18 +20,23 @@ import {
   DISCOVERED_BANDS_ARE_PRODUCTION_CONTRACT,
   GEOMETRY_BASIS,
   FIELD_BOUNDARY_OUTCOME_TUNING,
+  INVALID_NORMALIZED_GEOMETRY_SILENTLY_BANDED,
+  INVALID_X_DEFAULT_BAND,
   LAYOUT_DISCOVERY_BIN_WIDTH,
   LAYOUT_DISCOVERY_MIN_MODE_SHARE,
   REGION_SEMANTIC_ROLE_ASSIGNED,
   ROUND_105_COUNT_SPECIAL_CASE,
   SEMANTIC_REGION_CONTRACT_FROZEN,
+  bandIndexForCenter,
   buildColumnLayoutAuditDocumentV0,
   classifyNumericRawShape,
   classifyTokenShape,
+  isValidNormalizedFragmentGeometry,
   joinVisualAndAnchorRows,
   layoutFragmentFromVisual,
   looksLikeUnrepairedOddsRaw,
   normalizeX,
+  regionsFromRemainder,
   rowKey,
 } from "../src/lib/proto-round-column-layout-audit-v0";
 
@@ -235,6 +240,8 @@ async function main() {
   assert.equal(LAYOUT_DISCOVERY_MIN_MODE_SHARE, 0.01);
   assert.equal(ROUND_105_COUNT_SPECIAL_CASE, false);
   assert.equal(FIELD_BOUNDARY_OUTCOME_TUNING, false);
+  assert.equal(INVALID_NORMALIZED_GEOMETRY_SILENTLY_BANDED, false);
+  assert.equal(INVALID_X_DEFAULT_BAND, "NONE");
 
   // A. normalized X independent of image width
   assert.equal(normalizeX(400, 800), 0.5);
@@ -419,6 +426,73 @@ async function main() {
   assert.equal(doc.meta.layoutDiscoveryMinModeShare, LAYOUT_DISCOVERY_MIN_MODE_SHARE);
   assert.equal(doc.meta.round105CountSpecialCase, false);
   assert.equal(doc.meta.fieldBoundaryOutcomeTuning, false);
+
+  // Geometry fail-closed: invalid X is not mapped onto the last band.
+  const geoOk = isValidNormalizedFragmentGeometry({
+    normalizedLeftX: 0.1,
+    normalizedCenterX: 0.15,
+    normalizedRightX: 0.2,
+  });
+  assert.equal(geoOk, true);
+  assert.equal(
+    isValidNormalizedFragmentGeometry({
+      normalizedLeftX: -0.1,
+      normalizedCenterX: 0,
+      normalizedRightX: 0.1,
+    }),
+    false,
+  );
+  assert.equal(
+    isValidNormalizedFragmentGeometry({
+      normalizedLeftX: 0.9,
+      normalizedCenterX: 1.05,
+      normalizedRightX: 1.2,
+    }),
+    false,
+  );
+  assert.equal(
+    isValidNormalizedFragmentGeometry({
+      normalizedLeftX: Number.NaN,
+      normalizedCenterX: 0.5,
+      normalizedRightX: 0.6,
+    }),
+    false,
+  );
+  assert.equal(
+    isValidNormalizedFragmentGeometry({
+      normalizedLeftX: 0.4,
+      normalizedCenterX: 0.3,
+      normalizedRightX: 0.2,
+    }),
+    false,
+  );
+  const bands = [
+    { left: 0, right: 0.5 },
+    { left: 0.5, right: 1 },
+  ];
+  assert.equal(bandIndexForCenter(0.25, bands), 0);
+  assert.equal(bandIndexForCenter(1, bands), 1);
+  assert.equal(bandIndexForCenter(-0.1, bands), null);
+  assert.equal(bandIndexForCenter(1.2, bands), null);
+  assert.equal(bandIndexForCenter(Number.NaN, bands), null);
+  assert.equal(bandIndexForCenter(Number.POSITIVE_INFINITY, bands), null);
+  const overflowFrag = layoutFragmentFromVisual(frag("U2.5", 900, 200, 0), 800);
+  assert.equal(isValidNormalizedFragmentGeometry(overflowFrag), false);
+  const grouped = regionsFromRemainder({
+    remainder: [
+      layoutFragmentFromVisual(frag("한화", 80, 40, 0), 800),
+      overflowFrag,
+    ],
+    bands,
+  });
+  assert.equal(
+    grouped.some((r) => r.occupiedBandIndex === 1 && r.joinedRawText.includes("U2.5")),
+    false,
+  );
+  assert.equal(
+    grouped.some((r) => r.occupiedBandIndex == null && r.joinedRawText === "U2.5"),
+    true,
+  );
 
   // N. no fixed Round-105 count requirement in audit source
   // O. audit parameters do not become semantic band constants
