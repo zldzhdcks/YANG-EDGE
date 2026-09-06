@@ -37,6 +37,16 @@ export const INTAKE_2026_09_05_OBSERVED_AT = "2026-09-05T01:26:19.118Z";
  * Not a generic auto-approval of unanchored kickoff-window events.
  */
 export const MANUAL_REVIEW_2026_09_05_VERIFIED_AT = "2026-09-05T01:31:58.382Z";
+const INTAKE_2026_09_06 =
+  "data/research/football/2026-09-06-odds-bridge-candidate-intake-v1.json";
+/** Provider candidate /events observation time. Not human verification. */
+export const INTAKE_2026_09_06_OBSERVED_AT = "2026-09-06T01:21:45.709Z";
+/**
+ * CTO/human review of 2026-09-06 single-side-anchored MLS candidates.
+ * St. Louis City SC + Minnesota United FC only. Not a generic
+ * auto-approval of 10:30 ambiguous unanchored kickoff-window events.
+ */
+export const MANUAL_REVIEW_2026_09_06_VERIFIED_AT = "2026-09-06T01:28:40.263Z";
 
 function comparisonEventSource(oddsProviderEventId: string): string {
   return `${CMP_V0} the-odds-api event id=${oddsProviderEventId}`;
@@ -48,6 +58,10 @@ function intake20260825EventSource(oddsProviderEventId: string): string {
 
 function intake20260905EventSource(oddsProviderEventId: string): string {
   return `${INTAKE_2026_09_05} the-odds-api event id=${oddsProviderEventId}`;
+}
+
+function intake20260906EventSource(oddsProviderEventId: string): string {
+  return `${INTAKE_2026_09_06} the-odds-api event id=${oddsProviderEventId}`;
 }
 
 export const FOOTBALL_ODDS_TEAM_BRIDGE_V1: FootballOddsTeamBridgeEntry[] = [
@@ -288,6 +302,20 @@ export const FOOTBALL_ODDS_TEAM_BRIDGE_V1: FootballOddsTeamBridgeEntry[] = [
     oddsTeamNames: ["Atlético Madrid"],
     source: intake20260905EventSource("3a2b53cf7ad98755cf07c3eac948b056"),
     verifiedAt: MANUAL_REVIEW_2026_09_05_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-20787",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["St. Louis City SC"],
+    source: intake20260906EventSource("7fb26778bcbf01b9a8dba00d3d9d79f3"),
+    verifiedAt: MANUAL_REVIEW_2026_09_06_VERIFIED_AT,
+  },
+  {
+    canonicalTeamId: "fb-team-v1-api-football-1612",
+    oddsProvider: "THE_ODDS_API",
+    oddsTeamNames: ["Minnesota United FC"],
+    source: intake20260906EventSource("5866122c8f843a48da441b82a2a5f8e1"),
+    verifiedAt: MANUAL_REVIEW_2026_09_06_VERIFIED_AT,
   },
 ];
 

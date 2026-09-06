@@ -1,0 +1,1702 @@
+{
+  "meta": {
+    "schemaVersion": "football-odds-bridge-candidate-intake-v1",
+    "builderVersion": "football-odds-bridge-candidate-intake-builder-v1",
+    "dateKst": "2026-09-06",
+    "generatedAt": "2026-09-06T01:21:45.709Z",
+    "observedAt": "2026-09-06T01:21:45.709Z",
+    "researchOnly": true,
+    "legalStatus": "NEEDS_LEGAL_REVIEW",
+    "predictionInput": false,
+    "engineAdmission": "PROHIBITED",
+    "engineConnected": false,
+    "sourceScheduleRel": "data/research/football/2026-09-06-schedule-v1.json",
+    "sourceScheduleArtifactHash": "39bebc8f14f4328f09cb484e03f1b3db0ca5a4ee26eead8730646daeb26bf68c",
+    "oddsProvider": "THE_ODDS_API",
+    "providerMethod": "listEvents",
+    "providerCalls": 1,
+    "uniqueSportKeysRequested": [
+      "soccer_usa_mls"
+    ],
+    "eventsObserved": 43,
+    "candidateRows": 7,
+    "reviewRequired": 7,
+    "blockedRows": 32,
+    "kickoffToleranceMinutes": 15,
+    "counts": {
+      "noCandidateNeeded": 1,
+      "canonicalIdentityBlocked": 25,
+      "notSupported": 0,
+      "candidateIntakeTarget": 14,
+      "sportKeyNotMapped": 0,
+      "sportKeyEndpointFailed": 0,
+      "noEventCandidate": 0,
+      "ambiguousEventCandidates": 7,
+      "orientationConflict": 0,
+      "pendingReviewSingleSideAnchored": 7,
+      "pendingReviewSingleEventUnanchored": 0
+    },
+    "artifactHash": "6508dd936047b31a6205f650fce93374fdba9ea28a2093282f27410820a2505b"
+  },
+  "rows": [
+    {
+      "matchId": "soccer-api-football-1490437",
+      "competitionId": "fb-comp-api-football-253",
+      "sportKey": "soccer_usa_mls",
+      "schedule": {
+        "providerMatchId": "1490437",
+        "kickoffTimeUtc": "2026-09-05T23:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "9568",
+        "canonicalTeamId": "fb-team-v1-api-football-9568",
+        "scheduleDisplayName": "Inter Miami",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "1608",
+        "canonicalTeamId": "fb-team-v1-api-football-1608",
+        "scheduleDisplayName": "Atlanta United FC",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "3da4838a751c8b4bbddb2d9155d48c1c",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Philadelphia Union",
+          "awayTeamExact": "CF Montreal",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "fc4aa19aff79092d0ac992f2bef43250",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Charlotte FC",
+          "awayTeamExact": "Houston Dynamo",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "27d8f9c28008a780744c181925da2d4f",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Toronto FC",
+          "awayTeamExact": "Chicago Fire",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "1bf99ef423ec499aeec556ee713180f2",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Columbus Crew SC",
+          "awayTeamExact": "Colorado Rapids",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "c94c876e6c11d7f95c01612bfa4e70c6",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Orlando City SC",
+          "awayTeamExact": "San Diego FC",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE",
+        "LATE_IDENTITY_EVIDENCE",
+        "NOT_PREGAME"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1490438",
+      "competitionId": "fb-comp-api-football-253",
+      "sportKey": "soccer_usa_mls",
+      "schedule": {
+        "providerMatchId": "1490438",
+        "kickoffTimeUtc": "2026-09-05T23:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "1599",
+        "canonicalTeamId": "fb-team-v1-api-football-1599",
+        "scheduleDisplayName": "Philadelphia Union",
+        "existingBridgeNames": [
+          "Philadelphia Union"
+        ]
+      },
+      "away": {
+        "providerTeamId": "1614",
+        "canonicalTeamId": "fb-team-v1-api-football-1614",
+        "scheduleDisplayName": "CF Montreal",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "3da4838a751c8b4bbddb2d9155d48c1c",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Philadelphia Union",
+          "awayTeamExact": "CF Montreal",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_SIDE_ANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-1614",
+          "side": "away",
+          "oddsExactName": "CF Montreal",
+          "anchorType": "EXISTING_BRIDGE_HOME",
+          "confidenceClass": "HIGH_CONFIDENCE_REVIEW_CANDIDATE"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "SINGLE_SIDE_ANCHORED",
+        "AUTO_APPROVE_FORBIDDEN",
+        "LATE_IDENTITY_EVIDENCE",
+        "NOT_PREGAME"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1490439",
+      "competitionId": "fb-comp-api-football-253",
+      "sportKey": "soccer_usa_mls",
+      "schedule": {
+        "providerMatchId": "1490439",
+        "kickoffTimeUtc": "2026-09-05T23:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "2242",
+        "canonicalTeamId": "fb-team-v1-api-football-2242",
+        "scheduleDisplayName": "FC Cincinnati",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "1615",
+        "canonicalTeamId": "fb-team-v1-api-football-1615",
+        "scheduleDisplayName": "DC United",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "3da4838a751c8b4bbddb2d9155d48c1c",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Philadelphia Union",
+          "awayTeamExact": "CF Montreal",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "fc4aa19aff79092d0ac992f2bef43250",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Charlotte FC",
+          "awayTeamExact": "Houston Dynamo",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "27d8f9c28008a780744c181925da2d4f",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Toronto FC",
+          "awayTeamExact": "Chicago Fire",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "1bf99ef423ec499aeec556ee713180f2",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Columbus Crew SC",
+          "awayTeamExact": "Colorado Rapids",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "c94c876e6c11d7f95c01612bfa4e70c6",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Orlando City SC",
+          "awayTeamExact": "San Diego FC",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE",
+        "LATE_IDENTITY_EVIDENCE",
+        "NOT_PREGAME"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1490440",
+      "competitionId": "fb-comp-api-football-253",
+      "sportKey": "soccer_usa_mls",
+      "schedule": {
+        "providerMatchId": "1490440",
+        "kickoffTimeUtc": "2026-09-05T23:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "1598",
+        "canonicalTeamId": "fb-team-v1-api-football-1598",
+        "scheduleDisplayName": "Orlando City SC",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "25484",
+        "canonicalTeamId": "fb-team-v1-api-football-25484",
+        "scheduleDisplayName": "San Diego",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "3da4838a751c8b4bbddb2d9155d48c1c",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Philadelphia Union",
+          "awayTeamExact": "CF Montreal",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "fc4aa19aff79092d0ac992f2bef43250",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Charlotte FC",
+          "awayTeamExact": "Houston Dynamo",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "27d8f9c28008a780744c181925da2d4f",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Toronto FC",
+          "awayTeamExact": "Chicago Fire",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "1bf99ef423ec499aeec556ee713180f2",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Columbus Crew SC",
+          "awayTeamExact": "Colorado Rapids",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "c94c876e6c11d7f95c01612bfa4e70c6",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Orlando City SC",
+          "awayTeamExact": "San Diego FC",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE",
+        "LATE_IDENTITY_EVIDENCE",
+        "NOT_PREGAME"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1490441",
+      "competitionId": "fb-comp-api-football-253",
+      "sportKey": "soccer_usa_mls",
+      "schedule": {
+        "providerMatchId": "1490441",
+        "kickoffTimeUtc": "2026-09-05T23:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "1613",
+        "canonicalTeamId": "fb-team-v1-api-football-1613",
+        "scheduleDisplayName": "Columbus Crew",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "1610",
+        "canonicalTeamId": "fb-team-v1-api-football-1610",
+        "scheduleDisplayName": "Colorado Rapids",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "3da4838a751c8b4bbddb2d9155d48c1c",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Philadelphia Union",
+          "awayTeamExact": "CF Montreal",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "fc4aa19aff79092d0ac992f2bef43250",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Charlotte FC",
+          "awayTeamExact": "Houston Dynamo",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "27d8f9c28008a780744c181925da2d4f",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Toronto FC",
+          "awayTeamExact": "Chicago Fire",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "1bf99ef423ec499aeec556ee713180f2",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Columbus Crew SC",
+          "awayTeamExact": "Colorado Rapids",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "c94c876e6c11d7f95c01612bfa4e70c6",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Orlando City SC",
+          "awayTeamExact": "San Diego FC",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE",
+        "LATE_IDENTITY_EVIDENCE",
+        "NOT_PREGAME"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1490442",
+      "competitionId": "fb-comp-api-football-253",
+      "sportKey": "soccer_usa_mls",
+      "schedule": {
+        "providerMatchId": "1490442",
+        "kickoffTimeUtc": "2026-09-05T23:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "1601",
+        "canonicalTeamId": "fb-team-v1-api-football-1601",
+        "scheduleDisplayName": "Toronto FC",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "1607",
+        "canonicalTeamId": "fb-team-v1-api-football-1607",
+        "scheduleDisplayName": "Chicago Fire",
+        "existingBridgeNames": [
+          "Chicago Fire"
+        ]
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "27d8f9c28008a780744c181925da2d4f",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Toronto FC",
+          "awayTeamExact": "Chicago Fire",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_SIDE_ANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-1601",
+          "side": "home",
+          "oddsExactName": "Toronto FC",
+          "anchorType": "EXISTING_BRIDGE_AWAY",
+          "confidenceClass": "HIGH_CONFIDENCE_REVIEW_CANDIDATE"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "SINGLE_SIDE_ANCHORED",
+        "AUTO_APPROVE_FORBIDDEN",
+        "LATE_IDENTITY_EVIDENCE",
+        "NOT_PREGAME"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1490443",
+      "competitionId": "fb-comp-api-football-253",
+      "sportKey": "soccer_usa_mls",
+      "schedule": {
+        "providerMatchId": "1490443",
+        "kickoffTimeUtc": "2026-09-05T23:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "18310",
+        "canonicalTeamId": "fb-team-v1-api-football-18310",
+        "scheduleDisplayName": "Charlotte",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "1600",
+        "canonicalTeamId": "fb-team-v1-api-football-1600",
+        "scheduleDisplayName": "Houston Dynamo",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "3da4838a751c8b4bbddb2d9155d48c1c",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Philadelphia Union",
+          "awayTeamExact": "CF Montreal",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "fc4aa19aff79092d0ac992f2bef43250",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Charlotte FC",
+          "awayTeamExact": "Houston Dynamo",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "27d8f9c28008a780744c181925da2d4f",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Toronto FC",
+          "awayTeamExact": "Chicago Fire",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "1bf99ef423ec499aeec556ee713180f2",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Columbus Crew SC",
+          "awayTeamExact": "Colorado Rapids",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "c94c876e6c11d7f95c01612bfa4e70c6",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Orlando City SC",
+          "awayTeamExact": "San Diego FC",
+          "commenceTime": "2026-09-05T23:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE",
+        "LATE_IDENTITY_EVIDENCE",
+        "NOT_PREGAME"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1490444",
+      "competitionId": "fb-comp-api-football-253",
+      "sportKey": "soccer_usa_mls",
+      "schedule": {
+        "providerMatchId": "1490444",
+        "kickoffTimeUtc": "2026-09-06T00:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "1595",
+        "canonicalTeamId": "fb-team-v1-api-football-1595",
+        "scheduleDisplayName": "Seattle Sounders",
+        "existingBridgeNames": [
+          "Seattle Sounders FC"
+        ]
+      },
+      "away": {
+        "providerTeamId": "1602",
+        "canonicalTeamId": "fb-team-v1-api-football-1602",
+        "scheduleDisplayName": "New York Red Bulls",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "82dd9475d4b2b9b7f3a396a7be2547f3",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Seattle Sounders FC",
+          "awayTeamExact": "New York Red Bulls",
+          "commenceTime": "2026-09-06T00:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_SIDE_ANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-1602",
+          "side": "away",
+          "oddsExactName": "New York Red Bulls",
+          "anchorType": "EXISTING_BRIDGE_HOME",
+          "confidenceClass": "HIGH_CONFIDENCE_REVIEW_CANDIDATE"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "SINGLE_SIDE_ANCHORED",
+        "AUTO_APPROVE_FORBIDDEN",
+        "LATE_IDENTITY_EVIDENCE",
+        "NOT_PREGAME"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1490445",
+      "competitionId": "fb-comp-api-football-253",
+      "sportKey": "soccer_usa_mls",
+      "schedule": {
+        "providerMatchId": "1490445",
+        "kickoffTimeUtc": "2026-09-06T00:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "1597",
+        "canonicalTeamId": "fb-team-v1-api-football-1597",
+        "scheduleDisplayName": "FC Dallas",
+        "existingBridgeNames": [
+          "FC Dallas"
+        ]
+      },
+      "away": {
+        "providerTeamId": "1611",
+        "canonicalTeamId": "fb-team-v1-api-football-1611",
+        "scheduleDisplayName": "Sporting Kansas City",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "6f8d5e91050dd9253b0f95879e4e9b90",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "FC Dallas",
+          "awayTeamExact": "Sporting Kansas City",
+          "commenceTime": "2026-09-06T00:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_SIDE_ANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-1611",
+          "side": "away",
+          "oddsExactName": "Sporting Kansas City",
+          "anchorType": "EXISTING_BRIDGE_HOME",
+          "confidenceClass": "HIGH_CONFIDENCE_REVIEW_CANDIDATE"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "SINGLE_SIDE_ANCHORED",
+        "AUTO_APPROVE_FORBIDDEN",
+        "LATE_IDENTITY_EVIDENCE",
+        "NOT_PREGAME"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1490446",
+      "competitionId": "fb-comp-api-football-253",
+      "sportKey": "soccer_usa_mls",
+      "schedule": {
+        "providerMatchId": "1490446",
+        "kickoffTimeUtc": "2026-09-06T00:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "16489",
+        "canonicalTeamId": "fb-team-v1-api-football-16489",
+        "scheduleDisplayName": "Austin",
+        "existingBridgeNames": [
+          "Austin FC"
+        ]
+      },
+      "away": {
+        "providerTeamId": "1596",
+        "canonicalTeamId": "fb-team-v1-api-football-1596",
+        "scheduleDisplayName": "San Jose Earthquakes",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "f5db8bb9519e7aadef08603be700267b",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Austin FC",
+          "awayTeamExact": "San Jose Earthquakes",
+          "commenceTime": "2026-09-06T00:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_SIDE_ANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-1596",
+          "side": "away",
+          "oddsExactName": "San Jose Earthquakes",
+          "anchorType": "EXISTING_BRIDGE_HOME",
+          "confidenceClass": "HIGH_CONFIDENCE_REVIEW_CANDIDATE"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "SINGLE_SIDE_ANCHORED",
+        "AUTO_APPROVE_FORBIDDEN",
+        "LATE_IDENTITY_EVIDENCE",
+        "NOT_PREGAME"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1490447",
+      "competitionId": "fb-comp-api-football-253",
+      "sportKey": "soccer_usa_mls",
+      "schedule": {
+        "providerMatchId": "1490447",
+        "kickoffTimeUtc": "2026-09-06T01:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "1606",
+        "canonicalTeamId": "fb-team-v1-api-football-1606",
+        "scheduleDisplayName": "Real Salt Lake",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "1616",
+        "canonicalTeamId": "fb-team-v1-api-football-1616",
+        "scheduleDisplayName": "Los Angeles FC",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "22ab6f035459cf448e4c4ebac3f6c053",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "FC Cincinnati",
+          "awayTeamExact": "D.C. United",
+          "commenceTime": "2026-09-06T01:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "0ed5e9f3a90677d12a8bfb38e67764ee",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "LA Galaxy",
+          "awayTeamExact": "New England Revolution",
+          "commenceTime": "2026-09-06T01:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "8289ab720fb9bbc036bf0cdf52516ce2",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Real Salt Lake",
+          "awayTeamExact": "Los Angeles FC",
+          "commenceTime": "2026-09-06T01:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1490448",
+      "competitionId": "fb-comp-api-football-253",
+      "sportKey": "soccer_usa_mls",
+      "schedule": {
+        "providerMatchId": "1490448",
+        "kickoffTimeUtc": "2026-09-06T01:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "1605",
+        "canonicalTeamId": "fb-team-v1-api-football-1605",
+        "scheduleDisplayName": "Los Angeles Galaxy",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "1609",
+        "canonicalTeamId": "fb-team-v1-api-football-1609",
+        "scheduleDisplayName": "New England Revolution",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "22ab6f035459cf448e4c4ebac3f6c053",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "FC Cincinnati",
+          "awayTeamExact": "D.C. United",
+          "commenceTime": "2026-09-06T01:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "0ed5e9f3a90677d12a8bfb38e67764ee",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "LA Galaxy",
+          "awayTeamExact": "New England Revolution",
+          "commenceTime": "2026-09-06T01:30:00Z",
+          "kickoffDeltaMinutes": 0
+        },
+        {
+          "externalEventId": "8289ab720fb9bbc036bf0cdf52516ce2",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Real Salt Lake",
+          "awayTeamExact": "Los Angeles FC",
+          "commenceTime": "2026-09-06T01:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "AMBIGUOUS_EVENT_CANDIDATES",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "AMBIGUOUS_EVENT_CANDIDATES",
+        "NON_ACTIONABLE"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1490449",
+      "competitionId": "fb-comp-api-football-253",
+      "sportKey": "soccer_usa_mls",
+      "schedule": {
+        "providerMatchId": "1490449",
+        "kickoffTimeUtc": "2026-09-06T02:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "1603",
+        "canonicalTeamId": "fb-team-v1-api-football-1603",
+        "scheduleDisplayName": "Vancouver Whitecaps",
+        "existingBridgeNames": [
+          "Vancouver Whitecaps FC"
+        ]
+      },
+      "away": {
+        "providerTeamId": "20787",
+        "canonicalTeamId": "fb-team-v1-api-football-20787",
+        "scheduleDisplayName": "St. Louis City",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "7fb26778bcbf01b9a8dba00d3d9d79f3",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Vancouver Whitecaps FC",
+          "awayTeamExact": "St. Louis City SC",
+          "commenceTime": "2026-09-06T02:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_SIDE_ANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-20787",
+          "side": "away",
+          "oddsExactName": "St. Louis City SC",
+          "anchorType": "EXISTING_BRIDGE_HOME",
+          "confidenceClass": "HIGH_CONFIDENCE_REVIEW_CANDIDATE"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": true,
+      "reasonCodes": [
+        "SINGLE_SIDE_ANCHORED",
+        "AUTO_APPROVE_FORBIDDEN"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1490450",
+      "competitionId": "fb-comp-api-football-253",
+      "sportKey": "soccer_usa_mls",
+      "schedule": {
+        "providerMatchId": "1490450",
+        "kickoffTimeUtc": "2026-09-06T02:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "1617",
+        "canonicalTeamId": "fb-team-v1-api-football-1617",
+        "scheduleDisplayName": "Portland Timbers",
+        "existingBridgeNames": [
+          "Portland Timbers"
+        ]
+      },
+      "away": {
+        "providerTeamId": "1612",
+        "canonicalTeamId": "fb-team-v1-api-football-1612",
+        "scheduleDisplayName": "Minnesota United FC",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [
+        {
+          "externalEventId": "5866122c8f843a48da441b82a2a5f8e1",
+          "sportKey": "soccer_usa_mls",
+          "homeTeamExact": "Portland Timbers",
+          "awayTeamExact": "Minnesota United FC",
+          "commenceTime": "2026-09-06T02:30:00Z",
+          "kickoffDeltaMinutes": 0
+        }
+      ],
+      "candidateStatus": "PENDING_REVIEW_SINGLE_SIDE_ANCHORED",
+      "candidateMappings": [
+        {
+          "canonicalTeamId": "fb-team-v1-api-football-1612",
+          "side": "away",
+          "oddsExactName": "Minnesota United FC",
+          "anchorType": "EXISTING_BRIDGE_HOME",
+          "confidenceClass": "HIGH_CONFIDENCE_REVIEW_CANDIDATE"
+        }
+      ],
+      "reviewStatus": "PENDING",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": true,
+      "reasonCodes": [
+        "SINGLE_SIDE_ANCHORED",
+        "AUTO_APPROVE_FORBIDDEN"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1507056",
+      "competitionId": "fb-comp-api-football-292",
+      "sportKey": "soccer_korea_kleague1",
+      "schedule": {
+        "providerMatchId": "1507056",
+        "kickoffTimeUtc": "2026-09-06T10:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "2748",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "FC Anyang",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "2746",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Gangwon FC",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1507057",
+      "competitionId": "fb-comp-api-football-292",
+      "sportKey": "soccer_korea_kleague1",
+      "schedule": {
+        "providerMatchId": "1507057",
+        "kickoffTimeUtc": "2026-09-06T10:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "2768",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Gimcheon Sangmu FC",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "2759",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Gwangju FC",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1550107",
+      "competitionId": "fb-comp-api-football-135",
+      "sportKey": "soccer_italy_serie_a",
+      "schedule": {
+        "providerMatchId": "1550107",
+        "kickoffTimeUtc": "2026-09-05T18:45:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "497",
+        "canonicalTeamId": "fb-team-v1-api-football-497",
+        "scheduleDisplayName": "AS Roma",
+        "existingBridgeNames": [
+          "AS Roma"
+        ]
+      },
+      "away": {
+        "providerTeamId": "499",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Atalanta",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1550111",
+      "competitionId": "fb-comp-api-football-135",
+      "sportKey": "soccer_italy_serie_a",
+      "schedule": {
+        "providerMatchId": "1550111",
+        "kickoffTimeUtc": "2026-09-06T13:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "512",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Frosinone",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "517",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Venezia",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1550113",
+      "competitionId": "fb-comp-api-football-135",
+      "sportKey": "soccer_italy_serie_a",
+      "schedule": {
+        "providerMatchId": "1550113",
+        "kickoffTimeUtc": "2026-09-05T16:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "505",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Inter",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "492",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Napoli",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1550115",
+      "competitionId": "fb-comp-api-football-135",
+      "sportKey": "soccer_italy_serie_a",
+      "schedule": {
+        "providerMatchId": "1550115",
+        "kickoffTimeUtc": "2026-09-06T13:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "523",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Parma",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "1579",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Monza",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1552748",
+      "competitionId": "fb-comp-api-football-61",
+      "sportKey": "soccer_france_ligue_one",
+      "schedule": {
+        "providerMatchId": "1552748",
+        "kickoffTimeUtc": "2026-09-05T18:45:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "111",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Le Havre",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "106",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Stade Brestois 29",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1552749",
+      "competitionId": "fb-comp-api-football-61",
+      "sportKey": "soccer_france_ligue_one",
+      "schedule": {
+        "providerMatchId": "1552749",
+        "kickoffTimeUtc": "2026-09-05T15:15:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "116",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Lens",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "97",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Lorient",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1552752",
+      "competitionId": "fb-comp-api-football-61",
+      "sportKey": "soccer_france_ligue_one",
+      "schedule": {
+        "providerMatchId": "1552752",
+        "kickoffTimeUtc": "2026-09-05T18:45:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "84",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Nice",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "1298",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Le Mans",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1552755",
+      "competitionId": "fb-comp-api-football-61",
+      "sportKey": "soccer_france_ligue_one",
+      "schedule": {
+        "providerMatchId": "1552755",
+        "kickoffTimeUtc": "2026-09-06T13:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "110",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Estac Troyes",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "95",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Strasbourg",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1556052",
+      "competitionId": "fb-comp-api-football-98",
+      "sportKey": "soccer_japan_j_league",
+      "schedule": {
+        "providerMatchId": "1556052",
+        "kickoffTimeUtc": "2026-09-06T10:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "291",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Cerezo Osaka",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "306",
+        "canonicalTeamId": "fb-team-v1-api-football-306",
+        "scheduleDisplayName": "Tokyo Verdy",
+        "existingBridgeNames": [
+          "Tokyo Verdy"
+        ]
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1556053",
+      "competitionId": "fb-comp-api-football-98",
+      "sportKey": "soccer_japan_j_league",
+      "schedule": {
+        "providerMatchId": "1556053",
+        "kickoffTimeUtc": "2026-09-06T09:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "301",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "JEF United Chiba",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "293",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Gamba Osaka",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1556054",
+      "competitionId": "fb-comp-api-football-98",
+      "sportKey": "soccer_japan_j_league",
+      "schedule": {
+        "providerMatchId": "1556054",
+        "kickoffTimeUtc": "2026-09-06T10:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "292",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "FC Tokyo",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "302",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Kyoto Sanga",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1556055",
+      "competitionId": "fb-comp-api-football-98",
+      "sportKey": "soccer_japan_j_league",
+      "schedule": {
+        "providerMatchId": "1556055",
+        "kickoffTimeUtc": "2026-09-06T09:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "290",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Kashima",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "287",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Urawa",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1556056",
+      "competitionId": "fb-comp-api-football-98",
+      "sportKey": "soccer_japan_j_league",
+      "schedule": {
+        "providerMatchId": "1556056",
+        "kickoffTimeUtc": "2026-09-06T10:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "281",
+        "canonicalTeamId": "fb-team-v1-api-football-281",
+        "scheduleDisplayName": "Kashiwa Reysol",
+        "existingBridgeNames": [
+          "Kashiwa Reysol"
+        ]
+      },
+      "away": {
+        "providerTeamId": "296",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Yokohama F. Marinos",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1556057",
+      "competitionId": "fb-comp-api-football-98",
+      "sportKey": "soccer_japan_j_league",
+      "schedule": {
+        "providerMatchId": "1556057",
+        "kickoffTimeUtc": "2026-09-06T09:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "288",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Nagoya Grampus",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "303",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Machida Zelvia",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1556058",
+      "competitionId": "fb-comp-api-football-98",
+      "sportKey": "soccer_japan_j_league",
+      "schedule": {
+        "providerMatchId": "1556058",
+        "kickoffTimeUtc": "2026-09-06T09:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "310",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Fagiano Okayama",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "282",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Sanfrecce Hiroshima",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1556059",
+      "competitionId": "fb-comp-api-football-98",
+      "sportKey": "soccer_japan_j_league",
+      "schedule": {
+        "providerMatchId": "1556059",
+        "kickoffTimeUtc": "2026-09-06T10:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "289",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Vissel Kobe",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "285",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "V-varen Nagasaki",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1556060",
+      "competitionId": "fb-comp-api-football-98",
+      "sportKey": "soccer_japan_j_league",
+      "schedule": {
+        "providerMatchId": "1556060",
+        "kickoffTimeUtc": "2026-09-06T10:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "294",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Kawasaki Frontale",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "283",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Shimizu S-pulse",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1557390",
+      "competitionId": "fb-comp-api-football-39",
+      "sportKey": "soccer_epl",
+      "schedule": {
+        "providerMatchId": "1557390",
+        "kickoffTimeUtc": "2026-09-06T13:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "45",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Everton",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "33",
+        "canonicalTeamId": "fb-team-v1-api-football-33",
+        "scheduleDisplayName": "Manchester United",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1557392",
+      "competitionId": "fb-comp-api-football-39",
+      "sportKey": "soccer_epl",
+      "schedule": {
+        "providerMatchId": "1557392",
+        "kickoffTimeUtc": "2026-09-05T16:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "64",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Hull City",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "66",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Aston Villa",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1570370",
+      "competitionId": "fb-comp-api-football-140",
+      "sportKey": "soccer_spain_la_liga",
+      "schedule": {
+        "providerMatchId": "1570370",
+        "kickoffTimeUtc": "2026-09-05T16:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "728",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Rayo Vallecano",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "4665",
+        "canonicalTeamId": "fb-team-v1-api-football-4665",
+        "scheduleDisplayName": "Racing Santander",
+        "existingBridgeNames": [
+          "Real Racing Club de Santander"
+        ]
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1570371",
+      "competitionId": "fb-comp-api-football-140",
+      "sportKey": "soccer_spain_la_liga",
+      "schedule": {
+        "providerMatchId": "1570371",
+        "kickoffTimeUtc": "2026-09-06T14:15:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "532",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Valencia",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "529",
+        "canonicalTeamId": "fb-team-v1-api-football-529",
+        "scheduleDisplayName": "Barcelona",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1570372",
+      "competitionId": "fb-comp-api-football-140",
+      "sportKey": "soccer_spain_la_liga",
+      "schedule": {
+        "providerMatchId": "1570372",
+        "kickoffTimeUtc": "2026-09-05T19:00:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "533",
+        "canonicalTeamId": "fb-team-v1-api-football-533",
+        "scheduleDisplayName": "Villarreal",
+        "existingBridgeNames": [
+          "Villarreal"
+        ]
+      },
+      "away": {
+        "providerTeamId": "544",
+        "canonicalTeamId": "fb-team-v1-api-football-544",
+        "scheduleDisplayName": "Deportivo La Coruna",
+        "existingBridgeNames": [
+          "Deportivo La Coruña"
+        ]
+      },
+      "candidateEvents": [],
+      "candidateStatus": "NO_CANDIDATE_NEEDED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "BRIDGE_COMPLETE"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1575154",
+      "competitionId": "fb-comp-api-football-78",
+      "sportKey": "soccer_germany_bundesliga",
+      "schedule": {
+        "providerMatchId": "1575154",
+        "kickoffTimeUtc": "2026-09-06T13:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "175",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "Hamburger SV",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "164",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "FSV Mainz 05",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "PREGAME_REVIEW_CANDIDATE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    },
+    {
+      "matchId": "soccer-api-football-1575156",
+      "competitionId": "fb-comp-api-football-78",
+      "sportKey": "soccer_germany_bundesliga",
+      "schedule": {
+        "providerMatchId": "1575156",
+        "kickoffTimeUtc": "2026-09-05T16:30:00.000Z"
+      },
+      "home": {
+        "providerTeamId": "174",
+        "canonicalTeamId": null,
+        "scheduleDisplayName": "FC Schalke 04",
+        "existingBridgeNames": []
+      },
+      "away": {
+        "providerTeamId": "157",
+        "canonicalTeamId": "fb-team-v1-api-football-157",
+        "scheduleDisplayName": "Bayern München",
+        "existingBridgeNames": []
+      },
+      "candidateEvents": [],
+      "candidateStatus": "CANONICAL_IDENTITY_BLOCKED",
+      "candidateMappings": [],
+      "reviewStatus": "NOT_APPLICABLE",
+      "timingClass": "LATE_IDENTITY_EVIDENCE",
+      "pregameUsable": false,
+      "reasonCodes": [
+        "CANONICAL_IDENTITY_BLOCKED",
+        "IDENTITY_BLOCKED"
+      ]
+    }
+  ]
+}
