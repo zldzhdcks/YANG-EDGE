@@ -33,9 +33,13 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
-# Local proto-round operator inbox (raw screenshots + local manifests).
+# Local proto-round operator inbox (legacy layout; raw screenshots + local manifests).
 # Do not whitelist screenshots. All files under this root stay untracked.
 /PROTO_ROUNDS/
+
+# Active operator screenshot root if it is ever placed inside this git repo.
+# The live root is normally a sibling: ../YANG-EDGE-INBOX
+/YANG-EDGE-INBOX/
 
 # Research raw provider caches (regenerable; do not commit)
 # Tracked caches under data/cache/mlb-game-results/ are NOT covered here.

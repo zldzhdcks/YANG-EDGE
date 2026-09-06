@@ -1,14 +1,16 @@
 /**
  * CLI: Proto-round screenshot intake v1.
  *
- * Drop all screenshots for a Korean domestic Proto round into one INBOX.
+ * Drop screenshots for a Korean domestic Proto round into:
+ *   YANG-EDGE-INBOX/<year>/<round>회차/
+ *
  * Round is the primary grouping key. Calendar date is not required.
  * Exact SHA-256 duplicates are classified, never deleted.
  * No OCR. No odds extraction. Local image storage only.
  *
  *   npm run intake:proto-round-screenshots -- --year 2026 --round 105 --init
  *   npm run intake:proto-round-screenshots -- --year 2026 --round 105 --scan
- *   npm run intake:proto-round-screenshots -- --year 2026 --round 105 --init --json
+ *   npm run intake:proto-round-screenshots -- --year 2026 --round 105 --scan --json
  */
 import {
   assertSafeProtoRoundCoords,
@@ -22,8 +24,8 @@ function usage(): string {
   npm run intake:proto-round-screenshots -- --year YYYY --round N --init [--json]
   npm run intake:proto-round-screenshots -- --year YYYY --round N --scan [--json]
 
-Round is the primary grouping key. Do not pass a calendar date.
-Raw screenshots stay local under PROTO_ROUNDS/ and are not extracted in v1.
+Round is the primary grouping key. Do not pass a calendar date or path.
+Screenshots live in YANG-EDGE-INBOX/<year>/<round>회차/ (sibling of the repo).
 `;
 }
 
@@ -67,9 +69,9 @@ export function parseIntakeArgs(argv: string[]): {
       round = Number(v);
       continue;
     }
-    if (a === "--date") {
+    if (a === "--date" || a === "--path" || a === "--inbox") {
       throw new Error(
-        "Calendar date is not a proto-round intake argument. Use --year and --round only.",
+        "Do not pass --date, --path, or --inbox. Use --year and --round only.",
       );
     }
     throw new Error(`Unknown argument: ${a}`);
@@ -128,17 +130,23 @@ async function main() {
   for (const r of results) {
     const row = r as {
       action: string;
-      inboxRelativePath: string;
+      operatorRootAbs?: string;
+      roundRelativePath: string;
+      screenshotDirectoryAbs?: string;
       wroteRoundConfig?: boolean;
-      createdInbox?: boolean;
+      createdRoundDirectory?: boolean;
       summary?: { canonicalImageCount: number; duplicateExactCount: number };
       canonicalImageDelta?: number;
       manifestRelativePath?: string;
     };
     console.log(`action=${row.action}`);
-    console.log(`inbox=${row.inboxRelativePath}`);
+    console.log(`roundPath=${row.roundRelativePath}`);
+    if (row.operatorRootAbs) console.log(`operatorRootAbs=${row.operatorRootAbs}`);
+    if (row.screenshotDirectoryAbs) {
+      console.log(`screenshotDir=${row.screenshotDirectoryAbs}`);
+    }
     if (row.action === "init") {
-      console.log(`createdInbox=${row.createdInbox}`);
+      console.log(`createdRoundDirectory=${row.createdRoundDirectory}`);
       console.log(`wroteRoundConfig=${row.wroteRoundConfig}`);
     }
     if (row.action === "scan" && row.summary) {

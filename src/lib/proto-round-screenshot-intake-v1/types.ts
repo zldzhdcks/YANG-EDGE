@@ -109,6 +109,7 @@ export type ProtoRoundIdentity = {
 
 export type ProtoRoundConfigV1 = ProtoRoundIdentity & {
   schemaVersion: typeof ROUND_CONFIG_SCHEMA_VERSION;
+  operatorRoot: "YANG-EDGE-INBOX";
   createdAt: string;
   timezone: typeof DEFAULT_TIMEZONE;
   groupingPolicy: typeof GROUPING_POLICY;
@@ -136,6 +137,7 @@ export type PhysicalFileRecordV1 = {
 
 export type IntakeManifestMetaV1 = ProtoRoundIdentity & {
   schemaVersion: typeof INTAKE_SCHEMA_VERSION;
+  operatorRoot: "YANG-EDGE-INBOX";
   timezone: typeof DEFAULT_TIMEZONE;
   firstInitializedAt: string;
   lastScanAt: string;
@@ -170,9 +172,12 @@ export type InitProtoRoundResult = {
   round: number;
   roundLabel: string;
   protoRoundKey: string;
-  inboxRelativePath: string;
+  operatorRoot: "YANG-EDGE-INBOX";
+  operatorRootAbs: string;
+  roundRelativePath: string;
+  screenshotDirectoryAbs: string;
   roundConfigRelativePath: string;
-  createdInbox: boolean;
+  createdRoundDirectory: boolean;
   wroteRoundConfig: boolean;
 };
 
@@ -182,7 +187,10 @@ export type ScanProtoRoundResult = {
   round: number;
   roundLabel: string;
   protoRoundKey: string;
-  inboxRelativePath: string;
+  operatorRoot: "YANG-EDGE-INBOX";
+  operatorRootAbs: string;
+  roundRelativePath: string;
+  screenshotDirectoryAbs: string;
   manifestRelativePath: string;
   summary: IntakeManifestSummaryV1;
   previousCanonicalImageCount: number;

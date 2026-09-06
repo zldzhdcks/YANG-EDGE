@@ -1,8 +1,16 @@
 import path from "node:path";
 import type { ProtoRoundIdentity } from "./types";
 
-export const PROTO_ROUNDS_ROOT = "PROTO_ROUNDS";
-export const INBOX_DIR_NAME = "INBOX";
+/** Active user-facing operator root. Sibling of the git repo, not inside it. */
+export const OPERATOR_ROOT_NAME = "YANG-EDGE-INBOX" as const;
+
+/**
+ * Legacy intake root from proto-round screenshot intake v1 first layout.
+ * Do not scan, migrate, or delete. No INBOX child is used for the active contract.
+ */
+export const LEGACY_PROTO_ROUNDS_ROOT = "PROTO_ROUNDS";
+export const LEGACY_INBOX_DIR_NAME = "INBOX";
+
 export const YANG_EDGE_DIR_NAME = ".yang-edge";
 export const ROUND_CONFIG_FILE_NAME = "round.json";
 export const INTAKE_MANIFEST_FILE_NAME = "intake-manifest-v1.json";
@@ -72,45 +80,73 @@ export function protoRoundIdentity(
   };
 }
 
-function assertUnderProtoRoundsRoot(relPosix: string): string {
+/**
+ * Resolve YANG-EDGE-INBOX as a sibling of the git repo directory.
+ * Does not hardcode a username or drive letter.
+ *
+ * repo:    <workspaceParent>/<repoDir>
+ * inbox:   <workspaceParent>/YANG-EDGE-INBOX
+ */
+export function resolveOperatorRoot(opts?: {
+  repoRoot?: string;
+  operatorRootAbs?: string;
+}): string {
+  if (opts?.operatorRootAbs) {
+    const abs = path.resolve(opts.operatorRootAbs);
+    if (path.basename(abs) !== OPERATOR_ROOT_NAME) {
+      throw new Error("INVALID_OPERATOR_ROOT_NAME");
+    }
+    return abs;
+  }
+  const repoRoot = path.resolve(opts?.repoRoot ?? process.cwd());
+  return path.resolve(repoRoot, "..", OPERATOR_ROOT_NAME);
+}
+
+function assertUnderOperatorRoot(relPosix: string): string {
   const posix = toPosixPath(relPosix);
   const parts = posix.split("/");
   if (
     posix.startsWith("/") ||
     parts.includes("..") ||
     parts.includes("") ||
-    parts[0] !== PROTO_ROUNDS_ROOT
+    parts[0] !== OPERATOR_ROOT_NAME
   ) {
     throw new Error("PROTO_ROUND_PATH_ESCAPE");
   }
   return posix;
 }
 
-/** User-facing round folder. Calendar date is not part of this path. */
+/** User-facing round folder. No INBOX child. No calendar-date folder. */
 export function roundDirectoryRelative(year: number, round: number): string {
   const safe = assertSafeProtoRoundCoords(year, round);
-  return assertUnderProtoRoundsRoot(
-    path.posix.join(PROTO_ROUNDS_ROOT, String(safe.year), roundLabel(safe.round)),
+  return assertUnderOperatorRoot(
+    path.posix.join(
+      OPERATOR_ROOT_NAME,
+      String(safe.year),
+      roundLabel(safe.round),
+    ),
   );
 }
 
-export function inboxDirectoryRelative(year: number, round: number): string {
-  return assertUnderProtoRoundsRoot(
-    path.posix.join(roundDirectoryRelative(year, round), INBOX_DIR_NAME),
-  );
+/** Screenshots live directly in the round folder. */
+export function screenshotDirectoryRelative(
+  year: number,
+  round: number,
+): string {
+  return roundDirectoryRelative(year, round);
 }
 
 export function yangEdgeDirectoryRelative(
   year: number,
   round: number,
 ): string {
-  return assertUnderProtoRoundsRoot(
+  return assertUnderOperatorRoot(
     path.posix.join(roundDirectoryRelative(year, round), YANG_EDGE_DIR_NAME),
   );
 }
 
 export function roundConfigRelative(year: number, round: number): string {
-  return assertUnderProtoRoundsRoot(
+  return assertUnderOperatorRoot(
     path.posix.join(
       yangEdgeDirectoryRelative(year, round),
       ROUND_CONFIG_FILE_NAME,
@@ -119,7 +155,7 @@ export function roundConfigRelative(year: number, round: number): string {
 }
 
 export function intakeManifestRelative(year: number, round: number): string {
-  return assertUnderProtoRoundsRoot(
+  return assertUnderOperatorRoot(
     path.posix.join(
       yangEdgeDirectoryRelative(year, round),
       INTAKE_MANIFEST_FILE_NAME,
@@ -127,22 +163,27 @@ export function intakeManifestRelative(year: number, round: number): string {
   );
 }
 
-export function absFromRelative(cwd: string, relPosix: string): string {
-  const posix = assertUnderProtoRoundsRoot(relPosix);
-  return path.join(cwd, ...posix.split("/"));
+export function absFromOperatorRelative(
+  operatorRootAbs: string,
+  relPosix: string,
+): string {
+  const posix = assertUnderOperatorRoot(relPosix);
+  const parts = posix.split("/");
+  return path.join(operatorRootAbs, ...parts.slice(1));
 }
 
-export function inboxFileRelativeFromAbs(
-  inboxAbs: string,
+export function roundFileRelativeFromAbs(
+  roundAbs: string,
   fileAbs: string,
 ): string {
-  const fromInbox = toPosixPath(path.relative(inboxAbs, fileAbs));
+  const fromRound = toPosixPath(path.relative(roundAbs, fileAbs));
   if (
-    fromInbox.startsWith("..") ||
-    path.isAbsolute(fromInbox) ||
-    fromInbox.split("/").includes("..")
+    fromRound.startsWith("..") ||
+    path.isAbsolute(fromRound) ||
+    fromRound.split("/").includes("..") ||
+    fromRound.split("/").includes(".yang-edge")
   ) {
     throw new Error("PROTO_ROUND_PATH_ESCAPE");
   }
-  return toPosixPath(path.posix.join(INBOX_DIR_NAME, fromInbox));
+  return fromRound;
 }

@@ -3,14 +3,17 @@ import path from "node:path";
 import { resolveCanonicalPathBySha256 } from "./dedupe";
 import { sha256FileBytes } from "./hash";
 import {
-  absFromRelative,
+  absFromOperatorRelative,
   assertSafeProtoRoundCoords,
   comparePosixPath,
-  inboxDirectoryRelative,
-  inboxFileRelativeFromAbs,
   intakeManifestRelative,
+  OPERATOR_ROOT_NAME,
   protoRoundIdentity,
+  resolveOperatorRoot,
   roundConfigRelative,
+  roundDirectoryRelative,
+  roundFileRelativeFromAbs,
+  screenshotDirectoryRelative,
 } from "./paths";
 import {
   DEDUPE_POLICY_V1,
@@ -78,7 +81,7 @@ async function pathExists(abs: string): Promise<boolean> {
   }
 }
 
-/** Temp file + rename inside the same .yang-edge directory. Does not touch INBOX. */
+/** Temp file + rename inside the same .yang-edge directory. Does not touch screenshots. */
 async function writeJsonAtomic(abs: string, value: unknown): Promise<void> {
   const dir = path.dirname(abs);
   await mkdir(dir, { recursive: true });
@@ -119,13 +122,26 @@ function assertIntakeManifestSchema(doc: unknown): IntakeManifestV1 {
   return doc as IntakeManifestV1;
 }
 
+function resolveRoot(opts?: {
+  repoRoot?: string;
+  operatorRootAbs?: string;
+}): string {
+  return resolveOperatorRoot({
+    repoRoot: opts?.repoRoot,
+    operatorRootAbs: opts?.operatorRootAbs,
+  });
+}
+
 export async function loadRoundConfig(
-  cwd: string,
+  operatorRootAbs: string,
   year: number,
   round: number,
 ): Promise<ProtoRoundConfigV1 | null> {
   assertSafeProtoRoundCoords(year, round);
-  const abs = absFromRelative(cwd, roundConfigRelative(year, round));
+  const abs = absFromOperatorRelative(
+    operatorRootAbs,
+    roundConfigRelative(year, round),
+  );
   try {
     const raw = await readFile(abs, "utf8");
     return assertRoundConfigSchema(JSON.parse(raw));
@@ -137,12 +153,15 @@ export async function loadRoundConfig(
 }
 
 export async function loadIntakeManifest(
-  cwd: string,
+  operatorRootAbs: string,
   year: number,
   round: number,
 ): Promise<IntakeManifestV1 | null> {
   assertSafeProtoRoundCoords(year, round);
-  const abs = absFromRelative(cwd, intakeManifestRelative(year, round));
+  const abs = absFromOperatorRelative(
+    operatorRootAbs,
+    intakeManifestRelative(year, round),
+  );
   try {
     const raw = await readFile(abs, "utf8");
     return assertIntakeManifestSchema(JSON.parse(raw));
@@ -161,6 +180,7 @@ function buildRoundConfig(
   const identity = protoRoundIdentity(year, round);
   return {
     schemaVersion: ROUND_CONFIG_SCHEMA_VERSION,
+    operatorRoot: OPERATOR_ROOT_NAME,
     year: identity.year,
     round: identity.round,
     roundLabel: identity.roundLabel,
@@ -172,32 +192,26 @@ function buildRoundConfig(
   };
 }
 
-async function collectInboxFiles(inboxAbs: string): Promise<string[]> {
-  const out: string[] = [];
-  async function walk(dirAbs: string): Promise<void> {
-    let entries;
-    try {
-      entries = await readdir(dirAbs, { withFileTypes: true });
-    } catch (err) {
-      const code = (err as NodeJS.ErrnoException).code;
-      if (code === "ENOENT") return;
-      throw err;
-    }
-    for (const entry of entries) {
-      if (entry.name === ".yang-edge") continue;
-      const abs = path.join(dirAbs, entry.name);
-      if (entry.isDirectory()) {
-        await walk(abs);
-        continue;
-      }
-      if (entry.isFile()) out.push(abs);
-    }
+/** Direct children only. Screenshots live in the round folder, not nested INBOX. */
+async function collectRoundScreenshotFiles(roundAbs: string): Promise<string[]> {
+  let entries;
+  try {
+    entries = await readdir(roundAbs, { withFileTypes: true });
+  } catch (err) {
+    const code = (err as NodeJS.ErrnoException).code;
+    if (code === "ENOENT") return [];
+    throw err;
   }
-  await walk(inboxAbs);
+  const out: string[] = [];
+  for (const entry of entries) {
+    if (entry.name === ".yang-edge") continue;
+    if (!entry.isFile()) continue;
+    out.push(path.join(roundAbs, entry.name));
+  }
   out.sort((a, b) =>
     comparePosixPath(
-      inboxFileRelativeFromAbs(inboxAbs, a),
-      inboxFileRelativeFromAbs(inboxAbs, b),
+      roundFileRelativeFromAbs(roundAbs, a),
+      roundFileRelativeFromAbs(roundAbs, b),
     ),
   );
   return out;
@@ -209,23 +223,24 @@ function filesystemIso(ms: number | undefined): string | null {
 }
 
 export async function initProtoRound(opts: {
-  cwd?: string;
+  repoRoot?: string;
+  operatorRootAbs?: string;
   year: number;
   round: number;
   now?: () => string;
 }): Promise<InitProtoRoundResult> {
-  const cwd = opts.cwd ?? process.cwd();
   const { year, round } = assertSafeProtoRoundCoords(opts.year, opts.round);
+  const operatorRootAbs = resolveRoot(opts);
   const identity = protoRoundIdentity(year, round);
-  const inboxRel = inboxDirectoryRelative(year, round);
+  const roundRel = roundDirectoryRelative(year, round);
   const configRel = roundConfigRelative(year, round);
-  const inboxAbs = absFromRelative(cwd, inboxRel);
-  const configAbs = absFromRelative(cwd, configRel);
+  const roundAbs = absFromOperatorRelative(operatorRootAbs, roundRel);
+  const configAbs = absFromOperatorRelative(operatorRootAbs, configRel);
 
-  const inboxExisted = await pathExists(inboxAbs);
-  await mkdir(inboxAbs, { recursive: true });
+  const roundExisted = await pathExists(roundAbs);
+  await mkdir(roundAbs, { recursive: true });
 
-  const existing = await loadRoundConfig(cwd, year, round);
+  const existing = await loadRoundConfig(operatorRootAbs, year, round);
   let wroteRoundConfig = false;
   if (!existing) {
     await writeJsonAtomic(
@@ -241,27 +256,36 @@ export async function initProtoRound(opts: {
     round: identity.round,
     roundLabel: identity.roundLabel,
     protoRoundKey: identity.protoRoundKey,
-    inboxRelativePath: inboxRel,
+    operatorRoot: OPERATOR_ROOT_NAME,
+    operatorRootAbs,
+    roundRelativePath: roundRel,
+    screenshotDirectoryAbs: roundAbs,
     roundConfigRelativePath: configRel,
-    createdInbox: !inboxExisted,
+    createdRoundDirectory: !roundExisted,
     wroteRoundConfig,
   };
 }
 
 export async function scanProtoRoundInbox(opts: {
-  cwd?: string;
+  repoRoot?: string;
+  operatorRootAbs?: string;
   year: number;
   round: number;
   now?: () => string;
 }): Promise<ScanProtoRoundResult> {
-  const cwd = opts.cwd ?? process.cwd();
   const { year, round } = assertSafeProtoRoundCoords(opts.year, opts.round);
+  const operatorRootAbs = resolveRoot(opts);
   const scannedAt = (opts.now ?? isoNow)();
   const identity = protoRoundIdentity(year, round);
 
-  await initProtoRound({ cwd, year, round, now: () => scannedAt });
+  await initProtoRound({
+    operatorRootAbs,
+    year,
+    round,
+    now: () => scannedAt,
+  });
 
-  const previous = await loadIntakeManifest(cwd, year, round);
+  const previous = await loadIntakeManifest(operatorRootAbs, year, round);
   const previousByPath = new Map(
     (previous?.files ?? []).map((f) => [f.relativePath, f] as const),
   );
@@ -274,9 +298,9 @@ export async function scanProtoRoundInbox(opts: {
     }
   }
 
-  const inboxRel = inboxDirectoryRelative(year, round);
-  const inboxAbs = absFromRelative(cwd, inboxRel);
-  const presentAbs = await collectInboxFiles(inboxAbs);
+  const roundRel = screenshotDirectoryRelative(year, round);
+  const roundAbs = absFromOperatorRelative(operatorRootAbs, roundRel);
+  const presentAbs = await collectRoundScreenshotFiles(roundAbs);
 
   const pending: Array<{
     relativePath: string;
@@ -292,7 +316,7 @@ export async function scanProtoRoundInbox(opts: {
   }> = [];
 
   for (const abs of presentAbs) {
-    const relativePath = inboxFileRelativeFromAbs(inboxAbs, abs);
+    const relativePath = roundFileRelativeFromAbs(roundAbs, abs);
     const fileName = path.basename(abs);
     const extension = fileExtensionLower(fileName);
     const st = await stat(abs);
@@ -370,7 +394,7 @@ export async function scanProtoRoundInbox(opts: {
     };
   });
 
-  const roundConfig = await loadRoundConfig(cwd, year, round);
+  const roundConfig = await loadRoundConfig(operatorRootAbs, year, round);
   const firstInitializedAt =
     previous?.meta.firstInitializedAt ??
     roundConfig?.createdAt ??
@@ -381,6 +405,7 @@ export async function scanProtoRoundInbox(opts: {
   const manifest: IntakeManifestV1 = {
     meta: {
       schemaVersion: INTAKE_SCHEMA_VERSION,
+      operatorRoot: OPERATOR_ROOT_NAME,
       year: identity.year,
       round: identity.round,
       roundLabel: identity.roundLabel,
@@ -403,7 +428,10 @@ export async function scanProtoRoundInbox(opts: {
   };
 
   const manifestRel = intakeManifestRelative(year, round);
-  await writeJsonAtomic(absFromRelative(cwd, manifestRel), manifest);
+  await writeJsonAtomic(
+    absFromOperatorRelative(operatorRootAbs, manifestRel),
+    manifest,
+  );
 
   const previousCanonicalImageCount =
     previous?.summary.canonicalImageCount ?? 0;
@@ -414,7 +442,10 @@ export async function scanProtoRoundInbox(opts: {
     round: identity.round,
     roundLabel: identity.roundLabel,
     protoRoundKey: identity.protoRoundKey,
-    inboxRelativePath: inboxRel,
+    operatorRoot: OPERATOR_ROOT_NAME,
+    operatorRootAbs,
+    roundRelativePath: roundRel,
+    screenshotDirectoryAbs: roundAbs,
     manifestRelativePath: manifestRel,
     summary,
     previousCanonicalImageCount,
