@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "football-independent-scoring-contract-v0",
+  "contractVersion": "football-context-dominance-v0",
+  "createdAt": "2026-09-06T02:04:57.947Z",
+  "dateKst": "2026-09-06",
+  "researchOnly": true,
+  "validatedModel": false,
+  "engineAdmission": false,
+  "marketInputsAllowed": false,
+  "resultInputsAllowed": false,
+  "targetFixtureIds": ["1490449", "1490450"],
+  "evidenceSource": "API_FOOTBALL_TEAM_STATISTICS",
+  "providerEndpoint": "/teams/statistics",
+  "leagueId": 253,
+  "season": 2026,
+  "metrics": [
+    {
+      "id": "CONTEXT_WIN_RATE",
+      "home": {
+        "numerator": "fixtures.wins.home",
+        "denominator": "fixtures.played.home",
+        "formula": "homeWins / homeFixturesPlayed"
+      },
+      "away": {
+        "numerator": "fixtures.wins.away",
+        "denominator": "fixtures.played.away",
+        "formula": "awayWins / awayFixturesPlayed"
+      }
+    },
+    {
+      "id": "CONTEXT_GOAL_DIFFERENCE_PER_GAME",
+      "home": {
+        "goalsFor": "goals.for.total.home",
+        "goalsAgainst": "goals.against.total.home",
+        "denominator": "fixtures.played.home",
+        "formula": "(homeGoalsFor - homeGoalsAgainst) / homeFixturesPlayed"
+      },
+      "away": {
+        "goalsFor": "goals.for.total.away",
+        "goalsAgainst": "goals.against.total.away",
+        "denominator": "fixtures.played.away",
+        "formula": "(awayGoalsFor - awayGoalsAgainst) / awayFixturesPlayed"
+      }
+    }
+  ],
+  "decisionRule": {
+    "id": "STRICT_BOTH_METRICS_DOMINANCE",
+    "insufficientIf": "required fields missing OR either contextual fixturesPlayed denominator <= 0",
+    "insufficientDecision": "PASS",
+    "insufficientReason": "INSUFFICIENT_INDEPENDENT_DATA",
+    "homeWinsIf": "HOME strictly better than AWAY on BOTH metrics",
+    "homeDecision": "LEAN_HOME",
+    "awayWinsIf": "AWAY strictly better than HOME on BOTH metrics",
+    "awayDecision": "LEAN_AWAY",
+    "otherwiseDecision": "PASS",
+    "otherwiseReason": "NO_STRICT_DOMINANCE",
+    "tieBreaker": "NONE",
+    "weightedSum": false,
+    "thresholdTuning": false,
+    "marketConfirmation": false,
+    "comparisonRounding": "NONE"
+  },
+  "forbiddenInputs": [
+    "overall market odds",
+    "market favorite",
+    "implied probability",
+    "provider prediction",
+    "H2H prediction",
+    "standings rank",
+    "injury assumptions",
+    "manual subjective strength",
+    "weights"
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "schemaVersion": "football-independent-decision-v0",
+    "dateKst": "2026-09-06",
+    "generatedAt": "2026-09-06T02:07:20.896Z",
+    "researchOnly": true,
+    "validatedModel": false,
+    "publicRecommendation": false,
+    "engine": "NONE",
+    "weightModel": "NONE",
+    "contractRel": "data/research/football/2026-09-06-independent-scoring-contract-v0.json",
+    "contractHash": "77637bdc721f0e5f87276e4a5bb1794d8194a03ad56203ecb78fe98b81e64068",
+    "evidenceRel": "data/research/football/2026-09-06-independent-team-statistics-pregame-v0.json",
+    "evidenceHash": "620e9c1b5bfe5906ffa9d77b25537d13e92ecae2d9e32623e7149feb53f30ed1",
+    "marketDataRead": false,
+    "oddsInputUsed": false,
+    "resultDataUsed": false,
+    "postgameDataUsed": false,
+    "providerPredictionEndpointUsed": false,
+    "standingsUsed": false,
+    "scoringContractCreatedBeforeProviderCall": true,
+    "scoringContractChangedAfterData": false,
+    "artifactHash": "28ff2102588e0e05be83af8b53e193c9676e137cbecbee9bdc1ff35c87b3fcf5"
+  },
+  "rows": [
+    {
+      "fixtureId": "1490449",
+      "homeName": "Vancouver Whitecaps",
+      "awayName": "St. Louis City",
+      "homeProviderTeamId": "1603",
+      "awayProviderTeamId": "20787",
+      "homeContext": {
+        "fixturesPlayed": null,
+        "wins": null,
+        "goalsFor": null,
+        "goalsAgainst": null,
+        "contextWinRate": null,
+        "contextGoalDifferencePerGame": null,
+        "captureError": "Football API error on /teams/statistics: {\"plan\":\"Free plans do not have access to this season, try from 2022 to 2024.\"}"
+      },
+      "awayContext": {
+        "fixturesPlayed": null,
+        "wins": null,
+        "goalsFor": null,
+        "goalsAgainst": null,
+        "contextWinRate": null,
+        "contextGoalDifferencePerGame": null,
+        "captureError": "Football API error on /teams/statistics: {\"plan\":\"Free plans do not have access to this season, try from 2022 to 2024.\"}"
+      },
+      "metric1Winner": "INSUFFICIENT",
+      "metric2Winner": "INSUFFICIENT",
+      "decision": "PASS",
+      "reasonCodes": [
+        "INSUFFICIENT_INDEPENDENT_DATA"
+      ],
+      "researchPrototype": true,
+      "publicRecommendation": false
+    },
+    {
+      "fixtureId": "1490450",
+      "homeName": "Portland Timbers",
+      "awayName": "Minnesota United FC",
+      "homeProviderTeamId": "1617",
+      "awayProviderTeamId": "1612",
+      "homeContext": {
+        "fixturesPlayed": null,
+        "wins": null,
+        "goalsFor": null,
+        "goalsAgainst": null,
+        "contextWinRate": null,
+        "contextGoalDifferencePerGame": null,
+        "captureError": "Football API error on /teams/statistics: {\"plan\":\"Free plans do not have access to this season, try from 2022 to 2024.\"}"
+      },
+      "awayContext": {
+        "fixturesPlayed": null,
+        "wins": null,
+        "goalsFor": null,
+        "goalsAgainst": null,
+        "contextWinRate": null,
+        "contextGoalDifferencePerGame": null,
+        "captureError": "Football API error on /teams/statistics: {\"plan\":\"Free plans do not have access to this season, try from 2022 to 2024.\"}"
+      },
+      "metric1Winner": "INSUFFICIENT",
+      "metric2Winner": "INSUFFICIENT",
+      "decision": "PASS",
+      "reasonCodes": [
+        "INSUFFICIENT_INDEPENDENT_DATA"
+      ],
+      "researchPrototype": true,
+      "publicRecommendation": false
+    }
+  ]
+}
