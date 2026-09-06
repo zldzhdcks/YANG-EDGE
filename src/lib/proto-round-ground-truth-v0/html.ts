@@ -126,7 +126,7 @@ export function renderDiscoveryAnnotationHtml(
           <button type="button" id="saveLocal">Save locally</button>
           <button type="button" id="exportJson">Export JSON</button>
         </div>
-        <p class="note">Local save uses this browser only. Export writes a JSON download. Fields are never auto-filled.</p>
+        <p class="note">Browser local save is convenience only, not the official record. Export JSON, then import it into discovery-annotation-v0.json. A later pack build will not blank existing human JSON.</p>
       </form>
     </section>
   </main>

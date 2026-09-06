@@ -25,11 +25,15 @@ import {
   buildGroundTruthPackV0,
   buildHoldoutSealV0,
   buildSelectionManifestV0,
+  canonicalJson,
   collectEligibleRows,
   computeSelectionSortKey,
   createScreenshotBytesProbe,
   hashRowIdentity,
+  importDiscoveryAnnotationV0,
   lineageImagesFromVisualRows,
+  preserveOrCreateDiscoveryAnnotation,
+  reconcileGroundTruthPackV0,
   renderDiscoveryAnnotationHtml,
   selectFrozenSamples,
   sha256CanonicalJson,
@@ -644,6 +648,205 @@ async function main() {
   assert.deepEqual(
     filtered.map((r) => r.visualRowIndex),
     [0, 2],
+  );
+
+  function expectCode(err: unknown, code: string): boolean {
+    return err instanceof GroundTruthError && err.code === code;
+  }
+
+  // Overwrite blocker / rerun idempotence
+  const init = await reconcileGroundTruthPackV0({
+    protoRoundKey: PROTO,
+    visualRows: visual,
+    intake,
+    screenshot: probe,
+  });
+  assert.equal(init.selectionArtifact.action, "CREATED");
+  const annotated = structuredClone(init.discoveryAnnotation);
+  annotated.records[0]!.annotationStatus = "COMPLETE";
+  annotated.records[0]!.participantLeftRaw = "한화";
+  annotated.records[0]!.participantRightRaw = "NC";
+  annotated.records[0]!.marketMarkerRaw = "U2.5";
+  annotated.records[0]!.numericCellsRaw = ["1.79"];
+  annotated.records[0]!.otherVisibleTextRaw = ["  spaced  "];
+  annotated.records[0]!.annotatorNotes = "exact raw";
+  const rerun = await reconcileGroundTruthPackV0({
+    protoRoundKey: PROTO,
+    visualRows: visual,
+    intake,
+    screenshot: probe,
+    existing: {
+      selectionManifestRaw: init.selectionArtifact.raw,
+      holdoutSealRaw: init.holdoutSealArtifact.raw,
+      discoveryAnnotationRaw: canonicalJson(annotated),
+    },
+  });
+  assert.equal(rerun.selectionArtifact.write, false);
+  assert.equal(rerun.holdoutSealArtifact.write, false);
+  assert.equal(rerun.discoveryAnnotationArtifact.write, false);
+  assert.equal(rerun.selectionManifestSha256, init.selectionManifestSha256);
+  assert.equal(rerun.holdoutSealSha256, init.holdoutSealSha256);
+  assert.equal(rerun.discoveryAnnotation.records[0]!.annotationStatus, "COMPLETE");
+  assert.equal(rerun.discoveryAnnotation.records[0]!.participantLeftRaw, "한화");
+  assert.equal(rerun.discoveryAnnotation.records[0]!.participantRightRaw, "NC");
+  assert.equal(rerun.discoveryAnnotation.records[0]!.marketMarkerRaw, "U2.5");
+  assert.deepEqual(rerun.discoveryAnnotation.records[0]!.numericCellsRaw, ["1.79"]);
+  assert.deepEqual(rerun.discoveryAnnotation.records[0]!.otherVisibleTextRaw, ["  spaced  "]);
+  assert.equal(rerun.discoveryHtml.includes("한화"), true);
+  assert.equal(rerun.discoveryHtml.includes(OCR_LEAK), false);
+
+  // Selection drift: extra eligible image changes the frozen universe
+  const drifted = universe([25, 25, 15, 1]);
+  await assert.rejects(
+    () =>
+      reconcileGroundTruthPackV0({
+        protoRoundKey: PROTO,
+        visualRows: drifted.visual,
+        intake: drifted.intake,
+        screenshot: drifted.probe,
+        existing: {
+          selectionManifestRaw: init.selectionArtifact.raw,
+          holdoutSealRaw: init.holdoutSealArtifact.raw,
+          discoveryAnnotationRaw: init.discoveryAnnotationArtifact.raw,
+        },
+      }),
+    (err: unknown) => expectCode(err, "FROZEN_SELECTION_DRIFT"),
+  );
+
+  // Holdout seal drift
+  const corruptedSeal = JSON.parse(init.holdoutSealArtifact.raw) as {
+    holdoutRowKeyHashes: string[];
+  };
+  corruptedSeal.holdoutRowKeyHashes[0] = "0".repeat(64);
+  await assert.rejects(
+    () =>
+      reconcileGroundTruthPackV0({
+        protoRoundKey: PROTO,
+        visualRows: visual,
+        intake,
+        screenshot: probe,
+        existing: {
+          selectionManifestRaw: init.selectionArtifact.raw,
+          holdoutSealRaw: canonicalJson(corruptedSeal),
+          discoveryAnnotationRaw: init.discoveryAnnotationArtifact.raw,
+        },
+      }),
+    (err: unknown) => expectCode(err, "HOLDOUT_SEAL_DRIFT"),
+  );
+
+  // Annotation identity drift
+  const missing = structuredClone(init.discoveryAnnotation);
+  missing.records = missing.records.slice(1);
+  assert.throws(
+    () =>
+      preserveOrCreateDiscoveryAnnotation({
+        existingRaw: canonicalJson(missing),
+        protoRoundKey: PROTO,
+        expectedBlank: init.discoveryAnnotation,
+        discoveryRowKeys: init.selectionManifest.discoveryRowKeys,
+        holdoutRowKeys: init.selectionManifest.holdoutRowKeys,
+      }),
+    (err: unknown) => expectCode(err, "DISCOVERY_ANNOTATION_IDENTITY_DRIFT"),
+  );
+
+  const duplicate = structuredClone(init.discoveryAnnotation);
+  duplicate.records[1] = structuredClone(duplicate.records[0]!);
+  assert.throws(
+    () =>
+      preserveOrCreateDiscoveryAnnotation({
+        existingRaw: canonicalJson(duplicate),
+        protoRoundKey: PROTO,
+        expectedBlank: init.discoveryAnnotation,
+        discoveryRowKeys: init.selectionManifest.discoveryRowKeys,
+        holdoutRowKeys: init.selectionManifest.holdoutRowKeys,
+      }),
+    (err: unknown) => expectCode(err, "DISCOVERY_ANNOTATION_DUPLICATE_ROW"),
+  );
+
+  const extra = structuredClone(init.discoveryAnnotation);
+  extra.records.push(structuredClone(extra.records[0]!));
+  extra.records[extra.records.length - 1]!.visualRowIndex = 999;
+  extra.records[extra.records.length - 1]!.sourceImageSha256 = shaPad(99);
+  assert.throws(
+    () =>
+      preserveOrCreateDiscoveryAnnotation({
+        existingRaw: canonicalJson(extra),
+        protoRoundKey: PROTO,
+        expectedBlank: init.discoveryAnnotation,
+        discoveryRowKeys: init.selectionManifest.discoveryRowKeys,
+        holdoutRowKeys: init.selectionManifest.holdoutRowKeys,
+      }),
+    (err: unknown) => expectCode(err, "DISCOVERY_ANNOTATION_IDENTITY_DRIFT"),
+  );
+
+  const leaked = structuredClone(init.discoveryAnnotation);
+  leaked.records[0]!.sourceImageSha256 = init.selectionManifest.holdoutRowKeys[0]!.sourceImageSha256;
+  leaked.records[0]!.visualRowIndex = init.selectionManifest.holdoutRowKeys[0]!.visualRowIndex;
+  assert.throws(
+    () =>
+      preserveOrCreateDiscoveryAnnotation({
+        existingRaw: canonicalJson(leaked),
+        protoRoundKey: PROTO,
+        expectedBlank: init.discoveryAnnotation,
+        discoveryRowKeys: init.selectionManifest.discoveryRowKeys,
+        holdoutRowKeys: init.selectionManifest.holdoutRowKeys,
+      }),
+    (err: unknown) => expectCode(err, "DISCOVERY_ANNOTATION_HOLDOUT_LEAK"),
+  );
+
+  // Human text preservation via import; frozen identity cannot change
+  const importPayload = {
+    schemaVersion: "proto-round-ground-truth-discovery-v0",
+    protoRoundKey: PROTO,
+    records: init.discoveryAnnotation.records.map((record, i) => ({
+      sourceImageSha256: record.sourceImageSha256,
+      sourceFileName: record.sourceFileName,
+      visualRowIndex: record.visualRowIndex,
+      annotationStatus: i === 0 ? "COMPLETE" : "UNANNOTATED",
+      screenRowIdentifierRaw: i === 0 ? "9413" : null,
+      screenDateRaw: i === 0 ? "09-06" : null,
+      screenTimeRaw: i === 0 ? "11:30" : null,
+      leagueDisplayRaw: i === 0 ? "J2리그" : null,
+      participantLeftRaw: i === 0 ? "한화" : null,
+      participantRightRaw: i === 0 ? "NC" : null,
+      marketMarkerRaw: i === 0 ? "U2.5" : null,
+      numericCellsRaw: i === 0 ? ["1.79"] : [],
+      statusTextRaw: null,
+      otherVisibleTextRaw: i === 0 ? ["  spaced  "] : [],
+      annotatorNotes: i === 0 ? "keep punctuation!" : null,
+    })),
+  };
+  const imported = importDiscoveryAnnotationV0({
+    protoRoundKey: PROTO,
+    selectionManifest: init.selectionManifest,
+    existingAnnotation: init.discoveryAnnotation,
+    imported: importPayload,
+  });
+  assert.equal(imported.records[0]!.participantLeftRaw, "한화");
+  assert.equal(imported.records[0]!.participantRightRaw, "NC");
+  assert.equal(imported.records[0]!.leagueDisplayRaw, "J2리그");
+  assert.equal(imported.records[0]!.marketMarkerRaw, "U2.5");
+  assert.deepEqual(imported.records[0]!.numericCellsRaw, ["1.79"]);
+  assert.deepEqual(imported.records[0]!.otherVisibleTextRaw, ["  spaced  "]);
+  assert.equal(imported.records[0]!.annotatorNotes, "keep punctuation!");
+  assert.deepEqual(
+    imported.records[0]!.targetRowGeometry,
+    init.discoveryAnnotation.records[0]!.targetRowGeometry,
+  );
+  const mutateGeometry = structuredClone(importPayload);
+  mutateGeometry.records[0]!.targetRowGeometry = {
+    ...init.discoveryAnnotation.records[0]!.targetRowGeometry,
+    topY: 0,
+  };
+  assert.throws(
+    () =>
+      importDiscoveryAnnotationV0({
+        protoRoundKey: PROTO,
+        selectionManifest: init.selectionManifest,
+        existingAnnotation: init.discoveryAnnotation,
+        imported: mutateGeometry,
+      }),
+    (err: unknown) => expectCode(err, "ANNOTATION_IMPORT_MUTATES_FROZEN_IDENTITY"),
   );
 
   console.log("test:proto-round-ground-truth-v0 OK");

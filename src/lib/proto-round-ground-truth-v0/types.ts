@@ -43,6 +43,28 @@ export const POST_SELECTION_COVERAGE_AUDIT_ONLY = true as const;
 export const GROUND_TRUTH_DISCOVERY_TEMPLATE = "GENERATED" as const;
 export const GROUND_TRUTH_DISCOVERY_ANNOTATED = false as const;
 export const GROUND_TRUTH_ACCURACY_METRIC = "NOT_AVAILABLE_YET" as const;
+export const FROZEN_SELECTION_AUTO_OVERWRITE = false as const;
+export const HOLDOUT_SEAL_AUTO_OVERWRITE = false as const;
+export const HUMAN_ANNOTATION_AUTO_OVERWRITE = false as const;
+export const DISCOVERY_TEMPLATE_INITIALIZATION = "CREATE_IF_ABSENT_ONLY" as const;
+export const HTML_REGENERATION_RESETS_TRUTH = false as const;
+export const BROWSER_LOCAL_STORAGE_ONLY_PERSISTENCE = false as const;
+export const ANNOTATION_IMPORT_MUTATES_FROZEN_IDENTITY = false as const;
+
+export const HUMAN_TRUTH_FIELD_NAMES = [
+  "annotationStatus",
+  "screenRowIdentifierRaw",
+  "screenDateRaw",
+  "screenTimeRaw",
+  "leagueDisplayRaw",
+  "participantLeftRaw",
+  "participantRightRaw",
+  "marketMarkerRaw",
+  "numericCellsRaw",
+  "statusTextRaw",
+  "otherVisibleTextRaw",
+  "annotatorNotes",
+] as const;
 
 export type AnnotationStatusV0 =
   | "UNANNOTATED"

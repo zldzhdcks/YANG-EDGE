@@ -1,5 +1,6 @@
 /**
  * Freeze Proto Round ground-truth v0 discovery/holdout samples.
+ * Existing freeze and human annotations are preserved. No silent overwrite.
  * No OCR rerun. No screenshot rewrite. No network.
  *
  *   npm run build:proto-round-ground-truth-v0 -- --year <year> --round <round> --json
@@ -12,9 +13,9 @@ import {
   GROUND_TRUTH_DIRECTORY_NAME,
   HOLDOUT_SEAL_FILE_NAME,
   SELECTION_MANIFEST_FILE_NAME,
-  buildGroundTruthPackV0,
-  canonicalJson,
   createScreenshotBytesProbe,
+  reconcileGroundTruthPackV0,
+  type PreservedArtifactV0,
 } from "../src/lib/proto-round-ground-truth-v0";
 import { SEMANTIC_REGION_CANDIDATES_ARTIFACT_FILE_NAME } from "../src/lib/proto-round-semantic-region-candidates-v0";
 import type { SemanticRegionCandidatesDocumentV0 } from "../src/lib/proto-round-semantic-region-candidates-v0";
@@ -73,8 +74,22 @@ async function writeTextAtomic(abs: string, body: string): Promise<void> {
   }
 }
 
-async function writeJsonAtomic(abs: string, value: unknown): Promise<void> {
-  await writeTextAtomic(abs, canonicalJson(value));
+async function readOptionalUtf8(abs: string): Promise<string | null> {
+  try {
+    return await readFile(abs, "utf8");
+  } catch (err) {
+    const code = (err as NodeJS.ErrnoException).code;
+    if (code === "ENOENT") return null;
+    throw err;
+  }
+}
+
+async function writePreservedJson<T>(
+  abs: string,
+  artifact: PreservedArtifactV0<T>,
+): Promise<void> {
+  if (!artifact.write) return;
+  await writeTextAtomic(abs, artifact.raw);
 }
 
 async function loadOptionalSemantic(
@@ -118,24 +133,36 @@ async function main() {
     );
   }
 
+  const outDir = path.join(yangAbs, GROUND_TRUTH_DIRECTORY_NAME);
+  const existing = {
+    selectionManifestRaw: await readOptionalUtf8(
+      path.join(outDir, SELECTION_MANIFEST_FILE_NAME),
+    ),
+    holdoutSealRaw: await readOptionalUtf8(path.join(outDir, HOLDOUT_SEAL_FILE_NAME)),
+    discoveryAnnotationRaw: await readOptionalUtf8(
+      path.join(outDir, DISCOVERY_ANNOTATION_FILE_NAME),
+    ),
+  };
+
   const semanticRegions = await loadOptionalSemantic(yangAbs);
-  const pack = await buildGroundTruthPackV0({
+  const pack = await reconcileGroundTruthPackV0({
     protoRoundKey: expectedKey,
     visualRows,
     intake,
     screenshot: createScreenshotBytesProbe(roundAbs),
     semanticRegions,
+    existing,
   });
 
-  const outDir = path.join(yangAbs, GROUND_TRUTH_DIRECTORY_NAME);
-  await writeJsonAtomic(
+  await mkdir(outDir, { recursive: true });
+  await writePreservedJson(
     path.join(outDir, SELECTION_MANIFEST_FILE_NAME),
-    pack.selectionManifest,
+    pack.selectionArtifact,
   );
-  await writeJsonAtomic(path.join(outDir, HOLDOUT_SEAL_FILE_NAME), pack.holdoutSeal);
-  await writeJsonAtomic(
+  await writePreservedJson(path.join(outDir, HOLDOUT_SEAL_FILE_NAME), pack.holdoutSealArtifact);
+  await writePreservedJson(
     path.join(outDir, DISCOVERY_ANNOTATION_FILE_NAME),
-    pack.discoveryAnnotation,
+    pack.discoveryAnnotationArtifact,
   );
   await writeTextAtomic(
     path.join(outDir, DISCOVERY_ANNOTATION_HTML_FILE_NAME),
@@ -151,6 +178,10 @@ async function main() {
     holdoutSampleSize: pack.selectionManifest.holdoutSampleSize,
     selectionManifestSha256: pack.selectionManifestSha256,
     holdoutSealSha256: pack.holdoutSealSha256,
+    selectionAction: pack.selectionArtifact.action,
+    holdoutSealAction: pack.holdoutSealArtifact.action,
+    discoveryAnnotationAction: pack.discoveryAnnotationArtifact.action,
+    htmlRegeneratedFromPreservedAnnotation: true,
     discoveryHoldoutDisjoint: true,
     coverage: pack.coverage,
     discoveryTemplate: pack.discoveryAnnotation.discoveryTemplate,
@@ -167,6 +198,9 @@ async function main() {
   console.log(`holdoutSampleSize=${pack.selectionManifest.holdoutSampleSize}`);
   console.log(`SELECTION_MANIFEST_SHA256=${pack.selectionManifestSha256}`);
   console.log(`HOLDOUT_SEAL_SHA256=${pack.holdoutSealSha256}`);
+  console.log(`selectionAction=${pack.selectionArtifact.action}`);
+  console.log(`holdoutSealAction=${pack.holdoutSealArtifact.action}`);
+  console.log(`discoveryAnnotationAction=${pack.discoveryAnnotationArtifact.action}`);
 }
 
 main().catch((e) => {
