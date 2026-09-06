@@ -6,20 +6,29 @@ import type {
 
 export const QUICK_MODE_PRIMARY_FIELDS = [
   "screenRowIdentifierRaw",
-  "screenDateRaw",
-  "screenTimeRaw",
-  "leagueDisplayRaw",
   "participantLeftRaw",
   "participantRightRaw",
   "numericCellsRaw",
-  "statusTextRaw",
 ] as const;
 
-export const QUICK_MODE_ADVANCED_FIELDS = [
+export const PILOT_OPTIONAL_FIELDS = [
+  "screenDateRaw",
+  "screenTimeRaw",
+  "leagueDisplayRaw",
   "marketMarkerRaw",
+  "statusTextRaw",
   "otherVisibleTextRaw",
   "annotatorNotes",
 ] as const;
+
+export const QUICK_MODE_ADVANCED_FIELDS = PILOT_OPTIONAL_FIELDS;
+
+export const PILOT_SAMPLE_SIZE = 10 as const;
+export const PILOT_SOURCE = "FIRST_10_FROZEN_DISCOVERY_ROWS" as const;
+export const OPTIONAL_SECTION_LABEL = "필요할 때만" as const;
+export const ASSISTED_REVIEW_MODE_ACTIVE = false as const;
+export const GROUND_TRUTH_FROM_OCR = false as const;
+export const OCR_VISIBLE_DURING_TRUTH_ENTRY = false as const;
 
 export const QUICK_UI_LABELS = {
   screenRowIdentifierRaw: "경기번호",
@@ -192,6 +201,14 @@ export function countAnnotatedRecords(
   records: Array<{ annotationStatus: AnnotationStatusV0 }>,
 ): number {
   return records.filter((record) => record.annotationStatus !== "UNANNOTATED").length;
+}
+
+/**
+ * Blind pilot subset = first N frozen Discovery rows in frozen order.
+ * Selection is positional only.
+ */
+export function pilotDiscoverySlice<T>(records: readonly T[]): T[] {
+  return records.slice(0, PILOT_SAMPLE_SIZE);
 }
 
 export function buildDiscoveryExportV0(

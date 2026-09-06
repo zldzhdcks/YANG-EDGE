@@ -19,10 +19,20 @@ import type {
 import type { SemanticRegionCandidatesDocumentV0 } from "../src/lib/proto-round-semantic-region-candidates-v0/types";
 import {
   GroundTruthError,
+  ASSISTED_REVIEW_MODE_ACTIVE,
   CONFIRM_AND_NEXT_LABEL,
+  EXPLICIT_HUMAN_REVIEW_REQUIRED_FOR_COMPLETE,
+  GROUND_TRUTH_FROM_OCR,
+  NAVIGATION_ALONE_MARKS_COMPLETE,
+  OCR_VISIBLE_DURING_TRUTH_ENTRY,
+  OPTIONAL_SECTION_LABEL,
+  PILOT_OPTIONAL_FIELDS,
+  PILOT_SAMPLE_SIZE,
+  PILOT_SOURCE,
   QUICK_MODE_ADVANCED_FIELDS,
   QUICK_MODE_PRIMARY_FIELDS,
   QUICK_UI_LABELS,
+  TYPING_ALONE_MARKS_COMPLETE,
   applyQuickDraftToRecord,
   assertDiscoveryHoldoutDisjoint,
   blankHumanTruthFields,
@@ -49,6 +59,7 @@ import {
   renderDiscoveryAnnotationHtml,
   selectFrozenSamples,
   sha256CanonicalJson,
+  pilotDiscoverySlice,
   type EligibleVisualRowV0,
   type ScreenshotBytesProbe,
 } from "../src/lib/proto-round-ground-truth-v0";
@@ -56,6 +67,52 @@ import {
 const PROTO = "2026-105";
 const OCR_LEAK = "OCR_LEAK_TOKEN_MUST_NOT_PREFILL";
 const LIB_DIR = path.join("src", "lib", "proto-round-ground-truth-v0");
+
+function extractPackFromHtml(html: string): {
+  schemaVersion: string;
+  protoRoundKey: string;
+  pilotSampleSize: number;
+  records: Array<{
+    sourceImageSha256: string;
+    screenshotHref: string;
+    annotationStatus: string;
+    visualRowIndex: number;
+  }>;
+} {
+  const prefix = "const PACK = ";
+  const start = html.indexOf(prefix);
+  if (start < 0) {
+    throw new Error("PACK payload missing from HTML");
+  }
+  const jsonStart = start + prefix.length;
+  const unixEnd = html.indexOf(";\n    const STORAGE_KEY", jsonStart);
+  const winEnd = html.indexOf(";\r\n    const STORAGE_KEY", jsonStart);
+  const end = unixEnd >= 0 ? unixEnd : winEnd;
+  if (end < 0) {
+    throw new Error("PACK payload missing from HTML");
+  }
+  return JSON.parse(html.slice(jsonStart, end)) as {
+    schemaVersion: string;
+    protoRoundKey: string;
+    pilotSampleSize: number;
+    records: Array<{
+      sourceImageSha256: string;
+      screenshotHref: string;
+      annotationStatus: string;
+      visualRowIndex: number;
+    }>;
+  };
+}
+
+function sourceOf(fileName: string, start: string, end: string): string {
+  const src = readFileSync(path.join(LIB_DIR, fileName), "utf8");
+  const from = src.indexOf(start);
+  const to = src.indexOf(end, from + start.length);
+  if (from < 0 || to < 0) {
+    throw new Error(`Could not isolate ${start} in ${fileName}`);
+  }
+  return src.slice(from, to);
+}
 
 function shaPad(n: number): string {
   return n.toString(16).padStart(64, "0");
@@ -861,29 +918,52 @@ async function main() {
     (err: unknown) => expectCode(err, "ANNOTATION_IMPORT_MUTATES_FROZEN_IDENTITY"),
   );
 
-  // Quick UI v0
+  // Quick UI v0 / Pilot 10
+  assert.equal(QUICK_MODE_PRIMARY_FIELDS.length, 4);
+  assert.equal(PILOT_SAMPLE_SIZE, 10);
+  assert.equal(PILOT_SOURCE, "FIRST_10_FROZEN_DISCOVERY_ROWS");
+  assert.equal(ASSISTED_REVIEW_MODE_ACTIVE, false);
+  assert.equal(GROUND_TRUTH_FROM_OCR, false);
+  assert.equal(OCR_VISIBLE_DURING_TRUTH_ENTRY, false);
+  assert.equal(TYPING_ALONE_MARKS_COMPLETE, false);
+  assert.equal(NAVIGATION_ALONE_MARKS_COMPLETE, false);
+  assert.equal(EXPLICIT_HUMAN_REVIEW_REQUIRED_FOR_COMPLETE, true);
+
+  const formHtml = html.slice(html.indexOf('<form id="truthForm"'), html.indexOf("</form>"));
+  const detailsHtml = formHtml.slice(formHtml.indexOf("<details>"));
+  const visibleHtml = formHtml.slice(0, formHtml.indexOf("<details>"));
   for (const field of QUICK_MODE_PRIMARY_FIELDS) {
     assert.equal(field in discoveryDoc.records[0]!, true);
-    assert.equal(html.includes(`data-schema-field="${field}"`), true);
+    assert.equal(visibleHtml.includes(`data-schema-field="${field}"`), true);
     assert.equal(html.includes(QUICK_UI_LABELS[field]), true);
+    assert.equal(detailsHtml.includes(`data-schema-field="${field}"`), false);
   }
-  for (const field of QUICK_MODE_ADVANCED_FIELDS) {
+  for (const field of PILOT_OPTIONAL_FIELDS) {
     assert.equal(field in discoveryDoc.records[0]!, true);
-    assert.equal(html.includes(`data-schema-field="${field}"`), true);
+    assert.equal(detailsHtml.includes(`data-schema-field="${field}"`), true);
+    assert.equal(visibleHtml.includes(`data-schema-field="${field}"`), false);
     assert.equal(html.includes(QUICK_UI_LABELS[field]), true);
   }
-  assert.equal(html.includes("Advanced / Optional"), true);
+  assert.deepEqual([...QUICK_MODE_ADVANCED_FIELDS], [...PILOT_OPTIONAL_FIELDS]);
+  assert.equal(html.includes(OPTIONAL_SECTION_LABEL), true);
+  assert.equal(html.includes("Advanced / Optional"), false);
+  assert.equal(html.includes("<details open"), false);
   assert.equal(html.includes("HOME"), false);
   assert.equal(html.includes("AWAY"), false);
   assert.equal(/holdout/i.test(html), false);
   assert.equal(html.includes(OCR_LEAK), false);
   assert.equal(html.includes("Last saved:"), true);
   assert.equal(html.includes("Annotated"), true);
+  assert.equal(html.includes("1 / 10"), true);
+  assert.equal(html.includes("1 / 30"), false);
   assert.equal(html.includes(CONFIRM_AND_NEXT_LABEL), true);
   assert.equal(html.includes("confirmAndNext"), true);
   assert.equal(html.includes("autosave(false)"), true);
   assert.equal(html.includes('e.key === "Enter" && shortcut'), true);
   assert.equal(html.includes("if (e.key === \"Enter\" && editing)"), true);
+  assert.equal(html.includes("% PILOT_COUNT"), true);
+  assert.equal(html.includes("% records.length"), false);
+  assert.equal(html.includes('getElementById("fieldRowId")'), true);
 
   const blankDraft = {
     uncertain: false,
@@ -1000,6 +1080,49 @@ async function main() {
     roundTripped.records.map((r) => `${r.sourceImageSha256}|${r.visualRowIndex}`),
     discoveryDoc.records.map((r) => `${r.sourceImageSha256}|${r.visualRowIndex}`),
   );
+
+  // Pilot 10 subset / render / export contract
+  const pilot = pilotDiscoverySlice(discoveryDoc.records);
+  assert.equal(pilot.length, 10);
+  assert.deepEqual(
+    pilot.map((r) => `${r.sourceImageSha256}|${r.visualRowIndex}`),
+    discoveryDoc.records.slice(0, 10).map((r) => `${r.sourceImageSha256}|${r.visualRowIndex}`),
+  );
+  const sliceSrc = sourceOf(
+    "quick-ui.ts",
+    "export function pilotDiscoverySlice",
+    "export function buildDiscoveryExportV0",
+  );
+  assert.equal(sliceSrc.includes("rawText"), false);
+  assert.equal(sliceSrc.includes("layoutPatternId"), false);
+  assert.equal(sliceSrc.includes("slice(0, PILOT_SAMPLE_SIZE)"), true);
+
+  const htmlPack = extractPackFromHtml(html);
+  assert.equal(htmlPack.pilotSampleSize, 10);
+  assert.equal(htmlPack.records.length, 30);
+  assert.equal(htmlPack.records.filter((r) => r.screenshotHref.length > 0).length, 10);
+  assert.equal(
+    htmlPack.records.slice(10).every((r) => r.screenshotHref === ""),
+    true,
+  );
+  assert.deepEqual(
+    htmlPack.records.slice(0, 10).map((r) => `${r.sourceImageSha256}|${r.visualRowIndex}`),
+    discoveryDoc.records.slice(0, 10).map((r) => `${r.sourceImageSha256}|${r.visualRowIndex}`),
+  );
+  assert.equal(html.includes("id=\"totalCount\">10"), true);
+  assert.equal(exported.records.length, 30);
+  assert.equal(exported.records.slice(10).every((r) => r.annotationStatus === "UNANNOTATED"), true);
+  assert.equal(roundTripped.records.length, 30);
+  assert.equal(
+    roundTripped.records.slice(10).every((r) => r.annotationStatus === "UNANNOTATED"),
+    true,
+  );
+  assert.equal(html.includes("tabindex=\"1\""), true);
+  assert.equal(html.includes("tabindex=\"5\""), true);
+  assert.equal(confirmReviewAnnotationStatus(blankDraft), "COMPLETE");
+  assert.equal(html.includes("if (i >= PILOT_COUNT) continue;"), true);
+  assert.equal(html.includes("function restoreNonPilotRecords()"), true);
+  assert.equal(html.includes("restoreNonPilotRecords();"), true);
 
   console.log("test:proto-round-ground-truth-v0 OK");
 }

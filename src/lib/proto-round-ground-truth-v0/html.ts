@@ -1,5 +1,10 @@
 import type { DiscoveryAnnotationDocumentV0, DiscoveryAnnotationRecordV0 } from "./types";
-import { CONFIRM_AND_NEXT_LABEL, QUICK_UI_LABELS } from "./quick-ui";
+import {
+  CONFIRM_AND_NEXT_LABEL,
+  OPTIONAL_SECTION_LABEL,
+  PILOT_SAMPLE_SIZE,
+  QUICK_UI_LABELS,
+} from "./quick-ui";
 
 function escapeHtmlScriptJson(value: unknown): string {
   return JSON.stringify(value).replace(/</g, "\\u003c");
@@ -15,12 +20,13 @@ function screenshotHref(relativePath: string): string {
 }
 
 function viewerRecords(records: DiscoveryAnnotationRecordV0[]) {
-  return records.map((record) => ({
+  return records.map((record, index) => ({
     sourceImageSha256: record.sourceImageSha256,
     sourceFileName: record.sourceFileName,
     visualRowIndex: record.visualRowIndex,
     targetRowGeometry: record.targetRowGeometry,
-    screenshotHref: screenshotHref(record.screenshotRelativePath),
+    screenshotHref:
+      index < PILOT_SAMPLE_SIZE ? screenshotHref(record.screenshotRelativePath) : "",
     annotationStatus: record.annotationStatus,
     screenRowIdentifierRaw: record.screenRowIdentifierRaw,
     screenDateRaw: record.screenDateRaw,
@@ -46,6 +52,7 @@ export function renderDiscoveryAnnotationHtml(
   const payload = {
     schemaVersion: doc.schemaVersion,
     protoRoundKey: doc.protoRoundKey,
+    pilotSampleSize: PILOT_SAMPLE_SIZE,
     records: viewerRecords(doc.records),
   };
   return `<!DOCTYPE html>
@@ -62,12 +69,12 @@ export function renderDiscoveryAnnotationHtml(
     .meta { color: #aaa; font-size: 12px; }
     .progress { text-align: right; font-size: 13px; }
     .progress strong { font-size: 16px; }
-    main { display: grid; grid-template-columns: minmax(320px, 1.4fr) minmax(280px, 1fr); gap: 16px; padding: 16px; }
+    main { display: grid; grid-template-columns: minmax(420px, 1.9fr) minmax(260px, 0.9fr); gap: 16px; padding: 16px; }
     .nav { display: flex; gap: 8px; align-items: center; margin: 8px 0 12px; flex-wrap: wrap; }
     button, select, input, textarea { font: inherit; }
     button { background: #2a2a2a; color: #eee; border: 1px solid #555; padding: 6px 10px; cursor: pointer; }
     button.primary { background: #3d5a1f; border-color: #7aa33a; font-weight: 600; }
-    .viewport { position: relative; overflow: hidden; background: #000; border: 1px solid #444; width: 100%; }
+    .viewport { position: relative; overflow: hidden; background: #000; border: 1px solid #444; width: 100%; min-height: 220px; }
     .viewport img { position: absolute; left: 0; top: 0; display: block; }
     .highlight { position: absolute; left: 0; right: 0; border: 2px solid #ffcc33; background: rgba(255, 204, 51, 0.08); pointer-events: none; box-sizing: border-box; }
     form { display: grid; gap: 8px; }
@@ -86,14 +93,14 @@ export function renderDiscoveryAnnotationHtml(
 <body>
   <header>
     <div>
-      <h1>Discovery 빠른 입력</h1>
+      <h1>Discovery 파일럿 10</h1>
       <div class="meta">
-        화면에 보이는 글자만 그대로 옮기세요. OCR/파서 후보는 표시하지 않습니다.
+        앞 10개만 눈으로 옮기세요. OCR/파서 후보는 표시하지 않습니다.
       </div>
     </div>
     <div class="progress">
-      <div><strong id="position">1 / 30</strong></div>
-      <div>Annotated <span id="annotatedCount">0</span> / <span id="totalCount">30</span></div>
+      <div><strong id="position">1 / 10</strong></div>
+      <div>Annotated <span id="annotatedCount">0</span> / <span id="totalCount">10</span></div>
       <div class="note">Last saved: <span id="lastSaved">--:--:--</span></div>
     </div>
   </header>
@@ -119,47 +126,47 @@ export function renderDiscoveryAnnotationHtml(
     <section>
       <form id="truthForm" autocomplete="off">
         <label>${QUICK_UI_LABELS.screenRowIdentifierRaw}
-          <input name="screenRowIdentifierRaw" data-schema-field="screenRowIdentifierRaw" />
-        </label>
-        <label>${QUICK_UI_LABELS.screenDateRaw}
-          <input name="screenDateRaw" data-schema-field="screenDateRaw" />
-        </label>
-        <label>${QUICK_UI_LABELS.screenTimeRaw}
-          <input name="screenTimeRaw" data-schema-field="screenTimeRaw" />
-        </label>
-        <label>${QUICK_UI_LABELS.leagueDisplayRaw}
-          <input name="leagueDisplayRaw" data-schema-field="leagueDisplayRaw" />
+          <input id="fieldRowId" name="screenRowIdentifierRaw" data-schema-field="screenRowIdentifierRaw" tabindex="1" />
         </label>
         <label>${QUICK_UI_LABELS.participantLeftRaw}
-          <input name="participantLeftRaw" data-schema-field="participantLeftRaw" />
+          <input id="fieldLeft" name="participantLeftRaw" data-schema-field="participantLeftRaw" tabindex="2" />
         </label>
         <label>${QUICK_UI_LABELS.participantRightRaw}
-          <input name="participantRightRaw" data-schema-field="participantRightRaw" />
+          <input id="fieldRight" name="participantRightRaw" data-schema-field="participantRightRaw" tabindex="3" />
         </label>
         <label>${QUICK_UI_LABELS.numericCellsRaw}
-          <input name="numericCellsRaw" data-schema-field="numericCellsRaw" placeholder="공백 또는 쉼표로 구분" />
-        </label>
-        <label>${QUICK_UI_LABELS.statusTextRaw}
-          <input name="statusTextRaw" data-schema-field="statusTextRaw" />
+          <input id="fieldNumeric" name="numericCellsRaw" data-schema-field="numericCellsRaw" tabindex="4" placeholder="공백 또는 쉼표로 구분" />
         </label>
         <div class="checks">
-          <label><input type="checkbox" id="uncertain" name="uncertain" /> UNCERTAIN</label>
-          <label><input type="checkbox" id="unreadable" name="unreadable" /> UNREADABLE</label>
+          <label><input type="checkbox" id="uncertain" name="uncertain" tabindex="6" /> UNCERTAIN</label>
+          <label><input type="checkbox" id="unreadable" name="unreadable" tabindex="7" /> UNREADABLE</label>
         </div>
         <details>
-          <summary>Advanced / Optional</summary>
+          <summary>${OPTIONAL_SECTION_LABEL}</summary>
+          <label>${QUICK_UI_LABELS.screenDateRaw}
+            <input name="screenDateRaw" data-schema-field="screenDateRaw" tabindex="20" />
+          </label>
+          <label>${QUICK_UI_LABELS.screenTimeRaw}
+            <input name="screenTimeRaw" data-schema-field="screenTimeRaw" tabindex="21" />
+          </label>
+          <label>${QUICK_UI_LABELS.leagueDisplayRaw}
+            <input name="leagueDisplayRaw" data-schema-field="leagueDisplayRaw" tabindex="22" />
+          </label>
           <label>${QUICK_UI_LABELS.marketMarkerRaw}
-            <input name="marketMarkerRaw" data-schema-field="marketMarkerRaw" />
+            <input name="marketMarkerRaw" data-schema-field="marketMarkerRaw" tabindex="23" />
+          </label>
+          <label>${QUICK_UI_LABELS.statusTextRaw}
+            <input name="statusTextRaw" data-schema-field="statusTextRaw" tabindex="24" />
           </label>
           <label>${QUICK_UI_LABELS.otherVisibleTextRaw}
-            <textarea name="otherVisibleTextRaw" data-schema-field="otherVisibleTextRaw"></textarea>
+            <textarea name="otherVisibleTextRaw" data-schema-field="otherVisibleTextRaw" tabindex="25"></textarea>
           </label>
           <label>${QUICK_UI_LABELS.annotatorNotes}
-            <textarea name="annotatorNotes" data-schema-field="annotatorNotes"></textarea>
+            <textarea name="annotatorNotes" data-schema-field="annotatorNotes" tabindex="26"></textarea>
           </label>
         </details>
         <div class="actions">
-          <button type="button" id="confirmNext" class="primary">${CONFIRM_AND_NEXT_LABEL}</button>
+          <button type="button" id="confirmNext" class="primary" tabindex="5">${CONFIRM_AND_NEXT_LABEL}</button>
           <button type="button" id="saveLocal">Save locally</button>
           <button type="button" id="exportJson">Export JSON</button>
         </div>
@@ -170,6 +177,7 @@ export function renderDiscoveryAnnotationHtml(
   <script>
     const PACK = ${escapeHtmlScriptJson(payload)};
     const STORAGE_KEY = "proto-round-ground-truth-discovery-v0:" + PACK.protoRoundKey;
+    const PILOT_COUNT = PACK.pilotSampleSize || 10;
     let index = 0;
     const records = PACK.records.map((r) => ({ ...r }));
 
@@ -231,9 +239,15 @@ export function renderDiscoveryAnnotationHtml(
           const src = saved[i];
           if (!src || src.sourceImageSha256 !== records[i].sourceImageSha256) return;
           if (src.visualRowIndex !== records[i].visualRowIndex) return;
+          if (i >= PILOT_COUNT) continue;
           records[i] = { ...records[i], ...pickTruth(src) };
         }
       } catch {}
+    }
+    function restoreNonPilotRecords() {
+      for (let i = PILOT_COUNT; i < records.length; i++) {
+        records[i] = { ...PACK.records[i] };
+      }
     }
     function readForm() {
       const form = document.getElementById("truthForm");
@@ -276,6 +290,7 @@ export function renderDiscoveryAnnotationHtml(
     }
     function persistCurrent(confirm) {
       const draft = readForm();
+      if (index >= PILOT_COUNT) return;
       const current = records[index];
       Object.assign(current, {
         screenRowIdentifierRaw: draft.screenRowIdentifierRaw,
@@ -302,6 +317,7 @@ export function renderDiscoveryAnnotationHtml(
     }
     function autosave(confirm) {
       persistCurrent(confirm === true);
+      restoreNonPilotRecords();
       localStorage.setItem(STORAGE_KEY, JSON.stringify(records.map((r) => ({
         sourceImageSha256: r.sourceImageSha256,
         visualRowIndex: r.visualRowIndex,
@@ -311,10 +327,10 @@ export function renderDiscoveryAnnotationHtml(
       updateProgress();
     }
     function updateProgress() {
-      document.getElementById("position").textContent = (index + 1) + " / " + records.length;
-      document.getElementById("totalCount").textContent = String(records.length);
+      document.getElementById("position").textContent = (index + 1) + " / " + PILOT_COUNT;
+      document.getElementById("totalCount").textContent = String(PILOT_COUNT);
       document.getElementById("annotatedCount").textContent = String(
-        records.filter((r) => r.annotationStatus !== "UNANNOTATED").length
+        records.slice(0, PILOT_COUNT).filter((r) => r.annotationStatus !== "UNANNOTATED").length
       );
     }
     function layoutCrop() {
@@ -322,15 +338,15 @@ export function renderDiscoveryAnnotationHtml(
       const geo = record.targetRowGeometry;
       const mode = document.getElementById("viewMode").value;
       const rowH = Math.max(1, geo.bottomY - geo.topY);
-      const pad = mode === "focus" ? Math.max(12, rowH * 0.6) : Math.max(48, rowH * 2.2);
+      const pad = mode === "focus" ? Math.max(8, rowH * 0.28) : Math.max(48, rowH * 2.2);
       const cropTop = Math.max(0, geo.topY - pad);
       const cropBottom = Math.min(geo.imageHeight, geo.bottomY + pad);
       const cropHeight = Math.max(1, cropBottom - cropTop);
       const viewport = document.getElementById("viewport");
       const img = document.getElementById("shot");
       const highlight = document.getElementById("highlight");
-      const width = viewport.clientWidth || 640;
-      const scale = width / geo.imageWidth;
+      const width = viewport.clientWidth || 900;
+      const scale = Math.max(width / geo.imageWidth, 240 / cropHeight);
       viewport.style.height = (cropHeight * scale) + "px";
       img.style.width = width + "px";
       img.style.height = (geo.imageHeight * scale) + "px";
@@ -346,19 +362,22 @@ export function renderDiscoveryAnnotationHtml(
       document.getElementById("shot").src = record.screenshotHref;
       writeForm(record);
       requestAnimationFrame(layoutCrop);
+      const rowId = document.getElementById("fieldRowId");
+      if (rowId) rowId.focus();
     }
     function go(delta) {
       autosave(false);
-      index = (index + records.length + delta) % records.length;
+      index = (index + PILOT_COUNT + delta) % PILOT_COUNT;
       render();
     }
     function confirmAndNext() {
       autosave(true);
-      index = (index + 1) % records.length;
+      index = (index + 1) % PILOT_COUNT;
       render();
     }
     function exportDocument() {
       persistCurrent(false);
+      restoreNonPilotRecords();
       return {
         schemaVersion: PACK.schemaVersion,
         protoRoundKey: PACK.protoRoundKey,
@@ -439,6 +458,7 @@ export function renderDiscoveryAnnotationHtml(
     });
     window.addEventListener("resize", layoutCrop);
     loadLocal();
+    restoreNonPilotRecords();
     render();
   </script>
 </body>
