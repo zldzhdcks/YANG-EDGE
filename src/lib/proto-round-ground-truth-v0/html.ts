@@ -1,4 +1,5 @@
 import type { DiscoveryAnnotationDocumentV0, DiscoveryAnnotationRecordV0 } from "./types";
+import { CONFIRM_AND_NEXT_LABEL, QUICK_UI_LABELS } from "./quick-ui";
 
 function escapeHtmlScriptJson(value: unknown): string {
   return JSON.stringify(value).replace(/</g, "\\u003c");
@@ -36,7 +37,7 @@ function viewerRecords(records: DiscoveryAnnotationRecordV0[]) {
 }
 
 /**
- * Discovery-only annotation page.
+ * Discovery-only quick annotation page.
  * Original screenshot pixels via CSS crop. No OCR text. No parser guesses.
  */
 export function renderDiscoveryAnnotationHtml(
@@ -48,7 +49,7 @@ export function renderDiscoveryAnnotationHtml(
     records: viewerRecords(doc.records),
   };
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -56,37 +57,50 @@ export function renderDiscoveryAnnotationHtml(
   <style>
     :root { color-scheme: dark; }
     body { margin: 0; font: 14px/1.4 system-ui, sans-serif; background: #111; color: #eee; }
-    header { padding: 12px 16px; border-bottom: 1px solid #333; }
+    header { padding: 12px 16px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
     h1 { font-size: 16px; margin: 0 0 6px; }
     .meta { color: #aaa; font-size: 12px; }
+    .progress { text-align: right; font-size: 13px; }
+    .progress strong { font-size: 16px; }
     main { display: grid; grid-template-columns: minmax(320px, 1.4fr) minmax(280px, 1fr); gap: 16px; padding: 16px; }
-    .nav { display: flex; gap: 8px; align-items: center; margin: 8px 0 12px; }
+    .nav { display: flex; gap: 8px; align-items: center; margin: 8px 0 12px; flex-wrap: wrap; }
     button, select, input, textarea { font: inherit; }
     button { background: #2a2a2a; color: #eee; border: 1px solid #555; padding: 6px 10px; cursor: pointer; }
+    button.primary { background: #3d5a1f; border-color: #7aa33a; font-weight: 600; }
     .viewport { position: relative; overflow: hidden; background: #000; border: 1px solid #444; width: 100%; }
     .viewport img { position: absolute; left: 0; top: 0; display: block; }
     .highlight { position: absolute; left: 0; right: 0; border: 2px solid #ffcc33; background: rgba(255, 204, 51, 0.08); pointer-events: none; box-sizing: border-box; }
     form { display: grid; gap: 8px; }
     label { display: grid; gap: 4px; color: #ccc; }
-    input, textarea, select { background: #1a1a1a; color: #eee; border: 1px solid #555; padding: 6px; }
+    input, textarea { background: #1a1a1a; color: #eee; border: 1px solid #555; padding: 6px; }
     textarea { min-height: 56px; }
-    .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .checks { display: flex; gap: 16px; }
+    .checks label { display: flex; gap: 6px; align-items: center; }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; align-items: center; }
     .note { color: #999; font-size: 12px; }
+    details { border: 1px solid #333; padding: 8px; }
+    details summary { cursor: pointer; color: #bbb; }
+    kbd { border: 1px solid #555; padding: 0 4px; font-size: 11px; }
   </style>
 </head>
 <body>
   <header>
-    <h1>Discovery annotation pack v0</h1>
-    <div class="meta">
-      Transcribe visible screenshot pixels only. Parser/OCR candidates are not shown.
-      Leave a field blank if that text is not visible.
+    <div>
+      <h1>Discovery 빠른 입력</h1>
+      <div class="meta">
+        화면에 보이는 글자만 그대로 옮기세요. OCR/파서 후보는 표시하지 않습니다.
+      </div>
+    </div>
+    <div class="progress">
+      <div><strong id="position">1 / 30</strong></div>
+      <div>Annotated <span id="annotatedCount">0</span> / <span id="totalCount">30</span></div>
+      <div class="note">Last saved: <span id="lastSaved">--:--:--</span></div>
     </div>
   </header>
   <main>
     <section>
       <div class="nav">
         <button type="button" id="prev">Previous</button>
-        <span id="position"></span>
         <button type="button" id="next">Next</button>
         <label>View
           <select id="viewMode">
@@ -100,29 +114,52 @@ export function renderDiscoveryAnnotationHtml(
         <div id="highlight" class="highlight"></div>
       </div>
       <p class="note" id="rowMeta"></p>
+      <p class="note"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> ${CONFIRM_AND_NEXT_LABEL} · 화살표는 초안만 저장</p>
     </section>
     <section>
       <form id="truthForm" autocomplete="off">
-        <label>annotationStatus
-          <select name="annotationStatus">
-            <option value="UNANNOTATED">UNANNOTATED</option>
-            <option value="COMPLETE">COMPLETE</option>
-            <option value="UNCERTAIN">UNCERTAIN</option>
-            <option value="UNREADABLE">UNREADABLE</option>
-          </select>
+        <label>${QUICK_UI_LABELS.screenRowIdentifierRaw}
+          <input name="screenRowIdentifierRaw" data-schema-field="screenRowIdentifierRaw" />
         </label>
-        <label>screenRowIdentifierRaw <input name="screenRowIdentifierRaw" /></label>
-        <label>screenDateRaw <input name="screenDateRaw" /></label>
-        <label>screenTimeRaw <input name="screenTimeRaw" /></label>
-        <label>leagueDisplayRaw <input name="leagueDisplayRaw" /></label>
-        <label>participantLeftRaw <input name="participantLeftRaw" /></label>
-        <label>participantRightRaw <input name="participantRightRaw" /></label>
-        <label>marketMarkerRaw <input name="marketMarkerRaw" /></label>
-        <label>numericCellsRaw (one visible cell per line) <textarea name="numericCellsRaw"></textarea></label>
-        <label>statusTextRaw <input name="statusTextRaw" /></label>
-        <label>otherVisibleTextRaw (one item per line) <textarea name="otherVisibleTextRaw"></textarea></label>
-        <label>annotatorNotes <textarea name="annotatorNotes"></textarea></label>
+        <label>${QUICK_UI_LABELS.screenDateRaw}
+          <input name="screenDateRaw" data-schema-field="screenDateRaw" />
+        </label>
+        <label>${QUICK_UI_LABELS.screenTimeRaw}
+          <input name="screenTimeRaw" data-schema-field="screenTimeRaw" />
+        </label>
+        <label>${QUICK_UI_LABELS.leagueDisplayRaw}
+          <input name="leagueDisplayRaw" data-schema-field="leagueDisplayRaw" />
+        </label>
+        <label>${QUICK_UI_LABELS.participantLeftRaw}
+          <input name="participantLeftRaw" data-schema-field="participantLeftRaw" />
+        </label>
+        <label>${QUICK_UI_LABELS.participantRightRaw}
+          <input name="participantRightRaw" data-schema-field="participantRightRaw" />
+        </label>
+        <label>${QUICK_UI_LABELS.numericCellsRaw}
+          <input name="numericCellsRaw" data-schema-field="numericCellsRaw" placeholder="공백 또는 쉼표로 구분" />
+        </label>
+        <label>${QUICK_UI_LABELS.statusTextRaw}
+          <input name="statusTextRaw" data-schema-field="statusTextRaw" />
+        </label>
+        <div class="checks">
+          <label><input type="checkbox" id="uncertain" name="uncertain" /> UNCERTAIN</label>
+          <label><input type="checkbox" id="unreadable" name="unreadable" /> UNREADABLE</label>
+        </div>
+        <details>
+          <summary>Advanced / Optional</summary>
+          <label>${QUICK_UI_LABELS.marketMarkerRaw}
+            <input name="marketMarkerRaw" data-schema-field="marketMarkerRaw" />
+          </label>
+          <label>${QUICK_UI_LABELS.otherVisibleTextRaw}
+            <textarea name="otherVisibleTextRaw" data-schema-field="otherVisibleTextRaw"></textarea>
+          </label>
+          <label>${QUICK_UI_LABELS.annotatorNotes}
+            <textarea name="annotatorNotes" data-schema-field="annotatorNotes"></textarea>
+          </label>
+        </details>
         <div class="actions">
+          <button type="button" id="confirmNext" class="primary">${CONFIRM_AND_NEXT_LABEL}</button>
           <button type="button" id="saveLocal">Save locally</button>
           <button type="button" id="exportJson">Export JSON</button>
         </div>
@@ -136,6 +173,54 @@ export function renderDiscoveryAnnotationHtml(
     let index = 0;
     const records = PACK.records.map((r) => ({ ...r }));
 
+    function emptyToNull(v) {
+      if (v == null) return null;
+      const s = String(v);
+      return s.trim() === "" ? null : s;
+    }
+    function parseNumericCells(v) {
+      return String(v || "").split(/[,\\s]+/).filter((s) => s.length > 0);
+    }
+    function formatNumericCells(cells) {
+      return (cells || []).join(" ");
+    }
+    function lines(v) {
+      return String(v || "")
+        .split(/\\n/)
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0);
+    }
+    function exclusiveOverrides(uncertain, unreadable, lastToggled) {
+      if (lastToggled === "unreadable" && unreadable) return { uncertain: false, unreadable: true };
+      if (lastToggled === "uncertain" && uncertain) return { uncertain: true, unreadable: false };
+      if (unreadable) return { uncertain: false, unreadable: true };
+      if (uncertain) return { uncertain: true, unreadable: false };
+      return { uncertain: false, unreadable: false };
+    }
+    function confirmStatus(draft) {
+      const ex = exclusiveOverrides(draft.uncertain, draft.unreadable);
+      if (ex.unreadable) return "UNREADABLE";
+      if (ex.uncertain) return "UNCERTAIN";
+      return "COMPLETE";
+    }
+    function pickTruth(src) {
+      return {
+        annotationStatus: src.annotationStatus || "UNANNOTATED",
+        draftUncertain: src.draftUncertain === true,
+        draftUnreadable: src.draftUnreadable === true,
+        screenRowIdentifierRaw: emptyToNull(src.screenRowIdentifierRaw),
+        screenDateRaw: emptyToNull(src.screenDateRaw),
+        screenTimeRaw: emptyToNull(src.screenTimeRaw),
+        leagueDisplayRaw: emptyToNull(src.leagueDisplayRaw),
+        participantLeftRaw: emptyToNull(src.participantLeftRaw),
+        participantRightRaw: emptyToNull(src.participantRightRaw),
+        marketMarkerRaw: emptyToNull(src.marketMarkerRaw),
+        numericCellsRaw: Array.isArray(src.numericCellsRaw) ? src.numericCellsRaw : parseNumericCells(src.numericCellsRaw),
+        statusTextRaw: emptyToNull(src.statusTextRaw),
+        otherVisibleTextRaw: Array.isArray(src.otherVisibleTextRaw) ? src.otherVisibleTextRaw : [],
+        annotatorNotes: emptyToNull(src.annotatorNotes),
+      };
+    }
     function loadLocal() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
@@ -150,42 +235,13 @@ export function renderDiscoveryAnnotationHtml(
         }
       } catch {}
     }
-
-    function pickTruth(src) {
-      return {
-        annotationStatus: src.annotationStatus || "UNANNOTATED",
-        screenRowIdentifierRaw: emptyToNull(src.screenRowIdentifierRaw),
-        screenDateRaw: emptyToNull(src.screenDateRaw),
-        screenTimeRaw: emptyToNull(src.screenTimeRaw),
-        leagueDisplayRaw: emptyToNull(src.leagueDisplayRaw),
-        participantLeftRaw: emptyToNull(src.participantLeftRaw),
-        participantRightRaw: emptyToNull(src.participantRightRaw),
-        marketMarkerRaw: emptyToNull(src.marketMarkerRaw),
-        numericCellsRaw: Array.isArray(src.numericCellsRaw) ? src.numericCellsRaw : [],
-        statusTextRaw: emptyToNull(src.statusTextRaw),
-        otherVisibleTextRaw: Array.isArray(src.otherVisibleTextRaw) ? src.otherVisibleTextRaw : [],
-        annotatorNotes: emptyToNull(src.annotatorNotes),
-      };
-    }
-
-    function emptyToNull(v) {
-      if (v == null) return null;
-      const s = String(v);
-      return s.trim() === "" ? null : s;
-    }
-
-    function lines(v) {
-      return String(v || "")
-        .split(/\\n/)
-        .map((s) => s.trim())
-        .filter((s) => s.length > 0);
-    }
-
     function readForm() {
       const form = document.getElementById("truthForm");
       const data = new FormData(form);
+      const exclusive = exclusiveOverrides(form.uncertain.checked, form.unreadable.checked);
       return {
-        annotationStatus: data.get("annotationStatus"),
+        uncertain: exclusive.uncertain,
+        unreadable: exclusive.unreadable,
         screenRowIdentifierRaw: emptyToNull(data.get("screenRowIdentifierRaw")),
         screenDateRaw: emptyToNull(data.get("screenDateRaw")),
         screenTimeRaw: emptyToNull(data.get("screenTimeRaw")),
@@ -193,16 +249,19 @@ export function renderDiscoveryAnnotationHtml(
         participantLeftRaw: emptyToNull(data.get("participantLeftRaw")),
         participantRightRaw: emptyToNull(data.get("participantRightRaw")),
         marketMarkerRaw: emptyToNull(data.get("marketMarkerRaw")),
-        numericCellsRaw: lines(data.get("numericCellsRaw")),
+        numericCellsRaw: parseNumericCells(data.get("numericCellsRaw")),
         statusTextRaw: emptyToNull(data.get("statusTextRaw")),
         otherVisibleTextRaw: lines(data.get("otherVisibleTextRaw")),
         annotatorNotes: emptyToNull(data.get("annotatorNotes")),
       };
     }
-
     function writeForm(record) {
       const form = document.getElementById("truthForm");
-      form.annotationStatus.value = record.annotationStatus;
+      const uncertain = record.annotationStatus === "UNCERTAIN" || record.draftUncertain === true;
+      const unreadable = record.annotationStatus === "UNREADABLE" || record.draftUnreadable === true;
+      const exclusive = exclusiveOverrides(uncertain, unreadable);
+      form.uncertain.checked = exclusive.uncertain;
+      form.unreadable.checked = exclusive.unreadable;
       form.screenRowIdentifierRaw.value = record.screenRowIdentifierRaw || "";
       form.screenDateRaw.value = record.screenDateRaw || "";
       form.screenTimeRaw.value = record.screenTimeRaw || "";
@@ -210,16 +269,54 @@ export function renderDiscoveryAnnotationHtml(
       form.participantLeftRaw.value = record.participantLeftRaw || "";
       form.participantRightRaw.value = record.participantRightRaw || "";
       form.marketMarkerRaw.value = record.marketMarkerRaw || "";
-      form.numericCellsRaw.value = (record.numericCellsRaw || []).join("\\n");
+      form.numericCellsRaw.value = formatNumericCells(record.numericCellsRaw || []);
       form.statusTextRaw.value = record.statusTextRaw || "";
       form.otherVisibleTextRaw.value = (record.otherVisibleTextRaw || []).join("\\n");
       form.annotatorNotes.value = record.annotatorNotes || "";
     }
-
-    function persistCurrent() {
-      Object.assign(records[index], readForm());
+    function persistCurrent(confirm) {
+      const draft = readForm();
+      const current = records[index];
+      Object.assign(current, {
+        screenRowIdentifierRaw: draft.screenRowIdentifierRaw,
+        screenDateRaw: draft.screenDateRaw,
+        screenTimeRaw: draft.screenTimeRaw,
+        leagueDisplayRaw: draft.leagueDisplayRaw,
+        participantLeftRaw: draft.participantLeftRaw,
+        participantRightRaw: draft.participantRightRaw,
+        marketMarkerRaw: draft.marketMarkerRaw,
+        numericCellsRaw: draft.numericCellsRaw,
+        statusTextRaw: draft.statusTextRaw,
+        otherVisibleTextRaw: draft.otherVisibleTextRaw,
+        annotatorNotes: draft.annotatorNotes,
+        draftUncertain: draft.uncertain,
+        draftUnreadable: draft.unreadable,
+        annotationStatus: confirm ? confirmStatus(draft) : current.annotationStatus,
+      });
     }
-
+    function clock() {
+      const d = new Date();
+      return [d.getHours(), d.getMinutes(), d.getSeconds()]
+        .map((n) => String(n).padStart(2, "0"))
+        .join(":");
+    }
+    function autosave(confirm) {
+      persistCurrent(confirm === true);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(records.map((r) => ({
+        sourceImageSha256: r.sourceImageSha256,
+        visualRowIndex: r.visualRowIndex,
+        ...pickTruth(r),
+      }))));
+      document.getElementById("lastSaved").textContent = clock();
+      updateProgress();
+    }
+    function updateProgress() {
+      document.getElementById("position").textContent = (index + 1) + " / " + records.length;
+      document.getElementById("totalCount").textContent = String(records.length);
+      document.getElementById("annotatedCount").textContent = String(
+        records.filter((r) => r.annotationStatus !== "UNANNOTATED").length
+      );
+    }
     function layoutCrop() {
       const record = records[index];
       const geo = record.targetRowGeometry;
@@ -241,21 +338,27 @@ export function renderDiscoveryAnnotationHtml(
       highlight.style.top = ((geo.topY - cropTop) * scale) + "px";
       highlight.style.height = ((geo.bottomY - geo.topY) * scale) + "px";
     }
-
     function render() {
       const record = records[index];
-      document.getElementById("position").textContent =
-        (index + 1) + " / " + records.length;
+      updateProgress();
       document.getElementById("rowMeta").textContent =
         "visualRowIndex " + record.visualRowIndex + " · " + record.sourceFileName;
-      const img = document.getElementById("shot");
-      img.src = record.screenshotHref;
+      document.getElementById("shot").src = record.screenshotHref;
       writeForm(record);
       requestAnimationFrame(layoutCrop);
     }
-
+    function go(delta) {
+      autosave(false);
+      index = (index + records.length + delta) % records.length;
+      render();
+    }
+    function confirmAndNext() {
+      autosave(true);
+      index = (index + 1) % records.length;
+      render();
+    }
     function exportDocument() {
-      persistCurrent();
+      persistCurrent(false);
       return {
         schemaVersion: PACK.schemaVersion,
         protoRoundKey: PACK.protoRoundKey,
@@ -278,26 +381,33 @@ export function renderDiscoveryAnnotationHtml(
         })),
       };
     }
-
-    document.getElementById("prev").onclick = () => {
-      persistCurrent();
-      index = (index + records.length - 1) % records.length;
-      render();
-    };
-    document.getElementById("next").onclick = () => {
-      persistCurrent();
-      index = (index + 1) % records.length;
-      render();
-    };
+    function inTextField(el) {
+      if (!el) return false;
+      const tag = el.tagName;
+      return tag === "INPUT" || tag === "TEXTAREA";
+    }
+    document.getElementById("truthForm").addEventListener("submit", (e) => e.preventDefault());
+    document.getElementById("truthForm").addEventListener("input", () => autosave(false));
+    document.getElementById("truthForm").addEventListener("change", () => autosave(false));
+    document.getElementById("prev").onclick = () => go(-1);
+    document.getElementById("next").onclick = () => go(1);
+    document.getElementById("confirmNext").onclick = confirmAndNext;
+    document.getElementById("uncertain").addEventListener("change", () => {
+      const form = document.getElementById("truthForm");
+      const ex = exclusiveOverrides(form.uncertain.checked, form.unreadable.checked, "uncertain");
+      form.uncertain.checked = ex.uncertain;
+      form.unreadable.checked = ex.unreadable;
+      autosave(false);
+    });
+    document.getElementById("unreadable").addEventListener("change", () => {
+      const form = document.getElementById("truthForm");
+      const ex = exclusiveOverrides(form.uncertain.checked, form.unreadable.checked, "unreadable");
+      form.uncertain.checked = ex.uncertain;
+      form.unreadable.checked = ex.unreadable;
+      autosave(false);
+    });
     document.getElementById("viewMode").onchange = layoutCrop;
-    document.getElementById("saveLocal").onclick = () => {
-      persistCurrent();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(records.map((r) => ({
-        sourceImageSha256: r.sourceImageSha256,
-        visualRowIndex: r.visualRowIndex,
-        ...pickTruth(r),
-      }))));
-    };
+    document.getElementById("saveLocal").onclick = () => autosave(false);
     document.getElementById("exportJson").onclick = () => {
       const blob = new Blob([JSON.stringify(exportDocument(), null, 2) + "\\n"], { type: "application/json" });
       const a = document.createElement("a");
@@ -306,6 +416,27 @@ export function renderDiscoveryAnnotationHtml(
       a.click();
       URL.revokeObjectURL(a.href);
     };
+    document.addEventListener("keydown", (e) => {
+      const editing = inTextField(e.target) && e.target.type !== "checkbox";
+      const shortcut = e.ctrlKey || e.altKey;
+      if (e.key === "Enter" && shortcut) {
+        e.preventDefault();
+        confirmAndNext();
+        return;
+      }
+      if (e.key === "Enter" && editing) {
+        return;
+      }
+      if (e.key === "ArrowLeft" && (!editing || shortcut)) {
+        e.preventDefault();
+        go(-1);
+        return;
+      }
+      if (e.key === "ArrowRight" && (!editing || shortcut)) {
+        e.preventDefault();
+        go(1);
+      }
+    });
     window.addEventListener("resize", layoutCrop);
     loadLocal();
     render();

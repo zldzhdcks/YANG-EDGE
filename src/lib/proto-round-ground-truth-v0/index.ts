@@ -8,6 +8,7 @@ export * from "./import";
 export * from "./lineage";
 export * from "./pack";
 export * from "./persist";
+export * from "./quick-ui";
 export * from "./screenshot-probe";
 export * from "./select";
 export * from "./types";

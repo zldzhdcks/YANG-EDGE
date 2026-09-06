@@ -19,19 +19,31 @@ import type {
 import type { SemanticRegionCandidatesDocumentV0 } from "../src/lib/proto-round-semantic-region-candidates-v0/types";
 import {
   GroundTruthError,
+  CONFIRM_AND_NEXT_LABEL,
+  QUICK_MODE_ADVANCED_FIELDS,
+  QUICK_MODE_PRIMARY_FIELDS,
+  QUICK_UI_LABELS,
+  applyQuickDraftToRecord,
   assertDiscoveryHoldoutDisjoint,
   blankHumanTruthFields,
   buildDiscoveryAnnotationDocumentV0,
+  buildDiscoveryExportV0,
   buildGroundTruthPackV0,
   buildHoldoutSealV0,
   buildSelectionManifestV0,
   canonicalJson,
   collectEligibleRows,
   computeSelectionSortKey,
+  confirmReviewAnnotationStatus,
+  countAnnotatedRecords,
   createScreenshotBytesProbe,
+  deriveQuickAnnotationStatus,
+  exclusiveReviewOverrides,
   hashRowIdentity,
   importDiscoveryAnnotationV0,
   lineageImagesFromVisualRows,
+  parseNumericCellsRaw,
+  persistDraftAnnotationStatus,
   preserveOrCreateDiscoveryAnnotation,
   reconcileGroundTruthPackV0,
   renderDiscoveryAnnotationHtml,
@@ -847,6 +859,146 @@ async function main() {
         imported: mutateGeometry,
       }),
     (err: unknown) => expectCode(err, "ANNOTATION_IMPORT_MUTATES_FROZEN_IDENTITY"),
+  );
+
+  // Quick UI v0
+  for (const field of QUICK_MODE_PRIMARY_FIELDS) {
+    assert.equal(field in discoveryDoc.records[0]!, true);
+    assert.equal(html.includes(`data-schema-field="${field}"`), true);
+    assert.equal(html.includes(QUICK_UI_LABELS[field]), true);
+  }
+  for (const field of QUICK_MODE_ADVANCED_FIELDS) {
+    assert.equal(field in discoveryDoc.records[0]!, true);
+    assert.equal(html.includes(`data-schema-field="${field}"`), true);
+    assert.equal(html.includes(QUICK_UI_LABELS[field]), true);
+  }
+  assert.equal(html.includes("Advanced / Optional"), true);
+  assert.equal(html.includes("HOME"), false);
+  assert.equal(html.includes("AWAY"), false);
+  assert.equal(/holdout/i.test(html), false);
+  assert.equal(html.includes(OCR_LEAK), false);
+  assert.equal(html.includes("Last saved:"), true);
+  assert.equal(html.includes("Annotated"), true);
+  assert.equal(html.includes(CONFIRM_AND_NEXT_LABEL), true);
+  assert.equal(html.includes("confirmAndNext"), true);
+  assert.equal(html.includes("autosave(false)"), true);
+  assert.equal(html.includes('e.key === "Enter" && shortcut'), true);
+  assert.equal(html.includes("if (e.key === \"Enter\" && editing)"), true);
+
+  const blankDraft = {
+    uncertain: false,
+    unreadable: false,
+    screenRowIdentifierRaw: null,
+    screenDateRaw: null,
+    screenTimeRaw: null,
+    leagueDisplayRaw: null,
+    participantLeftRaw: null,
+    participantRightRaw: null,
+    marketMarkerRaw: null,
+    numericCellsRaw: [] as string[],
+    statusTextRaw: null,
+    otherVisibleTextRaw: [] as string[],
+    annotatorNotes: null,
+  };
+  const typedDraft = {
+    ...blankDraft,
+    screenRowIdentifierRaw: "9571",
+    screenDateRaw: "09.06(일)",
+    screenTimeRaw: "19:15",
+    leagueDisplayRaw: "에레디비",
+    numericCellsRaw: parseNumericCellsRaw("2.95 3.50 1.91"),
+    statusTextRaw: "경기전",
+  };
+  assert.equal(persistDraftAnnotationStatus("UNANNOTATED"), "UNANNOTATED");
+  assert.equal(deriveQuickAnnotationStatus(typedDraft), "UNANNOTATED");
+  assert.equal(
+    deriveQuickAnnotationStatus(typedDraft, { confirm: false, currentStatus: "UNANNOTATED" }),
+    "UNANNOTATED",
+  );
+  assert.equal(confirmReviewAnnotationStatus(typedDraft), "COMPLETE");
+  assert.equal(
+    deriveQuickAnnotationStatus(typedDraft, { confirm: true, currentStatus: "UNANNOTATED" }),
+    "COMPLETE",
+  );
+  assert.equal(
+    confirmReviewAnnotationStatus({ ...typedDraft, uncertain: true }),
+    "UNCERTAIN",
+  );
+  assert.equal(
+    confirmReviewAnnotationStatus({ ...typedDraft, unreadable: true }),
+    "UNREADABLE",
+  );
+  assert.deepEqual(
+    exclusiveReviewOverrides({ uncertain: true, unreadable: true, lastToggled: "unreadable" }),
+    { uncertain: false, unreadable: true },
+  );
+  assert.deepEqual(
+    exclusiveReviewOverrides({ uncertain: true, unreadable: true, lastToggled: "uncertain" }),
+    { uncertain: true, unreadable: false },
+  );
+  const draftOnly = applyQuickDraftToRecord(discoveryDoc.records[0]!, typedDraft);
+  assert.equal(draftOnly.annotationStatus, "UNANNOTATED");
+  assert.equal(draftOnly.screenRowIdentifierRaw, "9571");
+  assert.equal(countAnnotatedRecords([draftOnly, ...discoveryDoc.records.slice(1)]), 0);
+  const surviving = applyQuickDraftToRecord(
+    { ...discoveryDoc.records[0]!, annotationStatus: "COMPLETE", participantLeftRaw: "한화" },
+    { ...blankDraft, participantLeftRaw: "한화", participantRightRaw: "NC" },
+  );
+  assert.equal(surviving.annotationStatus, "COMPLETE");
+  assert.equal(surviving.participantRightRaw, "NC");
+
+  assert.deepEqual(parseNumericCellsRaw("2.95 3.50 1.91"), ["2.95", "3.50", "1.91"]);
+  assert.deepEqual(parseNumericCellsRaw("2.95,3.50,1.91"), ["2.95", "3.50", "1.91"]);
+  const numericToken = parseNumericCellsRaw("1.790")[0];
+  assert.equal(numericToken, "1.790");
+  assert.equal(typeof numericToken, "string");
+  assert.deepEqual(parseNumericCellsRaw("2-03"), ["2-03"]);
+
+  const filled = applyQuickDraftToRecord(
+    discoveryDoc.records[0]!,
+    {
+      ...blankDraft,
+      participantLeftRaw: "한화",
+      numericCellsRaw: parseNumericCellsRaw("2.95 3.50 1.91"),
+      marketMarkerRaw: null,
+      otherVisibleTextRaw: [],
+      annotatorNotes: null,
+    },
+    { confirm: true },
+  );
+  assert.equal(filled.annotationStatus, "COMPLETE");
+  assert.equal(filled.marketMarkerRaw, null);
+  assert.equal(countAnnotatedRecords([filled, ...discoveryDoc.records.slice(1)]), 1);
+
+  const preservedHtml = renderDiscoveryAnnotationHtml({
+    ...discoveryDoc,
+    records: [filled, ...discoveryDoc.records.slice(1)],
+  });
+  assert.equal(preservedHtml.includes("한화"), true);
+  assert.deepEqual(
+    preservedHtml.includes(filled.sourceImageSha256),
+    true,
+  );
+  const exported = buildDiscoveryExportV0(discoveryDoc, [
+    filled,
+    ...discoveryDoc.records.slice(1),
+  ]);
+  const roundTripped = importDiscoveryAnnotationV0({
+    protoRoundKey: PROTO,
+    selectionManifest: buildSelectionManifestV0({
+      protoRoundKey: PROTO,
+      selection: a1,
+    }),
+    existingAnnotation: discoveryDoc,
+    imported: exported,
+  });
+  assert.equal(roundTripped.records[0]!.participantLeftRaw, "한화");
+  assert.deepEqual(roundTripped.records[0]!.numericCellsRaw, ["2.95", "3.50", "1.91"]);
+  assert.equal(roundTripped.records[0]!.sourceImageSha256, discoveryDoc.records[0]!.sourceImageSha256);
+  assert.equal(roundTripped.records[0]!.visualRowIndex, discoveryDoc.records[0]!.visualRowIndex);
+  assert.deepEqual(
+    roundTripped.records.map((r) => `${r.sourceImageSha256}|${r.visualRowIndex}`),
+    discoveryDoc.records.map((r) => `${r.sourceImageSha256}|${r.visualRowIndex}`),
   );
 
   console.log("test:proto-round-ground-truth-v0 OK");
