@@ -203,6 +203,8 @@
     "intake:mlb-domestic-markets": "tsx --env-file=.env.local scripts/intake-mlb-domestic-markets-v1.ts",
     "intake:proto-round-screenshots": "tsx scripts/intake-proto-round-screenshots-v1.ts",
     "test:proto-round-screenshot-intake-v1": "tsx scripts/test-proto-round-screenshot-intake-v1.ts",
+    "design:proto-round-extraction-v0": "tsx scripts/design-proto-round-extraction-v0.ts",
+    "test:proto-round-extraction-design-v0": "tsx scripts/test-proto-round-extraction-design-v0.ts",
     "intake:mlb-2026-08-15-operator-observations": "tsx --env-file=.env.local scripts/intake-mlb-2026-08-15-operator-observations.ts",
     "correct:mlb-2026-08-15-expected-lineup-transcription": "tsx --env-file=.env.local scripts/intake-mlb-2026-08-15-operator-observations.ts --correct-lineup-transcription",
     "result:mlb": "tsx --env-file=.env.local scripts/build-mlb-official-results-v1.ts",
