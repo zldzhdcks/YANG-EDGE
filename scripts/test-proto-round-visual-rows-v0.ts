@@ -10,12 +10,14 @@ import path from "node:path";
 import type { ProtoRoundLocalOcrLine } from "../src/lib/proto-round-raw-ocr-v0";
 import {
   areVerticallyCompatible,
+  assertOcrSourceLineageMatchesExpected,
   FOUR_DIGIT_TOKEN_SEMANTIC_ROLE,
   MARKET_SIGNAL_SEMANTICS_ASSIGNED,
   reconstructVisualRowsForImage,
   rowHasStandaloneFourDigitToken,
   VERTICAL_OVERLAP_THRESHOLD,
   verticalOverlapRatio,
+  VisualRowsLineageError,
 } from "../src/lib/proto-round-visual-rows-v0";
 
 function box(
@@ -211,6 +213,108 @@ async function main() {
   ]).visualRows[0]!;
   assert.equal(rowHasStandaloneFourDigitToken(fourDigitRow), true);
   assert.equal("gameNumber" in fourDigitRow, false);
+
+  function lineagePair(count: number) {
+    const files = Array.from({ length: count }, (_, i) => ({
+      fileStatus: "CANONICAL_IMAGE" as const,
+      extractionEligible: true,
+      sha256: `sha-${i + 1}`,
+    }));
+    const ocr = {
+      meta: {
+        protoRoundKey: "2099-1",
+        year: 2099,
+        round: 1,
+        sourceCanonicalImages: count,
+      },
+      images: files.map((f) => ({ sourceImageSha256: f.sha256 })),
+    };
+    const manifest = {
+      meta: { protoRoundKey: "2099-1", year: 2099, round: 1 },
+      files,
+    };
+    return { manifest, ocr };
+  }
+
+  for (const n of [1, 2, 11, 15]) {
+    const expected = assertOcrSourceLineageMatchesExpected(lineagePair(n));
+    assert.equal(expected.size, n);
+  }
+
+  const missingOne = lineagePair(2);
+  missingOne.ocr.images = missingOne.ocr.images.slice(0, 1);
+  missingOne.ocr.meta.sourceCanonicalImages = 1;
+  await assert.rejects(
+    async () => assertOcrSourceLineageMatchesExpected(missingOne),
+    (err: unknown) =>
+      err instanceof VisualRowsLineageError &&
+      err.code === "MISSING_CANONICAL_OCR_SOURCE",
+  );
+
+  const extraUnknown = lineagePair(1);
+  extraUnknown.ocr.images.push({ sourceImageSha256: "sha-unknown" });
+  extraUnknown.ocr.meta.sourceCanonicalImages = 2;
+  await assert.rejects(
+    async () => assertOcrSourceLineageMatchesExpected(extraUnknown),
+    (err: unknown) =>
+      err instanceof VisualRowsLineageError && err.code === "UNKNOWN_OCR_SOURCE",
+  );
+
+  const duplicate = lineagePair(1);
+  duplicate.ocr.images.push({ sourceImageSha256: "sha-1" });
+  duplicate.ocr.meta.sourceCanonicalImages = 2;
+  await assert.rejects(
+    async () => assertOcrSourceLineageMatchesExpected(duplicate),
+    (err: unknown) =>
+      err instanceof VisualRowsLineageError &&
+      err.code === "DUPLICATE_OCR_SOURCE_SHA",
+  );
+
+  await assert.rejects(
+    async () =>
+      assertOcrSourceLineageMatchesExpected({
+        manifest: {
+          meta: { protoRoundKey: "2099-1", year: 2099, round: 1 },
+          files: [
+            {
+              fileStatus: "DUPLICATE_EXACT",
+              extractionEligible: false,
+              sha256: "sha-dup",
+            },
+          ],
+        },
+        ocr: {
+          meta: {
+            protoRoundKey: "2099-1",
+            year: 2099,
+            round: 1,
+            sourceCanonicalImages: 0,
+          },
+          images: [],
+        },
+      }),
+    (err: unknown) =>
+      err instanceof VisualRowsLineageError &&
+      err.code === "NO_CANONICAL_IMAGES_FOR_VISUAL_ROWS",
+  );
+
+  const metaCount = lineagePair(2);
+  metaCount.ocr.meta.sourceCanonicalImages = 99;
+  await assert.rejects(
+    async () => assertOcrSourceLineageMatchesExpected(metaCount),
+    (err: unknown) =>
+      err instanceof VisualRowsLineageError &&
+      err.code === "OCR_META_SOURCE_COUNT_MISMATCH",
+  );
+
+  const keyMismatch = lineagePair(1);
+  keyMismatch.ocr.meta.protoRoundKey = "2099-2";
+  await assert.rejects(
+    async () => assertOcrSourceLineageMatchesExpected(keyMismatch),
+    (err: unknown) =>
+      err instanceof VisualRowsLineageError &&
+      err.code === "OCR_PROTO_ROUND_KEY_MISMATCH",
+  );
 
   const src = readFileSync(
     path.join(process.cwd(), "src/lib/proto-round-visual-rows-v0/reconstruct.ts"),

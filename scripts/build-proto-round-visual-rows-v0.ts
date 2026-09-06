@@ -2,7 +2,7 @@
  * Build visual row candidates from an existing raw-ocr-v0.json.
  * Geometry only. No OCR rerun. No odds parse. No network.
  *
- *   npm run build:proto-round-visual-rows-v0 -- --year 2026 --round 105 --json
+ *   npm run build:proto-round-visual-rows-v0 -- --year <year> --round <round> --json
  */
 import { mkdir, readFile, rename, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -13,6 +13,7 @@ import {
   fragmentCountDistribution,
   reconstructVisualRowsDocumentV0,
   VISUAL_ROWS_ARTIFACT_FILE_NAME,
+  assertOcrSourceLineageMatchesExpected,
   type ImageDimensions,
 } from "../src/lib/proto-round-visual-rows-v0";
 import type { ExtractionDesignDocumentV0 } from "../src/lib/proto-round-extraction-design-v0";
@@ -81,20 +82,10 @@ async function main() {
 
   const ocrAbs = path.join(yangAbs, RAW_OCR_ARTIFACT_FILE_NAME);
   const ocr = JSON.parse(await readFile(ocrAbs, "utf8")) as RawOcrDocumentV0;
-  if (ocr.images.length !== 11) {
-    throw new Error(`UNEXPECTED_OCR_IMAGE_COUNT:${ocr.images.length}`);
-  }
-
-  const canonicalSha = new Set(
-    manifest.files
-      .filter((f) => f.fileStatus === "CANONICAL_IMAGE")
-      .map((f) => f.sha256),
-  );
-  for (const img of ocr.images) {
-    if (!canonicalSha.has(img.sourceImageSha256)) {
-      throw new Error("OCR_SOURCE_IMAGE_NOT_IN_MANIFEST");
-    }
-  }
+  assertOcrSourceLineageMatchesExpected({
+    manifest,
+    ocr,
+  });
 
   const dimensionsBySha256 = new Map<string, ImageDimensions>();
   try {
