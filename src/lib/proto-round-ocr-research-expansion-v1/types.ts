@@ -14,6 +14,16 @@ export const DISCOVERY2_ANNOTATION_FILE_NAME =
   "discovery2-annotation-v1.json" as const;
 export const DISCOVERY2_ANNOTATION_HTML_FILE_NAME =
   "discovery2-annotation.html" as const;
+export const DISCOVERY2_HUMAN_TRUTH_FILE_NAME =
+  "discovery2-human-truth-v1.json" as const;
+export const DISCOVERY2_HUMAN_TRUTH_SCHEMA_VERSION =
+  "proto-round-ocr-research-expansion-discovery2-human-truth-v1" as const;
+
+export const FROZEN_OCR_RESEARCH_EXPANSION_SPLIT_SHA256 =
+  "64367fb348124df4ba6ca64621ab6c2da88bae0839517afaef54ae79b1f7bdd8" as const;
+export const FROZEN_PILOT10_DISCOVERY_ANNOTATION_SHA256 =
+  "741d86dfb11ee34349ac18061bce223f418837aca20150acf6b1ef808f6c0f4d" as const;
+export const DISCOVERY2_PROTO_ROUND_KEY = "2026-105" as const;
 
 export const SPLIT_SALT = "proto-ocr-research-expansion-v1" as const;
 export const SPLIT_ALGORITHM =
@@ -69,6 +79,12 @@ export type ExpansionSplitSealV1 = {
   validation2RowKeyHashes: string[];
 };
 
+export type Discovery2AnnotationStatusV1 =
+  | "UNANNOTATED"
+  | "COMPLETE"
+  | "UNCERTAIN"
+  | "UNREADABLE";
+
 export type Discovery2AnnotationRecordV1 = ExpansionEligibleRowV1 & {
   targetRowGeometry: {
     topY: number;
@@ -77,10 +93,57 @@ export type Discovery2AnnotationRecordV1 = ExpansionEligibleRowV1 & {
     imageWidth: number;
     imageHeight: number;
   };
-  annotationStatus: "UNANNOTATED" | "COMPLETE" | "UNCERTAIN" | "UNREADABLE";
+  annotationStatus: Discovery2AnnotationStatusV1;
   screenRowIdentifierRaw: string | null;
   participantLeftRaw: string | null;
   participantRightRaw: string | null;
   numericCellsRaw: string[];
   marketMarkerRaw: string | null;
+};
+
+export type Discovery2HumanRecordV1 = ExpansionRowKeyV1 & {
+  sourceFileName: string;
+  annotationStatus: Discovery2AnnotationStatusV1;
+  screenRowIdentifierRaw: string | null;
+  participantLeftRaw: string | null;
+  participantRightRaw: string | null;
+  numericCellsRaw: string[];
+  marketMarkerRaw: string | null;
+};
+
+export type Discovery2HumanExportDocumentV1 = {
+  schemaVersion: typeof DISCOVERY2_ANNOTATION_SCHEMA_VERSION;
+  protoRoundKey: string;
+  groundTruthSource: typeof GROUND_TRUTH_SOURCE;
+  records: Discovery2HumanRecordV1[];
+};
+
+export type Discovery2IdentityJoinV1 = {
+  missing: number;
+  extra: number;
+  duplicates: number;
+  identityMutated: "NO";
+};
+
+export type Discovery2HumanStatusCountsV1 = {
+  records: number;
+  COMPLETE: number;
+  UNCERTAIN: number;
+  UNREADABLE: number;
+  UNANNOTATED: number;
+};
+
+export type Discovery2HumanTruthDocumentV1 = {
+  schemaVersion: typeof DISCOVERY2_HUMAN_TRUTH_SCHEMA_VERSION;
+  protoRoundKey: string;
+  groundTruthSource: typeof GROUND_TRUTH_SOURCE;
+  sourceExportPath: string;
+  identityJoin: Discovery2IdentityJoinV1;
+  VALIDATION_2_RENDERED: false;
+  VALIDATION_2_ANNOTATED: false;
+  VALIDATION_2_HUMAN_TRUTH_EXISTS: false;
+  VALIDATION_2_USED_FOR_RULE_DESIGN: false;
+  PILOT10_MUTATED: false;
+  USED_FOR_OCR_RULE_DESIGN: false;
+  records: Discovery2HumanRecordV1[];
 };

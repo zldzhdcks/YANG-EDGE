@@ -10,21 +10,30 @@ import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import {
   DISCOVERY2_COUNT,
+  FROZEN_OCR_RESEARCH_EXPANSION_SPLIT_SHA256,
+  FROZEN_PILOT10_DISCOVERY_ANNOTATION_SHA256,
+  GROUND_TRUTH_SOURCE,
   SOURCE_POOL_COUNT,
   SPLIT_SALT,
   VALIDATION2_COUNT,
   assertHoldoutExcluded,
+  assertNoUnannotatedDiscovery2,
   assertPilot10Excluded,
   blankDiscovery2AnnotationRecords,
+  buildDiscovery2HumanTruthDocument,
   buildExpansionSplitSealV1,
+  countDiscovery2HumanStatuses,
   discovery2RowsFromFrozenGeometry,
   expansionSplitSortKey,
   hashRowIdentity,
   identityKey,
+  joinDiscovery2HumanToFrozenKeys,
   OcrResearchExpansionV1Error,
+  parseDiscovery2HumanExportDocument,
   renderDiscovery2AnnotationHtml,
   sourcePoolFromDiscoveryKeys,
   splitDiscovery2Validation2,
+  type Discovery2HumanRecordV1,
   type ExpansionEligibleRowV1,
   type ExpansionRowKeyV1,
 } from "../src/lib/proto-round-ocr-research-expansion-v1";
@@ -70,7 +79,26 @@ function sourceFiles(): string[] {
       process.cwd(),
       "scripts/open-proto-round-ocr-research-expansion-discovery2-ui-v1.ts",
     ),
+    path.join(
+      process.cwd(),
+      "scripts/seal-proto-round-ocr-research-expansion-discovery2-human-truth-v1.ts",
+    ),
   ];
+}
+
+function humanRec(n: number, extra?: Partial<Discovery2HumanRecordV1>): Discovery2HumanRecordV1 {
+  return {
+    sourceImageSha256: `sha-${String(n).padStart(2, "0")}`,
+    visualRowIndex: n,
+    sourceFileName: `shot-${n}.png`,
+    annotationStatus: "COMPLETE",
+    screenRowIdentifierRaw: `id-${n}`,
+    participantLeftRaw: `left-${n}`,
+    participantRightRaw: `right-${n}`,
+    numericCellsRaw: ["1.80", "3.20"],
+    marketMarkerRaw: null,
+    ...extra,
+  };
 }
 
 async function main() {
@@ -134,6 +162,124 @@ async function main() {
   );
   assert.equal("validation2RowKeys" in seal, false);
   assert.equal(seal.VALIDATION_2_VISUAL_RENDERED, false);
+  assert.equal(
+    FROZEN_OCR_RESEARCH_EXPANSION_SPLIT_SHA256,
+    "64367fb348124df4ba6ca64621ab6c2da88bae0839517afaef54ae79b1f7bdd8",
+  );
+  assert.equal(
+    FROZEN_PILOT10_DISCOVERY_ANNOTATION_SHA256,
+    "741d86dfb11ee34349ac18061bce223f418837aca20150acf6b1ef808f6c0f4d",
+  );
+
+  const discovery2Humans = split.discovery2RowKeys.map((k) =>
+    humanRec(k.visualRowIndex, {
+      sourceImageSha256: k.sourceImageSha256,
+      visualRowIndex: k.visualRowIndex,
+      sourceFileName: `renamed-${k.visualRowIndex}.png`,
+    }),
+  );
+  const joined = joinDiscovery2HumanToFrozenKeys({
+    discovery2RowKeys: split.discovery2RowKeys,
+    humanRecords: [...discovery2Humans].reverse(),
+    validation2RowKeyHashes: seal.validation2RowKeyHashes,
+  });
+  assert.equal(joined.identityJoin.missing, 0);
+  assert.equal(joined.identityJoin.extra, 0);
+  assert.equal(joined.identityJoin.duplicates, 0);
+  assert.equal(joined.identityJoin.identityMutated, "NO");
+  assert.deepEqual(
+    joined.orderedRecords.map(identityKey),
+    split.discovery2RowKeys.map(identityKey),
+  );
+  assert.equal(joined.orderedRecords[0]!.sourceFileName.startsWith("renamed-"), true);
+  assert.equal(joined.orderedRecords[0]!.numericCellsRaw[0], "1.80");
+
+  const sameNameWrongSha = discovery2Humans.map((rec, i) =>
+    i === 0
+      ? { ...rec, sourceImageSha256: "not-the-frozen-sha", sourceFileName: rec.sourceFileName }
+      : rec,
+  );
+  assert.throws(
+    () =>
+      joinDiscovery2HumanToFrozenKeys({
+        discovery2RowKeys: split.discovery2RowKeys,
+        humanRecords: sameNameWrongSha,
+        validation2RowKeyHashes: seal.validation2RowKeyHashes,
+      }),
+    (err: unknown) =>
+      err instanceof OcrResearchExpansionV1Error &&
+      (err.code === "MISSING_HUMAN_IDENTITY" || err.code === "EXTRA_HUMAN_IDENTITY"),
+  );
+  assert.throws(
+    () =>
+      joinDiscovery2HumanToFrozenKeys({
+        discovery2RowKeys: split.discovery2RowKeys,
+        humanRecords: [...discovery2Humans.slice(0, 9), discovery2Humans[0]!],
+        validation2RowKeyHashes: seal.validation2RowKeyHashes,
+      }),
+    (err: unknown) =>
+      err instanceof OcrResearchExpansionV1Error && err.code === "DUPLICATE_IDENTITY",
+  );
+  const validation2Human = {
+    ...discovery2Humans[0]!,
+    sourceImageSha256: split.validation2RowKeys[0]!.sourceImageSha256,
+    visualRowIndex: split.validation2RowKeys[0]!.visualRowIndex,
+  };
+  assert.throws(
+    () =>
+      joinDiscovery2HumanToFrozenKeys({
+        discovery2RowKeys: split.discovery2RowKeys,
+        humanRecords: [...discovery2Humans.slice(1), validation2Human],
+        validation2RowKeyHashes: seal.validation2RowKeyHashes,
+      }),
+    (err: unknown) =>
+      err instanceof OcrResearchExpansionV1Error &&
+      (err.code === "VALIDATION2_IDENTITY_USED" ||
+        err.code === "EXTRA_HUMAN_IDENTITY" ||
+        err.code === "MISSING_HUMAN_IDENTITY"),
+  );
+
+  const uncertain = discovery2Humans.map((rec, i) =>
+    i === 0 ? { ...rec, annotationStatus: "UNCERTAIN" as const } : rec,
+  );
+  const uncertainJoined = joinDiscovery2HumanToFrozenKeys({
+    discovery2RowKeys: split.discovery2RowKeys,
+    humanRecords: uncertain,
+    validation2RowKeyHashes: seal.validation2RowKeyHashes,
+  });
+  assert.equal(uncertainJoined.orderedRecords[0]!.annotationStatus, "UNCERTAIN");
+  const statusCounts = countDiscovery2HumanStatuses(uncertainJoined.orderedRecords);
+  assert.equal(statusCounts.UNCERTAIN, 1);
+  assert.equal(statusCounts.COMPLETE, 9);
+  assert.equal(statusCounts.UNANNOTATED, 0);
+  assert.throws(
+    () =>
+      assertNoUnannotatedDiscovery2(
+        discovery2Humans.map((rec, i) =>
+          i === 0 ? { ...rec, annotationStatus: "UNANNOTATED" as const } : rec,
+        ),
+      ),
+    (err: unknown) =>
+      err instanceof OcrResearchExpansionV1Error && err.code === "UNANNOTATED_HUMAN_ROWS",
+  );
+
+  const exportDoc = parseDiscovery2HumanExportDocument({
+    schemaVersion: "proto-round-ocr-research-expansion-discovery2-v1",
+    protoRoundKey: "2026-105",
+    groundTruthSource: GROUND_TRUTH_SOURCE,
+    records: discovery2Humans,
+  });
+  const truth = buildDiscovery2HumanTruthDocument({
+    sourceExportPath: "C:\\tmp\\discovery2-annotation-v1.json",
+    exportDoc,
+    orderedRecords: joined.orderedRecords,
+    identityJoin: joined.identityJoin,
+  });
+  assert.equal(truth.USED_FOR_OCR_RULE_DESIGN, false);
+  assert.equal(truth.VALIDATION_2_USED_FOR_RULE_DESIGN, false);
+  assert.equal(truth.records[0]!.participantLeftRaw, discovery2Humans.find(
+    (r) => identityKey(r) === identityKey(split.discovery2RowKeys[0]!),
+  )!.participantLeftRaw);
 
   const geometry = sourcePool.map((k) => eligible(k.visualRowIndex));
   const d2 = discovery2RowsFromFrozenGeometry({
@@ -186,6 +332,16 @@ async function main() {
     assert.equal(src.includes("validation2-annotation"), false, abs);
     assert.equal(src.includes("holdout-seal-v0"), false, abs);
     assert.equal(src.includes("FRESH_HUMAN_TRUTH"), false, abs);
+    assert.equal(src.includes("nearest visual"), false, abs);
+    assert.equal(src.includes("filename-only"), false, abs);
+  }
+
+  const tracked = execFileSync("git", ["ls-files"], {
+    encoding: "utf8",
+  }).split(/\r?\n/);
+  for (const rel of tracked) {
+    assert.equal(rel.includes("discovery2-human-truth-v1.json"), false, rel);
+    assert.equal(rel.includes("YANG-EDGE-INBOX"), false, rel);
   }
 
   console.log("test:proto-round-ocr-research-expansion-v1 OK");
