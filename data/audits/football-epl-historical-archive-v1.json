@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "football-epl-historical-archive-review-manifest-v1",
+  "baseSha": "1b90cdd3d406dd2991f79fe0836c32d8ba08e4b9",
+  "sourceGateCommit": "d98a6cc089f29f78cd1c0d9c47ac9262a2ba6a2c",
+  "provider": "API_FOOTBALL",
+  "league": {
+    "id": 39,
+    "name": "Premier League"
+  },
+  "seasons": [
+    2023,
+    2024
+  ],
+  "seasonDefinitions": [
+    {
+      "apiSeason": 2023,
+      "start": "2023-08-11",
+      "end": "2024-05-19"
+    },
+    {
+      "apiSeason": 2024,
+      "start": "2024-08-16",
+      "end": "2025-05-25"
+    }
+  ],
+  "retrievedAt": "2026-09-10T12:22:59.884Z",
+  "apiCallCount": 4,
+  "rawProviderResponse": "LOCAL_ONLY",
+  "normalizedMatchRecords": "LOCAL_ONLY",
+  "localArchiveRelativePath": "data/cache/research/football/historical-archive-v1/2026-09-10T12-22-36-787Z-2d08238b-cb0c-43fd-9ff2-d20f2a89337b",
+  "terms": {
+    "TERMS_CHECKED_AT": "2026-09-10T12:16:40.000Z",
+    "TERMS_SOURCE_URL": "https://www.api-football.com/terms",
+    "OFFICIAL_STORAGE_GUIDANCE_URL": "https://www.api-football.com/news/post/how-to-optimize-api-sports-calls-and-quota-usage",
+    "OFFICIAL_HISTORICAL_GUIDANCE_URL": "https://www.api-football.com/news/post/how-to-get-all-fixtures-data-from-one-league",
+    "HISTORICAL_RETRIEVAL_ALLOWED": "YES_WITHIN_ACCOUNT_PLAN_VIA_OFFICIAL_API",
+    "LOCAL_RESEARCH_STORAGE_STATUS": "INTERNAL_LOCAL_CACHE_SUPPORTED_BY_OFFICIAL_GUIDANCE; PERMANENT_ARCHIVE_RIGHTS_TERMS_UNCLEAR",
+    "PUBLIC_REDISTRIBUTION_STATUS": "NOT_AUTHORIZED_BY_THIS_REVIEW; RAW_AND_NORMALIZED_MATCHES_LOCAL_ONLY; DIRECT_RESALE_PROHIBITED",
+    "COMMERCIAL_USE_STATUS": "NOT_CLEARED; THIRD_PARTY_COMPETITION_RIGHTS_NOT_GRANTED",
+    "RETENTION_STATUS": "TERMS_UNCLEAR: no explicit retention duration or post-termination archive rights established",
+    "ATTRIBUTION_STATUS": "TERMS_UNCLEAR: no general numeric-feed attribution clause identified; provider and source retained voluntarily",
+    "UNCLEAR_ITEMS": [
+      "Permanent archive retention",
+      "Rights after termination or plan changes",
+      "Third-party rights for future public/commercial products",
+      "General numeric-feed attribution requirement"
+    ],
+    "EXECUTION_SCOPE": "INTERNAL_LOCAL_ONLY",
+    "OWNER_INSTRUCTION": "2026-09-10 explicitly authorizes internal archive ingest, record ambiguous terms as TERMS_UNCLEAR and keep raw payload local; supersedes prior handoff's speculative blanket stop",
+    "PUBLICATION_LICENSE_CONFIRMED": false,
+    "STORAGE_POLICY": "Raw and normalized match records remain in gitignored research cache, not public serving paths. No push/upload/redistribution. Review unclear retention before indefinite retention or external use. No contractual retention duration is invented."
+  },
+  "rawRows": 760,
+  "canonicalMatches": 760,
+  "completedFixtures": 760,
+  "usableCompletedMatches": 760,
+  "seasonCounts": [
+    {
+      "season": 2023,
+      "rawRows": 380,
+      "expectedLeagueMatchCount": 380,
+      "canonicalMatches": 380,
+      "completedFixtures": 380,
+      "usableCompletedMatches": 380,
+      "completenessPercentage": 100,
+      "usableCompletenessPercentage": 100,
+      "teamCount": 20,
+      "directedPairCount": 380,
+      "repeatedPairCount": 0,
+      "earliestKickoff": "2023-08-11T19:00:00.000Z",
+      "latestKickoff": "2024-05-19T15:00:00.000Z"
+    },
+    {
+      "season": 2024,
+      "rawRows": 380,
+      "expectedLeagueMatchCount": 380,
+      "canonicalMatches": 380,
+      "completedFixtures": 380,
+      "usableCompletedMatches": 380,
+      "completenessPercentage": 100,
+      "usableCompletenessPercentage": 100,
+      "teamCount": 20,
+      "directedPairCount": 380,
+      "repeatedPairCount": 0,
+      "earliestKickoff": "2024-08-16T19:00:00.000Z",
+      "latestKickoff": "2025-05-25T15:00:00.000Z"
+    }
+  ],
+  "duplicateCount": 0,
+  "duplicateFixtureIds": [],
+  "conflictingFixtureIds": [],
+  "missingFieldCounts": {},
+  "missingIdentityRows": 0,
+  "dateRange": {
+    "earliest": "2023-08-11T19:00:00.000Z",
+    "latest": "2025-05-25T15:00:00.000Z"
+  },
+  "chronologicalResearchEligible": true,
+  "strictReplayEligible": false,
+  "temporalAudit": {
+    "ordering": "kickoffUtc ASC, providerFixtureId ASC (numeric)",
+    "providerFetchedAtPreserved": true,
+    "strictAsOfProvenance": "UNAVAILABLE",
+    "resultCompletionTimestampAvailable": false,
+    "futureFabricated": false,
+    "observedAtFabricated": false,
+    "futureBacktestRequirement": "Resolve/document result completion availability before target cutoff; kickoff-only sorting is not a completion proof. No backtest is executed."
+  },
+  "governance": {
+    "oddsUsed": false,
+    "providerPredictionUsed": false,
+    "engineChanged": false,
+    "weightsChanged": false,
+    "backtestExecuted": false,
+    "strictAsOfFabricated": false
+  },
+  "FOOTBALL_EPL_HISTORICAL_ARCHIVE_SHA256": "df77d7b146f4784fd4021282a6566fcfb36bdd574e1ab46ad8140a24e7585e76",
+  "localManifestSha256": "43ceca61618a1a7368f483b7c1d5435a728f3fe7efcb671a9fb06b8bb45586fd",
+  "fileHashes": [
+    {
+      "path": "league-metadata.json",
+      "sha256": "6833a2e42f1f7953d9b7218172b77b4379999bafec1a1d99d5ff1b17e9eab2f6"
+    },
+    {
+      "path": "2023/raw.json",
+      "sha256": "20970fe37742596e39c76e41225e8e6c267bf1b4f24cdc7c1b88130deddb7fd9"
+    },
+    {
+      "path": "2024/raw.json",
+      "sha256": "b17399cf308e1f3a3d33e08b48ab4f6f4797b8b603e82ea1900e7f80756517b2"
+    },
+    {
+      "path": "archive.json",
+      "sha256": "df77d7b146f4784fd4021282a6566fcfb36bdd574e1ab46ad8140a24e7585e76"
+    },
+    {
+      "path": "quarantine.json",
+      "sha256": "10a9e3f9f217ebd320ba45ac52b54024d3e3c39a2a85dc573a8cb43b97b680c4"
+    },
+    {
+      "path": "2023/normalized.json",
+      "sha256": "6428cf7cb2602b3de815463aab11c0dc677edc7b3b9697a8dfe8b80c8eb9cc45"
+    },
+    {
+      "path": "2024/normalized.json",
+      "sha256": "09fea92cc80fb171f5b79af2b1271e41a57bb77486faf94d4eb3a3e2b289b818"
+    }
+  ],
+  "tests": {
+    "archiveUnit": "10/10 PASS",
+    "existingInventory": "PASS",
+    "existingPoissonSyntheticUnit": "PASS",
+    "scopedStrictTypecheck": "PASS (ESNext/bundler matching project)",
+    "scopedLint": "PASS",
+    "offlineRebuild": "PASS",
+    "secretScan": "PASS: actual credential absent in staged files and local archive; raw/normalized not tracked"
+  },
+  "finalStatus": "FOOTBALL_EPL_HISTORICAL_ARCHIVE_V1_READY_FOR_CTO_REVIEW"
+}
