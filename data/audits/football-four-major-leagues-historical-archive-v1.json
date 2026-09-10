@@ -1,0 +1,626 @@
+{
+  "schemaVersion": "FOOTBALL_4_MAJOR_LEAGUES_HISTORICAL_ARCHIVE_V1",
+  "baseSha": "80cf220bb99b2cac3a248f9e14c6927e1c0c88bc",
+  "retrievedAt": "2026-09-10T13:10:15.882Z",
+  "apiCallCount": 7,
+  "priorFailedAttempt": {
+    "at": "2026-09-10T13:07:18.610Z",
+    "apiCalls": 7,
+    "error": "KICKOFF_OUTSIDE_SEASON"
+  },
+  "leagues": [
+    {
+      "provider": "API_FOOTBALL",
+      "league": {
+        "id": 39,
+        "name": "Premier League"
+      },
+      "seasons": [
+        2023,
+        2024
+      ],
+      "retrievedAt": "2026-09-10T12:22:59.884Z",
+      "rawRows": 760,
+      "canonicalMatches": 760,
+      "completedFixtures": 760,
+      "usableCompletedMatches": 760,
+      "seasonCounts": [
+        {
+          "season": 2023,
+          "rawRows": 380,
+          "expectedLeagueMatchCount": 380,
+          "canonicalMatches": 380,
+          "completedFixtures": 380,
+          "usableCompletedMatches": 380,
+          "completenessPercentage": 100,
+          "usableCompletenessPercentage": 100,
+          "teamCount": 20,
+          "directedPairCount": 380,
+          "repeatedPairCount": 0,
+          "earliestKickoff": "2023-08-11T19:00:00.000Z",
+          "latestKickoff": "2024-05-19T15:00:00.000Z",
+          "duplicates": 0,
+          "missingScore": 0,
+          "missingIdentity": 0,
+          "completeness": "COMPLETE"
+        },
+        {
+          "season": 2024,
+          "rawRows": 380,
+          "expectedLeagueMatchCount": 380,
+          "canonicalMatches": 380,
+          "completedFixtures": 380,
+          "usableCompletedMatches": 380,
+          "completenessPercentage": 100,
+          "usableCompletenessPercentage": 100,
+          "teamCount": 20,
+          "directedPairCount": 380,
+          "repeatedPairCount": 0,
+          "earliestKickoff": "2024-08-16T19:00:00.000Z",
+          "latestKickoff": "2025-05-25T15:00:00.000Z",
+          "duplicates": 0,
+          "missingScore": 0,
+          "missingIdentity": 0,
+          "completeness": "COMPLETE"
+        }
+      ],
+      "duplicateCount": 0,
+      "duplicateFixtureIds": [],
+      "conflictingFixtureIds": [],
+      "missingFieldCounts": {},
+      "missingIdentityRows": 0,
+      "dateRange": {
+        "earliest": "2023-08-11T19:00:00.000Z",
+        "latest": "2025-05-25T15:00:00.000Z"
+      },
+      "chronologicalResearchEligible": true,
+      "strictReplayEligible": false,
+      "temporalAudit": {
+        "ordering": "kickoffUtc ASC, providerFixtureId ASC (numeric)",
+        "providerFetchedAtPreserved": true,
+        "strictAsOfProvenance": "UNAVAILABLE",
+        "resultCompletionTimestampAvailable": false,
+        "futureFabricated": false,
+        "observedAtFabricated": false,
+        "futureBacktestRequirement": "Resolve/document result completion availability before target cutoff; kickoff-only sorting is not a completion proof. No backtest is executed."
+      },
+      "governance": {
+        "oddsUsed": false,
+        "providerPredictionUsed": false,
+        "engineChanged": false,
+        "weightsChanged": false,
+        "backtestExecuted": false,
+        "strictAsOfFabricated": false
+      },
+      "archiveSha256": "df77d7b146f4784fd4021282a6566fcfb36bdd574e1ab46ad8140a24e7585e76",
+      "localArchiveRelativePath": "data/cache/research/football/historical-archive-v1/2026-09-10T12-22-36-787Z-2d08238b-cb0c-43fd-9ff2-d20f2a89337b",
+      "completeness": "COMPLETE",
+      "providerStageInventory": [
+        {
+          "season": 2023,
+          "canonicalDateRange": {
+            "earliest": "2023-08-11T19:00:00.000Z",
+            "latest": "2024-05-19T15:00:00.000Z"
+          },
+          "stages": [
+            {
+              "providerStage": "Regular Season",
+              "rawRows": 380,
+              "canonicalMatches": 380,
+              "usableCompletedMatches": 380,
+              "statusCounts": {
+                "FT": 380
+              }
+            }
+          ],
+          "policy": "Descriptive grouping by provider round label only. Does not filter archive, change FT-only rule or approve a backtest cohort."
+        },
+        {
+          "season": 2024,
+          "canonicalDateRange": {
+            "earliest": "2024-08-16T19:00:00.000Z",
+            "latest": "2025-05-25T15:00:00.000Z"
+          },
+          "stages": [
+            {
+              "providerStage": "Regular Season",
+              "rawRows": 380,
+              "canonicalMatches": 380,
+              "usableCompletedMatches": 380,
+              "statusCounts": {
+                "FT": 380
+              }
+            }
+          ],
+          "policy": "Descriptive grouping by provider round label only. Does not filter archive, change FT-only rule or approve a backtest cohort."
+        }
+      ]
+    },
+    {
+      "provider": "API_FOOTBALL",
+      "league": {
+        "id": 140,
+        "name": "La Liga"
+      },
+      "seasons": [
+        2023,
+        2024
+      ],
+      "retrievedAt": "2026-09-10T13:06:59.072Z",
+      "rawRows": 760,
+      "canonicalMatches": 760,
+      "completedFixtures": 760,
+      "usableCompletedMatches": 760,
+      "seasonCounts": [
+        {
+          "season": 2023,
+          "rawRows": 380,
+          "expectedLeagueMatchCount": 380,
+          "canonicalMatches": 380,
+          "completedFixtures": 380,
+          "usableCompletedMatches": 380,
+          "completenessPercentage": 100,
+          "usableCompletenessPercentage": 100,
+          "teamCount": 20,
+          "directedPairCount": 380,
+          "repeatedPairCount": 0,
+          "earliestKickoff": "2023-08-11T17:30:00.000Z",
+          "latestKickoff": "2024-05-26T19:00:00.000Z",
+          "duplicates": 0,
+          "missingScore": 0,
+          "missingIdentity": 0,
+          "completeness": "COMPLETE",
+          "completenessBasis": "Provider returned counts + complete directed home/away pair inventory; expected count is an audit comparator only; no rows synthesized"
+        },
+        {
+          "season": 2024,
+          "rawRows": 380,
+          "expectedLeagueMatchCount": 380,
+          "canonicalMatches": 380,
+          "completedFixtures": 380,
+          "usableCompletedMatches": 380,
+          "completenessPercentage": 100,
+          "usableCompletenessPercentage": 100,
+          "teamCount": 20,
+          "directedPairCount": 380,
+          "repeatedPairCount": 0,
+          "earliestKickoff": "2024-08-15T17:00:00.000Z",
+          "latestKickoff": "2025-05-25T19:00:00.000Z",
+          "duplicates": 0,
+          "missingScore": 0,
+          "missingIdentity": 0,
+          "completeness": "COMPLETE",
+          "completenessBasis": "Provider returned counts + complete directed home/away pair inventory; expected count is an audit comparator only; no rows synthesized"
+        }
+      ],
+      "duplicateCount": 0,
+      "duplicateFixtureIds": [],
+      "conflictingFixtureIds": [],
+      "missingFieldCounts": {},
+      "missingIdentityRows": 0,
+      "dateRange": {
+        "earliest": "2023-08-11T17:30:00.000Z",
+        "latest": "2025-05-25T19:00:00.000Z"
+      },
+      "chronologicalResearchEligible": true,
+      "strictReplayEligible": false,
+      "temporalAudit": {
+        "ordering": "kickoffUtc ASC, providerFixtureId ASC (numeric)",
+        "providerFetchedAtPreserved": true,
+        "strictAsOfProvenance": "UNAVAILABLE",
+        "resultCompletionTimestampAvailable": false,
+        "futureFabricated": false,
+        "observedAtFabricated": false,
+        "futureBacktestRequirement": "Resolve/document result completion availability before target cutoff; kickoff-only sorting is not a completion proof. No backtest is executed."
+      },
+      "governance": {
+        "oddsUsed": false,
+        "providerPredictionUsed": false,
+        "engineChanged": false,
+        "weightsChanged": false,
+        "backtestExecuted": false,
+        "strictAsOfFabricated": false
+      },
+      "archiveSha256": "7e47fe1bdae7d99520d3b50f71d89d263558e61c11ec99c51cadd10a26ef4941",
+      "localArchiveRelativePath": "data/cache/research/football/historical-archive-v1/four-leagues-2026-09-10T13-06-38-679Z-16d06375-133b-4f57-890c-859d6c36e05a/LALIGA",
+      "completeness": "COMPLETE",
+      "reusedVerifiedArchive": true,
+      "providerStageInventory": [
+        {
+          "season": 2023,
+          "canonicalDateRange": {
+            "earliest": "2023-08-11T17:30:00.000Z",
+            "latest": "2024-05-26T19:00:00.000Z"
+          },
+          "stages": [
+            {
+              "providerStage": "Regular Season",
+              "rawRows": 380,
+              "canonicalMatches": 380,
+              "usableCompletedMatches": 380,
+              "statusCounts": {
+                "FT": 380
+              }
+            }
+          ],
+          "policy": "Descriptive grouping by provider round label only. Does not filter archive, change FT-only rule or approve a backtest cohort."
+        },
+        {
+          "season": 2024,
+          "canonicalDateRange": {
+            "earliest": "2024-08-15T17:00:00.000Z",
+            "latest": "2025-05-25T19:00:00.000Z"
+          },
+          "stages": [
+            {
+              "providerStage": "Regular Season",
+              "rawRows": 380,
+              "canonicalMatches": 380,
+              "usableCompletedMatches": 380,
+              "statusCounts": {
+                "FT": 380
+              }
+            }
+          ],
+          "policy": "Descriptive grouping by provider round label only. Does not filter archive, change FT-only rule or approve a backtest cohort."
+        }
+      ]
+    },
+    {
+      "provider": "API_FOOTBALL",
+      "league": {
+        "id": 135,
+        "name": "Serie A"
+      },
+      "seasons": [
+        2023,
+        2024
+      ],
+      "retrievedAt": "2026-09-10T13:09:55.893Z",
+      "rawRows": 760,
+      "canonicalMatches": 760,
+      "completedFixtures": 760,
+      "usableCompletedMatches": 760,
+      "seasonCounts": [
+        {
+          "season": 2023,
+          "rawRows": 380,
+          "expectedLeagueMatchCount": 380,
+          "canonicalMatches": 380,
+          "completedFixtures": 380,
+          "usableCompletedMatches": 380,
+          "completenessPercentage": 100,
+          "usableCompletenessPercentage": 100,
+          "teamCount": 20,
+          "directedPairCount": 380,
+          "repeatedPairCount": 0,
+          "earliestKickoff": "2023-08-19T16:30:00.000Z",
+          "latestKickoff": "2024-06-02T16:00:00.000Z",
+          "duplicates": 0,
+          "missingScore": 0,
+          "missingIdentity": 0,
+          "completeness": "COMPLETE",
+          "completenessBasis": "Provider returned counts + complete directed home/away pair inventory; expected count is an audit comparator only; no rows synthesized"
+        },
+        {
+          "season": 2024,
+          "rawRows": 380,
+          "expectedLeagueMatchCount": 380,
+          "canonicalMatches": 380,
+          "completedFixtures": 380,
+          "usableCompletedMatches": 380,
+          "completenessPercentage": 100,
+          "usableCompletenessPercentage": 100,
+          "teamCount": 20,
+          "directedPairCount": 380,
+          "repeatedPairCount": 0,
+          "earliestKickoff": "2024-08-17T16:30:00.000Z",
+          "latestKickoff": "2025-05-25T18:45:00.000Z",
+          "duplicates": 0,
+          "missingScore": 0,
+          "missingIdentity": 0,
+          "completeness": "COMPLETE",
+          "completenessBasis": "Provider returned counts + complete directed home/away pair inventory; expected count is an audit comparator only; no rows synthesized"
+        }
+      ],
+      "duplicateCount": 0,
+      "duplicateFixtureIds": [],
+      "conflictingFixtureIds": [],
+      "missingFieldCounts": {},
+      "missingIdentityRows": 0,
+      "dateRange": {
+        "earliest": "2023-08-19T16:30:00.000Z",
+        "latest": "2025-05-25T18:45:00.000Z"
+      },
+      "chronologicalResearchEligible": true,
+      "strictReplayEligible": false,
+      "temporalAudit": {
+        "ordering": "kickoffUtc ASC, providerFixtureId ASC (numeric)",
+        "providerFetchedAtPreserved": true,
+        "strictAsOfProvenance": "UNAVAILABLE",
+        "resultCompletionTimestampAvailable": false,
+        "futureFabricated": false,
+        "observedAtFabricated": false,
+        "futureBacktestRequirement": "Resolve/document result completion availability before target cutoff; kickoff-only sorting is not a completion proof. No backtest is executed."
+      },
+      "governance": {
+        "oddsUsed": false,
+        "providerPredictionUsed": false,
+        "engineChanged": false,
+        "weightsChanged": false,
+        "backtestExecuted": false,
+        "strictAsOfFabricated": false
+      },
+      "providerSeasonWindowAudit": [
+        {
+          "season": 2023,
+          "providerStart": "2023-08-19",
+          "providerEnd": "2024-05-26",
+          "outsideMetadataWindow": 1,
+          "policy": "Fixture explicit league/season identity determines membership; metadata date boundary discrepancies retained, never guessed, clipped or dropped"
+        },
+        {
+          "season": 2024,
+          "providerStart": "2024-08-17",
+          "providerEnd": "2025-05-25",
+          "outsideMetadataWindow": 0,
+          "policy": "Fixture explicit league/season identity determines membership; metadata date boundary discrepancies retained, never guessed, clipped or dropped"
+        }
+      ],
+      "archiveSha256": "0818f8ea0c84ab292245ec3c45c580750b837fe7be3406c06a645b5ff7295d68",
+      "localArchiveRelativePath": "data/cache/research/football/historical-archive-v1/four-leagues-2026-09-10T13-09-35-941Z-d19712a2-1fc3-4e76-81c7-dfb7188538af/SERIEA",
+      "completeness": "COMPLETE",
+      "providerStageInventory": [
+        {
+          "season": 2023,
+          "canonicalDateRange": {
+            "earliest": "2023-08-19T16:30:00.000Z",
+            "latest": "2024-06-02T16:00:00.000Z"
+          },
+          "stages": [
+            {
+              "providerStage": "Regular Season",
+              "rawRows": 380,
+              "canonicalMatches": 380,
+              "usableCompletedMatches": 380,
+              "statusCounts": {
+                "FT": 380
+              }
+            }
+          ],
+          "policy": "Descriptive grouping by provider round label only. Does not filter archive, change FT-only rule or approve a backtest cohort."
+        },
+        {
+          "season": 2024,
+          "canonicalDateRange": {
+            "earliest": "2024-08-17T16:30:00.000Z",
+            "latest": "2025-05-25T18:45:00.000Z"
+          },
+          "stages": [
+            {
+              "providerStage": "Regular Season",
+              "rawRows": 380,
+              "canonicalMatches": 380,
+              "usableCompletedMatches": 380,
+              "statusCounts": {
+                "FT": 380
+              }
+            }
+          ],
+          "policy": "Descriptive grouping by provider round label only. Does not filter archive, change FT-only rule or approve a backtest cohort."
+        }
+      ]
+    },
+    {
+      "provider": "API_FOOTBALL",
+      "league": {
+        "id": 78,
+        "name": "Bundesliga"
+      },
+      "seasons": [
+        2023,
+        2024
+      ],
+      "retrievedAt": "2026-09-10T13:10:15.832Z",
+      "rawRows": 616,
+      "canonicalMatches": 616,
+      "completedFixtures": 616,
+      "usableCompletedMatches": 615,
+      "seasonCounts": [
+        {
+          "season": 2023,
+          "rawRows": 308,
+          "expectedLeagueMatchCount": 306,
+          "canonicalMatches": 308,
+          "completedFixtures": 308,
+          "usableCompletedMatches": 307,
+          "completenessPercentage": 100.65359477124183,
+          "usableCompletenessPercentage": 100.32679738562092,
+          "teamCount": 19,
+          "directedPairCount": 307,
+          "repeatedPairCount": 0,
+          "earliestKickoff": "2023-08-18T18:30:00.000Z",
+          "latestKickoff": "2024-05-23T18:30:00.000Z",
+          "duplicates": 0,
+          "missingScore": 0,
+          "missingIdentity": 0,
+          "completeness": "INCOMPLETE",
+          "completenessBasis": "Provider returned counts + complete directed home/away pair inventory; expected count is an audit comparator only; no rows synthesized"
+        },
+        {
+          "season": 2024,
+          "rawRows": 308,
+          "expectedLeagueMatchCount": 306,
+          "canonicalMatches": 308,
+          "completedFixtures": 308,
+          "usableCompletedMatches": 308,
+          "completenessPercentage": 100.65359477124183,
+          "usableCompletenessPercentage": 100.65359477124183,
+          "teamCount": 19,
+          "directedPairCount": 308,
+          "repeatedPairCount": 0,
+          "earliestKickoff": "2024-08-23T18:30:00.000Z",
+          "latestKickoff": "2025-05-26T18:30:00.000Z",
+          "duplicates": 0,
+          "missingScore": 0,
+          "missingIdentity": 0,
+          "completeness": "INCOMPLETE",
+          "completenessBasis": "Provider returned counts + complete directed home/away pair inventory; expected count is an audit comparator only; no rows synthesized"
+        }
+      ],
+      "duplicateCount": 0,
+      "duplicateFixtureIds": [],
+      "conflictingFixtureIds": [],
+      "missingFieldCounts": {
+        "unexpectedStatus": 1
+      },
+      "missingIdentityRows": 0,
+      "dateRange": {
+        "earliest": "2023-08-18T18:30:00.000Z",
+        "latest": "2025-05-26T18:30:00.000Z"
+      },
+      "chronologicalResearchEligible": false,
+      "strictReplayEligible": false,
+      "temporalAudit": {
+        "ordering": "kickoffUtc ASC, providerFixtureId ASC (numeric)",
+        "providerFetchedAtPreserved": true,
+        "strictAsOfProvenance": "UNAVAILABLE",
+        "resultCompletionTimestampAvailable": false,
+        "futureFabricated": false,
+        "observedAtFabricated": false,
+        "futureBacktestRequirement": "Resolve/document result completion availability before target cutoff; kickoff-only sorting is not a completion proof. No backtest is executed."
+      },
+      "governance": {
+        "oddsUsed": false,
+        "providerPredictionUsed": false,
+        "engineChanged": false,
+        "weightsChanged": false,
+        "backtestExecuted": false,
+        "strictAsOfFabricated": false
+      },
+      "providerSeasonWindowAudit": [
+        {
+          "season": 2023,
+          "providerStart": "2023-08-18",
+          "providerEnd": "2024-05-27",
+          "outsideMetadataWindow": 0,
+          "policy": "Fixture explicit league/season identity determines membership; metadata date boundary discrepancies retained, never guessed, clipped or dropped"
+        },
+        {
+          "season": 2024,
+          "providerStart": "2024-08-23",
+          "providerEnd": "2025-05-26",
+          "outsideMetadataWindow": 0,
+          "policy": "Fixture explicit league/season identity determines membership; metadata date boundary discrepancies retained, never guessed, clipped or dropped"
+        }
+      ],
+      "archiveSha256": "5ada547e57350befb660a44253a5c3f14c813a2e4c5423ad9f74ced3dd2c37c6",
+      "localArchiveRelativePath": "data/cache/research/football/historical-archive-v1/four-leagues-2026-09-10T13-09-35-941Z-d19712a2-1fc3-4e76-81c7-dfb7188538af/BUNDESLIGA",
+      "completeness": "INCOMPLETE",
+      "providerStageInventory": [
+        {
+          "season": 2023,
+          "canonicalDateRange": {
+            "earliest": "2023-08-18T18:30:00.000Z",
+            "latest": "2024-05-27T18:30:00.000Z"
+          },
+          "stages": [
+            {
+              "providerStage": "Regular Season",
+              "rawRows": 306,
+              "canonicalMatches": 306,
+              "usableCompletedMatches": 306,
+              "statusCounts": {
+                "FT": 306
+              }
+            },
+            {
+              "providerStage": "Relegation Round",
+              "rawRows": 2,
+              "canonicalMatches": 2,
+              "usableCompletedMatches": 1,
+              "statusCounts": {
+                "FT": 1,
+                "PEN": 1
+              }
+            }
+          ],
+          "policy": "Descriptive grouping by provider round label only. Does not filter archive, change FT-only rule or approve a backtest cohort."
+        },
+        {
+          "season": 2024,
+          "canonicalDateRange": {
+            "earliest": "2024-08-23T18:30:00.000Z",
+            "latest": "2025-05-26T18:30:00.000Z"
+          },
+          "stages": [
+            {
+              "providerStage": "Regular Season",
+              "rawRows": 306,
+              "canonicalMatches": 306,
+              "usableCompletedMatches": 306,
+              "statusCounts": {
+                "FT": 306
+              }
+            },
+            {
+              "providerStage": "Relegation Round",
+              "rawRows": 2,
+              "canonicalMatches": 2,
+              "usableCompletedMatches": 2,
+              "statusCounts": {
+                "FT": 2
+              }
+            }
+          ],
+          "policy": "Descriptive grouping by provider round label only. Does not filter archive, change FT-only rule or approve a backtest cohort."
+        }
+      ],
+      "reviewRequired": "Provider includes Relegation Round in both seasons; one PEN fixture quarantined under unchanged FT-only rule. Aggregate is not cleared as a homogeneous regular-league backtest cohort."
+    }
+  ],
+  "canonicalMatches": 2896,
+  "usableCompletedMatches": 2895,
+  "FOUR_MAJOR_LEAGUES_DATA_READY": false,
+  "terms": {
+    "TERMS_CHECKED_AT": "2026-09-10T12:16:40.000Z",
+    "TERMS_SOURCE_URL": "https://www.api-football.com/terms",
+    "OFFICIAL_STORAGE_GUIDANCE_URL": "https://www.api-football.com/news/post/how-to-optimize-api-sports-calls-and-quota-usage",
+    "OFFICIAL_HISTORICAL_GUIDANCE_URL": "https://www.api-football.com/news/post/how-to-get-all-fixtures-data-from-one-league",
+    "HISTORICAL_RETRIEVAL_ALLOWED": "YES_WITHIN_ACCOUNT_PLAN_VIA_OFFICIAL_API",
+    "LOCAL_RESEARCH_STORAGE_STATUS": "INTERNAL_LOCAL_CACHE_SUPPORTED_BY_OFFICIAL_GUIDANCE; PERMANENT_ARCHIVE_RIGHTS_TERMS_UNCLEAR",
+    "PUBLIC_REDISTRIBUTION_STATUS": "NOT_AUTHORIZED_BY_THIS_REVIEW; RAW_AND_NORMALIZED_MATCHES_LOCAL_ONLY; DIRECT_RESALE_PROHIBITED",
+    "COMMERCIAL_USE_STATUS": "NOT_CLEARED; THIRD_PARTY_COMPETITION_RIGHTS_NOT_GRANTED",
+    "RETENTION_STATUS": "TERMS_UNCLEAR: no explicit retention duration or post-termination archive rights established",
+    "ATTRIBUTION_STATUS": "TERMS_UNCLEAR: no general numeric-feed attribution clause identified; provider and source retained voluntarily",
+    "UNCLEAR_ITEMS": [
+      "Permanent archive retention",
+      "Rights after termination or plan changes",
+      "Third-party rights for future public/commercial products",
+      "General numeric-feed attribution requirement"
+    ],
+    "EXECUTION_SCOPE": "INTERNAL_LOCAL_ONLY",
+    "OWNER_INSTRUCTION": "2026-09-10 explicitly authorizes internal archive ingest, record ambiguous terms as TERMS_UNCLEAR and keep raw payload local; supersedes prior handoff's speculative blanket stop",
+    "PUBLICATION_LICENSE_CONFIRMED": false,
+    "STORAGE_POLICY": "Raw and normalized match records remain in gitignored research cache, not public serving paths. No push/upload/redistribution. Review unclear retention before indefinite retention or external use. No contractual retention duration is invented."
+  },
+  "rawProviderPayload": "LOCAL_ONLY",
+  "normalizedMatches": "LOCAL_ONLY",
+  "governance": {
+    "oddsUsed": false,
+    "providerPredictionUsed": false,
+    "engineChanged": false,
+    "weightsChanged": false,
+    "minSampleChanged": false,
+    "backtestExecuted": false,
+    "strictAsOfFabricated": false,
+    "strictReplayEligible": false
+  },
+  "EPL_HISTORICAL_ARCHIVE_SHA256": "df77d7b146f4784fd4021282a6566fcfb36bdd574e1ab46ad8140a24e7585e76",
+  "LALIGA_HISTORICAL_ARCHIVE_SHA256": "7e47fe1bdae7d99520d3b50f71d89d263558e61c11ec99c51cadd10a26ef4941",
+  "SERIEA_HISTORICAL_ARCHIVE_SHA256": "0818f8ea0c84ab292245ec3c45c580750b837fe7be3406c06a645b5ff7295d68",
+  "BUNDESLIGA_HISTORICAL_ARCHIVE_SHA256": "5ada547e57350befb660a44253a5c3f14c813a2e4c5423ad9f74ced3dd2c37c6",
+  "4_MAJOR_LEAGUES_DATA_READY": false,
+  "totalApiCallsIncludingInterruptedAttempt": 14,
+  "finalStatus": "FOOTBALL_4_MAJOR_LEAGUES_HISTORICAL_ARCHIVE_V1_READY_FOR_CTO_REVIEW"
+}

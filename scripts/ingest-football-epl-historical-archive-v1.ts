@@ -4,6 +4,8 @@ import {fileURLToPath} from 'node:url';
 import {createHash, randomUUID} from 'node:crypto';
 
 type Obj = Record<string, unknown>;
+export type LeagueSpec = {id:number;name:string;teamCount:number};
+export const EPL: LeagueSpec = {id:39,name:'Premier League',teamCount:20};
 export type Batch = {season: number; fetchedAt: string; sourceHash: string; rows: unknown[]};
 export const SEASONS = [2023, 2024] as const;
 export const LOCAL_ROOT = 'data/cache/research/football/historical-archive-v1';
@@ -20,17 +22,17 @@ const instant = (v: unknown): string | null => {
 };
 export const json = (v: unknown) => JSON.stringify(v, null, 2) + '\n';
 
-export function envelope(value: unknown, season?: number): Obj {
+export function envelope(value: unknown, season?: number, leagueId = 39): Obj {
   const j = obj(value);
   if(!j.errors || typeof j.errors !== 'object' || Object.keys(j.errors).length) throw Error('API_ERRORS_OR_MISSING_ERROR_ENVELOPE');
   if(!Array.isArray(j.response) || j.results !== j.response.length) throw Error('RESPONSE_COUNT_MISMATCH');
   const paging = obj(j.paging);
   if(paging.current !== 1 || paging.total !== 1) throw Error('PAGINATION_NOT_COMPLETE');
-  if(season !== undefined && (String(obj(j.parameters).league) !== '39' || String(obj(j.parameters).season) !== String(season))) throw Error('QUERY_ECHO_MISMATCH');
+  if(season !== undefined && (String(obj(j.parameters).league) !== String(leagueId) || String(obj(j.parameters).season) !== String(season))) throw Error('QUERY_ECHO_MISMATCH');
   return j;
 }
 
-function normalize(value: unknown, batch: Batch) {
+export function normalize(value: unknown, batch: Batch, spec: LeagueSpec) {
   const row = obj(value), fixture = obj(row.fixture), league = obj(row.league), teams = obj(row.teams);
   const home = obj(teams.home), away = obj(teams.away), scores = obj(obj(row.score).fulltime);
   const match = {
@@ -47,7 +49,7 @@ function normalize(value: unknown, batch: Batch) {
   if(!match.homeTeamId || !match.homeTeamName) reasons.push('missingHomeTeam');
   if(!match.awayTeamId || !match.awayTeamName) reasons.push('missingAwayTeam');
   if(match.fullTimeHomeGoals === null || match.fullTimeAwayGoals === null) reasons.push('missingScore');
-  if(match.leagueId !== 39 || !match.leagueName || match.season !== batch.season) reasons.push('leagueSeasonMismatch');
+  if(match.leagueId !== spec.id || !match.leagueName || match.season !== batch.season) reasons.push('leagueSeasonMismatch');
   if(match.homeTeamId && match.homeTeamId === match.awayTeamId) reasons.push('sameTeam');
   if(match.fixtureStatus !== 'FT') reasons.push('unexpectedStatus');
   if(!match.round) reasons.push('missingRound');
@@ -57,10 +59,11 @@ function normalize(value: unknown, batch: Batch) {
   return {match, reasons};
 }
 
-export function buildArchive(batches: Batch[]) {
+export function buildArchive(batches: Batch[], spec: LeagueSpec = EPL) {
+  const expected = spec.teamCount * (spec.teamCount - 1);
   if(batches.length !== 2 || SEASONS.some(s => batches.filter(b=>b.season === s).length !== 1)) throw Error('EXACT_TWO_SEASONS_REQUIRED');
   for(const b of batches) if(instant(b.fetchedAt) !== b.fetchedAt || !/^[a-f0-9]{64}$/.test(b.sourceHash)) throw Error('INVALID_PROVENANCE');
-  const all = batches.flatMap(b => b.rows.map(r => ({...normalize(r,b), batchSeason:b.season})));
+  const all = batches.flatMap(b => b.rows.map(r => ({...normalize(r,b,spec), batchSeason:b.season})));
   const missingFieldCounts: Record<string,number> = {};
   for(const row of all) for(const reason of row.reasons) missingFieldCounts[reason] = (missingFieldCounts[reason] ?? 0) + 1;
   const groups = new Map<number, typeof all>();
@@ -81,15 +84,15 @@ export function buildArchive(batches: Batch[]) {
     const teamIds = new Set(valid.flatMap(r=>[r.homeTeamId,r.awayTeamId]));
     const pairCounts = new Map<string,number>();
     for(const r of valid) {const key = `${r.homeTeamId}:${r.awayTeamId}`;pairCounts.set(key,(pairCounts.get(key)??0)+1);}
-    return {season, rawRows:all.filter(r=>r.batchSeason===season).length, expectedLeagueMatchCount:380, canonicalMatches:rows.length,
+    return {season, rawRows:all.filter(r=>r.batchSeason===season).length, expectedLeagueMatchCount:expected, canonicalMatches:rows.length,
       completedFixtures:rows.filter(r=>['FT','AET','PEN'].includes(r.match.fixtureStatus??'')).length, usableCompletedMatches:valid.length,
-      completenessPercentage:rows.length/380*100, usableCompletenessPercentage:valid.length/380*100, teamCount:teamIds.size,
+      completenessPercentage:rows.length/expected*100, usableCompletenessPercentage:valid.length/expected*100, teamCount:teamIds.size,
       directedPairCount:pairCounts.size, repeatedPairCount:[...pairCounts.values()].filter(n=>n!==1).length,
       earliestKickoff:valid[0]?.kickoffUtc??null, latestKickoff:valid.at(-1)?.kickoffUtc??null};
   });
-  const eligible = !Object.keys(missingFieldCounts).length && !conflictingFixtureIds.length && seasonCounts.every(s=>s.canonicalMatches===380&&s.usableCompletedMatches===380&&s.teamCount===20&&s.directedPairCount===380&&s.repeatedPairCount===0);
-  const archive = {schemaVersion:'football-epl-historical-archive-v1',historicalRole:'RETROSPECTIVE_HISTORICAL_RESULTS',strictReplayEligible:false,matches:usable};
-  const audit = {provider:'API_FOOTBALL',league:{id:39,name:'Premier League'},seasons:[...SEASONS],retrievedAt:batches.map(b=>b.fetchedAt).sort().at(-1),
+  const eligible = !Object.keys(missingFieldCounts).length && !conflictingFixtureIds.length && seasonCounts.every(s=>s.canonicalMatches===expected&&s.usableCompletedMatches===expected&&s.teamCount===spec.teamCount&&s.directedPairCount===expected&&s.repeatedPairCount===0);
+  const archive = {schemaVersion:spec.id===39?'football-epl-historical-archive-v1':'football-league-historical-archive-v1',historicalRole:'RETROSPECTIVE_HISTORICAL_RESULTS',strictReplayEligible:false,matches:usable};
+  const audit = {provider:'API_FOOTBALL',league:{id:spec.id,name:spec.name},seasons:[...SEASONS],retrievedAt:batches.map(b=>b.fetchedAt).sort().at(-1),
     rawRows:all.length,canonicalMatches:groups.size,completedFixtures:seasonCounts.reduce((n,s)=>n+s.completedFixtures,0),usableCompletedMatches:usable.length,
     seasonCounts,duplicateCount,duplicateFixtureIds:duplicateFixtureIds.sort((a,b)=>a-b),conflictingFixtureIds:conflictingFixtureIds.sort((a,b)=>a-b),missingFieldCounts,
     missingIdentityRows:all.filter(r=>r.reasons.some(s=>['missingFixtureId','missingHomeTeam','missingAwayTeam','leagueSeasonMismatch','sameTeam'].includes(s))).length,
