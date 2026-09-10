@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "FOOTBALL_FORWARD_SHADOW_SCHEMAS_V1",
+  "layers": {
+    "MODEL_FORWARD": {"directory": "MODEL_FORWARD", "inputs": ["TARGET_SCHEDULE_ONLY", "ACTUALLY_OBSERVED_PAST_FT_SAME_LEAGUE_365D"], "ownerOrExternalInputsAllowed": false},
+    "OWNER_MANUAL_SHADOW": {"directory": "OWNER_MANUAL_SHADOW", "required": ["fixtureId", "createdAt", "author", "contentHash"], "modelInputAllowed": false, "implemented": false},
+    "EXTERNAL_ANALYSIS_SHADOW": {"directory": "EXTERNAL_ANALYSIS_SHADOW", "required": ["fixtureId", "createdAt", "source", "contentHash"], "modelInputAllowed": false, "implemented": false}
+  },
+  "pregameRevision": {"supportedInV1": false, "futureRequiredFields": ["revisionReason", "previousHash", "newHash", "createdAt"], "afterKickoffAllowed": false},
+  "postgameJoin": {"directory": "MODEL_FORWARD/postgame", "separateFromPregame": true, "required": ["fixtureId", "predictionHash", "actualScore", "actualClass", "correct1X2", "gradedAt", "officialCompletionEvidence", "sourceHash"], "mayModifyPrediction": false, "automaticGradingImplemented": false},
+  "identity": "API_FOOTBALL provider fixture.id; globally keyed fixture directory, league identity checked on reuse",
+  "immutability": "Exclusive-create files + canonical payload SHA256 + fsync seal receipt; application append-only, not tamper-proof hardware storage",
+  "retention": "Local research storage under existing licensed-data retention limitations; no public raw data or perpetual retention rights implied"
+}
