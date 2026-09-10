@@ -1,0 +1,106 @@
+{
+  "protocolVersion": "FOOTBALL_POISSON_CHRONOLOGICAL_BACKTEST_V1",
+  "baseSha": "162bdf3a5d26c6a2e8d5b78eb3e9c03e89f164f4",
+  "archiveSha256": "df77d7b146f4784fd4021282a6566fcfb36bdd574e1ab46ad8140a24e7585e76",
+  "model": {
+    "version": "football-poisson-research-v1",
+    "sourceHashNormalization": "UTF8_CRLF_TO_LF",
+    "sourceSha256": {
+      "src/lib/football/poisson-research-v1/index.ts": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+      "src/lib/football/odds-1x2-v1/instant.ts": "c848e4f64438a76bb39531a0f702c01c0aa3c3076f33ef5d39f56c480e97c784"
+    },
+    "policy": { "minCompetitionMatches": 30, "minVenueMatches": 5, "priorMatches": 5, "lookbackDays": 365, "maxExpectedGoals": 10 },
+    "passReasons": ["INSUFFICIENT_COMPETITION_HISTORY", "INSUFFICIENT_HOME_HISTORY", "INSUFFICIENT_AWAY_HISTORY", "ZERO_COMPETITION_GOAL_RATE", "GOAL_RATE_OUT_OF_RANGE"],
+    "passMapping": "INSUFFICIENT_DATA => PASS; retain reasons; probabilities, predictedClass and correct1X2 null",
+    "predictedMapping": "RESEARCH_PREDICTED => PREDICTED; passReason []",
+    "changed": false
+  },
+  "dataContract": {
+    "provider": "API_FOOTBALL", "leagueId": 39, "primarySeason": 2024,
+    "primarySeasonLabel": "EPL 2024/25", "contextSeasons": [2023, 2024],
+    "archiveMatchCount": 760, "targetMatchCount": 380,
+    "identity": "API_FOOTBALL:<providerFixtureId>; numeric ID unique archive-wide",
+    "score": "fullTimeHomeGoals/fullTimeAwayGoals; regulation time including stoppage; fixtureStatus FT",
+    "invalid": "Hash mismatch, duplicate identity, missing/invalid required field, unexpected league/season/status/count, noninteger scores outside 0..100 or team identity mismatch => INVALID; do not silently drop rows",
+    "targetFieldsBeforePrediction": ["providerFixtureId", "leagueId", "homeTeamId", "awayTeamId", "kickoffUtc"],
+    "targetLabels": "Join actual scores/class only after prediction and PASS record is sealed; never pass target scores to predictor"
+  },
+  "temporal": {
+    "sort": ["kickoffUtc ASC by UTC epoch milliseconds", "providerFixtureId ASC numeric"],
+    "pool": "Expanding archived context from seasons 2023 and 2024; effective inputs retain the existing 365-day model lookback",
+    "cutoffOffsetMs": 1,
+    "cutoff": "targetKickoffUtc - cutoffOffsetMs",
+    "resultLagMs": 172800000,
+    "derivedField": "derivedResearchAvailableAt",
+    "derivedFormula": "priorKickoffUtc + resultLagMs",
+    "IS_ACTUAL_OBSERVED_AT": false,
+    "STRICT_REPLAY_PROVENANCE": false,
+    "eligibility": "same league; context season; prior ID != target ID; prior kickoff < cutoff; derivedResearchAvailableAt < cutoff; prior kickoff >= cutoff - 365 days",
+    "sameKickoffPolicy": "One immutable pre-group eligible history for all targets sharing kickoff; fixture ID orders execution only; no within-group result updates",
+    "legacyAdapter": "Future research runner only: map derivedResearchAvailableAt into legacy resultObservedAt parameter in memory with explicit false provenance sidecar; never persist this alias, backfill archive observedAt or claim actual observation",
+    "limitation": "48 hours is a fixed research assumption, not actual final whistle/observation evidence. Multi-day suspensions or retrospective corrections may violate it. Contrary reliable completion evidence invalidates affected evaluation pending a new prospective protocol; no ad hoc outcome-driven exceptions."
+  },
+  "output": {
+    "requiredFields": ["providerFixtureId", "kickoffUtc", "homeTeam", "awayTeam", "trainingMatchCount", "homeRelevantSampleCount", "awayRelevantSampleCount", "latestEligibleTrainingKickoff", "status", "passReason", "pHome", "pDraw", "pAway", "predictedClass", "actualHomeGoals", "actualAwayGoals", "actualClass", "correct1X2", "modelVersion", "archiveSha256", "backtestProtocolVersion", "marketUsed", "strictReplay"],
+    "additionalAuditFields": ["homeTeamId", "awayTeamId", "cutoffAt", "eligibleTrainingFixtureIds", "modelStatus", "IS_ACTUAL_OBSERVED_AT", "STRICT_REPLAY_PROVENANCE", "protocolSha256"],
+    "counts": "Training count = model evidence competitionMatches; home/away relevant counts = homeVenueMatches/awayVenueMatches; latest kickoff is max eligible kickoff or null",
+    "classes": ["HOME", "DRAW", "AWAY"],
+    "tieBreak": ["HOME", "DRAW", "AWAY"],
+    "actualClass": "home goals > away goals HOME; equal DRAW; otherwise AWAY",
+    "probabilitySumTolerance": 1e-10,
+    "invalidProbability": "Nonfinite, outside [0,1], or sum outside tolerance => INVALID; no external renormalization",
+    "marketUsed": false, "strictReplay": false
+  },
+  "metrics": {
+    "cohort": "All and only Poisson PREDICTED targets, in frozen target order; no outcome-dependent exclusions",
+    "required": ["TOTAL_TARGET_MATCHES", "PREDICTED_MATCHES", "PASS_MATCHES", "COVERAGE", "1X2_ACCURACY", "MULTICLASS_LOG_LOSS", "MULTICLASS_BRIER_SCORE", "HOME_PREDICTED_ACTUAL_CORRECT", "DRAW_PREDICTED_ACTUAL_CORRECT_RECALL", "AWAY_PREDICTED_ACTUAL_CORRECT", "MEAN_P_HOME", "MEAN_P_DRAW", "MEAN_P_AWAY"],
+    "coverage": "PREDICTED_MATCHES / TOTAL_TARGET_MATCHES; PASS stays in target denominator",
+    "accuracy": "correct predictedClass count / PREDICTED_MATCHES",
+    "logLoss": "-sum(ln(max(pActual, logLossFloor))) / PREDICTED_MATCHES",
+    "logLossFloor": 1e-15,
+    "logLossFloorReporting": "Count pActual < floor; floor for scoring only, never alter stored probabilities",
+    "brier": "mean(sum over HOME,DRAW,AWAY of (pClass - indicatorActualClass)^2); unscaled, range 0..2",
+    "classCounts": "All class predicted/actual/correct counts use PREDICTED cohort, not all targets; confusion matrix rows actual, columns predicted",
+    "drawRecall": "DRAW correct count / DRAW actual count in PREDICTED cohort",
+    "means": "Arithmetic mean of each probability on PREDICTED cohort",
+    "zeroDenominator": "null (not 0); counts remain integers, empty calibration bins remain visible",
+    "precision": "IEEE-754 binary64; aggregate unrounded values in frozen target order; rounding for display only"
+  },
+  "calibration": {
+    "edges": [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+    "interval": "[lower, upper), except final [0.9,1]",
+    "cohort": "PREDICTED cohort, separately HOME/DRAW/AWAY one-vs-rest",
+    "fields": ["predictionCount", "meanPredictedProbability", "observedFrequency", "lowSample"],
+    "lowSampleBelow": 20,
+    "empty": "count 0, mean/frequency null, lowSample true; retain all 30 bins"
+  },
+  "comparator": {
+    "name": "ELIGIBLE_HISTORY_EMPIRICAL_1X2",
+    "count": 1,
+    "formula": "Counts of HOME/DRAW/AWAY regulation results divided by number of same eligible training matches; no smoothing",
+    "zeroHistory": "PASS with null probabilities",
+    "comparisonCohort": "Same Poisson PREDICTED targets only; report paired count; missing comparator on this cohort => INVALID",
+    "metrics": "Same accuracy, log loss (same floor), Brier, class counts/recall, probability means and calibration; no alternative comparator selection"
+  },
+  "classification": {
+    "precedence": ["INVALID", "INSUFFICIENT_EVALUATION", "BASELINE_MEASURED"],
+    "invalid": "Any temporal/leakage/data/hash/model/protocol contract failure",
+    "minimumPredictedMatches": 200,
+    "minimumActualCountPerClass": 20,
+    "insufficient": "PREDICTED count below minimum OR any actual outcome class count on PREDICTED cohort below minimum",
+    "baseline": "Valid protocol and both reporting sufficiency floors met, irrespective of measured performance",
+    "thresholdRationale": "Preregistered reporting guardrails, not statistical power or model input thresholds",
+    "promising": "Never automatic; separate CTO review annotation only after the frozen baseline report",
+    "VALIDATED_MODEL": false
+  },
+  "governance": {
+    "BACKTEST_EXECUTED": false, "ENGINE_CHANGED": false, "WEIGHTS_CHANGED": false,
+    "ODDS_USED": false, "PROVIDER_PREDICTION_USED": false, "STRICT_REPLAY": false,
+    "forbiddenOutputs": ["pick", "recommendedBet", "stake", "ROI", "profit"],
+    "network": "None in future offline backtest or protocol tests",
+    "privateData": "No owner risk manager/ledger/private data reads or writes",
+    "archive": "Read-only local archive; no raw data publication",
+    "changeControl": "No performance-dependent tuning, lag sweep, minimum changes or selective reporting. Changes require a new prospective protocol/version and separate review. This commit authorizes no backtest execution."
+  },
+  "hashPolicy": "SHA256 of UTF8 canonical JSON: recursively sort object keys, preserve array order, JSON.stringify with no whitespace or trailing newline; hash stored separately to avoid self-reference"
+}
