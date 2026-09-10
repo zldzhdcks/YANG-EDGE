@@ -1,0 +1,319 @@
+{
+  "protocolVersion": "FOOTBALL_POISSON_CROSS_LEAGUE_VALIDATION_V1",
+  "baseSha": "66c2a3b76c9fe28ebee8e11017b39d2094619958",
+  "parentProtocol": {
+    "version": "FOOTBALL_POISSON_CHRONOLOGICAL_BACKTEST_V1",
+    "sha256": "5388a9fa829ef7f4aad181a464d60daf6ab2e60de4de1d046701ffc666e91b75",
+    "freezeCommit": "e138db1fb8b4e90c4eda746e35a5c96419c385cf"
+  },
+  "model": {
+    "version": "football-poisson-research-v1",
+    "sourceHashNormalization": "UTF8_CRLF_TO_LF",
+    "sourceSha256": {
+      "src/lib/football/poisson-research-v1/index.ts": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+      "src/lib/football/odds-1x2-v1/instant.ts": "c848e4f64438a76bb39531a0f702c01c0aa3c3076f33ef5d39f56c480e97c784"
+    },
+    "policy": {
+      "minCompetitionMatches": 30,
+      "minVenueMatches": 5,
+      "priorMatches": 5,
+      "lookbackDays": 365,
+      "maxExpectedGoals": 10
+    },
+    "passReasons": [
+      "INSUFFICIENT_COMPETITION_HISTORY",
+      "INSUFFICIENT_HOME_HISTORY",
+      "INSUFFICIENT_AWAY_HISTORY",
+      "ZERO_COMPETITION_GOAL_RATE",
+      "GOAL_RATE_OUT_OF_RANGE"
+    ],
+    "passMapping": "INSUFFICIENT_DATA => PASS; retain reasons; probabilities, predictedClass and correct1X2 null",
+    "predictedMapping": "RESEARCH_PREDICTED => PREDICTED; passReason []",
+    "changed": false
+  },
+  "eplReference": {
+    "leagueId": 39,
+    "role": "PREVIOUSLY_MEASURED_REFERENCE_ONLY; never external training input",
+    "archiveSha256": "df77d7b146f4784fd4021282a6566fcfb36bdd574e1ab46ad8140a24e7585e76",
+    "resultSha256": "2c02e3685496c07fd533e6f9876b89c48b978a773229b77ed3c8f55ea3a1bb6c",
+    "resultCommit": "80cf220bb99b2cac3a248f9e14c6927e1c0c88bc",
+    "recalculate": false
+  },
+  "externalLeagues": [
+    {
+      "leagueId": 140,
+      "name": "La Liga",
+      "archiveSha256": "7e47fe1bdae7d99520d3b50f71d89d263558e61c11ec99c51cadd10a26ef4941",
+      "archiveCanonical": 760,
+      "primarySeason": 2024,
+      "contextSeasons": [
+        2023,
+        2024
+      ],
+      "regularSeasonCohort": 760,
+      "primaryTargets": 380,
+      "outOfScopeStage": 0,
+      "scopeMetadataSha256": "efdb5b6113e35a447dfd5e00c7c801741278a72ff36d3d55afb7005ee682676d"
+    },
+    {
+      "leagueId": 135,
+      "name": "Serie A",
+      "archiveSha256": "0818f8ea0c84ab292245ec3c45c580750b837fe7be3406c06a645b5ff7295d68",
+      "archiveCanonical": 760,
+      "primarySeason": 2024,
+      "contextSeasons": [
+        2023,
+        2024
+      ],
+      "regularSeasonCohort": 760,
+      "primaryTargets": 380,
+      "outOfScopeStage": 0,
+      "scopeMetadataSha256": "cbc4b902ef5faba377bfc8d5a9929f4e8caf61761f57a2bd0de32ca7170ff1ff"
+    },
+    {
+      "leagueId": 78,
+      "name": "Bundesliga",
+      "archiveSha256": "5ada547e57350befb660a44253a5c3f14c813a2e4c5423ad9f74ced3dd2c37c6",
+      "archiveCanonical": 616,
+      "primarySeason": 2024,
+      "contextSeasons": [
+        2023,
+        2024
+      ],
+      "regularSeasonCohort": 612,
+      "primaryTargets": 306,
+      "outOfScopeStage": 4,
+      "scopeMetadataSha256": "c6f4021abbb0cd102457a64b238ef54fc37b6a7c0551c91cf553060d0ab174ce"
+    }
+  ],
+  "totalExternalTargets": 1066,
+  "scope": {
+    "researchQuestion": "Does the identical frozen Poisson V1 reproduce across four European domestic top-tier regular leagues?",
+    "basis": "Provider explicit leagueId, season and round only. Scope decision never reads status, goals, model probabilities or performance.",
+    "regularLabel": "Exact regex ^Regular Season - ([1-9][0-9]*)$ with round number <=38 for 140/135 and <=34 for 78.",
+    "outOfScopeLabel": "For leagueId=78 only: exact Relegation Round => OUT_OF_SCOPE_STAGE for BOTH context and evaluation seasons.",
+    "unknownStage": "INVALID/STOP, no fuzzy matching or guessing",
+    "bundesligaArchiveCanonical": 616,
+    "bundesligaRegularSeasonResearchCohort": 612,
+    "bundesligaOutOfScopePlayoffs": 4,
+    "bundesligaPerSeasonRegularCount": 306,
+    "archiveRetention": "All four playoffs remain in raw canonical archive inventory, including the PEN fixture in existing quarantine. Normalized FT archive remains 615 rows. No file, score, stage or timestamp changed.",
+    "quality": "Determine scope first without status/score. Any invalid IN_SCOPE fixture invalidates the data contract; never silently drop it or adjust counts.",
+    "evidenceAuditCanonicalSha256": "5e871d0a2b91e91e565881243f3b570fdc958f6e778e759a22601b4a73bfe4cd"
+  },
+  "training": {
+    "leagueIsolation": "Each target uses only history with exactly the same provider leagueId and IN_SCOPE regular stage. EPL excluded from all external inputs. No pooling across leagues.",
+    "candidatePool": "2023 regular-season context plus prior eligible 2024 regular matches of that league; effective model window remains 365 days.",
+    "expectedTargets": "Exactly 380/380/306; mismatch => INVALID/STOP before prediction; no padding"
+  },
+  "temporal": {
+    "sort": [
+      "kickoffUtc ASC by UTC epoch milliseconds",
+      "providerFixtureId ASC numeric"
+    ],
+    "pool": "Expanding archived context from seasons 2023 and 2024; effective inputs retain the existing 365-day model lookback",
+    "cutoffOffsetMs": 1,
+    "cutoff": "targetKickoffUtc - cutoffOffsetMs",
+    "resultLagMs": 172800000,
+    "derivedField": "derivedResearchAvailableAt",
+    "derivedFormula": "priorKickoffUtc + resultLagMs",
+    "IS_ACTUAL_OBSERVED_AT": false,
+    "STRICT_REPLAY_PROVENANCE": false,
+    "eligibility": "same league; context season; prior ID != target ID; prior kickoff < cutoff; derivedResearchAvailableAt < cutoff; prior kickoff >= cutoff - 365 days",
+    "sameKickoffPolicy": "One immutable pre-group eligible history for all targets sharing kickoff; fixture ID orders execution only; no within-group result updates",
+    "legacyAdapter": "Future research runner only: map derivedResearchAvailableAt into legacy resultObservedAt parameter in memory with explicit false provenance sidecar; never persist this alias, backfill archive observedAt or claim actual observation",
+    "limitation": "48 hours is a fixed research assumption, not actual final whistle/observation evidence. Multi-day suspensions or retrospective corrections may violate it. Contrary reliable completion evidence invalidates affected evaluation pending a new prospective protocol; no ad hoc outcome-driven exceptions."
+  },
+  "output": {
+    "requiredFields": [
+      "providerFixtureId",
+      "kickoffUtc",
+      "homeTeam",
+      "awayTeam",
+      "trainingMatchCount",
+      "homeRelevantSampleCount",
+      "awayRelevantSampleCount",
+      "latestEligibleTrainingKickoff",
+      "status",
+      "passReason",
+      "pHome",
+      "pDraw",
+      "pAway",
+      "predictedClass",
+      "actualHomeGoals",
+      "actualAwayGoals",
+      "actualClass",
+      "correct1X2",
+      "modelVersion",
+      "archiveSha256",
+      "backtestProtocolVersion",
+      "marketUsed",
+      "strictReplay"
+    ],
+    "additionalAuditFields": [
+      "homeTeamId",
+      "awayTeamId",
+      "cutoffAt",
+      "eligibleTrainingFixtureIds",
+      "modelStatus",
+      "IS_ACTUAL_OBSERVED_AT",
+      "STRICT_REPLAY_PROVENANCE",
+      "protocolSha256"
+    ],
+    "counts": "Training count = model evidence competitionMatches; home/away relevant counts = homeVenueMatches/awayVenueMatches; latest kickoff is max eligible kickoff or null",
+    "classes": [
+      "HOME",
+      "DRAW",
+      "AWAY"
+    ],
+    "tieBreak": [
+      "HOME",
+      "DRAW",
+      "AWAY"
+    ],
+    "actualClass": "home goals > away goals HOME; equal DRAW; otherwise AWAY",
+    "probabilitySumTolerance": 1e-10,
+    "invalidProbability": "Nonfinite, outside [0,1], or sum outside tolerance => INVALID; no external renormalization",
+    "marketUsed": false,
+    "strictReplay": false
+  },
+  "metrics": {
+    "cohort": "All and only Poisson PREDICTED targets, in frozen target order; no outcome-dependent exclusions",
+    "required": [
+      "TOTAL_TARGET_MATCHES",
+      "PREDICTED_MATCHES",
+      "PASS_MATCHES",
+      "COVERAGE",
+      "1X2_ACCURACY",
+      "MULTICLASS_LOG_LOSS",
+      "MULTICLASS_BRIER_SCORE",
+      "HOME_PREDICTED_ACTUAL_CORRECT",
+      "DRAW_PREDICTED_ACTUAL_CORRECT_RECALL",
+      "AWAY_PREDICTED_ACTUAL_CORRECT",
+      "MEAN_P_HOME",
+      "MEAN_P_DRAW",
+      "MEAN_P_AWAY"
+    ],
+    "coverage": "PREDICTED_MATCHES / TOTAL_TARGET_MATCHES; PASS stays in target denominator",
+    "accuracy": "correct predictedClass count / PREDICTED_MATCHES",
+    "logLoss": "-sum(ln(max(pActual, logLossFloor))) / PREDICTED_MATCHES",
+    "logLossFloor": 1e-15,
+    "logLossFloorReporting": "Count pActual < floor; floor for scoring only, never alter stored probabilities",
+    "brier": "mean(sum over HOME,DRAW,AWAY of (pClass - indicatorActualClass)^2); unscaled, range 0..2",
+    "classCounts": "All class predicted/actual/correct counts use PREDICTED cohort, not all targets; confusion matrix rows actual, columns predicted",
+    "drawRecall": "DRAW correct count / DRAW actual count in PREDICTED cohort",
+    "means": "Arithmetic mean of each probability on PREDICTED cohort",
+    "zeroDenominator": "null (not 0); counts remain integers, empty calibration bins remain visible",
+    "precision": "IEEE-754 binary64; aggregate unrounded values in frozen target order; rounding for display only"
+  },
+  "calibration": {
+    "edges": [
+      0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1
+    ],
+    "interval": "[lower, upper), except final [0.9,1]",
+    "cohort": "PREDICTED cohort, separately HOME/DRAW/AWAY one-vs-rest",
+    "fields": [
+      "predictionCount",
+      "meanPredictedProbability",
+      "observedFrequency",
+      "lowSample"
+    ],
+    "lowSampleBelow": 20,
+    "empty": "count 0, mean/frequency null, lowSample true; retain all 30 bins"
+  },
+  "comparator": {
+    "name": "ELIGIBLE_HISTORY_EMPIRICAL_1X2",
+    "count": 1,
+    "formula": "Counts of HOME/DRAW/AWAY regulation results divided by number of same eligible training matches; no smoothing",
+    "zeroHistory": "PASS with null probabilities",
+    "comparisonCohort": "Same Poisson PREDICTED targets only; report paired count; missing comparator on this cohort => INVALID",
+    "metrics": "Same accuracy, log loss (same floor), Brier, class counts/recall, probability means and calibration; no alternative comparator selection"
+  },
+  "classification": {
+    "precedence": [
+      "INVALID",
+      "INSUFFICIENT_EVALUATION",
+      "BASELINE_MEASURED"
+    ],
+    "invalid": "Any temporal/leakage/data/hash/model/protocol contract failure",
+    "minimumPredictedMatches": 200,
+    "minimumActualCountPerClass": 20,
+    "insufficient": "PREDICTED count below minimum OR any actual outcome class count on PREDICTED cohort below minimum",
+    "baseline": "Valid protocol and both reporting sufficiency floors met, irrespective of measured performance",
+    "thresholdRationale": "Preregistered reporting guardrails, not statistical power or model input thresholds",
+    "promising": "Never automatic; separate CTO review annotation only after the frozen baseline report",
+    "VALIDATED_MODEL": false
+  },
+  "researchQuestions": [
+    {
+      "id": "Q1",
+      "question": "Is EPL accuracy of approximately 51.84% descriptively reproduced in the other leagues?",
+      "interpretation": "Report each unchanged accuracy with sample/coverage; no new similarity threshold, significance test or success criterion."
+    },
+    {
+      "id": "Q2",
+      "question": "What log loss and Brier values does Poisson show relative to the single empirical comparator in each league?",
+      "interpretation": "Use the existing paired cohort and fixed metrics only; no post-result comparator choice."
+    },
+    {
+      "id": "Q3",
+      "question": "Does DRAW predicted = 0 recur in La Liga, Serie A and Bundesliga?"
+    },
+    {
+      "id": "Q4",
+      "question": "How do HOME/DRAW/AWAY calibration bins differ by league?"
+    },
+    {
+      "id": "Q5",
+      "question": "How do coverage and PASS counts differ by league?"
+    }
+  ],
+  "reporting": {
+    "requiredIndependentResults": [
+      "LALIGA_RESULT",
+      "SERIEA_RESULT",
+      "BUNDESLIGA_RESULT"
+    ],
+    "reference": "Include the previously sealed EPL baseline beside independent league results.",
+    "classification": "Apply unchanged sufficiency rules independently per league; one invalid/insufficient league cannot be hidden by another.",
+    "aggregate": "No secondary pooled aggregate is preregistered for V1; never replace independent results with one combined accuracy.",
+    "metricsChangeAllowed": false,
+    "questionsChangeAllowed": false,
+    "promising": "CTO review only; no automatic promotion",
+    "VALIDATED_MODEL": false
+  },
+  "governance": {
+    "BACKTEST_EXECUTED": false,
+    "MODEL_CHANGED": false,
+    "ENGINE_CHANGED": false,
+    "WEIGHTS_CHANGED": false,
+    "MIN_SAMPLE_CHANGED": false,
+    "RESULT_LAG_CHANGED": false,
+    "CROSS_LEAGUE_POOLING": false,
+    "ODDS_USED": false,
+    "PROVIDER_PREDICTION_USED": false,
+    "STRICT_REPLAY": false,
+    "IS_ACTUAL_OBSERVED_AT": false,
+    "OWNER_PRIVATE_DATA_USED": false,
+    "NETWORK_CALLS": 0,
+    "forbiddenOutputs": [
+      "pick",
+      "recommendedBet",
+      "stake",
+      "ROI",
+      "profit"
+    ],
+    "execution": "No external predictions in this mission. A separate explicit execution mission after CTO review is required; no new model version or tuning based on EPL results."
+  },
+  "hashPolicy": "SHA256 of UTF8 canonical JSON: recursively sort object keys, preserve array order, JSON.stringify with no whitespace or trailing newline; hash stored separately to avoid self-reference"
+}
