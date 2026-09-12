@@ -1,0 +1,788 @@
+{
+  "payload": {
+    "designVersion": "FOOTBALL_V3_FEATURE_ALGORITHM_DESIGN_FREEZE_V1",
+    "baseSha": "6690d4c9f05a9e659bc25d531f08e5da214c9566",
+    "branch": "agent/astra/football-historical-source-gate-v1",
+    "createdAt": "2026-09-12T09:26:06.350Z",
+    "scope": "DESIGN_ONLY",
+    "executionAuthorized": false,
+    "parent": {
+      "path": "docs/FOOTBALL_V3_FEATURE_RESEARCH_PROTOCOL_V1.json",
+      "canonicalSha256": "0b30bc4d41684f2797d0a8e0a2a53694ecc6d5dc8f151b45213af1f1f9dc1bb8",
+      "byteSha256": "4c9afaea91670d881818aa7692710c9c1db3421e5730a2a98345f3e913aa153c"
+    },
+    "prerequisiteSeal": {
+      "selectedAt": "2026-09-12T09:26:06.348Z",
+      "authority": "Current owner design mission resolves the parent deferred choices; parent remains byte-identical.",
+      "temporal": {
+        "cutoff": "C(T)=kickoffUtc(T)-1 millisecond",
+        "lookbackDays": 365,
+        "lagHours": 48,
+        "featureResearchAvailableAt": "kickoffUtc(m)+48 hours",
+        "eligibility": "same league; Regular Season FT; distinct fixture ID; kickoff(m)>=C(T)-365 days; kickoff(m)+48 hours<C(T); authorized source seasons only; all venues",
+        "actualPublicationTime": false,
+        "strictReplayEligible": false,
+        "justification": "Owner explicitly permits 48h retrospective assumption, consistent with frozen v1/v2 chronology; census proves final/revised presence only and two still-missing current observations do not establish publication latency. No empirical publication guarantee.",
+        "contradictoryCompletionEvidence": "INVALID_TEMPORAL_CONTRACT; no selective repair or shortening lag",
+        "simultaneousKickoffs": "One immutable history per kickoff group; fixture ID orders output only",
+        "historicalObservedAtFabricated": false,
+        "forward": "Actual observed completed-match features with providerFetchedAt<=predictionCreatedAt only; never use synthetic 48h timestamps. No Forward implementation here."
+      },
+      "promotion": {
+        "applicableSeason": 2025,
+        "prerequisites": [
+          "Independent holdout identity/scope/completeness/exposure/hash seal",
+          "Separate CTO approval",
+          "Frozen implementation, comparators, input and beta hashes",
+          "All four leagues evaluated once without rerun or tuning"
+        ],
+        "tolerance": 1e-12,
+        "primary": "Per candidate, every league, and each comparator separately: delta LL < -1e-12 AND delta multiclass Brier < -1e-12.",
+        "classGuards": "Every HOME/DRAW/AWAY versus each comparator on the fixed primary population: recall delta >= -0.05-1e-12; ECE delta <= 0.01+1e-12; one-vs-rest Brier delta <= 1e-12.",
+        "coverage": "Fixed comparator intersection U contains at least 100 fixtures and >=80% of full league cohort; candidate predicts 100% of U; all full-cohort IDs retained; zero FAIL/INVALID; all three actual classes present in U.",
+        "nullHandling": "Null required recall/ECE or missing primary probabilities => INSUFFICIENT, never silently pass. Precision null is reported, not a promotion guard.",
+        "allLeaguesRequired": true,
+        "outcome": "ELIGIBLE_FOR_CTO_PROMOTION_REVIEW only if all four leagues pass all gates; otherwise SCREEN_NO, INSUFFICIENT, FAIL or INVALID as applicable. No model promotion or automatic Forward migration.",
+        "multipleCandidates": "Evaluate all F1/F2/F3 separately; no composite winner, league cherry-picking, unregistered ensemble or automatic choice among passing candidates.",
+        "exposed2024": "DESCRIPTIVE_CHECK_ONLY; report numeric metrics and differences, no promotion eligibility from these data",
+        "rationale": "Fixed conservative descriptive eligibility guardrails, not a significance test: common denominators, both probability scores improve, class recall capped at 5 percentage-point loss and ECE at 1 point. No claim that these constants were empirically optimized."
+      },
+      "canonicalSha256": "3865f247cda98eb7816ed5b9f2441c68b64bc3033723ce6d2230f073be4021db"
+    },
+    "bindingParent": {
+      "featureCandidates": [
+        {
+          "id": "F1",
+          "name": "xG",
+          "providerField": "expected_goals"
+        },
+        {
+          "id": "F2",
+          "name": "Total Shots",
+          "providerField": "Total Shots"
+        },
+        {
+          "id": "F3",
+          "name": "Shots on Goal",
+          "providerField": "Shots on Goal"
+        }
+      ],
+      "experiments": [
+        {
+          "id": "V3-F1",
+          "backbone": "H2",
+          "featureInformation": [
+            "xG"
+          ]
+        },
+        {
+          "id": "V3-F2",
+          "backbone": "H2",
+          "featureInformation": [
+            "Total Shots",
+            "Shots on Goal"
+          ]
+        },
+        {
+          "id": "V3-F3",
+          "backbone": "H2",
+          "featureInformation": [
+            "xG",
+            "Total Shots",
+            "Shots on Goal"
+          ]
+        }
+      ],
+      "comparators": [
+        {
+          "id": "A",
+          "model": "football-poisson-research-v1",
+          "role": "OFFICIAL_FROZEN_COMPARATOR"
+        },
+        {
+          "id": "B",
+          "model": "frozen H2 specification",
+          "role": "UNPROMOTED_RESEARCH_COMPARATOR",
+          "specification": "docs/FOOTBALL_POISSON_V2_ALGORITHM_DESIGN_FREEZE_V1.json"
+        }
+      ],
+      "cohort": {
+        "provider": "API_FOOTBALL",
+        "stage": "Regular Season",
+        "fixtureIdentity": "provider fixture.id",
+        "total": 2892,
+        "cohortIdsHash": "ad5cfb6fb08d9ce790596d5cd1c74dad1106c80e903769e66b4ee9c044813d14",
+        "leagues": [
+          {
+            "leagueId": 39,
+            "name": "Premier League",
+            "archiveSha256": "df77d7b146f4784fd4021282a6566fcfb36bdd574e1ab46ad8140a24e7585e76",
+            "primaryDevelopment": {
+              "providerSeason": 2023,
+              "count": 380,
+              "firstKickoff": "2023-08-11T19:00:00.000Z",
+              "lastKickoff": "2024-05-19T15:00:00.000Z",
+              "fixtureIdsSha256": "ad8ae24a3713aa9e105d600f2e0168906ad7cef1a6663d5946123730dd5abdf5"
+            },
+            "exposedCheck": {
+              "providerSeason": 2024,
+              "count": 380,
+              "firstKickoff": "2024-08-16T19:00:00.000Z",
+              "lastKickoff": "2025-05-25T15:00:00.000Z",
+              "fixtureIdsSha256": "7f7c6b1e63e5fdb118f2ef50826032e6f02b52c1fa9dbe02adbb6dca67153842"
+            }
+          },
+          {
+            "leagueId": 140,
+            "name": "La Liga",
+            "archiveSha256": "7e47fe1bdae7d99520d3b50f71d89d263558e61c11ec99c51cadd10a26ef4941",
+            "primaryDevelopment": {
+              "providerSeason": 2023,
+              "count": 380,
+              "firstKickoff": "2023-08-11T17:30:00.000Z",
+              "lastKickoff": "2024-05-26T19:00:00.000Z",
+              "fixtureIdsSha256": "bab38bb5259b15e200c426b7a88d03ad4efce5440fc7022365c340cdaad7a0c3"
+            },
+            "exposedCheck": {
+              "providerSeason": 2024,
+              "count": 380,
+              "firstKickoff": "2024-08-15T17:00:00.000Z",
+              "lastKickoff": "2025-05-25T19:00:00.000Z",
+              "fixtureIdsSha256": "6cc4ce888702696251c145a8da0e4f4056d4aa2cbe989b3adb3e07f0e5e9dc2c"
+            }
+          },
+          {
+            "leagueId": 135,
+            "name": "Serie A",
+            "archiveSha256": "0818f8ea0c84ab292245ec3c45c580750b837fe7be3406c06a645b5ff7295d68",
+            "primaryDevelopment": {
+              "providerSeason": 2023,
+              "count": 380,
+              "firstKickoff": "2023-08-19T16:30:00.000Z",
+              "lastKickoff": "2024-06-02T16:00:00.000Z",
+              "fixtureIdsSha256": "6235755c9fac4e4960fa23c487e356537fe1ec842a40181d95514b9d90e120e5"
+            },
+            "exposedCheck": {
+              "providerSeason": 2024,
+              "count": 380,
+              "firstKickoff": "2024-08-17T16:30:00.000Z",
+              "lastKickoff": "2025-05-25T18:45:00.000Z",
+              "fixtureIdsSha256": "385c508acfdd7115d88bfeeaddc8544d398e9446c019f25528104db5e56093cd"
+            }
+          },
+          {
+            "leagueId": 78,
+            "name": "Bundesliga",
+            "archiveSha256": "5ada547e57350befb660a44253a5c3f14c813a2e4c5423ad9f74ced3dd2c37c6",
+            "primaryDevelopment": {
+              "providerSeason": 2023,
+              "count": 306,
+              "firstKickoff": "2023-08-18T18:30:00.000Z",
+              "lastKickoff": "2024-05-18T13:30:00.000Z",
+              "fixtureIdsSha256": "764829c04cc9a64fe377f2b2101165bb2a8027dfc16ff6cc03b5f849d221c58a"
+            },
+            "exposedCheck": {
+              "providerSeason": 2024,
+              "count": 306,
+              "firstKickoff": "2024-08-23T18:30:00.000Z",
+              "lastKickoff": "2025-05-17T13:30:00.000Z",
+              "fixtureIdsSha256": "8e1d854c11f8995fda1ee75565baa4f3d37df89c942f7f8e07db52e520fc08ec"
+            }
+          }
+        ],
+        "addDeleteGuessFixtures": false,
+        "featureComplete": 2891,
+        "featureCoveragePercent": 99.96542185338866
+      },
+      "splits": {
+        "primaryDevelopment": {
+          "season": "2023/24",
+          "providerSeason": 2023,
+          "role": "PRIMARY_DEVELOPMENT"
+        },
+        "exposedCheck": {
+          "season": "2024/25",
+          "providerSeason": 2024,
+          "role": "EXPOSED_DEVELOPMENT_CHECK",
+          "untouchedHoldout": false,
+          "postResultSpecificationChangeAllowed": false
+        },
+        "independentHoldoutCandidate": {
+          "season": "2025/26",
+          "providerSeason": 2025,
+          "role": "INDEPENDENT_HOLDOUT_CANDIDATE",
+          "independenceCertified": false,
+          "collectedInThisMission": false,
+          "metricsViewedInThisMission": false,
+          "metricsComputedInThisMission": false,
+          "initialSealOnly": [
+            "fixture identity",
+            "league/stage scope",
+            "data completeness",
+            "hashes"
+          ],
+          "evaluationAuthorization": "Separate CTO approval after protocol and algorithm freeze, cohort seal, integrity and exposure checks",
+          "finalEvaluationRunsAllowedAfterApproval": 1
+        },
+        "currentSeason": {
+          "season": "2026/27",
+          "providerSeason": 2026,
+          "role": "PROSPECTIVE_FORWARD_EVIDENCE",
+          "historicalHoldout": false,
+          "separateFromOfficialForwardV1": true,
+          "autoMigration": false
+        }
+      },
+      "firewalls": {
+        "market": {
+          "forbiddenInputs": [
+            "odds",
+            "market consensus",
+            "betting lines"
+          ],
+          "MODEL_INPUT_ALLOWED": false,
+          "comparisonOnlyAfterIndependentPredictionSeal": true
+        },
+        "forward": {
+          "officialModel": "football-poisson-research-v1",
+          "FORWARD_V3_AUTO_MIGRATION": false,
+          "separatePromotionAndCTOApprovalRequired": true
+        },
+        "holdout": {
+          "readOrCompute2025MetricsThisMission": false,
+          "fetch2025ThisMission": false,
+          "firstCollectionAfterProtocolFreezeOnly": true,
+          "unknownPriorExposureMustBeAudited": true,
+          "exposureDetectedAction": "Report contamination; do not relabel exposed data as independent or inspect metrics to decide what to keep."
+        }
+      }
+    },
+    "backbone": {
+      "name": "FROZEN_V2_H2",
+      "MODEL_PROMOTED": false,
+      "SCREEN_RESULT": "SCREEN_NO",
+      "role": "RESEARCH_OFFSET_ONLY",
+      "v1ComparatorRetained": true,
+      "parameterFeedbackFromV3": false,
+      "fitPolicy": "For each target and each beta-training example, fresh causal frozen H2 fit using its same-league 365d/48h result pool and unchanged 30/5/5, universe, objective, optimizer, caps and PASS rules. Offset must never come from a full-season fit containing that example or later results.",
+      "references": [
+        {
+          "path": "docs/FOOTBALL_POISSON_V2_ALGORITHM_DESIGN_FREEZE_V1.json",
+          "byteSha256": "342d6af06c95578b91e8d479656dc296f8ca2a7f1bb7a3fe1bc1248450411cec"
+        },
+        {
+          "path": "scripts/football-poisson-v2-draw-research/h2-ridge-rates-v1.ts",
+          "byteSha256": "5a5431f11b4852d16fb3483f6c0ecd9fec75cf296f051f17fa64a35933cb14af"
+        },
+        {
+          "path": "scripts/football-poisson-v2-draw-research/evaluation-v1/h2-ridge-rates-v1.ts",
+          "byteSha256": "fab9d235b885207a0feba198f1e777f0a8ee0577e50d14f317613e7dcfef0aea"
+        },
+        {
+          "path": "scripts/football-poisson-v2-draw-research/v1-readonly-adapter.ts",
+          "byteSha256": "59ec79b2dc41ba7c5413998bbf142b59368146f65a865b58391f2e30704b4067"
+        }
+      ],
+      "adapterPolicy": "Existing season guards stay untouched. Any future V3-scoped season adapter must preserve identities, not relabel 2025 as 2024, and pass equivalence tests on 2023/2024 before authorization; no 2025 access here."
+    },
+    "temporal": {
+      "cutoff": "C(T)=kickoffUtc(T)-1 millisecond",
+      "lookbackDays": 365,
+      "lagHours": 48,
+      "featureResearchAvailableAt": "kickoffUtc(m)+48 hours",
+      "eligibility": "same league; Regular Season FT; distinct fixture ID; kickoff(m)>=C(T)-365 days; kickoff(m)+48 hours<C(T); authorized source seasons only; all venues",
+      "actualPublicationTime": false,
+      "strictReplayEligible": false,
+      "justification": "Owner explicitly permits 48h retrospective assumption, consistent with frozen v1/v2 chronology; census proves final/revised presence only and two still-missing current observations do not establish publication latency. No empirical publication guarantee.",
+      "contradictoryCompletionEvidence": "INVALID_TEMPORAL_CONTRACT; no selective repair or shortening lag",
+      "simultaneousKickoffs": "One immutable history per kickoff group; fixture ID orders output only",
+      "historicalObservedAtFabricated": false,
+      "forward": "Actual observed completed-match features with providerFetchedAt<=predictionCreatedAt only; never use synthetic 48h timestamps. No Forward implementation here."
+    },
+    "aggregation": {
+      "pool": "For feature f independently, M_f(T) is eligible base-history matches with valid non-null f for BOTH exact team IDs. Completeness of unregistered features must not affect the candidate.",
+      "types": {
+        "xG": "expected_goals",
+        "shots": "Total Shots",
+        "sot": "Shots on Goal"
+      },
+      "validity": "Exactly one matching provider type per expected team; finite nonnegative number or trimmed decimal numeric string; shots/SOT integer. Zero is present. Null/absent/block unavailable are missing. Duplicate identity/type, negative/invalid/nonfinite raw values or hash mismatch are INVALID, not dropped.",
+      "mapping": "Home team For=f_home and Against=f_away; away team For=f_away and Against=f_home. Do not negate Against. League reference counts both team For values once per match.",
+      "means": "n_tf=count of M_f(T) involving t; muFor_tf=sum For/n_tf; muAgainst_tf=sum Against/n_tf; L_f=sum over M_f(T)(f_home+f_away)/(2*|M_f(T)|). All arithmetic means, uniform weights, all venues.",
+      "minimumPerTeamPerFeature": 5,
+      "normalization": "zFor_tf=ln(muFor_tf)-ln(L_f); zAgainst_tf=ln(muAgainst_tf)-ln(L_f), mathematically log ratio. No epsilon, clipping, standardization, feature mean shrinkage or imputation.",
+      "zeroRule": "Any required mean or reference exactly zero => PASS_NONPOSITIVE_FEATURE_MEAN; nonfinite arithmetic => FAIL_NUMERICAL. Min-count check precedes means. Invalid raw values are INVALID_INPUT before aggregation.",
+      "featureIndependentMasks": "F1 only inspects xG; F2 only shots/SOT; F3 reuses the same per-feature pools, not a joint-complete new pool. Every required feature must independently meet both team min counts.",
+      "order": "Matches kickoffUtc then numeric fixtureId; per match home then away; features xG,shots,sot; coefficients For then Against; all scalar reductions left-to-right binary64."
+    },
+    "fitting": {
+      "scope": "Separate league x candidate beta; no pooling, no warm starts, no cross-candidate initialization",
+      "objective": "J(beta)=(1/(2N))*sum_i[exp(o_iH+X_iH dot beta)-y_iH*(o_iH+X_iH dot beta)+exp(o_iA+X_iA dot beta)-y_iA*(o_iA+X_iA dot beta)]+(0.01/2)*sum_j beta_j^2; o=ln(causal frozen H2 rate); omit log-factorial constants.",
+      "gradient": "g=(1/(2N))*sum_i,s X_is*(lambda_is-y_is)+0.01*beta",
+      "hessian": "H=(1/(2N))*sum_i,s lambda_is*X_is*X_is^T+0.01*I",
+      "regularization": {
+        "type": "RIDGE",
+        "kappa": 0.01,
+        "allBeta": true,
+        "search": false
+      },
+      "parameters": "Unconstrained real beta, shared between home/away equations, no intercept, no feature interaction or draw coefficient; H2 parameters never optimized with beta.",
+      "optimizer": "Deterministic damped Newton with unpivoted Cholesky solve H*d=-g; column/index order ascending; no jitter, alternate solver or restart.",
+      "initialization": "All beta=0 each fit",
+      "convergence": "At initialization and after accepted updates, max(abs(g))<=1e-7; max accepted updates=100. Small objective change alone is not convergence.",
+      "lineSearch": "At each update test alpha=2^(-j), j=0..59; first finite positive-rate trial with J(beta+alpha*d)<=J(beta)+1e-4*alpha*dot(g,d) accepted. Reject overflow/underflow trials without clipping. If none: FAIL_LINE_SEARCH.",
+      "failure": "Nonpositive Cholesky pivot, nonfinite accepted state or g dot d>=0 before convergence => FAIL_NUMERICAL. 100 updates without convergence => FAIL_NON_CONVERGENCE. No beta=0/H2 fallback after failure.",
+      "minimumFitFixtures": 30,
+      "insufficient": "Fewer than 30 valid two-equation causal examples => PASS_INSUFFICIENT_FIT / experiment INSUFFICIENT; no class-count gate for Poisson fitting.",
+      "trainingRates": "Finite positive likelihood rates; no target cap of 10 inside beta likelihood. Prediction output rate cap remains 10.",
+      "randomness": "NONE",
+      "seed": null
+    },
+    "candidates": [
+      {
+        "id": "V3-F1",
+        "ALGORITHM_NAME": "FROZEN_H2_OFFSET_XG_RIDGE_POISSON_V1",
+        "FEATURE_VECTOR": {
+          "home": [
+            "zFor_home_xG",
+            "zAgainst_away_xG"
+          ],
+          "away": [
+            "zFor_away_xG",
+            "zAgainst_home_xG"
+          ]
+        },
+        "FEATURE_AGGREGATION": {
+          "pool": "For feature f independently, M_f(T) is eligible base-history matches with valid non-null f for BOTH exact team IDs. Completeness of unregistered features must not affect the candidate.",
+          "types": {
+            "xG": "expected_goals",
+            "shots": "Total Shots",
+            "sot": "Shots on Goal"
+          },
+          "validity": "Exactly one matching provider type per expected team; finite nonnegative number or trimmed decimal numeric string; shots/SOT integer. Zero is present. Null/absent/block unavailable are missing. Duplicate identity/type, negative/invalid/nonfinite raw values or hash mismatch are INVALID, not dropped.",
+          "mapping": "Home team For=f_home and Against=f_away; away team For=f_away and Against=f_home. Do not negate Against. League reference counts both team For values once per match.",
+          "means": "n_tf=count of M_f(T) involving t; muFor_tf=sum For/n_tf; muAgainst_tf=sum Against/n_tf; L_f=sum over M_f(T)(f_home+f_away)/(2*|M_f(T)|). All arithmetic means, uniform weights, all venues.",
+          "minimumPerTeamPerFeature": 5,
+          "normalization": "zFor_tf=ln(muFor_tf)-ln(L_f); zAgainst_tf=ln(muAgainst_tf)-ln(L_f), mathematically log ratio. No epsilon, clipping, standardization, feature mean shrinkage or imputation.",
+          "zeroRule": "Any required mean or reference exactly zero => PASS_NONPOSITIVE_FEATURE_MEAN; nonfinite arithmetic => FAIL_NUMERICAL. Min-count check precedes means. Invalid raw values are INVALID_INPUT before aggregation.",
+          "featureIndependentMasks": "F1 only inspects xG; F2 only shots/SOT; F3 reuses the same per-feature pools, not a joint-complete new pool. Every required feature must independently meet both team min counts.",
+          "order": "Matches kickoffUtc then numeric fixtureId; per match home then away; features xG,shots,sot; coefficients For then Against; all scalar reductions left-to-right binary64."
+        },
+        "NORMALIZATION": "zFor_tf=ln(muFor_tf)-ln(L_f); zAgainst_tf=ln(muAgainst_tf)-ln(L_f), mathematically log ratio. No epsilon, clipping, standardization, feature mean shrinkage or imputation.",
+        "RATE_FORMULA": "lambda_V3_s=lambda_H2_s*exp(beta dot X_s); numerical evaluation exp(ln(lambda_H2_s)+left-to-right dot(beta,X_s)); same beta for s=home,away.",
+        "PARAMETERS": {
+          "count": 2,
+          "names": [
+            "beta_xG_For",
+            "beta_xG_Against"
+          ],
+          "sharedAcrossSides": true,
+          "perLeague": true,
+          "intercept": false,
+          "interaction": "NONE",
+          "drawSpecific": false
+        },
+        "FIT_OBJECTIVE": "J(beta)=(1/(2N))*sum_i[exp(o_iH+X_iH dot beta)-y_iH*(o_iH+X_iH dot beta)+exp(o_iA+X_iA dot beta)-y_iA*(o_iA+X_iA dot beta)]+(0.01/2)*sum_j beta_j^2; o=ln(causal frozen H2 rate); omit log-factorial constants.",
+        "REGULARIZATION": {
+          "type": "RIDGE",
+          "kappa": 0.01,
+          "allBeta": true,
+          "search": false
+        },
+        "OPTIMIZER": "Deterministic damped Newton with unpivoted Cholesky solve H*d=-g; column/index order ascending; no jitter, alternate solver or restart.",
+        "INITIALIZATION": "All beta=0 each fit",
+        "CONVERGENCE": "At initialization and after accepted updates, max(abs(g))<=1e-7; max accepted updates=100. Small objective change alone is not convergence.",
+        "FAILURE_PASS_RULE": {
+          "precedence": [
+            "INVALID",
+            "FAIL",
+            "INSUFFICIENT",
+            "PASS"
+          ],
+          "rowPass": [
+            "Preserve frozen H2/base history PASS reason(s)",
+            "PASS_INSUFFICIENT_FEATURE_HISTORY for any required feature team count<5",
+            "PASS_NONPOSITIVE_FEATURE_MEAN",
+            "PASS_GOAL_RATE_OUT_OF_RANGE if either finite positive V3 target rate>10"
+          ],
+          "rowOrder": "First validate integrity, then frozen H2 status, then min feature counts, then positive means, then V3 arithmetic/rates, then probability mass. Record all independent failing min-count feature/team pairs in canonical order.",
+          "invalid": "Hash/identity/season/temporal/forbidden-input violation or invalid raw data/probability mass => INVALID, never exclude and continue as missing.",
+          "fail": "Numerical, optimizer or convergence failure; do not turn into a model PASS or silently remove fit example.",
+          "experiment": "Any INVALID dominates any FAIL. Initial/final beta fit insufficiency => INSUFFICIENT. Ordinary per-target frozen PASS retained without automatic experiment FAIL; missing primary coverage blocks promotion. Execution PASS describes valid execution, not metric success."
+        },
+        "TEMPORAL_RULE": {
+          "cutoff": "C(T)=kickoffUtc(T)-1 millisecond",
+          "lookbackDays": 365,
+          "lagHours": 48,
+          "featureResearchAvailableAt": "kickoffUtc(m)+48 hours",
+          "eligibility": "same league; Regular Season FT; distinct fixture ID; kickoff(m)>=C(T)-365 days; kickoff(m)+48 hours<C(T); authorized source seasons only; all venues",
+          "actualPublicationTime": false,
+          "strictReplayEligible": false,
+          "justification": "Owner explicitly permits 48h retrospective assumption, consistent with frozen v1/v2 chronology; census proves final/revised presence only and two still-missing current observations do not establish publication latency. No empirical publication guarantee.",
+          "contradictoryCompletionEvidence": "INVALID_TEMPORAL_CONTRACT; no selective repair or shortening lag",
+          "simultaneousKickoffs": "One immutable history per kickoff group; fixture ID orders output only",
+          "historicalObservedAtFabricated": false,
+          "forward": "Actual observed completed-match features with providerFetchedAt<=predictionCreatedAt only; never use synthetic 48h timestamps. No Forward implementation here."
+        },
+        "MISSINGNESS_RULE": "HISTORY_WINDOW_EXCLUSION_FEATURE_LAYER_ONLY",
+        "DIAGNOSTICS": [
+          "All full target IDs/status/reasons, comparator statuses and U membership",
+          "Input/provider/raw hashes and actual providerFetchedAt; featureResearchAvailableAt separate",
+          "Per feature eligible/excluded IDs and reasons, both-team history counts, arithmetic means and league references",
+          "Feature vectors, causal H2 parameter/input hash and offset rates",
+          "Beta vector/hash, fit example IDs/hash, fit boundary, objective, gradient infinity norm, iterations and backtracking trace",
+          "Per target beta dot X, H2 rates, V3 rates, probability vector/hash and predictedClass",
+          "Full and paired coverage/PASS/missingness, per-league dual-comparator primary and class metrics; no performance-based reclassification"
+        ]
+      },
+      {
+        "id": "V3-F2",
+        "ALGORITHM_NAME": "FROZEN_H2_OFFSET_SHOTS_SOT_RIDGE_POISSON_V1",
+        "FEATURE_VECTOR": {
+          "home": [
+            "zFor_home_shots",
+            "zAgainst_away_shots",
+            "zFor_home_sot",
+            "zAgainst_away_sot"
+          ],
+          "away": [
+            "zFor_away_shots",
+            "zAgainst_home_shots",
+            "zFor_away_sot",
+            "zAgainst_home_sot"
+          ]
+        },
+        "FEATURE_AGGREGATION": {
+          "pool": "For feature f independently, M_f(T) is eligible base-history matches with valid non-null f for BOTH exact team IDs. Completeness of unregistered features must not affect the candidate.",
+          "types": {
+            "xG": "expected_goals",
+            "shots": "Total Shots",
+            "sot": "Shots on Goal"
+          },
+          "validity": "Exactly one matching provider type per expected team; finite nonnegative number or trimmed decimal numeric string; shots/SOT integer. Zero is present. Null/absent/block unavailable are missing. Duplicate identity/type, negative/invalid/nonfinite raw values or hash mismatch are INVALID, not dropped.",
+          "mapping": "Home team For=f_home and Against=f_away; away team For=f_away and Against=f_home. Do not negate Against. League reference counts both team For values once per match.",
+          "means": "n_tf=count of M_f(T) involving t; muFor_tf=sum For/n_tf; muAgainst_tf=sum Against/n_tf; L_f=sum over M_f(T)(f_home+f_away)/(2*|M_f(T)|). All arithmetic means, uniform weights, all venues.",
+          "minimumPerTeamPerFeature": 5,
+          "normalization": "zFor_tf=ln(muFor_tf)-ln(L_f); zAgainst_tf=ln(muAgainst_tf)-ln(L_f), mathematically log ratio. No epsilon, clipping, standardization, feature mean shrinkage or imputation.",
+          "zeroRule": "Any required mean or reference exactly zero => PASS_NONPOSITIVE_FEATURE_MEAN; nonfinite arithmetic => FAIL_NUMERICAL. Min-count check precedes means. Invalid raw values are INVALID_INPUT before aggregation.",
+          "featureIndependentMasks": "F1 only inspects xG; F2 only shots/SOT; F3 reuses the same per-feature pools, not a joint-complete new pool. Every required feature must independently meet both team min counts.",
+          "order": "Matches kickoffUtc then numeric fixtureId; per match home then away; features xG,shots,sot; coefficients For then Against; all scalar reductions left-to-right binary64."
+        },
+        "NORMALIZATION": "zFor_tf=ln(muFor_tf)-ln(L_f); zAgainst_tf=ln(muAgainst_tf)-ln(L_f), mathematically log ratio. No epsilon, clipping, standardization, feature mean shrinkage or imputation.",
+        "RATE_FORMULA": "lambda_V3_s=lambda_H2_s*exp(beta dot X_s); numerical evaluation exp(ln(lambda_H2_s)+left-to-right dot(beta,X_s)); same beta for s=home,away.",
+        "PARAMETERS": {
+          "count": 4,
+          "names": [
+            "beta_shots_For",
+            "beta_shots_Against",
+            "beta_sot_For",
+            "beta_sot_Against"
+          ],
+          "sharedAcrossSides": true,
+          "perLeague": true,
+          "intercept": false,
+          "interaction": "NONE",
+          "drawSpecific": false
+        },
+        "FIT_OBJECTIVE": "J(beta)=(1/(2N))*sum_i[exp(o_iH+X_iH dot beta)-y_iH*(o_iH+X_iH dot beta)+exp(o_iA+X_iA dot beta)-y_iA*(o_iA+X_iA dot beta)]+(0.01/2)*sum_j beta_j^2; o=ln(causal frozen H2 rate); omit log-factorial constants.",
+        "REGULARIZATION": {
+          "type": "RIDGE",
+          "kappa": 0.01,
+          "allBeta": true,
+          "search": false
+        },
+        "OPTIMIZER": "Deterministic damped Newton with unpivoted Cholesky solve H*d=-g; column/index order ascending; no jitter, alternate solver or restart.",
+        "INITIALIZATION": "All beta=0 each fit",
+        "CONVERGENCE": "At initialization and after accepted updates, max(abs(g))<=1e-7; max accepted updates=100. Small objective change alone is not convergence.",
+        "FAILURE_PASS_RULE": {
+          "precedence": [
+            "INVALID",
+            "FAIL",
+            "INSUFFICIENT",
+            "PASS"
+          ],
+          "rowPass": [
+            "Preserve frozen H2/base history PASS reason(s)",
+            "PASS_INSUFFICIENT_FEATURE_HISTORY for any required feature team count<5",
+            "PASS_NONPOSITIVE_FEATURE_MEAN",
+            "PASS_GOAL_RATE_OUT_OF_RANGE if either finite positive V3 target rate>10"
+          ],
+          "rowOrder": "First validate integrity, then frozen H2 status, then min feature counts, then positive means, then V3 arithmetic/rates, then probability mass. Record all independent failing min-count feature/team pairs in canonical order.",
+          "invalid": "Hash/identity/season/temporal/forbidden-input violation or invalid raw data/probability mass => INVALID, never exclude and continue as missing.",
+          "fail": "Numerical, optimizer or convergence failure; do not turn into a model PASS or silently remove fit example.",
+          "experiment": "Any INVALID dominates any FAIL. Initial/final beta fit insufficiency => INSUFFICIENT. Ordinary per-target frozen PASS retained without automatic experiment FAIL; missing primary coverage blocks promotion. Execution PASS describes valid execution, not metric success."
+        },
+        "TEMPORAL_RULE": {
+          "cutoff": "C(T)=kickoffUtc(T)-1 millisecond",
+          "lookbackDays": 365,
+          "lagHours": 48,
+          "featureResearchAvailableAt": "kickoffUtc(m)+48 hours",
+          "eligibility": "same league; Regular Season FT; distinct fixture ID; kickoff(m)>=C(T)-365 days; kickoff(m)+48 hours<C(T); authorized source seasons only; all venues",
+          "actualPublicationTime": false,
+          "strictReplayEligible": false,
+          "justification": "Owner explicitly permits 48h retrospective assumption, consistent with frozen v1/v2 chronology; census proves final/revised presence only and two still-missing current observations do not establish publication latency. No empirical publication guarantee.",
+          "contradictoryCompletionEvidence": "INVALID_TEMPORAL_CONTRACT; no selective repair or shortening lag",
+          "simultaneousKickoffs": "One immutable history per kickoff group; fixture ID orders output only",
+          "historicalObservedAtFabricated": false,
+          "forward": "Actual observed completed-match features with providerFetchedAt<=predictionCreatedAt only; never use synthetic 48h timestamps. No Forward implementation here."
+        },
+        "MISSINGNESS_RULE": "HISTORY_WINDOW_EXCLUSION_FEATURE_LAYER_ONLY",
+        "DIAGNOSTICS": [
+          "All full target IDs/status/reasons, comparator statuses and U membership",
+          "Input/provider/raw hashes and actual providerFetchedAt; featureResearchAvailableAt separate",
+          "Per feature eligible/excluded IDs and reasons, both-team history counts, arithmetic means and league references",
+          "Feature vectors, causal H2 parameter/input hash and offset rates",
+          "Beta vector/hash, fit example IDs/hash, fit boundary, objective, gradient infinity norm, iterations and backtracking trace",
+          "Per target beta dot X, H2 rates, V3 rates, probability vector/hash and predictedClass",
+          "Full and paired coverage/PASS/missingness, per-league dual-comparator primary and class metrics; no performance-based reclassification"
+        ]
+      },
+      {
+        "id": "V3-F3",
+        "ALGORITHM_NAME": "FROZEN_H2_OFFSET_XG_SHOTS_SOT_RIDGE_POISSON_V1",
+        "FEATURE_VECTOR": {
+          "home": [
+            "zFor_home_xG",
+            "zAgainst_away_xG",
+            "zFor_home_shots",
+            "zAgainst_away_shots",
+            "zFor_home_sot",
+            "zAgainst_away_sot"
+          ],
+          "away": [
+            "zFor_away_xG",
+            "zAgainst_home_xG",
+            "zFor_away_shots",
+            "zAgainst_home_shots",
+            "zFor_away_sot",
+            "zAgainst_home_sot"
+          ]
+        },
+        "FEATURE_AGGREGATION": {
+          "pool": "For feature f independently, M_f(T) is eligible base-history matches with valid non-null f for BOTH exact team IDs. Completeness of unregistered features must not affect the candidate.",
+          "types": {
+            "xG": "expected_goals",
+            "shots": "Total Shots",
+            "sot": "Shots on Goal"
+          },
+          "validity": "Exactly one matching provider type per expected team; finite nonnegative number or trimmed decimal numeric string; shots/SOT integer. Zero is present. Null/absent/block unavailable are missing. Duplicate identity/type, negative/invalid/nonfinite raw values or hash mismatch are INVALID, not dropped.",
+          "mapping": "Home team For=f_home and Against=f_away; away team For=f_away and Against=f_home. Do not negate Against. League reference counts both team For values once per match.",
+          "means": "n_tf=count of M_f(T) involving t; muFor_tf=sum For/n_tf; muAgainst_tf=sum Against/n_tf; L_f=sum over M_f(T)(f_home+f_away)/(2*|M_f(T)|). All arithmetic means, uniform weights, all venues.",
+          "minimumPerTeamPerFeature": 5,
+          "normalization": "zFor_tf=ln(muFor_tf)-ln(L_f); zAgainst_tf=ln(muAgainst_tf)-ln(L_f), mathematically log ratio. No epsilon, clipping, standardization, feature mean shrinkage or imputation.",
+          "zeroRule": "Any required mean or reference exactly zero => PASS_NONPOSITIVE_FEATURE_MEAN; nonfinite arithmetic => FAIL_NUMERICAL. Min-count check precedes means. Invalid raw values are INVALID_INPUT before aggregation.",
+          "featureIndependentMasks": "F1 only inspects xG; F2 only shots/SOT; F3 reuses the same per-feature pools, not a joint-complete new pool. Every required feature must independently meet both team min counts.",
+          "order": "Matches kickoffUtc then numeric fixtureId; per match home then away; features xG,shots,sot; coefficients For then Against; all scalar reductions left-to-right binary64."
+        },
+        "NORMALIZATION": "zFor_tf=ln(muFor_tf)-ln(L_f); zAgainst_tf=ln(muAgainst_tf)-ln(L_f), mathematically log ratio. No epsilon, clipping, standardization, feature mean shrinkage or imputation.",
+        "RATE_FORMULA": "lambda_V3_s=lambda_H2_s*exp(beta dot X_s); numerical evaluation exp(ln(lambda_H2_s)+left-to-right dot(beta,X_s)); same beta for s=home,away.",
+        "PARAMETERS": {
+          "count": 6,
+          "names": [
+            "beta_xG_For",
+            "beta_xG_Against",
+            "beta_shots_For",
+            "beta_shots_Against",
+            "beta_sot_For",
+            "beta_sot_Against"
+          ],
+          "sharedAcrossSides": true,
+          "perLeague": true,
+          "intercept": false,
+          "interaction": "NONE",
+          "drawSpecific": false
+        },
+        "FIT_OBJECTIVE": "J(beta)=(1/(2N))*sum_i[exp(o_iH+X_iH dot beta)-y_iH*(o_iH+X_iH dot beta)+exp(o_iA+X_iA dot beta)-y_iA*(o_iA+X_iA dot beta)]+(0.01/2)*sum_j beta_j^2; o=ln(causal frozen H2 rate); omit log-factorial constants.",
+        "REGULARIZATION": {
+          "type": "RIDGE",
+          "kappa": 0.01,
+          "allBeta": true,
+          "search": false
+        },
+        "OPTIMIZER": "Deterministic damped Newton with unpivoted Cholesky solve H*d=-g; column/index order ascending; no jitter, alternate solver or restart.",
+        "INITIALIZATION": "All beta=0 each fit",
+        "CONVERGENCE": "At initialization and after accepted updates, max(abs(g))<=1e-7; max accepted updates=100. Small objective change alone is not convergence.",
+        "FAILURE_PASS_RULE": {
+          "precedence": [
+            "INVALID",
+            "FAIL",
+            "INSUFFICIENT",
+            "PASS"
+          ],
+          "rowPass": [
+            "Preserve frozen H2/base history PASS reason(s)",
+            "PASS_INSUFFICIENT_FEATURE_HISTORY for any required feature team count<5",
+            "PASS_NONPOSITIVE_FEATURE_MEAN",
+            "PASS_GOAL_RATE_OUT_OF_RANGE if either finite positive V3 target rate>10"
+          ],
+          "rowOrder": "First validate integrity, then frozen H2 status, then min feature counts, then positive means, then V3 arithmetic/rates, then probability mass. Record all independent failing min-count feature/team pairs in canonical order.",
+          "invalid": "Hash/identity/season/temporal/forbidden-input violation or invalid raw data/probability mass => INVALID, never exclude and continue as missing.",
+          "fail": "Numerical, optimizer or convergence failure; do not turn into a model PASS or silently remove fit example.",
+          "experiment": "Any INVALID dominates any FAIL. Initial/final beta fit insufficiency => INSUFFICIENT. Ordinary per-target frozen PASS retained without automatic experiment FAIL; missing primary coverage blocks promotion. Execution PASS describes valid execution, not metric success."
+        },
+        "TEMPORAL_RULE": {
+          "cutoff": "C(T)=kickoffUtc(T)-1 millisecond",
+          "lookbackDays": 365,
+          "lagHours": 48,
+          "featureResearchAvailableAt": "kickoffUtc(m)+48 hours",
+          "eligibility": "same league; Regular Season FT; distinct fixture ID; kickoff(m)>=C(T)-365 days; kickoff(m)+48 hours<C(T); authorized source seasons only; all venues",
+          "actualPublicationTime": false,
+          "strictReplayEligible": false,
+          "justification": "Owner explicitly permits 48h retrospective assumption, consistent with frozen v1/v2 chronology; census proves final/revised presence only and two still-missing current observations do not establish publication latency. No empirical publication guarantee.",
+          "contradictoryCompletionEvidence": "INVALID_TEMPORAL_CONTRACT; no selective repair or shortening lag",
+          "simultaneousKickoffs": "One immutable history per kickoff group; fixture ID orders output only",
+          "historicalObservedAtFabricated": false,
+          "forward": "Actual observed completed-match features with providerFetchedAt<=predictionCreatedAt only; never use synthetic 48h timestamps. No Forward implementation here."
+        },
+        "MISSINGNESS_RULE": "HISTORY_WINDOW_EXCLUSION_FEATURE_LAYER_ONLY",
+        "DIAGNOSTICS": [
+          "All full target IDs/status/reasons, comparator statuses and U membership",
+          "Input/provider/raw hashes and actual providerFetchedAt; featureResearchAvailableAt separate",
+          "Per feature eligible/excluded IDs and reasons, both-team history counts, arithmetic means and league references",
+          "Feature vectors, causal H2 parameter/input hash and offset rates",
+          "Beta vector/hash, fit example IDs/hash, fit boundary, objective, gradient infinity norm, iterations and backtracking trace",
+          "Per target beta dot X, H2 rates, V3 rates, probability vector/hash and predictedClass",
+          "Full and paired coverage/PASS/missingness, per-league dual-comparator primary and class metrics; no performance-based reclassification"
+        ]
+      }
+    ],
+    "missingness": {
+      "behavior": "HISTORY_WINDOW_EXCLUSION_FEATURE_LAYER_ONLY",
+      "knownFixture": 1223728,
+      "baseResultsRetained": true,
+      "excludeOnlyMissingFeaturePool": true,
+      "keepFullTargetDenominator": true,
+      "imputation": false,
+      "zeroSubstitution": false,
+      "leagueMeanSubstitution": false,
+      "featureNeutralFallback": false
+    },
+    "phases": {
+      "boundary": "2024-01-01T00:00:00.000Z",
+      "initialFit": "Only season-2023 examples with kickoff<boundary AND kickoff+48h<boundary. Each example is predicted from its own C(i) causal history and feature state, then its FT goals become fitting labels. Retain every excluded example/reason in full fit census.",
+      "internalCheck": "All season-2023 targets with kickoff>=boundary, ordered chronologically, using initial beta frozen before check. Pre-boundary examples not yet 48h available remain audited but are not moved into check.",
+      "finalDevelopmentFit": "Once, from beta=0, all eligible season-2023 causal examples after all season-2023 results satisfy the research lag. Same estimator, not selection; fit and parameter/input hashes sealed before any 2024 candidate results.",
+      "exposed2024": "Use that final-2023 beta unchanged. No beta fit on 2024 labels; no specification/hyperparameter adaptation.",
+      "holdout2025": "Use identical final-2023 beta and hash; no refit using 2024 or 2025 labels. Only after separate identity/completeness/exposure seal, independence certification and CTO approval: one evaluation.",
+      "historySeasons": {
+        "development": [
+          2023
+        ],
+        "exposed": [
+          2023,
+          2024
+        ],
+        "holdoutAfterApproval": [
+          2023,
+          2024,
+          2025
+        ]
+      },
+      "causalUpdates": "Earlier 2024/2025 results/features may update later same-season H2 and feature states only after fixed lag/window; never beta, hyperparameter or selection. No season-2022 warmup ingestion.",
+      "fitPass": "Legal example PASS omitted from beta likelihood with IDs/reasons and full denominator audit. Any example FAIL/INVALID blocks that league-candidate fit, rather than shrinking training data.",
+      "outputOrder": [
+        "V1",
+        "H2",
+        "V3-F1",
+        "V3-F2",
+        "V3-F3"
+      ],
+      "freezeAllBeforeResults": true
+    },
+    "probabilities": {
+      "model": "Independent Poisson, no Dixon-Coles or temperature/DRAW correction",
+      "rates": "Require finite 0<lambda_home,lambda_away<=10; positive >10 => PASS; nonfinite/nonpositive computed => FAIL_NUMERICAL",
+      "grid": "For each marginal start P0=exp(-lambda), recurse Pk=P(k-1)*lambda/k; include k>=1 and extend until 1-cumulative<=1e-12 with k<=199. If tail unmet at cap: INVALID. Sum joint in ascending home-score then away-score order.",
+      "mass": "Require Z finite positive and abs(1-Z)<=3e-12; normalize joint once by Z. HOME i>j, DRAW i=j, AWAY i<j. Final probabilities finite in [0,1], sum error<=1e-10. Evaluator does not repair.",
+      "classRule": "Ordinary argmax with exact-tie HOME then DRAW then AWAY; no threshold",
+      "arithmetic": "IEEE754 binary64, no randomness or rounded comparison inputs"
+    },
+    "comparisons": {
+      "population": "For each league/phase, N is every frozen target. Before candidate execution and without consulting outcomes/features, seal U={IDs where frozen V1 and frozen H2 both PREDICTED} and comparator probabilities/hashes. Never import V2 paired IDs as V3 universe.",
+      "candidateMissing": "If candidate does not predict every ID in U, primary LL/Brier/class metrics are null with INCOMPLETE_PRIMARY_COVERAGE; do not drop targets or substitute comparator probabilities. Optional common-subset metric not produced in this design.",
+      "extraPredictions": "Predictions outside U retained as operational evidence only, never added to primary comparison denominator.",
+      "metrics": {
+        "logLoss": "mean(-ln(max(pActual,1e-15))), scoring-only floor; report floor-hit count",
+        "brier": "mean(sum_c(p_c-y_c)^2), no division by class count",
+        "accuracy": "Correct argmax count / |U|",
+        "recall": "TP_c / actual_c; zero denominator null",
+        "precision": "TP_c / predicted_c; zero denominator null",
+        "classShare": "predicted_c/|U|",
+        "ovrBrier": "mean((p_c-y_c)^2)",
+        "ece": "Per-class 10 equal bins [0,.1),...,[.9,1]; ECE=sum(n_b/|U|)*abs(meanP_b-frequency_b); empty bins retained with null means; n_b<20 flagged low sample",
+        "undefined": "No required-class actual samples => required recall null and promotion INSUFFICIENT",
+        "delta": "candidate minus comparator on identical U, unrounded"
+      },
+      "aggregation": "Each league separately, both comparators; no pooled historical/Forward or league-weighted winner score"
+    },
+    "promotion": {
+      "applicableSeason": 2025,
+      "prerequisites": [
+        "Independent holdout identity/scope/completeness/exposure/hash seal",
+        "Separate CTO approval",
+        "Frozen implementation, comparators, input and beta hashes",
+        "All four leagues evaluated once without rerun or tuning"
+      ],
+      "tolerance": 1e-12,
+      "primary": "Per candidate, every league, and each comparator separately: delta LL < -1e-12 AND delta multiclass Brier < -1e-12.",
+      "classGuards": "Every HOME/DRAW/AWAY versus each comparator on the fixed primary population: recall delta >= -0.05-1e-12; ECE delta <= 0.01+1e-12; one-vs-rest Brier delta <= 1e-12.",
+      "coverage": "Fixed comparator intersection U contains at least 100 fixtures and >=80% of full league cohort; candidate predicts 100% of U; all full-cohort IDs retained; zero FAIL/INVALID; all three actual classes present in U.",
+      "nullHandling": "Null required recall/ECE or missing primary probabilities => INSUFFICIENT, never silently pass. Precision null is reported, not a promotion guard.",
+      "allLeaguesRequired": true,
+      "outcome": "ELIGIBLE_FOR_CTO_PROMOTION_REVIEW only if all four leagues pass all gates; otherwise SCREEN_NO, INSUFFICIENT, FAIL or INVALID as applicable. No model promotion or automatic Forward migration.",
+      "multipleCandidates": "Evaluate all F1/F2/F3 separately; no composite winner, league cherry-picking, unregistered ensemble or automatic choice among passing candidates.",
+      "exposed2024": "DESCRIPTIVE_CHECK_ONLY; report numeric metrics and differences, no promotion eligibility from these data",
+      "rationale": "Fixed conservative descriptive eligibility guardrails, not a significance test: common denominators, both probability scores improve, class recall capped at 5 percentage-point loss and ECE at 1 point. No claim that these constants were empirically optimized."
+    },
+    "implementationContract": {
+      "paths": [
+        "scripts/football-v3-feature-research-v1/f1-xg-offset-v1.ts",
+        "scripts/football-v3-feature-research-v1/f2-shots-sot-offset-v1.ts",
+        "scripts/football-v3-feature-research-v1/f3-combined-offset-v1.ts"
+      ],
+      "createdNow": false,
+      "requiredBeforeExecution": [
+        "Seal all source/test/input/comparator hashes before any V3 outputs",
+        "Synthetic field reversal, candidate isolation and per-feature mask tests",
+        "Exact 365d/48h cutoff and simultaneous kickoff tests",
+        "Missing fixture remains in base history; feature min-count/zero/invalid distinction tests",
+        "Analytic gradient/Hessian and deterministic optimizer tests on synthetic data only",
+        "beta=0 rates equal H2 within 1e-12; probability mapper equivalent to frozen H2 within 1e-10",
+        "Frozen H2/v1 adapter equivalence; reject target results and forbidden market/manual inputs",
+        "Full denominator/PASS and fixed U coverage tests",
+        "Protected source/parent/archive and holdout-access firewall tests"
+      ],
+      "noFallback": true
+    },
+    "rights": {
+      "LEGAL_INTERNAL_USE": "CONDITIONAL",
+      "rawLocalOnly": true,
+      "PUBLIC_RAW_FEATURE_DISPLAY": "UNRESOLVED",
+      "COMMERCIAL_PUBLIC_RIGHTS": "UNRESOLVED",
+      "HUMAN_SUPPORT_CONFIRMATION": false,
+      "FORMAL_WRITTEN_LICENSE": false,
+      "retentionEvidence": "User-reported provider dashboard Chat AI guidance from prior gate; no upgrade in rights status."
+    },
+    "governance": {
+      "V3_IMPLEMENTED": false,
+      "V3_FITTING_EXECUTED": false,
+      "V3_BACKTEST_EXECUTED": false,
+      "2025_HOLDOUT_METRICS_VIEWED": false,
+      "V2_CHANGED": false,
+      "H2_CHANGED": false,
+      "FORWARD_V1_CHANGED": false,
+      "F1_SPEC_FROZEN": true,
+      "F2_SPEC_FROZEN": true,
+      "F3_SPEC_FROZEN": true,
+      "API_CALLS": 0,
+      "MAIN_MERGED": false
+    },
+    "preservation": {
+      "files": 640,
+      "beforeHash": "cde62af159fac97290520126bd116b54f3b1aaada46dd1f6b59725a5739734d2",
+      "afterHash": "cde62af159fac97290520126bd116b54f3b1aaada46dd1f6b59725a5739734d2"
+    },
+    "hashPolicy": "SHA256 over recursively key-sorted compact UTF8 payload, array order unchanged; envelope sha256 excluded."
+  },
+  "sha256": "04803e9b26acfd43de263c9b52c575ed2231d91984f82877da5e63b0cde6207a"
+}
