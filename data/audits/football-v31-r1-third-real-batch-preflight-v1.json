@@ -1,0 +1,112 @@
+{
+  "payload": {
+    "schema": "FOOTBALL_V31_R1_THIRD_REAL_BATCH_PREFLIGHT_V1",
+    "createdAt": "2026-09-12T18:02:00.933Z",
+    "completedAt": "2026-09-12T18:02:40.602Z",
+    "BASE_SHA": "484806e49e2f89783416639290952a159c66628d",
+    "RESULT_COMMIT_SHA": null,
+    "branch": "agent/cursor/football-v31-third-real-batch-preflight-v1",
+    "discoveryAt": "2026-09-12T18:02:00.933Z",
+    "windowEnd": "2026-09-13T18:02:00.933Z",
+    "windowMs": 86400000,
+    "scope": "ONE_SHOT_24H_NO_RETRY",
+    "foundationCensusHash": "5503411bd08384993a81487f516214b55c70f8750030d815e1dd4bfac60c3ec8",
+    "localDiscoveryHash": "2b69960ed65b51e96e1cbd41762456c917e62c3768e71aa567639146a77437c9",
+    "localDiscovery": "LOCAL_ONLY",
+    "PREDICTION_SEAL_EXECUTED": "NO",
+    "CHECKPOINT_GAMING": "NO",
+    "counts": {
+      "TOTAL_DISCOVERED": 66,
+      "WITHIN_WINDOW": 28,
+      "READY_FOR_TRIPLE_SEAL": 0,
+      "PASS_PRECHECK": 4,
+      "IDENTITY_BLOCKED": 0,
+      "OUTSIDE_WINDOW": 38,
+      "ALREADY_SEALED": 24,
+      "NOT_NS_OR_DEADLINE": 0,
+      "V1_READY": 0,
+      "H2_READY": 0,
+      "R1_READY": 0,
+      "CURRENT_SEALED_R1_PREDICTED": 19,
+      "READY_R1_PREDICTED_CAPACITY": 0,
+      "PROJECTED_MAX_R1_PREDICTED_IF_ALL_READY_PREDICT": 19
+    },
+    "earliestKickoff": "2026-09-12T13:00:00.000Z",
+    "latestKickoff": "2026-09-13T16:30:00.000Z",
+    "minimumLeadTimeMs": null,
+    "SECOND_BATCH_IDS": [
+      1575159,
+      1570376,
+      1557404,
+      1550123
+    ],
+    "PASS_PRECHECK": [
+      {
+        "fixtureId": 1550122,
+        "leagueId": 135,
+        "season": 2026,
+        "kickoffUtc": "2026-09-13T13:00:00.000Z",
+        "homeTeamId": 867,
+        "awayTeamId": 1579
+      },
+      {
+        "fixtureId": 1557400,
+        "leagueId": 39,
+        "season": 2026,
+        "kickoffUtc": "2026-09-13T13:00:00.000Z",
+        "homeTeamId": 1346,
+        "awayTeamId": 51
+      },
+      {
+        "fixtureId": 1575166,
+        "leagueId": 78,
+        "season": 2026,
+        "kickoffUtc": "2026-09-13T15:30:00.000Z",
+        "homeTeamId": 1660,
+        "awayTeamId": 157
+      },
+      {
+        "fixtureId": 1570375,
+        "leagueId": 140,
+        "season": 2026,
+        "kickoffUtc": "2026-09-13T16:30:00.000Z",
+        "homeTeamId": 546,
+        "awayTeamId": 544
+      }
+    ],
+    "READY_FOR_TRIPLE_SEAL": [],
+    "frozen": {
+      "V1_HASH": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+      "ADAPTER_HASH": "125f715c85a5199b7f5725949c4b1ff6f12b1e5d6ef65095c5af0d0673682b6b",
+      "H2_HASH": "fab9d235b885207a0feba198f1e777f0a8ee0577e50d14f317613e7dcfef0aea",
+      "MAP_HASH": "244c2ef4f930855271744e39f0de44598ec6c929ac18edd4c6f72965eb8a4a26",
+      "BETA_HASH": "dc8f9faa4a09429ddfdd46631502375540e25fdbb37f84a1f92f6ceeb21e2ab4"
+    },
+    "MODEL_CHANGED": "NO",
+    "MAP_CHANGED": "NO",
+    "BETA_CHANGED": "NO",
+    "SELECTOR_CHANGED": "NO",
+    "FIRST_SECOND_BATCH_PERFORMANCE_USED_FOR_TUNING": "NO",
+    "MARKET_INPUT_USED": "NO",
+    "POSTGAME_INPUT_USED": "NO",
+    "FORWARD_CHANGED": "NO",
+    "RECOMMENDATION_ENGINE_CHANGED": "NO",
+    "MODEL_PROMOTED": "NO",
+    "R1_ROLE": "UNPROMOTED_PROSPECTIVE_SHADOW",
+    "tests": {
+      "status": "PASS",
+      "thirdBatchPreflight": 12,
+      "comparatorProspectiveGraderReceiptMultibatchSecondPreflightSealRegression": 126,
+      "eslint": "PASS"
+    },
+    "sourceFiles": {
+      "docs/FOOTBALL_V31_R1_THIRD_REAL_BATCH_PREFLIGHT_V1.md": "378f29832bf8f8527196fd242e9273577d18792389d9a39c7044446846c33ab4",
+      "scripts/football-v31-r1-third-real-batch-preflight-v1/sealed-v1.ts": "89af4205578b72b4ad12b0dc6d5b8917429477755531914ac2be5fe84e63b24b",
+      "scripts/football-v31-r1-third-real-batch-preflight-v1/preflight-v1.ts": "ff7b2de2471ab499d4a050e5f0d5561b7ede7f28a9255810006ef014be07d5a2",
+      "scripts/football-v31-r1-third-real-batch-preflight-v1/run-v1.ts": "dc71a0fd58f2118bfb20943c31ba4f2f390260882df3335255c6bc30bfba1027",
+      "scripts/football-v31-r1-third-real-batch-preflight-v1/test-v1.ts": "709e48fe92e03272709eb57f86f4a9d96f230293970a66dd93b58ac8cf115f7d"
+    },
+    "sourceFilesHash": "57aa6a729257aa01bca4f6f76a6ed36c8c3aafe49cf9f197fb02c49b8e3e2533"
+  },
+  "sha256": "c85619097907115507e5f9c4892a503e905e8cb74b929bdea624fc4378dd0040"
+}
