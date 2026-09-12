@@ -1,0 +1,31 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync,mkdtempSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {freeze} from './football-forward-shadow-v1';
+import {grade} from './football-forward-postgame-v1';
+const policy=JSON.parse(readFileSync(new URL('../docs/FOOTBALL_FORWARD_DAILY_OPERATIONS_V1.policy.json',import.meta.url),'utf8'));
+test('policy locks review population, checkpoints and implementation gaps',()=>{
+  assert.deepEqual(policy.milestones.values,[25,50,100,200]);
+  assert.equal(policy.milestones.validatedModelAutoPromotion,false);
+  assert.equal(policy.miss.frozenRunnerConformsFully,false);
+  assert.equal(policy.postgame.automaticCollectorImplemented,false);
+  assert.equal(policy.scorecard.implemented,false);
+  assert.equal(policy.cadence.watchIntervalHoursAfterCompletion,6);
+  assert.equal(policy.separation.historicalAccuracyPoolingAllowed,false);
+  assert.equal(policy.separation.marketModelInputAllowed,false);
+});
+test('PASS postgame uses separate file, preserves all pregame bytes and actual observation time',()=>{
+  const root=mkdtempSync(join(tmpdir(),'forward-daily-policy-'));
+  const kickoff=Date.parse('2030-01-01T12:00:00.000Z'),now=kickoff-3600000;
+  const f={fixtureId:777,leagueId:39,season:2029,kickoffUtc:new Date(kickoff).toISOString(),homeTeam:{id:1,name:'H'},awayTeam:{id:2,name:'A'},providerStatus:'NS',scheduleFetchedAt:new Date(now-1000).toISOString()};
+  const seal=freeze(root,f,()=>now);assert.equal(seal.envelope!.payload.status,'PASS');
+  const files=['input.json','snapshot.json','seal-receipt.json'].map(n=>join(root,'MODEL_FORWARD','fixtures','777',n));
+  const before=files.map(p=>readFileSync(p));
+  const observed=new Date(kickoff+7200000).toISOString();
+  const result=grade(root,{fixtureId:777,leagueId:39,fixtureStatus:'FT',actualScore:{home:1,away:1},providerFetchedAt:observed,sourceHash:'a'.repeat(64)},()=>kickoff+7201000);
+  assert.equal(result.payload.correct1X2,null);assert.equal(result.payload.predictionHash,seal.envelope!.sha256);
+  assert.equal(result.payload.officialCompletionEvidence.providerFetchedAt,observed);
+  files.forEach((p,i)=>assert.deepEqual(readFileSync(p),before[i]));
+});
