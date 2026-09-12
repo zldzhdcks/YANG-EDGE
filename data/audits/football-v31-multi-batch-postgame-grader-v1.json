@@ -1,0 +1,126 @@
+{
+  "payload": {
+    "schema": "FOOTBALL_V31_MULTI_BATCH_POSTGAME_GRADER_V1",
+    "createdAt": "2026-09-12T17:45:00.000Z",
+    "BASE_SHA": "45e29ac74cdd6ec7d6f9584aa20ad71434ecdbeb",
+    "RESULT_COMMIT_SHA": null,
+    "branch": "agent/cursor/football-v31-multi-batch-postgame-grader-v1",
+    "SUPPORTED_BATCHES": 2,
+    "FIRST_BATCH_AUDIT_BOUND": "YES",
+    "SECOND_BATCH_AUDIT_BOUND": "YES",
+    "FIRST_BATCH_FILES_MUTATED": "NO",
+    "SECOND_BATCH_PREGAME_FILES_MUTATED": "NO",
+    "EXISTING_POSTGAME_FILES_MUTATED": "NO",
+    "MODEL_CHANGED": "NO",
+    "FORWARD_CHANGED": "NO",
+    "RECOMMENDATION_ENGINE_CHANGED": "NO",
+    "MARKET_INPUT_USED": "NO",
+    "WATCH_STARTED": "NO",
+    "MODEL_PROMOTED": "NO",
+    "R1_ROLE": "UNPROMOTED_PROSPECTIVE_SHADOW",
+    "INTERPRETATION": "EARLY_DESCRIPTIVE_ONLY",
+    "checkpoint": {
+      "next": 25,
+      "R1_PREDICTED_GRADED": 8
+    },
+    "batches": {
+      "FIRST_REAL_ONE_SHOT_V1": {
+        "auditFile": "data/audits/football-v31-r1-first-real-batch-v1.json",
+        "auditSha256": "f959518751631281723006d71d66516685fcc62896334ec477e2ca0b6fc29dcd",
+        "targetCount": 20,
+        "TOTAL_SEALED": 20,
+        "RESULT_AVAILABLE": 12,
+        "RESULT_PENDING": 8,
+        "RESULT_BLOCKED": 0,
+        "R1_PREDICTED_GRADED": 8,
+        "R1_PASS_PRESERVED": 4,
+        "V1_PREDICTED_GRADED": 8,
+        "H2_PREDICTED_GRADED": 8,
+        "NEW_POSTGAME_APPENDED": 6,
+        "requests": 10,
+        "runId": "2026-09-12T17-43-22-671Z-2cc01128-d7e4-40f0-9827-e9f2aeb9e985",
+        "receiptRelativePath": "batches/FIRST_REAL_ONE_SHOT_V1/postgame-runs/2026-09-12T17-43-22-671Z-2cc01128-d7e4-40f0-9827-e9f2aeb9e985.json",
+        "receiptSha256": "5a262c98523fa7a864efd4db4d86a016ce4e38de0a8cf66bf191e264988b6491"
+      },
+      "SECOND_REAL_ONE_SHOT_V1": {
+        "auditFile": "data/audits/football-v31-r1-second-real-batch-seal-v1.json",
+        "auditSha256": "405145c492935fc9c789e17e37af3758d77db528ef6a62b034c07ea0fe7fd8d5",
+        "implementationCommit": "7b711179f04e2246823b4f86a896f6d174dce19d",
+        "targetCount": 4,
+        "TOTAL_SEALED": 4,
+        "RESULT_AVAILABLE": 0,
+        "RESULT_PENDING": 4,
+        "RESULT_BLOCKED": 0,
+        "R1_PREDICTED_GRADED": 0,
+        "R1_PASS_PRESERVED": 0,
+        "V1_PREDICTED_GRADED": 0,
+        "H2_PREDICTED_GRADED": 0,
+        "NEW_POSTGAME_APPENDED": 0,
+        "requests": 0,
+        "runId": "2026-09-12T17-44-26-803Z-463e7cef-bf0e-4eaf-aba6-d167c2e224c4",
+        "receiptRelativePath": "batches/SECOND_REAL_ONE_SHOT_V1/postgame-runs/2026-09-12T17-44-26-803Z-463e7cef-bf0e-4eaf-aba6-d167c2e224c4.json",
+        "receiptSha256": "4b6c0cf5ed9c7deb4dd9cae6c0f75151d56d51aa2b12385a3fc9322e4e89e6f3"
+      }
+    },
+    "aggregate": {
+      "TOTAL_BATCHES": 2,
+      "TOTAL_SEALED": 24,
+      "RESULT_AVAILABLE": 12,
+      "RESULT_PENDING": 12,
+      "RESULT_BLOCKED": 0,
+      "R1_PREDICTED_GRADED": 8,
+      "R1_PASS_PRESERVED": 4,
+      "V1_PREDICTED_GRADED": 8,
+      "H2_PREDICTED_GRADED": 8,
+      "NEW_POSTGAME_APPENDED": 6
+    },
+    "EXISTING_POSTGAME_IMMUTABLE": [
+      1550119,
+      1575158,
+      1575160,
+      1575161,
+      1575162,
+      1575163
+    ],
+    "NEW_POSTGAME_APPENDED_IDS": [
+      1557397,
+      1557398,
+      1557399,
+      1557401,
+      1557403,
+      1570377
+    ],
+    "SECOND_BATCH_PENDING_IDS": [
+      1575159,
+      1570376,
+      1557404,
+      1550123
+    ],
+    "localManifest": "LOCAL_ONLY",
+    "tests": {
+      "status": "PASS",
+      "multiBatch": 21,
+      "graderReceiptComparatorProspectivePreflightSealRegression": 105,
+      "eslint": "PASS"
+    },
+    "frozen": {
+      "V1_HASH": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+      "ADAPTER_HASH": "125f715c85a5199b7f5725949c4b1ff6f12b1e5d6ef65095c5af0d0673682b6b",
+      "H2_HASH": "fab9d235b885207a0feba198f1e777f0a8ee0577e50d14f317613e7dcfef0aea",
+      "MAP_HASH": "244c2ef4f930855271744e39f0de44598ec6c929ac18edd4c6f72965eb8a4a26",
+      "BETA_HASH": "dc8f9faa4a09429ddfdd46631502375540e25fdbb37f84a1f92f6ceeb21e2ab4"
+    },
+    "sourceFiles": {
+      "docs/FOOTBALL_V31_MULTI_BATCH_POSTGAME_GRADER_V1.md": "9a072cf15fe37596e6e3b647741d83c3e849df281e3cf35c260c9543303631e9",
+      "scripts/football-v31-r1-prospective-postgame-v1/registry-v1.ts": "1d7e5cd4df298b2bc848ec428b05d4cced4b53140ef53ebb30d2a35270d02bcd",
+      "scripts/football-v31-r1-prospective-postgame-v1/resolve-v1.ts": "1eeb8505dda523e8142cb56932786d2086681f40bc40009062afe45ac1a1dfee",
+      "scripts/football-v31-r1-prospective-postgame-v1/load-v1.ts": "ebaa99e0c65f3c5476cc0f89e7bb67627db0eb082d4587f02c639e84899b4fb6",
+      "scripts/football-v31-r1-prospective-postgame-v1/fingerprint-batch-v1.ts": "e22af32322f41471e289a1cc9cb6f48dceeb14edd450903af65c24aa9bb7cb79",
+      "scripts/football-v31-r1-prospective-postgame-v1/aggregate-v1.ts": "e2e46902520b468dec45646018abd68d43c86aee26b2bfde8d66edf69fcfcac2",
+      "scripts/football-v31-r1-prospective-postgame-v1/run-multibatch-v1.ts": "57cbb44abb9d4f2560c1317a38cafa7af4a415232efec86539bcddf7e92de56b",
+      "scripts/football-v31-r1-prospective-postgame-v1/test-multibatch-v1.ts": "3c5530832c21a8aee98d17d8480c0e3ab5e1dbbc004adda3c8fad05bd2c66f2f"
+    },
+    "sourceFilesHash": "26c84d8431988f7314e90d8bb8e95c38afd9a7298c4c5849a26e1ba833e5832a"
+  },
+  "sha256": "a4805083b02883443e93c61be2b5c27c93cac7836e6fa923c4d365872fba2022"
+}
