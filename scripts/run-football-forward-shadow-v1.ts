@@ -4,6 +4,7 @@ import {readFileSync,mkdirSync,readdirSync} from 'node:fs';
 import {resolve,join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {randomUUID} from 'node:crypto';
+import {restoreScheduleLedger,observeSchedule} from './football-forward-schedule-ledger-v1';
 import {freeze,auditCoverage,validateFixture,envelope,writeOnce,MODEL_HASH,sha,readSealed,LAYERS,type Fixture,type Completed} from './football-forward-shadow-v1';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const leagues=[39,140,135,78];
@@ -22,6 +23,7 @@ export function projectCompleted(r:RawSchedule & {score:{fulltime:{home:number;a
 export async function run(){
   const local=resolve(root,'data/cache/research/football/forward-shadow-v1');
   for(const layer of Object.values(LAYERS))mkdirSync(join(local,layer),{recursive:true});
+  restoreScheduleLedger(local);
   assert.equal(sha(readFileSync(resolve(root,'src/lib/football/poisson-research-v1/index.ts'),'utf8').replace(/\r\n/g,'\n')),MODEL_HASH,'MODEL_CHANGED');
   assert.equal(sha(readFileSync(resolve(root,'src/lib/football/odds-1x2-v1/instant.ts'),'utf8').replace(/\r\n/g,'\n')),'c848e4f64438a76bb39531a0f702c01c0aa3c3076f33ef5d39f56c480e97c784');
   const key=process.env.FOOTBALL_API_KEY?.trim();assert.ok(key,'MISSING_PROVIDER_KEY');
@@ -39,7 +41,7 @@ export async function run(){
     const meta=await request('/leagues',{id:String(leagueId),current:'true'});assert.equal(meta.response.length,1);assert.equal(meta.response[0].league.id,leagueId);
     const current=meta.response[0].seasons.filter((s:{current:boolean})=>s.current);assert.equal(current.length,1);const season=current[0].year;assert.ok(Number.isSafeInteger(season));seasons.push({leagueId,season});
     const fixtures=await request('/fixtures',{league:String(leagueId),season:String(season),from:day,to:end,timezone:'UTC'});const fetchedAt=new Date().toISOString();
-    for(const row of fixtures.response)schedule.push(projectSchedule(row,leagueId,season,fetchedAt));
+    for(const row of fixtures.response){const projected=projectSchedule(row,leagueId,season,fetchedAt);observeSchedule(local,projected,sha(JSON.stringify(projected)));schedule.push(projected);}
     const history:Completed[]=[];
     // Actual FT observations only. Never infer observedAt from historical kickoff.
     for(const historySeason of [season-1,season]){

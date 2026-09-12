@@ -4,6 +4,7 @@ import {createHash,randomUUID} from 'node:crypto';
 import {existsSync,mkdirSync,readFileSync,openSync,writeFileSync,fsyncSync,closeSync} from 'node:fs';
 import {join} from 'node:path';
 import {predictFootball,POLICY} from '../src/lib/football/poisson-research-v1/index';
+import {observeSchedule,scheduleState} from './football-forward-schedule-ledger-v1';
 export const MODEL_HASH='6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf';
 export const sha=(v:string)=>createHash('sha256').update(v).digest('hex');
 export function canonical(v:unknown):string {if(Array.isArray(v))return `[${v.map(canonical).join(',')}]`;if(v!==null&&typeof v==='object'){const o=v as Record<string,unknown>;return `{${Object.keys(o).sort().map(k=>`${JSON.stringify(k)}:${canonical(o[k])}`).join(',')}}`;}return JSON.stringify(v);}
@@ -23,23 +24,39 @@ export const LAYERS={MODEL_FORWARD:'MODEL_FORWARD',OWNER_MANUAL_SHADOW:'OWNER_MA
 export function markMiss(root:string,f:Fixture,now:number){
   assert.ok(now>=Date.parse(f.kickoffUtc),'NOT_STARTED');const dir=join(root,LAYERS.MODEL_FORWARD,'fixtures',String(f.fixtureId));mkdirSync(dir,{recursive:true});
   const file=join(dir,'miss.json');if(existsSync(file))return readSealed(file);
-  const value=envelope({fixtureId:f.fixtureId,leagueId:f.leagueId,kickoffUtc:f.kickoffUtc,status:'MISSED_PREGAME_SNAPSHOT',recordedAt:new Date(now).toISOString(),backfillAllowed:false});writeOnce(file,JSON.stringify(value,null,2)+'\n');return value;
+  assert.ok(!(existsSync(join(dir,'snapshot.json'))&&existsSync(join(dir,'seal-receipt.json'))&&!existsSync(join(dir,'invalid.json'))),'SEALED_FIXTURE_NOT_MISS');
+  if(!existsSync(join(root,LAYERS.MODEL_FORWARD,'schedule-ledger',String(f.fixtureId),'first.json')))observeSchedule(root,f,sha(canonical(f)),now);
+  const first=scheduleState(root,f.fixtureId).first;
+  assert.ok(Date.parse(first.firstObservedAt)<Date.parse(f.kickoffUtc),'FIRST_SEEN_AFTER_KICKOFF_NOT_MISS');
+  const value=envelope({fixtureId:f.fixtureId,leagueId:f.leagueId,kickoffUtc:f.kickoffUtc,status:'MISSED_PREGAME_SNAPSHOT',scheduleFirstObservedAt:first.firstObservedAt,firstSourceHash:first.firstSourceHash,recordedAt:new Date(now).toISOString(),backfillAllowed:false});writeOnce(file,JSON.stringify(value,null,2)+'\n');return value;
+}
+export function recordAbsence(root:string,f:Fixture,now:number){
+  assert.ok(now>=Date.parse(f.kickoffUtc),'NOT_STARTED');
+  const first=observeSchedule(root,f,sha(canonical(f)),now);
+  const dir=join(root,LAYERS.MODEL_FORWARD,'fixtures',String(f.fixtureId));mkdirSync(dir,{recursive:true});
+  const late=join(dir,'first-seen-after-kickoff.json');
+  if(existsSync(late))return {kind:'FIRST_SEEN_AFTER_KICKOFF' as const,envelope:readSealed(late)};
+  if(Date.parse(first.firstObservedAt)<Date.parse(f.kickoffUtc))return {kind:'MISSED' as const,envelope:markMiss(root,f,now)};
+  const value=envelope({fixtureId:f.fixtureId,leagueId:f.leagueId,kickoffUtc:f.kickoffUtc,firstObservedAt:first.firstObservedAt,status:'FIRST_SEEN_AFTER_KICKOFF',recordedAt:new Date(now).toISOString(),MISS:false,BACKFILL:false,PREDICTION:false});
+  writeOnce(late,JSON.stringify(value,null,2)+'\n');return {kind:'FIRST_SEEN_AFTER_KICKOFF' as const,envelope:value};
 }
 export function freeze(root:string,f:Fixture,clock=()=>Date.now(),observations:Completed[]=[]){
   validateFixture(f);const dir=join(root,LAYERS.MODEL_FORWARD,'fixtures',String(f.fixtureId));mkdirSync(dir,{recursive:true});
   const file=join(dir,'snapshot.json'),miss=join(dir,'miss.json');
   if(existsSync(miss))return {kind:'MISSED' as const,envelope:readSealed(miss)};
+  if(existsSync(join(dir,'first-seen-after-kickoff.json')))return {kind:'FIRST_SEEN_AFTER_KICKOFF' as const,envelope:readSealed(join(dir,'first-seen-after-kickoff.json'))};
   if(existsSync(file)){
     const existing=readSealed(file);assert.equal(existing.payload.leagueId,f.leagueId,'FIXTURE_IDENTITY_CONFLICT');
     assert.equal(existing.payload.homeTeam.id,f.homeTeam.id,'FIXTURE_IDENTITY_CONFLICT');assert.equal(existing.payload.awayTeam.id,f.awayTeam.id,'FIXTURE_IDENTITY_CONFLICT');
     const receipt=join(dir,'seal-receipt.json');
-    if(!existsSync(receipt)){if(clock()>=Date.parse(f.kickoffUtc))return {kind:'MISSED' as const,envelope:markMiss(root,f,clock())};throw Error('INCOMPLETE_SEAL_REQUIRES_REVIEW');}
+    if(!existsSync(receipt)){if(clock()>=Date.parse(f.kickoffUtc))return recordAbsence(root,f,clock());throw Error('INCOMPLETE_SEAL_REQUIRES_REVIEW');}
     const sealed=readSealed(receipt).payload;assert.equal(sealed.snapshotHash,existing.sha256);assert.equal(sealed.validPregame,true);assert.ok(Date.parse(sealed.sealedAt)<Date.parse(existing.payload.kickoffUtc));
     assert.equal(readSealed(join(dir,'input.json')).sha256,existing.payload.inputSnapshotHash);return {kind:'EXISTING' as const,envelope:existing};
   }
   const now=clock(),kickoff=Date.parse(f.kickoffUtc);
+  observeSchedule(root,f,sha(canonical(f)),now);
   if(['PST','CANC','TBD'].includes(f.providerStatus))return {kind:'NOT_ELIGIBLE' as const,envelope:null};
-  if(now>=kickoff)return {kind:'MISSED' as const,envelope:markMiss(root,f,now)};
+  if(now>=kickoff)return recordAbsence(root,f,now);
   assert.ok(Date.parse(f.scheduleFetchedAt)<=now,'FUTURE_SCHEDULE_OBSERVATION');
   if(f.providerStatus!=='NS'||kickoff-now<60000)return {kind:'NOT_ELIGIBLE' as const,envelope:null};
   const cutoffAt=new Date(now).toISOString();
@@ -74,13 +91,14 @@ export function freeze(root:string,f:Fixture,clock=()=>Date.now(),observations:C
 }
 export function auditCoverage(root:string,fixtures:Fixture[],now=Date.now(),providerCoverageComplete=true){
   const dates=[...new Set([new Date(now).toISOString().slice(0,10),...fixtures.map(f=>f.kickoffUtc.slice(0,10))])].sort();const audits=[];
-  for(const date of dates){const rows=fixtures.filter(f=>f.kickoffUtc.startsWith(date));let predicted=0,pass=0,missed=0,eligible=0;
+  for(const date of dates){const rows=fixtures.filter(f=>f.kickoffUtc.startsWith(date));let predicted=0,pass=0,missed=0,eligible=0,firstSeenAfterKickoff=0;
     for(const f of rows){const dir=join(root,LAYERS.MODEL_FORWARD,'fixtures',String(f.fixtureId));
       if(existsSync(join(dir,'miss.json'))){readSealed(join(dir,'miss.json'));missed++;continue;}
+      if(existsSync(join(dir,'first-seen-after-kickoff.json'))){readSealed(join(dir,'first-seen-after-kickoff.json'));firstSeenAfterKickoff++;continue;}
       if(existsSync(join(dir,'snapshot.json'))&&existsSync(join(dir,'seal-receipt.json'))){const s=readSealed(join(dir,'snapshot.json')),r=readSealed(join(dir,'seal-receipt.json'));assert.equal(s.sha256,r.payload.snapshotHash);assert.equal(readSealed(join(dir,'input.json')).sha256,s.payload.inputSnapshotHash);assert.ok(Date.parse(r.payload.sealedAt)<Date.parse(s.payload.kickoffUtc));if(s.payload.status==='PREDICTED')predicted++;else pass++;eligible++;}
-      else if(!['PST','CANC','TBD'].includes(f.providerStatus)&&Date.parse(f.kickoffUtc)<=now){markMiss(root,f,now);missed++;}else if(f.providerStatus==='NS'&&Date.parse(f.kickoffUtc)-now>=60000)eligible++;
+      else if(!['PST','CANC','TBD'].includes(f.providerStatus)&&Date.parse(f.kickoffUtc)<=now){const absent=recordAbsence(root,f,now);if(absent.kind==='MISSED')missed++;else firstSeenAfterKickoff++;}else if(f.providerStatus==='NS'&&Date.parse(f.kickoffUtc)-now>=60000)eligible++;
     }
-    const a=envelope({date,timezone:'UTC',observedAt:new Date(now).toISOString(),scheduledFixtures:providerCoverageComplete?rows.length:null,observedScheduledFixtures:rows.length,eligibleFixtures:eligible,predicted,pass,missed,providerCoverageComplete,coverageScope:'Observed provider schedule only; provider failure is not zero fixtures'});
+    const a=envelope({date,timezone:'UTC',observedAt:new Date(now).toISOString(),scheduledFixtures:providerCoverageComplete?rows.length:null,observedScheduledFixtures:rows.length,eligibleFixtures:eligible,predicted,pass,missed,firstSeenAfterKickoff,providerCoverageComplete,coverageScope:'Observed provider schedule only; provider failure is not zero fixtures'});
     const dir=join(root,LAYERS.MODEL_FORWARD,'coverage',date);mkdirSync(dir,{recursive:true});writeOnce(join(dir,`${now}-${randomUUID()}.json`),JSON.stringify(a,null,2)+'\n');audits.push(a);
   }return audits;
 }

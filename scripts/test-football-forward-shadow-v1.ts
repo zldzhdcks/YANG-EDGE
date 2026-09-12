@@ -67,7 +67,8 @@ test('separate postgame grading cannot mutate pregame or overwrite grade',()=>{
   const r={fixtureId:100,leagueId:39,fixtureStatus:'FT' as const,actualScore:{home:2,away:1},providerFetchedAt:new Date(T+7200000).toISOString(),sourceHash:sha('result')};
   assert.throws(()=>grade(dir,r,()=>now),/NOT_OBSERVED_POSTGAME/);
   assert.equal(grade(dir,r,()=>T+7200001).payload.actualClass,'HOME');assert.equal(readFileSync(file,'utf8'),before);
-  assert.throws(()=>grade(dir,r,()=>T+7200002),/EEXIST/);
+  const gradeFile=join(dir,'MODEL_FORWARD','postgame','100.json'),gradeBytes=readFileSync(gradeFile,'utf8');
+  grade(dir,{...r,actualScore:{home:0,away:9}},()=>T+7200002);assert.equal(readFileSync(gradeFile,'utf8'),gradeBytes);
 });
 test('late disk seal is invalidated and permanently missed',()=>{
   const dir=temp();let calls=0;assert.equal(freeze(dir,fixture(),()=>++calls<4?now:T).kind,'MISSED');
