@@ -1,0 +1,1070 @@
+{
+  "payload": {
+    "schemaVersion": "FOOTBALL_V31_ALGORITHM_DESIGN_FREEZE_V1",
+    "baseSha": "534f32f9ecfdbf7f1e149f95c4c2acfc82882b82",
+    "branch": "agent/astra/football-historical-source-gate-v1",
+    "createdAt": "2026-09-12T10:46:55.904Z",
+    "scope": "AUDIT_AND_DESIGN_ONLY",
+    "executionAuthorized": false,
+    "auditPrerequisite": {
+      "payload": {
+        "schemaVersion": "FOOTBALL_V31_OMISSION_AUDIT_V1",
+        "baseSha": "534f32f9ecfdbf7f1e149f95c4c2acfc82882b82",
+        "createdAt": "2026-09-12T10:42:17.700Z",
+        "scope": "PRE_SELECTION_DESIGN_ADMISSIBILITY_ONLY",
+        "binding": [
+          {
+            "path": "docs/FOOTBALL_V31_INCREMENTAL_FEATURE_RESEARCH_PROTOCOL_V1.json",
+            "canonicalSha256": "04d7a0029d70c031fcc3fcb443dca56c6a08f7d1c64c5051570af4dd4117ebfb",
+            "byteSha256": "ccea241733e09b315040fd08d45843e23ecfc3dec13c492ac648f1f8176541b8"
+          },
+          {
+            "path": "data/audits/football-v3-phase1-diagnostic-review-v1.json",
+            "canonicalSha256": "1d6b4219774c9e58a0421cc5b91eb5cb0b985a36a143397ebba58fe0b89d9b12",
+            "byteSha256": "f1a3f673f973917a1b740cb89058b0be8a302533a8538b67032786fca1f1432e"
+          },
+          {
+            "path": "docs/FOOTBALL_V3_FEATURE_ALGORITHM_DESIGN_FREEZE_V1.json",
+            "canonicalSha256": "04803e9b26acfd43de263c9b52c575ed2231d91984f82877da5e63b0cde6207a",
+            "byteSha256": "06092089cb4ab557b796a8ed3cd462c9ca33df257b44c74aaac0046b9a750da7"
+          },
+          {
+            "path": "data/audits/football-v3-feature-source-freeze-v1.json",
+            "canonicalSha256": "9b77401cc2f3c828f58a3018367985edb8c4e8ee4bd005467ff694e1e8192091",
+            "byteSha256": "01e46ca7d1374e16d9c0fe8a34042e6859b40fe9792ce4f9fdc2d9e9ba6afcd1"
+          },
+          {
+            "path": "data/audits/football-v3-2025-independent-holdout-cohort-seal-v1.json",
+            "canonicalSha256": "7924420956e419af1a7f14b8b2eb520cc55d37b46534736d35b0fbdcf51c2581",
+            "byteSha256": "a0b8486789ff31a40e1c0fbe50758dc0c35c8bd3b70ab49dae88081a41ff829b"
+          }
+        ],
+        "items": [
+          {
+            "id": "A",
+            "name": "TEMPORAL_LEAKAGE",
+            "status": "RISK_NOTED",
+            "finding": "Target-own/future feature prohibition and same-kickoff immutable histories are enforceable. Require 365d inclusive lower bound and strict kickoff+48h<cutoff for all historical histories. 48h is an unverified retrospective assumption, never actual fetchedAt; final/revised historical values are not strict replay. Any contrary completion evidence is INVALID."
+          },
+          {
+            "id": "B",
+            "name": "H2_CAUSALITY",
+            "status": "PASS",
+            "finding": "Existing read-only causalOffset builds fresh frozen H2 from target-prior history. Design must use that causal state for every training example and scored target, never a full-season hindsight parameter. No target outcome in conditioning."
+          },
+          {
+            "id": "C",
+            "name": "REPRESENTATION_TRAINING_LEAKAGE",
+            "status": "PASS",
+            "finding": "Protocol omission resolved as a binding design constraint: every beta-training example uses representation learned only from its eligible chronological prefix. Separate initial/final 2023 maps are sealed for out-of-sample checks; no learned-map refresh in 2024/2025. Static transforms require no fit. This is design admissibility, not a passed runtime test."
+          },
+          {
+            "id": "D",
+            "name": "FEATURE_IDENTITY",
+            "status": "PASS",
+            "finding": "Reuse exact provider fixture/team IDs, explicit home For/away Against reversal, exact three provider types. Duplicate/invalid values are INVALID; zero distinct from missing. No fuzzy joins or season relabeling."
+          },
+          {
+            "id": "E",
+            "name": "MISSINGNESS",
+            "status": "PASS",
+            "finding": "Keep base-result history and every target ID. Missing feature is excluded from its feature history only; all required-feature count gates and representation-prefix gates must be explicit. Preserve PASS reasons. No denominator repair, imputation or fallback."
+          },
+          {
+            "id": "F",
+            "name": "MULTICOLLINEARITY_IDENTIFIABILITY",
+            "status": "RISK_NOTED",
+            "finding": "Phase-1 correlated state motivates a low-degree representation; at most two candidates. Design must bound free coefficients and deterministic regularization. Compression can discard incremental signal and conditioning may remove only a restricted functional component; no empirical identifiability or performance claim before tests."
+          },
+          {
+            "id": "G",
+            "name": "RESEARCHER_DEGREES_OF_FREEDOM",
+            "status": "PASS",
+            "finding": "At most two fixed candidates; no grid search, league-specific formula, outcome-based deletion or threshold relaxation. Constants selected once from structural reasoning and inherited contracts, not new performance runs."
+          },
+          {
+            "id": "H",
+            "name": "COMPARATOR_FAIRNESS",
+            "status": "PASS",
+            "finding": "Seal outcome-independent fixed U where V1/H2 both predict. Candidate PASS/FAIL cannot remove comparator IDs. Missing U candidate probability nulls primary candidate metrics. Reference Phase-1 comparison cannot change U or promotion."
+          },
+          {
+            "id": "I",
+            "name": "DRAW_FIREWALL",
+            "status": "PASS",
+            "finding": "No draw parameter, multiplier/intercept/threshold, Dixon-Coles or class calibration; ordinary frozen independent-Poisson class rule only."
+          },
+          {
+            "id": "J",
+            "name": "HOLDOUT_FIREWALL",
+            "status": "PASS",
+            "finding": "Only committed 2025 metadata/hash was read. No raw/value/result/probability/metric access. Future implementation must enforce an allowlist and reject season 2025 before file loading until a separate approved stage."
+          },
+          {
+            "id": "K",
+            "name": "DETERMINISM",
+            "status": "PASS",
+            "finding": "Deterministic scalar binary64 order, fixed linear algebra, initialization, convergence and fail rules can be specified; input/source/map/beta hashes mandatory. No random starts or solver fallback. Execution remains unauthorized."
+          },
+          {
+            "id": "L",
+            "name": "STATISTICAL_INTERPRETATION",
+            "status": "RISK_NOTED",
+            "finding": "2024 is already exposed; two further candidates still create researcher degrees of freedom. Descriptive only, no pooled winner, no significance claim or promotion. Independent 2025 remains sealed; learned-map generalization and prefix/deployment map differences must be disclosed."
+          },
+          {
+            "id": "M",
+            "name": "DATA_RIGHTS_STORAGE",
+            "status": "RISK_NOTED",
+            "finding": "Existing conditional internal use is retained; raw stays LOCAL_ONLY. Provider Chat AI guidance is not formal license or human confirmation. Public/commercial rights unresolved; no new data requests or public raw release."
+          }
+        ],
+        "blockingIssues": [],
+        "decision": "DESIGN_FREEZE_ALLOWED",
+        "interpretation": "No BLOCKING findings. RISK_NOTED limitations remain disclosed; PASS is a design-control assessment, not implementation/fit/performance validation. Subsequent design must implement every stated constraint. No candidate selected at this audit seal.",
+        "candidateSelected": false,
+        "sourceFilesVerified": 12,
+        "dependencyFilesVerified": 21,
+        "protectedFilesVerified": 644,
+        "untracked": {
+          "path": "docs/FOOTBALL_CURRENT_SEASON_DATA_ACCESS_GATE_V1.md",
+          "sha256": "a5538cc0a8c0e74dd77d087e3d577c00da8ae99cd7c9c84e9d2b60b7b01218f8"
+        }
+      },
+      "sha256": "87abfe5f7218657a4142d65d029034cd9ae4f48e93fc46da649309dfb30da350"
+    },
+    "parent": {
+      "path": "docs/FOOTBALL_V31_INCREMENTAL_FEATURE_RESEARCH_PROTOCOL_V1.json",
+      "sha256": "04d7a0029d70c031fcc3fcb443dca56c6a08f7d1c64c5051570af4dd4117ebfb"
+    },
+    "selection": {
+      "selected": [
+        "V31-R1",
+        "V31-R3"
+      ],
+      "candidateLimit": 2,
+      "performanceRunUsed": false,
+      "reason": "R1 directly tests restricted H2-conditional process information. R3 fixed projection is a low-degree unresidualized representation control using the identical all-feature composites, separating compression from the additional conditioning operation. Both have two rate coefficients and identical features/normalization.",
+      "rejected": {
+        "R2": "Not selected: recent/baseline innovation would introduce extra window definitions and conflate temporal recency with conditioning. No claim of inferior predictive performance.",
+        "learnedPCA": "Not selected: fixed projection avoids eigensolver/sign/tie/fit-season degrees of freedom. No PCA performance evaluated."
+      },
+      "featureDeletion": false,
+      "performanceExpectation": "NONE; no performance-selected constants or candidate winner"
+    },
+    "common": {
+      "temporal": {
+        "cutoff": "C(T)=kickoffUtc(T)-1 millisecond",
+        "lookbackDays": 365,
+        "lagHours": 48,
+        "featureResearchAvailableAt": "kickoffUtc(m)+48 hours",
+        "eligibility": "same league; Regular Season FT; distinct fixture ID; kickoff(m)>=C(T)-365 days; kickoff(m)+48 hours<C(T); authorized source seasons only; all venues",
+        "actualPublicationTime": false,
+        "strictReplayEligible": false,
+        "justification": "Owner explicitly permits 48h retrospective assumption, consistent with frozen v1/v2 chronology; census proves final/revised presence only and two still-missing current observations do not establish publication latency. No empirical publication guarantee.",
+        "contradictoryCompletionEvidence": "INVALID_TEMPORAL_CONTRACT; no selective repair or shortening lag",
+        "simultaneousKickoffs": "One immutable history per kickoff group; fixture ID orders output only",
+        "historicalObservedAtFabricated": false,
+        "forward": "Actual observed completed-match features with providerFetchedAt<=predictionCreatedAt only; never use synthetic 48h timestamps. No Forward implementation here.",
+        "sourceSeasons": {
+          "initialAndFinalBeta": [
+            2023
+          ],
+          "exposedTargetHistory": [
+            2023,
+            2024
+          ],
+          "holdout": "NOT_AUTHORIZED; later separately approved target history may include 2023/2024/2025 under same cutoff, but learned maps/betas remain final-2023"
+        },
+        "noNew2022Warmup": true
+      },
+      "aggregation": {
+        "pool": "For feature f independently, M_f(T) is eligible base-history matches with valid non-null f for BOTH exact team IDs. Completeness of unregistered features must not affect the candidate.",
+        "types": {
+          "xG": "expected_goals",
+          "shots": "Total Shots",
+          "sot": "Shots on Goal"
+        },
+        "validity": "Exactly one matching provider type per expected team; finite nonnegative number or trimmed decimal numeric string; shots/SOT integer. Zero is present. Null/absent/block unavailable are missing. Duplicate identity/type, negative/invalid/nonfinite raw values or hash mismatch are INVALID, not dropped.",
+        "mapping": "Home team For=f_home and Against=f_away; away team For=f_away and Against=f_home. Do not negate Against. League reference counts both team For values once per match.",
+        "means": "n_tf=count of M_f(T) involving t; muFor_tf=sum For/n_tf; muAgainst_tf=sum Against/n_tf; L_f=sum over M_f(T)(f_home+f_away)/(2*|M_f(T)|). All arithmetic means, uniform weights, all venues.",
+        "minimumPerTeamPerFeature": 5,
+        "normalization": "zFor_tf=ln(muFor_tf)-ln(L_f); zAgainst_tf=ln(muAgainst_tf)-ln(L_f), mathematically log ratio. No epsilon, clipping, standardization, feature mean shrinkage or imputation.",
+        "zeroRule": "Any required mean or reference exactly zero => PASS_NONPOSITIVE_FEATURE_MEAN; nonfinite arithmetic => FAIL_NUMERICAL. Min-count check precedes means. Invalid raw values are INVALID_INPUT before aggregation.",
+        "featureIndependentMasks": "Both V31-R1 and V31-R3 require xG, shots, sot. Each feature has its own complete prior pool; do not replace with joint-complete match intersection. Require min 5 for each feature and both target teams.",
+        "order": "Matches kickoffUtc then numeric fixtureId; per match home then away; features xG,shots,sot; coefficients For then Against; all scalar reductions left-to-right binary64."
+      },
+      "projection": {
+        "method": "FIXED_PROJECTION",
+        "inputOrder": [
+          "xG_For",
+          "xG_Against",
+          "Shots_For",
+          "Shots_Against",
+          "SOT_For",
+          "SOT_Against"
+        ],
+        "components": 2,
+        "formula": "q_sFor=((z_sFor_xG+z_sFor_shots)+z_sFor_sot)/3; q_sAgainst=((z_oppAgainst_xG+z_oppAgainst_shots)+z_oppAgainst_sot)/3.",
+        "matrixRows": [
+          [
+            0.3333333333333333,
+            0,
+            0.3333333333333333,
+            0,
+            0.3333333333333333,
+            0
+          ],
+          [
+            0,
+            0.3333333333333333,
+            0,
+            0.3333333333333333,
+            0,
+            0.3333333333333333
+          ]
+        ],
+        "authoritativeArithmetic": "Use explicit sum then divide by 3, not a matrix multiplication with pre-rounded 1/3. q=[For,opponent Against].",
+        "fitSeason": "NONE; design-time constants fixed for every season/league",
+        "centeringScaling": "Only inherited per-feature causal log/league normalization; no learned centering, variance scaling or norm normalization.",
+        "signConvention": "All three weights positive; positive q means above league process mean; component order For then opponent Against.",
+        "eigenvalueTieRule": "NOT_APPLICABLE: no eigensolver or PCA",
+        "solver": "NOT_APPLICABLE: fixed ordered scalar arithmetic",
+        "outOfSample": "Same fixed projection for every target; no refit.",
+        "reason": "Keep all three allowed features while reducing six raw covariates to two symmetric process composites. Equal weight is a design prior, not an estimated winner or evidence of independence from H2."
+      },
+      "h2": {
+        "source": "scripts/football-v3-feature-research-v1/h2-causal-offset-v1.ts",
+        "frozenSpecification": {
+          "name": "FROZEN_V2_H2",
+          "MODEL_PROMOTED": false,
+          "SCREEN_RESULT": "SCREEN_NO",
+          "role": "RESEARCH_OFFSET_ONLY",
+          "v1ComparatorRetained": true,
+          "parameterFeedbackFromV3": false,
+          "fitPolicy": "For each target and each beta-training example, fresh causal frozen H2 fit using its same-league 365d/48h result pool and unchanged 30/5/5, universe, objective, optimizer, caps and PASS rules. Offset must never come from a full-season fit containing that example or later results.",
+          "references": [
+            {
+              "path": "docs/FOOTBALL_POISSON_V2_ALGORITHM_DESIGN_FREEZE_V1.json",
+              "byteSha256": "342d6af06c95578b91e8d479656dc296f8ca2a7f1bb7a3fe1bc1248450411cec"
+            },
+            {
+              "path": "scripts/football-poisson-v2-draw-research/h2-ridge-rates-v1.ts",
+              "byteSha256": "5a5431f11b4852d16fb3483f6c0ecd9fec75cf296f051f17fa64a35933cb14af"
+            },
+            {
+              "path": "scripts/football-poisson-v2-draw-research/evaluation-v1/h2-ridge-rates-v1.ts",
+              "byteSha256": "fab9d235b885207a0feba198f1e777f0a8ee0577e50d14f317613e7dcfef0aea"
+            },
+            {
+              "path": "scripts/football-poisson-v2-draw-research/v1-readonly-adapter.ts",
+              "byteSha256": "59ec79b2dc41ba7c5413998bbf142b59368146f65a865b58391f2e30704b4067"
+            }
+          ],
+          "adapterPolicy": "Existing season guards stay untouched. Any future V3-scoped season adapter must preserve identities, not relabel 2025 as 2024, and pass equivalence tests on 2023/2024 before authorization; no 2025 access here."
+        },
+        "contract": "Every target or training anchor uses fresh frozen H2 estimator on its own eligible base-result history. Preserve 30/5/5 and unseen-team gates, optimizer, regularization and rate rules exactly. No full-season H2 parameter reuse. Exact same eligible history for both candidates and H2 comparator.",
+        "conditioning": "h_s=[1,log(lambda_H2_s),log(lambda_H2_opponent)]; ordering is scorer then opponent; same coefficient maps shared across home/away.",
+        "noTargetLabel": "lambda_H2 is generated before anchor cutoff from prior completed results only. Anchor score and own process stats cannot enter h or q. These causal rates are model state, not future-outcome proxies.",
+        "limitations": "Conditioning removes a regularized linear component in the TWO H2 log-rate summaries, not every nonlinear/team latent component of H2 and not full statistical independence."
+      },
+      "representation": {
+        "method": "TWO_OUTPUT_RIDGE_LEAST_SQUARES_ON_CAUSAL_PREGAME_PROCESS_COMPOSITES",
+        "outputs": [
+          "q_For",
+          "q_opponentAgainst"
+        ],
+        "conditioningColumns": [
+          "intercept",
+          "log_H2_scoring_rate",
+          "log_H2_opponent_rate"
+        ],
+        "parametersPerMap": 6,
+        "intercepts": 2,
+        "slopes": 4,
+        "sharedSides": true,
+        "objective": "For j=For,Against separately: minimize L(a_j)=(1/(2M))*sum_r(q_rj-h_r dot a_j)^2+(0.01/2)*(a_j1^2+a_j2^2). r iterates home then away for N distinct eligible anchors; M=2N. Intercept unpenalized.",
+        "normalEquation": "A=(sum_r h_r h_r^T)/M+diag(0,0.01,0.01); b_j=(sum_r h_r q_rj)/M; solve A*a_j=b_j. No target scores or process stats are regression responses: q is its anchor-prior process composite.",
+        "regularization": {
+          "slopes": 0.01,
+          "intercept": 0,
+          "search": false
+        },
+        "minimumDistinctFixtures": 5,
+        "gateRationale": "Fixed structural overdetermination gate for three columns with ten side observations; not a power claim or performance-selected threshold. Dependence between sides is disclosed.",
+        "solver": "Unpivoted Cholesky in column order 0,1,2; ascending lower-triangle accumulation, forward/back substitution. Reuse A factor only for the two RHS within the identical pool; no alternate solver, pivoting, jitter, random initialization, grid or restart.",
+        "verification": "Require all finite, all Cholesky pivots strictly positive, and infinity norm(A*a_j-b_j)<=1e-10*(1+maxAbs(b_j)) for each j. A is positive definite mathematically for any nonempty pool because the intercept has positive count and slopes have positive ridge. Numerical failure remains failure.",
+        "transform": "r_sj=q_sj-h_s dot a_j; ordered dot from index0 to2. No residual clipping, standardization, centering, renormalization or label-dependent correction.",
+        "exactInterpretation": "Ridge residual is not exactly orthogonal to slope columns: (H^T*r)/M=diag(0,0.01,0.01)*a. Intercept residual mean is zero up to solver tolerance on its own training pool. Out-of-sample residuals need not have zero mean/correlation. Incremental signal is a hypothesis, not guaranteed by residualization.",
+        "baseAnchorPopulation": "B is every season-2023 full-cohort anchor with PREDICTED causal H2 and valid all-required-feature pregame q. Construct each anchor from its own cutoff history. Normal H2/feature PASS excluded only from representation likelihood with full census; FAIL/INVALID prevents required fit. B does not depend on R1 residual eligibility or labels: no recursion.",
+        "prefixTiming": "For beta-training anchor T, P(T)={m in B: same league, kickoff(m)>=C(T)-365d AND kickoff(m)+48h<C(T)}. Fit a(T) from P(T), requiring >=5 distinct fixtures, and transform T with a(T) only. Never use T, same-kickoff anchors, or later anchor states. P(T) is independent of candidate results. Every q_m and h_m was already causal at m.",
+        "stageMaps": "Initial check map: fit B with kickoff<2024-01-01T00:00:00.000Z and kickoff+48h<boundary. Final map: fit all B from season2023, only after max2023Kickoff+48h+1ms. Both require >=5 anchors. These maps are used only out-of-sample; never replace stored prefix maps in beta training.",
+        "noRefit": "Initial map held fixed throughout internal check; final map held fixed throughout 2024 and any separately approved 2025 check. Neither representation response nor map fit can use 2024/2025 anchors. Current causal target history may update; learned map may not.",
+        "complexity": "Active scored model has 6 nuisance coefficients + 2 beta per league/stage. Training also estimates many six-coefficient prefix maps; 8 is active parameter count, not total estimation count or an effective-df claim.",
+        "deploymentMismatch": "Beta is trained on causal prefix residuals and evaluated with a fixed end-of-training map. This prevents in-sample lookahead but may cause scale/distribution differences. Retain hashes and descriptive diagnostics; no recalibration or repair after results."
+      },
+      "betaFitting": {
+        "scope": "Independent two-beta fit per league x candidate; no pooling/cross-candidate initialization.",
+        "objective": "J(beta)=(1/(2N))*sum_i[exp(o_iH+X_iH dot beta)-y_iH*(o_iH+X_iH dot beta)+exp(o_iA+X_iA dot beta)-y_iA*(o_iA+X_iA dot beta)]+(0.01/2)*sum_j beta_j^2; o=ln(causal frozen H2 rate); omit log-factorial constants.",
+        "gradient": "g=(1/(2N))*sum_i,s X_is*(lambda_is-y_is)+0.01*beta",
+        "hessian": "H=(1/(2N))*sum_i,s lambda_is*X_is*X_is^T+0.01*I",
+        "regularization": {
+          "type": "RIDGE",
+          "kappa": 0.01,
+          "allBeta": true,
+          "search": false
+        },
+        "parameters": "[beta_For,beta_Against], unconstrained shared sides; no intercept/draw/interaction; X is R1 residual r or R3 q. H2 and representation coefficients held fixed while optimizing beta.",
+        "optimizer": "Deterministic damped Newton with unpivoted Cholesky solve H*d=-g; column/index order ascending; no jitter, alternate solver or restart.",
+        "initialization": "All beta=0 each fit",
+        "convergence": "At initialization and after accepted updates, max(abs(g))<=1e-7; max accepted updates=100. Small objective change alone is not convergence.",
+        "lineSearch": "At each update test alpha=2^(-j), j=0..59; first finite positive-rate trial with J(beta+alpha*d)<=J(beta)+1e-4*alpha*dot(g,d) accepted. Reject overflow/underflow trials without clipping. If none: FAIL_LINE_SEARCH.",
+        "failure": "Nonpositive Cholesky pivot, nonfinite accepted state or g dot d>=0 before convergence => FAIL_NUMERICAL. 100 updates without convergence => FAIL_NON_CONVERGENCE. No beta=0/H2 fallback after failure.",
+        "minimumFitFixtures": 30,
+        "insufficient": "Fewer than 30 valid two-equation causal examples => PASS_INSUFFICIENT_FIT / experiment INSUFFICIENT; no class-count gate for Poisson fitting.",
+        "trainingRates": "Finite positive likelihood rates; no target cap of 10 inside beta likelihood. Prediction output rate cap remains 10.",
+        "randomness": "NONE",
+        "seed": null
+      },
+      "development": {
+        "boundary": "2024-01-01T00:00:00.000Z",
+        "initialFit": "Season2023 anchors kickoff<boundary and kickoff+48h<boundary. R1 uses prefix-map residual per anchor, R3 fixed q. Require >=30 valid beta examples. Initial R1 map fitted separately from B before check. Fit each beta from zero with inherited optimizer; no tune based on internal check.",
+        "internalCheck": "All season2023 targets kickoff>=boundary. Freeze initial beta and initial R1 map. H2/q target state remains causal and updates with eligible 2023 history. Pre-boundary anchors whose 48h has not elapsed at boundary remain audited but are not moved into internal check.",
+        "finalFit": "At time strictly after max season2023 kickoff+48h, fit beta once from all eligible season2023 causal examples using saved prefix-map residuals (R1) or fixed q (R3). Fit final R1 map separately from all B. Seal final map/beta/input hashes before 2024 candidate result access.",
+        "exposed": "Season2024 full cohort; final-2023 beta and R1 map immutable. No representation fit/refit, beta refit, feature selection or structural changes from 2024 outcomes. H2 and q may consume earlier eligible 2024 results/features as causal history only.",
+        "holdout": "Not executed or authorized. Future approved 2025 stage must reuse identical final-2023 beta/map hashes; no 2024/2025 learned-map or beta refit.",
+        "fitCensus": "Each fit records full eligible/noneligible anchor identities and reasons. FAIL/INVALID cannot be dropped. Insufficient initial or final map/beta fit => experiment INSUFFICIENT. Normal row PASS does not imply experiment FAIL."
+      },
+      "status": {
+        "precedence": [
+          "INVALID",
+          "FAIL",
+          "INSUFFICIENT",
+          "PASS"
+        ],
+        "invalid": [
+          "Source/input/map/beta/comparator hash mismatch",
+          "Target/future/foreign-league input; wrong season; relabeling; duplicate identity/type; forbidden input",
+          "Invalid raw value or temporal contract contradiction",
+          "Probability mass/integrity violation"
+        ],
+        "fail": [
+          "Inherited H2 optimizer/numerical failure",
+          "Representation Cholesky/nonfinite/normal-equation verification failure",
+          "Inherited beta optimizer/line search/nonconvergence failure",
+          "Nonfinite/nonpositive computed rates or nonfinite aggregate"
+        ],
+        "pass": [
+          "Inherited H2 PASS reasons unchanged",
+          "PASS_INSUFFICIENT_FEATURE_HISTORY (<5 each required feature/team)",
+          "PASS_NONPOSITIVE_FEATURE_MEAN (zero required mean/reference)",
+          "PASS_INSUFFICIENT_REPRESENTATION_HISTORY (<5 prefix anchors; R1 only)",
+          "PASS_INSUFFICIENT_FIT (<30 beta anchors)",
+          "PASS_GOAL_RATE_OUT_OF_RANGE (finite positive rate >10)"
+        ],
+        "missingStageMap": "If required initial/final map has fewer than5 anchors, experiment INSUFFICIENT and row PASS_INSUFFICIENT_REPRESENTATION_HISTORY; do not substitute zeros or R3/H2.",
+        "propagation": "Integrity first; then causal H2, feature min counts and positive means, R1 map integrity/eligibility, final rates/mass. A required upstream FAIL/INVALID halts the fit/candidate stage and emits its status; do not silently continue a fit after dropping it. Other independent candidate remains separately reported only if shared integrity is valid.",
+        "executionScreen": "PASS means valid completed fit/check, not performance improvement; no score-based override. Metrics null when U incomplete; report INCOMPLETE_PRIMARY_COVERAGE without shrinking U."
+      },
+      "comparison": {
+        "population": "For each league/phase, N is every frozen target. Before candidate execution and without consulting outcomes/features, seal U={IDs where frozen V1 and frozen H2 both PREDICTED} and comparator probabilities/hashes. Never import V2 paired IDs as V3 universe.",
+        "candidateMissing": "If candidate does not predict every ID in U, primary LL/Brier/class metrics are null with INCOMPLETE_PRIMARY_COVERAGE; do not drop targets or substitute comparator probabilities. Optional common-subset metric not produced in this design.",
+        "extraPredictions": "Predictions outside U retained as operational evidence only, never added to primary comparison denominator.",
+        "metrics": {
+          "logLoss": "mean(-ln(max(pActual,1e-15))), scoring-only floor; report floor-hit count",
+          "brier": "mean(sum_c(p_c-y_c)^2), no division by class count",
+          "accuracy": "Correct argmax count / |U|",
+          "recall": "TP_c / actual_c; zero denominator null",
+          "precision": "TP_c / predicted_c; zero denominator null",
+          "classShare": "predicted_c/|U|",
+          "ovrBrier": "mean((p_c-y_c)^2)",
+          "ece": "Per-class 10 equal bins [0,.1),...,[.9,1]; ECE=sum(n_b/|U|)*abs(meanP_b-frequency_b); empty bins retained with null means; n_b<20 flagged low sample",
+          "undefined": "No required-class actual samples => required recall null and promotion INSUFFICIENT",
+          "delta": "candidate minus comparator on identical U, unrounded"
+        },
+        "aggregation": "Each league separately, both comparators; no pooled historical/Forward or league-weighted winner score",
+        "reference": "Both use Phase-1 F3 as feature-set-matched descriptive reference only, because all three feature families retained. Logical comparison is registered now; no candidate mapping by observed performance. Compare existing sealed F3 only if exact stage IDs and U and comparator contracts match, else REFERENCE_NOT_COMPARABLE without rerun/subsetting. No reference required for promotion.",
+        "order": "Freeze sources/specs; for each phase seal V1/H2 U and probabilities before candidate outputs. Candidate order V31-R1 then V31-R3. Seal candidate pregame outputs before joining stage outcomes for scoring. Beta fitting joins only eligible training labels via separate interface."
+      },
+      "probabilities": {
+        "model": "Independent Poisson, no Dixon-Coles or temperature/DRAW correction",
+        "rates": "Require finite 0<lambda_home,lambda_away<=10; positive >10 => PASS; nonfinite/nonpositive computed => FAIL_NUMERICAL",
+        "grid": "For each marginal start P0=exp(-lambda), recurse Pk=P(k-1)*lambda/k; include k>=1 and extend until 1-cumulative<=1e-12 with k<=199. If tail unmet at cap: INVALID. Sum joint in ascending home-score then away-score order.",
+        "mass": "Require Z finite positive and abs(1-Z)<=3e-12; normalize joint once by Z. HOME i>j, DRAW i=j, AWAY i<j. Final probabilities finite in [0,1], sum error<=1e-10. Evaluator does not repair.",
+        "classRule": "Ordinary argmax with exact-tie HOME then DRAW then AWAY; no threshold",
+        "arithmetic": "IEEE754 binary64, no randomness or rounded comparison inputs"
+      },
+      "missingness": {
+        "behavior": "HISTORY_WINDOW_EXCLUSION_FEATURE_LAYER_ONLY",
+        "knownFixture": 1223728,
+        "baseResultsRetained": true,
+        "excludeOnlyMissingFeaturePool": true,
+        "keepFullTargetDenominator": true,
+        "imputation": false,
+        "zeroSubstitution": false,
+        "leagueMeanSubstitution": false,
+        "featureNeutralFallback": false
+      },
+      "arithmetic": "Binary64; sorted kickoff ascending then numeric fixtureId; home then away; features xG/shots/sot; component For then Against; column order 0,1,2; scalar left-to-right sums; fixed Node/runtime version logged at future source seal. No BLAS parallel reductions, randomness, rounding comparisons, solver fallback or tuning.",
+      "population": "Unchanged frozen four-league Regular Season cohort: 2023=1446,2024=1446 (39/140/135 each380,78=306). 2025 seal metadata only,1446. No new cohort read or candidate metric computation in this mission."
+    },
+    "candidates": [
+      {
+        "CANDIDATE_ID": "V31-R1",
+        "REPRESENTATION_FAMILY": "R1_H2_CONDITIONAL_RESIDUAL",
+        "FEATURE_SET": [
+          "expected_goals",
+          "Total Shots",
+          "Shots on Goal"
+        ],
+        "MATHEMATICAL_FORMULA": "q=Pz; r=q-a^T h; eta_s=log(lambda_H2_s)+beta_For*r_sFor+beta_Against*r_sAgainst; lambda_s=exp(eta_s)",
+        "REPRESENTATION_FIT": {
+          "method": "TWO_OUTPUT_RIDGE_LEAST_SQUARES_ON_CAUSAL_PREGAME_PROCESS_COMPOSITES",
+          "outputs": [
+            "q_For",
+            "q_opponentAgainst"
+          ],
+          "conditioningColumns": [
+            "intercept",
+            "log_H2_scoring_rate",
+            "log_H2_opponent_rate"
+          ],
+          "parametersPerMap": 6,
+          "intercepts": 2,
+          "slopes": 4,
+          "sharedSides": true,
+          "objective": "For j=For,Against separately: minimize L(a_j)=(1/(2M))*sum_r(q_rj-h_r dot a_j)^2+(0.01/2)*(a_j1^2+a_j2^2). r iterates home then away for N distinct eligible anchors; M=2N. Intercept unpenalized.",
+          "normalEquation": "A=(sum_r h_r h_r^T)/M+diag(0,0.01,0.01); b_j=(sum_r h_r q_rj)/M; solve A*a_j=b_j. No target scores or process stats are regression responses: q is its anchor-prior process composite.",
+          "regularization": {
+            "slopes": 0.01,
+            "intercept": 0,
+            "search": false
+          },
+          "minimumDistinctFixtures": 5,
+          "gateRationale": "Fixed structural overdetermination gate for three columns with ten side observations; not a power claim or performance-selected threshold. Dependence between sides is disclosed.",
+          "solver": "Unpivoted Cholesky in column order 0,1,2; ascending lower-triangle accumulation, forward/back substitution. Reuse A factor only for the two RHS within the identical pool; no alternate solver, pivoting, jitter, random initialization, grid or restart.",
+          "verification": "Require all finite, all Cholesky pivots strictly positive, and infinity norm(A*a_j-b_j)<=1e-10*(1+maxAbs(b_j)) for each j. A is positive definite mathematically for any nonempty pool because the intercept has positive count and slopes have positive ridge. Numerical failure remains failure.",
+          "transform": "r_sj=q_sj-h_s dot a_j; ordered dot from index0 to2. No residual clipping, standardization, centering, renormalization or label-dependent correction.",
+          "exactInterpretation": "Ridge residual is not exactly orthogonal to slope columns: (H^T*r)/M=diag(0,0.01,0.01)*a. Intercept residual mean is zero up to solver tolerance on its own training pool. Out-of-sample residuals need not have zero mean/correlation. Incremental signal is a hypothesis, not guaranteed by residualization.",
+          "baseAnchorPopulation": "B is every season-2023 full-cohort anchor with PREDICTED causal H2 and valid all-required-feature pregame q. Construct each anchor from its own cutoff history. Normal H2/feature PASS excluded only from representation likelihood with full census; FAIL/INVALID prevents required fit. B does not depend on R1 residual eligibility or labels: no recursion.",
+          "prefixTiming": "For beta-training anchor T, P(T)={m in B: same league, kickoff(m)>=C(T)-365d AND kickoff(m)+48h<C(T)}. Fit a(T) from P(T), requiring >=5 distinct fixtures, and transform T with a(T) only. Never use T, same-kickoff anchors, or later anchor states. P(T) is independent of candidate results. Every q_m and h_m was already causal at m.",
+          "stageMaps": "Initial check map: fit B with kickoff<2024-01-01T00:00:00.000Z and kickoff+48h<boundary. Final map: fit all B from season2023, only after max2023Kickoff+48h+1ms. Both require >=5 anchors. These maps are used only out-of-sample; never replace stored prefix maps in beta training.",
+          "noRefit": "Initial map held fixed throughout internal check; final map held fixed throughout 2024 and any separately approved 2025 check. Neither representation response nor map fit can use 2024/2025 anchors. Current causal target history may update; learned map may not.",
+          "complexity": "Active scored model has 6 nuisance coefficients + 2 beta per league/stage. Training also estimates many six-coefficient prefix maps; 8 is active parameter count, not total estimation count or an effective-df claim.",
+          "deploymentMismatch": "Beta is trained on causal prefix residuals and evaluated with a fixed end-of-training map. This prevents in-sample lookahead but may cause scale/distribution differences. Retain hashes and descriptive diagnostics; no recalibration or repair after results."
+        },
+        "TEMPORAL_RULE": {
+          "cutoff": "C(T)=kickoffUtc(T)-1 millisecond",
+          "lookbackDays": 365,
+          "lagHours": 48,
+          "featureResearchAvailableAt": "kickoffUtc(m)+48 hours",
+          "eligibility": "same league; Regular Season FT; distinct fixture ID; kickoff(m)>=C(T)-365 days; kickoff(m)+48 hours<C(T); authorized source seasons only; all venues",
+          "actualPublicationTime": false,
+          "strictReplayEligible": false,
+          "justification": "Owner explicitly permits 48h retrospective assumption, consistent with frozen v1/v2 chronology; census proves final/revised presence only and two still-missing current observations do not establish publication latency. No empirical publication guarantee.",
+          "contradictoryCompletionEvidence": "INVALID_TEMPORAL_CONTRACT; no selective repair or shortening lag",
+          "simultaneousKickoffs": "One immutable history per kickoff group; fixture ID orders output only",
+          "historicalObservedAtFabricated": false,
+          "forward": "Actual observed completed-match features with providerFetchedAt<=predictionCreatedAt only; never use synthetic 48h timestamps. No Forward implementation here.",
+          "sourceSeasons": {
+            "initialAndFinalBeta": [
+              2023
+            ],
+            "exposedTargetHistory": [
+              2023,
+              2024
+            ],
+            "holdout": "NOT_AUTHORIZED; later separately approved target history may include 2023/2024/2025 under same cutoff, but learned maps/betas remain final-2023"
+          },
+          "noNew2022Warmup": true
+        },
+        "H2_CONDITIONING": {
+          "source": "scripts/football-v3-feature-research-v1/h2-causal-offset-v1.ts",
+          "frozenSpecification": {
+            "name": "FROZEN_V2_H2",
+            "MODEL_PROMOTED": false,
+            "SCREEN_RESULT": "SCREEN_NO",
+            "role": "RESEARCH_OFFSET_ONLY",
+            "v1ComparatorRetained": true,
+            "parameterFeedbackFromV3": false,
+            "fitPolicy": "For each target and each beta-training example, fresh causal frozen H2 fit using its same-league 365d/48h result pool and unchanged 30/5/5, universe, objective, optimizer, caps and PASS rules. Offset must never come from a full-season fit containing that example or later results.",
+            "references": [
+              {
+                "path": "docs/FOOTBALL_POISSON_V2_ALGORITHM_DESIGN_FREEZE_V1.json",
+                "byteSha256": "342d6af06c95578b91e8d479656dc296f8ca2a7f1bb7a3fe1bc1248450411cec"
+              },
+              {
+                "path": "scripts/football-poisson-v2-draw-research/h2-ridge-rates-v1.ts",
+                "byteSha256": "5a5431f11b4852d16fb3483f6c0ecd9fec75cf296f051f17fa64a35933cb14af"
+              },
+              {
+                "path": "scripts/football-poisson-v2-draw-research/evaluation-v1/h2-ridge-rates-v1.ts",
+                "byteSha256": "fab9d235b885207a0feba198f1e777f0a8ee0577e50d14f317613e7dcfef0aea"
+              },
+              {
+                "path": "scripts/football-poisson-v2-draw-research/v1-readonly-adapter.ts",
+                "byteSha256": "59ec79b2dc41ba7c5413998bbf142b59368146f65a865b58391f2e30704b4067"
+              }
+            ],
+            "adapterPolicy": "Existing season guards stay untouched. Any future V3-scoped season adapter must preserve identities, not relabel 2025 as 2024, and pass equivalence tests on 2023/2024 before authorization; no 2025 access here."
+          },
+          "contract": "Every target or training anchor uses fresh frozen H2 estimator on its own eligible base-result history. Preserve 30/5/5 and unseen-team gates, optimizer, regularization and rate rules exactly. No full-season H2 parameter reuse. Exact same eligible history for both candidates and H2 comparator.",
+          "conditioning": "h_s=[1,log(lambda_H2_s),log(lambda_H2_opponent)]; ordering is scorer then opponent; same coefficient maps shared across home/away.",
+          "noTargetLabel": "lambda_H2 is generated before anchor cutoff from prior completed results only. Anchor score and own process stats cannot enter h or q. These causal rates are model state, not future-outcome proxies.",
+          "limitations": "Conditioning removes a regularized linear component in the TWO H2 log-rate summaries, not every nonlinear/team latent component of H2 and not full statistical independence."
+        },
+        "PARAMETERS": {
+          "activeRepresentation": 6,
+          "beta": 2,
+          "activeTotal": 8,
+          "prefixMapParametersEach": 6
+        },
+        "NORMALIZATION": {
+          "method": "FIXED_PROJECTION",
+          "inputOrder": [
+            "xG_For",
+            "xG_Against",
+            "Shots_For",
+            "Shots_Against",
+            "SOT_For",
+            "SOT_Against"
+          ],
+          "components": 2,
+          "formula": "q_sFor=((z_sFor_xG+z_sFor_shots)+z_sFor_sot)/3; q_sAgainst=((z_oppAgainst_xG+z_oppAgainst_shots)+z_oppAgainst_sot)/3.",
+          "matrixRows": [
+            [
+              0.3333333333333333,
+              0,
+              0.3333333333333333,
+              0,
+              0.3333333333333333,
+              0
+            ],
+            [
+              0,
+              0.3333333333333333,
+              0,
+              0.3333333333333333,
+              0,
+              0.3333333333333333
+            ]
+          ],
+          "authoritativeArithmetic": "Use explicit sum then divide by 3, not a matrix multiplication with pre-rounded 1/3. q=[For,opponent Against].",
+          "fitSeason": "NONE; design-time constants fixed for every season/league",
+          "centeringScaling": "Only inherited per-feature causal log/league normalization; no learned centering, variance scaling or norm normalization.",
+          "signConvention": "All three weights positive; positive q means above league process mean; component order For then opponent Against.",
+          "eigenvalueTieRule": "NOT_APPLICABLE: no eigensolver or PCA",
+          "solver": "NOT_APPLICABLE: fixed ordered scalar arithmetic",
+          "outOfSample": "Same fixed projection for every target; no refit.",
+          "reason": "Keep all three allowed features while reducing six raw covariates to two symmetric process composites. Equal weight is a design prior, not an estimated winner or evidence of independence from H2."
+        },
+        "REGULARIZATION": {
+          "betaRidge": 0.01,
+          "representation": {
+            "slopes": 0.01,
+            "intercepts": 0
+          }
+        },
+        "OPTIMIZER": {
+          "beta": {
+            "scope": "Independent two-beta fit per league x candidate; no pooling/cross-candidate initialization.",
+            "objective": "J(beta)=(1/(2N))*sum_i[exp(o_iH+X_iH dot beta)-y_iH*(o_iH+X_iH dot beta)+exp(o_iA+X_iA dot beta)-y_iA*(o_iA+X_iA dot beta)]+(0.01/2)*sum_j beta_j^2; o=ln(causal frozen H2 rate); omit log-factorial constants.",
+            "gradient": "g=(1/(2N))*sum_i,s X_is*(lambda_is-y_is)+0.01*beta",
+            "hessian": "H=(1/(2N))*sum_i,s lambda_is*X_is*X_is^T+0.01*I",
+            "regularization": {
+              "type": "RIDGE",
+              "kappa": 0.01,
+              "allBeta": true,
+              "search": false
+            },
+            "parameters": "[beta_For,beta_Against], unconstrained shared sides; no intercept/draw/interaction; X is R1 residual r or R3 q. H2 and representation coefficients held fixed while optimizing beta.",
+            "optimizer": "Deterministic damped Newton with unpivoted Cholesky solve H*d=-g; column/index order ascending; no jitter, alternate solver or restart.",
+            "initialization": "All beta=0 each fit",
+            "convergence": "At initialization and after accepted updates, max(abs(g))<=1e-7; max accepted updates=100. Small objective change alone is not convergence.",
+            "lineSearch": "At each update test alpha=2^(-j), j=0..59; first finite positive-rate trial with J(beta+alpha*d)<=J(beta)+1e-4*alpha*dot(g,d) accepted. Reject overflow/underflow trials without clipping. If none: FAIL_LINE_SEARCH.",
+            "failure": "Nonpositive Cholesky pivot, nonfinite accepted state or g dot d>=0 before convergence => FAIL_NUMERICAL. 100 updates without convergence => FAIL_NON_CONVERGENCE. No beta=0/H2 fallback after failure.",
+            "minimumFitFixtures": 30,
+            "insufficient": "Fewer than 30 valid two-equation causal examples => PASS_INSUFFICIENT_FIT / experiment INSUFFICIENT; no class-count gate for Poisson fitting.",
+            "trainingRates": "Finite positive likelihood rates; no target cap of 10 inside beta likelihood. Prediction output rate cap remains 10.",
+            "randomness": "NONE",
+            "seed": null
+          },
+          "representation": "Unpivoted Cholesky in column order 0,1,2; ascending lower-triangle accumulation, forward/back substitution. Reuse A factor only for the two RHS within the identical pool; no alternate solver, pivoting, jitter, random initialization, grid or restart."
+        },
+        "MISSINGNESS": {
+          "behavior": "HISTORY_WINDOW_EXCLUSION_FEATURE_LAYER_ONLY",
+          "knownFixture": 1223728,
+          "baseResultsRetained": true,
+          "excludeOnlyMissingFeaturePool": true,
+          "keepFullTargetDenominator": true,
+          "imputation": false,
+          "zeroSubstitution": false,
+          "leagueMeanSubstitution": false,
+          "featureNeutralFallback": false
+        },
+        "STATUS_RULE": {
+          "precedence": [
+            "INVALID",
+            "FAIL",
+            "INSUFFICIENT",
+            "PASS"
+          ],
+          "invalid": [
+            "Source/input/map/beta/comparator hash mismatch",
+            "Target/future/foreign-league input; wrong season; relabeling; duplicate identity/type; forbidden input",
+            "Invalid raw value or temporal contract contradiction",
+            "Probability mass/integrity violation"
+          ],
+          "fail": [
+            "Inherited H2 optimizer/numerical failure",
+            "Representation Cholesky/nonfinite/normal-equation verification failure",
+            "Inherited beta optimizer/line search/nonconvergence failure",
+            "Nonfinite/nonpositive computed rates or nonfinite aggregate"
+          ],
+          "pass": [
+            "Inherited H2 PASS reasons unchanged",
+            "PASS_INSUFFICIENT_FEATURE_HISTORY (<5 each required feature/team)",
+            "PASS_NONPOSITIVE_FEATURE_MEAN (zero required mean/reference)",
+            "PASS_INSUFFICIENT_REPRESENTATION_HISTORY (<5 prefix anchors; R1 only)",
+            "PASS_INSUFFICIENT_FIT (<30 beta anchors)",
+            "PASS_GOAL_RATE_OUT_OF_RANGE (finite positive rate >10)"
+          ],
+          "missingStageMap": "If required initial/final map has fewer than5 anchors, experiment INSUFFICIENT and row PASS_INSUFFICIENT_REPRESENTATION_HISTORY; do not substitute zeros or R3/H2.",
+          "propagation": "Integrity first; then causal H2, feature min counts and positive means, R1 map integrity/eligibility, final rates/mass. A required upstream FAIL/INVALID halts the fit/candidate stage and emits its status; do not silently continue a fit after dropping it. Other independent candidate remains separately reported only if shared integrity is valid.",
+          "executionScreen": "PASS means valid completed fit/check, not performance improvement; no score-based override. Metrics null when U incomplete; report INCOMPLETE_PRIMARY_COVERAGE without shrinking U."
+        },
+        "DEVELOPMENT_SPLIT": {
+          "boundary": "2024-01-01T00:00:00.000Z",
+          "initialFit": "Season2023 anchors kickoff<boundary and kickoff+48h<boundary. R1 uses prefix-map residual per anchor, R3 fixed q. Require >=30 valid beta examples. Initial R1 map fitted separately from B before check. Fit each beta from zero with inherited optimizer; no tune based on internal check.",
+          "internalCheck": "All season2023 targets kickoff>=boundary. Freeze initial beta and initial R1 map. H2/q target state remains causal and updates with eligible 2023 history. Pre-boundary anchors whose 48h has not elapsed at boundary remain audited but are not moved into internal check.",
+          "finalFit": "At time strictly after max season2023 kickoff+48h, fit beta once from all eligible season2023 causal examples using saved prefix-map residuals (R1) or fixed q (R3). Fit final R1 map separately from all B. Seal final map/beta/input hashes before 2024 candidate result access.",
+          "exposed": "Season2024 full cohort; final-2023 beta and R1 map immutable. No representation fit/refit, beta refit, feature selection or structural changes from 2024 outcomes. H2 and q may consume earlier eligible 2024 results/features as causal history only.",
+          "holdout": "Not executed or authorized. Future approved 2025 stage must reuse identical final-2023 beta/map hashes; no 2024/2025 learned-map or beta refit.",
+          "fitCensus": "Each fit records full eligible/noneligible anchor identities and reasons. FAIL/INVALID cannot be dropped. Insufficient initial or final map/beta fit => experiment INSUFFICIENT. Normal row PASS does not imply experiment FAIL."
+        },
+        "CHECK_BEHAVIOR": "Season2024 full cohort; final-2023 beta and R1 map immutable. No representation fit/refit, beta refit, feature selection or structural changes from 2024 outcomes. H2 and q may consume earlier eligible 2024 results/features as causal history only.",
+        "PROMOTION_RULE": "UNCHANGED: common promotion object applies to both V31-R1/V31-R3; no 2023/2024 promotion",
+        "TEST_REQUIREMENTS": [
+          "Target own feature absent from input schema and mutation has no effect",
+          "Target result inaccessible to representation/H2 state; labels joined only for eligible beta examples",
+          "Future feature mutation cannot affect an earlier state or prefix-map hash",
+          "Check/evaluation season rejected from representation-fit population; final maps fixed from 2023",
+          "48h strict equality excluded and +1ms transition included relative to cutoff",
+          "365d equality included and 1ms older excluded",
+          "Same-kickoff group shares history and prefix maps; ID permutation cannot reveal outcomes",
+          "Foreign league rejected from history, representation pool and beta fit",
+          "Exact fixture/team identity; duplicates rejected; no fuzzy join or season relabel",
+          "Home/away swap exchanges process state, H2 log rates and predicted sides with no manual coefficient change",
+          "Zero valid raw value versus null/missing; all-zero required mean PASS, invalid value INVALID",
+          "Each feature/team count gate, 5-fixture representation gate and 30-fixture beta gate checked separately",
+          "Fixed projection arithmetic and R1 transform deterministic under canonical ordering",
+          "Representation normal equation and unpenalized-intercept equation checked on synthetic inputs only",
+          "Representation solver nonpositive pivot/nonfinite/residual failure propagates; no fallback",
+          "Residual-training example uses its own strictly earlier prefix; initial/final full map cannot be substituted",
+          "Final map training excludes 2024 even when earlier 2024 history is available to target state",
+          "Beta gradient/Hessian analytic versus synthetic finite differences; deterministic zero-start fit",
+          "Beta=0 reproduces frozen H2 probabilities within frozen numerical tolerance, without changing source",
+          "Hash mismatch in source/input/map/beta/comparator rejects execution",
+          "2025 raw path/season rejected before file read without separately approved stage",
+          "V1 and H2 comparator U identical for every candidate; a candidate PASS cannot delete U IDs",
+          "Incomplete U yields null primary metrics; PASS census retained; no H2 fallback",
+          "Forbidden odds/market/provider predictions/manual/external inputs rejected",
+          "Frozen source/model/protocol/promotion hashes unchanged before and after",
+          "Probability mass, cap, argmax tie order, null metrics and ECE bins match inherited contracts",
+          "Revisions of candidate source after source seal invalidate execution; no fitting before freeze"
+        ]
+      },
+      {
+        "CANDIDATE_ID": "V31-R3",
+        "REPRESENTATION_FAMILY": "R3_LOW_DIMENSIONAL_FIXED_PROJECTION",
+        "FEATURE_SET": [
+          "expected_goals",
+          "Total Shots",
+          "Shots on Goal"
+        ],
+        "MATHEMATICAL_FORMULA": "q=Pz; eta_s=log(lambda_H2_s)+beta_For*q_sFor+beta_Against*q_sAgainst; lambda_s=exp(eta_s)",
+        "REPRESENTATION_FIT": {
+          "method": "FIXED_PROJECTION",
+          "inputOrder": [
+            "xG_For",
+            "xG_Against",
+            "Shots_For",
+            "Shots_Against",
+            "SOT_For",
+            "SOT_Against"
+          ],
+          "components": 2,
+          "formula": "q_sFor=((z_sFor_xG+z_sFor_shots)+z_sFor_sot)/3; q_sAgainst=((z_oppAgainst_xG+z_oppAgainst_shots)+z_oppAgainst_sot)/3.",
+          "matrixRows": [
+            [
+              0.3333333333333333,
+              0,
+              0.3333333333333333,
+              0,
+              0.3333333333333333,
+              0
+            ],
+            [
+              0,
+              0.3333333333333333,
+              0,
+              0.3333333333333333,
+              0,
+              0.3333333333333333
+            ]
+          ],
+          "authoritativeArithmetic": "Use explicit sum then divide by 3, not a matrix multiplication with pre-rounded 1/3. q=[For,opponent Against].",
+          "fitSeason": "NONE; design-time constants fixed for every season/league",
+          "centeringScaling": "Only inherited per-feature causal log/league normalization; no learned centering, variance scaling or norm normalization.",
+          "signConvention": "All three weights positive; positive q means above league process mean; component order For then opponent Against.",
+          "eigenvalueTieRule": "NOT_APPLICABLE: no eigensolver or PCA",
+          "solver": "NOT_APPLICABLE: fixed ordered scalar arithmetic",
+          "outOfSample": "Same fixed projection for every target; no refit.",
+          "reason": "Keep all three allowed features while reducing six raw covariates to two symmetric process composites. Equal weight is a design prior, not an estimated winner or evidence of independence from H2."
+        },
+        "TEMPORAL_RULE": {
+          "cutoff": "C(T)=kickoffUtc(T)-1 millisecond",
+          "lookbackDays": 365,
+          "lagHours": 48,
+          "featureResearchAvailableAt": "kickoffUtc(m)+48 hours",
+          "eligibility": "same league; Regular Season FT; distinct fixture ID; kickoff(m)>=C(T)-365 days; kickoff(m)+48 hours<C(T); authorized source seasons only; all venues",
+          "actualPublicationTime": false,
+          "strictReplayEligible": false,
+          "justification": "Owner explicitly permits 48h retrospective assumption, consistent with frozen v1/v2 chronology; census proves final/revised presence only and two still-missing current observations do not establish publication latency. No empirical publication guarantee.",
+          "contradictoryCompletionEvidence": "INVALID_TEMPORAL_CONTRACT; no selective repair or shortening lag",
+          "simultaneousKickoffs": "One immutable history per kickoff group; fixture ID orders output only",
+          "historicalObservedAtFabricated": false,
+          "forward": "Actual observed completed-match features with providerFetchedAt<=predictionCreatedAt only; never use synthetic 48h timestamps. No Forward implementation here.",
+          "sourceSeasons": {
+            "initialAndFinalBeta": [
+              2023
+            ],
+            "exposedTargetHistory": [
+              2023,
+              2024
+            ],
+            "holdout": "NOT_AUTHORIZED; later separately approved target history may include 2023/2024/2025 under same cutoff, but learned maps/betas remain final-2023"
+          },
+          "noNew2022Warmup": true
+        },
+        "H2_CONDITIONING": {
+          "source": "scripts/football-v3-feature-research-v1/h2-causal-offset-v1.ts",
+          "frozenSpecification": {
+            "name": "FROZEN_V2_H2",
+            "MODEL_PROMOTED": false,
+            "SCREEN_RESULT": "SCREEN_NO",
+            "role": "RESEARCH_OFFSET_ONLY",
+            "v1ComparatorRetained": true,
+            "parameterFeedbackFromV3": false,
+            "fitPolicy": "For each target and each beta-training example, fresh causal frozen H2 fit using its same-league 365d/48h result pool and unchanged 30/5/5, universe, objective, optimizer, caps and PASS rules. Offset must never come from a full-season fit containing that example or later results.",
+            "references": [
+              {
+                "path": "docs/FOOTBALL_POISSON_V2_ALGORITHM_DESIGN_FREEZE_V1.json",
+                "byteSha256": "342d6af06c95578b91e8d479656dc296f8ca2a7f1bb7a3fe1bc1248450411cec"
+              },
+              {
+                "path": "scripts/football-poisson-v2-draw-research/h2-ridge-rates-v1.ts",
+                "byteSha256": "5a5431f11b4852d16fb3483f6c0ecd9fec75cf296f051f17fa64a35933cb14af"
+              },
+              {
+                "path": "scripts/football-poisson-v2-draw-research/evaluation-v1/h2-ridge-rates-v1.ts",
+                "byteSha256": "fab9d235b885207a0feba198f1e777f0a8ee0577e50d14f317613e7dcfef0aea"
+              },
+              {
+                "path": "scripts/football-poisson-v2-draw-research/v1-readonly-adapter.ts",
+                "byteSha256": "59ec79b2dc41ba7c5413998bbf142b59368146f65a865b58391f2e30704b4067"
+              }
+            ],
+            "adapterPolicy": "Existing season guards stay untouched. Any future V3-scoped season adapter must preserve identities, not relabel 2025 as 2024, and pass equivalence tests on 2023/2024 before authorization; no 2025 access here."
+          },
+          "contract": "Every target or training anchor uses fresh frozen H2 estimator on its own eligible base-result history. Preserve 30/5/5 and unseen-team gates, optimizer, regularization and rate rules exactly. No full-season H2 parameter reuse. Exact same eligible history for both candidates and H2 comparator.",
+          "conditioning": "h_s=[1,log(lambda_H2_s),log(lambda_H2_opponent)]; ordering is scorer then opponent; same coefficient maps shared across home/away.",
+          "noTargetLabel": "lambda_H2 is generated before anchor cutoff from prior completed results only. Anchor score and own process stats cannot enter h or q. These causal rates are model state, not future-outcome proxies.",
+          "limitations": "Conditioning removes a regularized linear component in the TWO H2 log-rate summaries, not every nonlinear/team latent component of H2 and not full statistical independence."
+        },
+        "PARAMETERS": {
+          "activeRepresentation": 0,
+          "beta": 2,
+          "activeTotal": 2
+        },
+        "NORMALIZATION": {
+          "method": "FIXED_PROJECTION",
+          "inputOrder": [
+            "xG_For",
+            "xG_Against",
+            "Shots_For",
+            "Shots_Against",
+            "SOT_For",
+            "SOT_Against"
+          ],
+          "components": 2,
+          "formula": "q_sFor=((z_sFor_xG+z_sFor_shots)+z_sFor_sot)/3; q_sAgainst=((z_oppAgainst_xG+z_oppAgainst_shots)+z_oppAgainst_sot)/3.",
+          "matrixRows": [
+            [
+              0.3333333333333333,
+              0,
+              0.3333333333333333,
+              0,
+              0.3333333333333333,
+              0
+            ],
+            [
+              0,
+              0.3333333333333333,
+              0,
+              0.3333333333333333,
+              0,
+              0.3333333333333333
+            ]
+          ],
+          "authoritativeArithmetic": "Use explicit sum then divide by 3, not a matrix multiplication with pre-rounded 1/3. q=[For,opponent Against].",
+          "fitSeason": "NONE; design-time constants fixed for every season/league",
+          "centeringScaling": "Only inherited per-feature causal log/league normalization; no learned centering, variance scaling or norm normalization.",
+          "signConvention": "All three weights positive; positive q means above league process mean; component order For then opponent Against.",
+          "eigenvalueTieRule": "NOT_APPLICABLE: no eigensolver or PCA",
+          "solver": "NOT_APPLICABLE: fixed ordered scalar arithmetic",
+          "outOfSample": "Same fixed projection for every target; no refit.",
+          "reason": "Keep all three allowed features while reducing six raw covariates to two symmetric process composites. Equal weight is a design prior, not an estimated winner or evidence of independence from H2."
+        },
+        "REGULARIZATION": {
+          "betaRidge": 0.01,
+          "representation": "NONE"
+        },
+        "OPTIMIZER": {
+          "beta": {
+            "scope": "Independent two-beta fit per league x candidate; no pooling/cross-candidate initialization.",
+            "objective": "J(beta)=(1/(2N))*sum_i[exp(o_iH+X_iH dot beta)-y_iH*(o_iH+X_iH dot beta)+exp(o_iA+X_iA dot beta)-y_iA*(o_iA+X_iA dot beta)]+(0.01/2)*sum_j beta_j^2; o=ln(causal frozen H2 rate); omit log-factorial constants.",
+            "gradient": "g=(1/(2N))*sum_i,s X_is*(lambda_is-y_is)+0.01*beta",
+            "hessian": "H=(1/(2N))*sum_i,s lambda_is*X_is*X_is^T+0.01*I",
+            "regularization": {
+              "type": "RIDGE",
+              "kappa": 0.01,
+              "allBeta": true,
+              "search": false
+            },
+            "parameters": "[beta_For,beta_Against], unconstrained shared sides; no intercept/draw/interaction; X is R1 residual r or R3 q. H2 and representation coefficients held fixed while optimizing beta.",
+            "optimizer": "Deterministic damped Newton with unpivoted Cholesky solve H*d=-g; column/index order ascending; no jitter, alternate solver or restart.",
+            "initialization": "All beta=0 each fit",
+            "convergence": "At initialization and after accepted updates, max(abs(g))<=1e-7; max accepted updates=100. Small objective change alone is not convergence.",
+            "lineSearch": "At each update test alpha=2^(-j), j=0..59; first finite positive-rate trial with J(beta+alpha*d)<=J(beta)+1e-4*alpha*dot(g,d) accepted. Reject overflow/underflow trials without clipping. If none: FAIL_LINE_SEARCH.",
+            "failure": "Nonpositive Cholesky pivot, nonfinite accepted state or g dot d>=0 before convergence => FAIL_NUMERICAL. 100 updates without convergence => FAIL_NON_CONVERGENCE. No beta=0/H2 fallback after failure.",
+            "minimumFitFixtures": 30,
+            "insufficient": "Fewer than 30 valid two-equation causal examples => PASS_INSUFFICIENT_FIT / experiment INSUFFICIENT; no class-count gate for Poisson fitting.",
+            "trainingRates": "Finite positive likelihood rates; no target cap of 10 inside beta likelihood. Prediction output rate cap remains 10.",
+            "randomness": "NONE",
+            "seed": null
+          },
+          "representation": "NONE_FIXED_PROJECTION"
+        },
+        "MISSINGNESS": {
+          "behavior": "HISTORY_WINDOW_EXCLUSION_FEATURE_LAYER_ONLY",
+          "knownFixture": 1223728,
+          "baseResultsRetained": true,
+          "excludeOnlyMissingFeaturePool": true,
+          "keepFullTargetDenominator": true,
+          "imputation": false,
+          "zeroSubstitution": false,
+          "leagueMeanSubstitution": false,
+          "featureNeutralFallback": false
+        },
+        "STATUS_RULE": {
+          "precedence": [
+            "INVALID",
+            "FAIL",
+            "INSUFFICIENT",
+            "PASS"
+          ],
+          "invalid": [
+            "Source/input/map/beta/comparator hash mismatch",
+            "Target/future/foreign-league input; wrong season; relabeling; duplicate identity/type; forbidden input",
+            "Invalid raw value or temporal contract contradiction",
+            "Probability mass/integrity violation"
+          ],
+          "fail": [
+            "Inherited H2 optimizer/numerical failure",
+            "Representation Cholesky/nonfinite/normal-equation verification failure",
+            "Inherited beta optimizer/line search/nonconvergence failure",
+            "Nonfinite/nonpositive computed rates or nonfinite aggregate"
+          ],
+          "pass": [
+            "Inherited H2 PASS reasons unchanged",
+            "PASS_INSUFFICIENT_FEATURE_HISTORY (<5 each required feature/team)",
+            "PASS_NONPOSITIVE_FEATURE_MEAN (zero required mean/reference)",
+            "PASS_INSUFFICIENT_REPRESENTATION_HISTORY (<5 prefix anchors; R1 only)",
+            "PASS_INSUFFICIENT_FIT (<30 beta anchors)",
+            "PASS_GOAL_RATE_OUT_OF_RANGE (finite positive rate >10)"
+          ],
+          "missingStageMap": "If required initial/final map has fewer than5 anchors, experiment INSUFFICIENT and row PASS_INSUFFICIENT_REPRESENTATION_HISTORY; do not substitute zeros or R3/H2.",
+          "propagation": "Integrity first; then causal H2, feature min counts and positive means, R1 map integrity/eligibility, final rates/mass. A required upstream FAIL/INVALID halts the fit/candidate stage and emits its status; do not silently continue a fit after dropping it. Other independent candidate remains separately reported only if shared integrity is valid.",
+          "executionScreen": "PASS means valid completed fit/check, not performance improvement; no score-based override. Metrics null when U incomplete; report INCOMPLETE_PRIMARY_COVERAGE without shrinking U."
+        },
+        "DEVELOPMENT_SPLIT": {
+          "boundary": "2024-01-01T00:00:00.000Z",
+          "initialFit": "Season2023 anchors kickoff<boundary and kickoff+48h<boundary. R1 uses prefix-map residual per anchor, R3 fixed q. Require >=30 valid beta examples. Initial R1 map fitted separately from B before check. Fit each beta from zero with inherited optimizer; no tune based on internal check.",
+          "internalCheck": "All season2023 targets kickoff>=boundary. Freeze initial beta and initial R1 map. H2/q target state remains causal and updates with eligible 2023 history. Pre-boundary anchors whose 48h has not elapsed at boundary remain audited but are not moved into internal check.",
+          "finalFit": "At time strictly after max season2023 kickoff+48h, fit beta once from all eligible season2023 causal examples using saved prefix-map residuals (R1) or fixed q (R3). Fit final R1 map separately from all B. Seal final map/beta/input hashes before 2024 candidate result access.",
+          "exposed": "Season2024 full cohort; final-2023 beta and R1 map immutable. No representation fit/refit, beta refit, feature selection or structural changes from 2024 outcomes. H2 and q may consume earlier eligible 2024 results/features as causal history only.",
+          "holdout": "Not executed or authorized. Future approved 2025 stage must reuse identical final-2023 beta/map hashes; no 2024/2025 learned-map or beta refit.",
+          "fitCensus": "Each fit records full eligible/noneligible anchor identities and reasons. FAIL/INVALID cannot be dropped. Insufficient initial or final map/beta fit => experiment INSUFFICIENT. Normal row PASS does not imply experiment FAIL."
+        },
+        "CHECK_BEHAVIOR": "Season2024 full cohort; final-2023 beta and R1 map immutable. No representation fit/refit, beta refit, feature selection or structural changes from 2024 outcomes. H2 and q may consume earlier eligible 2024 results/features as causal history only.",
+        "PROMOTION_RULE": "UNCHANGED: common promotion object applies to both V31-R1/V31-R3; no 2023/2024 promotion",
+        "TEST_REQUIREMENTS": [
+          "Target own feature absent from input schema and mutation has no effect",
+          "Target result inaccessible to representation/H2 state; labels joined only for eligible beta examples",
+          "Future feature mutation cannot affect an earlier state or prefix-map hash",
+          "Check/evaluation season rejected from representation-fit population; final maps fixed from 2023",
+          "48h strict equality excluded and +1ms transition included relative to cutoff",
+          "365d equality included and 1ms older excluded",
+          "Same-kickoff group shares history and prefix maps; ID permutation cannot reveal outcomes",
+          "Foreign league rejected from history, representation pool and beta fit",
+          "Exact fixture/team identity; duplicates rejected; no fuzzy join or season relabel",
+          "Home/away swap exchanges process state, H2 log rates and predicted sides with no manual coefficient change",
+          "Zero valid raw value versus null/missing; all-zero required mean PASS, invalid value INVALID",
+          "Each feature/team count gate, 5-fixture representation gate and 30-fixture beta gate checked separately",
+          "Fixed projection arithmetic and R1 transform deterministic under canonical ordering",
+          "Representation normal equation and unpenalized-intercept equation checked on synthetic inputs only",
+          "Representation solver nonpositive pivot/nonfinite/residual failure propagates; no fallback",
+          "Residual-training example uses its own strictly earlier prefix; initial/final full map cannot be substituted",
+          "Final map training excludes 2024 even when earlier 2024 history is available to target state",
+          "Beta gradient/Hessian analytic versus synthetic finite differences; deterministic zero-start fit",
+          "Beta=0 reproduces frozen H2 probabilities within frozen numerical tolerance, without changing source",
+          "Hash mismatch in source/input/map/beta/comparator rejects execution",
+          "2025 raw path/season rejected before file read without separately approved stage",
+          "V1 and H2 comparator U identical for every candidate; a candidate PASS cannot delete U IDs",
+          "Incomplete U yields null primary metrics; PASS census retained; no H2 fallback",
+          "Forbidden odds/market/provider predictions/manual/external inputs rejected",
+          "Frozen source/model/protocol/promotion hashes unchanged before and after",
+          "Probability mass, cap, argmax tie order, null metrics and ECE bins match inherited contracts",
+          "Revisions of candidate source after source seal invalidate execution; no fitting before freeze"
+        ]
+      }
+    ],
+    "promotion": {
+      "status": "UNCHANGED",
+      "originalRule": {
+        "applicableSeason": 2025,
+        "prerequisites": [
+          "Independent holdout identity/scope/completeness/exposure/hash seal",
+          "Separate CTO approval",
+          "Frozen implementation, comparators, input and beta hashes",
+          "All four leagues evaluated once without rerun or tuning"
+        ],
+        "tolerance": 1e-12,
+        "primary": "Per candidate, every league, and each comparator separately: delta LL < -1e-12 AND delta multiclass Brier < -1e-12.",
+        "classGuards": "Every HOME/DRAW/AWAY versus each comparator on the fixed primary population: recall delta >= -0.05-1e-12; ECE delta <= 0.01+1e-12; one-vs-rest Brier delta <= 1e-12.",
+        "coverage": "Fixed comparator intersection U contains at least 100 fixtures and >=80% of full league cohort; candidate predicts 100% of U; all full-cohort IDs retained; zero FAIL/INVALID; all three actual classes present in U.",
+        "nullHandling": "Null required recall/ECE or missing primary probabilities => INSUFFICIENT, never silently pass. Precision null is reported, not a promotion guard.",
+        "allLeaguesRequired": true,
+        "outcome": "ELIGIBLE_FOR_CTO_PROMOTION_REVIEW only if all four leagues pass all gates; otherwise SCREEN_NO, INSUFFICIENT, FAIL or INVALID as applicable. No model promotion or automatic Forward migration.",
+        "multipleCandidates": "Evaluate all F1/F2/F3 separately; no composite winner, league cherry-picking, unregistered ensemble or automatic choice among passing candidates.",
+        "exposed2024": "DESCRIPTIVE_CHECK_ONLY; report numeric metrics and differences, no promotion eligibility from these data",
+        "rationale": "Fixed conservative descriptive eligibility guardrails, not a significance test: common denominators, both probability scores improve, class recall capped at 5 percentage-point loss and ECE at 1 point. No claim that these constants were empirically optimized."
+      },
+      "originalRuleCanonicalSha256": "9bb0ccd9917f3049ec740617caf86d06787ab8d46ced235c442844adf1639f7f",
+      "candidateEnumerationOverride": "Apply every original numeric and integrity gate to V31-R1 and V31-R3 separately; historical F1/F2/F3 names in copied evidence are not extra candidates.",
+      "prerequisitesInAdditionToOriginal": "All V3.1 protocol/design/source/tests and2023development/2024exposed stages complete; separate explicit CTO approval; 2025 still not authorized.",
+      "noRelaxation": true
+    },
+    "diagnostics": {
+      "scope": "Future descriptive reports only; none computed now",
+      "population": "On exact fixed U if complete; otherwise diagnostics may report available pregame state with explicit counts, never substitute primary metrics.",
+      "statistics": "Per league/candidate Pearson and Spearman average tied ranks; zero variance=>null. All allowed pregame representation components versus each H2 log-rate and one another; no outcome-conditioned selection. Contribution quantiles linear interpolation (n-1)q at p10,p25,median,p75,p90 and maximum absolute, rates ratio likewise. Initial/final active map/beta values/signs and absolute delta, relative abs delta divided by abs initial (zero=>null). Prefix fit counts/ranges/hashes recorded; no confidence/significance claim.",
+      "caveat": "Training sides, repeated teams and overlapping histories are dependent. Ridge residual not fully decorrelated. Low-dimensional fixed projection can discard useful contrast. Prefix versus fixed map scale may differ."
+    },
+    "testRequirements": [
+      "Target own feature absent from input schema and mutation has no effect",
+      "Target result inaccessible to representation/H2 state; labels joined only for eligible beta examples",
+      "Future feature mutation cannot affect an earlier state or prefix-map hash",
+      "Check/evaluation season rejected from representation-fit population; final maps fixed from 2023",
+      "48h strict equality excluded and +1ms transition included relative to cutoff",
+      "365d equality included and 1ms older excluded",
+      "Same-kickoff group shares history and prefix maps; ID permutation cannot reveal outcomes",
+      "Foreign league rejected from history, representation pool and beta fit",
+      "Exact fixture/team identity; duplicates rejected; no fuzzy join or season relabel",
+      "Home/away swap exchanges process state, H2 log rates and predicted sides with no manual coefficient change",
+      "Zero valid raw value versus null/missing; all-zero required mean PASS, invalid value INVALID",
+      "Each feature/team count gate, 5-fixture representation gate and 30-fixture beta gate checked separately",
+      "Fixed projection arithmetic and R1 transform deterministic under canonical ordering",
+      "Representation normal equation and unpenalized-intercept equation checked on synthetic inputs only",
+      "Representation solver nonpositive pivot/nonfinite/residual failure propagates; no fallback",
+      "Residual-training example uses its own strictly earlier prefix; initial/final full map cannot be substituted",
+      "Final map training excludes 2024 even when earlier 2024 history is available to target state",
+      "Beta gradient/Hessian analytic versus synthetic finite differences; deterministic zero-start fit",
+      "Beta=0 reproduces frozen H2 probabilities within frozen numerical tolerance, without changing source",
+      "Hash mismatch in source/input/map/beta/comparator rejects execution",
+      "2025 raw path/season rejected before file read without separately approved stage",
+      "V1 and H2 comparator U identical for every candidate; a candidate PASS cannot delete U IDs",
+      "Incomplete U yields null primary metrics; PASS census retained; no H2 fallback",
+      "Forbidden odds/market/provider predictions/manual/external inputs rejected",
+      "Frozen source/model/protocol/promotion hashes unchanged before and after",
+      "Probability mass, cap, argmax tie order, null metrics and ECE bins match inherited contracts",
+      "Revisions of candidate source after source seal invalidate execution; no fitting before freeze"
+    ],
+    "implementationPathsReserved": [
+      "scripts/football-v31-incremental-feature-research-v1/"
+    ],
+    "implementationFilesCreated": false,
+    "preservation": {
+      "binding": [
+        {
+          "path": "docs/FOOTBALL_V31_INCREMENTAL_FEATURE_RESEARCH_PROTOCOL_V1.json",
+          "canonicalSha256": "04d7a0029d70c031fcc3fcb443dca56c6a08f7d1c64c5051570af4dd4117ebfb",
+          "byteSha256": "ccea241733e09b315040fd08d45843e23ecfc3dec13c492ac648f1f8176541b8"
+        },
+        {
+          "path": "data/audits/football-v3-phase1-diagnostic-review-v1.json",
+          "canonicalSha256": "1d6b4219774c9e58a0421cc5b91eb5cb0b985a36a143397ebba58fe0b89d9b12",
+          "byteSha256": "f1a3f673f973917a1b740cb89058b0be8a302533a8538b67032786fca1f1432e"
+        },
+        {
+          "path": "docs/FOOTBALL_V3_FEATURE_ALGORITHM_DESIGN_FREEZE_V1.json",
+          "canonicalSha256": "04803e9b26acfd43de263c9b52c575ed2231d91984f82877da5e63b0cde6207a",
+          "byteSha256": "06092089cb4ab557b796a8ed3cd462c9ca33df257b44c74aaac0046b9a750da7"
+        },
+        {
+          "path": "data/audits/football-v3-feature-source-freeze-v1.json",
+          "canonicalSha256": "9b77401cc2f3c828f58a3018367985edb8c4e8ee4bd005467ff694e1e8192091",
+          "byteSha256": "01e46ca7d1374e16d9c0fe8a34042e6859b40fe9792ce4f9fdc2d9e9ba6afcd1"
+        },
+        {
+          "path": "data/audits/football-v3-2025-independent-holdout-cohort-seal-v1.json",
+          "canonicalSha256": "7924420956e419af1a7f14b8b2eb520cc55d37b46534736d35b0fbdcf51c2581",
+          "byteSha256": "a0b8486789ff31a40e1c0fbe50758dc0c35c8bd3b70ab49dae88081a41ff829b"
+        }
+      ],
+      "untracked": {
+        "path": "docs/FOOTBALL_CURRENT_SEASON_DATA_ACCESS_GATE_V1.md",
+        "sha256": "a5538cc0a8c0e74dd77d087e3d577c00da8ae99cd7c9c84e9d2b60b7b01218f8"
+      },
+      "sourceHashesUnchanged": true,
+      "sourceFiles": 12,
+      "dependencies": 21,
+      "protectedFiles": 644
+    },
+    "rights": {
+      "legalInternalUse": "CONDITIONAL",
+      "publicRawFeatureDisplay": "UNRESOLVED",
+      "commercialPublicRights": "UNRESOLVED",
+      "humanSupportConfirmation": false,
+      "formalWrittenLicense": false,
+      "source": "Prior provider dashboard Chat AI guidance relayed by user; not upgraded by this protocol."
+    },
+    "governance": {
+      "V31_IMPLEMENTED": false,
+      "V31_FITTING_EXECUTED": false,
+      "V31_BACKTEST_EXECUTED": false,
+      "V31_CANDIDATE_METRICS_COMPUTED": false,
+      "HOLDOUT_2025_PREDICTIONS_GENERATED": false,
+      "HOLDOUT_2025_METRICS_VIEWED": false,
+      "HOLDOUT_2025_METRICS_COMPUTED": false,
+      "HOLDOUT_2025_RAW_ACCESSED": false,
+      "V3_PHASE1_CHANGED": false,
+      "V2_H2_CHANGED": false,
+      "FORWARD_V1_CHANGED": false,
+      "MODEL_PROMOTED": false
+    },
+    "hashPolicy": "Canonical sorted-key compact UTF8 payload SHA256; array order preserved; envelope hash excluded. Hash source/test/runtime/input/ordered-IDs/H2-state/prefix-map/stage-map/beta/U/output separately at future execution."
+  },
+  "sha256": "8ed600a7a97ed7276dbadf1fc9eaff518e03101090b9d952563877116f3ff264"
+}
