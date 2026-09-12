@@ -10,6 +10,11 @@ function pct(value: number | null): string {
   return `${(value * 100).toFixed(1)}%`;
 }
 
+function oddsText(value: number | null): string {
+  if (value === null) return "—";
+  return value.toFixed(2);
+}
+
 function metric(value: number | null): string {
   if (value === null) return "—";
   return value.toFixed(4);
@@ -81,6 +86,83 @@ function GradeBlock({name, grade}: {name: string; grade: GradeView}) {
   );
 }
 
+function deltaText(
+  modelName: string,
+  selection: string,
+  modelP: number | null,
+  marketP: number | null,
+): string {
+  if (modelP == null || marketP == null) return `${modelName} ${selection} —`;
+  const diff = (modelP - marketP) * 100;
+  const sign = diff > 0 ? "+" : "";
+  return `${modelName} ${selection} ${(modelP * 100).toFixed(1)}% · Market ${selection} ${(marketP * 100).toFixed(1)}% · Difference ${sign}${diff.toFixed(1)}%p`;
+}
+
+function MarketBlock({row}: {row: FixtureView}) {
+  const market = row.marketComparison;
+  return (
+    <div className="mt-4 rounded-lg border border-dashed border-zinc-600 bg-zinc-900/40 p-4">
+      <p className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">
+        Market comparison
+      </p>
+      <div className="mt-2 flex flex-wrap gap-1">
+        <Badge label={market.status} />
+        <Badge label="1X2_ONLY" />
+        <Badge label="ROUND_IDENTITY_CONFIRMED = NO" />
+        {market.captureTimeUnverified ? <Badge label="CAPTURE_TIME_UNVERIFIED" /> : null}
+      </div>
+      {market.status === "MATCHED" && market.impliedNormalized ? (
+        <div className="mt-3 space-y-2">
+          <p className="font-mono text-xs text-zinc-400">
+            observedAt {market.observedAt ?? "—"}
+          </p>
+          <p className="font-mono text-sm text-zinc-200">
+            Home odds {market.homeOdds} · Draw odds {market.drawOdds} · Away odds {market.awayOdds}
+          </p>
+          <p className="font-mono text-xs text-zinc-400">
+            Market implied raw HOME {pct(market.impliedRaw?.home ?? null)} · DRAW{" "}
+            {pct(market.impliedRaw?.draw ?? null)} · AWAY {pct(market.impliedRaw?.away ?? null)}
+          </p>
+          <p className="font-mono text-sm text-zinc-200">
+            Normalized market HOME {pct(market.impliedNormalized.home)} · DRAW{" "}
+            {pct(market.impliedNormalized.draw)} · AWAY {pct(market.impliedNormalized.away)}
+          </p>
+          <p className="font-mono text-xs text-zinc-400">
+            Fair odds V1 HOME {oddsText(market.v1?.fairOdds.home ?? null)} · DRAW{" "}
+            {oddsText(market.v1?.fairOdds.draw ?? null)} · AWAY {oddsText(market.v1?.fairOdds.away ?? null)}
+          </p>
+          <p className="font-mono text-xs text-zinc-400">
+            Fair odds H2 HOME {oddsText(market.h2?.fairOdds.home ?? null)} · DRAW{" "}
+            {oddsText(market.h2?.fairOdds.draw ?? null)} · AWAY {oddsText(market.h2?.fairOdds.away ?? null)}
+          </p>
+          <p className="font-mono text-xs text-zinc-400">
+            Fair odds R1 HOME {oddsText(market.r1?.fairOdds.home ?? null)} · DRAW{" "}
+            {oddsText(market.r1?.fairOdds.draw ?? null)} · AWAY {oddsText(market.r1?.fairOdds.away ?? null)}
+          </p>
+          <div className="space-y-1 font-mono text-xs text-zinc-300">
+            <p>{deltaText("V1", "HOME", row.v1.homePct, market.impliedNormalized.home)}</p>
+            <p>{deltaText("H2", "HOME", row.h2.homePct, market.impliedNormalized.home)}</p>
+            <p>{deltaText("R1", "HOME", row.r1.homePct, market.impliedNormalized.home)}</p>
+            <p>{deltaText("V1", "DRAW", row.v1.drawPct, market.impliedNormalized.draw)}</p>
+            <p>{deltaText("H2", "DRAW", row.h2.drawPct, market.impliedNormalized.draw)}</p>
+            <p>{deltaText("R1", "DRAW", row.r1.drawPct, market.impliedNormalized.draw)}</p>
+            <p>{deltaText("V1", "AWAY", row.v1.awayPct, market.impliedNormalized.away)}</p>
+            <p>{deltaText("H2", "AWAY", row.h2.awayPct, market.impliedNormalized.away)}</p>
+            <p>{deltaText("R1", "AWAY", row.r1.awayPct, market.impliedNormalized.away)}</p>
+          </div>
+          <p className="text-xs text-zinc-500">
+            Probability difference · Model vs normalized market. Research comparison only.
+          </p>
+        </div>
+      ) : (
+        <p className="mt-3 text-sm text-zinc-400">
+          No 1X2 market comparison for this fixture. Totals and handicap are not compared in this V1.
+        </p>
+      )}
+    </div>
+  );
+}
+
 function FixtureCard({row}: {row: FixtureView}) {
   return (
     <article className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-4">
@@ -130,6 +212,7 @@ function FixtureCard({row}: {row: FixtureView}) {
           </div>
         )}
       </div>
+      <MarketBlock row={row} />
     </article>
   );
 }
@@ -214,14 +297,21 @@ export default function FootballV31ResearchConsoleView({
           <Badge label="LOCAL_ONLY" />
           <Badge label={`MODEL_PROMOTED = ${data.modelPromoted}`} />
           <Badge label={`R1_ROLE = ${data.r1Role}`} />
+          <Badge label="ROUND_IDENTITY_CONFIRMED = NO" />
+          <Badge label="CAPTURE_TIME_UNVERIFIED" />
+          <Badge label="1X2_ONLY" />
+          <Badge label="MARKET_INPUT_TO_MODEL = NO" />
+          <Badge label="TOTALS_RECOMMENDATION_ENABLED = NO" />
+          <Badge label="HANDICAP_COMPARISON_ENABLED = NO" />
         </div>
         <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
           Football V3.1 Internal Research Console
         </h1>
         <p className="max-w-3xl text-sm text-amber-200/90">{data.disclaimer}</p>
+        <p className="max-w-3xl text-sm text-zinc-300">{data.marketDisclaimer}</p>
         <p className="text-sm text-zinc-500">
-          Sealed V1 / H2 / R1 snapshots and postgame grades only. Prospective shadow. No market
-          comparison in this V1.
+          Independent model first, then market comparison. Market odds are not model input. Totals
+          and handicap are not compared in this V1.
         </p>
       </header>
 
@@ -234,6 +324,18 @@ export default function FootballV31ResearchConsoleView({
           <StatusCard label="RESULT PENDING" value={s.resultPending} />
           <StatusCard label="RESULT GRADED" value={s.resultGraded} />
           <StatusCard label="RESULT BLOCKED" value={s.resultBlocked} />
+          <StatusCard
+            label="MATCHED 1X2"
+            value={data.marketSummary.matched}
+          />
+          <StatusCard
+            label="UNMATCHED 1X2"
+            value={data.marketSummary.unmatched}
+          />
+          <StatusCard
+            label="IDENTITY BLOCKED"
+            value={data.marketSummary.identityBlocked}
+          />
         </div>
         <div className="mt-3 rounded-lg border border-zinc-800 bg-zinc-950/80 p-4">
           <p className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">

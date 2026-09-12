@@ -1,4 +1,4 @@
-/** Local sealed-evidence research viewer. Read only. No prediction, refit, provider, or market. */
+/** Local sealed-evidence research viewer. Read only. No prediction, refit, or provider. Market comparison is post-freeze only. */
 import {existsSync} from "node:fs";
 import {join} from "node:path";
 import {storeRoot,readSeal,digest} from "../football-v31-r1-prospective-v1/store-v1";
@@ -13,6 +13,18 @@ import {
   type ModelGrade,
 } from "../football-v31-r1-prospective-postgame-v1/grader-v1";
 import {leagueLabel,teamLabel} from "./labels-v1";
+import {
+  HANDICAP_COMPARISON_ENABLED,
+  MARKET_DISCLAIMER,
+  MARKET_INPUT_TO_MODEL,
+  MARKET_TYPE,
+  ROUND_IDENTITY_CONFIRMED,
+  TOTALS_RECOMMENDATION_ENABLED,
+  type MarketComparisonView,
+  type MarketSummary,
+} from "../football-v31-internal-market-comparison-v1/contract-v1";
+import {loadOwnerOnlyMarkets,resolveMarketEvidenceFile} from "../football-v31-internal-market-comparison-v1/local-evidence-v1";
+import {compareSealedToMarket,summarizeMarket} from "../football-v31-internal-market-comparison-v1/compare-v1";
 
 export const SCHEMA = "FOOTBALL_V31_INTERNAL_RESEARCH_CONSOLE_V1";
 export const ROUTE = "/internal/football/research";
@@ -85,6 +97,7 @@ export type FixtureView = {
   integrity: "verified" | "INTEGRITY_BLOCKED";
   snapshotShortHash: string | null;
   postgame: PostgameView;
+  marketComparison: MarketComparisonView;
 };
 export type ResearchSummary = {
   sealedTargets: number;
@@ -108,6 +121,13 @@ export type ResearchConsoleView = {
   pending: FixtureView[];
   graded: FixtureView[];
   blocked: FixtureView[];
+  marketType: typeof MARKET_TYPE;
+  roundIdentityConfirmed: typeof ROUND_IDENTITY_CONFIRMED;
+  marketInputToModel: typeof MARKET_INPUT_TO_MODEL;
+  totalsRecommendationEnabled: typeof TOTALS_RECOMMENDATION_ENABLED;
+  handicapComparisonEnabled: typeof HANDICAP_COMPARISON_ENABLED;
+  marketDisclaimer: typeof MARKET_DISCLAIMER;
+  marketSummary: MarketSummary;
 };
 
 type PredictionRow = {
@@ -262,6 +282,13 @@ function gatedView(gate: Exclude<ResearchGate, "OK">): ResearchConsoleView {
     pending: [],
     graded: [],
     blocked: [],
+    marketType: MARKET_TYPE,
+    roundIdentityConfirmed: ROUND_IDENTITY_CONFIRMED,
+    marketInputToModel: MARKET_INPUT_TO_MODEL,
+    totalsRecommendationEnabled: TOTALS_RECOMMENDATION_ENABLED,
+    handicapComparisonEnabled: HANDICAP_COMPARISON_ENABLED,
+    marketDisclaimer: MARKET_DISCLAIMER,
+    marketSummary: {matched: 0, unmatched: 0, identityBlocked: 0},
   };
 }
 
@@ -281,6 +308,7 @@ function identityView(expected: ExpectedSeal, extra: Partial<FixtureView>): Fixt
     integrity: "INTEGRITY_BLOCKED",
     snapshotShortHash: null,
     postgame: {status: "INTEGRITY_BLOCKED"},
+    marketComparison: compareSealedToMarket(expected, {v1: BLOCKED_MODEL, h2: BLOCKED_MODEL, r1: BLOCKED_MODEL}, []),
     ...extra,
   };
 }
@@ -386,6 +414,7 @@ export function loadResearchConsole(input: {
   auditFile?: string;
   expectedAuditSha?: string;
   expectedTargets?: ExpectedSeal[];
+  marketFile?: string;
 } = {}): ResearchConsoleView {
   const env = input.env ?? process.env;
   const access = researchAccess(env);
@@ -408,8 +437,20 @@ export function loadResearchConsole(input: {
     }
   }
 
+  const markets = loadOwnerOnlyMarkets(
+    input.marketFile ?? resolveMarketEvidenceFile(env, input.cwd ?? process.cwd()),
+  );
   const fixtures = expected
-    .map((row) => readFixtureView(root, row))
+    .map((row) => {
+      const view = readFixtureView(root, row);
+      return {
+        ...view,
+        v1: view.v1,
+        h2: view.h2,
+        r1: view.r1,
+        marketComparison: compareSealedToMarket(row, {v1: view.v1, h2: view.h2, r1: view.r1}, markets),
+      };
+    })
     .sort((a, b) => {
       const ka = Date.parse(a.kickoffUtc);
       const kb = Date.parse(b.kickoffUtc);
@@ -433,6 +474,13 @@ export function loadResearchConsole(input: {
     blocked: fixtures.filter(
       (f) => f.evidence === "INTEGRITY_BLOCKED" || f.evidence === "BLOCKED",
     ),
+    marketType: MARKET_TYPE,
+    roundIdentityConfirmed: ROUND_IDENTITY_CONFIRMED,
+    marketInputToModel: MARKET_INPUT_TO_MODEL,
+    totalsRecommendationEnabled: TOTALS_RECOMMENDATION_ENABLED,
+    handicapComparisonEnabled: HANDICAP_COMPARISON_ENABLED,
+    marketDisclaimer: MARKET_DISCLAIMER,
+    marketSummary: summarizeMarket(fixtures.map((f) => f.marketComparison)),
   };
 }
 

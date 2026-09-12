@@ -1,0 +1,54 @@
+{
+  "payload": {
+    "schema": "FOOTBALL_V31_INTERNAL_MARKET_COMPARISON_V1",
+    "createdAt": "2026-09-12T15:13:00.000Z",
+    "BASE_SHA": "a6611d9628888a8dde4a90c9946dfba9642c9aa1",
+    "RESULT_COMMIT_SHA": null,
+    "branch": "agent/cursor/football-v31-internal-market-comparison-v1",
+    "route": "/internal/football/research",
+    "MARKET_TYPE": "1X2_ONLY",
+    "MATCHED_FIXTURES": 19,
+    "UNMATCHED_FIXTURES": 1,
+    "IDENTITY_BLOCKED": 0,
+    "unmatchedFixtureIds": [1570374],
+    "ROUND_IDENTITY_CONFIRMED": "NO",
+    "MARKET_INPUT_TO_MODEL": "NO",
+    "TOTALS_RECOMMENDATION_ENABLED": "NO",
+    "HANDICAP_COMPARISON_ENABLED": "NO",
+    "CAPTURE_TIME_UNVERIFIED": "YES",
+    "LOCAL_ONLY": "YES",
+    "PREGAME_FILES_MUTATED": "NO",
+    "MODEL_CHANGED": "NO",
+    "FORWARD_CHANGED": "NO",
+    "RECOMMENDATION_ENGINE_CHANGED": "NO",
+    "PUBLIC_EXPOSED": "NO",
+    "tests": {
+      "status": "PASS",
+      "newMarketTests": 17,
+      "consoleRegression": 15,
+      "graderRegression": 15,
+      "typescript": "PASS_NEW_FILES",
+      "eslint": "PASS",
+      "suites": [
+        "scripts/football-v31-internal-market-comparison-v1/test-v1.ts",
+        "scripts/football-v31-internal-research-console-v1/test-v1.ts",
+        "scripts/football-v31-r1-prospective-postgame-v1/test-v1.ts"
+      ]
+    },
+    "sourceFiles": {
+      "docs/FOOTBALL_V31_INTERNAL_MARKET_COMPARISON_V1.md": "5f8b39b61895b067e9988f2e76a4432b35896d7458984adfd7c37016f483c81d",
+      "scripts/football-v31-internal-market-comparison-v1/contract-v1.ts": "a73ace4a5e7548718856baa7bd50426a7f4bfb9a5f8b0c9c159256459b473006",
+      "scripts/football-v31-internal-market-comparison-v1/local-evidence-v1.ts": "b9adcee2a0fb65c7a9661ddaadc503041f4316fa4c6aef2d13c00d58182630d5",
+      "scripts/football-v31-internal-market-comparison-v1/identity-v1.ts": "329ebc7ac371cafddb83b8ce2b4c3f190aa7f0440b147856cfb519e9817e160a",
+      "scripts/football-v31-internal-market-comparison-v1/normalize-v1.ts": "0ef615d37985625a8a261fd2795749b647cb34d571d83d62535ef42205883884",
+      "scripts/football-v31-internal-market-comparison-v1/compare-v1.ts": "2f4a891a00ed87cc03545a167f23217f57fa5ccc643765009e2d7e7607538293",
+      "scripts/football-v31-internal-market-comparison-v1/test-v1.ts": "c60b8ba7c655d72ec40c627f98e48d03226ce15dc9127febbae612b897b845ca",
+      "scripts/football-v31-internal-research-console-v1/console-v1.ts": "a08b7a071e955ff78729e95f1ff04c508fabe63eb3eb7ae963ac75b030cdcd78",
+      "src/components/internal/football/FootballV31ResearchConsoleView.tsx": "db62491871b1041456769ac643bf75f0cfb99e3207e4801d4bb7bc0ff8cdefd3",
+      "src/app/internal/football/research/page.tsx": "36b9ea8ea3226a1f1bb8f06fabaf3ebcdd5679325ff5bf24a5bfb2e26b86a09a",
+      "src/lib/football/v31-internal-research-console-v1/load-console-v1.ts": "ea2e41b0c4a880016639174a4568a6c3de25a62c01e9773ee589389342455544",
+      "package.json": "d0dbccc213b47d934ecd11e4b8cd8ef280f4629805f13e635ef087473ccb57ce"
+    }
+  },
+  "sha256": "pending"
+}
