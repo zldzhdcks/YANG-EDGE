@@ -2,6 +2,8 @@
 
 BASE_SHA: `a6611d9628888a8dde4a90c9946dfba9642c9aa1`
 
+RESULT_COMMIT_SHA: `727486bf2061b054cf936733ba0bf1f6e92970b4`
+
 This mission adds an owner-only domestic 1X2 market comparison layer under the existing Internal Research Console.
 
 Order is fixed:
