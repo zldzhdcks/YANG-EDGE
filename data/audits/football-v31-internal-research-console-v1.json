@@ -1,0 +1,61 @@
+{
+  "payload": {
+    "schema": "FOOTBALL_V31_INTERNAL_RESEARCH_CONSOLE_V1",
+    "createdAt": "2026-09-12T14:49:57.632Z",
+    "BASE_SHA": "a67cfa22db1fa5bcdd8e97bd2767ea7f5cb328f6",
+    "branch": "agent/cursor/football-v31-internal-research-console-v1",
+    "route": "/internal/football/research",
+    "sourceMode": "LOCAL_ONLY",
+    "LOCAL_ONLY": "YES",
+    "sealedCount": 20,
+    "predictedPassCounts": {
+      "R1_PREDICTED": 15,
+      "R1_PASS": 5,
+      "V1_PREDICTED": 15,
+      "V1_PASS": 5,
+      "H2_PREDICTED": 15,
+      "H2_PASS": 5
+    },
+    "pendingGradedCounts": {
+      "RESULT_PENDING": 20,
+      "RESULT_GRADED": 0,
+      "RESULT_BLOCKED": 0
+    },
+    "firstCheckpoint": {
+      "label": "R1 graded PREDICTED / 25",
+      "current": 0,
+      "next": 25
+    },
+    "MODEL_PROMOTED": "NO",
+    "R1_ROLE": "UNPROMOTED_PROSPECTIVE_SHADOW",
+    "tests": {
+      "status": "PASS",
+      "newConsoleTests": 15,
+      "graderRegression": 15,
+      "typescript": "PASS_NEW_FILES",
+      "eslint": "PASS",
+      "suites": [
+        "scripts/football-v31-internal-research-console-v1/test-v1.ts",
+        "scripts/football-v31-r1-prospective-postgame-v1/test-v1.ts"
+      ]
+    },
+    "PREGAME_FILES_MUTATED": "NO",
+    "MODEL_CHANGED": "NO",
+    "FORWARD_CHANGED": "NO",
+    "RECOMMENDATION_ENGINE_CHANGED": "NO",
+    "MARKET_CONNECTED": "NO",
+    "PUBLIC_EXPOSED": "NO",
+    "WATCH_STARTED": "NO",
+    "sourceFiles": {
+      "docs/FOOTBALL_V31_INTERNAL_RESEARCH_CONSOLE_V1.md": "88e159fdd8a9fe8c1925e4dbee937367bdeed5a020099518c6ce8477473137fa",
+      "scripts/football-v31-internal-research-console-v1/console-v1.ts": "813b2f7779a61dc726daa50bcfd6541afe9d090fc1650fb4681c782af902fec1",
+      "scripts/football-v31-internal-research-console-v1/labels-v1.ts": "a8212871d5b810ab38e9206d2b6d05ed3c5908239be07aeb1e5eb8f75bd2b58a",
+      "scripts/football-v31-internal-research-console-v1/test-v1.ts": "ce1e450bed055fcb0ca93eab1331353e1d931bb35c792f823491c48405d0458c",
+      "src/lib/football/v31-internal-research-console-v1/load-console-v1.ts": "24ee402627f3395249b864fc0a5095120fb0a6a62f5614c393c4da0b85237fde",
+      "src/components/internal/football/FootballV31ResearchConsoleView.tsx": "58626c772d9bf004081c65c509ce85fd2a5adaa4536b4a8aa3624e8e606d2a81",
+      "src/app/internal/football/research/page.tsx": "45a1e8e608e08aca262c0c435a221e52ed34b261b0352fe1315deeed2797ac2b"
+    },
+    "sourceFilesHash": "2c661c6d305d71fcab007389bdb7c334eeab52d8b22a5b95e899776943aa9161"
+  },
+  "sha256": "196af026cc1628ae489372dafd9cacd15923c3d3a6e3c74700634363675e9016"
+}
