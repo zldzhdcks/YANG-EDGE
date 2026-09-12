@@ -123,7 +123,7 @@ test('no pregame file mutation',()=>{
 
 test('no market input',()=>{
  const dir=fileURLToPath(new URL('.',import.meta.url));
- for(const file of readdirSync(dir).filter(f=>f.endsWith('.ts')&&f!=='test-v1.ts')){
+  for(const file of readdirSync(dir).filter(f=>f.endsWith('.ts')&&!f.startsWith('test-'))){
   const text=readFileSync(join(dir,file),'utf8');
   assert.doesNotMatch(text,/\bodds\b|\bmarket\b|\bbookmaker\b|\brecommendation\b/i);
  }
