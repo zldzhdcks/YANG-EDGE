@@ -1,0 +1,2720 @@
+{
+  "payload": {
+    "schema": "FOOTBALL_V31_R1_FIRST_RUN_PREFLIGHT_V1",
+    "createdAt": "2026-09-12T12:38:42.948Z",
+    "baseSha": "3373696409b92470769a465eb4066270402de3b7",
+    "sourceCommitSha": "077f38251296cf77698999489df22eb9f01dfa82",
+    "branch": "agent/astra/football-historical-source-gate-v1",
+    "firstRunReadiness": "FIRST_RUN_READY",
+    "sameCutoffV1Status": "IMPLEMENTED_SYNTHETIC_TESTED_NOT_EXECUTED_ON_REAL_TARGETS",
+    "sameCutoffH2Status": "IMPLEMENTED_SYNTHETIC_TESTED_NOT_EXECUTED_ON_REAL_TARGETS",
+    "h2OffsetEquivalence": "PASS_EXACT_SYNTHETIC_RATES_AND_PARAMETER_HASH",
+    "foundationRegressionStatus": "PASS",
+    "tests": {
+      "status": "PASS",
+      "createdAt": "2026-09-12T12:33:36.658Z",
+      "testsPassed": 236,
+      "suites": [
+        "scripts/football-v31-r1-comparator-v1/test-v1.ts",
+        "scripts/football-v31-r1-prospective-v1/test-v1.ts",
+        "scripts/football-v31-incremental-feature-research-v1/test-v1.ts",
+        "scripts/football-v3-feature-research-v1/test-v1.ts",
+        "scripts/test-football-poisson-research-v1.ts",
+        "scripts/test-football-poisson-backtest-v1.ts",
+        "scripts/test-football-poisson-chronological-protocol-v1.ts",
+        "scripts/football-poisson-v2-draw-research/test-synthetic-contracts-v1.ts",
+        "scripts/football-poisson-v2-draw-research/evaluation-v1/test-evaluation-v1.ts",
+        "scripts/test-football-forward-shadow-v1.ts",
+        "scripts/test-football-forward-daily-operations-v1.ts",
+        "scripts/test-football-forward-safe-operations-v1.ts"
+      ],
+      "typescript": "PASS",
+      "eslint": "PASS",
+      "matchedInputEquivalence": "PASS_1e-12",
+      "realPredictions": false,
+      "realFitting": false,
+      "existingTests": 212,
+      "additionalTests": 24,
+      "receipts": {
+        "tests.log": "707636d8be4af991fa11826cae7c1b9eecb8d49c19b01e98d86eb23b07d8ccf1",
+        "typescript.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "eslint.log": "272e4c2b0e16e307699713ad6b529510bfa6a765ef48eba689f6f501a403e27f"
+      }
+    },
+    "preservation": {
+      "trackedFiles": 3854,
+      "trackedFilesUnchanged": true,
+      "officialFiles": 513,
+      "officialFilesUnchanged": true,
+      "actualObservedSelectorUnchanged": true,
+      "foundationAdapterHash": "125f715c85a5199b7f5725949c4b1ff6f12b1e5d6ef65095c5af0d0673682b6b",
+      "finalR1MapHash": "244c2ef4f930855271744e39f0de44598ec6c929ac18edd4c6f72965eb8a4a26",
+      "finalR1BetaHash": "dc8f9faa4a09429ddfdd46631502375540e25fdbb37f84a1f92f6ceeb21e2ab4",
+      "observationRecords": 1570,
+      "observationRegistryHash": "2028e390b86e64aebf5a7bf05a71aefcc2e38d8392f1ea6971012d674ecc749e",
+      "observationRegistryUnchanged": true,
+      "existingUntrackedAccessGateDocPreserved": true
+    },
+    "sourceFiles": {
+      "docs/FOOTBALL_V31_R1_PROSPECTIVE_COMPARATOR_AMENDMENT_V1.md": "ca3b25ac0bffbea1083bb16f99555432114eefb9a8c6c2a3a7020705bcf32b9d",
+      "scripts/football-v31-r1-comparator-v1/comparator-v1.ts": "fa4f27ba800b2461789f9e710b899b8bd44e339f823a1a6b400bbc5f3942298c",
+      "scripts/football-v31-r1-comparator-v1/preflight-v1.ts": "d7e00c3d9cf15d688cc04f258486e8ddc98eac8a39e8ecaf2b1d2c3da8f52580",
+      "scripts/football-v31-r1-comparator-v1/seal-v1.ts": "70e10edfdf8c3aaa37e6e90b14907f6bfe5acd80bf8f1cc3967e0b614f5a335c",
+      "scripts/football-v31-r1-comparator-v1/test-v1.ts": "0d914b412e5bfaf40e5ef46e13e76c79b2ebcfc755101871b4cc501c24632159"
+    },
+    "sourceFilesHash": "e64ec689db3a3aac5b636ed46387f8ff51eca60836117ccb61770b0fa8f9b1f0",
+    "livePreflightHash": "7a9c8426f2e6ea489d09f92e206bfb26eebc641d1fd425d281b6acc90259cf4f",
+    "livePreflight": {
+      "completedAt": "2026-09-12T12:36:30.002Z",
+      "foundationCensusHash": "5503411bd08384993a81487f516214b55c70f8750030d815e1dd4bfac60c3ec8",
+      "storedTargets": 66,
+      "futureTargets": 66,
+      "potentiallyEligibleTargets": 48,
+      "apiRequests": 66,
+      "unverified": 0,
+      "observationRecords": 1570,
+      "receipts": [
+        {
+          "endpoint": "/fixtures?id=1550117",
+          "providerFetchedAt": "2026-09-12T12:36:06.883Z",
+          "sourceHash": "7b8975452de475b11b9af3c6bb478982d65702439c882c3cfedf3788ef58a1ec",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1550117,
+            "leagueId": 135,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T18:45:00.000Z",
+            "homeTeamId": 499,
+            "awayTeamId": 490
+          },
+          "checkedAt": "2026-09-12T12:36:06.883Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 20,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1550118",
+          "providerFetchedAt": "2026-09-12T12:36:07.220Z",
+          "sourceHash": "9245723b7e3dd2bd60d9547d468a947fd40c7780304605363e7538985006bf5c",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1550118,
+            "leagueId": 135,
+            "season": 2026,
+            "kickoffUtc": "2026-09-14T16:30:00.000Z",
+            "homeTeamId": 895,
+            "awayTeamId": 523
+          },
+          "checkedAt": "2026-09-12T12:36:07.220Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 18,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1550119",
+          "providerFetchedAt": "2026-09-12T12:36:07.541Z",
+          "sourceHash": "678961d15a7d012364b5a629ebf89e7ffa8f77d778588cf71ca21a599b0cd148",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1550119,
+            "leagueId": 135,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T13:00:00.000Z",
+            "homeTeamId": 495,
+            "awayTeamId": 512
+          },
+          "checkedAt": "2026-09-12T12:36:07.541Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 3,
+              "shots": 3,
+              "sot": 3
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 19,
+            "awayVenue": 1
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1550120",
+          "providerFetchedAt": "2026-09-12T12:36:07.859Z",
+          "sourceHash": "8f590e4a74bf68b619f2086ba636561a32a56f64bb3a07ff635793b0612593fb",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1550120,
+            "leagueId": 135,
+            "season": 2026,
+            "kickoffUtc": "2026-09-14T18:45:00.000Z",
+            "homeTeamId": 505,
+            "awayTeamId": 494
+          },
+          "checkedAt": "2026-09-12T12:36:07.859Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 19,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1550121",
+          "providerFetchedAt": "2026-09-12T12:36:08.236Z",
+          "sourceHash": "3f1f6422fb311fdd0cae5fc7c349f174b4feb5053a9582ddfcdf75562b3619d1",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1550121,
+            "leagueId": 135,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T16:00:00.000Z",
+            "homeTeamId": 487,
+            "awayTeamId": 489
+          },
+          "checkedAt": "2026-09-12T12:36:08.236Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 19,
+            "awayVenue": 20
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1550122",
+          "providerFetchedAt": "2026-09-12T12:36:08.569Z",
+          "sourceHash": "590ec183ff2a7b61d07403e01deb2ee22f7ba764c62259c0ba4664f9d00df942",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1550122,
+            "leagueId": 135,
+            "season": 2026,
+            "kickoffUtc": "2026-09-13T13:00:00.000Z",
+            "homeTeamId": 867,
+            "awayTeamId": 1579
+          },
+          "checkedAt": "2026-09-12T12:36:08.569Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 3,
+              "shots": 3,
+              "sot": 3
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 19,
+            "awayVenue": 2
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1550123",
+          "providerFetchedAt": "2026-09-12T12:36:08.892Z",
+          "sourceHash": "38a2536ecbc6a5e942bfdf51489aa47620e483c90d8a511b6f3bf3f849e0600f",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1550123,
+            "leagueId": 135,
+            "season": 2026,
+            "kickoffUtc": "2026-09-13T16:00:00.000Z",
+            "homeTeamId": 492,
+            "awayTeamId": 500
+          },
+          "checkedAt": "2026-09-12T12:36:08.892Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 19,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1550124",
+          "providerFetchedAt": "2026-09-12T12:36:09.203Z",
+          "sourceHash": "3c371251cdf44b95392a42988c325051703b1dac3e7530dcac890e521426e7fe",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1550124,
+            "leagueId": 135,
+            "season": 2026,
+            "kickoffUtc": "2026-09-13T18:45:00.000Z",
+            "homeTeamId": 488,
+            "awayTeamId": 496
+          },
+          "checkedAt": "2026-09-12T12:36:09.203Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 19,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1550125",
+          "providerFetchedAt": "2026-09-12T12:36:09.535Z",
+          "sourceHash": "3a0f76ac1ace550ca8296a3265531d4b9edbe3802cd884a7bf58e0fccce6a7fe",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1550125,
+            "leagueId": 135,
+            "season": 2026,
+            "kickoffUtc": "2026-09-14T16:30:00.000Z",
+            "homeTeamId": 503,
+            "awayTeamId": 497
+          },
+          "checkedAt": "2026-09-12T12:36:09.535Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 19,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1550128",
+          "providerFetchedAt": "2026-09-12T12:36:09.852Z",
+          "sourceHash": "f724ac63fda2bde90e3f2d4ee2af037c5539b0af5ac03de91640fcfcb140eb84",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1550128,
+            "leagueId": 135,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T16:00:00.000Z",
+            "homeTeamId": 497,
+            "awayTeamId": 505
+          },
+          "checkedAt": "2026-09-12T12:36:09.852Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 20,
+            "awayVenue": 20
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1550129",
+          "providerFetchedAt": "2026-09-12T12:36:10.329Z",
+          "sourceHash": "44edff001ec6ce30ad6223670238d2cc21ae4c9c5892e7fa8a5dd712ca6cbcdb",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1550129,
+            "leagueId": 135,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T13:00:00.000Z",
+            "homeTeamId": 500,
+            "awayTeamId": 503
+          },
+          "checkedAt": "2026-09-12T12:36:10.329Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 20,
+            "awayVenue": 20
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1550133",
+          "providerFetchedAt": "2026-09-12T12:36:10.703Z",
+          "sourceHash": "198fe76ce97fd6825d6bcdcf2704b0d6be0858ee13a31579ba883cbdf821368c",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1550133,
+            "leagueId": 135,
+            "season": 2026,
+            "kickoffUtc": "2026-09-18T18:45:00.000Z",
+            "homeTeamId": 1579,
+            "awayTeamId": 488
+          },
+          "checkedAt": "2026-09-12T12:36:10.703Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 3,
+              "shots": 3,
+              "sot": 3
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 1,
+            "awayVenue": 20
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1550135",
+          "providerFetchedAt": "2026-09-12T12:36:11.173Z",
+          "sourceHash": "c8bebe774db751986097baa91a2acadfbbbde7b27027d86a5fc5a11b606547bc",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1550135,
+            "leagueId": 135,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T13:00:00.000Z",
+            "homeTeamId": 494,
+            "awayTeamId": 490
+          },
+          "checkedAt": "2026-09-12T12:36:11.173Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 20,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1550136",
+          "providerFetchedAt": "2026-09-12T12:36:11.813Z",
+          "sourceHash": "ee0d913791ec29a7efb8ab7991e49ab328108df9d88a41d1c317d95d0b0dfdfb",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1550136,
+            "leagueId": 135,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T18:45:00.000Z",
+            "homeTeamId": 517,
+            "awayTeamId": 487
+          },
+          "checkedAt": "2026-09-12T12:36:11.813Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 4,
+              "shots": 4,
+              "sot": 4
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 2,
+            "awayVenue": 20
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557397",
+          "providerFetchedAt": "2026-09-12T12:36:12.933Z",
+          "sourceHash": "bd909586c34f9f6363aa3bbc9bf2dda5b4663edf518f596ad8116453a98d998b",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557397,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T14:00:00.000Z",
+            "homeTeamId": 66,
+            "awayTeamId": 65
+          },
+          "checkedAt": "2026-09-12T12:36:12.933Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 18,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557398",
+          "providerFetchedAt": "2026-09-12T12:36:13.429Z",
+          "sourceHash": "db1d60b4407c124eec3fd21fc21f3fa445d2d4e33b4510b90797032e4918e775",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557398,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T14:00:00.000Z",
+            "homeTeamId": 35,
+            "awayTeamId": 55
+          },
+          "checkedAt": "2026-09-12T12:36:13.429Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 19,
+            "awayVenue": 18
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557399",
+          "providerFetchedAt": "2026-09-12T12:36:13.942Z",
+          "sourceHash": "a649afd7b389616ed9fa9160dae74cd1db768d7bbb9257f024ad059dd8df186c",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557399,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T14:00:00.000Z",
+            "homeTeamId": 49,
+            "awayTeamId": 64
+          },
+          "checkedAt": "2026-09-12T12:36:13.942Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 3,
+              "shots": 3,
+              "sot": 3
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 18,
+            "awayVenue": 1
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557400",
+          "providerFetchedAt": "2026-09-12T12:36:14.286Z",
+          "sourceHash": "d89b313d72f31e8cb7ad03b7c966e27cb7160aa00208417a0487d85cb9462072",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557400,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-13T13:00:00.000Z",
+            "homeTeamId": 1346,
+            "awayTeamId": 51
+          },
+          "checkedAt": "2026-09-12T12:36:14.286Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 3,
+              "shots": 3,
+              "sot": 3
+            },
+            "away": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 1,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557401",
+          "providerFetchedAt": "2026-09-12T12:36:14.658Z",
+          "sourceHash": "19f490246f8c9a5d8aa614884c7cfd3c06c570eb009230f533185a4dfe8485d5",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557401,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T14:00:00.000Z",
+            "homeTeamId": 52,
+            "awayTeamId": 57
+          },
+          "checkedAt": "2026-09-12T12:36:14.658Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 3,
+              "shots": 3,
+              "sot": 3
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 19,
+            "awayVenue": 1
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557402",
+          "providerFetchedAt": "2026-09-12T12:36:14.964Z",
+          "sourceHash": "924a126a823add9a6c063635fa98aceec6018861f0756ac5d875aa55bbbdd887",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557402,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-14T19:00:00.000Z",
+            "homeTeamId": 63,
+            "awayTeamId": 34
+          },
+          "checkedAt": "2026-09-12T12:36:14.964Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 18,
+            "awayVenue": 18
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557403",
+          "providerFetchedAt": "2026-09-12T12:36:15.364Z",
+          "sourceHash": "dd011c3c776f585fcb889e434eda9125bbc34f98ffa221cadbe02c08d200a806",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557403,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T14:00:00.000Z",
+            "homeTeamId": 40,
+            "awayTeamId": 36
+          },
+          "checkedAt": "2026-09-12T12:36:15.364Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 18,
+            "awayVenue": 18
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557404",
+          "providerFetchedAt": "2026-09-12T12:36:15.678Z",
+          "sourceHash": "b07f5fbf53dbb8cc6d7d30115723bc8028371ba9cf08815cf5770c2abbaf9ce3",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557404,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-13T15:30:00.000Z",
+            "homeTeamId": 33,
+            "awayTeamId": 50
+          },
+          "checkedAt": "2026-09-12T12:36:15.678Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 18,
+            "awayVenue": 18
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557405",
+          "providerFetchedAt": "2026-09-12T12:36:16.002Z",
+          "sourceHash": "8a689772600e452e02aa58b477e6604052e177cf2da94f2e604a8569dc08d74b",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557405,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T19:00:00.000Z",
+            "homeTeamId": 746,
+            "awayTeamId": 42
+          },
+          "checkedAt": "2026-09-12T12:36:16.002Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 18,
+            "awayVenue": 18
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557406",
+          "providerFetchedAt": "2026-09-12T12:36:16.338Z",
+          "sourceHash": "ef519ea25619880864b8815f0e6a3f81ac9fc10adf7f07344a2cb28660dd310b",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557406,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T16:30:00.000Z",
+            "homeTeamId": 47,
+            "awayTeamId": 45
+          },
+          "checkedAt": "2026-09-12T12:36:16.338Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 18,
+            "awayVenue": 18
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557408",
+          "providerFetchedAt": "2026-09-12T12:36:16.709Z",
+          "sourceHash": "82394e8591b2274271f7b48002a63ca211aef644dbae7e0a414fb52e6cd17e2e",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557408,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-18T19:00:00.000Z",
+            "homeTeamId": 55,
+            "awayTeamId": 49
+          },
+          "checkedAt": "2026-09-12T12:36:16.709Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 20,
+            "awayVenue": 20
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557409",
+          "providerFetchedAt": "2026-09-12T12:36:17.021Z",
+          "sourceHash": "2bf14342babb9b1ef3c6f4ee0725dbe24a711a5dc214bdf2b01a7e5c02cb8890",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557409,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T14:00:00.000Z",
+            "homeTeamId": 51,
+            "awayTeamId": 42
+          },
+          "checkedAt": "2026-09-12T12:36:17.021Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 19,
+            "awayVenue": 18
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557410",
+          "providerFetchedAt": "2026-09-12T12:36:17.338Z",
+          "sourceHash": "6ae75c3fa1e7d89a38261158b5163235f8cf290721d30d83f2d5d90574ebde73",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557410,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T14:00:00.000Z",
+            "homeTeamId": 45,
+            "awayTeamId": 57
+          },
+          "checkedAt": "2026-09-12T12:36:17.338Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 3,
+              "shots": 3,
+              "sot": 3
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 20,
+            "awayVenue": 1
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557414",
+          "providerFetchedAt": "2026-09-12T12:36:17.643Z",
+          "sourceHash": "a8a9d5fdccaec44e3422c679d74bb14ebe92edd2e3dd6a2896b4e0ab8b2b21b9",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557414,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T14:00:00.000Z",
+            "homeTeamId": 34,
+            "awayTeamId": 64
+          },
+          "checkedAt": "2026-09-12T12:36:17.643Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 3,
+              "shots": 3,
+              "sot": 3
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 20,
+            "awayVenue": 1
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557415",
+          "providerFetchedAt": "2026-09-12T12:36:17.964Z",
+          "sourceHash": "571b7389a8ebc6e7794cd38f9f962940589307503132780f0905a389afa6753d",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557415,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T16:30:00.000Z",
+            "homeTeamId": 65,
+            "awayTeamId": 1346
+          },
+          "checkedAt": "2026-09-12T12:36:17.964Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 3,
+              "shots": 3,
+              "sot": 3
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 19,
+            "awayVenue": 2
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1557416",
+          "providerFetchedAt": "2026-09-12T12:36:18.316Z",
+          "sourceHash": "fed54d32aef0e316a9cbc4095152bf49e84f9f2ac750787af3608ac22f25bbce",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1557416,
+            "leagueId": 39,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T11:30:00.000Z",
+            "homeTeamId": 47,
+            "awayTeamId": 66
+          },
+          "checkedAt": "2026-09-12T12:36:18.316Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            }
+          },
+          "baseCounts": {
+            "competition": 380,
+            "homeVenue": 18,
+            "awayVenue": 20
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570373",
+          "providerFetchedAt": "2026-09-12T12:36:18.631Z",
+          "sourceHash": "278e2b23d7fa7e61e35dea867ec19a5b87d875dfe26ace46b6a92b3a6df4c7a4",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570373,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T16:30:00.000Z",
+            "homeTeamId": 531,
+            "awayTeamId": 797
+          },
+          "checkedAt": "2026-09-12T12:36:18.631Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 38,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 19,
+            "awayVenue": 20
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570374",
+          "providerFetchedAt": "2026-09-12T12:36:18.957Z",
+          "sourceHash": "fa7e6d107461abcb1cc4846ee4ef544bb31a1005b956dad7eefe855be02353e0",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570374,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-13T12:00:00.000Z",
+            "homeTeamId": 538,
+            "awayTeamId": 535
+          },
+          "checkedAt": "2026-09-12T12:36:18.957Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 4,
+              "shots": 4,
+              "sot": 4
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 18,
+            "awayVenue": 2
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570375",
+          "providerFetchedAt": "2026-09-12T12:36:19.260Z",
+          "sourceHash": "22fc41a6748491da24b7d062e2c65207fc685fc73db18f0394eac12449358094",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570375,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-13T16:30:00.000Z",
+            "homeTeamId": 546,
+            "awayTeamId": 544
+          },
+          "checkedAt": "2026-09-12T12:36:19.260Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 4,
+              "shots": 4,
+              "sot": 4
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 21,
+            "awayVenue": 2
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570376",
+          "providerFetchedAt": "2026-09-12T12:36:19.565Z",
+          "sourceHash": "653a3c10a6695b229f57d2c8c48bd82190d8616161f87c6234748fe8bed5af46",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570376,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-13T14:15:00.000Z",
+            "homeTeamId": 539,
+            "awayTeamId": 529
+          },
+          "checkedAt": "2026-09-12T12:36:19.565Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 19,
+            "awayVenue": 18
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570377",
+          "providerFetchedAt": "2026-09-12T12:36:19.869Z",
+          "sourceHash": "739a9f495f2239fd9ca369f371ce10726841529770b24ee57e1ab6fdcf93a2b5",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570377,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T14:15:00.000Z",
+            "homeTeamId": 727,
+            "awayTeamId": 540
+          },
+          "checkedAt": "2026-09-12T12:36:19.869Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 20,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570379",
+          "providerFetchedAt": "2026-09-12T12:36:20.168Z",
+          "sourceHash": "287e666aaeabf929150cb2fd6d14b39c20cebf7acb93d026ae4be0449ec8be02",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570379,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T19:00:00.000Z",
+            "homeTeamId": 541,
+            "awayTeamId": 728
+          },
+          "checkedAt": "2026-09-12T12:36:20.168Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 19,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570380",
+          "providerFetchedAt": "2026-09-12T12:36:20.474Z",
+          "sourceHash": "7a716cecb674909299f7e326e905cedc2d9dfc6b98bef203aef1181ab15be583",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570380,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-13T19:00:00.000Z",
+            "homeTeamId": 548,
+            "awayTeamId": 530
+          },
+          "checkedAt": "2026-09-12T12:36:20.474Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 40,
+              "sot": 40
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 20,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570382",
+          "providerFetchedAt": "2026-09-12T12:36:20.792Z",
+          "sourceHash": "ae0eaeb42eacf70c3c0b87a4c677c047297409329c2c1ae55da48488aa645ca4",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570382,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-14T19:00:00.000Z",
+            "homeTeamId": 533,
+            "awayTeamId": 543
+          },
+          "checkedAt": "2026-09-12T12:36:20.792Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 18,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570383",
+          "providerFetchedAt": "2026-09-12T12:36:21.104Z",
+          "sourceHash": "2e23156382de85e5a135a489f7cfd7e93581804f7b9db3f4b57f5ef5f906fe03",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570383,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-15T18:00:00.000Z",
+            "homeTeamId": 542,
+            "awayTeamId": 532
+          },
+          "checkedAt": "2026-09-12T12:36:21.104Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 40,
+              "sot": 40
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 20,
+            "awayVenue": 20
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570384",
+          "providerFetchedAt": "2026-09-12T12:36:21.411Z",
+          "sourceHash": "61a02f58d4ff7d70394b51eb901c38d2f5e1d3be3643ffd1d038d548d813a576",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570384,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-16T17:00:00.000Z",
+            "homeTeamId": 530,
+            "awayTeamId": 727
+          },
+          "checkedAt": "2026-09-12T12:36:21.411Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 20,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570385",
+          "providerFetchedAt": "2026-09-12T12:36:21.729Z",
+          "sourceHash": "69bc9c16daf1d64b1b8d9fcfdd4cc188c7f715740b91f7923372d49f57fc481c",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570385,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-16T19:30:00.000Z",
+            "homeTeamId": 529,
+            "awayTeamId": 4665
+          },
+          "checkedAt": "2026-09-12T12:36:21.729Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 4,
+              "shots": 4,
+              "sot": 4
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 21,
+            "awayVenue": 2
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570386",
+          "providerFetchedAt": "2026-09-12T12:36:22.052Z",
+          "sourceHash": "23dc28eea85f7068421cbfef84dcdd6142fc80d1af624f92d932c24d1bda6164",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570386,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-17T17:00:00.000Z",
+            "homeTeamId": 543,
+            "awayTeamId": 546
+          },
+          "checkedAt": "2026-09-12T12:36:22.052Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 38,
+              "sot": 38
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 19,
+            "awayVenue": 18
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570387",
+          "providerFetchedAt": "2026-09-12T12:36:22.378Z",
+          "sourceHash": "fb5837fd915ffbe4584498a136fc4241420a4fea57ab16029b557352521297fd",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570387,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-16T17:00:00.000Z",
+            "homeTeamId": 544,
+            "awayTeamId": 536
+          },
+          "checkedAt": "2026-09-12T12:36:22.378Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 4,
+              "shots": 4,
+              "sot": 4
+            },
+            "away": {
+              "xG": 39,
+              "shots": 40,
+              "sot": 40
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 2,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570388",
+          "providerFetchedAt": "2026-09-12T12:36:22.704Z",
+          "sourceHash": "48cab770ec139e9e0406e23e218e4c522ed69b08544bac5d3290f9c040b2be67",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570388,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-15T19:30:00.000Z",
+            "homeTeamId": 797,
+            "awayTeamId": 541
+          },
+          "checkedAt": "2026-09-12T12:36:22.704Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 38,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 19,
+            "awayVenue": 20
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570389",
+          "providerFetchedAt": "2026-09-12T12:36:23.080Z",
+          "sourceHash": "f038762d6fecab96a68dd0815245208d09465e5cded2c2b2fba6d11216619ee4",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570389,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-16T19:30:00.000Z",
+            "homeTeamId": 539,
+            "awayTeamId": 531
+          },
+          "checkedAt": "2026-09-12T12:36:23.080Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 19,
+            "awayVenue": 20
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570390",
+          "providerFetchedAt": "2026-09-12T12:36:23.402Z",
+          "sourceHash": "924de0072168f1c3b21a6e2a374dbe9b2c3b0ee9bb5943d3de1a4ebae701bcfe",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570390,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-17T19:30:00.000Z",
+            "homeTeamId": 535,
+            "awayTeamId": 533
+          },
+          "checkedAt": "2026-09-12T12:36:23.402Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 4,
+              "shots": 4,
+              "sot": 4
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 2,
+            "awayVenue": 21
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570391",
+          "providerFetchedAt": "2026-09-12T12:36:23.712Z",
+          "sourceHash": "71260e95d66f57b414594da772411712b8b3dad4eae189c117e83ef88e571a30",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570391,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-15T17:00:00.000Z",
+            "homeTeamId": 728,
+            "awayTeamId": 540
+          },
+          "checkedAt": "2026-09-12T12:36:23.712Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 20,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570393",
+          "providerFetchedAt": "2026-09-12T12:36:24.023Z",
+          "sourceHash": "b0d0f0ad04ac18157d277cfef9593347a751fff46e94dce42054679a9c6b2ce5",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570393,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T14:15:00.000Z",
+            "homeTeamId": 531,
+            "awayTeamId": 542
+          },
+          "checkedAt": "2026-09-12T12:36:24.023Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 19,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570395",
+          "providerFetchedAt": "2026-09-12T12:36:24.409Z",
+          "sourceHash": "362bce2d4647e12b4425eff781474cd31999846844342968fd1663b98179a931",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570395,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T16:30:00.000Z",
+            "homeTeamId": 538,
+            "awayTeamId": 4665
+          },
+          "checkedAt": "2026-09-12T12:36:24.409Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 4,
+              "shots": 4,
+              "sot": 4
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 18,
+            "awayVenue": 2
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570397",
+          "providerFetchedAt": "2026-09-12T12:36:24.722Z",
+          "sourceHash": "a1b0c9f2f62ab9a67a213cf1a680945aab1008fc8d4d4a3d34db5474224bee26",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570397,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-18T19:00:00.000Z",
+            "homeTeamId": 540,
+            "awayTeamId": 797
+          },
+          "checkedAt": "2026-09-12T12:36:24.722Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 38,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 20,
+            "awayVenue": 20
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570399",
+          "providerFetchedAt": "2026-09-12T12:36:25.024Z",
+          "sourceHash": "4b65737316aede9ac28f900bc37deeeab76192b4b7a53c80ca9cb6726a4bb7f5",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570399,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T12:00:00.000Z",
+            "homeTeamId": 727,
+            "awayTeamId": 728
+          },
+          "checkedAt": "2026-09-12T12:36:25.024Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 20,
+            "awayVenue": 19
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1570400",
+          "providerFetchedAt": "2026-09-12T12:36:25.322Z",
+          "sourceHash": "daf5e443da4beae2e60b4546d017418d42bbf8e9b925d187c5759d4fdfda4a6c",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1570400,
+            "leagueId": 140,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T19:00:00.000Z",
+            "homeTeamId": 536,
+            "awayTeamId": 529
+          },
+          "checkedAt": "2026-09-12T12:36:25.322Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 39,
+              "shots": 40,
+              "sot": 40
+            },
+            "away": {
+              "xG": 39,
+              "shots": 39,
+              "sot": 39
+            }
+          },
+          "baseCounts": {
+            "competition": 391,
+            "homeVenue": 21,
+            "awayVenue": 18
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1575158",
+          "providerFetchedAt": "2026-09-12T12:36:25.634Z",
+          "sourceHash": "2ef34f33ea723f40ad92495450856d7a0ac9cb85e56a54e5a927e824ac9dd169",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1575158,
+            "leagueId": 78,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T13:30:00.000Z",
+            "homeTeamId": 165,
+            "awayTeamId": 185
+          },
+          "checkedAt": "2026-09-12T12:36:25.634Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            },
+            "away": {
+              "xG": 2,
+              "shots": 2,
+              "sot": 2
+            }
+          },
+          "baseCounts": {
+            "competition": 307,
+            "homeVenue": 17,
+            "awayVenue": 1
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1575159",
+          "providerFetchedAt": "2026-09-12T12:36:25.942Z",
+          "sourceHash": "1bdfc6837e0254de63d80fc8f911de131c05302846311df1390d56d707400c29",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1575159,
+            "leagueId": 78,
+            "season": 2026,
+            "kickoffUtc": "2026-09-13T13:30:00.000Z",
+            "homeTeamId": 173,
+            "awayTeamId": 175
+          },
+          "checkedAt": "2026-09-12T12:36:25.942Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            },
+            "away": {
+              "xG": 33,
+              "shots": 34,
+              "sot": 34
+            }
+          },
+          "baseCounts": {
+            "competition": 307,
+            "homeVenue": 17,
+            "awayVenue": 17
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1575160",
+          "providerFetchedAt": "2026-09-12T12:36:26.242Z",
+          "sourceHash": "1756795ccce2d42435316c45e80188f56a50cba52241e2a85045e566e15e50b6",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1575160,
+            "leagueId": 78,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T13:30:00.000Z",
+            "homeTeamId": 167,
+            "awayTeamId": 172
+          },
+          "checkedAt": "2026-09-12T12:36:26.242Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            },
+            "away": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            }
+          },
+          "baseCounts": {
+            "competition": 307,
+            "homeVenue": 17,
+            "awayVenue": 17
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1575161",
+          "providerFetchedAt": "2026-09-12T12:36:26.546Z",
+          "sourceHash": "50e214436caccdbf332d0eab3824632ac000366b6e147f31ed1857668006f6ec",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1575161,
+            "leagueId": 78,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T13:30:00.000Z",
+            "homeTeamId": 160,
+            "awayTeamId": 163
+          },
+          "checkedAt": "2026-09-12T12:36:26.546Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            },
+            "away": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            }
+          },
+          "baseCounts": {
+            "competition": 307,
+            "homeVenue": 17,
+            "awayVenue": 17
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1575162",
+          "providerFetchedAt": "2026-09-12T12:36:26.859Z",
+          "sourceHash": "2b27cdb8eedb8eda399ad3ae8c8c9a26a5f67ffcddc4f2ac6e5d0fa4d1d2bf0c",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1575162,
+            "leagueId": 78,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T13:30:00.000Z",
+            "homeTeamId": 170,
+            "awayTeamId": 168
+          },
+          "checkedAt": "2026-09-12T12:36:26.859Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            },
+            "away": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            }
+          },
+          "baseCounts": {
+            "competition": 307,
+            "homeVenue": 17,
+            "awayVenue": 17
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1575163",
+          "providerFetchedAt": "2026-09-12T12:36:27.157Z",
+          "sourceHash": "7475d54b218a71ad88e6bdb73f6853eeaa3197ae8c3757a7c4cce27e7d02ac01",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1575163,
+            "leagueId": 78,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T13:30:00.000Z",
+            "homeTeamId": 164,
+            "awayTeamId": 169
+          },
+          "checkedAt": "2026-09-12T12:36:27.157Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 33,
+              "shots": 34,
+              "sot": 34
+            },
+            "away": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            }
+          },
+          "baseCounts": {
+            "competition": 307,
+            "homeVenue": 17,
+            "awayVenue": 17
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1575165",
+          "providerFetchedAt": "2026-09-12T12:36:27.473Z",
+          "sourceHash": "290540b2a915bec522461280fbf4986c13439485363afb8aeab61d8dae2ab1bb",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1575165,
+            "leagueId": 78,
+            "season": 2026,
+            "kickoffUtc": "2026-09-12T16:30:00.000Z",
+            "homeTeamId": 192,
+            "awayTeamId": 162
+          },
+          "checkedAt": "2026-09-12T12:36:27.473Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            },
+            "away": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            }
+          },
+          "baseCounts": {
+            "competition": 307,
+            "homeVenue": 17,
+            "awayVenue": 17
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1575166",
+          "providerFetchedAt": "2026-09-12T12:36:27.780Z",
+          "sourceHash": "72835fe31d88949c8a1f1e64966eb60d06a40f24e5afedd1bcffa58d60e96ccc",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1575166,
+            "leagueId": 78,
+            "season": 2026,
+            "kickoffUtc": "2026-09-13T15:30:00.000Z",
+            "homeTeamId": 1660,
+            "awayTeamId": 157
+          },
+          "checkedAt": "2026-09-12T12:36:27.780Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": false,
+          "counts": {
+            "home": {
+              "xG": 2,
+              "shots": 2,
+              "sot": 2
+            },
+            "away": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            }
+          },
+          "baseCounts": {
+            "competition": 307,
+            "homeVenue": 1,
+            "awayVenue": 17
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1575167",
+          "providerFetchedAt": "2026-09-12T12:36:28.123Z",
+          "sourceHash": "d64a169563c5e974467a59da6c3264521cd1b2d9d66d11cc6949dca92d9f9ef6",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1575167,
+            "leagueId": 78,
+            "season": 2026,
+            "kickoffUtc": "2026-09-18T18:30:00.000Z",
+            "homeTeamId": 157,
+            "awayTeamId": 182
+          },
+          "checkedAt": "2026-09-12T12:36:28.123Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            },
+            "away": {
+              "xG": 34,
+              "shots": 35,
+              "sot": 35
+            }
+          },
+          "baseCounts": {
+            "competition": 307,
+            "homeVenue": 17,
+            "awayVenue": 17
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1575168",
+          "providerFetchedAt": "2026-09-12T12:36:28.580Z",
+          "sourceHash": "ff5a368bee9c03c931a4c1c4f0fb4920453f819fcfe59e2c0959d169421a607d",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1575168,
+            "leagueId": 78,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T16:30:00.000Z",
+            "homeTeamId": 172,
+            "awayTeamId": 165
+          },
+          "checkedAt": "2026-09-12T12:36:28.580Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            },
+            "away": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            }
+          },
+          "baseCounts": {
+            "competition": 307,
+            "homeVenue": 17,
+            "awayVenue": 17
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1575170",
+          "providerFetchedAt": "2026-09-12T12:36:29.054Z",
+          "sourceHash": "517062bff4923f3276d1506d50892dc9f21873fc9546fe2b4b566ed4b05aaaf9",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1575170,
+            "leagueId": 78,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T13:30:00.000Z",
+            "homeTeamId": 169,
+            "awayTeamId": 160
+          },
+          "checkedAt": "2026-09-12T12:36:29.054Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            },
+            "away": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            }
+          },
+          "baseCounts": {
+            "competition": 307,
+            "homeVenue": 17,
+            "awayVenue": 17
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1575171",
+          "providerFetchedAt": "2026-09-12T12:36:29.372Z",
+          "sourceHash": "4a8c2b70a1a5ac06075daa8c5110ec0108a993be5bf777c9779b3488d08d3f9f",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1575171,
+            "leagueId": 78,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T13:30:00.000Z",
+            "homeTeamId": 175,
+            "awayTeamId": 192
+          },
+          "checkedAt": "2026-09-12T12:36:29.372Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 33,
+              "shots": 34,
+              "sot": 34
+            },
+            "away": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            }
+          },
+          "baseCounts": {
+            "competition": 307,
+            "homeVenue": 17,
+            "awayVenue": 17
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1575172",
+          "providerFetchedAt": "2026-09-12T12:36:29.677Z",
+          "sourceHash": "cd9b3c52f4562279227bfbce346d0bc1b1ef2e1a501543c3ae0d144b51c48785",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1575172,
+            "leagueId": 78,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T13:30:00.000Z",
+            "homeTeamId": 162,
+            "awayTeamId": 170
+          },
+          "checkedAt": "2026-09-12T12:36:29.677Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            },
+            "away": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            }
+          },
+          "baseCounts": {
+            "competition": 307,
+            "homeVenue": 17,
+            "awayVenue": 17
+          },
+          "boundaryCompatible": true
+        },
+        {
+          "endpoint": "/fixtures?id=1575174",
+          "providerFetchedAt": "2026-09-12T12:36:29.973Z",
+          "sourceHash": "ff9c8fdc3200e0c1d217058316892a6984548eace3392f3f4fd003a6a3cac515",
+          "status": "VERIFIED",
+          "kickoffChanged": false,
+          "providerStatus": "NS",
+          "target": {
+            "fixtureId": 1575174,
+            "leagueId": 78,
+            "season": 2026,
+            "kickoffUtc": "2026-09-19T13:30:00.000Z",
+            "homeTeamId": 163,
+            "awayTeamId": 164
+          },
+          "checkedAt": "2026-09-12T12:36:29.973Z",
+          "FUTURE": true,
+          "NS": true,
+          "deadlineSatisfied": true,
+          "historyPotentiallySatisfiable": true,
+          "counts": {
+            "home": {
+              "xG": 34,
+              "shots": 34,
+              "sot": 34
+            },
+            "away": {
+              "xG": 33,
+              "shots": 34,
+              "sot": 34
+            }
+          },
+          "baseCounts": {
+            "competition": 307,
+            "homeVenue": 17,
+            "awayVenue": 17
+          },
+          "boundaryCompatible": true
+        }
+      ],
+      "prospectiveShadowExecuted": false,
+      "probabilitiesComputed": false,
+      "firstRunStillRequiresAuthorization": true
+    },
+    "perLeague": [
+      {
+        "leagueId": 39,
+        "verified": 16,
+        "future": 16,
+        "potentiallyEligible": 10
+      },
+      {
+        "leagueId": 140,
+        "verified": 22,
+        "future": 22,
+        "potentiallyEligible": 16
+      },
+      {
+        "leagueId": 135,
+        "verified": 14,
+        "future": 14,
+        "potentiallyEligible": 10
+      },
+      {
+        "leagueId": 78,
+        "verified": 14,
+        "future": 14,
+        "potentiallyEligible": 12
+      }
+    ],
+    "primaryComparisons": [
+      "R1_VS_SAME_CUTOFF_V1",
+      "R1_VS_SAME_CUTOFF_H2"
+    ],
+    "officialReferenceRole": "SECONDARY_TIMING_CONFOUNDED_OPERATIONAL_CONTEXT_ONLY",
+    "milestones": [
+      25,
+      50,
+      100,
+      200
+    ],
+    "boundaryPolicy": "FAIL_CLOSED_IF_COMPLETION_OBSERVATION_EQUALS_CUTOFF; NO_TIMESTAMP_OR_SELECTOR_CHANGE",
+    "contractFreeze": "IMMUTABLE_AFTER_FIRST_REAL_SEAL",
+    "limitations": [
+      "Readiness is point-in-time; re-query status and deadline on the authorized first run.",
+      "No real probabilities, fitting or snapshots were produced; structural eligibility does not guarantee a PREDICTED output.",
+      "Separate postgame consumer must support the amended multi-result envelope; do not apply the old single-result grade reader directly."
+    ],
+    "governance": {
+      "PROSPECTIVE_SHADOW_EXECUTED": false,
+      "REAL_R1_PREDICTIONS": 0,
+      "REAL_FITTING_EXECUTED": false,
+      "MODEL_PROMOTED": false,
+      "FORWARD_MODEL_CHANGED": false,
+      "RECOMMENDATION_ENGINE_CHANGED": false,
+      "SELECTOR_CHANGED": false,
+      "MAP_CHANGED": false,
+      "BETA_CHANGED": false,
+      "ODDS_MODEL_INPUT": false,
+      "TARGET_RESULT_DATA_USED": false,
+      "OFFICIAL_ARTIFACTS_MUTATED": false,
+      "HISTORICAL_RERUN": false,
+      "WATCH_STARTED": false,
+      "MAIN_MERGED": false
+    },
+    "nextAction": "STOP. CTO review and separate first-run authorization required."
+  },
+  "sha256": "3dedc94e33587cb9292c8ff8a41b185a4ae73029fd0bcfa11c9985ef24073a98"
+}
