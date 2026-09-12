@@ -1,0 +1,90 @@
+{
+  "payload": {
+    "schema": "FOOTBALL_V31_R1_PROSPECTIVE_POSTGAME_GRADER_V1",
+    "createdAt": "2026-09-12T14:20:42.799Z",
+    "baseSha": "21ff4f7d22152fd16b10149042c318e6295be802",
+    "branch": "agent/cursor/football-v31-r1-prospective-postgame-grader-v1",
+    "firstRealBatchAuditSha": "f959518751631281723006d71d66516685fcc62896334ec477e2ca0b6fc29dcd",
+    "artifactName": "postgame-v1.json",
+    "privateRoot": "C:\\Users\\TCTCTC\\YANG-EDGE\\YANG-EDGE-INBOX\\football-v31-r1-prospective-shadow-v1",
+    "tests": {
+      "status": "PASS",
+      "newPostgameTests": 15,
+      "frozenResearchTests": 236,
+      "frozenNote": "235 passed in this worktree; the remaining football-v3 data-loader test requires gitignored historical-archive cache and passed on the sealed sibling worktree at the same BASE_SHA",
+      "typescript": "PASS_NEW_FILES",
+      "eslint": "PASS",
+      "suites": [
+        "scripts/football-v31-r1-prospective-postgame-v1/test-v1.ts",
+        "scripts/football-v31-r1-comparator-v1/test-v1.ts",
+        "scripts/football-v31-r1-prospective-v1/test-v1.ts",
+        "scripts/football-v31-incremental-feature-research-v1/test-v1.ts",
+        "scripts/football-v3-feature-research-v1/test-v1.ts",
+        "scripts/test-football-poisson-research-v1.ts",
+        "scripts/test-football-poisson-backtest-v1.ts",
+        "scripts/test-football-poisson-chronological-protocol-v1.ts",
+        "scripts/football-poisson-v2-draw-research/test-synthetic-contracts-v1.ts",
+        "scripts/football-poisson-v2-draw-research/evaluation-v1/test-evaluation-v1.ts",
+        "scripts/test-football-forward-shadow-v1.ts",
+        "scripts/test-football-forward-daily-operations-v1.ts",
+        "scripts/test-football-forward-safe-operations-v1.ts"
+      ]
+    },
+    "firstExecution": {
+      "startedAt": "2026-09-12T14:17:10.208Z",
+      "completedAt": "2026-09-12T14:18:27.265Z",
+      "requests": 12,
+      "localScorecardHash": "b407708c808529bbf5d4e005f24b5024a7b7046e686969956d8becd9022f74c2",
+      "TOTAL_SEALED": 20,
+      "RESULT_AVAILABLE": 0,
+      "RESULT_PENDING": 20,
+      "RESULT_BLOCKED": 0,
+      "R1_PREDICTED_GRADED": 0,
+      "R1_PASS_PRESERVED": 0,
+      "V1_PREDICTED_GRADED": 0,
+      "H2_PREDICTED_GRADED": 0,
+      "interpretation": "EARLY_DESCRIPTIVE_ONLY",
+      "checkpoint": {
+        "next": 25,
+        "R1_PREDICTED_GRADED": 0
+      }
+    },
+    "preservation": {
+      "PREGAME_FILES_MUTATED": "NO",
+      "MODEL_CHANGED": "NO",
+      "FORWARD_CHANGED": "NO",
+      "RECOMMENDATION_ENGINE_CHANGED": "NO",
+      "WATCH_STARTED": "NO",
+      "MARKET_INPUT": "NO",
+      "HOLDOUT_REUSE": "NO",
+      "MAP_CHANGED": "NO",
+      "BETA_CHANGED": "NO",
+      "COMPARATOR_CHANGED": "NO",
+      "FOUNDATION_CHANGED": "NO",
+      "postgameArtifactsWritten": 0,
+      "sealedEnvelopesReboundAfterRun": 20
+    },
+    "sourceFiles": {
+      "docs/FOOTBALL_V31_R1_PROSPECTIVE_POSTGAME_GRADER_V1.md": "6f861c7277f14c78c18d9d15bd3c0e6ef91d55611f255e220a3f817cc3617bff",
+      "scripts/football-v31-r1-prospective-postgame-v1/grader-v1.ts": "4caa717a1cfe375fe2bd62cab1defe859949bca6b7458cfbe957f72d3c515d26",
+      "scripts/football-v31-r1-prospective-postgame-v1/run-v1.ts": "3ab5782666ca66d52138cc71dd2d6b30a83cd845c1ed49945723999600d86af5",
+      "scripts/football-v31-r1-prospective-postgame-v1/test-v1.ts": "4204d9be527d4f0f2cae18b19a40d2bd88825a6843323cbfd61f6f9fadad31c6"
+    },
+    "sourceFilesHash": "355615e2563f539a4a1f5b3243ff1304cac66c51f48e28441aabac7d63d2c97a",
+    "frozenParameters": {
+      "FINAL_R1_MAP_HASH": "244c2ef4f930855271744e39f0de44598ec6c929ac18edd4c6f72965eb8a4a26",
+      "FINAL_R1_BETA_HASH": "dc8f9faa4a09429ddfdd46631502375540e25fdbb37f84a1f92f6ceeb21e2ab4",
+      "V1_HASH": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+      "ADAPTER_HASH": "125f715c85a5199b7f5725949c4b1ff6f12b1e5d6ef65095c5af0d0673682b6b",
+      "H2_HASH": "fab9d235b885207a0feba198f1e777f0a8ee0577e50d14f317613e7dcfef0aea"
+    },
+    "governance": {
+      "MODEL_PROMOTED": "NO",
+      "POSTGAME_GRADER_READY": true,
+      "GRADING_EXECUTED": true,
+      "GRADED_FT_COUNT": 0,
+      "MAIN_MERGED": false
+    }
+  },
+  "sha256": "75ea4b07d7c61c874a50ab54d95912e3b73390d4866ce127478db6e7e35efc13"
+}

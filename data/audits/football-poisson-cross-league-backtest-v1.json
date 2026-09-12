@@ -1,0 +1,5639 @@
+{
+  "startedAt": "2026-09-10T13:57:17.686Z",
+  "baseSha": "f7cd4fc5d7b809536173add181230f7b9a86e094",
+  "protocolSha256": "6bedb86389f62afae5feebdd098b9ab6d4b2c151719ef267309d562f8df3e31f",
+  "codeHashes": {
+    "scripts/football-cross-league-backtest-v1-core.ts": "eac29ceb6c57ab816ecb195f14b03bdc4d325a7bb529832c5ae8bcbef0e09818",
+    "scripts/run-football-cross-league-backtest-v1.ts": "b762c85019565928d85996d224653b633c8c54415d8896b049e67e8596c38d05",
+    "scripts/test-football-cross-league-backtest-v1.ts": "c6cb6f83604ce7df9450ff4dd877473cde92027fb1b3e114bea2ab7bd7b89b85",
+    "scripts/football-poisson-backtest-v1-core.ts": "10990cb6df0d5dfbd9656cf49b1bda5ec6c55f0e69353a871e2773c45489502d",
+    "scripts/run-football-poisson-chronological-backtest-v1.ts": "05763aa9b5506bbd2348f8af3d01858a949e7550be67df17da620a627ea6cef9",
+    "scripts/football-cross-league-scope-v1.ts": "e95befb218a80410e7c6c94ab6ac6f6a4b216c6e3d99ee948e5de574cc7d852c",
+    "scripts/audit-football-cross-league-scope-v1.ts": "b2787ff2cc1862508b3c2951ac7a867a3cffeaa4ed5c3b0823aa0a7e8f2ab3f0",
+    "src/lib/football/poisson-research-v1/index.ts": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+    "src/lib/football/odds-1x2-v1/instant.ts": "c848e4f64438a76bb39531a0f702c01c0aa3c3076f33ef5d39f56c480e97c784"
+  },
+  "entryGate": "HEAD/upstream matched and tree clean before authorized runner additions; all tracked files still unchanged",
+  "executionOrder": [
+    140,
+    135,
+    78
+  ],
+  "schemaVersion": "football-poisson-cross-league-review-seal-v1",
+  "modelVersion": "football-poisson-research-v1",
+  "resultSha256": "2c51553d966d5957f6b7a7ffecc3871c33645df9edbe90b8b498cf3372847328",
+  "resultHashPolicy": "SHA256 exact UTF8 local result bytes including final newline",
+  "localResultRelativePath": "data/cache/research/football/poisson-chronological-backtest-v1/cross-league-v1/football-poisson-cross-league-backtest-v1.json",
+  "eplReference": {
+    "leagueId": 39,
+    "league": "EPL",
+    "summary": {
+      "TOTAL_TARGET_MATCHES": 380,
+      "PREDICTED_MATCHES": 353,
+      "PASS_MATCHES": 27,
+      "COVERAGE": 0.9289473684210526,
+      "BACKTEST_CLASSIFICATION": "BASELINE_MEASURED",
+      "VALIDATED_MODEL": false
+    },
+    "poisson": {
+      "count": 353,
+      "accuracy": 0.5184135977337111,
+      "logLoss": 1.0073175622022543,
+      "brier": 0.6027274350952274,
+      "logLossFloorCount": 0,
+      "classMetrics": [
+        {
+          "outcome": "HOME",
+          "predicted": 228,
+          "actual": 143,
+          "correct": 114
+        },
+        {
+          "outcome": "DRAW",
+          "predicted": 0,
+          "actual": 85,
+          "correct": 0
+        },
+        {
+          "outcome": "AWAY",
+          "predicted": 125,
+          "actual": 125,
+          "correct": 69
+        }
+      ],
+      "drawRecall": 0,
+      "meanPHome": 0.4360329541018299,
+      "meanPDraw": 0.2200081330664167,
+      "meanPAway": 0.34395891283175356,
+      "confusionMatrix": {
+        "rows": [
+          "HOME",
+          "DRAW",
+          "AWAY"
+        ],
+        "columns": [
+          "HOME",
+          "DRAW",
+          "AWAY"
+        ],
+        "values": [
+          [
+            114,
+            0,
+            29
+          ],
+          [
+            58,
+            0,
+            27
+          ],
+          [
+            56,
+            0,
+            69
+          ]
+        ]
+      },
+      "calibration": [
+        {
+          "outcome": "HOME",
+          "lower": 0,
+          "upper": 0.1,
+          "upperInclusive": false,
+          "predictionCount": 8,
+          "meanPredictedProbability": 0.07648397958970288,
+          "observedFrequency": 0,
+          "lowSample": true
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.1,
+          "upper": 0.2,
+          "upperInclusive": false,
+          "predictionCount": 26,
+          "meanPredictedProbability": 0.15823741149214776,
+          "observedFrequency": 0.15384615384615385,
+          "lowSample": false
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.2,
+          "upper": 0.3,
+          "upperInclusive": false,
+          "predictionCount": 51,
+          "meanPredictedProbability": 0.2552298880471193,
+          "observedFrequency": 0.2549019607843137,
+          "lowSample": false
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.3,
+          "upper": 0.4,
+          "upperInclusive": false,
+          "predictionCount": 54,
+          "meanPredictedProbability": 0.35722881424210134,
+          "observedFrequency": 0.35185185185185186,
+          "lowSample": false
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.4,
+          "upper": 0.5,
+          "upperInclusive": false,
+          "predictionCount": 94,
+          "meanPredictedProbability": 0.4487872512338379,
+          "observedFrequency": 0.425531914893617,
+          "lowSample": false
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.5,
+          "upper": 0.6,
+          "upperInclusive": false,
+          "predictionCount": 56,
+          "meanPredictedProbability": 0.558808137966331,
+          "observedFrequency": 0.48214285714285715,
+          "lowSample": false
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.6,
+          "upper": 0.7,
+          "upperInclusive": false,
+          "predictionCount": 41,
+          "meanPredictedProbability": 0.6405160904258644,
+          "observedFrequency": 0.5853658536585366,
+          "lowSample": false
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.7,
+          "upper": 0.8,
+          "upperInclusive": false,
+          "predictionCount": 21,
+          "meanPredictedProbability": 0.7384917614730091,
+          "observedFrequency": 0.6666666666666666,
+          "lowSample": false
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.8,
+          "upper": 0.9,
+          "upperInclusive": false,
+          "predictionCount": 2,
+          "meanPredictedProbability": 0.8188819812334462,
+          "observedFrequency": 1,
+          "lowSample": true
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.9,
+          "upper": 1,
+          "upperInclusive": true,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0,
+          "upper": 0.1,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.1,
+          "upper": 0.2,
+          "upperInclusive": false,
+          "predictionCount": 83,
+          "meanPredictedProbability": 0.171376953819441,
+          "observedFrequency": 0.1927710843373494,
+          "lowSample": false
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.2,
+          "upper": 0.3,
+          "upperInclusive": false,
+          "predictionCount": 270,
+          "meanPredictedProbability": 0.23495771779789454,
+          "observedFrequency": 0.25555555555555554,
+          "lowSample": false
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.3,
+          "upper": 0.4,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.4,
+          "upper": 0.5,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.5,
+          "upper": 0.6,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.6,
+          "upper": 0.7,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.7,
+          "upper": 0.8,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.8,
+          "upper": 0.9,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.9,
+          "upper": 1,
+          "upperInclusive": true,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0,
+          "upper": 0.1,
+          "upperInclusive": false,
+          "predictionCount": 10,
+          "meanPredictedProbability": 0.08172656785221366,
+          "observedFrequency": 0.1,
+          "lowSample": true
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.1,
+          "upper": 0.2,
+          "upperInclusive": false,
+          "predictionCount": 66,
+          "meanPredictedProbability": 0.15954777939402057,
+          "observedFrequency": 0.22727272727272727,
+          "lowSample": false
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.2,
+          "upper": 0.3,
+          "upperInclusive": false,
+          "predictionCount": 84,
+          "meanPredictedProbability": 0.2518294509496669,
+          "observedFrequency": 0.25,
+          "lowSample": false
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.3,
+          "upper": 0.4,
+          "upperInclusive": false,
+          "predictionCount": 80,
+          "meanPredictedProbability": 0.3465303474752975,
+          "observedFrequency": 0.275,
+          "lowSample": false
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.4,
+          "upper": 0.5,
+          "upperInclusive": false,
+          "predictionCount": 45,
+          "meanPredictedProbability": 0.44080917241369316,
+          "observedFrequency": 0.4888888888888889,
+          "lowSample": false
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.5,
+          "upper": 0.6,
+          "upperInclusive": false,
+          "predictionCount": 38,
+          "meanPredictedProbability": 0.5444984108242142,
+          "observedFrequency": 0.5789473684210527,
+          "lowSample": false
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.6,
+          "upper": 0.7,
+          "upperInclusive": false,
+          "predictionCount": 18,
+          "meanPredictedProbability": 0.6406609050162189,
+          "observedFrequency": 0.7222222222222222,
+          "lowSample": true
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.7,
+          "upper": 0.8,
+          "upperInclusive": false,
+          "predictionCount": 8,
+          "meanPredictedProbability": 0.7380480846932158,
+          "observedFrequency": 0.75,
+          "lowSample": true
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.8,
+          "upper": 0.9,
+          "upperInclusive": false,
+          "predictionCount": 4,
+          "meanPredictedProbability": 0.8075855238779275,
+          "observedFrequency": 0.75,
+          "lowSample": true
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.9,
+          "upper": 1,
+          "upperInclusive": true,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        }
+      ]
+    },
+    "comparator": {
+      "name": "ELIGIBLE_HISTORY_EMPIRICAL_1X2",
+      "count": 353,
+      "accuracy": 0.40509915014164305,
+      "logLoss": 1.0823811530007903,
+      "brier": 0.6565732728056762,
+      "logLossFloorCount": 0,
+      "classMetrics": [
+        {
+          "outcome": "HOME",
+          "predicted": 353,
+          "actual": 143,
+          "correct": 143
+        },
+        {
+          "outcome": "DRAW",
+          "predicted": 0,
+          "actual": 85,
+          "correct": 0
+        },
+        {
+          "outcome": "AWAY",
+          "predicted": 0,
+          "actual": 125,
+          "correct": 0
+        }
+      ],
+      "drawRecall": 0,
+      "meanPHome": 0.4316403382111371,
+      "meanPDraw": 0.24165404027805384,
+      "meanPAway": 0.3267056215108093,
+      "confusionMatrix": {
+        "rows": [
+          "HOME",
+          "DRAW",
+          "AWAY"
+        ],
+        "columns": [
+          "HOME",
+          "DRAW",
+          "AWAY"
+        ],
+        "values": [
+          [
+            143,
+            0,
+            0
+          ],
+          [
+            85,
+            0,
+            0
+          ],
+          [
+            125,
+            0,
+            0
+          ]
+        ]
+      },
+      "calibration": [
+        {
+          "outcome": "HOME",
+          "lower": 0,
+          "upper": 0.1,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.1,
+          "upper": 0.2,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.2,
+          "upper": 0.3,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.3,
+          "upper": 0.4,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.4,
+          "upper": 0.5,
+          "upperInclusive": false,
+          "predictionCount": 353,
+          "meanPredictedProbability": 0.4316403382111371,
+          "observedFrequency": 0.40509915014164305,
+          "lowSample": false
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.5,
+          "upper": 0.6,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.6,
+          "upper": 0.7,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.7,
+          "upper": 0.8,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.8,
+          "upper": 0.9,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "HOME",
+          "lower": 0.9,
+          "upper": 1,
+          "upperInclusive": true,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0,
+          "upper": 0.1,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.1,
+          "upper": 0.2,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.2,
+          "upper": 0.3,
+          "upperInclusive": false,
+          "predictionCount": 353,
+          "meanPredictedProbability": 0.24165404027805384,
+          "observedFrequency": 0.24079320113314448,
+          "lowSample": false
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.3,
+          "upper": 0.4,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.4,
+          "upper": 0.5,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.5,
+          "upper": 0.6,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.6,
+          "upper": 0.7,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.7,
+          "upper": 0.8,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.8,
+          "upper": 0.9,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "DRAW",
+          "lower": 0.9,
+          "upper": 1,
+          "upperInclusive": true,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0,
+          "upper": 0.1,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.1,
+          "upper": 0.2,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.2,
+          "upper": 0.3,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.3,
+          "upper": 0.4,
+          "upperInclusive": false,
+          "predictionCount": 353,
+          "meanPredictedProbability": 0.3267056215108093,
+          "observedFrequency": 0.35410764872521244,
+          "lowSample": false
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.4,
+          "upper": 0.5,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.5,
+          "upper": 0.6,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.6,
+          "upper": 0.7,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.7,
+          "upper": 0.8,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.8,
+          "upper": 0.9,
+          "upperInclusive": false,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        },
+        {
+          "outcome": "AWAY",
+          "lower": 0.9,
+          "upper": 1,
+          "upperInclusive": true,
+          "predictionCount": 0,
+          "meanPredictedProbability": null,
+          "observedFrequency": null,
+          "lowSample": true
+        }
+      ]
+    },
+    "resultSha256": "2c02e3685496c07fd533e6f9876b89c48b978a773229b77ed3c8f55ea3a1bb6c",
+    "rerun": false
+  },
+  "leagueResults": [
+    {
+      "leagueId": 140,
+      "league": "La Liga",
+      "archiveSha256": "7e47fe1bdae7d99520d3b50f71d89d263558e61c11ec99c51cadd10a26ef4941",
+      "protocolSha256": "6bedb86389f62afae5feebdd098b9ab6d4b2c151719ef267309d562f8df3e31f",
+      "summary": {
+        "TOTAL_TARGET_MATCHES": 380,
+        "PREDICTED_MATCHES": 352,
+        "PASS_MATCHES": 28,
+        "COVERAGE": 0.9263157894736842,
+        "BACKTEST_CLASSIFICATION": "BASELINE_MEASURED",
+        "VALIDATED_MODEL": false
+      },
+      "poisson": {
+        "count": 352,
+        "accuracy": 0.5113636363636364,
+        "logLoss": 1.0001070498512572,
+        "brier": 0.5962352418750473,
+        "logLossFloorCount": 0,
+        "classMetrics": [
+          {
+            "outcome": "HOME",
+            "predicted": 236,
+            "actual": 155,
+            "correct": 125
+          },
+          {
+            "outcome": "DRAW",
+            "predicted": 1,
+            "actual": 90,
+            "correct": 0
+          },
+          {
+            "outcome": "AWAY",
+            "predicted": 115,
+            "actual": 107,
+            "correct": 55
+          }
+        ],
+        "drawRecall": 0,
+        "meanPHome": 0.44117695163687976,
+        "meanPDraw": 0.25069238789409226,
+        "meanPAway": 0.3081306604690275,
+        "confusionMatrix": {
+          "rows": [
+            "HOME",
+            "DRAW",
+            "AWAY"
+          ],
+          "columns": [
+            "HOME",
+            "DRAW",
+            "AWAY"
+          ],
+          "values": [
+            [
+              125,
+              0,
+              30
+            ],
+            [
+              60,
+              0,
+              30
+            ],
+            [
+              51,
+              1,
+              55
+            ]
+          ]
+        },
+        "calibration": [
+          {
+            "outcome": "HOME",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 1,
+            "meanPredictedProbability": 0.05288156313027803,
+            "observedFrequency": 0,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 22,
+            "meanPredictedProbability": 0.16364595083643985,
+            "observedFrequency": 0.22727272727272727,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 49,
+            "meanPredictedProbability": 0.2508226987407838,
+            "observedFrequency": 0.22448979591836735,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 88,
+            "meanPredictedProbability": 0.3540269964558039,
+            "observedFrequency": 0.3181818181818182,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 76,
+            "meanPredictedProbability": 0.4485231322976422,
+            "observedFrequency": 0.4342105263157895,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 49,
+            "meanPredictedProbability": 0.5479107442037914,
+            "observedFrequency": 0.6122448979591837,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 35,
+            "meanPredictedProbability": 0.6556837169374602,
+            "observedFrequency": 0.6571428571428571,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 24,
+            "meanPredictedProbability": 0.7406917271842288,
+            "observedFrequency": 0.75,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 8,
+            "meanPredictedProbability": 0.816948812800189,
+            "observedFrequency": 0.875,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 1,
+            "meanPredictedProbability": 0.09332968733952879,
+            "observedFrequency": 0,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 58,
+            "meanPredictedProbability": 0.16411255650762643,
+            "observedFrequency": 0.15517241379310345,
+            "lowSample": false
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 230,
+            "meanPredictedProbability": 0.254036455432536,
+            "observedFrequency": 0.28695652173913044,
+            "lowSample": false
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 63,
+            "meanPredictedProbability": 0.3206901241977027,
+            "observedFrequency": 0.23809523809523808,
+            "lowSample": false
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 21,
+            "meanPredictedProbability": 0.07829821136139066,
+            "observedFrequency": 0.047619047619047616,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 65,
+            "meanPredictedProbability": 0.152019609365537,
+            "observedFrequency": 0.18461538461538463,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 94,
+            "meanPredictedProbability": 0.25187194662484647,
+            "observedFrequency": 0.2127659574468085,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 93,
+            "meanPredictedProbability": 0.35051523771872706,
+            "observedFrequency": 0.3548387096774194,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 41,
+            "meanPredictedProbability": 0.444457344568725,
+            "observedFrequency": 0.5121951219512195,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 24,
+            "meanPredictedProbability": 0.5487123298471109,
+            "observedFrequency": 0.5416666666666666,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 11,
+            "meanPredictedProbability": 0.6319478284575549,
+            "observedFrequency": 0.36363636363636365,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 2,
+            "meanPredictedProbability": 0.7374825459714143,
+            "observedFrequency": 1,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 1,
+            "meanPredictedProbability": 0.8443370985471619,
+            "observedFrequency": 1,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          }
+        ]
+      },
+      "comparator": {
+        "name": "ELIGIBLE_HISTORY_EMPIRICAL_1X2",
+        "count": 352,
+        "accuracy": 0.4403409090909091,
+        "logLoss": 1.075103754336168,
+        "brier": 0.6503228546458522,
+        "logLossFloorCount": 0,
+        "classMetrics": [
+          {
+            "outcome": "HOME",
+            "predicted": 352,
+            "actual": 155,
+            "correct": 155
+          },
+          {
+            "outcome": "DRAW",
+            "predicted": 0,
+            "actual": 90,
+            "correct": 0
+          },
+          {
+            "outcome": "AWAY",
+            "predicted": 0,
+            "actual": 107,
+            "correct": 0
+          }
+        ],
+        "drawRecall": 0,
+        "meanPHome": 0.4449092304242848,
+        "meanPDraw": 0.26995217936583304,
+        "meanPAway": 0.2851385902098826,
+        "confusionMatrix": {
+          "rows": [
+            "HOME",
+            "DRAW",
+            "AWAY"
+          ],
+          "columns": [
+            "HOME",
+            "DRAW",
+            "AWAY"
+          ],
+          "values": [
+            [
+              155,
+              0,
+              0
+            ],
+            [
+              90,
+              0,
+              0
+            ],
+            [
+              107,
+              0,
+              0
+            ]
+          ]
+        },
+        "calibration": [
+          {
+            "outcome": "HOME",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 352,
+            "meanPredictedProbability": 0.4449092304242848,
+            "observedFrequency": 0.4403409090909091,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 349,
+            "meanPredictedProbability": 0.2696900722363073,
+            "observedFrequency": 0.25787965616045844,
+            "lowSample": false
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 3,
+            "meanPredictedProbability": 0.3004439754339931,
+            "observedFrequency": 0,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 320,
+            "meanPredictedProbability": 0.28336425365768425,
+            "observedFrequency": 0.3125,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 32,
+            "meanPredictedProbability": 0.30288195573186466,
+            "observedFrequency": 0.21875,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          }
+        ]
+      },
+      "predictionSha256": "9d2bb829b9ba4ff171e7fcd29b5b9fbf316de55f853eed79580ef2f7e6a5f97c"
+    },
+    {
+      "leagueId": 135,
+      "league": "Serie A",
+      "archiveSha256": "0818f8ea0c84ab292245ec3c45c580750b837fe7be3406c06a645b5ff7295d68",
+      "protocolSha256": "6bedb86389f62afae5feebdd098b9ab6d4b2c151719ef267309d562f8df3e31f",
+      "summary": {
+        "TOTAL_TARGET_MATCHES": 380,
+        "PREDICTED_MATCHES": 351,
+        "PASS_MATCHES": 29,
+        "COVERAGE": 0.9236842105263158,
+        "BACKTEST_CLASSIFICATION": "BASELINE_MEASURED",
+        "VALIDATED_MODEL": false
+      },
+      "poisson": {
+        "count": 351,
+        "accuracy": 0.5356125356125356,
+        "logLoss": 0.9915049278920861,
+        "brier": 0.5931659662252553,
+        "logLossFloorCount": 0,
+        "classMetrics": [
+          {
+            "outcome": "HOME",
+            "predicted": 208,
+            "actual": 139,
+            "correct": 111
+          },
+          {
+            "outcome": "DRAW",
+            "predicted": 3,
+            "actual": 99,
+            "correct": 2
+          },
+          {
+            "outcome": "AWAY",
+            "predicted": 140,
+            "actual": 113,
+            "correct": 75
+          }
+        ],
+        "drawRecall": 0.020202020202020204,
+        "meanPHome": 0.41581872568777833,
+        "meanPDraw": 0.24871884247565867,
+        "meanPAway": 0.3354624318365632,
+        "confusionMatrix": {
+          "rows": [
+            "HOME",
+            "DRAW",
+            "AWAY"
+          ],
+          "columns": [
+            "HOME",
+            "DRAW",
+            "AWAY"
+          ],
+          "values": [
+            [
+              111,
+              0,
+              28
+            ],
+            [
+              60,
+              2,
+              37
+            ],
+            [
+              37,
+              1,
+              75
+            ]
+          ]
+        },
+        "calibration": [
+          {
+            "outcome": "HOME",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 6,
+            "meanPredictedProbability": 0.07970120207750625,
+            "observedFrequency": 0,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 25,
+            "meanPredictedProbability": 0.15880733090156074,
+            "observedFrequency": 0.08,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 66,
+            "meanPredictedProbability": 0.25082415664738655,
+            "observedFrequency": 0.24242424242424243,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 71,
+            "meanPredictedProbability": 0.35249394921575655,
+            "observedFrequency": 0.23943661971830985,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 67,
+            "meanPredictedProbability": 0.45189790816895553,
+            "observedFrequency": 0.5074626865671642,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 62,
+            "meanPredictedProbability": 0.5488022847928751,
+            "observedFrequency": 0.5645161290322581,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 46,
+            "meanPredictedProbability": 0.6469636195779429,
+            "observedFrequency": 0.6086956521739131,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 8,
+            "meanPredictedProbability": 0.7324111866620254,
+            "observedFrequency": 0.875,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 38,
+            "meanPredictedProbability": 0.17603609906157222,
+            "observedFrequency": 0.18421052631578946,
+            "lowSample": false
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 277,
+            "meanPredictedProbability": 0.24883626396492922,
+            "observedFrequency": 0.2779783393501805,
+            "lowSample": false
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 36,
+            "meanPredictedProbability": 0.3245360229536403,
+            "observedFrequency": 0.4166666666666667,
+            "lowSample": false
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 3,
+            "meanPredictedProbability": 0.08388059327386864,
+            "observedFrequency": 0,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 81,
+            "meanPredictedProbability": 0.1561997081329303,
+            "observedFrequency": 0.12345679012345678,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 89,
+            "meanPredictedProbability": 0.25077105450683596,
+            "observedFrequency": 0.15730337078651685,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 64,
+            "meanPredictedProbability": 0.3529623619237996,
+            "observedFrequency": 0.375,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 55,
+            "meanPredictedProbability": 0.4486811396706706,
+            "observedFrequency": 0.5272727272727272,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 39,
+            "meanPredictedProbability": 0.5474485187124791,
+            "observedFrequency": 0.5897435897435898,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 11,
+            "meanPredictedProbability": 0.6510912737886072,
+            "observedFrequency": 0.5454545454545454,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 8,
+            "meanPredictedProbability": 0.7390861338660039,
+            "observedFrequency": 0.75,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 1,
+            "meanPredictedProbability": 0.8326324275368444,
+            "observedFrequency": 1,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          }
+        ]
+      },
+      "comparator": {
+        "name": "ELIGIBLE_HISTORY_EMPIRICAL_1X2",
+        "count": 351,
+        "accuracy": 0.396011396011396,
+        "logLoss": 1.0932957426728327,
+        "brier": 0.6629184682582107,
+        "logLossFloorCount": 0,
+        "classMetrics": [
+          {
+            "outcome": "HOME",
+            "predicted": 351,
+            "actual": 139,
+            "correct": 139
+          },
+          {
+            "outcome": "DRAW",
+            "predicted": 0,
+            "actual": 99,
+            "correct": 0
+          },
+          {
+            "outcome": "AWAY",
+            "predicted": 0,
+            "actual": 113,
+            "correct": 0
+          }
+        ],
+        "drawRecall": 0,
+        "meanPHome": 0.3953942122860473,
+        "meanPDraw": 0.3054054106638409,
+        "meanPAway": 0.29920037705011215,
+        "confusionMatrix": {
+          "rows": [
+            "HOME",
+            "DRAW",
+            "AWAY"
+          ],
+          "columns": [
+            "HOME",
+            "DRAW",
+            "AWAY"
+          ],
+          "values": [
+            [
+              139,
+              0,
+              0
+            ],
+            [
+              99,
+              0,
+              0
+            ],
+            [
+              113,
+              0,
+              0
+            ]
+          ]
+        },
+        "calibration": [
+          {
+            "outcome": "HOME",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 219,
+            "meanPredictedProbability": 0.3852078701291381,
+            "observedFrequency": 0.3926940639269406,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 132,
+            "meanPredictedProbability": 0.4122942799554643,
+            "observedFrequency": 0.4015151515151515,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 72,
+            "meanPredictedProbability": 0.29535802609466116,
+            "observedFrequency": 0.2916666666666667,
+            "lowSample": false
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 279,
+            "meanPredictedProbability": 0.30799828410104857,
+            "observedFrequency": 0.27956989247311825,
+            "lowSample": false
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 168,
+            "meanPredictedProbability": 0.28589138254539803,
+            "observedFrequency": 0.30952380952380953,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 183,
+            "meanPredictedProbability": 0.3114184703659148,
+            "observedFrequency": 0.3333333333333333,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          }
+        ]
+      },
+      "predictionSha256": "2010ef134c1243f343b18ec5cc3380b4401cf672f3a2aa8c703f3b3a82de842a"
+    },
+    {
+      "leagueId": 78,
+      "league": "Bundesliga",
+      "archiveSha256": "5ada547e57350befb660a44253a5c3f14c813a2e4c5423ad9f74ced3dd2c37c6",
+      "protocolSha256": "6bedb86389f62afae5feebdd098b9ab6d4b2c151719ef267309d562f8df3e31f",
+      "summary": {
+        "TOTAL_TARGET_MATCHES": 306,
+        "PREDICTED_MATCHES": 286,
+        "PASS_MATCHES": 20,
+        "COVERAGE": 0.934640522875817,
+        "BACKTEST_CLASSIFICATION": "BASELINE_MEASURED",
+        "VALIDATED_MODEL": false
+      },
+      "poisson": {
+        "count": 286,
+        "accuracy": 0.4755244755244755,
+        "logLoss": 1.0446896587374959,
+        "brier": 0.6279990190911756,
+        "logLossFloorCount": 0,
+        "classMetrics": [
+          {
+            "outcome": "HOME",
+            "predicted": 180,
+            "actual": 111,
+            "correct": 84
+          },
+          {
+            "outcome": "DRAW",
+            "predicted": 1,
+            "actual": 74,
+            "correct": 0
+          },
+          {
+            "outcome": "AWAY",
+            "predicted": 105,
+            "actual": 101,
+            "correct": 52
+          }
+        ],
+        "drawRecall": 0,
+        "meanPHome": 0.45013443809024156,
+        "meanPDraw": 0.21870731293153994,
+        "meanPAway": 0.33115824897821805,
+        "confusionMatrix": {
+          "rows": [
+            "HOME",
+            "DRAW",
+            "AWAY"
+          ],
+          "columns": [
+            "HOME",
+            "DRAW",
+            "AWAY"
+          ],
+          "values": [
+            [
+              84,
+              1,
+              26
+            ],
+            [
+              47,
+              0,
+              27
+            ],
+            [
+              49,
+              0,
+              52
+            ]
+          ]
+        },
+        "calibration": [
+          {
+            "outcome": "HOME",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 3,
+            "meanPredictedProbability": 0.09537111327457436,
+            "observedFrequency": 0,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 13,
+            "meanPredictedProbability": 0.1468379915089627,
+            "observedFrequency": 0,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 42,
+            "meanPredictedProbability": 0.26126404846519596,
+            "observedFrequency": 0.3333333333333333,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 64,
+            "meanPredictedProbability": 0.3518108306701792,
+            "observedFrequency": 0.265625,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 56,
+            "meanPredictedProbability": 0.4440867175840382,
+            "observedFrequency": 0.32142857142857145,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 43,
+            "meanPredictedProbability": 0.5402898850499548,
+            "observedFrequency": 0.5116279069767442,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 39,
+            "meanPredictedProbability": 0.6467725035539676,
+            "observedFrequency": 0.6410256410256411,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 20,
+            "meanPredictedProbability": 0.7339963720682735,
+            "observedFrequency": 0.55,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 5,
+            "meanPredictedProbability": 0.8293113289489534,
+            "observedFrequency": 0.8,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 1,
+            "meanPredictedProbability": 0.9025258993700127,
+            "observedFrequency": 0,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 3,
+            "meanPredictedProbability": 0.08321470674106997,
+            "observedFrequency": 0,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 80,
+            "meanPredictedProbability": 0.1728455012317332,
+            "observedFrequency": 0.2875,
+            "lowSample": false
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 196,
+            "meanPredictedProbability": 0.23598660372524205,
+            "observedFrequency": 0.25510204081632654,
+            "lowSample": false
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 7,
+            "meanPredictedProbability": 0.3170904213587343,
+            "observedFrequency": 0.14285714285714285,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 13,
+            "meanPredictedProbability": 0.07222920033029118,
+            "observedFrequency": 0.07692307692307693,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 53,
+            "meanPredictedProbability": 0.14939947358321579,
+            "observedFrequency": 0.18867924528301888,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 63,
+            "meanPredictedProbability": 0.25278082087584053,
+            "observedFrequency": 0.3492063492063492,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 63,
+            "meanPredictedProbability": 0.3469763933933917,
+            "observedFrequency": 0.3492063492063492,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 54,
+            "meanPredictedProbability": 0.44524068406112494,
+            "observedFrequency": 0.4444444444444444,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 24,
+            "meanPredictedProbability": 0.5393369636668797,
+            "observedFrequency": 0.5,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 9,
+            "meanPredictedProbability": 0.6528460901898985,
+            "observedFrequency": 0.4444444444444444,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 7,
+            "meanPredictedProbability": 0.7438148750842319,
+            "observedFrequency": 0.8571428571428571,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          }
+        ]
+      },
+      "comparator": {
+        "name": "ELIGIBLE_HISTORY_EMPIRICAL_1X2",
+        "count": 286,
+        "accuracy": 0.3881118881118881,
+        "logLoss": 1.0894737912732002,
+        "brier": 0.6609997579564437,
+        "logLossFloorCount": 0,
+        "classMetrics": [
+          {
+            "outcome": "HOME",
+            "predicted": 286,
+            "actual": 111,
+            "correct": 111
+          },
+          {
+            "outcome": "DRAW",
+            "predicted": 0,
+            "actual": 74,
+            "correct": 0
+          },
+          {
+            "outcome": "AWAY",
+            "predicted": 0,
+            "actual": 101,
+            "correct": 0
+          }
+        ],
+        "drawRecall": 0,
+        "meanPHome": 0.42680590876483193,
+        "meanPDraw": 0.25505139580077313,
+        "meanPAway": 0.3181426954343941,
+        "confusionMatrix": {
+          "rows": [
+            "HOME",
+            "DRAW",
+            "AWAY"
+          ],
+          "columns": [
+            "HOME",
+            "DRAW",
+            "AWAY"
+          ],
+          "values": [
+            [
+              111,
+              0,
+              0
+            ],
+            [
+              74,
+              0,
+              0
+            ],
+            [
+              101,
+              0,
+              0
+            ]
+          ]
+        },
+        "calibration": [
+          {
+            "outcome": "HOME",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 286,
+            "meanPredictedProbability": 0.42680590876483193,
+            "observedFrequency": 0.3881118881118881,
+            "lowSample": false
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "HOME",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 286,
+            "meanPredictedProbability": 0.25505139580077313,
+            "observedFrequency": 0.25874125874125875,
+            "lowSample": false
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "DRAW",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0,
+            "upper": 0.1,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.1,
+            "upper": 0.2,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.2,
+            "upper": 0.3,
+            "upperInclusive": false,
+            "predictionCount": 32,
+            "meanPredictedProbability": 0.2983654343190424,
+            "observedFrequency": 0.28125,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.3,
+            "upper": 0.4,
+            "upperInclusive": false,
+            "predictionCount": 254,
+            "meanPredictedProbability": 0.320634318881998,
+            "observedFrequency": 0.36220472440944884,
+            "lowSample": false
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.4,
+            "upper": 0.5,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.5,
+            "upper": 0.6,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.6,
+            "upper": 0.7,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.7,
+            "upper": 0.8,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.8,
+            "upper": 0.9,
+            "upperInclusive": false,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          },
+          {
+            "outcome": "AWAY",
+            "lower": 0.9,
+            "upper": 1,
+            "upperInclusive": true,
+            "predictionCount": 0,
+            "meanPredictedProbability": null,
+            "observedFrequency": null,
+            "lowSample": true
+          }
+        ]
+      },
+      "predictionSha256": "300e83002bb4af6ebd9719a8ad97c273fa6d701abf95a4222acfea8892302ae8"
+    }
+  ],
+  "comparison": [
+    {
+      "League": "EPL",
+      "Targets": 380,
+      "Predicted": 353,
+      "PASS": 27,
+      "Coverage": 0.9289473684210526,
+      "Accuracy": 0.5184135977337111,
+      "LogLoss": 1.0073175622022543,
+      "Brier": 0.6027274350952274,
+      "DrawPredicted": 0,
+      "DrawActual": 85,
+      "DrawRecall": 0,
+      "ComparatorAccuracy": 0.40509915014164305,
+      "ComparatorLogLoss": 1.0823811530007903,
+      "ComparatorBrier": 0.6565732728056762,
+      "Classification": "BASELINE_MEASURED"
+    },
+    {
+      "League": "La Liga",
+      "Targets": 380,
+      "Predicted": 352,
+      "PASS": 28,
+      "Coverage": 0.9263157894736842,
+      "Accuracy": 0.5113636363636364,
+      "LogLoss": 1.0001070498512572,
+      "Brier": 0.5962352418750473,
+      "DrawPredicted": 1,
+      "DrawActual": 90,
+      "DrawRecall": 0,
+      "ComparatorAccuracy": 0.4403409090909091,
+      "ComparatorLogLoss": 1.075103754336168,
+      "ComparatorBrier": 0.6503228546458522,
+      "Classification": "BASELINE_MEASURED"
+    },
+    {
+      "League": "Serie A",
+      "Targets": 380,
+      "Predicted": 351,
+      "PASS": 29,
+      "Coverage": 0.9236842105263158,
+      "Accuracy": 0.5356125356125356,
+      "LogLoss": 0.9915049278920861,
+      "Brier": 0.5931659662252553,
+      "DrawPredicted": 3,
+      "DrawActual": 99,
+      "DrawRecall": 0.020202020202020204,
+      "ComparatorAccuracy": 0.396011396011396,
+      "ComparatorLogLoss": 1.0932957426728327,
+      "ComparatorBrier": 0.6629184682582107,
+      "Classification": "BASELINE_MEASURED"
+    },
+    {
+      "League": "Bundesliga",
+      "Targets": 306,
+      "Predicted": 286,
+      "PASS": 20,
+      "Coverage": 0.934640522875817,
+      "Accuracy": 0.4755244755244755,
+      "LogLoss": 1.0446896587374959,
+      "Brier": 0.6279990190911756,
+      "DrawPredicted": 1,
+      "DrawActual": 74,
+      "DrawRecall": 0,
+      "ComparatorAccuracy": 0.3881118881118881,
+      "ComparatorLogLoss": 1.0894737912732002,
+      "ComparatorBrier": 0.6609997579564437,
+      "Classification": "BASELINE_MEASURED"
+    }
+  ],
+  "crossLeagueQuestions": {
+    "Q1": {
+      "question": "Accuracy reproduction relative to EPL, descriptively only",
+      "values": [
+        {
+          "league": "EPL",
+          "accuracy": 0.5184135977337111,
+          "predicted": 353
+        },
+        {
+          "league": "La Liga",
+          "accuracy": 0.5113636363636364,
+          "predicted": 352
+        },
+        {
+          "league": "Serie A",
+          "accuracy": 0.5356125356125356,
+          "predicted": 351
+        },
+        {
+          "league": "Bundesliga",
+          "accuracy": 0.4755244755244755,
+          "predicted": 286
+        }
+      ],
+      "interpretation": "No preregistered numeric similarity threshold; report values without declaring equivalence."
+    },
+    "Q2": {
+      "question": "Per-league fixed log loss / Brier versus paired comparator",
+      "values": [
+        {
+          "league": "EPL",
+          "poissonLogLoss": 1.0073175622022543,
+          "comparatorLogLoss": 1.0823811530007903,
+          "poissonBrier": 0.6027274350952274,
+          "comparatorBrier": 0.6565732728056762
+        },
+        {
+          "league": "La Liga",
+          "poissonLogLoss": 1.0001070498512572,
+          "comparatorLogLoss": 1.075103754336168,
+          "poissonBrier": 0.5962352418750473,
+          "comparatorBrier": 0.6503228546458522
+        },
+        {
+          "league": "Serie A",
+          "poissonLogLoss": 0.9915049278920861,
+          "comparatorLogLoss": 1.0932957426728327,
+          "poissonBrier": 0.5931659662252553,
+          "comparatorBrier": 0.6629184682582107
+        },
+        {
+          "league": "Bundesliga",
+          "poissonLogLoss": 1.0446896587374959,
+          "comparatorLogLoss": 1.0894737912732002,
+          "poissonBrier": 0.6279990190911756,
+          "comparatorBrier": 0.6609997579564437
+        }
+      ]
+    },
+    "Q3": {
+      "question": "Does DRAW predicted = 0 recur?",
+      "values": [
+        {
+          "league": "EPL",
+          "predicted": 0,
+          "actual": 85,
+          "recall": 0
+        },
+        {
+          "league": "La Liga",
+          "predicted": 1,
+          "actual": 90,
+          "recall": 0
+        },
+        {
+          "league": "Serie A",
+          "predicted": 3,
+          "actual": 99,
+          "recall": 0.020202020202020204
+        },
+        {
+          "league": "Bundesliga",
+          "predicted": 1,
+          "actual": 74,
+          "recall": 0
+        }
+      ],
+      "allFourZero": false
+    },
+    "Q4": {
+      "question": "HOME/DRAW/AWAY calibration differences",
+      "values": [
+        {
+          "league": "EPL",
+          "poisson": [
+            {
+              "outcome": "HOME",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 8,
+              "meanPredictedProbability": 0.07648397958970288,
+              "observedFrequency": 0,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 26,
+              "meanPredictedProbability": 0.15823741149214776,
+              "observedFrequency": 0.15384615384615385,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 51,
+              "meanPredictedProbability": 0.2552298880471193,
+              "observedFrequency": 0.2549019607843137,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 54,
+              "meanPredictedProbability": 0.35722881424210134,
+              "observedFrequency": 0.35185185185185186,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 94,
+              "meanPredictedProbability": 0.4487872512338379,
+              "observedFrequency": 0.425531914893617,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 56,
+              "meanPredictedProbability": 0.558808137966331,
+              "observedFrequency": 0.48214285714285715,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 41,
+              "meanPredictedProbability": 0.6405160904258644,
+              "observedFrequency": 0.5853658536585366,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 21,
+              "meanPredictedProbability": 0.7384917614730091,
+              "observedFrequency": 0.6666666666666666,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 2,
+              "meanPredictedProbability": 0.8188819812334462,
+              "observedFrequency": 1,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 83,
+              "meanPredictedProbability": 0.171376953819441,
+              "observedFrequency": 0.1927710843373494,
+              "lowSample": false
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 270,
+              "meanPredictedProbability": 0.23495771779789454,
+              "observedFrequency": 0.25555555555555554,
+              "lowSample": false
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 10,
+              "meanPredictedProbability": 0.08172656785221366,
+              "observedFrequency": 0.1,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 66,
+              "meanPredictedProbability": 0.15954777939402057,
+              "observedFrequency": 0.22727272727272727,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 84,
+              "meanPredictedProbability": 0.2518294509496669,
+              "observedFrequency": 0.25,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 80,
+              "meanPredictedProbability": 0.3465303474752975,
+              "observedFrequency": 0.275,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 45,
+              "meanPredictedProbability": 0.44080917241369316,
+              "observedFrequency": 0.4888888888888889,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 38,
+              "meanPredictedProbability": 0.5444984108242142,
+              "observedFrequency": 0.5789473684210527,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 18,
+              "meanPredictedProbability": 0.6406609050162189,
+              "observedFrequency": 0.7222222222222222,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 8,
+              "meanPredictedProbability": 0.7380480846932158,
+              "observedFrequency": 0.75,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 4,
+              "meanPredictedProbability": 0.8075855238779275,
+              "observedFrequency": 0.75,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            }
+          ],
+          "comparator": [
+            {
+              "outcome": "HOME",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 353,
+              "meanPredictedProbability": 0.4316403382111371,
+              "observedFrequency": 0.40509915014164305,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 353,
+              "meanPredictedProbability": 0.24165404027805384,
+              "observedFrequency": 0.24079320113314448,
+              "lowSample": false
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 353,
+              "meanPredictedProbability": 0.3267056215108093,
+              "observedFrequency": 0.35410764872521244,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            }
+          ]
+        },
+        {
+          "league": "La Liga",
+          "poisson": [
+            {
+              "outcome": "HOME",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 1,
+              "meanPredictedProbability": 0.05288156313027803,
+              "observedFrequency": 0,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 22,
+              "meanPredictedProbability": 0.16364595083643985,
+              "observedFrequency": 0.22727272727272727,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 49,
+              "meanPredictedProbability": 0.2508226987407838,
+              "observedFrequency": 0.22448979591836735,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 88,
+              "meanPredictedProbability": 0.3540269964558039,
+              "observedFrequency": 0.3181818181818182,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 76,
+              "meanPredictedProbability": 0.4485231322976422,
+              "observedFrequency": 0.4342105263157895,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 49,
+              "meanPredictedProbability": 0.5479107442037914,
+              "observedFrequency": 0.6122448979591837,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 35,
+              "meanPredictedProbability": 0.6556837169374602,
+              "observedFrequency": 0.6571428571428571,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 24,
+              "meanPredictedProbability": 0.7406917271842288,
+              "observedFrequency": 0.75,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 8,
+              "meanPredictedProbability": 0.816948812800189,
+              "observedFrequency": 0.875,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 1,
+              "meanPredictedProbability": 0.09332968733952879,
+              "observedFrequency": 0,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 58,
+              "meanPredictedProbability": 0.16411255650762643,
+              "observedFrequency": 0.15517241379310345,
+              "lowSample": false
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 230,
+              "meanPredictedProbability": 0.254036455432536,
+              "observedFrequency": 0.28695652173913044,
+              "lowSample": false
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 63,
+              "meanPredictedProbability": 0.3206901241977027,
+              "observedFrequency": 0.23809523809523808,
+              "lowSample": false
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 21,
+              "meanPredictedProbability": 0.07829821136139066,
+              "observedFrequency": 0.047619047619047616,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 65,
+              "meanPredictedProbability": 0.152019609365537,
+              "observedFrequency": 0.18461538461538463,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 94,
+              "meanPredictedProbability": 0.25187194662484647,
+              "observedFrequency": 0.2127659574468085,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 93,
+              "meanPredictedProbability": 0.35051523771872706,
+              "observedFrequency": 0.3548387096774194,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 41,
+              "meanPredictedProbability": 0.444457344568725,
+              "observedFrequency": 0.5121951219512195,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 24,
+              "meanPredictedProbability": 0.5487123298471109,
+              "observedFrequency": 0.5416666666666666,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 11,
+              "meanPredictedProbability": 0.6319478284575549,
+              "observedFrequency": 0.36363636363636365,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 2,
+              "meanPredictedProbability": 0.7374825459714143,
+              "observedFrequency": 1,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 1,
+              "meanPredictedProbability": 0.8443370985471619,
+              "observedFrequency": 1,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            }
+          ],
+          "comparator": [
+            {
+              "outcome": "HOME",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 352,
+              "meanPredictedProbability": 0.4449092304242848,
+              "observedFrequency": 0.4403409090909091,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 349,
+              "meanPredictedProbability": 0.2696900722363073,
+              "observedFrequency": 0.25787965616045844,
+              "lowSample": false
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 3,
+              "meanPredictedProbability": 0.3004439754339931,
+              "observedFrequency": 0,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 320,
+              "meanPredictedProbability": 0.28336425365768425,
+              "observedFrequency": 0.3125,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 32,
+              "meanPredictedProbability": 0.30288195573186466,
+              "observedFrequency": 0.21875,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            }
+          ]
+        },
+        {
+          "league": "Serie A",
+          "poisson": [
+            {
+              "outcome": "HOME",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 6,
+              "meanPredictedProbability": 0.07970120207750625,
+              "observedFrequency": 0,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 25,
+              "meanPredictedProbability": 0.15880733090156074,
+              "observedFrequency": 0.08,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 66,
+              "meanPredictedProbability": 0.25082415664738655,
+              "observedFrequency": 0.24242424242424243,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 71,
+              "meanPredictedProbability": 0.35249394921575655,
+              "observedFrequency": 0.23943661971830985,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 67,
+              "meanPredictedProbability": 0.45189790816895553,
+              "observedFrequency": 0.5074626865671642,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 62,
+              "meanPredictedProbability": 0.5488022847928751,
+              "observedFrequency": 0.5645161290322581,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 46,
+              "meanPredictedProbability": 0.6469636195779429,
+              "observedFrequency": 0.6086956521739131,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 8,
+              "meanPredictedProbability": 0.7324111866620254,
+              "observedFrequency": 0.875,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 38,
+              "meanPredictedProbability": 0.17603609906157222,
+              "observedFrequency": 0.18421052631578946,
+              "lowSample": false
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 277,
+              "meanPredictedProbability": 0.24883626396492922,
+              "observedFrequency": 0.2779783393501805,
+              "lowSample": false
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 36,
+              "meanPredictedProbability": 0.3245360229536403,
+              "observedFrequency": 0.4166666666666667,
+              "lowSample": false
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 3,
+              "meanPredictedProbability": 0.08388059327386864,
+              "observedFrequency": 0,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 81,
+              "meanPredictedProbability": 0.1561997081329303,
+              "observedFrequency": 0.12345679012345678,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 89,
+              "meanPredictedProbability": 0.25077105450683596,
+              "observedFrequency": 0.15730337078651685,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 64,
+              "meanPredictedProbability": 0.3529623619237996,
+              "observedFrequency": 0.375,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 55,
+              "meanPredictedProbability": 0.4486811396706706,
+              "observedFrequency": 0.5272727272727272,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 39,
+              "meanPredictedProbability": 0.5474485187124791,
+              "observedFrequency": 0.5897435897435898,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 11,
+              "meanPredictedProbability": 0.6510912737886072,
+              "observedFrequency": 0.5454545454545454,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 8,
+              "meanPredictedProbability": 0.7390861338660039,
+              "observedFrequency": 0.75,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 1,
+              "meanPredictedProbability": 0.8326324275368444,
+              "observedFrequency": 1,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            }
+          ],
+          "comparator": [
+            {
+              "outcome": "HOME",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 219,
+              "meanPredictedProbability": 0.3852078701291381,
+              "observedFrequency": 0.3926940639269406,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 132,
+              "meanPredictedProbability": 0.4122942799554643,
+              "observedFrequency": 0.4015151515151515,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 72,
+              "meanPredictedProbability": 0.29535802609466116,
+              "observedFrequency": 0.2916666666666667,
+              "lowSample": false
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 279,
+              "meanPredictedProbability": 0.30799828410104857,
+              "observedFrequency": 0.27956989247311825,
+              "lowSample": false
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 168,
+              "meanPredictedProbability": 0.28589138254539803,
+              "observedFrequency": 0.30952380952380953,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 183,
+              "meanPredictedProbability": 0.3114184703659148,
+              "observedFrequency": 0.3333333333333333,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            }
+          ]
+        },
+        {
+          "league": "Bundesliga",
+          "poisson": [
+            {
+              "outcome": "HOME",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 3,
+              "meanPredictedProbability": 0.09537111327457436,
+              "observedFrequency": 0,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 13,
+              "meanPredictedProbability": 0.1468379915089627,
+              "observedFrequency": 0,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 42,
+              "meanPredictedProbability": 0.26126404846519596,
+              "observedFrequency": 0.3333333333333333,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 64,
+              "meanPredictedProbability": 0.3518108306701792,
+              "observedFrequency": 0.265625,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 56,
+              "meanPredictedProbability": 0.4440867175840382,
+              "observedFrequency": 0.32142857142857145,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 43,
+              "meanPredictedProbability": 0.5402898850499548,
+              "observedFrequency": 0.5116279069767442,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 39,
+              "meanPredictedProbability": 0.6467725035539676,
+              "observedFrequency": 0.6410256410256411,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 20,
+              "meanPredictedProbability": 0.7339963720682735,
+              "observedFrequency": 0.55,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 5,
+              "meanPredictedProbability": 0.8293113289489534,
+              "observedFrequency": 0.8,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 1,
+              "meanPredictedProbability": 0.9025258993700127,
+              "observedFrequency": 0,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 3,
+              "meanPredictedProbability": 0.08321470674106997,
+              "observedFrequency": 0,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 80,
+              "meanPredictedProbability": 0.1728455012317332,
+              "observedFrequency": 0.2875,
+              "lowSample": false
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 196,
+              "meanPredictedProbability": 0.23598660372524205,
+              "observedFrequency": 0.25510204081632654,
+              "lowSample": false
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 7,
+              "meanPredictedProbability": 0.3170904213587343,
+              "observedFrequency": 0.14285714285714285,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 13,
+              "meanPredictedProbability": 0.07222920033029118,
+              "observedFrequency": 0.07692307692307693,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 53,
+              "meanPredictedProbability": 0.14939947358321579,
+              "observedFrequency": 0.18867924528301888,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 63,
+              "meanPredictedProbability": 0.25278082087584053,
+              "observedFrequency": 0.3492063492063492,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 63,
+              "meanPredictedProbability": 0.3469763933933917,
+              "observedFrequency": 0.3492063492063492,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 54,
+              "meanPredictedProbability": 0.44524068406112494,
+              "observedFrequency": 0.4444444444444444,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 24,
+              "meanPredictedProbability": 0.5393369636668797,
+              "observedFrequency": 0.5,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 9,
+              "meanPredictedProbability": 0.6528460901898985,
+              "observedFrequency": 0.4444444444444444,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 7,
+              "meanPredictedProbability": 0.7438148750842319,
+              "observedFrequency": 0.8571428571428571,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            }
+          ],
+          "comparator": [
+            {
+              "outcome": "HOME",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 286,
+              "meanPredictedProbability": 0.42680590876483193,
+              "observedFrequency": 0.3881118881118881,
+              "lowSample": false
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "HOME",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 286,
+              "meanPredictedProbability": 0.25505139580077313,
+              "observedFrequency": 0.25874125874125875,
+              "lowSample": false
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "DRAW",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0,
+              "upper": 0.1,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.1,
+              "upper": 0.2,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.2,
+              "upper": 0.3,
+              "upperInclusive": false,
+              "predictionCount": 32,
+              "meanPredictedProbability": 0.2983654343190424,
+              "observedFrequency": 0.28125,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.3,
+              "upper": 0.4,
+              "upperInclusive": false,
+              "predictionCount": 254,
+              "meanPredictedProbability": 0.320634318881998,
+              "observedFrequency": 0.36220472440944884,
+              "lowSample": false
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.4,
+              "upper": 0.5,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.5,
+              "upper": 0.6,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.6,
+              "upper": 0.7,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.7,
+              "upper": 0.8,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.8,
+              "upper": 0.9,
+              "upperInclusive": false,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            },
+            {
+              "outcome": "AWAY",
+              "lower": 0.9,
+              "upper": 1,
+              "upperInclusive": true,
+              "predictionCount": 0,
+              "meanPredictedProbability": null,
+              "observedFrequency": null,
+              "lowSample": true
+            }
+          ]
+        }
+      ],
+      "interpretation": "All bins retained; descriptive mean probability versus observed frequency only, no significance claim."
+    },
+    "Q5": {
+      "question": "Coverage/PASS differences",
+      "values": [
+        {
+          "league": "EPL",
+          "coverage": 0.9289473684210526,
+          "pass": 27,
+          "targets": 380
+        },
+        {
+          "league": "La Liga",
+          "coverage": 0.9263157894736842,
+          "pass": 28,
+          "targets": 380
+        },
+        {
+          "league": "Serie A",
+          "coverage": 0.9236842105263158,
+          "pass": 29,
+          "targets": 380
+        },
+        {
+          "league": "Bundesliga",
+          "coverage": 0.934640522875817,
+          "pass": 20,
+          "targets": 306
+        }
+      ]
+    }
+  },
+  "CROSS_LEAGUE_STATUS": "ALL_BASELINES_MEASURED",
+  "ALL_4_LEAGUES_DRAW_PREDICTED_ZERO": false,
+  "governance": {
+    "POST_RESULT_TUNING": false,
+    "ENGINE_CHANGED": false,
+    "WEIGHTS_CHANGED": false,
+    "MIN_SAMPLE_CHANGED": false,
+    "RESULT_LAG_CHANGED": false,
+    "ODDS_USED": false,
+    "PROVIDER_PREDICTION_USED": false,
+    "NETWORK_CALLS": 0,
+    "NETWORK_ATTEMPTS": 0,
+    "STRICT_REPLAY": false,
+    "STRICT_AS_OF_FABRICATED": false,
+    "IS_ACTUAL_OBSERVED_AT": false,
+    "OWNER_PRIVATE_DATA_USED": false,
+    "CROSS_LEAGUE_POOLING": false,
+    "PICK": false,
+    "STAKE": false,
+    "ROI": false,
+    "PROFIT": false,
+    "BACKTEST_EXECUTED": true,
+    "VALIDATED_MODEL": false
+  },
+  "perMatchData": "LOCAL_ONLY_GITIGNORED",
+  "excludedStageCount": 4,
+  "finalStatus": "FOOTBALL_POISSON_CROSS_LEAGUE_BACKTEST_V1_READY_FOR_CTO_REVIEW"
+}

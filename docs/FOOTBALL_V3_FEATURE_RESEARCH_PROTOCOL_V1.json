@@ -1,0 +1,413 @@
+{
+  "payload": {
+    "protocolVersion": "FOOTBALL_V3_FEATURE_RESEARCH_PROTOCOL_V1",
+    "baseSha": "c8701b678e6d6a7b8cffb668e74ed696c7f6ee79",
+    "branch": "agent/astra/football-historical-source-gate-v1",
+    "createdAt": "2026-09-12T09:15:34.106Z",
+    "scope": "PROTOCOL_DESIGN_SCOPE_ONLY",
+    "executionAuthorized": false,
+    "researchQuestion": "Do prior completed-match attacking-process data improve future 1X2 probability quality beyond team goals for/against structure?",
+    "priorEvidence": {
+      "officialForwardModel": "football-poisson-research-v1",
+      "BEST_DESCRIPTIVE_CANDIDATE": "H2",
+      "SCREEN_RESULT": "SCREEN_NO",
+      "MODEL_PROMOTED": false,
+      "V3_RESEARCH_BACKBONE_CANDIDATE": "H2",
+      "interpretation": "H2 improved descriptive Log Loss and Brier in all four leagues but failed the frozen screen; this motivates research only, not promotion.",
+      "references": [
+        {
+          "path": "docs/FOOTBALL_POISSON_V2_DRAW_RESEARCH_PROTOCOL_V1.json",
+          "byteSha256": "a92f3016b235811f227d66a0c4e9e3fe1b56a2363db15394a50a99766654d073"
+        },
+        {
+          "path": "docs/FOOTBALL_POISSON_V2_ALGORITHM_DESIGN_FREEZE_V1.json",
+          "byteSha256": "342d6af06c95578b91e8d479656dc296f8ca2a7f1bb7a3fe1bc1248450411cec"
+        },
+        {
+          "path": "docs/FOOTBALL_POISSON_V2_EXPOSED_EVALUATION_V1.md",
+          "byteSha256": "f739dcc0e68f1cb5783c639a858ca7088b958f1d754a16333ea45bce1fca1214"
+        },
+        {
+          "path": "docs/FOOTBALL_V3_FEATURE_DATA_ACCESS_GATE_V1.json",
+          "byteSha256": "a0c48ab3653d25f7d75d7b7c23e477cbb23ab91312af2e37aa5b8d3ec5d69af4"
+        },
+        {
+          "path": "data/audits/football-v3-historical-feature-coverage-census-v1.json",
+          "byteSha256": "3a4b48374286532010163fe3cf86a501f08d6cabcccfaaed73cde17ea5cf0118"
+        }
+      ],
+      "historicalCensusCanonicalSha256": "0f215fba91a68cdd0a4a53b5124a311f193821baddd2ff1764d8942cb8718c41"
+    },
+    "featureCandidates": [
+      {
+        "id": "F1",
+        "name": "xG",
+        "providerField": "expected_goals"
+      },
+      {
+        "id": "F2",
+        "name": "Total Shots",
+        "providerField": "Total Shots"
+      },
+      {
+        "id": "F3",
+        "name": "Shots on Goal",
+        "providerField": "Shots on Goal"
+      }
+    ],
+    "experiments": [
+      {
+        "id": "V3-F1",
+        "backbone": "H2",
+        "featureInformation": [
+          "xG"
+        ]
+      },
+      {
+        "id": "V3-F2",
+        "backbone": "H2",
+        "featureInformation": [
+          "Total Shots",
+          "Shots on Goal"
+        ]
+      },
+      {
+        "id": "V3-F3",
+        "backbone": "H2",
+        "featureInformation": [
+          "xG",
+          "Total Shots",
+          "Shots on Goal"
+        ]
+      }
+    ],
+    "experimentContract": {
+      "independentCandidates": true,
+      "changeF2F3AfterF1Results": false,
+      "allSpecificationsFrozenBeforeAnyV3Results": true,
+      "combinationFormula": null,
+      "formulaStatus": "DEFERRED_TO_ALGORITHM_DESIGN_FREEZE"
+    },
+    "excluded": {
+      "phase2": [
+        "restDays",
+        "fixtureCongestion"
+      ],
+      "phase2Gate": "Separate all-competition schedule-scope audit; league-only schedules do not establish true workload.",
+      "v4": [
+        "lineups",
+        "injuries",
+        "suspensions"
+      ],
+      "otherFeatures": "Not registered in Phase 1"
+    },
+    "comparators": [
+      {
+        "id": "A",
+        "model": "football-poisson-research-v1",
+        "role": "OFFICIAL_FROZEN_COMPARATOR"
+      },
+      {
+        "id": "B",
+        "model": "frozen H2 specification",
+        "role": "UNPROMOTED_RESEARCH_COMPARATOR",
+        "specification": "docs/FOOTBALL_POISSON_V2_ALGORITHM_DESIGN_FREEZE_V1.json"
+      }
+    ],
+    "comparisonContract": {
+      "reportCandidateVersusV1": true,
+      "reportCandidateVersusH2": true,
+      "replaceV1WithH2": false,
+      "preserveComparatorSpecification": true,
+      "perLeagueAndCandidateReporting": true,
+      "pairedIdsAndDenominatorsRequired": true,
+      "fullCohortCoverageAndPassRequired": true,
+      "exactPairingAndMetricImplementation": "Must be sealed before execution in Algorithm Design Freeze; do not inherit V2 prediction-only IDs as the V3 population."
+    },
+    "cohort": {
+      "provider": "API_FOOTBALL",
+      "stage": "Regular Season",
+      "fixtureIdentity": "provider fixture.id",
+      "total": 2892,
+      "cohortIdsHash": "ad5cfb6fb08d9ce790596d5cd1c74dad1106c80e903769e66b4ee9c044813d14",
+      "leagues": [
+        {
+          "leagueId": 39,
+          "name": "Premier League",
+          "archiveSha256": "df77d7b146f4784fd4021282a6566fcfb36bdd574e1ab46ad8140a24e7585e76",
+          "primaryDevelopment": {
+            "providerSeason": 2023,
+            "count": 380,
+            "firstKickoff": "2023-08-11T19:00:00.000Z",
+            "lastKickoff": "2024-05-19T15:00:00.000Z",
+            "fixtureIdsSha256": "ad8ae24a3713aa9e105d600f2e0168906ad7cef1a6663d5946123730dd5abdf5"
+          },
+          "exposedCheck": {
+            "providerSeason": 2024,
+            "count": 380,
+            "firstKickoff": "2024-08-16T19:00:00.000Z",
+            "lastKickoff": "2025-05-25T15:00:00.000Z",
+            "fixtureIdsSha256": "7f7c6b1e63e5fdb118f2ef50826032e6f02b52c1fa9dbe02adbb6dca67153842"
+          }
+        },
+        {
+          "leagueId": 140,
+          "name": "La Liga",
+          "archiveSha256": "7e47fe1bdae7d99520d3b50f71d89d263558e61c11ec99c51cadd10a26ef4941",
+          "primaryDevelopment": {
+            "providerSeason": 2023,
+            "count": 380,
+            "firstKickoff": "2023-08-11T17:30:00.000Z",
+            "lastKickoff": "2024-05-26T19:00:00.000Z",
+            "fixtureIdsSha256": "bab38bb5259b15e200c426b7a88d03ad4efce5440fc7022365c340cdaad7a0c3"
+          },
+          "exposedCheck": {
+            "providerSeason": 2024,
+            "count": 380,
+            "firstKickoff": "2024-08-15T17:00:00.000Z",
+            "lastKickoff": "2025-05-25T19:00:00.000Z",
+            "fixtureIdsSha256": "6cc4ce888702696251c145a8da0e4f4056d4aa2cbe989b3adb3e07f0e5e9dc2c"
+          }
+        },
+        {
+          "leagueId": 135,
+          "name": "Serie A",
+          "archiveSha256": "0818f8ea0c84ab292245ec3c45c580750b837fe7be3406c06a645b5ff7295d68",
+          "primaryDevelopment": {
+            "providerSeason": 2023,
+            "count": 380,
+            "firstKickoff": "2023-08-19T16:30:00.000Z",
+            "lastKickoff": "2024-06-02T16:00:00.000Z",
+            "fixtureIdsSha256": "6235755c9fac4e4960fa23c487e356537fe1ec842a40181d95514b9d90e120e5"
+          },
+          "exposedCheck": {
+            "providerSeason": 2024,
+            "count": 380,
+            "firstKickoff": "2024-08-17T16:30:00.000Z",
+            "lastKickoff": "2025-05-25T18:45:00.000Z",
+            "fixtureIdsSha256": "385c508acfdd7115d88bfeeaddc8544d398e9446c019f25528104db5e56093cd"
+          }
+        },
+        {
+          "leagueId": 78,
+          "name": "Bundesliga",
+          "archiveSha256": "5ada547e57350befb660a44253a5c3f14c813a2e4c5423ad9f74ced3dd2c37c6",
+          "primaryDevelopment": {
+            "providerSeason": 2023,
+            "count": 306,
+            "firstKickoff": "2023-08-18T18:30:00.000Z",
+            "lastKickoff": "2024-05-18T13:30:00.000Z",
+            "fixtureIdsSha256": "764829c04cc9a64fe377f2b2101165bb2a8027dfc16ff6cc03b5f849d221c58a"
+          },
+          "exposedCheck": {
+            "providerSeason": 2024,
+            "count": 306,
+            "firstKickoff": "2024-08-23T18:30:00.000Z",
+            "lastKickoff": "2025-05-17T13:30:00.000Z",
+            "fixtureIdsSha256": "8e1d854c11f8995fda1ee75565baa4f3d37df89c942f7f8e07db52e520fc08ec"
+          }
+        }
+      ],
+      "addDeleteGuessFixtures": false,
+      "featureComplete": 2891,
+      "featureCoveragePercent": 99.96542185338866
+    },
+    "splits": {
+      "primaryDevelopment": {
+        "season": "2023/24",
+        "providerSeason": 2023,
+        "role": "PRIMARY_DEVELOPMENT"
+      },
+      "exposedCheck": {
+        "season": "2024/25",
+        "providerSeason": 2024,
+        "role": "EXPOSED_DEVELOPMENT_CHECK",
+        "untouchedHoldout": false,
+        "postResultSpecificationChangeAllowed": false
+      },
+      "independentHoldoutCandidate": {
+        "season": "2025/26",
+        "providerSeason": 2025,
+        "role": "INDEPENDENT_HOLDOUT_CANDIDATE",
+        "independenceCertified": false,
+        "collectedInThisMission": false,
+        "metricsViewedInThisMission": false,
+        "metricsComputedInThisMission": false,
+        "initialSealOnly": [
+          "fixture identity",
+          "league/stage scope",
+          "data completeness",
+          "hashes"
+        ],
+        "evaluationAuthorization": "Separate CTO approval after protocol and algorithm freeze, cohort seal, integrity and exposure checks",
+        "finalEvaluationRunsAllowedAfterApproval": 1
+      },
+      "currentSeason": {
+        "season": "2026/27",
+        "providerSeason": 2026,
+        "role": "PROSPECTIVE_FORWARD_EVIDENCE",
+        "historicalHoldout": false,
+        "separateFromOfficialForwardV1": true,
+        "autoMigration": false
+      }
+    },
+    "missingness": {
+      "fixtureId": 1223728,
+      "leagueId": 135,
+      "providerSeason": 2024,
+      "fields": [
+        "xG",
+        "Total Shots",
+        "Shots on Goal"
+      ],
+      "state": "STATISTICS_UNAVAILABLE",
+      "baseResultHistoryPreserved": true,
+      "featureUnavailableExplicit": true,
+      "imputationAllowed": false,
+      "zeroSubstitutionAllowed": false,
+      "leagueTeamMeanSubstitutionAllowed": false,
+      "deleteFixtureToShrinkDenominatorAllowed": false,
+      "behaviorOptions": [
+        "PASS",
+        "feature-neutral",
+        "history-window exclusion"
+      ],
+      "selectedBehavior": null,
+      "status": "PRINCIPLES_FROZEN_BEHAVIOR_DEFERRED",
+      "freezeRequirement": "Select exactly one behavior before execution in Algorithm Design Freeze, with no fabricated replacement value and full target denominator preserved; history-window exclusion may not delete base-result history."
+    },
+    "temporal": {
+      "targetOwnStatsAllowed": false,
+      "onlyEarlierCompletedMatches": true,
+      "historicalRole": "RETROSPECTIVE_FINAL_OR_REVISED_STATISTICS",
+      "strictReplayEligible": false,
+      "historicalAvailabilityLag": null,
+      "lagStatus": "ONE_EVIDENCE_JUSTIFIED_LAG_REQUIRED_BEFORE_ALGORITHM_DESIGN_FREEZE",
+      "existingV2LagAutomaticallyInherited": false,
+      "twoCurrentMissingRechecksEstablishLag": false,
+      "forwardRequirement": "Actual providerFetchedAt <= predictionCreatedAt, observed feature and completion evidence; no later revisions replacing sealed inputs.",
+      "syntheticHistoricalObservedAtInForwardAllowed": false,
+      "backdatedObservedAtAllowed": false
+    },
+    "representationQuestions": {
+      "xG": [
+        "for/against",
+        "home/away representation",
+        "rolling aggregation"
+      ],
+      "shots": [
+        "for/against"
+      ],
+      "sot": [
+        "for/against"
+      ],
+      "window": "Recent N matches versus fixed days; value not selected",
+      "normalization": "League-relative or not; not selected",
+      "shrinkage": "Whether needed; not selected",
+      "featureFormulaSelected": false,
+      "hyperparametersSelected": false
+    },
+    "metrics": {
+      "primary": [
+        "Multiclass Log Loss",
+        "Multiclass Brier Score"
+      ],
+      "secondary": [
+        "Accuracy",
+        "DRAW recall",
+        "DRAW precision",
+        "HOME recall",
+        "HOME precision",
+        "AWAY recall",
+        "AWAY precision",
+        "predicted class shares",
+        "one-vs-rest Brier",
+        "per-class calibration",
+        "ECE"
+      ],
+      "operational": [
+        "feature coverage",
+        "PASS counts and reasons",
+        "missingness counts and reasons",
+        "full and paired denominators"
+      ],
+      "numericConventions": "Seal definitions, ECE bins, zero-denominator handling and pairing before execution; no choices based on results."
+    },
+    "promotion": {
+      "accuracyAloneSufficient": false,
+      "requirements": [
+        "Overall probability quality improvement versus both comparators, separately reported",
+        "No catastrophic class degradation",
+        "Integrity and coverage gates passed",
+        "Confirmation on independently protected 2025/26 holdout"
+      ],
+      "numericRule": null,
+      "numericRuleStatus": "MUST_BE_EXPLICITLY_FROZEN_BEFORE_ALGORITHM_DESIGN_FREEZE",
+      "developmentOnlyPromotionAllowed": false,
+      "automaticPromotion": false,
+      "modelPromoted": false
+    },
+    "firewalls": {
+      "market": {
+        "forbiddenInputs": [
+          "odds",
+          "market consensus",
+          "betting lines"
+        ],
+        "MODEL_INPUT_ALLOWED": false,
+        "comparisonOnlyAfterIndependentPredictionSeal": true
+      },
+      "forward": {
+        "officialModel": "football-poisson-research-v1",
+        "FORWARD_V3_AUTO_MIGRATION": false,
+        "separatePromotionAndCTOApprovalRequired": true
+      },
+      "holdout": {
+        "readOrCompute2025MetricsThisMission": false,
+        "fetch2025ThisMission": false,
+        "firstCollectionAfterProtocolFreezeOnly": true,
+        "unknownPriorExposureMustBeAudited": true,
+        "exposureDetectedAction": "Report contamination; do not relabel exposed data as independent or inspect metrics to decide what to keep."
+      }
+    },
+    "rights": {
+      "LEGAL_INTERNAL_USE": "CONDITIONAL",
+      "rawLocalOnly": true,
+      "PUBLIC_RAW_FEATURE_DISPLAY": "UNRESOLVED",
+      "COMMERCIAL_PUBLIC_RIGHTS": "UNRESOLVED",
+      "HUMAN_SUPPORT_CONFIRMATION": false,
+      "FORMAL_WRITTEN_LICENSE": false,
+      "retentionEvidence": "User-reported provider dashboard Chat AI guidance from prior gate; no upgrade in rights status."
+    },
+    "nextRequiredSeals": [
+      "Evidence-backed single historical feature availability lag",
+      "Explicit numeric promotion rule",
+      "Algorithm Design Freeze: all three formulas, representations, fitting and hyperparameters, one missingness behavior, comparator execution, pairing and metric conventions",
+      "Separately authorized 2025 cohort identity/scope/completeness/hash seal with exposure audit",
+      "Separate CTO approval before one final holdout evaluation"
+    ],
+    "governance": {
+      "V3_IMPLEMENTED": false,
+      "V3_FITTING_EXECUTED": false,
+      "V3_BACKTEST_EXECUTED": false,
+      "2025_HOLDOUT_METRICS_VIEWED": false,
+      "V2_CHANGED": false,
+      "H2_CHANGED": false,
+      "FORWARD_V1_CHANGED": false,
+      "FEATURE_FORMULA_SELECTED": false,
+      "MISSINGNESS_BEHAVIOR_SELECTED": false,
+      "AVAILABILITY_LAG_SELECTED": false,
+      "NUMERIC_PROMOTION_RULE_SELECTED": false,
+      "API_CALLS": 0,
+      "MAIN_MERGED": false
+    },
+    "preservation": {
+      "files": 638,
+      "beforeSha256": "a924d4fc27057c15f859b58227049e0d8b95490e6102d366aca00ecc6b66e528",
+      "afterSha256": "a924d4fc27057c15f859b58227049e0d8b95490e6102d366aca00ecc6b66e528",
+      "includes": "V2/H2/Forward/archive/prior-gate/census and existing untracked access-gate document; byte hashes only, no holdout metrics inspected"
+    },
+    "hashPolicy": "SHA256 of UTF-8 canonical payload: recursively sorted object keys, array order retained, no whitespace; sha256 envelope excluded."
+  },
+  "sha256": "0b30bc4d41684f2797d0a8e0a2a53694ecc6d5dc8f151b45213af1f1f9dc1bb8"
+}

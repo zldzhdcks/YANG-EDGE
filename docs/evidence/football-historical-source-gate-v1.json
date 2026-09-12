@@ -1,0 +1,157 @@
+{
+  "schemaVersion": "football-historical-source-gate-v1",
+  "baseSha": "1b90cdd3d406dd2991f79fe0836c32d8ba08e4b9",
+  "date": "2026-09-09",
+  "source": "API-Football (API-Sports)",
+  "baseUrl": "https://v3.football.api-sports.io",
+  "apiCalls": 7,
+  "bulkIngest": false,
+  "rawPayloadsSaved": false,
+  "apiKeysSaved": false,
+  "accountPiiSaved": false,
+  "ownerPrivateDataUsed": false,
+  "probes": [
+    {
+      "at": "2026-09-09T14:34:52.654Z",
+      "endpoint": "/status",
+      "http": 200,
+      "errors": [],
+      "subscription": {
+        "plan": "Free",
+        "active": true
+      },
+      "requests": {
+        "current": 1,
+        "limit_day": 100
+      }
+    },
+    {
+      "at": "2026-09-09T14:35:32.943Z",
+      "endpoint": "/leagues?id=39",
+      "http": 200,
+      "errors": [],
+      "results": 1,
+      "leagueId": 39,
+      "league": "Premier League",
+      "catalogYears": [
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ],
+      "catalogIsNotEntitlement": true
+    },
+    {
+      "at": "2026-09-09T14:35:33.244Z",
+      "endpoint": "/fixtures?league=39&season=2023&date=2023-08-11&timezone=UTC",
+      "http": 200,
+      "errors": {
+        "plan": "Free plans do not have access to this date, try from 2026-09-08 to 2026-09-10."
+      },
+      "results": 0
+    },
+    {
+      "at": "2026-09-09T14:35:33.560Z",
+      "endpoint": "/fixtures?league=39&season=2024&date=2024-08-16&timezone=UTC",
+      "http": 200,
+      "errors": {
+        "plan": "Free plans do not have access to this date, try from 2026-09-08 to 2026-09-10."
+      },
+      "results": 0
+    },
+    {
+      "at": "2026-09-09T14:36:36.422Z",
+      "endpoint": "/fixtures?league=39&season=2025&date=2025-08-15&timezone=UTC",
+      "http": 200,
+      "errors": {
+        "plan": "Free plans do not have access to this season, try from 2022 to 2024."
+      },
+      "results": 0
+    },
+    {
+      "at": "2026-09-09T14:37:02.133Z",
+      "endpoint": "/fixtures?league=39&season=2023&round=Regular%20Season%20-%201&timezone=UTC",
+      "http": 200,
+      "errors": [],
+      "results": 10,
+      "paging": {
+        "current": 1,
+        "total": 1
+      },
+      "inspectedSample": {
+        "fixtureId": 1035037,
+        "kickoff": "2023-08-11T19:00:00+00:00",
+        "status": "FT",
+        "league": 39,
+        "season": 2023,
+        "homeId": 44,
+        "home": "Burnley",
+        "awayId": 50,
+        "away": "Manchester City",
+        "fullTime": {
+          "home": 0,
+          "away": 3
+        }
+      }
+    },
+    {
+      "at": "2026-09-09T14:37:02.480Z",
+      "endpoint": "/fixtures?league=39&season=2024&round=Regular%20Season%20-%201&timezone=UTC",
+      "http": 200,
+      "errors": [],
+      "results": 10,
+      "paging": {
+        "current": 1,
+        "total": 1
+      },
+      "inspectedSample": {
+        "fixtureId": 1208021,
+        "kickoff": "2024-08-16T19:00:00+00:00",
+        "status": "FT",
+        "league": 39,
+        "season": 2024,
+        "homeId": 33,
+        "home": "Manchester United",
+        "awayId": 36,
+        "away": "Fulham",
+        "fullTime": {
+          "home": 1,
+          "away": 0
+        }
+      }
+    }
+  ],
+  "decision": {
+    "primarySource": "API_FOOTBALL",
+    "leagueId": 39,
+    "seasons": [
+      2023,
+      2024
+    ],
+    "expectedResultRows": 760,
+    "expectedCountBasis": "380 per EPL season x 2; not full-download verified",
+    "actualProbeResponseRows": 20,
+    "individualRowsInspected": 2,
+    "historicalAcquisitionPathFeasible": true,
+    "strictBacktestDataPathFeasible": false,
+    "strictHistoricalEvaluationRowsAdded": 0,
+    "blanketLegalClearance": false,
+    "longTermRetentionRights": "Confirm exact scope before archive ingest",
+    "marketUsed": false,
+    "modelChanged": false,
+    "backtestExecuted": false
+  }
+}

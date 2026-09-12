@@ -1,0 +1,12 @@
+import {requireRule,type Prediction} from './contracts-v1';
+const mean=(a:number[])=>a.reduce((s,v)=>s+v,0)/a.length;
+export function pearson(a:number[],b:number[]){requireRule(a.length===b.length,'DIAGNOSTIC_LENGTH');if(!a.length)return null;const ma=mean(a),mb=mean(b);let xx=0,yy=0,xy=0;for(let i=0;i<a.length;i++){const x=a[i]-ma,y=b[i]-mb;xx+=x*x;yy+=y*y;xy+=x*y;}return xx&&yy?xy/Math.sqrt(xx*yy):null;}
+export function ranks(a:number[]){const ix=a.map((v,i)=>({v,i})).sort((x,y)=>x.v-y.v),r:number[]=[];for(let i=0;i<ix.length;){let j=i+1;while(j<ix.length&&ix[i].v===ix[j].v)j++;for(let k=i;k<j;k++)r[ix[k].i]=(i+j-1)/2+1;i=j;}return r;}
+export function correlation(a:number[],b:number[]){return {n:a.length,pearson:pearson(a,b),spearman:pearson(ranks(a),ranks(b))};}
+export function distribution(a:number[]){if(!a.length)return null;requireRule(a.every(Number.isFinite),'INVALID_DIAGNOSTIC_VALUES');const s=[...a].sort((x,y)=>x-y),q=(p:number)=>{const i=(s.length-1)*p,l=Math.floor(i);return s[l]+(s[Math.ceil(i)]-s[l])*(i-l);};return {n:a.length,mean:mean(a),p10:q(.1),p25:q(.25),median:q(.5),p75:q(.75),p90:q(.9),maxAbsolute:Math.max(...a.map(Math.abs))};}
+export function movement(initial:number[]|null,final:number[]|null){return initial&&final?initial.map((v,i)=>({initial:v,final:final[i],change:final[i]-v,absoluteChange:Math.abs(final[i]-v),relativeAbsoluteChange:v===0?null:Math.abs(final[i]-v)/Math.abs(v),signReversal:v*final[i]<0})):null;}
+export function diagnose(predictions:Prediction[]){
+  const good=predictions.filter(p=>p.status==='PREDICTED'),x:number[][]=[],q:number[][]=[],h:number[][]=[],con:number[]=[],ratios:number[]=[];
+  for(const p of good){const d=p.details as {x:number[][];q:number[][];h:number[][];offset:number[];contribution:number[]};for(let s=0;s<2;s++){x.push(d.x[s]);q.push(d.q[s]);h.push(d.h[s]);con.push(d.contribution[s]);ratios.push(p.rates![s]/d.offset[s]);}}
+  return {availablePredictions:good.length,inputPredictions:predictions.length,interpretation:'Descriptive, dependent repeated teams/history; not significance or promotion.',components:[0,1].map(j=>({component:j,withH2:[1,2].map(k=>({h2Column:k,representation:correlation(x.map(v=>v[j]),h.map(v=>v[k])),unresidualizedComposite:correlation(q.map(v=>v[j]),h.map(v=>v[k]))}))})),crossRepresentation:correlation(x.map(v=>v[0]),x.map(v=>v[1])),crossComposite:correlation(q.map(v=>v[0]),q.map(v=>v[1])),contribution:distribution(con),rateRatio:distribution(ratios)};
+}

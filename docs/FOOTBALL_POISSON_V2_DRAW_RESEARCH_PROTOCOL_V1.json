@@ -1,0 +1,429 @@
+{
+  "protocolVersion": "FOOTBALL_POISSON_V2_DRAW_RESEARCH_PROTOCOL_V1",
+  "baseSha": "e025e87a4cda3e36130109125927e16499a384a6",
+  "scope": "RESEARCH_DESIGN_ONLY",
+  "executionAuthorized": false,
+  "baseline": {
+    "modelVersion": "football-poisson-research-v1",
+    "sourceSha256Lf": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+    "predictedFixtures": 1342,
+    "actualDrawInPredicted": 348,
+    "drawPredictions": 5,
+    "correctDraw": 2,
+    "drawFailureType": "ARGMAX_COMPETITION",
+    "interpretation": "Preserve the sealed review. Class competition is observed; causal contributions of dependence, rates, shrinkage and calibration remain unproved.",
+    "resultAuditPaths": [
+      "data/audits/football-poisson-chronological-backtest-v1.json",
+      "data/audits/football-poisson-cross-league-backtest-v1.json"
+    ],
+    "reviewPath": "docs/FOOTBALL_DRAW_STRUCTURAL_FAILURE_REVIEW_V1.md"
+  },
+  "researchQuestion": "Can independent changes to goal-distribution dependence, goal-rate estimation or multiclass calibration improve overall probability quality, rather than merely increase DRAW selections?",
+  "hypotheses": [
+    {
+      "id": "H1",
+      "priorReviewId": "DRAW-H1",
+      "name": "LOW_SCORE_DEPENDENCE_MODEL",
+      "mechanism": "Permit explicit low-score joint dependence, including 0-0 and 1-1; Dixon-Coles-family correction is an example, not a selected implementation.",
+      "heldFixed": [
+        "v1 marginal rate estimates",
+        "same history gates",
+        "argmax HOME/DRAW/AWAY tie order",
+        "no calibration layer"
+      ],
+      "dataNeeded": [
+        "same-league chronological FT history",
+        "development out-of-time v1 marginal rates",
+        "low-score joint probability diagnostics"
+      ],
+      "fitPolicy": "Dependence coefficients fitted on development only, frozen before evaluation; v1 rates still update causally per target.",
+      "expectedEffect": "Possible improvement in joint-score and multiclass probabilities; DRAW recall gain is not guaranteed.",
+      "failureRisk": "No stable low-score dependence, invalid/negative mass, distortion of HOME/AWAY probabilities or development overfit.",
+      "falsification": "Fails the fixed probability-quality screen, lacks valid normalized probabilities, or shows no preregistered low-score fit improvement.",
+      "implementationSelected": false
+    },
+    {
+      "id": "H2",
+      "priorReviewId": "DRAW-H2",
+      "name": "GOAL_RATE_ESTIMATION_V2",
+      "mechanism": "Separately specify team attack/defence, league baseline, venue effects and regularization for marginal goal-rate estimation.",
+      "heldFixed": [
+        "independent Poisson score distribution",
+        "same history gates",
+        "argmax HOME/DRAW/AWAY tie order",
+        "no dependence correction",
+        "no calibration layer"
+      ],
+      "dataNeeded": [
+        "same-league eligible FT scores",
+        "team and venue identity",
+        "training-only rates and sample sizes"
+      ],
+      "fitPolicy": "Freeze estimator and all hyperparameters before evaluation; team/rate state may refit at each cutoff using only the common eligible history. No evaluation-metric feedback.",
+      "expectedEffect": "If rates are biased, better rates may improve multiple classes; reducing rates merely to chase draws is not an objective.",
+      "failureRisk": "Sparse-team instability, overfit, faulty shrinkage or damage to non-draw probabilities.",
+      "falsification": "Fails the fixed probability-quality screen or preregistered marginal-goal fit diagnostics.",
+      "implementationSelected": false
+    },
+    {
+      "id": "H3",
+      "priorReviewId": "DRAW-H3",
+      "name": "MULTICLASS_CALIBRATION",
+      "mechanism": "Fit one preregistered class-symmetric multiclass calibration transformation to v1 probability vectors, retaining ordinary argmax.",
+      "heldFixed": [
+        "v1 goal rates",
+        "v1 raw probability generator",
+        "same history gates",
+        "argmax HOME/DRAW/AWAY tie order"
+      ],
+      "dataNeeded": [
+        "chronological out-of-time development v1 probability vectors",
+        "development labels available under the fixed 48-hour research lag",
+        "all three classes"
+      ],
+      "fitPolicy": "Never fit in-sample predictor vectors, evaluation labels or pooled leagues; fit calibration on development only and freeze before evaluation.",
+      "expectedEffect": "Possible reliability/log-loss improvement without necessarily changing rare DRAW argmax behavior.",
+      "failureRisk": "Leakage, insufficient calibration class counts, lost resolution or development overfit.",
+      "falsification": "Fails the fixed probability-quality screen or worsens preregistered class calibration diagnostics.",
+      "implementationSelected": false
+    }
+  ],
+  "split": {
+    "unit": "API_FOOTBALL providerFixtureId; exact identity, no fuzzy matching",
+    "leagues": [
+      39,
+      140,
+      135,
+      78
+    ],
+    "membership": "Hash-verified existing archives; provider season 2023 or 2024; FT Regular Season only. Round 1..38 for 39/140/135; 1..34 for 78. Existing Bundesliga Relegation Round exclusion is inherited, not newly optimized.",
+    "development": {
+      "providerSeason": 2023,
+      "label": "2023/24",
+      "targetCount": 1446
+    },
+    "evaluation": {
+      "providerSeason": 2024,
+      "label": "2024/25",
+      "targetCount": 1446,
+      "primaryV1PredictedCount": 1342,
+      "v1PassCount": 104,
+      "role": "EXPOSED_RETROSPECTIVE_COMPARISON",
+      "untouchedHoldout": false
+    },
+    "developmentInternalBoundaryUtc": "2024-01-01T00:00:00.000Z",
+    "developmentFit": "Season-2023 targets with kickoff before boundary; chronological out-of-time feature/probability generation, never full-season hindsight features.",
+    "developmentCheck": "Season-2023 targets at/after boundary; fit coefficients only on fit-part labels available before boundary under 48-hour lag. No variant selection or parameter-grid expansion from check results.",
+    "finalDevelopmentFit": "After the fixed development check, fit the same preregistered estimator on all season-2023 eligible out-of-time development examples whose research-availability precedes that league's first evaluation cutoff. Freeze H1/H3 coefficients and H2 hyperparameters before evaluation.",
+    "noOverlap": "Development target IDs and evaluation target IDs must be disjoint globally. Both seasons are also checked against sealed evaluation target/status membership.",
+    "priorExposure": "The 2024/25 labels/probabilities informed the existing structural review. This protocol is prospective relative to v2 execution, not relative to discovery of the problem. No unseen-test, causal-proof, validated-model or confirmatory significance claim is permitted.",
+    "newHoldout": "An independent, not-yet-inspected cohort and separate prospective protocol are mandatory before any actual model promotion. No such cohort is selected, acquired or executed here."
+  },
+  "temporal": {
+    "cutoff": "targetKickoffUtc - 1 millisecond",
+    "lookbackDays": 365,
+    "researchResultLagHours": 48,
+    "availabilityField": "derivedResearchAvailableAt = priorKickoffUtc + 48 hours",
+    "actualObservedAtFabricated": false,
+    "strictReplayEligible": false,
+    "eligibility": "Same league, in-scope stage, distinct fixture ID; prior kickoff < cutoff; derivedResearchAvailableAt < cutoff; prior kickoff >= cutoff - 365 days.",
+    "developmentContext": "Season 2023 only. No season-2022 ingestion or invented warmup. Early insufficient examples remain PASS.",
+    "evaluationContext": "Season 2023 plus strictly earlier eligible season-2024 fixtures. Earlier evaluation outcomes may enter later target history only through the fixed causal update rule; never development selection, H1/H3 coefficient fitting or hyperparameter tuning.",
+    "simultaneousKickoffs": "One immutable history per kickoff group; numeric fixture ID only orders output, never within-group training updates.",
+    "completionLimitation": "48 hours is an inherited retrospective assumption, not observed final-whistle evidence. Reliable contradictory evidence invalidates the affected experiment pending a new protocol; no selective repairs.",
+    "leagueIsolation": "Separate fits, calibration and histories per league. No pooled labels, team mapping guesses, league-specific hand-selected specifications or EPL-result-driven changes. Same estimator specification applied independently."
+  },
+  "experiment": {
+    "order": [
+      "FROZEN_V1_REFERENCE",
+      "H1_ALONE",
+      "H2_ALONE",
+      "H3_ALONE"
+    ],
+    "combinationsAllowed": false,
+    "candidateSpecificationsPerHypothesis": 1,
+    "hyperparameterSearchTrials": 0,
+    "coefficientFitting": "Future deterministic fitting within a frozen estimator is allowed only after design approval; not performed in this mission.",
+    "jointDesignFreezeRequired": "All three algorithm specifications, fixed hyperparameters, fitting objectives/constraints, initialization/seeds, convergence limits, class sufficiency gates, failure/PASS rules, numerical grid/normalization and mechanism diagnostics must be sealed together before any new development or evaluation output is viewed.",
+    "executionGate": "BLOCKED_PENDING_SEPARATE_DESIGN_FREEZE_AND_CTO_EXECUTION_APPROVAL",
+    "evaluationGate": "Freeze candidate source hash, final development parameter hashes, input/cohort/protocol hashes and development report before evaluation. Baseline is the existing sealed v1 comparator; no v1 retuning.",
+    "noAdaptiveSelection": "Report all three hypotheses, including failed/nonconverged ones. Do not use H1 results to redesign H2/H3. No winner ranking or combination choice from these exposed evaluation results.",
+    "abort": "Leakage, hash/identity/cohort mismatch, nonfinite output or missing baseline-predicted candidate output blocks the screen; never silently remove that fixture. Corrections need a separately versioned protocol before a new run."
+  },
+  "metrics": {
+    "primary": [
+      "MULTICLASS_LOG_LOSS",
+      "MULTICLASS_BRIER_SCORE"
+    ],
+    "comparisonPopulation": "All 1342 sealed v1 PREDICTED evaluation IDs, separately by league, fixed before candidate execution. Every candidate must predict every one; candidate PASS cannot shrink the denominator.",
+    "fullTargetAudit": "Keep all 1446 targets and the original 104 v1 PASS records. Candidate coverage and additional predictions on these 104 are separately descriptive only, never added to primary paired metrics.",
+    "logLoss": "mean(-ln(max(pActual,1e-15))); floor for scoring only, report floor-hit count",
+    "brier": "mean(sum over HOME/DRAW/AWAY of (pClass - indicatorActualClass)^2); unscaled range 0..2",
+    "secondary": [
+      "accuracy",
+      "DRAW recall",
+      "DRAW precision",
+      "predicted DRAW count/share",
+      "HOME/AWAY recall and precision",
+      "HOME/AWAY one-vs-rest Brier",
+      "all-class calibration",
+      "full-target coverage and PASS reasons"
+    ],
+    "calibrationEdges": [
+      0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1
+    ],
+    "calibration": "Per class and league: bins [lower,upper), final bin closed at 1; count, mean probability, observed frequency; n<20 low-sample. ECE=sum(nBin/n)*abs(meanProbability-observedFrequency). Retain empty bins with null means/frequencies.",
+    "classRule": "Ordinary argmax, tie order HOME then DRAW then AWAY, unchanged for all candidates.",
+    "nullRule": "Zero denominators => null, not zero. Invalid probabilities => INVALID, no evaluator repair. Stored probabilities finite in [0,1], sum within 1e-10 of 1.",
+    "arithmetic": "IEEE-754 binary64, chronological kickoff then numeric fixture order, no rounding before comparisons.",
+    "aggregation": "Each league is an independent mandatory primary report. No pooled accuracy or league-weighted winner score; no historical/Forward pooling.",
+    "inference": "Descriptive preregistered screen only; no significance or confidence claim from the previously exposed season. Mechanism diagnostics cannot override primary failures."
+  },
+  "promotion": {
+    "automaticPromotion": false,
+    "promoteFromThisEvaluation": false,
+    "screenLabel": "ELIGIBLE_FOR_INDEPENDENT_CONFIRMATION_ONLY",
+    "numericTolerance": 1e-12,
+    "probabilityGate": "For EACH of all four leagues, candidate Log Loss < sealed v1 Log Loss - 1e-12 AND candidate Brier < sealed v1 Brier - 1e-12. Any worsening or failure to improve either metric in any league => screen NO, regardless of DRAW recall.",
+    "coverageGate": "All fixed primary IDs predicted, no integrity failure, >=200 paired predictions and >=20 actual outcomes per class in each league; otherwise INVALID/INSUFFICIENT, never silently pool.",
+    "homeAwayGuard": "For EACH league, overall accuracy and each HOME/AWAY recall may fall at most 0.02 absolute versus v1 (plus 1e-12 numeric tolerance). Each HOME/AWAY one-vs-rest Brier must not worsen beyond 1e-12.",
+    "calibrationGuard": "For EACH league and each HOME/DRAW/AWAY class, ECE increase must be <=0.01 absolute plus 1e-12. Unknown required guardrail => insufficient, not a pass.",
+    "thresholdMeaning": "These are prospective evaluation guardrails, not fitted model thresholds, weights, estimates of statistical power or claimed clinically/economically meaningful effects.",
+    "ifAllPass": "Only a follow-up research candidacy label is allowed. All passing hypotheses are reported without choosing the best; actual PROMOTE remains NO until independent untouched-cohort protocol/results and separate CTO approval.",
+    "ifFail": "Report failure unchanged. No recall-only success, manual league exception, offset, multiplier, new split, metric replacement or enlarged parameter search."
+  },
+  "firewalls": {
+    "futureV2Namespace": "data/cache/research/football/poisson-v2-draw-research/protocol-v1/<hypothesis>/<league>/<run>/",
+    "baselineEvidence": "Read-only, hash checked before/after; no existing archive/review/result edits.",
+    "forward": "Keep football-poisson-research-v1 and all forward runner/policy/input/snapshot/grade/scorecard files unchanged. V2 runner may not import or write operational Forward state. No Forward sample enters this historical study.",
+    "marketInputAllowed": false,
+    "forbiddenInputs": [
+      "odds",
+      "market consensus",
+      "betting lines",
+      "provider predictions",
+      "owner manual/private data",
+      "external analysis shadow",
+      "target score in pregame input"
+    ],
+    "marketComparison": "Only a separately authorized post-seal analysis; none in this mission.",
+    "noPostResultTuning": [
+      "parameter search expansion",
+      "threshold edits",
+      "cohort resplitting",
+      "metric changes",
+      "failed-hypothesis redefinition",
+      "H1/H2/H3 combination"
+    ],
+    "changeControl": "A new prospectively versioned hypothesis/protocol with explicit exposure history and approval is required; never relabel an outcome-driven rerun as the original preregistration."
+  },
+  "governance": {
+    "MODEL_CHANGED": false,
+    "ENGINE_CHANGED": false,
+    "FORWARD_V1_CHANGED": false,
+    "FORWARD_MODEL_CHANGED": false,
+    "BACKTEST_EXECUTED": false,
+    "V2_IMPLEMENTED": false,
+    "PARAMETER_TUNING": false,
+    "ODDS_USED": false,
+    "NETWORK_CALLS": 0,
+    "RAW_DATA_COMMITTED": false,
+    "MAIN_MERGED": false
+  },
+  "hashPolicy": "Companion Markdown records SHA256 of canonical JSON: recursively sorted object keys, original array order, compact JSON, UTF8, no newline. Cohort ID hashes use compact JSON of numeric IDs sorted by kickoff UTC then numeric ID. No per-fixture licensed data is published.",
+  "cohortManifest": [
+    {
+      "leagueId": 39,
+      "name": "Premier League",
+      "archiveSha256": "df77d7b146f4784fd4021282a6566fcfb36bdd574e1ab46ad8140a24e7585e76",
+      "development": {
+        "count": 380,
+        "firstKickoff": "2023-08-11T19:00:00.000Z",
+        "lastKickoff": "2024-05-19T15:00:00.000Z",
+        "fixtureIdsSha256": "ad8ae24a3713aa9e105d600f2e0168906ad7cef1a6663d5946123730dd5abdf5"
+      },
+      "developmentFit": {
+        "count": 196,
+        "firstKickoff": "2023-08-11T19:00:00.000Z",
+        "lastKickoff": "2023-12-31T14:00:00.000Z",
+        "fixtureIdsSha256": "05f6a2c9f2ce1358f4097ed65fea47ba7356c12da2f3c1d33494c74527e07a3e"
+      },
+      "developmentCheck": {
+        "count": 184,
+        "firstKickoff": "2024-01-01T20:00:00.000Z",
+        "lastKickoff": "2024-05-19T15:00:00.000Z",
+        "fixtureIdsSha256": "02a4786f514073a41b455117e9d4a0524c870c28548b3096e89b26bf9e9023a6"
+      },
+      "evaluation": {
+        "count": 380,
+        "firstKickoff": "2024-08-16T19:00:00.000Z",
+        "lastKickoff": "2025-05-25T15:00:00.000Z",
+        "fixtureIdsSha256": "7f7c6b1e63e5fdb118f2ef50826032e6f02b52c1fa9dbe02adbb6dca67153842"
+      },
+      "fixedPrimaryV1Predicted": {
+        "count": 353,
+        "firstKickoff": "2024-08-16T19:00:00.000Z",
+        "lastKickoff": "2025-05-25T15:00:00.000Z",
+        "fixtureIdsSha256": "f331b0dcb5a33aa22fa444e72c7d2a39a6ce8f5737666693a2b2fd9116272c45"
+      },
+      "preservedV1Pass": {
+        "count": 27,
+        "firstKickoff": "2024-08-17T11:30:00.000Z",
+        "lastKickoff": "2024-11-02T15:00:00.000Z",
+        "fixtureIdsSha256": "2fbd0724b24b0485073688e2d4678d62380e9e29d1d54cd6f5dd24800b810f2e"
+      }
+    },
+    {
+      "leagueId": 140,
+      "name": "La Liga",
+      "archiveSha256": "7e47fe1bdae7d99520d3b50f71d89d263558e61c11ec99c51cadd10a26ef4941",
+      "development": {
+        "count": 380,
+        "firstKickoff": "2023-08-11T17:30:00.000Z",
+        "lastKickoff": "2024-05-26T19:00:00.000Z",
+        "fixtureIdsSha256": "bab38bb5259b15e200c426b7a88d03ad4efce5440fc7022365c340cdaad7a0c3"
+      },
+      "developmentFit": {
+        "count": 180,
+        "firstKickoff": "2023-08-11T17:30:00.000Z",
+        "lastKickoff": "2023-12-23T15:15:00.000Z",
+        "fixtureIdsSha256": "d7775eb5e133ae6e13bd08bb827f44b0cc898f600009dc7b7d40b5c9de595422"
+      },
+      "developmentCheck": {
+        "count": 200,
+        "firstKickoff": "2024-01-02T16:00:00.000Z",
+        "lastKickoff": "2024-05-26T19:00:00.000Z",
+        "fixtureIdsSha256": "7f2ffc782224effadd3b8329e5af1291443aa75e1baed065795dfce00d252c14"
+      },
+      "evaluation": {
+        "count": 380,
+        "firstKickoff": "2024-08-15T17:00:00.000Z",
+        "lastKickoff": "2025-05-25T19:00:00.000Z",
+        "fixtureIdsSha256": "6cc4ce888702696251c145a8da0e4f4056d4aa2cbe989b3adb3e07f0e5e9dc2c"
+      },
+      "fixedPrimaryV1Predicted": {
+        "count": 352,
+        "firstKickoff": "2024-08-15T17:00:00.000Z",
+        "lastKickoff": "2025-05-25T19:00:00.000Z",
+        "fixtureIdsSha256": "521219886b1c809950c003947cef92f4c767cd4f83f345037ac1be278a402c29"
+      },
+      "preservedV1Pass": {
+        "count": 28,
+        "firstKickoff": "2024-08-17T17:00:00.000Z",
+        "lastKickoff": "2024-10-27T12:00:00.000Z",
+        "fixtureIdsSha256": "cbc88899d972ba2aade112295ae5caa03a3c3d0ca5283d4c043fd7d67af02f2e"
+      }
+    },
+    {
+      "leagueId": 135,
+      "name": "Serie A",
+      "archiveSha256": "0818f8ea0c84ab292245ec3c45c580750b837fe7be3406c06a645b5ff7295d68",
+      "development": {
+        "count": 380,
+        "firstKickoff": "2023-08-19T16:30:00.000Z",
+        "lastKickoff": "2024-06-02T16:00:00.000Z",
+        "fixtureIdsSha256": "6235755c9fac4e4960fa23c487e356537fe1ec842a40181d95514b9d90e120e5"
+      },
+      "developmentFit": {
+        "count": 180,
+        "firstKickoff": "2023-08-19T16:30:00.000Z",
+        "lastKickoff": "2023-12-30T19:45:00.000Z",
+        "fixtureIdsSha256": "11d651f4a8dc6380c5964b53358326ac4c6578e0992c6ae63bea2c1a861b6258"
+      },
+      "developmentCheck": {
+        "count": 200,
+        "firstKickoff": "2024-01-05T19:45:00.000Z",
+        "lastKickoff": "2024-06-02T16:00:00.000Z",
+        "fixtureIdsSha256": "20edbe3b7c277c00d5b8a5bb28a8906a878558873dd3d089fe6a6ce4d06a0e9e"
+      },
+      "evaluation": {
+        "count": 380,
+        "firstKickoff": "2024-08-17T16:30:00.000Z",
+        "lastKickoff": "2025-05-25T18:45:00.000Z",
+        "fixtureIdsSha256": "385c508acfdd7115d88bfeeaddc8544d398e9446c019f25528104db5e56093cd"
+      },
+      "fixedPrimaryV1Predicted": {
+        "count": 351,
+        "firstKickoff": "2024-08-17T16:30:00.000Z",
+        "lastKickoff": "2025-05-25T18:45:00.000Z",
+        "fixtureIdsSha256": "46fe23276fd9ef34872d281bd33fa93eb9de3d4fd6adc5d552307a00fab9fa61"
+      },
+      "preservedV1Pass": {
+        "count": 29,
+        "firstKickoff": "2024-08-17T16:30:00.000Z",
+        "lastKickoff": "2024-11-24T14:00:00.000Z",
+        "fixtureIdsSha256": "b683526c1d3691eaa1f18dd1477294008fa573119f9b62c2695889c04d9bd728"
+      }
+    },
+    {
+      "leagueId": 78,
+      "name": "Bundesliga",
+      "archiveSha256": "5ada547e57350befb660a44253a5c3f14c813a2e4c5423ad9f74ced3dd2c37c6",
+      "development": {
+        "count": 306,
+        "firstKickoff": "2023-08-18T18:30:00.000Z",
+        "lastKickoff": "2024-05-18T13:30:00.000Z",
+        "fixtureIdsSha256": "764829c04cc9a64fe377f2b2101165bb2a8027dfc16ff6cc03b5f849d221c58a"
+      },
+      "developmentFit": {
+        "count": 143,
+        "firstKickoff": "2023-08-18T18:30:00.000Z",
+        "lastKickoff": "2023-12-20T19:30:00.000Z",
+        "fixtureIdsSha256": "755b530004678304073c5460fa7f3d7ff8f0b33d3910b122a8465063419ae7c9"
+      },
+      "developmentCheck": {
+        "count": 163,
+        "firstKickoff": "2024-01-12T19:30:00.000Z",
+        "lastKickoff": "2024-05-18T13:30:00.000Z",
+        "fixtureIdsSha256": "b1a2954ab7f80b09be010f1da20553341e858790bfd18feb43b9726ac7a5447c"
+      },
+      "evaluation": {
+        "count": 306,
+        "firstKickoff": "2024-08-23T18:30:00.000Z",
+        "lastKickoff": "2025-05-17T13:30:00.000Z",
+        "fixtureIdsSha256": "8e1d854c11f8995fda1ee75565baa4f3d37df89c942f7f8e07db52e520fc08ec"
+      },
+      "fixedPrimaryV1Predicted": {
+        "count": 286,
+        "firstKickoff": "2024-08-23T18:30:00.000Z",
+        "lastKickoff": "2025-05-17T13:30:00.000Z",
+        "fixtureIdsSha256": "0849c92a920ae32bb2a420d3b67829c46f732c1378c080d12fd4e743af4acad4"
+      },
+      "preservedV1Pass": {
+        "count": 20,
+        "firstKickoff": "2024-08-24T13:30:00.000Z",
+        "lastKickoff": "2024-11-09T14:30:00.000Z",
+        "fixtureIdsSha256": "ddac19a6f619a11f5dca16ecd7bb7dfe1836332eaf104adf733f431147aaddc3"
+      }
+    }
+  ],
+  "evidenceSealVerification": {
+    "resultFileHashes": [
+      {
+        "path": "data/cache/research/football/poisson-chronological-backtest-v1/football-poisson-chronological-backtest-v1.json",
+        "sha256": "2c02e3685496c07fd533e6f9876b89c48b978a773229b77ed3c8f55ea3a1bb6c"
+      },
+      {
+        "path": "data/cache/research/football/poisson-chronological-backtest-v1/cross-league-v1/football-poisson-cross-league-backtest-v1.json",
+        "sha256": "2c51553d966d5957f6b7a7ffecc3871c33645df9edbe90b8b498cf3372847328"
+      }
+    ],
+    "drawReviewSha256": "20b5b8621f6cfee044c2a8055e036d1cb641c75ad8262d4b1e13aa3a07714425",
+    "modelHashVerified": true,
+    "archiveHashesVerified": true,
+    "developmentEvaluationOverlap": 0,
+    "metadataOnly": true,
+    "modelImported": false,
+    "metricsRecomputed": false
+  }
+}

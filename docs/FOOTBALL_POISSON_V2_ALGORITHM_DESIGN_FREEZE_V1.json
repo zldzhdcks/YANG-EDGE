@@ -1,0 +1,204 @@
+{
+  "designVersion": "FOOTBALL_POISSON_V2_ALGORITHM_DESIGN_FREEZE_V1",
+  "baseSha": "2be2d12b75cff34560bbe3f8608db2d82c613698",
+  "status": "DESIGN_ONLY_NOT_EXECUTION_AUTHORIZATION",
+  "parentProtocol": {
+    "path": "docs/FOOTBALL_POISSON_V2_DRAW_RESEARCH_PROTOCOL_V1.json",
+    "canonicalSha256": "0299f98fd28d1c3f4dc1c5153c5ddb6d614da6f0fbff09be295d68de51cfc69f",
+    "unchangedContracts": ["split", "cohortManifest", "temporal", "metrics", "promotion", "firewalls"],
+    "precedence": "Parent cohort, timing, metrics, promotion, experiment order and firewalls are binding. Design adds algorithm details only. Any contradiction blocks implementation rather than overriding the parent.",
+    "experimentOrder": ["FROZEN_V1_REFERENCE", "H1_ALONE", "H2_ALONE", "H3_ALONE"],
+    "specificationsPerHypothesis": 1,
+    "hyperparameterSearchTrials": 0,
+    "optimizerComparisonAllowed": false
+  },
+  "common": {
+    "arithmetic": "IEEE-754 binary64; natural exp/log; no float32, stochastic arithmetic or display rounding in decisions.",
+    "ordering": "Cohorts and reductions: kickoffUtc then numeric fixtureId. Teams: numeric provider team ID. Class order: HOME,DRAW,AWAY. The read-only v1 module retains its internal matchId ordering for exact v1 rates/probabilities.",
+    "randomness": "NONE",
+    "seed": null,
+    "probabilityValidation": {"finite": true, "minimum": 0, "maximum": 1, "sumAbsoluteTolerance": 1e-10},
+    "argmax": "Ordinary maximum of final probabilities; exact ties HOME then DRAW then AWAY. No epsilon tie rule or class-specific threshold.",
+    "normalization": "Only the algorithm's declared generative normalization is allowed. The evaluator must never repair, clip or externally renormalize invalid output.",
+    "scoreGrid": "H1/H2 use Poisson recursion P(0)=exp(-rate), P(k)=P(k-1)*rate/k; include at least k=0,1 and extend until 1-sum(P)<=1e-12 per marginal, at most k=199. Reject nonfinite terms or failure at cap. Iterate x ascending then y ascending. Normalize joint cells once by finite positive Z; require abs(1-Z)<=3e-12 before normalization. No changes to the v1 module.",
+    "targetRateDomain": "0 < lambda_home, lambda_away <= 10; no clipping to 10. Positive finite values outside the upper bound => PASS_GOAL_RATE_OUT_OF_RANGE; nonpositive/nonfinite final values => FAIL_NUMERICAL.",
+    "targetSampleGates": "Inherited same-league eligible history: >=30 competition matches, >=5 target home-team home appearances, >=5 target away-team away appearances. Zero mean home or away goals in that history => PASS_ZERO_COMPETITION_GOAL_RATE. Missing history gate => PASS with all reasons. Do not lower gates.",
+    "temporal": "Parent exactly: cutoff=kickoff-1ms; 365d lookback; derivedResearchAvailableAt=prior kickoff+48h < cutoff; same league and stage; distinct fixture IDs; immutable simultaneous-kickoff history; retrospective provenance only.",
+    "fittingVsSearch": "Repeated deterministic coefficient fitting at allowed chronological cutoffs is not a hyperparameter search. No restart with different constants, optimizer or specification after failure.",
+    "failurePrecedence": ["INVALID_INTEGRITY", "FAIL_NUMERICAL_OR_OPTIMIZER", "PASS_INSUFFICIENT_OR_RANGE", "PREDICTED"],
+    "nullOutputs": "PASS/FAIL/INVALID have null probabilities and predictedClass, retained fixture identity, reasons and provenance; never omit rows. A failed shared fit makes dependent targets unavailable, not a silent v1 fallback.",
+    "comparisonImpact": "Any unavailable prediction among fixed 1342 primary IDs blocks the paired research screen under the parent; do not compute a survivor-only primary result. Original 104 v1 PASS records remain unchanged."
+  },
+  "developmentContract": {
+    "boundaryUtc": "2024-01-01T00:00:00.000Z",
+    "fitTargets": "Parent season-2023 targets strictly before boundary. For H1/H3, build v1 out-of-time vectors/rates at each original cutoff, seal them before joining that target's label, and retain v1 PASS separately. Initial fit additionally requires target kickoff+48h < boundary.",
+    "checkTargets": "Parent season-2023 targets at/after boundary. The initial H1/H3 coefficients AND initial H2 coefficient vector fitted using only pre-boundary available labels remain fixed throughout check, respecting the parent's developmentCheck contract. Target sample gates still use each target's eligible history; v1 rates/raw probabilities for H1/H3 remain causal per target.",
+    "h2InitialFit": "Fit H2 once on season-2023 FT training history in [boundary-365d,boundary) with derivedResearchAvailableAt < boundary. Team universe is this pool only. Do not add check labels to this initial coefficient fit.",
+    "noDevelopmentCheckFeedback": "Check is sanity/falsification only. Record every result, failure and diagnostic without changing design, constants or optimizer. Statistical underperformance does not authorize choosing an alternate candidate. Integrity or numerical failures halt the affected experiment pending separate review.",
+    "finalFitBoundary": "For each league E is its first season-2024 target kickoff minus 1ms, as fixed in the parent cohort manifest.",
+    "finalH1H3Fit": "Fit the identical method on all valid season-2023 out-of-time v1 examples with derivedResearchAvailableAt < E. No new target population or 2024 labels. Seal coefficient and fit-ID hashes before any evaluation output.",
+    "finalH2Fit": "Fit identical H2 on same-league season-2023 history eligible at E under the 365d window; seal this final-development state. At each evaluation cutoff refit from the prescribed initialization using the parent eligible history (including earlier eligible 2024 results); this is causal state estimation, not evaluation feedback. H2 hyperparameters and algorithm never change.",
+    "fitPartDiagnostics": "H1/H3 coefficient-training objective is explicitly in-fit and not an out-of-sample performance claim. H2 initial fit deviance is similarly labelled. Check diagnostics use untouched-by-that-fit check labels. Final-development fitting is allowed only under a future execution mission, never here.",
+    "initialFitFailure": "If initial H1/H3 sample gate fails or H2 initial fit is unavailable, record the affected league/hypothesis as PASS_INSUFFICIENT_FIT and all check predictions as PASS. Do not inspect check outcomes to revise the gate or skip to a favorable final fit; affected experiment is blocked pending review.",
+    "existingExposure": "2024/25 remains EXPOSED_RETROSPECTIVE_COMPARISON, not an untouched holdout. No actual promotion from this evaluation."
+  },
+  "hypotheses": [
+    {
+      "id": "H1",
+      "ALGORITHM_NAME": "FIXED_V1_MARGINAL_DIXON_COLES_FOUR_CELL_MLE",
+      "FORMULA": {
+        "joint": "q(x,y)=Pois(x;lambda)*Pois(y;mu)*tau(x,y;lambda,mu,rho)",
+        "tau00": "1-lambda*mu*rho",
+        "tau01": "1+lambda*rho",
+        "tau10": "1+mu*rho",
+        "tau11": "1-rho",
+        "tauOther": "1",
+        "lambdaMu": "Exactly v1 predictFootball(input).expectedGoals.home/away through read-only model module; no new lambda estimation or mutation. v1 PASS stays PASS.",
+        "massIdentity": "The four additive mass changes are -A,+A,+A,-A with A=exp(-lambda-mu)*lambda*mu*rho; their total and each row/column change sum to zero. Infinite-support normalization is 1 and Poisson marginals are preserved.",
+        "numericalNormalization": "Apply tau on the four cells before common score-grid normalization. Require finite positive tau at all four cells, and abs(1-Z)<=3e-12. Normalize joint once, then sum HOME/DRAW/AWAY; no draw-level multiplier or offset."
+      },
+      "PARAMETERS": {"fitted": ["rho"], "countPerLeague": 1, "lifecycle": "Separate initial-development and final-development estimates; final rho fixed throughout evaluation"},
+      "FIT_OBJECTIVE": "Minimize mean[-log(tau(x_i,y_i;lambda_i,mu_i,rho))] over all valid development v1 PREDICTED examples in the allowed fit population. This differs from full joint score NLL only by a constant in rho. No weighting, ridge, time decay, class oversampling or example deletion.",
+      "CONSTRAINTS": {
+        "delta": 1e-8,
+        "rhoLower": "-(1-delta)/10",
+        "rhoUpper": "(1-delta)/100",
+        "rationale": "Fixed global interval guarantees tau>=delta for all 0<lambda,mu<=10. Do not adapt the domain to evaluation rates or move a boundary after fitting. Negative rho transfers mass to 0-0 and 1-1; positive rho reverses it.",
+        "sample": "At least 30 allowed fit examples AND at least 10 with observed (x,y) in {0,1}x{0,1}. No minimum for each individual cell or 1X2 class, because this is a score-dependence likelihood; all cell counts must be reported."
+      },
+      "OPTIMIZER": {
+        "name": "DETERMINISTIC_BOUNDED_DERIVATIVE_BISECTION",
+        "coefficient": "c_i=-lambda_i*mu_i for 00, +lambda_i for 01, +mu_i for 10, -1 for 11, else 0",
+        "gradient": "g(rho)=-mean[c_i/(1+c_i*rho)]",
+        "curvature": "mean[c_i^2/(1+c_i*rho)^2]>=0",
+        "steps": "Evaluate finite g at bounds. If g(L)>=0 select L; else if g(U)<=0 select U. Otherwise evaluate rho=0, stop if abs(g)<=1e-10, then bracket by its sign and repeatedly take midpoint. Positive gradient replaces upper, negative replaces lower. No alternate optimizer."
+      },
+      "INITIALIZATION": {"rho": 0, "bracket": "Fixed [rhoLower,rhoUpper]"},
+      "HYPERPARAMETERS": {"gradientTolerance": 1e-10, "intervalTolerance": 1e-10, "maxIterations": 80, "timeDecay": "NONE", "gridSearch": 0},
+      "CONVERGENCE_RULE": "Boundary KKT sign, abs(g)<=1e-10, or bracket width<=1e-10; on width convergence choose midpoint. Exact zero gradient stops immediately. Flat objective (should be excluded by informative-count gate) chooses rho=0. Nonconvergence after 80 midpoint iterations => FAIL_OPTIMIZER. Boundary optimum is valid and must be flagged.",
+      "FAILURE_RULE": "Insufficient allowed/informative fit examples => PASS_INSUFFICIENT_FIT; nonfinite derivative/parameter or nonconvergence => FAIL; invalid input/hash/identity or final probability mass => INVALID. No per-target rho clipping/refit or fallback rho=0 on failure.",
+      "DIAGNOSTICS": [
+        "Per league and phase record rho, boundary flag, fit N, informative count, each of four observed-cell counts, objective and iterations.",
+        "For each held-out target record lambda/mu, four tau factors, independent and corrected probabilities for 00/01/10/11, their total low-score mass, diagonal low-score mass (00+11), and all three class deltas. Total four-cell mass is invariant; redistribution, not total growth, is expected.",
+        "For each of the four cells report mean predicted probability and empirical frequency; also 00+11. Report candidate-minus-v1 mean full joint score NLL on check/evaluation and the sum of absolute four-cell frequency residuals. Analytic log score uses log factorial=sum(log(k),k=1..score), empty sum=0; no grid truncation of observed score.",
+        "mechanismSupported only if held-out joint NLL delta<-1e-12 and four-cell absolute residual sum delta<-1e-12. Otherwise NOT_SUPPORTED/INSUFFICIENT. Never override primary gates."
+      ],
+      "RANDOMNESS": "NONE",
+      "IMPLEMENTATION_PATH": "scripts/football-poisson-v2-draw-research/h1-dixon-coles-v1.ts"
+    },
+    {
+      "id": "H2",
+      "ALGORITHM_NAME": "RIDGE_LOG_LINEAR_ATTACK_DEFENCE_INDEPENDENT_POISSON",
+      "FORMULA": {
+        "lambdaHome": "exp(b+h+a_home-d_away)",
+        "lambdaAway": "exp(b+a_away-d_home)",
+        "meaning": "b=league log baseline; h=home log advantage; a_t=team attack; d_t=team defensive strength (larger reduces opponent scoring). No draw parameter.",
+        "distribution": "Independent Poisson with these rates and common grid/normalization. No H1 correction or H3 calibration."
+      },
+      "PARAMETERS": {"fitted": ["b", "h", "a_t for each training team", "d_t for each training team"], "storedCount": "2+2K", "freeDegrees": "2K", "teamUniverse": "K unique exact provider team IDs present in the fitting pool; sorted numeric. No future roster, target-driven universe expansion or name matching."},
+      "FIT_OBJECTIVE": "J= (1/(2N))*sum_i[exp(etaHi)-x_i*etaHi + exp(etaAi)-y_i*etaAi] + (kappa/2)*(b^2+h^2+sum_t(a_t^2+d_t^2)); etaHi=b+h+a_hi-d_ai; etaAi=b+a_ai-d_hi. Constant log factorial terms omitted for optimization only. Uniform fixture weighting; no time decay or class weights.",
+      "CONSTRAINTS": {
+        "identifiability": "sum_t a_t=0 and sum_t d_t=0. Projection subtracts block means; after each trial step center both blocks again. b,h unprojected.",
+        "parameterDomain": "All coefficients finite real; no hidden box clipping. Accepted train rates strictly positive finite; training rate >10 is allowed in the objective, but emitted target rates retain the inherited <=10 gate.",
+        "fitWindow": "Only the phase-specific pool in developmentContract; evaluation refit uses same-league stage-eligible 365d history with strict 48h availability at that cutoff.",
+        "sparseNewTeam": "No extra per-training-team minimum: symmetric ridge supplies shrinkage. Target must meet unchanged 30/5/5 gates and both teams must exist in fitted universe; otherwise PASS_INSUFFICIENT_HISTORY or PASS_UNSEEN_TEAM. Never silently assign zero strength to unseen teams."
+      },
+      "OPTIMIZER": {
+        "name": "PROJECTED_GRADIENT_DESCENT_WITH_FIXED_ARMIJO_BACKTRACKING",
+        "analyticGradient": "Let eHi=exp(etaHi)-x_i, eAi=exp(etaAi)-y_i. g_b=sum(eHi+eAi)/(2N)+kappa*b; g_h=sum(eHi)/(2N)+kappa*h; g_a[t]=(sum_{hi=t}eHi+sum_{ai=t}eAi)/(2N)+kappa*a_t; g_d[t]=-(sum_{ai=t}eHi+sum_{hi=t}eAi)/(2N)+kappa*d_t.",
+        "projection": "Subtract mean from attack-gradient block and defence-gradient block to obtain gP; direction=-gP. Norms include b,h and both full centered blocks.",
+        "lineSearch": "Every iteration starts alpha=1. Try alpha=2^(-j), j=0..59, in that order. Center trial attack/defence coefficients. Accept first finite positive-rate trial with J(trial)<=J(current)-1e-4*alpha*dot(gP,gP). Reject nonfinite/zero-rate trial and halve; do not clamp. If all 60 trials fail => FAIL_LINE_SEARCH.",
+        "restartPolicy": "Fresh prescribed initialization for each allowed fit. No warm start, optimizer substitution, best-of-seed selection or manual restart."
+      },
+      "INITIALIZATION": {"b": "log(sum_i(x_i+y_i)/(2N))", "h": 0, "attack": "all 0", "defence": "all 0", "zeroGoals": "PASS_ZERO_COMPETITION_GOAL_RATE when either home or away goal sum is zero; no pseudocount"},
+      "HYPERPARAMETERS": {"kappa": 0.01, "initialStep": 1, "backtrackFactor": 0.5, "armijo": 0.0001, "maxLineSearchTrials": 60, "projectedGradientInfinityTolerance": 1e-7, "maxIterations": 10000, "zeroSumTolerance": 1e-10, "gridSearch": 0},
+      "CONVERGENCE_RULE": "Stop only when maxAbs(gP)<=1e-7 at current accepted iterate, with finite objective/coefficients/rates and both zero sums within 1e-10. Check initialization, then after each accepted update. Up to 10000 updates; remaining gradient above tolerance => FAIL_NON_CONVERGENCE. Small objective improvement alone is not convergence.",
+      "FAILURE_RULE": "Insufficient pool or target gates/unseen team => PASS; line-search exhaustion, accepted nonfinite coefficient/gradient or nonconvergence => FAIL; identity/hash/leakage or invalid emitted probability mass => INVALID. Positive target rate >10 => PASS_GOAL_RATE_OUT_OF_RANGE. Do not fallback to v1 or remove failing fixtures.",
+      "DIAGNOSTICS": [
+        "Record N,K, sorted team-ID hash, b,h, centered team coefficients, kappa, objective, projected-gradient norm, iterations, line-search reductions, zero-sum residuals and target lambda_home/away. Training objective is not held-out performance.",
+        "Held-out marginal Poisson deviance separately home/away: mean[2*(g*log(g/lambda)-(g-lambda))], convention g*log(g/lambda)=0 at g=0. Also mean(lambda-g), mean(abs(lambda-g)) and candidate-minus-v1 deltas, plus target sum-rate distribution min/median/max.",
+        "mechanismSupported only if both held-out home and away mean deviance deltas<-1e-12 on complete fixed paired rows. Otherwise NOT_SUPPORTED/INSUFFICIENT; no arbitrary rate-lowering success criterion or primary override."
+      ],
+      "RANDOMNESS": "NONE",
+      "IMPLEMENTATION_PATH": "scripts/football-poisson-v2-draw-research/h2-ridge-rates-v1.ts"
+    },
+    {
+      "id": "H3",
+      "ALGORITHM_NAME": "SINGLE_TEMPERATURE_MULTICLASS_SCALING",
+      "FORMULA": {
+        "input": "Frozen v1 p=(pHome,pDraw,pAway), validated before transform. z_k=log(p_k) for p_k>0; zero entries have empty support, not a finite floored logit.",
+        "output": "beta=1/T; q_k=exp(beta*z_k-m)/sum_{j:p_j>0}exp(beta*z_j-m), m=max_{j:p_j>0}(beta*z_j); q_k=0 for p_k=0.",
+        "normalization": "Stable supported log-sum-exp; same scalar for all classes, no offsets, biases, class weights or output floor. Empty support invalid.",
+        "rank": "beta>0 preserves raw ranking and exact ties mathematically. H3 cannot fix DRAW argmax scarcity; it isolates calibration from classification. Emitted argmax must equal v1 ordinary argmax; floating-point drift => INVALID, never manual class override."
+      },
+      "PARAMETERS": {"fitted": ["beta=1/T"], "countPerLeague": 1, "reported": ["beta", "T"], "lifecycle": "Fit initial/final development only; final beta frozen throughout evaluation"},
+      "FIT_OBJECTIVE": "Minimize mean[log(sum_{k:pik>0} exp(beta*log(pik)))-beta*log(piActual)] on allowed out-of-time development vectors, using stable log-sum-exp. No regularizer or sample/class weighting. This objective is in inverse temperature beta, not unconstrained T.",
+      "CONSTRAINTS": {"betaLower": 0.05, "betaUpper": 20, "equivalentTDomain": [0.05,20], "sample": "At least 30 allowed v1 PREDICTED fit vectors, and at least 5 actual HOME, 5 DRAW, 5 AWAY. No balancing or oversampling.", "zeroActualProbability": "If any fit example has pActual=0 => FAIL_ZERO_SUPPORT for the entire fit; never drop it or introduce a floor. Non-actual zero probabilities stay zero in q. Evaluation scoring uses the parent's scoring-only floor if needed."},
+      "OPTIMIZER": {
+        "name": "DETERMINISTIC_BOUNDED_DERIVATIVE_BISECTION",
+        "gradient": "g(beta)=mean[sum_k(qik*log(pik))-log(piActual)] over supported classes",
+        "curvature": "mean[Var_q(log(pik))]>=0",
+        "steps": "If every fit vector is exactly uniform on its positive support and every actual label is in support, objective is flat: select beta=1. Otherwise evaluate finite g at bounds; g(L)>=0 selects L, else g(U)<=0 selects U. Otherwise start beta=1, stop if abs(g)<=1e-10, bracket by its sign and bisect. Positive g replaces upper, negative replaces lower."
+      },
+      "INITIALIZATION": {"beta": 1, "T": 1, "bracket": [0.05,20]},
+      "HYPERPARAMETERS": {"gradientTolerance": 1e-10, "intervalTolerance": 1e-10, "maxIterations": 80, "gridSearch": 0},
+      "CONVERGENCE_RULE": "Boundary KKT sign, abs(g)<=1e-10, or bracket width<=1e-10 with midpoint choice. Exact flat objective selects identity beta=1 as declared; this is not a failed-fit fallback. Cap exhaustion or nonfinite derivative => FAIL. Flag boundary and flat outcomes.",
+      "FAILURE_RULE": "Insufficient class/sample => PASS_INSUFFICIENT_FIT; actual zero support/nonconvergence/nonfinite fitted parameter => FAIL; malformed input/hash/identity, invalid final mass or argmax drift => INVALID. No beta=1 fallback on failure, league-specific alternative or DRAW parameter.",
+      "DIAGNOSTICS": [
+        "Record fitted beta/T, fit N and class counts, zero-support counts, boundary/flat flags, optimizer iterations and objective. Training objective labelled in-fit.",
+        "On held-out rows report parent 10-bin per-class reliability and ECE, per-class mean probability minus frequency, multiclass NLL/Brier deltas and argmax-change count (must be zero). All empty bins remain visible.",
+        "mechanismSupported only if all three ECE deltas<=1e-12 with at least one<-1e-12 AND NLL delta<-1e-12. Otherwise NOT_SUPPORTED/INSUFFICIENT. Unchanged accuracy/DRAW count is expected, not evidence of failure or permission for a threshold. Primary gates remain binding."
+      ],
+      "RANDOMNESS": "NONE",
+      "IMPLEMENTATION_PATH": "scripts/football-poisson-v2-draw-research/h3-temperature-v1.ts"
+    }
+  ],
+  "failureContract": {
+    "INVALID": ["archive/protocol/design/model/input hash mismatch", "fixture/league/team identity mismatch or duplicates", "target/future/league leakage", "invalid raw/final probabilities or normalization outside contract", "unknown stage or contract contradiction"],
+    "FAIL": ["optimizer/line-search nonconvergence", "nonfinite accepted parameter/objective/gradient", "nonpositive or nonfinite final target rate", "H3 actual zero support in fit"],
+    "PASS": ["unchanged history minimum not met", "zero competition goal rate", "H1 informative/sample minimum not met", "H3 sample/class minimum not met", "H2 target team absent from fitted universe", "positive finite target rate >10"],
+    "runBehavior": "INVALID stops affected experiment and seals reason. Shared-fit FAIL or PASS blocks dependent phase for that league/hypothesis; retain an unavailable record for each scheduled dependent target. Per-target H2 FAIL/PASS is retained and blocks complete-primary screening; no selective metric repair. No automatic replacement candidate or rerun with changed settings."
+  },
+  "diagnosticContract": {
+    "phases": ["INITIAL_FIT_IN_SAMPLE_LABELLED", "DEVELOPMENT_CHECK_HELD_OUT_FROM_INITIAL_FIT", "FINAL_FIT_IN_SAMPLE_LABELLED", "EVALUATION_EXPOSED_RETROSPECTIVE"],
+    "pairedRows": "Use complete v1-predicted paired rows within phase; unavailable candidate row => diagnostic INSUFFICIENT and no survivor-only support label. Full counts/statuses still published in local audit. Fit objectives have their explicitly defined fit population.",
+    "quantiles": "Sort numeric values; median uses linear interpolation at (n-1)*0.5. Empty statistic => null.",
+    "priority": "Mechanism diagnostics never override parent primary/promotion gates or enable algorithm changes. Statistical failure is retained without adaptive rescue."
+  },
+  "implementationPlan": {
+    "codeRoot": "scripts/football-poisson-v2-draw-research/",
+    "plannedFiles": ["contracts-v1.ts", "numerics-v1.ts", "v1-readonly-adapter.ts", "h1-dixon-coles-v1.ts", "h2-ridge-rates-v1.ts", "h3-temperature-v1.ts", "run-development-v1.ts", "run-evaluation-v1.ts", "test-synthetic-contracts-v1.ts"],
+    "allowedV1Dependency": "Read-only src/lib/football/poisson-research-v1/index.ts and its instant.ts dependency, verified by frozen hash. Never import any football-forward module, operational runner or owner/market module.",
+    "localOutputRoot": "data/cache/research/football/poisson-v2-draw-research/protocol-v1/<hypothesis>/<league>/<run>/",
+    "isolation": "No candidate imports another candidate. Common numerical helpers cannot select variants or mutate baseline. Inputs/parameters/results stored separately and append-only; H1/H3 final coefficients sealed before evaluation, H2 per-cutoff fit state linked to exact history hash.",
+    "artifactFields": ["parentProtocolHash", "designHash", "candidateSourceHash", "modelSourceHash", "archiveHash", "cohortIdHash", "inputSnapshotHash", "fitFixtureIdsHash", "fitBoundary", "fitPhase", "parameterHash", "status", "reasons", "optimizerDiagnostics", "predictionHash"],
+    "futureTestsRequired": ["symbolic/reference rho=0 and four-cell mass/marginal conservation", "global rho-domain validity including lambda=mu=10", "H1 derivative finite-difference on synthetic inputs", "H2 analytic gradient finite-difference and zero-sum projection", "H2 cutoff/team universe and sparse/new-team PASS", "H3 identity, permutation symmetry, positive-temperature rank preservation and zero support", "all boundary/flat/nonconvergence/failure paths", "leakage and hash rejection", "original cohort/PASS preservation", "no Forward import/write"],
+    "executionPermission": "No source files or synthetic optimizer/model tests are created/run now. Future implementation and any fitting/evaluation require a separate authorized mission after CTO review."
+  },
+  "sources": [
+    {"title": "Dixon and Coles (1997), original paper", "url": "https://doi.org/10.1111/1467-9876.00065", "readCopy": "https://www.ajbuckeconbikesail.net/wkpapers/Airports/MVPoisson/soccer_betting.pdf", "scope": "Four-cell probability-correction family only; no market data, source performance results, original fitting/decay choices adopted."},
+    {"title": "Guo et al. (2017), On Calibration of Modern Neural Networks", "url": "https://proceedings.mlr.press/v70/guo17a.html", "scope": "Single scalar temperature transformation and rank preservation; no empirical result transferred to football."}
+  ],
+  "governance": {
+    "MODEL_CHANGED": false,
+    "ENGINE_CHANGED": false,
+    "FORWARD_V1_CHANGED": false,
+    "V2_IMPLEMENTED": false,
+    "DEVELOPMENT_EXECUTED": false,
+    "DEVELOPMENT_RESULTS_VIEWED": false,
+    "EVALUATION_EXECUTED": false,
+    "BACKTEST_EXECUTED": false,
+    "FITTING_EXECUTED": false,
+    "H1_SPEC_FROZEN": true,
+    "H2_SPEC_FROZEN": true,
+    "H3_SPEC_FROZEN": true,
+    "MARKET_INPUT_ALLOWED": false,
+    "FORWARD_IMPORT_ALLOWED": false,
+    "RAW_DATA_COMMITTED": false,
+    "WATCH_STARTED": false,
+    "MAIN_MERGED": false,
+    "literatureRead": true,
+    "providerRequests": 0
+  },
+  "hashPolicy": "SHA256 of this full JSON canonical UTF8 representation with recursively sorted object keys, original array order, no whitespace/newline. Hash placed in companion Markdown; parent hash is checked read-only."
+}
