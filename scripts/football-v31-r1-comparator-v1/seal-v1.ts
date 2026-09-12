@@ -1,0 +1,30 @@
+import {mkdirSync} from 'node:fs';
+import {join} from 'node:path';
+import {CONTRACT,roles,V1_HASH,H2_HASH,ADAPTER_HASH,verifyModel,type Bundle,freezeDeep} from './comparator-v1';
+import {select,targetGate,MAP_HASH,BETA_HASH} from '../football-v31-r1-prospective-v1/adapter-v1';
+import {storeRoot,writeSeal,digest,requireRule,verifyRawProjection,type Observation} from '../football-v31-r1-prospective-v1/store-v1';
+import {exactKeys,validProb,argmax,order,rateGate} from '../football-v31-r1-prospective-v1/frozen/scripts/football-v3-feature-research-v1/contracts-v1';
+export type Snapshot=Bundle & {sealedAt:string};
+export function validate(s:Snapshot){
+ exactKeys(s,['targetIdentity','cutoffAt','predictionCreatedAt','baseHistoryIds','baseHistoryHash','contract','featureObservationIds','featureObservationHashes','featureCounts','inputSnapshotHash','sameCutoffV1','sameCutoffH2','r1','officialForwardReference','sealedAt']);
+ requireRule(s.contract===CONTRACT,'CONTRACT');targetGate(s.targetIdentity,s.cutoffAt,s.predictionCreatedAt);requireRule(Date.parse(s.sealedAt)>=Date.parse(s.predictionCreatedAt)&&Date.parse(s.targetIdentity.kickoffUtc)-Date.parse(s.sealedAt)>=60000,'SEAL_DEADLINE');
+ requireRule(new Set(s.baseHistoryIds).size===s.baseHistoryIds.length&&new Set(s.featureObservationIds).size===s.featureObservationIds.length&&s.baseHistoryIds.length===s.featureObservationIds.length&&s.featureObservationIds.length===s.featureObservationHashes.length,'IDENTITY_CARDINALITY');
+ for(const hash of [s.baseHistoryHash,s.inputSnapshotHash,...s.featureObservationHashes])requireRule(/^[a-f0-9]{64}$/.test(hash),'HASH');
+ [s.sameCutoffV1,s.sameCutoffH2,s.r1].forEach((r,i)=>{exactKeys(r,['payload','sha256']);requireRule(digest(r.payload)===r.sha256,'PREDICTION_MUTATION');const p=r.payload;exactKeys(p,['targetIdentity','cutoffAt','predictionCreatedAt','baseHistoryIds','baseHistoryHash','role','status','passReason','probabilities','class','rates','modelHash','parameterHash','mapHash','betaHash','adapterHash','details']);requireRule(p.role===roles[i]&&digest(p.targetIdentity)===digest(s.targetIdentity)&&p.cutoffAt===s.cutoffAt&&p.predictionCreatedAt===s.predictionCreatedAt&&digest(p.baseHistoryIds)===digest(s.baseHistoryIds)&&p.baseHistoryHash===s.baseHistoryHash,'SAME_CUTOFF_CONTRACT');requireRule(['PREDICTED','PASS'].includes(p.status),'UNSEALABLE_STATUS');requireRule(/^[a-f0-9]{64}$/.test(p.modelHash),'MODEL_HASH');if(p.status==='PREDICTED'){requireRule(p.probabilities&&p.rates&&p.rates.length===2&&p.passReason.length===0,'PREDICTION');validProb(p.probabilities);rateGate(...p.rates);requireRule(p.class===['HOME','DRAW','AWAY'][argmax(p.probabilities)],'CLASS');}else requireRule(p.probabilities===null&&p.rates===null&&p.class===null&&p.passReason.length>0,'PASS');});
+ requireRule(s.sameCutoffV1.payload.modelHash===V1_HASH&&s.sameCutoffH2.payload.modelHash===H2_HASH&&s.r1.payload.mapHash===MAP_HASH&&s.r1.payload.betaHash===BETA_HASH&&s.r1.payload.adapterHash===ADAPTER_HASH&&s.r1.payload.modelHash===ADAPTER_HASH,'FROZEN_PARAMETERS');
+ if(s.sameCutoffH2.payload.status==='PREDICTED')requireRule(/^[a-f0-9]{64}$/.test(s.sameCutoffH2.payload.parameterHash??'')&&s.sameCutoffH2.payload.details.inputHash===s.baseHistoryHash&&s.sameCutoffH2.payload.details.parameterHash===s.sameCutoffH2.payload.parameterHash,'H2_PARAMETER');
+ if(s.r1.payload.status==='PREDICTED')requireRule(s.sameCutoffH2.payload.status==='PREDICTED'&&digest(s.r1.payload.details.offset)===digest(s.sameCutoffH2.payload.rates)&&s.r1.payload.details.h2ParameterHash===s.sameCutoffH2.payload.parameterHash&&s.r1.payload.details.h2InputHash===s.baseHistoryHash,'H2_OFFSET_EQUIVALENCE');
+ if(s.officialForwardReference){exactKeys(s.officialForwardReference,['role','fixtureId','snapshotHash']);requireRule(s.officialForwardReference.role==='OFFICIAL_FORWARD_REFERENCE_ONLY'&&s.officialForwardReference.fixtureId===s.targetIdentity.fixtureId&&/^[a-f0-9]{64}$/.test(s.officialForwardReference.snapshotHash),'REFERENCE_ONLY');}
+}
+/** One exclusive directory reservation; interruption leaves a blocked partial seal, never an overwrite. */
+export function seal(root:string,b:Bundle,observations:Observation[],now=new Date().toISOString()){
+ verifyModel();const s:Snapshot={...structuredClone(b),sealedAt:now};validate(s);const c=select(s.targetIdentity,s.cutoffAt,s.predictionCreatedAt,observations);
+ requireRule(c.selected.every(o=>Date.parse(o.completion.providerFetchedAt)<Date.parse(s.cutoffAt)),'SAME_CUTOFF_OBSERVATION_BOUNDARY');
+ requireRule(digest(c.selected)===s.inputSnapshotHash&&digest(c.selected.map(o=>o.observationId))===digest(s.featureObservationIds)&&digest(c.selected.map(digest))===digest(s.featureObservationHashes)&&digest(c.counts)===digest(s.featureCounts),'EVIDENCE_LINK');
+ const base=order(c.selected.map(o=>({...o.fixture,homeGoals:o.completion.homeGoals,awayGoals:o.completion.awayGoals})));requireRule(digest(base)===s.baseHistoryHash&&digest(base.map(o=>o.fixtureId))===digest(s.baseHistoryIds),'BASE_LINK');
+ c.selected.forEach(verifyRawProjection);
+ const parent=join(storeRoot(root),'fixtures');mkdirSync(parent,{recursive:true});const dir=join(parent,String(s.targetIdentity.fixtureId));mkdirSync(dir);
+ writeSeal(join(dir,'input.json'),c.selected);return freezeDeep(writeSeal(join(dir,'snapshot.json'),s));
+}
+/** Separate exact paired sets; never discard PASS targets from the denominator. */
+export function pairedSets(snapshots:Snapshot[]){snapshots.forEach(validate);requireRule(new Set(snapshots.map(s=>s.targetIdentity.fixtureId)).size===snapshots.length,'DUPLICATE_TARGET');const full=[...snapshots].sort((a,b)=>a.targetIdentity.fixtureId-b.targetIdentity.fixtureId);return {fullTargetDenominator:full.length,allFixtureIds:full.map(s=>s.targetIdentity.fixtureId),r1VsV1:full.filter(s=>s.r1.payload.status==='PREDICTED'&&s.sameCutoffV1.payload.status==='PREDICTED').map(s=>s.targetIdentity.fixtureId),r1VsH2:full.filter(s=>s.r1.payload.status==='PREDICTED'&&s.sameCutoffH2.payload.status==='PREDICTED').map(s=>s.targetIdentity.fixtureId)};}
