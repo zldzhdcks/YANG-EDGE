@@ -1,0 +1,303 @@
+{
+  "payload": {
+    "schemaVersion": "FOOTBALL_V31_INCREMENTAL_FEATURE_RESEARCH_PROTOCOL_V1",
+    "baseSha": "4c92f7ce89c9ebf7a682199181f084f75f889681",
+    "branch": "agent/astra/football-historical-source-gate-v1",
+    "createdAt": "2026-09-12T10:34:51.189Z",
+    "scope": "PROTOCOL_ONLY",
+    "executionAuthorized": false,
+    "PRIMARY_RESEARCH_QUESTION": {
+      "en": "Do xG / Shots / SOT contain predictive information incremental to the frozen H2 attack/defence goal-rate structure, rather than mostly re-expressing the same underlying team strength?",
+      "ko": "H2가 이미 설명하는 팀 강도 성분을 분리한 뒤에도 과거 공격 과정 데이터에 추가적인 1X2 probability signal이 남는가?"
+    },
+    "PRIOR_EVIDENCE": {
+      "artifacts": [
+        {
+          "path": "docs/FOOTBALL_V3_FEATURE_RESEARCH_PROTOCOL_V1.json",
+          "canonicalSha256": "0b30bc4d41684f2797d0a8e0a2a53694ecc6d5dc8f151b45213af1f1f9dc1bb8",
+          "byteSha256": "4c9afaea91670d881818aa7692710c9c1db3421e5730a2a98345f3e913aa153c"
+        },
+        {
+          "path": "docs/FOOTBALL_V3_FEATURE_ALGORITHM_DESIGN_FREEZE_V1.json",
+          "canonicalSha256": "04803e9b26acfd43de263c9b52c575ed2231d91984f82877da5e63b0cde6207a",
+          "byteSha256": "06092089cb4ab557b796a8ed3cd462c9ca33df257b44c74aaac0046b9a750da7"
+        },
+        {
+          "path": "data/audits/football-v3-feature-development-v1.json",
+          "canonicalSha256": "b1197bfaa895a9bf9893e9c6f1df817e687fff94ecc9d54cea958de6c004f2e8",
+          "byteSha256": "a3d03940ec16825f1e6c0e83c79426a8e89cd7232b047d8b251767f273e6421e"
+        },
+        {
+          "path": "data/audits/football-v3-feature-2024-exposed-check-v1.json",
+          "canonicalSha256": "3cb3c4f907f8c493043660b2a6ffd018b378021d6e6adfc736eea48a0ce427da",
+          "byteSha256": "8608b38256a907e6475d3ef30402a3f525d4b30a9393b68392fa70f0a3cfd85c"
+        },
+        {
+          "path": "data/audits/football-v3-phase1-diagnostic-review-v1.json",
+          "canonicalSha256": "1d6b4219774c9e58a0421cc5b91eb5cb0b985a36a143397ebba58fe0b89d9b12",
+          "byteSha256": "f1a3f673f973917a1b740cb89058b0be8a302533a8538b67032786fca1f1432e"
+        },
+        {
+          "path": "data/audits/football-v3-2025-independent-holdout-cohort-seal-v1.json",
+          "canonicalSha256": "7924420956e419af1a7f14b8b2eb520cc55d37b46534736d35b0fbdcf51c2581",
+          "byteSha256": "a0b8486789ff31a40e1c0fbe50758dc0c35c8bd3b70ab49dae88081a41ff829b"
+        },
+        {
+          "path": "data/audits/football-v3-feature-source-freeze-v1.json",
+          "canonicalSha256": "9b77401cc2f3c828f58a3018367985edb8c4e8ee4bd005467ff694e1e8192091",
+          "byteSha256": "01e46ca7d1374e16d9c0fe8a34042e6859b40fe9792ce4f9fdc2d9e9ba6afcd1"
+        }
+      ],
+      "observations": [
+        "All Phase-1 candidates improved 2024 LL/Brier versus v1.",
+        "Versus H2: EPL F1/F2/F3 improved; La Liga F2/F3 improved while F1 worsened; Serie A and Bundesliga all worsened.",
+        "High fitted covariate correlation; H2 information overlap PARTIALLY_SUPPORTED.",
+        "Coefficient movement/sign reversal and correction magnitude alone do not explain success/failure.",
+        "DRAW recall problem remains unresolved."
+      ],
+      "interpretation": "Motivation only; no expected performance target, candidate selection, causal proof, or winner declaration. Phase-1 evidence was already exposed before V3.1 registration."
+    },
+    "FEATURE_SCOPE": {
+      "allowed": [
+        "expected_goals",
+        "Total Shots",
+        "Shots on Goal"
+      ],
+      "newExternalFeatures": false,
+      "restCongestion": "SEPARATE_PHASE_2",
+      "lineupsInjuriesSuspensions": "V4",
+      "purpose": "Representation and incremental information, not feature expansion"
+    },
+    "ALLOWED_REPRESENTATION_FAMILIES": [
+      {
+        "id": "R1",
+        "name": "H2-CONDITIONAL RESIDUAL REPRESENTATION"
+      },
+      {
+        "id": "R2",
+        "name": "LEAGUE-RELATIVE FEATURE INNOVATION REPRESENTATION"
+      },
+      {
+        "id": "R3",
+        "name": "LOW-DIMENSIONAL CORRELATED-FEATURE REPRESENTATION"
+      }
+    ],
+    "CANDIDATE_LIMIT": {
+      "maxFamiliesConsidered": 3,
+      "maxV31Candidates": 2,
+      "selectedCandidates": [],
+      "selectionStatus": "DEFERRED_TO_ALGORITHM_DESIGN_FREEZE",
+      "noProliferation": true,
+      "noResultBasedCandidateExpansion": true
+    },
+    "UNDECIDED": [
+      "Exact formulas",
+      "Residual estimator",
+      "Dimension reduction method",
+      "Number of coefficients",
+      "Hyperparameters",
+      "Exact fitting and representation training procedure",
+      "Feature-family reduction, if any",
+      "Logical Phase-1 reference mapping per candidate"
+    ],
+    "REQUIRED_PROPERTIES": [
+      "Frozen H2 backbone estimator/source unchanged; official Forward remains v1.",
+      "Retain v1 and H2 comparators.",
+      "Exclude target own statistics and target results from prediction input.",
+      "Exclude market/odds/provider predictions and owner/external shadow inputs.",
+      "Same-league temporal isolation for every learned representation, parameter and target input.",
+      "Mathematically explain the claimed information distinction from H2; decorrelation alone is not proof of incremental predictive signal.",
+      "One algorithm specification per registered candidate applied identically to all four leagues; no outcome-tailored league formula.",
+      "League-specific fitting may be allowed by future design, not selected here.",
+      "No automatic Forward migration."
+    ],
+    "COMPARATORS": {
+      "mandatory": [
+        "football-poisson-research-v1",
+        "frozen H2"
+      ],
+      "referenceOnly": "Corresponding frozen V3 Phase-1 candidate only when logically comparable; mapping/rationale preregistered before V3.1 results, otherwise mark NOT_APPLICABLE. No forced R1/F1 or R2/F2 mapping.",
+      "promotionRequired": [
+        "football-poisson-research-v1",
+        "frozen H2"
+      ],
+      "h2Status": "UNPROMOTED_RESEARCH_BACKBONE_SCREEN_NO",
+      "reporting": "Each league/candidate separately; paired IDs, denominator, coverage, PASS and missingness preserved; no pooled winner score."
+    },
+    "DEVELOPMENT_SPLIT": {
+      "primary": {
+        "providerSeason": 2023,
+        "season": "2023/24",
+        "role": "PRIMARY_DEVELOPMENT"
+      },
+      "check": {
+        "providerSeason": 2024,
+        "season": "2024/25",
+        "role": "EXPOSED_DEVELOPMENT_CHECK",
+        "untouchedHoldout": false
+      },
+      "scope": "Existing four-league Regular Season cohort; no outcome-based cohort repair.",
+      "noPromotion": true,
+      "noStructureChangeAfterV31CheckResults": true,
+      "exposureDisclosure": "Prior Phase-1 2024 results informed these research questions. This is preregistration before V3.1 results, not a claim that 2024 is unexposed."
+    },
+    "HOLDOUT_FIREWALL": {
+      "providerSeason": 2025,
+      "season": "2025/26",
+      "total": 1446,
+      "role": "SEALED_INDEPENDENT_HOLDOUT",
+      "allowedNow": "Committed seal metadata/hash verification only",
+      "forbiddenNow": [
+        "Raw feature magnitudes",
+        "Scores/results",
+        "Predictions/probabilities",
+        "Metrics"
+      ],
+      "evaluationPrerequisites": [
+        "V3.1 protocol complete",
+        "Algorithm Design Freeze complete",
+        "Frozen implementation and tests complete",
+        "2023 development complete",
+        "2024 exposed check complete",
+        "Numeric promotion rule resealed before holdout access",
+        "Independent integrity/exposure validation and separate explicit CTO approval"
+      ],
+      "automaticAccess": false
+    },
+    "DRAW_FIREWALL": {
+      "researchSeparated": true,
+      "forbidden": [
+        "draw multiplier",
+        "draw intercept",
+        "draw threshold",
+        "draw-specific coefficient",
+        "Dixon-Coles combination",
+        "class-specific post-hoc calibration"
+      ],
+      "purpose": "Incremental attacking-process signal; DRAW behavior monitored descriptively, no DRAW repair."
+    },
+    "METRICS": {
+      "primary": [
+        "Multiclass Log Loss",
+        "Multiclass Brier"
+      ],
+      "secondary": [
+        "Accuracy",
+        "HOME/DRAW/AWAY recall",
+        "HOME/DRAW/AWAY precision",
+        "Predicted class shares",
+        "One-vs-rest Brier",
+        "Per-class ECE"
+      ],
+      "diagnostics": [
+        "Representation correlation with H2",
+        "Representation cross-feature correlation",
+        "Contribution magnitude",
+        "Coefficient stability"
+      ],
+      "interpretation": "Report both comparators separately. Correlation, ECE and proper scores address different properties. Exact execution conventions must be frozen before execution, not selected after results."
+    },
+    "SUCCESS_QUESTIONS": [
+      "Has information overlap with H2 decreased?",
+      "Has cross-league heterogeneity in feature-effect direction decreased?",
+      "Are LL/Brier improvements versus H2 more consistent than Phase-1?",
+      "Has class-level degradation decreased?"
+    ],
+    "SUCCESS_QUESTION_STATUS": "DESCRIPTIVE_ONLY_NOT_PROMOTION_THRESHOLDS",
+    "PROMOTION_GOVERNANCE": {
+      "existingRuleSource": "docs/FOOTBALL_V3_FEATURE_ALGORITHM_DESIGN_FREEZE_V1.json#/payload/promotion",
+      "existingRuleCanonicalSha256": "9bb0ccd9917f3049ec740617caf86d06787ab8d46ced235c442844adf1639f7f",
+      "existingRuleReadOnly": {
+        "applicableSeason": 2025,
+        "prerequisites": [
+          "Independent holdout identity/scope/completeness/exposure/hash seal",
+          "Separate CTO approval",
+          "Frozen implementation, comparators, input and beta hashes",
+          "All four leagues evaluated once without rerun or tuning"
+        ],
+        "tolerance": 1e-12,
+        "primary": "Per candidate, every league, and each comparator separately: delta LL < -1e-12 AND delta multiclass Brier < -1e-12.",
+        "classGuards": "Every HOME/DRAW/AWAY versus each comparator on the fixed primary population: recall delta >= -0.05-1e-12; ECE delta <= 0.01+1e-12; one-vs-rest Brier delta <= 1e-12.",
+        "coverage": "Fixed comparator intersection U contains at least 100 fixtures and >=80% of full league cohort; candidate predicts 100% of U; all full-cohort IDs retained; zero FAIL/INVALID; all three actual classes present in U.",
+        "nullHandling": "Null required recall/ECE or missing primary probabilities => INSUFFICIENT, never silently pass. Precision null is reported, not a promotion guard.",
+        "allLeaguesRequired": true,
+        "outcome": "ELIGIBLE_FOR_CTO_PROMOTION_REVIEW only if all four leagues pass all gates; otherwise SCREEN_NO, INSUFFICIENT, FAIL or INVALID as applicable. No model promotion or automatic Forward migration.",
+        "multipleCandidates": "Evaluate all F1/F2/F3 separately; no composite winner, league cherry-picking, unregistered ensemble or automatic choice among passing candidates.",
+        "exposed2024": "DESCRIPTIVE_CHECK_ONLY; report numeric metrics and differences, no promotion eligibility from these data",
+        "rationale": "Fixed conservative descriptive eligibility guardrails, not a significance test: common denominators, both probability scores improve, class recall capped at 5 percentage-point loss and ECE at 1 point. No claim that these constants were empirically optimized."
+      },
+      "v31RuleDecision": "DEFERRED: reuse unchanged or make stricter at V3.1 Design Freeze; no weakening or automatic discard.",
+      "numericRuleResealRequiredBeforeHoldout": true,
+      "noPostResultRelaxation": true,
+      "no2023Or2024Promotion": true,
+      "noAutomaticWinnerOrForwardMigration": true,
+      "note": "The copied F1/F2/F3 enumeration is historical evidence, not authorization for three V3.1 candidates. V3.1 limit is two; all registered candidates must follow the presealed rule."
+    },
+    "FEATURE_SELECTION_FIREWALL": {
+      "no2024ResultOnlyDeletion": [
+        "xG",
+        "Shots",
+        "SOT"
+      ],
+      "possibleReduction": "Only a documented Phase-1 redundancy rationale and preregistered protocol reasoning, resolved before Algorithm Design Freeze; no selection made here.",
+      "noDeletionAfterV31Results": true
+    },
+    "TEMPORAL_AND_PROVENANCE": {
+      "sameLeague": true,
+      "targetOwnStatsForbidden": true,
+      "futureDataForbidden": true,
+      "representationFittingMustBeTemporal": true,
+      "historicalRole": "Retrospective final/revised evidence; strictReplayEligible=false; no fabricated observedAt.",
+      "priorPhase1Contract": "Read-only historical reference. V3.1 exact representation/fitting/availability/missingness details must be explicitly resolved in Design Freeze; no silent algorithm inheritance.",
+      "raw": "LOCAL_ONLY",
+      "newProviderRequests": false
+    },
+    "RIGHTS": {
+      "legalInternalUse": "CONDITIONAL",
+      "publicRawFeatureDisplay": "UNRESOLVED",
+      "commercialPublicRights": "UNRESOLVED",
+      "humanSupportConfirmation": false,
+      "formalWrittenLicense": false,
+      "source": "Prior provider dashboard Chat AI guidance relayed by user; not upgraded by this protocol."
+    },
+    "GOVERNANCE": {
+      "V31_IMPLEMENTED": false,
+      "V31_FITTING_EXECUTED": false,
+      "V31_BACKTEST_EXECUTED": false,
+      "V3_PHASE1_CHANGED": false,
+      "V2_H2_CHANGED": false,
+      "V1_CHANGED": false,
+      "FORWARD_V1_CHANGED": false,
+      "HOLDOUT_2025_PREDICTIONS_GENERATED": false,
+      "HOLDOUT_2025_METRICS_VIEWED": false,
+      "HOLDOUT_2025_METRICS_COMPUTED": false,
+      "HOLDOUT_2025_RAW_ACCESSED": false,
+      "ALGORITHM_SELECTED": false,
+      "MODEL_PROMOTED": false
+    },
+    "preservation": {
+      "v3Sources": 12,
+      "dependencies": 21,
+      "protectedFiles": 644,
+      "untrackedDocument": {
+        "path": "docs/FOOTBALL_CURRENT_SEASON_DATA_ACCESS_GATE_V1.md",
+        "sha256": "a5538cc0a8c0e74dd77d087e3d577c00da8ae99cd7c9c84e9d2b60b7b01218f8"
+      },
+      "verification": "Canonical evidence hashes and source/dependency/protected byte hashes verified before/after; no local holdout raw accessed."
+    },
+    "HANDOFF": {
+      "nextAllowedPlanningStep": "Separate V3.1 Algorithm Design Freeze mission; at most two candidates, no implementation under this protocol.",
+      "mustResolveBeforeExecution": [
+        "Candidate definitions and incremental-information mathematical rationale",
+        "Single shared cross-league specification per candidate",
+        "Exact causal fit/transform chronology and missingness",
+        "Comparator pairing, reference comparability and metrics conventions",
+        "Numeric promotion rule unchanged or stricter, resealed",
+        "Source/input/parameter integrity tests and seal order"
+      ],
+      "stop": "No holdout authorization until every prerequisite and separate CTO approval; do not alter existing source/betas or untracked doc; no main merge."
+    },
+    "hashPolicy": "SHA256 of canonical payload: recursively sorted object keys, array order preserved, compact UTF-8 JSON; envelope sha256 excluded."
+  },
+  "sha256": "04d7a0029d70c031fcc3fcb443dca56c6a08f7d1c64c5051570af4dd4117ebfb"
+}
