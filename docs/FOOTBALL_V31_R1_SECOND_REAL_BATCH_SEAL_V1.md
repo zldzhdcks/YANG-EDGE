@@ -2,6 +2,10 @@
 
 BASE_SHA: 76f59133b61b819bcb2db5a54c1f01f64e88c13b
 
+RESULT_COMMIT_SHA: 7b711179f04e2246823b4f02a896f6d174dce19d
+
+BRANCH: agent/cursor/football-v31-second-real-batch-seal-v1
+
 PREFLIGHT_IMPLEMENTATION_COMMIT: f8a3d7081b9888a66644848649bb43fd6c3205a7
 
 PREFLIGHT_AUDIT_SHA256: 2fd09298fcf44340bf5818bcde6d19549201b6e803c82db1f24a4da62a638680
@@ -92,7 +96,7 @@ Private namespace: `football-v31-r1-prospective-shadow-v1` / `V31_R1_PROSPECTIVE
 
 Batch manifest: `batches/SECOND_REAL_ONE_SHOT_V1/` (LOCAL_ONLY, not committed). STARTED hash `42324880bb4a9c9dea38602000754636f462809cca2afb7eb7db17dfe68c7149`. COMPLETED hash `28dacd03c04e229aef0eacaa4880c596d47b50155b368ae9591df52199c521d9`.
 
-Git audit SHA256: b57e4a98babe8180499724bfca44093577a16ec448750e1318438c1e183bc331. That file stores metadata, hashes, and status only.
+Git audit SHA256: 5f89d44fa026daa8e5b37bd8cc34df94535cbf17659e08f12836481b1ed31c7e. That file stores metadata, hashes, and status only.
 
 FOOTBALL_V31_R1_SECOND_REAL_BATCH_SEAL_V1_READY_FOR_CTO_REVIEW
 
