@@ -2,6 +2,10 @@
 
 BASE_SHA: e33c40ecc2aa871f183e09950155eaefa20fc358
 
+RESULT_COMMIT_SHA: f8a3d7081b9888a66644848649bb43fd6c3205a7
+
+BRANCH: agent/cursor/football-v31-second-real-batch-preflight-v1
+
 This mission is preflight only. It discovers, validates identity, and classifies readiness for a second prospective batch. It does not seal predictions. V1, H2, and R1 stay frozen. First-batch grades are evaluation evidence only and were not used to change the model, map, beta, selector, PASS rule, or weights.
 
 R1_ROLE = UNPROMOTED_PROSPECTIVE_SHADOW
@@ -120,7 +124,7 @@ Regression: comparator + prospective + postgame grader/receipt suites, 78 PASS.
 
 Private discovery JSON is LOCAL_ONLY under `YANG-EDGE-INBOX/football-v31-r1-second-real-batch-preflight-v1` and is not committed. Hash: 274b5266e0c898279890e26644305187b4e2a725462c1f60f65d9890e142cccc
 
-Audit SHA256 (canonical payload): 41356036f2261050fdc064ddfec6b1867f59659bffc6f72596ff7026d5a7ddba
+Audit SHA256 (canonical payload): 2fd09298fcf44340bf5818bcde6d19549201b6e803c82db1f24a4da62a638680
 
 A later authorized mission may seal the four READY fixtures. This mission does not.
 
