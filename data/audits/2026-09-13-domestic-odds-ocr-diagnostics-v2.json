@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "yang-edge-domestic-odds-ocr-extraction-v2",
+  "v1GeometryRel": "data/audits/2026-09-13-domestic-odds-ocr-geometry-v1.json",
+  "v1Immutable": true,
+  "familyCounts": {
+    "DECIMAL_SEPARATOR_DROPPED": 170,
+    "DECIMAL_SEPARATOR_REPLACED": 133,
+    "DIGIT_MERGED": 38,
+    "TEAM_TEXT_PARTIAL": 32,
+    "ROW_BOUNDARY_ERROR": 61,
+    "DATE_PARSE_FAILURE": 0,
+    "TIME_TEXT_CONFUSION": 121,
+    "UNKNOWN": 472
+  },
+  "samples": {
+    "TEAM_TEXT_PARTIAL": [
+      "그 NC",
+      "그 NC",
+      "그",
+      "그",
+      "그",
+      "한화",
+      "한화",
+      "한화"
+    ],
+    "UNKNOWN": [
+      "NC",
+      "NC",
+      "NC",
+      "LG",
+      "LG",
+      "LG",
+      "LG",
+      "LG"
+    ],
+    "TIME_TEXT_CONFUSION": [
+      "09 13(일) 17고0",
+      "09 13(일) 17고0",
+      "09 13(일) 17고0",
+      "09 13(일) 17고0",
+      "09 13(일) 17T0",
+      "09 13(일) 17고0",
+      "09 13(일) 17고0",
+      "09 13(일) 17고0"
+    ],
+    "DECIMAL_SEPARATOR_REPLACED": [
+      "2-19",
+      "5-80",
+      "3-35",
+      "7-00",
+      "2-03",
+      "2-30",
+      "1-87",
+      "2-04"
+    ],
+    "DECIMAL_SEPARATOR_DROPPED": [
+      "3 03",
+      "1 70",
+      "2 53",
+      "1 76",
+      "3 23",
+      "2 64",
+      "1 93",
+      "2 80"
+    ],
+    "DIGIT_MERGED": [
+      "124",
+      "220",
+      "121",
+      "260",
+      "240",
+      "245",
+      "209",
+      "320"
+    ],
+    "ROW_BOUNDARY_ERROR": [
+      "7.5",
+      "7.5",
+      "U 157.5",
+      "도로므",
+      "PSV",
+      "PSV",
+      "PSV",
+      "PSV"
+    ]
+  },
+  "tokenCount": 1890
+}
