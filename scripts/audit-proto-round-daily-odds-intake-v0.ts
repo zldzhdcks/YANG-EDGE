@@ -7,13 +7,10 @@
 import { mkdir, readFile, rename, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import {
-  absFromOperatorRelative,
   loadIntakeManifest,
   protoRoundIdentity,
   resolveOperatorRoot,
-  scanProtoRoundInbox,
   sha256FileBytes,
-  yangEdgeDirectoryRelative,
   type PhysicalFileRecordV1,
 } from "../src/lib/proto-round-screenshot-intake-v1";
 import {
@@ -23,8 +20,10 @@ import {
   dailySealFileName,
   groupInventoryByRound,
   inventoryDailyScreenshots,
+  listAmbiguousDuplicateRoundDirectories,
   newCanonicalImages,
   sha256Bytes,
+  summarizeRoundDirectoryImages,
   type DailyOddsImageV0,
 } from "../src/lib/proto-round-daily-odds-intake-v0";
 
@@ -82,6 +81,8 @@ async function main() {
     inventoryDate: args.inventoryDate,
   });
   const grouped = groupInventoryByRound(hits);
+  const ambiguousDuplicateRoundDirectories =
+    listAmbiguousDuplicateRoundDirectories(operatorRootAbs);
   const rounds = [];
 
   for (const [protoRoundKey, roundHits] of grouped) {
@@ -95,15 +96,7 @@ async function main() {
     const previousCanonicalSha256 = new Set(
       canonicalImagesFromManifest(previous?.files).map((img) => img.sourceImageSha256),
     );
-    const scan = await scanProtoRoundInbox({
-      year: identity.year,
-      round: identity.round,
-    });
-    const after = await loadIntakeManifest(
-      operatorRootAbs,
-      identity.year,
-      identity.round,
-    );
+    const folderSummary = summarizeRoundDirectoryImages(first.roundAbs);
     const dailyImages: DailyOddsImageV0[] = [];
     const seen = new Set<string>();
     for (const hit of roundHits) {
@@ -118,7 +111,7 @@ async function main() {
       });
     }
     const roundNewCanonical = newCanonicalImages({
-      currentCanonical: canonicalImagesFromManifest(after?.files),
+      currentCanonical: dailyImages,
       previousCanonicalSha256,
     });
     const seal = buildDailyOddsIntakeSealV0({
@@ -128,22 +121,19 @@ async function main() {
       roundLabel: identity.roundLabel,
       protoRoundKey: identity.protoRoundKey,
       scanSummary: {
-        physical: scan.summary.physicalFileCount,
-        canonical: scan.summary.canonicalImageCount,
-        duplicates: scan.summary.duplicateExactCount,
-        unsupported: scan.summary.unsupportedFileCount,
-        eligible: scan.summary.extractionEligibleCount,
-        previousCanonicalImageCount: scan.previousCanonicalImageCount,
-        canonicalImageDelta: scan.canonicalImageDelta,
+        physical: folderSummary.physical,
+        canonical: folderSummary.canonical,
+        duplicates: folderSummary.duplicates,
+        unsupported: folderSummary.unsupported,
+        eligible: folderSummary.eligible,
+        previousCanonicalImageCount: previousCanonicalSha256.size,
+        canonicalImageDelta: roundNewCanonical.length,
       },
       images: dailyImages,
     });
-    const yangAbs = absFromOperatorRelative(
-      operatorRootAbs,
-      yangEdgeDirectoryRelative(identity.year, identity.round),
-    );
     const sealAbs = path.join(
-      yangAbs,
+      first.roundAbs,
+      ".yang-edge",
       DAILY_ODDS_INTAKE_LOCAL_DIR_NAME,
       dailySealFileName(args.inventoryDate),
     );
@@ -151,14 +141,15 @@ async function main() {
     const sealSha = sha256Bytes(await readFile(sealAbs));
     rounds.push({
       protoRoundKey,
-      NEW_SCREENSHOT_ROUND_DIR: identity.roundLabel,
+      NEW_SCREENSHOT_ROUND_DIR: first.roundDirectoryName,
+      NEW_SCREENSHOT_ROUND_DIRECTORY_KIND: first.roundDirectoryKind,
       NEW_SCREENSHOT_PHYSICAL_COUNT: roundHits.length,
-      physical: scan.summary.physicalFileCount,
-      canonical: scan.summary.canonicalImageCount,
-      duplicates: scan.summary.duplicateExactCount,
-      unsupported: scan.summary.unsupportedFileCount,
-      eligible: scan.summary.extractionEligibleCount,
-      canonicalImageDelta: scan.canonicalImageDelta,
+      physical: folderSummary.physical,
+      canonical: folderSummary.canonical,
+      duplicates: folderSummary.duplicates,
+      unsupported: folderSummary.unsupported,
+      eligible: folderSummary.eligible,
+      canonicalImageDelta: roundNewCanonical.length,
       NEW_CANONICAL_IMAGE_COUNT: dailyImages.length,
       NEW_CANONICAL_IMAGE_SHA256: dailyImages.map((img) => img.sourceImageSha256),
       NEW_CANONICAL_FILE_NAMES: dailyImages.map((img) => img.sourceFileName),
@@ -177,6 +168,7 @@ async function main() {
     action: "audit-daily-odds-intake-v0",
     capturedInventoryDate: args.inventoryDate,
     rounds,
+    ambiguousDuplicateRoundDirectories,
     OCR_V4_STARTED: "NO",
     NETWORK_CALLS: 0,
   };

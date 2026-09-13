@@ -15,7 +15,10 @@ import {
   filenameContainsInventoryDate,
   inventoryDailyScreenshots,
   isDailyNewScreenshotFile,
+  listAmbiguousDuplicateRoundDirectories,
+  listProtoRoundDirectories,
   newCanonicalImages,
+  parseRoundDirectoryName,
   sha256Bytes,
 } from "../src/lib/proto-round-daily-odds-intake-v0";
 
@@ -138,6 +141,74 @@ async function main() {
   assert.equal(hits.length, 1);
   assert.equal(hits[0]!.round, 106);
   assert.equal(hits[0]!.sourceFileName, "shot 2026-09-09 212016.png");
+  assert.equal(hits[0]!.roundDirectoryKind, "LABELLED_HOICHA");
+  assert.equal(hits[0]!.roundDirectoryName, "106회차");
+
+  mkdirSync(path.join(operatorRootAbs, "2026", "108"), { recursive: true });
+  writeFileSync(
+    path.join(operatorRootAbs, "2026", "108", "스크린샷 2026-09-09 162226.png"),
+    pngB,
+  );
+  mkdirSync(path.join(operatorRootAbs, "2026", "107"), { recursive: true });
+  mkdirSync(path.join(operatorRootAbs, "2026", "107회차"), { recursive: true });
+  writeFileSync(
+    path.join(operatorRootAbs, "2026", "107", "shot 2026-09-09 100000.png"),
+    pngA,
+  );
+  writeFileSync(
+    path.join(operatorRootAbs, "2026", "107회차", "shot 2026-09-09 100001.png"),
+    pngA,
+  );
+  mkdirSync(path.join(operatorRootAbs, "2026", "notes"), { recursive: true });
+  writeFileSync(
+    path.join(operatorRootAbs, "2026", "notes", "shot 2026-09-09 100002.png"),
+    pngB,
+  );
+
+  assert.deepEqual(parseRoundDirectoryName("108"), {
+    round: 108,
+    kind: "NUMERIC",
+  });
+  assert.deepEqual(parseRoundDirectoryName("108회차"), {
+    round: 108,
+    kind: "LABELLED_HOICHA",
+  });
+  assert.equal(parseRoundDirectoryName("2026-09-09"), null);
+  assert.equal(parseRoundDirectoryName("notes"), null);
+  assert.equal(parseRoundDirectoryName("0"), null);
+
+  const dirs = listProtoRoundDirectories(operatorRootAbs);
+  assert.equal(
+    dirs.some((d) => d.round === 108 && d.roundDirectoryKind === "NUMERIC"),
+    true,
+  );
+  assert.equal(
+    dirs.some((d) => d.round === 106 && d.roundDirectoryKind === "LABELLED_HOICHA"),
+    true,
+  );
+  assert.equal(dirs.some((d) => d.round === 107), false);
+  const ambiguous = listAmbiguousDuplicateRoundDirectories(operatorRootAbs);
+  assert.equal(ambiguous.length, 1);
+  assert.equal(ambiguous[0]!.round, 107);
+  assert.equal(ambiguous[0]!.resolution, "AMBIGUOUS_DUPLICATE_ROUND_FOLDERS");
+  assert.deepEqual(ambiguous[0]!.directoryNames, ["107", "107회차"]);
+
+  const hitsBoth = inventoryDailyScreenshots({
+    operatorRootAbs,
+    inventoryDate: "2026-09-09",
+  });
+  assert.equal(hitsBoth.some((h) => h.round === 107), false);
+  assert.equal(
+    hitsBoth.some(
+      (h) => h.round === 108 && h.sourceFileName.includes("2026-09-09"),
+    ),
+    true,
+  );
+  const otherDate = inventoryDailyScreenshots({
+    operatorRootAbs,
+    inventoryDate: "2026-09-10",
+  });
+  assert.equal(otherDate.length, 0);
   const sealSha = sha256Bytes(Buffer.from(`${JSON.stringify(seal, null, 2)}\n`, "utf8"));
   const sealShaAgain = sha256Bytes(Buffer.from(`${JSON.stringify(seal, null, 2)}\n`, "utf8"));
   assert.equal(sealSha, sealShaAgain);

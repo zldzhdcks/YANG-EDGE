@@ -45,11 +45,38 @@ export type DailyOddsIntakeSealV0 = {
   images: DailyOddsImageV0[];
 };
 
+export const ROUND_DIRECTORY_KIND_LABELLED_HOICHA =
+  "LABELLED_HOICHA" as const;
+export const ROUND_DIRECTORY_KIND_NUMERIC = "NUMERIC" as const;
+
+export type RoundDirectoryKindV0 =
+  | typeof ROUND_DIRECTORY_KIND_LABELLED_HOICHA
+  | typeof ROUND_DIRECTORY_KIND_NUMERIC;
+
+export type ProtoRoundDirectoryV0 = {
+  year: number;
+  round: number;
+  roundLabel: string;
+  roundAbs: string;
+  roundDirectoryName: string;
+  roundDirectoryKind: RoundDirectoryKindV0;
+};
+
+export type AmbiguousDuplicateRoundDirectoryV0 = {
+  year: number;
+  round: number;
+  roundLabel: string;
+  directoryNames: string[];
+  resolution: "AMBIGUOUS_DUPLICATE_ROUND_FOLDERS";
+};
+
 export type DailyOddsInventoryHitV0 = {
   year: number;
   round: number;
   roundLabel: string;
   roundAbs: string;
+  roundDirectoryName: string;
+  roundDirectoryKind: RoundDirectoryKindV0;
   sourceFileName: string;
   relativePath: string;
   absPath: string;
