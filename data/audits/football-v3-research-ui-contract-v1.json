@@ -1,0 +1,987 @@
+{
+  "payload": {
+    "schemaVersion": "yang-edge-football-v3-research-ui-contract-v1",
+    "auditedAt": "2026-09-14T01:10:00.000Z",
+    "scope": "READ_AUDIT_DESIGN_ONLY",
+    "REACT_UI_IMPLEMENTED": "NO",
+    "ENGINE_CHANGED": "NO",
+    "PREDICTION_CHANGED": "NO",
+    "V3_ALGORITHM_CHANGED": "NO",
+    "V31_ALGORITHM_CHANGED": "NO",
+    "FORWARD_CHANGED": "NO",
+    "COMMITTED": "NO",
+    "branch": "agent/cursor/football-v31-third-real-batch-preflight-v1",
+    "head": "c61bcae9291263f1463766b8c4092af9912179d4",
+    "originMain": "1b90cdd3d406dd2991f79fe0836c32d8ba08e4b9",
+    "officialStatus": {
+      "line": "V3/V3.1 RESEARCH LINE CLOSED — UNPROMOTED",
+      "officialForward": "V1",
+      "sourceAudit": "data/audits/football-v3-v31-closure-audit-v1.json",
+      "sourceAuditSha256": "f1d81d05627b5d4d0e648b65161c671829fcb91aa4680f383384bf2dada032c6",
+      "verdictPath": "payload.verdict.label",
+      "verdictValue": "RESEARCH_LINE_CLOSED_UNPROMOTED"
+    },
+    "verdict": "CONTRACT_READY_NO_UI_IMPLEMENTATION",
+    "existingUiInventory": {
+      "worktree": "football-v31-research-console-v1",
+      "note": "This worktree is the sealed research line. yang-edge Daily checkout on origin/main has no /internal/football/research route.",
+      "routes": [
+        {
+          "route": "/internal/football/research",
+          "file": "src/app/internal/football/research/page.tsx",
+          "component": "src/components/internal/football/FootballV31ResearchConsoleView.tsx",
+          "loader": "src/lib/football/v31-internal-research-console-v1/load-console-v1.ts",
+          "loaderReexport": "scripts/football-v31-internal-research-console-v1/console-v1.ts",
+          "shows": [
+            "LOCAL_ONLY R1 prospective sealed targets",
+            "side-by-side V1 / H2 / R1 probabilities from sameCutoffV1 / sameCutoffH2 / r1",
+            "TRIPLE_CONSENSUS / H2_R1_CONSENSUS / SPLIT / PASS",
+            "postgame grades logLoss/Brier when postgame-v1.json exists",
+            "owner-only 1X2 market comparison and model-vs-market percentage-point deltas"
+          ],
+          "sourceStore": "../YANG-EDGE-INBOX/football-v31-r1-prospective-shadow-v1",
+          "sourceStoreOverrideEnv": "FOOTBALL_V31_INTERNAL_RESEARCH_ROOT",
+          "notOfficialForward": true,
+          "reuse": "INTERNAL_LAYOUT_ONLY",
+          "prototypeAudience": "INTERNAL_ONLY",
+          "userScreenExtension": "NO_AS_IS",
+          "reason": "Console V1 is the R1 prospective shadow store, not MODEL_FORWARD. It renders unpromoted H2/R1 probabilities, consensus-as-agreement, and market deltas. Production NODE_ENV fail-closes. OS nav does not link this route."
+        },
+        {
+          "route": "/",
+          "file": "src/app/page.tsx",
+          "component": "src/components/home/HomeBestPicks.tsx",
+          "loader": "src/lib/api/today-edge-picks.ts",
+          "shows": [
+            "Hero + today EDGE picks",
+            "modelProbability and valueEdge for baseball picks"
+          ],
+          "reuse": "LAYOUT_SHELL_ONLY",
+          "prototypeAudience": "PUBLIC_PROTOTYPE_SHELL",
+          "userScreenExtension": "YES_WITH_NEW_FOOTBALL_STRIP",
+          "reason": "HomeBestPicks is baseball EDGE selection with value/edge language. Do not feed Football V3/V3.1 or even Official Forward into this card as-is."
+        },
+        {
+          "route": "/games",
+          "file": "src/app/games/page.tsx",
+          "component": "src/components/games/GamesPageContent.tsx + GameCard.tsx + GameList.tsx",
+          "loader": "src/app/api/games/route.ts via getFootballGamesForDate",
+          "shows": [
+            "date-scoped fixtures including football filter 축구",
+            "kickoff, teams, optional market odds",
+            "MLB researchOutcome / engine recommendation badges when present"
+          ],
+          "reuse": "YES_FIXTURE_LIST",
+          "prototypeAudience": "PUBLIC_PROTOTYPE",
+          "userScreenExtension": "YES",
+          "reason": "Best existing user surface for today football fixtures. Currently lists provider schedule, not sealed MODEL_FORWARD probabilities."
+        },
+        {
+          "route": "/analysis/[gameId]",
+          "file": "src/app/analysis/[gameId]/page.tsx",
+          "component": "src/components/analysis/public/PublicAnalysisViewer.tsx",
+          "loader": "src/lib/public-analysis/load-public-game-analysis.ts",
+          "shows": [
+            "headline/description, form, lineup, injuries, coach, team metrics, market benchmark"
+          ],
+          "reuse": "SHELL_AND_HEADER_ONLY",
+          "prototypeAudience": "PUBLIC_PROTOTYPE_CAUTION",
+          "userScreenExtension": "CONDITIONAL",
+          "reason": "Football public analysis can exist as schedule/context. Lineup/injuries/raw metrics must stay behind the rights gate. Do not place R1/H2/V3 probabilities here as official judgment."
+        },
+        {
+          "route": "/api/football/fixtures",
+          "file": "src/app/api/football/fixtures/route.ts",
+          "component": null,
+          "loader": "src/lib/football provider getFixtures",
+          "shows": [
+            "live/cached API-Football fixtures mapped to GameData"
+          ],
+          "reuse": "SCHEDULE_ONLY",
+          "prototypeAudience": "INTERNAL_DATA_PATH",
+          "userScreenExtension": "NO_AS_OFFICIAL_PREDICTION"
+        },
+        {
+          "route": "/picks",
+          "file": "src/app/picks/page.tsx",
+          "component": "src/components/picks/PickList.tsx",
+          "loader": "constants/picks AI_PICKS sample",
+          "shows": [
+            "fixed sample EDGE ranking, labeled not a real pick"
+          ],
+          "reuse": "NO",
+          "prototypeAudience": "PROHIBITED_FOR_FOOTBALL_RESEARCH",
+          "userScreenExtension": "NO"
+        },
+        {
+          "route": "/internal/dashboard",
+          "file": "src/app/internal/dashboard/page.tsx",
+          "component": "src/components/internal/os/DashboardView.tsx football section",
+          "loader": "src/lib/internal/load-yang-edge-os-page.ts + operation-memory football foundation slices",
+          "shows": [
+            "축구 Identity / 1X2 Odds / Result / Review Foundation stages",
+            "plainLanguage '연구 ≠ 공식'",
+            "no sealed Forward probabilities"
+          ],
+          "reuse": "OWNER_OS_STATUS_ONLY",
+          "prototypeAudience": "INTERNAL_ONLY",
+          "userScreenExtension": "NO_FRIEND_DEMO"
+        },
+        {
+          "route": "/internal/research",
+          "file": "src/app/internal/research/page.tsx",
+          "component": "src/components/internal/os/ResearchLabView.tsx",
+          "loader": "loadYangEdgeOsPage",
+          "shows": [
+            "MLB/NPB/KBO research lab; no football V3 console link"
+          ],
+          "reuse": "NO",
+          "prototypeAudience": "INTERNAL_ONLY",
+          "userScreenExtension": "NO"
+        },
+        {
+          "route": "/internal/engine",
+          "file": "src/app/internal/engine/page.tsx",
+          "component": "src/components/internal/os/EngineCenterView.tsx",
+          "loader": "loadYangEdgeOsPage",
+          "shows": [
+            "engine variable status; football V3/V3.1 not rendered"
+          ],
+          "reuse": "NO",
+          "prototypeAudience": "INTERNAL_ONLY",
+          "userScreenExtension": "NO"
+        },
+        {
+          "route": "/internal/developer",
+          "file": "src/app/internal/developer/page.tsx",
+          "component": "src/components/internal/os/DeveloperConsoleView.tsx",
+          "loader": "football foundation developer snapshots",
+          "shows": [
+            "Football Foundation layers; Prediction surface absent"
+          ],
+          "reuse": "NO",
+          "prototypeAudience": "INTERNAL_ONLY",
+          "userScreenExtension": "NO"
+        }
+      ],
+      "namedComponents": {
+        "FootballV31ResearchConsoleView": {
+          "exists": true,
+          "collisionWithProposedNames": false,
+          "prototypeReuse": "Do not rename. Keep as internal research viewer. Do not promote to friend-facing Official Forward."
+        },
+        "GameCard": {
+          "exists": true,
+          "prototypeReuse": "Reuse for fixture identity/kickoff/odds row. Do not attach engine recommendation or MLB researchOutcome to football Forward."
+        },
+        "PredictionResultBadge": {
+          "exists": true,
+          "labels": [
+            "예측 적중",
+            "예측 실패"
+          ],
+          "prototypeReuse": "Allowed only for Official Forward graded PREDICTED rows (CORRECT/WRONG). Forbidden for R1/H2/V3."
+        },
+        "HomeBestPicks": {
+          "exists": true,
+          "prototypeReuse": "Do not reuse valueEdge CTA for football."
+        }
+      },
+      "dataLoaders": [
+        {
+          "id": "loadResearchConsole",
+          "path": "scripts/football-v31-internal-research-console-v1/console-v1.ts",
+          "reads": "R1 prospective shadow seals + optional postgame-v1.json + owner-only market file",
+          "officialForward": false
+        },
+        {
+          "id": "getFootballGamesForDate",
+          "path": "src/lib/games/football-games.ts",
+          "reads": "API-Football fixtures for enabled leagues",
+          "officialForward": false
+        },
+        {
+          "id": "validatePregame",
+          "path": "scripts/football-forward-validation-v1.ts",
+          "reads": "MODEL_FORWARD/fixtures/{id}/snapshot.json + input.json + seal-receipt.json",
+          "officialForward": true,
+          "uiWired": false
+        }
+      ]
+    },
+    "informationArchitecture": {
+      "A_OFFICIAL_FORWARD": {
+        "title": "공식 예측",
+        "engine": "football-poisson-research-v1",
+        "modelHash": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+        "displayAllowed": [
+          "fixture (home/away/league)",
+          "kickoff",
+          "pHome / pDraw / pAway",
+          "predictedClass",
+          "PREDICTED / PASS",
+          "SEALED PREGAME",
+          "result/grade CORRECT / WRONG when a grade artifact exists"
+        ],
+        "displayForbidden": [
+          "H2 / V3-F1/F2/F3 / V31-R1/R3 probabilities as official",
+          "TRIPLE_CONSENSUS or H2_R1_CONSENSUS as a pick",
+          "provider xG/shots/SOT raw values",
+          "betting CTA"
+        ],
+        "docsCaveat": "docs/FOOTBALL_POISSON_RESEARCH_V1.md still marks VALIDATED_MODEL=NO / PUBLIC_RECOMMENDATION=NO. Prototype may call this Official Forward of this product, not a validated betting recommendation."
+      },
+      "B_V3_RESEARCH_STATUS": {
+        "title": "V3 연구 상태",
+        "display": {
+          "xG": "RESEARCHED",
+          "Total Shots": "RESEARCHED",
+          "Shots on Target": "RESEARCHED",
+          "Phase-1": "CLOSED",
+          "V3.1 Holdout": "COMPLETE",
+          "Promotion": "SCREEN_NO",
+          "Official Engine": "V1"
+        },
+        "rawProviderValues": "PROHIBITED on prototype/public-friendly UI (rights unresolved)"
+      },
+      "C_ENGINE_EVOLUTION": {
+        "nodes": [
+          {
+            "id": "V1",
+            "label": "Official Forward",
+            "status": "LIVE_OFFICIAL_FORWARD"
+          },
+          {
+            "id": "V2/H2",
+            "label": "Unpromoted Backbone",
+            "status": "UNPROMOTED_RESEARCH_BACKBONE"
+          },
+          {
+            "id": "V3",
+            "label": "xG + Shots + SOT",
+            "status": "RESEARCH_CLOSED"
+          },
+          {
+            "id": "V3.1",
+            "label": "R1 / R3 Independent Holdout",
+            "status": "SCREEN_NO"
+          },
+          {
+            "id": "V4",
+            "label": "Player / Lineup",
+            "status": "FUTURE_NOT_IMPLEMENTED",
+            "requiredBadge": [
+              "FUTURE",
+              "NOT IMPLEMENTED"
+            ]
+          }
+        ]
+      }
+    },
+    "artifactToUiFieldMap": [
+      {
+        "UI_FIELD": "currentOfficialModelId",
+        "SOURCE_ARTIFACT": "data/audits/football-v3-v31-closure-audit-v1.json",
+        "JSON_PATH": "payload.officialModelStatus.currentForwardModel.id",
+        "SEMANTIC_MEANING": "Official Forward runtime identity.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "football-poisson-research-v1 from scripts/football-forward-shadow-v1.ts POLICY.version / MODEL_HASH pairing"
+      },
+      {
+        "UI_FIELD": "forwardModelHash",
+        "SOURCE_ARTIFACT": "data/audits/football-v3-v31-closure-audit-v1.json",
+        "JSON_PATH": "payload.officialModelStatus.currentForwardModel.hash",
+        "SEMANTIC_MEANING": "Sealed V1 source hash. Same value as scripts/football-forward-shadow-v1.ts MODEL_HASH.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": "INTERNAL_SHORT_HASH_OK",
+        "FALLBACK": "scripts/football-forward-shadow-v1.ts export MODEL_HASH"
+      },
+      {
+        "UI_FIELD": "forwardPredictionStatus",
+        "SOURCE_ARTIFACT": "data/cache/research/football/forward-shadow-v1/MODEL_FORWARD/fixtures/{fixtureId}/snapshot.json",
+        "JSON_PATH": "payload.status",
+        "SEMANTIC_MEANING": "PREDICTED or PASS for Official Forward, written by scripts/football-forward-shadow-v1.ts and asserted by scripts/football-forward-validation-v1.ts.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "data/audits/2026-09-13-football-forward-postgame-review-v1.json payload.predicted[].status or payload.pass[].status for the 2026-09-13 UTC slate"
+      },
+      {
+        "UI_FIELD": "officialPHome",
+        "SOURCE_ARTIFACT": "data/cache/research/football/forward-shadow-v1/MODEL_FORWARD/fixtures/{fixtureId}/snapshot.json",
+        "JSON_PATH": "payload.pHome",
+        "SEMANTIC_MEANING": "Official Forward home 1X2 probability. Null on PASS.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "payload.predicted[].pHome or payload.pass[].pHome in data/audits/2026-09-13-football-forward-postgame-review-v1.json"
+      },
+      {
+        "UI_FIELD": "officialPDraw",
+        "SOURCE_ARTIFACT": "data/cache/research/football/forward-shadow-v1/MODEL_FORWARD/fixtures/{fixtureId}/snapshot.json",
+        "JSON_PATH": "payload.pDraw",
+        "SEMANTIC_MEANING": "Official Forward draw probability. Null on PASS.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "2026-09-13 review payload.predicted[].pDraw / payload.pass[].pDraw"
+      },
+      {
+        "UI_FIELD": "officialPAway",
+        "SOURCE_ARTIFACT": "data/cache/research/football/forward-shadow-v1/MODEL_FORWARD/fixtures/{fixtureId}/snapshot.json",
+        "JSON_PATH": "payload.pAway",
+        "SEMANTIC_MEANING": "Official Forward away probability. Null on PASS.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "2026-09-13 review payload.predicted[].pAway / payload.pass[].pAway"
+      },
+      {
+        "UI_FIELD": "officialPredictedClass",
+        "SOURCE_ARTIFACT": "data/cache/research/football/forward-shadow-v1/MODEL_FORWARD/fixtures/{fixtureId}/snapshot.json",
+        "JSON_PATH": "payload.predictedClass",
+        "SEMANTIC_MEANING": "Argmax of official pHome/pDraw/pAway. Null on PASS.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "2026-09-13 review payload.predicted[].predictedClass"
+      },
+      {
+        "UI_FIELD": "officialPassReason",
+        "SOURCE_ARTIFACT": "data/cache/research/football/forward-shadow-v1/MODEL_FORWARD/fixtures/{fixtureId}/snapshot.json",
+        "JSON_PATH": "payload.passReason",
+        "SEMANTIC_MEANING": "Why Official Forward withheld a class. Confirmed values include INSUFFICIENT_HOME_HISTORY / INSUFFICIENT_AWAY_HISTORY.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "2026-09-13 review payload.pass[].passReason"
+      },
+      {
+        "UI_FIELD": "sealedPregame",
+        "SOURCE_ARTIFACT": "data/cache/research/football/forward-shadow-v1/MODEL_FORWARD/fixtures/{fixtureId}/seal-receipt.json",
+        "JSON_PATH": "payload.validPregame",
+        "SEMANTIC_MEANING": "Receipt asserts the snapshot was sealed before kickoff.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "2026-09-13 review payload.predicted[].sealedAtBeforeKickoff / payload.pass[].sealedAtBeforeKickoff"
+      },
+      {
+        "UI_FIELD": "officialGrade",
+        "SOURCE_ARTIFACT": "data/audits/2026-09-13-football-forward-postgame-review-v1.json",
+        "JSON_PATH": "payload.predicted[].verdict",
+        "SEMANTIC_MEANING": "CORRECT or WRONG for PREDICTED rows after FT. MODEL_FORWARD/postgame/{id}.json was not written (payload.MODEL_FORWARD_POSTGAME_GRADE_WRITTEN = NO).",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "If a future MODEL_FORWARD/postgame/{fixtureId}.json exists, use payload.correct1X2 via scripts/football-forward-postgame-v1.ts. Do not invent grades."
+      },
+      {
+        "UI_FIELD": "officialActualClass",
+        "SOURCE_ARTIFACT": "data/audits/2026-09-13-football-forward-postgame-review-v1.json",
+        "JSON_PATH": "payload.predicted[].actualClass",
+        "SEMANTIC_MEANING": "Observed FT 1X2 class used only to grade Official Forward.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "payload.pass[].actualClass is observation-only; counterfactualPredictionForbidden=true"
+      },
+      {
+        "UI_FIELD": "v3Phase1Status",
+        "SOURCE_ARTIFACT": "data/audits/football-v3-v31-closure-audit-v1.json",
+        "JSON_PATH": "payload.v3StatusMatrix.phase1.phase1Diagnostic",
+        "SEMANTIC_MEANING": "PHASE1_DIAGNOSTIC_REDESIGN_JUSTIFIED. Phase-1 is diagnostically closed, not promoted.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "data/audits/football-v3-phase1-diagnostic-review-v1.json payload.classification"
+      },
+      {
+        "UI_FIELD": "v3Phase1Closed",
+        "SOURCE_ARTIFACT": "data/audits/football-v3-v31-closure-audit-v1.json",
+        "JSON_PATH": "payload.v3StatusMatrix.SCREEN",
+        "SEMANTIC_MEANING": "NOT_APPLIED — V3 F1/F2/F3 never received a 2025 promotion screen.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "payload.v3StatusMatrix.EVALUATED_2025_HOLDOUT = NO"
+      },
+      {
+        "UI_FIELD": "v31R1Status",
+        "SOURCE_ARTIFACT": "data/audits/football-v3-v31-closure-audit-v1.json",
+        "JSON_PATH": "payload.v31StatusMatrix.R1.historicalStatus",
+        "SEMANTIC_MEANING": "HISTORICAL_RESEARCH_CLOSED_PRIMARY_METRICS_CONFIRMED_SCREEN_NO",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "docs/FOOTBALL_V31_R1_HOLDOUT_CLOSURE_V1.md R1_FINAL_RESEARCH_STATUS"
+      },
+      {
+        "UI_FIELD": "v31R3Status",
+        "SOURCE_ARTIFACT": "data/audits/football-v3-v31-closure-audit-v1.json",
+        "JSON_PATH": "payload.v31StatusMatrix.R3.historicalStatus",
+        "SEMANTIC_MEANING": "HISTORICAL_RESEARCH_CLOSED_MIXED_SCREEN_NO",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "docs/FOOTBALL_V31_R1_HOLDOUT_CLOSURE_V1.md R3_FINAL_RESEARCH_STATUS"
+      },
+      {
+        "UI_FIELD": "holdoutScreen",
+        "SOURCE_ARTIFACT": "data/audits/football-v31-2025-independent-holdout-evaluation-v1.json",
+        "JSON_PATH": "payload.outcomes.V31-R1.screen",
+        "SEMANTIC_MEANING": "Global independent-holdout promotion screen result SCREEN_NO. Also payload.outcomes.V31-R3.screen and payload.results[].screen.status.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "payload.v31StatusMatrix.SCREEN in closure audit"
+      },
+      {
+        "UI_FIELD": "holdoutMetricsLogLoss",
+        "SOURCE_ARTIFACT": "data/audits/football-v31-2025-independent-holdout-evaluation-v1.json",
+        "JSON_PATH": "payload.results[].comparison.candidate.logLoss",
+        "SEMANTIC_MEANING": "Per-league holdout log loss for V31-R1 or V31-R3. Comparators at payload.results[].comparison.v1.logLoss and .h2.logLoss.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": false,
+        "FALLBACK": "omit numbers; show SCREEN_NO only"
+      },
+      {
+        "UI_FIELD": "holdoutMetricsBrier",
+        "SOURCE_ARTIFACT": "data/audits/football-v31-2025-independent-holdout-evaluation-v1.json",
+        "JSON_PATH": "payload.results[].comparison.candidate.brier",
+        "SEMANTIC_MEANING": "Per-league holdout multiclass Brier for the candidate.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": false,
+        "FALLBACK": "omit numbers; show SCREEN_NO only"
+      },
+      {
+        "UI_FIELD": "featureFamilyNames",
+        "SOURCE_ARTIFACT": "scripts/football-v3-feature-research-v1/contracts-v1.ts",
+        "JSON_PATH": "FEATURES",
+        "SEMANTIC_MEANING": "Frozen family ids: xG, shots, sot. Human labels from closure payload.featureInventory.implementedOrResearched[].feature (xG, Total Shots, Shots on Goal).",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "closure audit payload.featureInventory.implementedOrResearched"
+      },
+      {
+        "UI_FIELD": "featureResearchStatus",
+        "SOURCE_ARTIFACT": "data/audits/football-v3-v31-closure-audit-v1.json",
+        "JSON_PATH": "payload.featureInventory.implementedOrResearched[].status",
+        "SEMANTIC_MEANING": "IMPLEMENTED_RESEARCH for xG / Total Shots / Shots on Goal. forwardUsed=false.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "show RESEARCHED when status is IMPLEMENTED_RESEARCH"
+      },
+      {
+        "UI_FIELD": "closureState",
+        "SOURCE_ARTIFACT": "data/audits/football-v3-v31-closure-audit-v1.json",
+        "JSON_PATH": "payload.verdict.label",
+        "SEMANTIC_MEANING": "RESEARCH_LINE_CLOSED_UNPROMOTED. Implementation complete, evaluation partial, model not promoted.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "payload.closureDecision.C_MODEL_PROMOTED.value = NO"
+      },
+      {
+        "UI_FIELD": "modelPromoted",
+        "SOURCE_ARTIFACT": "data/audits/football-v3-v31-closure-audit-v1.json",
+        "JSON_PATH": "payload.verdict.MODEL_PROMOTED",
+        "SEMANTIC_MEANING": "NO. Also payload.officialModelStatus.promotedProductionOfficialModel = false.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "data/audits/football-v31-internal-research-console-v1.json payload.MODEL_PROMOTED"
+      },
+      {
+        "UI_FIELD": "r1Role",
+        "SOURCE_ARTIFACT": "data/audits/football-v31-internal-research-console-v1.json",
+        "JSON_PATH": "payload.R1_ROLE",
+        "SEMANTIC_MEANING": "UNPROMOTED_PROSPECTIVE_SHADOW. Console constant R1_ROLE matches this.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "scripts/football-v31-internal-research-console-v1/console-v1.ts R1_ROLE"
+      },
+      {
+        "UI_FIELD": "v4PlayerLineupStatus",
+        "SOURCE_ARTIFACT": "data/audits/football-v3-v31-closure-audit-v1.json",
+        "JSON_PATH": "payload.featureInventory.notImplementedOrFuture[feature=Starting XI / XI strength].status",
+        "SEMANTIC_MEANING": "NOT_IMPLEMENTED_AS_PREDICTION_INPUT. Prototype must label FUTURE / NOT IMPLEMENTED.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "show FUTURE / NOT IMPLEMENTED with no numbers"
+      },
+      {
+        "UI_FIELD": "publicRawFeatureDisplayGate",
+        "SOURCE_ARTIFACT": "data/audits/football-v3-historical-feature-coverage-census-v1.json",
+        "JSON_PATH": "payload.rights.PUBLIC_RAW_FEATURE_DISPLAY",
+        "SEMANTIC_MEANING": "UNRESOLVED. Also payload.rights.COMMERCIAL_PUBLIC_RIGHTS = UNRESOLVED.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": true,
+        "FALLBACK": "closure payload.temporalLeakageProvider.v3.publicRawFeatureDisplay"
+      },
+      {
+        "UI_FIELD": "strictReplayEligible",
+        "SOURCE_ARTIFACT": "data/audits/football-v3-historical-feature-coverage-census-v1.json",
+        "JSON_PATH": "payload.temporal.strictReplayEligible",
+        "SEMANTIC_MEANING": "false. Historical statistics are retrospective final/revised, not publication-time replay.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": false,
+        "FALLBACK": "holdout payload.strictReplayEligible"
+      },
+      {
+        "UI_FIELD": "consoleV1NotOfficial",
+        "SOURCE_ARTIFACT": "scripts/football-v31-internal-research-console-v1/console-v1.ts",
+        "JSON_PATH": "FixtureView.v1 via projectModel(snap.payload.sameCutoffV1)",
+        "SEMANTIC_MEANING": "Research-store V1 comparator from R1 prospective seals. Same algorithm family, different store and slate than MODEL_FORWARD. Must not be labeled Official Forward.",
+        "DISPLAY_ALLOWED": true,
+        "PUBLIC_SAFE": false,
+        "FALLBACK": "hide rather than mix with MODEL_FORWARD"
+      }
+    ],
+    "labelContract": [
+      {
+        "internal": "OFFICIAL",
+        "ko": "공식 예측",
+        "en": "Official prediction",
+        "usage": "Only MODEL_FORWARD / football-poisson-research-v1."
+      },
+      {
+        "internal": "SEALED PREGAME",
+        "ko": "경기 전 봉인",
+        "en": "Sealed before kickoff",
+        "usage": "Snapshot + seal-receipt validPregame=true."
+      },
+      {
+        "internal": "PREDICTED",
+        "ko": "예측 완료",
+        "en": "Predicted",
+        "usage": "Model emitted 1X2 probabilities. Not a bet slip."
+      },
+      {
+        "internal": "PASS",
+        "ko": "예측 보류",
+        "en": "No prediction",
+        "usage": "Insufficient same-league history. Not a hidden lean."
+      },
+      {
+        "internal": "RESEARCH",
+        "ko": "연구 기록",
+        "en": "Research record",
+        "usage": "Unpromoted line. Never the live official engine."
+      },
+      {
+        "internal": "SHADOW",
+        "ko": "비교용 연구",
+        "en": "Shadow research",
+        "usage": "R1 prospective role UNPROMOTED_PROSPECTIVE_SHADOW."
+      },
+      {
+        "internal": "SCREEN_NO",
+        "ko": "독립 검증에서 사전 승격 기준 미충족",
+        "en": "Did not meet the pre-set independent promotion screen",
+        "forbiddenKo": [
+          "실패한 모델",
+          "나쁜 모델",
+          "성능 실패",
+          "폐기된 모델"
+        ],
+        "usage": "Neutral process result. Primary LL/Brier confirmation does not override class guards."
+      },
+      {
+        "internal": "UNPROMOTED",
+        "ko": "미승격",
+        "en": "Not promoted",
+        "usage": "H2 / V3 / V3.1 remain research."
+      },
+      {
+        "internal": "RESEARCH CLOSED",
+        "ko": "이 연구 단계 종료",
+        "en": "This research stage is closed",
+        "usage": "No new V3 F1–F3 2025 holdout and no holdout rerun in this protocol."
+      },
+      {
+        "internal": "FUTURE",
+        "ko": "향후 연구",
+        "en": "Future research",
+        "usage": "V4 player/lineup. Pair with NOT IMPLEMENTED / 아직 없음."
+      }
+    ],
+    "safetyRightsDisplayGate": [
+      {
+        "item": "raw provider xG",
+        "classification": "PROHIBITED_AS_PICK",
+        "publicAllowed": false,
+        "internalOnly": "RAW_VALUES_ALSO_BLOCKED_ON_PROTOTYPE",
+        "note": "payload.rights.PUBLIC_RAW_FEATURE_DISPLAY=UNRESOLVED. Status word RESEARCHED is allowed; numeric expected_goals is not."
+      },
+      {
+        "item": "raw shots / SOT",
+        "classification": "PROHIBITED_AS_PICK",
+        "publicAllowed": false,
+        "internalOnly": "RAW_VALUES_ALSO_BLOCKED_ON_PROTOTYPE",
+        "note": "Same rights gate as xG. Feature names OK; provider statistics values not OK."
+      },
+      {
+        "item": "provider payload",
+        "classification": "INTERNAL_ONLY",
+        "publicAllowed": false,
+        "internalOnly": true,
+        "note": "API-Football bodies, archive JSON, INBOX stores stay off prototype screens."
+      },
+      {
+        "item": "unresolved commercial/public-rights data",
+        "classification": "INTERNAL_ONLY",
+        "publicAllowed": false,
+        "internalOnly": true,
+        "note": "COMMERCIAL_PUBLIC_RIGHTS=UNRESOLVED in census payload.rights."
+      },
+      {
+        "item": "R1/R3 expressed as recommended Pick",
+        "classification": "PROHIBITED_AS_PICK",
+        "publicAllowed": false,
+        "internalOnly": "PROBABILITIES_INTERNAL_RESEARCH_CONSOLE_ONLY",
+        "note": "R1_ROLE=UNPROMOTED_PROSPECTIVE_SHADOW. SCREEN_NO."
+      },
+      {
+        "item": "odds vs research probability as value/edge",
+        "classification": "PROHIBITED_AS_PICK",
+        "publicAllowed": false,
+        "internalOnly": "MARKET_DELTA_STAYS_ON_INTERNAL_CONSOLE",
+        "note": "Existing FootballV31ResearchConsoleView MarketBlock deltas must not ship to prototype/public."
+      },
+      {
+        "item": "betting CTA",
+        "classification": "PROHIBITED_AS_PICK",
+        "publicAllowed": false,
+        "internalOnly": false,
+        "note": "No 베팅하기 / 이 경기에 걸어라 / EDGE PICK / Strong Pick for football research or Official Forward."
+      },
+      {
+        "item": "Official Forward pHome/pDraw/pAway",
+        "classification": "PUBLIC_ALLOWED",
+        "publicAllowed": true,
+        "internalOnly": false,
+        "note": "Allowed as sealed research prediction, with SEALED PREGAME and not-a-recommendation disclaimer."
+      },
+      {
+        "item": "Poisson model expectedGoals (lambda)",
+        "classification": "INTERNAL_ONLY",
+        "publicAllowed": false,
+        "internalOnly": true,
+        "note": "2026-09-13 review payload.predicted[].expectedGoals is V1 Poisson mean, not provider xG. Do not label it xG."
+      },
+      {
+        "item": "holdout logLoss/Brier numbers",
+        "classification": "INTERNAL_ONLY",
+        "publicAllowed": false,
+        "internalOnly": true,
+        "note": "Friend prototype shows SCREEN_NO sentence, not metric tables."
+      },
+      {
+        "item": "XI / injuries as prediction input",
+        "classification": "PROHIBITED_AS_PICK",
+        "publicAllowed": false,
+        "internalOnly": "EXISTING_PUBLIC_ANALYSIS_CONTEXT_MUST_NOT_IMPLY_MODEL_INPUT",
+        "note": "V4 FUTURE. PublicAnalysisViewer lineup/availability must not be framed as Official Forward features."
+      }
+    ],
+    "minimumPrototypeComponents": [
+      {
+        "name": "FootballOfficialPredictionCard",
+        "reuse": "NEW. No existing official Forward card. Do not reuse FootballV31ResearchConsoleView ModelBlock as official.",
+        "purpose": "Show one sealed Official Forward fixture.",
+        "props": [
+          "fixtureId",
+          "homeTeam",
+          "awayTeam",
+          "league",
+          "kickoffKst",
+          "status",
+          "pHome",
+          "pDraw",
+          "pAway",
+          "predictedClass",
+          "passReason",
+          "sealedPregame",
+          "grade",
+          "actualClass"
+        ],
+        "sourceArtifact": "MODEL_FORWARD snapshot + seal-receipt; 2026-09-13 review for graded demo slate",
+        "desktop": "Horizontal 1X2 probability row + status badges.",
+        "mobile": "Stacked teams, then probabilities, then badges.",
+        "emptyState": "오늘 봉인된 공식 예측이 없습니다.",
+        "passState": "예측 보류 + passReason in Korean map; probabilities hidden as em dash.",
+        "screenNoState": "N/A — Official Forward is not SCREEN_NO."
+      },
+      {
+        "name": "FootballResearchStatusCard",
+        "reuse": "NEW. Do not reuse console StatusCard counts (those are R1 batch counts).",
+        "purpose": "Show V3/V3.1 research closure without raw features or candidate probabilities.",
+        "props": [
+          "xgStatus",
+          "shotsStatus",
+          "sotStatus",
+          "phase1Status",
+          "holdoutStatus",
+          "promotionScreen",
+          "officialEngine"
+        ],
+        "sourceArtifact": "data/audits/football-v3-v31-closure-audit-v1.json",
+        "desktop": "Two-column definition list.",
+        "mobile": "Single column.",
+        "emptyState": "연구 상태 아티팩트를 읽지 못했습니다.",
+        "passState": "N/A",
+        "screenNoState": "Promotion row uses SCREEN_NO Korean label, not failure copy."
+      },
+      {
+        "name": "FootballEngineEvolution",
+        "reuse": "NEW. OS EngineCenterView does not render this lineage.",
+        "purpose": "Vertical V1 → H2 → V3 → V3.1 → V4 story.",
+        "props": [
+          "nodes[] {id,title,subtitle,badge}"
+        ],
+        "sourceArtifact": "closure payload.versionLineage + officialModelStatus + featureInventory.notImplementedOrFuture",
+        "desktop": "Vertical timeline.",
+        "mobile": "Same, tighter type.",
+        "emptyState": "엔진 계보를 표시할 수 없습니다.",
+        "passState": "N/A",
+        "screenNoState": "V3.1 node badge = 독립 검증에서 사전 승격 기준 미충족. V4 = 향후 연구 · 아직 없음."
+      },
+      {
+        "name": "FootballResearchComparison",
+        "reuse": "ADAPT FootballV31ResearchConsoleView internals; keep route /internal/football/research.",
+        "purpose": "Owner-only V1 vs H2 vs R1 comparator. Not part of the 3–5 minute friend path.",
+        "props": "existing ResearchConsoleView",
+        "sourceArtifact": "R1 prospective shadow store + console-v1.ts",
+        "desktop": "Existing three-column ModelBlock.",
+        "mobile": "Existing stacked ModelBlock.",
+        "emptyState": "existing LOCAL_RESEARCH_DATA_UNAVAILABLE / no pending fixtures copy",
+        "passState": "existing PASS badges with blank probabilities",
+        "screenNoState": "Must add a SCREEN_NO banner so comparison is not read as a live pick board."
+      },
+      {
+        "name": "FootballDataIntegrityBadge",
+        "reuse": "NEW small badge. Console already has verified / INTEGRITY_BLOCKED chips — extract pattern, do not fork Official Forward integrity into R1 hashes.",
+        "purpose": "Show sealed / integrity-blocked / rights-unresolved.",
+        "props": [
+          "state",
+          "shortHash?"
+        ],
+        "sourceArtifact": "snapshot.sha256, seal-receipt, census rights",
+        "desktop": "Inline chip.",
+        "mobile": "Inline chip.",
+        "emptyState": "미확인",
+        "passState": "N/A",
+        "screenNoState": "N/A"
+      }
+    ],
+    "prototypeUserFlow": {
+      "duration": "3-5 minutes",
+      "audience": "friend / non-developer",
+      "goal": "Official prediction and research models are visually distinct without a verbal briefing.",
+      "steps": [
+        {
+          "step": 1,
+          "route": "/",
+          "action": "Home. Hero already points to 오늘 경기. Add a football Official Forward strip or a clearly labeled 오늘 축구 공식 예측 entry. Do not use HomeBestPicks valueEdge."
+        },
+        {
+          "step": 2,
+          "route": "/games?sport=football",
+          "action": "Today football fixtures via existing GameCard list. Each card may show Official Forward PREDICTED/PASS chip only when a MODEL_FORWARD seal exists for that fixtureId."
+        },
+        {
+          "step": 3,
+          "route": "fixture detail (new /football/[fixtureId] or gated analysis of /analysis/[gameId])",
+          "action": "FootballOfficialPredictionCard first. Research probabilities absent."
+        },
+        {
+          "step": 4,
+          "route": "same detail, below the fold",
+          "action": "FootballResearchStatusCard then FootballEngineEvolution. V4 labeled FUTURE / 아직 없음."
+        },
+        {
+          "step": 5,
+          "route": "optional recent grade",
+          "action": "2026-09-13 review CORRECT/WRONG with SAMPLE_INSUFFICIENT=true disclaimer. Philosophy: 공식 예측은 V1, V3/V3.1은 연구 종료·미승격."
+        }
+      ],
+      "outOfFlow": [
+        "/internal/football/research remains owner-only",
+        "Do not open market deltas during the friend demo"
+      ]
+    },
+    "implementationPlan": {
+      "P0": [
+        {
+          "id": "P0_OFFICIAL_LOADER",
+          "task": "Read-only loader for MODEL_FORWARD snapshot + seal-receipt. No predictFootball call.",
+          "expectedModifiedFiles": [],
+          "expectedNewFiles": [
+            "src/lib/football/prototype-ui-v1/load-official-forward-v1.ts"
+          ],
+          "risks": [
+            "Joining provider /games fixtureId to MODEL_FORWARD fixtureId incorrectly",
+            "Accidentally reading R1 sameCutoffV1 as official"
+          ],
+          "tests": [
+            "Golden 2026-09-13 snapshot hashes unchanged",
+            "PASS rows have null probabilities",
+            "Missing seal fail-closes to empty, does not call the engine"
+          ]
+        },
+        {
+          "id": "P0_OFFICIAL_CARD",
+          "task": "FootballOfficialPredictionCard + wire one demo surface (home strip or /games football chip).",
+          "expectedModifiedFiles": [
+            "src/components/games/GameCard.tsx",
+            "src/components/games/GamesPageContent.tsx",
+            "src/app/page.tsx"
+          ],
+          "expectedNewFiles": [
+            "src/components/football/FootballOfficialPredictionCard.tsx"
+          ],
+          "risks": [
+            "RecommendationFilter / HomeBestPicks edge language leaking onto football",
+            "Showing unsigned live provider fixtures as sealed"
+          ],
+          "tests": [
+            "Card copy uses label contract",
+            "No R1/H2 fields in props type"
+          ]
+        },
+        {
+          "id": "P0_STATUS_AND_EVOLUTION",
+          "task": "Static research-status + engine-evolution from sealed closure audit JSON.",
+          "expectedModifiedFiles": [],
+          "expectedNewFiles": [
+            "src/components/football/FootballResearchStatusCard.tsx",
+            "src/components/football/FootballEngineEvolution.tsx",
+            "src/components/football/FootballDataIntegrityBadge.tsx",
+            "src/lib/football/prototype-ui-v1/load-research-status-v1.ts"
+          ],
+          "risks": [
+            "Reading census raw xG tables",
+            "Calling SCREEN_NO a failed model"
+          ],
+          "tests": [
+            "Fixture-level feature values never appear",
+            "V4 badge FUTURE + NOT IMPLEMENTED"
+          ]
+        }
+      ],
+      "P1": [
+        {
+          "id": "P1_FIXTURE_DETAIL",
+          "task": "Friend-safe fixture detail composing Official + Status + Evolution. Prefer new /football/[fixtureId] over overloading PublicAnalysisViewer.",
+          "expectedModifiedFiles": [
+            "src/constants/navigation.ts"
+          ],
+          "expectedNewFiles": [
+            "src/app/football/[fixtureId]/page.tsx"
+          ],
+          "risks": [
+            "PublicAnalysisViewer lineup/injuries implying V4 features",
+            "Analysis headline sounding like a pick"
+          ],
+          "tests": [
+            "Detail page robots noindex until product decision",
+            "Official block renders above research block"
+          ]
+        },
+        {
+          "id": "P1_GRADES",
+          "task": "Show 2026-09-13 review CORRECT/WRONG with N insufficient. Do not write MODEL_FORWARD/postgame JSON.",
+          "expectedModifiedFiles": [],
+          "expectedNewFiles": [
+            "src/lib/football/prototype-ui-v1/load-forward-review-v1.ts"
+          ],
+          "risks": [
+            "Treating N=6 50% as a performance claim",
+            "Grading PASS rows"
+          ],
+          "tests": [
+            "PASS rows observation-only",
+            "SAMPLE_INSUFFICIENT surfaced"
+          ]
+        },
+        {
+          "id": "P1_INTERNAL_CONSOLE_BANNER",
+          "task": "Add SCREEN_NO / NOT_OFFICIAL_FORWARD banner on existing /internal/football/research without changing its store.",
+          "expectedModifiedFiles": [
+            "src/components/internal/football/FootballV31ResearchConsoleView.tsx"
+          ],
+          "expectedNewFiles": [],
+          "risks": [
+            "Friends using the internal console as the demo"
+          ],
+          "tests": [
+            "Existing console tests still pass",
+            "Market deltas remain unlabeled as edge"
+          ]
+        }
+      ],
+      "P2": [
+        {
+          "id": "P2_V4_PLACEHOLDER",
+          "task": "Keep V4 Future node only. No XI strength model input.",
+          "expectedModifiedFiles": [
+            "src/components/football/FootballEngineEvolution.tsx"
+          ],
+          "expectedNewFiles": [],
+          "risks": [
+            "Quietly reading lineup into Forward"
+          ],
+          "tests": [
+            "predictionInput remains false"
+          ]
+        },
+        {
+          "id": "P2_RIGHTS",
+          "task": "Raw xG/shots/SOT stay blocked until PUBLIC_RAW_FEATURE_DISPLAY and COMMERCIAL_PUBLIC_RIGHTS are resolved in a later sealed audit.",
+          "expectedModifiedFiles": [],
+          "expectedNewFiles": [],
+          "risks": [
+            "Displaying census values after a verbal 'it is researched'"
+          ],
+          "tests": [
+            "Gate unit test on rights enum"
+          ]
+        },
+        {
+          "id": "P2_NO_PROMOTION",
+          "task": "No Forward swap, no holdout rerun, no guard relaxation.",
+          "expectedModifiedFiles": [],
+          "expectedNewFiles": [],
+          "risks": [
+            "UI copy implying V3.1 is next official engine"
+          ],
+          "tests": [
+            "Copy lint for 실패한 모델 / EDGE / 베팅"
+          ]
+        }
+      ]
+    },
+    "filesPlannedForImplementation": {
+      "doNotTouch": [
+        "src/lib/football/poisson-research-v1/index.ts",
+        "scripts/football-forward-shadow-v1.ts",
+        "scripts/football-v3-feature-research-v1/**",
+        "scripts/football-v31-r1-prospective-v1/**",
+        "data/cache/research/football/forward-shadow-v1/MODEL_FORWARD/**",
+        "data/audits/football-v31-2025-independent-holdout-evaluation-v1.json",
+        "data/audits/football-v3-v31-closure-audit-v1.json"
+      ],
+      "p0New": [
+        "src/lib/football/prototype-ui-v1/load-official-forward-v1.ts",
+        "src/lib/football/prototype-ui-v1/load-research-status-v1.ts",
+        "src/components/football/FootballOfficialPredictionCard.tsx",
+        "src/components/football/FootballResearchStatusCard.tsx",
+        "src/components/football/FootballEngineEvolution.tsx",
+        "src/components/football/FootballDataIntegrityBadge.tsx"
+      ],
+      "p0MaybeTouch": [
+        "src/app/page.tsx",
+        "src/components/games/GameCard.tsx",
+        "src/components/games/GamesPageContent.tsx"
+      ]
+    },
+    "sourceArtifactHashes": {
+      "football-v3-v31-closure-audit-v1.json": "f1d81d05627b5d4d0e648b65161c671829fcb91aa4680f383384bf2dada032c6",
+      "football-v31-2025-independent-holdout-evaluation-v1.json": "8ab3dcfd3245490e6b622c1e11def19b026405a9e1a6fd2a07a4610c89fff0c5",
+      "2026-09-13-football-forward-postgame-review-v1.json": "5f06ab7a3a1bdfb229a3eb3ffbc37f0f6b77cd2214b842e4ac32a848a7e10c75",
+      "football-v31-internal-research-console-v1.json": "196af026cc1628ae489372dafd9cacd15923c3d3a6e3c74700634363675e9016",
+      "football-v3-phase1-diagnostic-review-v1.json": "1d6b4219774c9e58a0421cc5b91eb5cb0b985a36a143397ebba58fe0b89d9b12",
+      "football-v3-feature-development-v1.json": "b1197bfaa895a9bf9893e9c6f1df817e687fff94ecc9d54cea958de6c004f2e8",
+      "football-v3-historical-feature-coverage-census-v1.json": "0f215fba91a68cdd0a4a53b5124a311f193821baddd2ff1764d8942cb8718c41",
+      "MODEL_HASH": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+      "exampleForwardSnapshot_1575159": "ff3698057f87299045f9dab69101a266cabb7ad4017bd11df5bcff24c127c941"
+    }
+  },
+  "sha256": "cb2b535a02193f1ac6935e6f85e9b5341165cfd2222a7ffce85960bfdaab064f"
+}
