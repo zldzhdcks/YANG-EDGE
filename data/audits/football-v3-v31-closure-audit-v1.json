@@ -1,0 +1,634 @@
+{
+  "payload": {
+    "schemaVersion": "yang-edge-football-v3-v31-closure-audit-v1",
+    "auditedAt": "2026-09-14T00:50:00.000Z",
+    "branch": "agent/cursor/football-v31-third-real-batch-preflight-v1",
+    "head": "a357e85487d96f0c1db8e1ee25050bca8ee2a8ee",
+    "originMain": "1b90cdd3d406dd2991f79fe0836c32d8ba08e4b9",
+    "scope": "READ_AUDIT_ONLY",
+    "ENGINE_CHANGED": "NO",
+    "V3_ALGORITHM_CHANGED": "NO",
+    "V31_ALGORITHM_CHANGED": "NO",
+    "FORWARD_CHANGED": "NO",
+    "PREDICTION_CHANGED": "NO",
+    "THRESHOLD_CHANGED": "NO",
+    "WEIGHT_CHANGED": "NO",
+    "BACKTEST_RERUN": "NO",
+    "HOLDOUT_2025_RERUN": "NO",
+    "INTERPRETATION": "REPOSITORY_EVIDENCE_ONLY",
+    "verdict": {
+      "label": "RESEARCH_LINE_CLOSED_UNPROMOTED",
+      "RESEARCH_IMPLEMENTATION_COMPLETE": "YES",
+      "RESEARCH_EVALUATION_COMPLETE": "PARTIAL",
+      "MODEL_PROMOTED": "NO",
+      "note": "V3 F1/F2/F3 implementation and 2023/2024 descriptive checks are sealed. V3 2025 holdout metrics were never authorized or computed. V3.1 R1/R3 2025 independent holdout was executed once and closed SCREEN_NO. Official Forward remains football-poisson-research-v1."
+    },
+    "versionLineage": [
+      {
+        "version": "V1",
+        "identity": "football-poisson-research-v1",
+        "modelHash": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+        "purpose": "Independent 90-minute 1X2 Poisson from same-league past FT goals.",
+        "inputFeatures": [
+          "regulationHomeGoals",
+          "regulationAwayGoals",
+          "sameLeague365dHistory",
+          "homeVenueShrinkage",
+          "awayVenueShrinkage"
+        ],
+        "algorithm": "Shrunk venue rates times league means; independent Poisson score grid; max-class 1X2; PASS on insufficient history.",
+        "developmentBacktest": "Sealed chronological/cross-league research backtests exist under FOOTBALL_POISSON_* docs; RESEARCH_ONLY.",
+        "holdout": "Not a V3-style 2025 promotion screen. Forward uses live pregame seals.",
+        "promotionStatus": "Official Forward runtime model. Docs still mark VALIDATED_MODEL=NO / PUBLIC_RECOMMENDATION=NO.",
+        "forwardUse": "YES_OFFICIAL_FORWARD",
+        "evidence": [
+          "src/lib/football/poisson-research-v1/index.ts",
+          "scripts/football-forward-shadow-v1.ts",
+          "docs/FOOTBALL_POISSON_RESEARCH_V1.md"
+        ]
+      },
+      {
+        "version": "V2/H2",
+        "identity": "football-poisson-v2-draw-research H1/H2/H3",
+        "purpose": "Draw/rate research on FT goals. H2 is ridge log-linear attack/defence independent Poisson.",
+        "inputFeatures": [
+          "FT goals",
+          "teamAttack",
+          "teamDefence",
+          "homeAdvantage",
+          "leagueBaseline"
+        ],
+        "algorithm": "H1 Dixon-Coles four-cell MLE; H2 ridge rates KAPPA=0.01; H3 temperature scaling.",
+        "developmentBacktest": "Development plus 2024/25 exposed evaluation sealed.",
+        "holdout": "Exposed evaluation SCREEN_NO for H1, H2, H3. H2 BEST_DESCRIPTIVE_CANDIDATE only.",
+        "promotionStatus": "MODEL_PROMOTED=NO. FORWARD_MODEL_CHANGED=NO.",
+        "forwardUse": "NO. UNPROMOTED_RESEARCH_BACKBONE only. Forbidden in Forward.",
+        "evidence": [
+          "docs/FOOTBALL_POISSON_V2_ALGORITHM_DESIGN_FREEZE_V1.md",
+          "docs/FOOTBALL_POISSON_V2_EXPOSED_EVALUATION_V1.md",
+          "data/audits/football-poisson-v2-exposed-evaluation-v1.json"
+        ]
+      },
+      {
+        "version": "V3",
+        "identity": "V3-F1 / V3-F2 / V3-F3 H2-offset Poisson",
+        "purpose": "Phase-1 incremental feature research on frozen H2 rates using xG / shots / SOT.",
+        "inputFeatures": {
+          "F1": [
+            "xG"
+          ],
+          "F2": [
+            "Total Shots",
+            "Shots on Goal"
+          ],
+          "F3": [
+            "xG",
+            "Total Shots",
+            "Shots on Goal"
+          ]
+        },
+        "algorithm": "lambda_V3 = lambda_H2 * exp(beta·X); ridge kappa 0.01; 365d; 48h lag assumption; min 5 games/feature/team.",
+        "developmentBacktest": "PRIMARY_DEVELOPMENT 2023 FITTED all 12 league×candidate rows. 2024 EXPOSED_DEVELOPMENT_CHECK EXECUTED, descriptive MIXED.",
+        "holdout": "2025 cohort/exposure seal only. evaluationAuthorized=false. No predictions or metrics.",
+        "promotionStatus": "modelPromoted=false. No numeric SCREEN applied to F1/F2/F3. Phase-1 diagnostic PHASE1_DIAGNOSTIC_REDESIGN_JUSTIFIED.",
+        "forwardUse": "NO",
+        "evidence": [
+          "docs/FOOTBALL_V3_FEATURE_ALGORITHM_DESIGN_FREEZE_V1.json",
+          "data/audits/football-v3-feature-development-v1.json",
+          "data/audits/football-v3-feature-2024-exposed-check-v1.json",
+          "data/audits/football-v3-phase1-diagnostic-review-v1.json",
+          "data/audits/football-v3-2025-independent-holdout-cohort-seal-v1.json"
+        ]
+      },
+      {
+        "version": "V3.1",
+        "identity": "V31-R1 residual representation / V31-R3 fixed 2-parameter projection",
+        "purpose": "Representation redesign after V3 phase-1 diagnostic. Same feature family on H2 backbone.",
+        "inputFeatures": [
+          "expected_goals",
+          "Total Shots",
+          "Shots on Goal"
+        ],
+        "algorithm": "R1: two-output ridge least squares on causal pregame process composites (6 map + 2 beta). R3: fixed projection (0 map + 2 beta). R2/PCA rejected.",
+        "developmentBacktest": "PRIMARY_DEVELOPMENT 2023 FITTED. 2024 exposed DESCRIPTIVE_ONLY. R1 classified BETTER_THAN_H2_ALL_4_DESCRIPTIVELY; R3 MIXED.",
+        "holdout": "2025 independent holdout executed once. successfulHoldoutExecutions=1. Both candidates SCREEN_NO.",
+        "promotionStatus": "MODEL_PROMOTED=NO. R1_FINAL_RESEARCH_STATUS=HISTORICAL_RESEARCH_CLOSED_PRIMARY_METRICS_CONFIRMED_SCREEN_NO. R3=HISTORICAL_RESEARCH_CLOSED_MIXED_SCREEN_NO.",
+        "forwardUse": "R1 UNPROMOTED_PROSPECTIVE_SHADOW only, private namespace. R3 outside R1 prospective protocol. Neither is Official Forward.",
+        "evidence": [
+          "docs/FOOTBALL_V31_ALGORITHM_DESIGN_FREEZE_V1.json",
+          "data/audits/football-v31-development-v1.json",
+          "data/audits/football-v31-2024-exposed-check-v1.json",
+          "data/audits/football-v31-2025-independent-holdout-evaluation-v1.json",
+          "docs/FOOTBALL_V31_R1_HOLDOUT_CLOSURE_V1.md"
+        ]
+      }
+    ],
+    "v3StatusMatrix": {
+      "DESIGN": "YES",
+      "IMPLEMENTED": "YES",
+      "FITTED": "YES",
+      "BACKTESTED": "YES_DESCRIPTIVE_2023_2024_ONLY",
+      "EVALUATED_2025_HOLDOUT": "NO",
+      "SCREEN": "NOT_APPLIED",
+      "MODEL_PROMOTED": "NO",
+      "phase1": {
+        "xG": "IMPLEMENTED_AS_F1_AND_F3",
+        "totalShots": "IMPLEMENTED_AS_F2_AND_F3",
+        "shotsOnGoal": "IMPLEMENTED_AS_F2_AND_F3",
+        "F1": "FITTED_DESCRIPTIVE_MIXED",
+        "F2": "FITTED_DESCRIPTIVE_MIXED",
+        "F3": "FITTED_DESCRIPTIVE_MIXED",
+        "development": "PRIMARY_DEVELOPMENT_COMPLETE",
+        "exposed2024": "EXECUTED_DESCRIPTIVE_MIXED",
+        "phase1Diagnostic": "PHASE1_DIAGNOSTIC_REDESIGN_JUSTIFIED",
+        "holdout2025": "HOLDOUT_COHORT_EXPOSURE_SEAL_ONLY"
+      },
+      "artifactHashes": {
+        "designFreeze": "04803e9b26acfd43de263c9b52c575ed2231d91984f82877da5e63b0cde6207a",
+        "sourceFreeze": "9b77401cc2f3c828f58a3018367985edb8c4e8ee4bd005467ff694e1e8192091",
+        "coverageCensus": "0f215fba91a68cdd0a4a53b5124a311f193821baddd2ff1764d8942cb8718c41",
+        "development": "b1197bfaa895a9bf9893e9c6f1df817e687fff94ecc9d54cea958de6c004f2e8",
+        "exposed2024": "3cb3c4f907f8c493043660b2a6ffd018b378021d6e6adfc736eea48a0ce427da",
+        "phase1Diagnostic": "1d6b4219774c9e58a0421cc5b91eb5cb0b985a36a143397ebba58fe0b89d9b12",
+        "holdoutCohortSeal": "7924420956e419af1a7f14b8b2eb520cc55d37b46534736d35b0fbdcf51c2581"
+      },
+      "codePaths": [
+        "scripts/football-v3-feature-research-v1/feature-state-v1.ts",
+        "scripts/football-v3-feature-research-v1/f1-xg-offset-v1.ts",
+        "scripts/football-v3-feature-research-v1/f2-shots-sot-offset-v1.ts",
+        "scripts/football-v3-feature-research-v1/f3-combined-offset-v1.ts"
+      ]
+    },
+    "v31StatusMatrix": {
+      "DESIGN": "YES",
+      "IMPLEMENTED": "YES",
+      "FITTED": "YES",
+      "BACKTESTED": "YES_DESCRIPTIVE_2023_2024_ONLY",
+      "EVALUATED_2025_HOLDOUT": "YES",
+      "SCREEN": "SCREEN_NO",
+      "MODEL_PROMOTED": "NO",
+      "R1": {
+        "mapStatus": "FITTED",
+        "historicalStatus": "HISTORICAL_RESEARCH_CLOSED_PRIMARY_METRICS_CONFIRMED_SCREEN_NO",
+        "prospectiveStatus": "UNPROMOTED_PROSPECTIVE_SHADOW_CANDIDATE",
+        "screen": "SCREEN_NO",
+        "interpretation": "INDEPENDENT_HOLDOUT_CONFIRMED",
+        "note": "LL and aggregate Brier beat V1 and H2 in all four leagues in the one authorized holdout. Class guards failed in EPL, La Liga, Bundesliga. Serie A league-level ELIGIBLE_FOR_CTO_PROMOTION_REVIEW does not lift the global screen."
+      },
+      "R3": {
+        "mapStatus": "FIXED_NO_FIT",
+        "historicalStatus": "HISTORICAL_RESEARCH_CLOSED_MIXED_SCREEN_NO",
+        "prospectiveStatus": "OUTSIDE_R1_PROSPECTIVE_PROTOCOL",
+        "screen": "SCREEN_NO",
+        "interpretation": "INDEPENDENT_HOLDOUT_MIXED"
+      },
+      "algorithmDesignFreeze": "YES",
+      "development": "PRIMARY_DEVELOPMENT_COMPLETE",
+      "exposed2024": "EXECUTED_DESCRIPTIVE_ONLY",
+      "holdout2025": "EXECUTED_ONCE_SCREEN_NO",
+      "artifactHashes": {
+        "holdoutEvaluation": "8ab3dcfd3245490e6b622c1e11def19b026405a9e1a6fd2a07a4610c89fff0c5",
+        "internalResearchConsole": "196af026cc1628ae489372dafd9cacd15923c3d3a6e3c74700634363675e9016",
+        "finalR1MapHash": "244c2ef4f930855271744e39f0de44598ec6c929ac18edd4c6f72965eb8a4a26",
+        "finalR1BetaHash": "dc8f9faa4a09429ddfdd46631502375540e25fdbb37f84a1f92f6ceeb21e2ab4"
+      }
+    },
+    "screenNoReasons": {
+      "rule": "Frozen global promotion screen. League cherry-pick forbidden. Thresholds not relaxed in this audit.",
+      "aggregate": {
+        "V31-R1": "SCREEN_NO",
+        "V31-R3": "SCREEN_NO"
+      },
+      "failingClassGuards": [
+        {
+          "leagueId": 39,
+          "league": "EPL",
+          "candidate": "V31-R1",
+          "screen": "SCREEN_NO",
+          "gates": [
+            "v1:HOME:recall",
+            "v1:DRAW:brier",
+            "h2:DRAW:brier"
+          ]
+        },
+        {
+          "leagueId": 39,
+          "league": "EPL",
+          "candidate": "V31-R3",
+          "screen": "SCREEN_NO",
+          "gates": [
+            "v1:DRAW:brier",
+            "v1:AWAY:ece",
+            "h2:logLoss",
+            "h2:brier",
+            "h2:HOME:brier",
+            "h2:DRAW:brier",
+            "h2:AWAY:brier"
+          ]
+        },
+        {
+          "leagueId": 140,
+          "league": "La Liga",
+          "candidate": "V31-R1",
+          "screen": "SCREEN_NO",
+          "gates": [
+            "v1:HOME:ece",
+            "v1:DRAW:ece",
+            "v1:AWAY:brier",
+            "h2:HOME:recall",
+            "h2:HOME:ece",
+            "h2:DRAW:ece",
+            "h2:AWAY:ece"
+          ]
+        },
+        {
+          "leagueId": 140,
+          "league": "La Liga",
+          "candidate": "V31-R3",
+          "screen": "SCREEN_NO",
+          "gates": [
+            "v1:DRAW:ece",
+            "h2:DRAW:ece"
+          ]
+        },
+        {
+          "leagueId": 135,
+          "league": "Serie A",
+          "candidate": "V31-R1",
+          "screen": "ELIGIBLE_FOR_CTO_PROMOTION_REVIEW",
+          "gates": [],
+          "doesNotOverrideGlobalScreen": true
+        },
+        {
+          "leagueId": 135,
+          "league": "Serie A",
+          "candidate": "V31-R3",
+          "screen": "SCREEN_NO",
+          "gates": [
+            "v1:AWAY:ece",
+            "h2:logLoss",
+            "h2:brier",
+            "h2:HOME:brier",
+            "h2:DRAW:brier",
+            "h2:AWAY:brier"
+          ]
+        },
+        {
+          "leagueId": 78,
+          "league": "Bundesliga",
+          "candidate": "V31-R1",
+          "screen": "SCREEN_NO",
+          "gates": [
+            "v1:HOME:ece",
+            "v1:DRAW:brier",
+            "h2:DRAW:brier"
+          ]
+        },
+        {
+          "leagueId": 78,
+          "league": "Bundesliga",
+          "candidate": "V31-R3",
+          "screen": "SCREEN_NO",
+          "gates": [
+            "v1:HOME:ece",
+            "v1:DRAW:brier",
+            "h2:logLoss",
+            "h2:brier",
+            "h2:HOME:ece",
+            "h2:HOME:brier",
+            "h2:AWAY:brier"
+          ]
+        }
+      ],
+      "source": "data/audits/football-v31-2025-independent-holdout-evaluation-v1.json"
+    },
+    "officialModelStatus": {
+      "currentForwardModel": {
+        "id": "football-poisson-research-v1",
+        "hash": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+        "role": "OFFICIAL_FORWARD_RUNTIME",
+        "validatedModel": false,
+        "publicRecommendation": false
+      },
+      "h2ResearchBackbone": {
+        "id": "V2-H2",
+        "role": "UNPROMOTED_RESEARCH_BACKBONE",
+        "screen": "SCREEN_NO",
+        "forwardForbidden": true
+      },
+      "v3ResearchCandidates": {
+        "ids": [
+          "V3-F1",
+          "V3-F2",
+          "V3-F3"
+        ],
+        "role": "UNPROMOTED_RESEARCH_CANDIDATES",
+        "screen": "NOT_APPLIED",
+        "forwardUse": false
+      },
+      "v31ResearchCandidates": {
+        "ids": [
+          "V31-R1",
+          "V31-R3"
+        ],
+        "role": "UNPROMOTED_RESEARCH_CANDIDATES",
+        "screen": "SCREEN_NO",
+        "r1ForwardRole": "UNPROMOTED_PROSPECTIVE_SHADOW",
+        "forwardOfficialUse": false
+      },
+      "promotedProductionOfficialModel": false,
+      "v3CompleteIsNotModelPromoted": true
+    },
+    "featureInventory": {
+      "implementedOrResearched": [
+        {
+          "feature": "pastFTGoalsSameLeague365d",
+          "status": "IMPLEMENTED",
+          "usedBy": [
+            "V1_FORWARD",
+            "V2_H2"
+          ],
+          "evidence": "src/lib/football/poisson-research-v1/index.ts"
+        },
+        {
+          "feature": "xG",
+          "providerField": "expected_goals",
+          "status": "IMPLEMENTED_RESEARCH",
+          "usedBy": [
+            "V3-F1",
+            "V3-F3",
+            "V31-R1",
+            "V31-R3"
+          ],
+          "forwardUsed": false,
+          "evidence": "scripts/football-v3-feature-research-v1/feature-state-v1.ts"
+        },
+        {
+          "feature": "Total Shots",
+          "status": "IMPLEMENTED_RESEARCH",
+          "usedBy": [
+            "V3-F2",
+            "V3-F3",
+            "V31-R1",
+            "V31-R3"
+          ],
+          "forwardUsed": false
+        },
+        {
+          "feature": "Shots on Goal",
+          "status": "IMPLEMENTED_RESEARCH",
+          "usedBy": [
+            "V3-F2",
+            "V3-F3",
+            "V31-R1",
+            "V31-R3"
+          ],
+          "forwardUsed": false
+        },
+        {
+          "feature": "H2 attackDefenceRates",
+          "status": "IMPLEMENTED_RESEARCH",
+          "usedBy": [
+            "V2-H2",
+            "V3_OFFSET_BACKBONE",
+            "V31_BACKBONE"
+          ],
+          "forwardUsed": false
+        }
+      ],
+      "notImplementedOrFuture": [
+        {
+          "feature": "Starting XI / XI strength",
+          "status": "NOT_IMPLEMENTED_AS_PREDICTION_INPUT",
+          "evidence": "docs/research/YANG_EDGE_FEATURE_UTILIZATION_MATRIX_V1.md; player-feature predictionInput=false; XI_STRENGTH_PROHIBITED=true"
+        },
+        {
+          "feature": "player-level strength",
+          "status": "NOT_IMPLEMENTED"
+        },
+        {
+          "feature": "injuries",
+          "status": "PROVIDER_METHOD_EXISTS_NOT_MODEL_INPUT",
+          "evidence": "INJURY_PENALTY_WEIGHTING_PROHIBITED=true"
+        },
+        {
+          "feature": "suspensions",
+          "status": "NOT_IMPLEMENTED"
+        },
+        {
+          "feature": "O/U totals",
+          "status": "NOT_IMPLEMENTED_AS_RECOMMENDATION",
+          "evidence": "TOTALS_RECOMMENDATION_ENABLED=NO"
+        },
+        {
+          "feature": "Asian handicap recommendation",
+          "status": "NOT_IMPLEMENTED",
+          "evidence": "HANDICAP_COMPARISON_ENABLED=NO"
+        },
+        {
+          "feature": "restDays / congestion",
+          "status": "PROTOCOL_PHASE2_NOT_V3_PHASE1",
+          "evidence": "docs/FOOTBALL_V3_FEATURE_RESEARCH_PROTOCOL_V1.md"
+        }
+      ]
+    },
+    "temporalLeakageProvider": {
+      "v3": {
+        "targetResultLeakage": "FORBIDDEN_IN_CONTRACT",
+        "futureDataLeakage": "CUTOFF_KICKOFF_MINUS_1MS",
+        "retrospective48hAssumption": true,
+        "actualPublicationTime": false,
+        "strictReplayEligible": false,
+        "providerFetchedAtLimitation": "Historical statistics are RETROSPECTIVE_FINAL_OR_REVISED. 48h lag is a research assumption, not provider publication time. Forward path requires actual providerFetchedAt<=predictionCreatedAt and was not implemented for V3.",
+        "publicCommercialRights": "UNRESOLVED",
+        "legalInternalUse": "CONDITIONAL",
+        "publicRawFeatureDisplay": "UNRESOLVED",
+        "dataGate": "V3_PARTIAL_DATA_READY"
+      },
+      "v31": {
+        "targetResultLeakage": "FORBIDDEN_IN_CONTRACT",
+        "oddsUsedInHoldout": false,
+        "retrospective48hAssumption": true,
+        "actualPublicationTime": false,
+        "strictReplayEligible": false,
+        "historicalRole": "RETROSPECTIVE_FINAL_OR_REVISED",
+        "providerFetchedAtInHoldoutBody": "ABSENT",
+        "omissionAudit": "TEMPORAL_LEAKAGE=RISK_NOTED",
+        "publicCommercialRights": "UNRESOLVED"
+      }
+    },
+    "closureDecision": {
+      "A_RESEARCH_IMPLEMENTATION_COMPLETE": {
+        "value": "YES",
+        "basis": "V3 F1/F2/F3 and V3.1 R1/R3 are designed, implemented, and fitted. Source/design freezes and development artifacts exist."
+      },
+      "B_RESEARCH_EVALUATION_COMPLETE": {
+        "value": "PARTIAL",
+        "v3F1F2F3_2025Holdout": "NO_METRICS_COHORT_SEAL_ONLY",
+        "v31R1R3_2025Holdout": "YES_EXECUTED_SCREEN_NO",
+        "basis": "Independent confirmation required by protocol was executed for V3.1, not for V3 F1/F2/F3. Phase-1 diagnostic explicitly did not authorize V3 2025 holdout and justified representation redesign instead."
+      },
+      "C_MODEL_PROMOTED": {
+        "value": "NO",
+        "basis": "All promotion flags false. Official Forward unchanged. R1 must not be Official/Recommendation/Pick/Strong Pick/Edge Pick."
+      },
+      "weekendV3CompleteMeans": {
+        "inRepoTerms": [
+          "Treat V3 Phase-1 as implementation-complete and diagnostically closed (REDESIGN_JUSTIFIED), not as a promoted model.",
+          "Treat V3.1 2025 holdout SCREEN_NO as the closed historical promotion path. Do not rerun or relax guards.",
+          "Do not equate V3 COMPLETE with MODEL_PROMOTED.",
+          "Official 1X2 runtime remains football-poisson-research-v1.",
+          "Weekend remaining work is research-status UI wiring of sealed artifacts, with RESEARCH/SHADOW labels, not a new evaluation or Forward swap."
+        ],
+        "doesNotMean": [
+          "Running V3 F1/F2/F3 2025 holdout (unauthorized; HOLDOUT_EXECUTION_AUTHORIZED=false).",
+          "Promoting R1 because primary LL/Brier confirmed.",
+          "Cherry-picking Serie A R1.",
+          "Showing V3/V3.1 as official picks."
+        ]
+      }
+    },
+    "uiReadyArtifacts": {
+      "routeAlreadyPresent": "/internal/football/research",
+      "consoleAudit": "data/audits/football-v31-internal-research-console-v1.json",
+      "consoleSha256": "196af026cc1628ae489372dafd9cacd15923c3d3a6e3c74700634363675e9016",
+      "page": "src/app/internal/football/research/page.tsx",
+      "readableNow": [
+        {
+          "from": "data/audits/football-v31-2025-independent-holdout-evaluation-v1.json",
+          "fields": [
+            "outcomes.V31-R1.screen",
+            "outcomes.V31-R3.screen",
+            "modelPromoted",
+            "results[].screen",
+            "comparison metrics"
+          ]
+        },
+        {
+          "from": "docs/FOOTBALL_V31_R1_HOLDOUT_CLOSURE_V1.md",
+          "fields": [
+            "PROMOTION_SCREEN",
+            "MODEL_PROMOTED",
+            "R1_FINAL_RESEARCH_STATUS",
+            "R1_PROSPECTIVE_STATUS"
+          ]
+        },
+        {
+          "from": "data/audits/football-v3-phase1-diagnostic-review-v1.json",
+          "fields": [
+            "PHASE1_DIAGNOSTIC_REDESIGN_JUSTIFIED",
+            "F1/F2/F3 MIXED"
+          ]
+        },
+        {
+          "from": "data/audits/football-v3-feature-development-v1.json",
+          "fields": [
+            "stage",
+            "modelPromoted",
+            "FITTED metrics",
+            "xG/shots/sot candidate ids"
+          ]
+        },
+        {
+          "from": "data/audits/football-v3-historical-feature-coverage-census-v1.json",
+          "fields": [
+            "xG/shots/sot coverage",
+            "strictReplayEligible"
+          ]
+        },
+        {
+          "from": "data/audits/football-v31-internal-research-console-v1.json",
+          "fields": [
+            "R1_ROLE",
+            "MODEL_PROMOTED",
+            "predictedPassCounts",
+            "LOCAL_ONLY"
+          ]
+        },
+        {
+          "from": "scripts/football-forward-shadow-v1.ts MODEL_FORWARD snapshots",
+          "fields": [
+            "status PREDICTED/PASS",
+            "pHome/pDraw/pAway",
+            "predictedClass",
+            "snapshotSha256"
+          ]
+        }
+      ],
+      "mustNotShowAsOfficial": [
+        "V31-R1 probabilities",
+        "V31-R3 probabilities",
+        "V3-F1/F2/F3 probabilities",
+        "H2 probabilities",
+        "TRIPLE_CONSENSUS / H2_R1_CONSENSUS labels as picks",
+        "market odds as model input or stake advice",
+        "SCREEN_NO candidates as Strong/Edge Pick"
+      ],
+      "requiredLabels": [
+        "RESEARCH",
+        "SHADOW",
+        "UNPROMOTED",
+        "NOT_OFFICIAL_FORWARD"
+      ],
+      "minimumSafeUi": {
+        "panelA": "Official Forward V1 PREDICTED/PASS + sealed pHome/pDraw/pAway",
+        "panelB": "Research comparator V1 vs H2 vs R1 with SCREEN_NO banner",
+        "panelC": "V3 F1/F2/F3 status matrix: FITTED + MIXED + 2025 holdout not run",
+        "forbidden": "single CTA pick, stake, edge, promotion"
+      }
+    },
+    "gaps": {
+      "P0": [
+        {
+          "id": "P0_CLOSURE_DEFINITION",
+          "task": "Adopt this audit's weekend definition: V3 implementation complete; V3.1 historical evaluation complete as SCREEN_NO; MODEL_PROMOTED=NO. Do not run unauthorized V3 F1/F2/F3 2025 holdout."
+        },
+        {
+          "id": "P0_NO_PROMOTION",
+          "task": "Keep Official Forward on football-poisson-research-v1. Do not swap engine, weights, or thresholds."
+        },
+        {
+          "id": "P0_NO_GUARD_RELAXATION",
+          "task": "Leave SCREEN_NO class guards intact. Serie A R1 eligibility is not a global pass."
+        }
+      ],
+      "P1": [
+        {
+          "id": "P1_STATUS_SURFACE",
+          "task": "Expose sealed model/candidate/SCREEN/xG-shots-SOT status from existing audits on the internal research console (already at /internal/football/research) with RESEARCH/SHADOW labels."
+        },
+        {
+          "id": "P1_FORWARD_VS_RESEARCH_SPLIT",
+          "task": "UI must separate Official Forward V1 seals from unpromoted H2/V3/V3.1 research panels."
+        },
+        {
+          "id": "P1_PUBLIC_DISPLAY_GATE",
+          "task": "Do not put xG/shots/SOT raw values or XI/injuries on a public product UI while PUBLIC_RAW_FEATURE_DISPLAY and COMMERCIAL_PUBLIC_RIGHTS remain UNRESOLVED."
+        }
+      ],
+      "P2": [
+        {
+          "id": "P2_STARTING_XI",
+          "task": "Player-level XI strength remains V4 / not prediction input."
+        },
+        {
+          "id": "P2_INJURIES_SUSPENSIONS",
+          "task": "Provider methods exist; weighting prohibited until a later authorized protocol."
+        },
+        {
+          "id": "P2_OU_HANDICAP",
+          "task": "Totals/handicap recommendation disabled. Market comparison is 1X2-only and not model input."
+        },
+        {
+          "id": "P2_STRICT_REPLAY",
+          "task": "strictReplayEligible=false until real providerFetchedAt publication times exist."
+        },
+        {
+          "id": "P2_NEW_PROSPECTIVE_EVIDENCE",
+          "task": "Any future confirmation requires new prospectively governed evidence, not reuse of the exposed 2025 holdout."
+        }
+      ]
+    }
+  },
+  "sha256": "f1d81d05627b5d4d0e648b65161c671829fcb91aa4680f383384bf2dada032c6"
+}
