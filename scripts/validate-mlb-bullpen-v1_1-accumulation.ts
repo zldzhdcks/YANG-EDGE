@@ -364,7 +364,7 @@ async function surveyAvailability(): Promise<Record<string, unknown>> {
   )
     ? (asRecord(roster.json)!.roster as unknown[])
     : [];
-  let statusCodes: Record<string, number> = {};
+  const statusCodes: Record<string, number> = {};
   let positionPitchers = 0;
   for (const raw of rosterRows) {
     const row = asRecord(raw);

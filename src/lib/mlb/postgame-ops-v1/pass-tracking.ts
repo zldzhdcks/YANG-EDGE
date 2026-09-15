@@ -79,7 +79,7 @@ export async function loadMlbPassTracking(input: {
       asString(row.researchPick) ??
       null;
 
-    let result =
+    const result =
       (gameId ? resultById.get(gameId) : undefined) ??
       (gamePk != null ? resultByPk.get(gamePk) : undefined) ??
       null;

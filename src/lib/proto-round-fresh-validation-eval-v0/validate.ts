@@ -13,6 +13,7 @@ export function asHumanRecord(raw: unknown, index: number): FreshHumanRecordV0 {
   if (
     typeof rec.sourceImageSha256 !== "string" ||
     rec.sourceImageSha256.length === 0 ||
+    typeof rec.visualRowIndex !== "number" ||
     !Number.isInteger(rec.visualRowIndex)
   ) {
     throw new FreshValidationEvalV0Error(`HUMAN_IDENTITY_INVALID:${index + 1}`);

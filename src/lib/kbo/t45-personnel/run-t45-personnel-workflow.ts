@@ -230,7 +230,7 @@ export async function runKboT45PersonnelWorkflow(
 
   const wouldCreateArtifacts: string[] = [];
   const writtenArtifacts: string[] = [];
-  let providerCalls = 0;
+  const providerCalls = 0;
 
   let rawText: string;
   try {

@@ -2,8 +2,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {scope,eligibleMetadata,evaluationTargets,ordered,type ScopeRow} from './football-cross-league-scope-v1.ts';
-import {canonical,hash} from './audit-football-cross-league-scope-v1.ts';
+import {scope,eligibleMetadata,evaluationTargets,ordered,type ScopeRow} from './football-cross-league-scope-v1';
+import {canonical,hash} from './audit-football-cross-league-scope-v1';
 const read=(p:string)=>fs.readFileSync(new URL(`../${p}`,import.meta.url),'utf8');
 const protocol=JSON.parse(read('docs/FOOTBALL_POISSON_CROSS_LEAGUE_VALIDATION_V1.json'));
 const parent=JSON.parse(read('docs/FOOTBALL_POISSON_CHRONOLOGICAL_BACKTEST_V1.json'));

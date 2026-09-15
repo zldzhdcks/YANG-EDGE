@@ -70,12 +70,12 @@ export type DailyStageGDailyCloseGitSyncV1 = {
   };
   scope: {
     scopeTotal: 26;
-    baseball: 11;
-    kbo: 5;
-    npb: 6;
-    football: 14;
-    volleyball: 1;
-    mlb: 0;
+    baseball: number;
+    kbo: number;
+    npb: number;
+    football: number;
+    volleyball: number;
+    mlb: number;
     laterGamesAdded: false;
   };
   predictionPass: {

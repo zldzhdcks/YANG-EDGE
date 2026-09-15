@@ -27,8 +27,6 @@ export const PILOT_SAMPLE_SIZE = 10 as const;
 export const PILOT_SOURCE = "FIRST_10_FROZEN_DISCOVERY_ROWS" as const;
 export const OPTIONAL_SECTION_LABEL = "필요할 때만" as const;
 export const ASSISTED_REVIEW_MODE_ACTIVE = false as const;
-export const GROUND_TRUTH_FROM_OCR = false as const;
-export const OCR_VISIBLE_DURING_TRUTH_ENTRY = false as const;
 
 export const QUICK_UI_LABELS = {
   screenRowIdentifierRaw: "경기번호",

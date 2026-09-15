@@ -258,7 +258,7 @@ async function runStep(step: BuilderStep, dateKst: string): Promise<void> {
   // Builder may fail even if a prior artifact remains — prefer run outcome,
   // but still surface artifact quality when the file exists.
   let status = assessed.status;
-  let run: RunOutcome = exitCode === 0 ? "SUCCESS" : "FAIL";
+  const run: RunOutcome = exitCode === 0 ? "SUCCESS" : "FAIL";
   if (exitCode !== 0 && !exists) {
     status = "FAILED";
   } else if (exitCode !== 0 && exists) {

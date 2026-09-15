@@ -2,7 +2,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {envelope,json,sha,normalize,type Batch,type LeagueSpec} from './ingest-football-epl-historical-archive-v1.ts';
+import {envelope,json,sha,normalize,type Batch,type LeagueSpec} from './ingest-football-epl-historical-archive-v1';
 export function stageInventory(batches:Batch[],spec:LeagueSpec) {
   return batches.map(b=>{
     const rows=b.rows.map(r=>normalize(r,b,spec));

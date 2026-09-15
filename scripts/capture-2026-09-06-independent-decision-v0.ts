@@ -38,7 +38,7 @@ const TEAMS = [
 ] as const;
 
 function fileSha256(abs: string): string {
-  return createHash("sha256").update(readFileSync(abs), "utf8").digest("hex");
+  return createHash("sha256").update(readFileSync(abs)).digest("hex");
 }
 
 function asRecord(value: unknown): Record<string, unknown> | null {

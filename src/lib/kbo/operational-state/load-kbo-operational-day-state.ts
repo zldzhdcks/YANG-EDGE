@@ -402,7 +402,7 @@ export async function loadKboOperationalDayState(
     }
 
     // Overseas
-    let overseas = component({
+    const overseas = component({
       status: cancelled
         ? "NOT_APPLICABLE"
         : overseasById.has(gameId)

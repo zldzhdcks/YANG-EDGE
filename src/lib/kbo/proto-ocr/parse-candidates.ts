@@ -177,10 +177,10 @@ export function parseProtoCandidatesFromText(input: {
     const screenshotFirst = firstTeam;
     const screenshotSecond = secondTeam;
     // Default assume first=away display common in KR proto lists — NOT final SoT
-    let awayTeamText = screenshotFirst;
-    let homeTeamText = screenshotSecond;
-    let awayPriceText = price0;
-    let homePriceText = price1;
+    const awayTeamText = screenshotFirst;
+    const homeTeamText = screenshotSecond;
+    const awayPriceText = price0;
+    const homePriceText = price1;
     let awayPriceCandidate = n0.value;
     let homePriceCandidate = n1.value;
 

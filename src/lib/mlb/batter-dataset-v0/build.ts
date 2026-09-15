@@ -605,7 +605,7 @@ export async function buildBatterDatasetV0(
         warnings.push("BATS_FROM_LINEUP_OBSERVATION");
       }
 
-      let cutoffUnsafe = false;
+      const cutoffUnsafe = false;
       let providerError = false;
       let statsReady = false;
       let statsPartial = false;

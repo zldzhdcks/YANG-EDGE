@@ -25,7 +25,17 @@ export function buildFreshSelectionDocument(input: {
   const selected = selectFreshValidationRows({
     eligibleRows: input.eligibleRows,
   });
-  const strip = (row: FreshMachineGeometryRowV0) => ({
+  const strip = (row: {
+    sourceImageSha256: string;
+    sourceFileName: string;
+    visualRowIndex: number;
+    topY: number;
+    bottomY: number;
+    centerY: number;
+    imageWidth: number;
+    imageHeight: number;
+    screenshotRelativePath: string;
+  }) => ({
     sourceImageSha256: row.sourceImageSha256,
     sourceFileName: row.sourceFileName,
     visualRowIndex: row.visualRowIndex,

@@ -170,7 +170,7 @@ export async function planGame(input: {
     };
   }
 
-  let action = resolveLeagueAction({
+  const action = resolveLeagueAction({
     league: input.league,
     stage,
     dateKst: input.dateKst,

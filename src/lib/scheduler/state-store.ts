@@ -74,7 +74,7 @@ export function upsertGameStage(
   stageRecord: StageStateRecord,
 ): SchedulerStateArtifact {
   const games = [...state.games];
-  let idx = games.findIndex((g) => g.gameId === gameId);
+  const idx = games.findIndex((g) => g.gameId === gameId);
   if (idx < 0) {
     games.push({
       gameId,

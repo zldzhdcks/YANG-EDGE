@@ -11,7 +11,7 @@ import {
   type ExpansionSplitSealV1,
 } from "./types";
 
-const ALLOWED_EXPANSION_LOCAL_FILES = new Set([
+const ALLOWED_EXPANSION_LOCAL_FILES = new Set<string>([
   SPLIT_SEAL_FILE_NAME,
   DISCOVERY2_ANNOTATION_HTML_FILE_NAME,
   DISCOVERY2_HUMAN_TRUTH_FILE_NAME,

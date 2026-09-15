@@ -39,6 +39,7 @@ export function parseDiscovery2HumanRecord(
   if (
     typeof raw.sourceImageSha256 !== "string" ||
     raw.sourceImageSha256.length === 0 ||
+    typeof raw.visualRowIndex !== "number" ||
     !Number.isInteger(raw.visualRowIndex)
   ) {
     throw new OcrResearchExpansionV1Error(`HUMAN_IDENTITY_INVALID:${index + 1}`);

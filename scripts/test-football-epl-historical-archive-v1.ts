@@ -5,7 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import {execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
-import {buildArchive,envelope,sha,json,verifyRun,type Batch} from './ingest-football-epl-historical-archive-v1.ts';
+import {buildArchive,envelope,sha,json,verifyRun,type Batch} from './ingest-football-epl-historical-archive-v1';
 
 const fetchedAt='2026-09-10T12:00:00.000Z';
 const fixture=(season=2023,fixtureId=1,home=1,away=2)=>({fixture:{id:fixtureId,date:`${season}-08-15T19:00:00+00:00`,status:{short:'FT'}},league:{id:39,name:'Premier League',season,round:'Regular Season - 1'},teams:{home:{id:home,name:'Home '+home},away:{id:away,name:'Away '+away}},score:{fulltime:{home:1,away:0}},goals:{home:1,away:0}});

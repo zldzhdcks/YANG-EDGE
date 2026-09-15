@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {randomUUID} from 'node:crypto';
-import {buildArchive, normalize, envelope, json, sha, verifyRun, LOCAL_ROOT, SEASONS, type Batch, type LeagueSpec} from './ingest-football-epl-historical-archive-v1.ts';
+import {buildArchive, normalize, envelope, json, sha, verifyRun, LOCAL_ROOT, SEASONS, type Batch, type LeagueSpec} from './ingest-football-epl-historical-archive-v1';
 
 export const LEAGUES = [
   {id:140,name:'La Liga',teamCount:20,code:'LALIGA'},

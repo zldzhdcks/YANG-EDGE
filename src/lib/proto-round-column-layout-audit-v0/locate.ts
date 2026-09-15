@@ -72,11 +72,6 @@ export function locateRowGeometry(joined: JoinedLayoutRowV0): LocatedRowGeometry
             lastAnchorIndex = dateEnd + k;
           }
         }
-      } else if (
-        timeHit.rawParts.length === 2 &&
-        timeHit.status === "PARSED_EXACT"
-      ) {
-        lastAnchorIndex = dateEnd + 1;
       }
     }
   }

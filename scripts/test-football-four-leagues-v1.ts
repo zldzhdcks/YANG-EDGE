@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {LEAGUES,expandAudit,seasonWindowAudit} from './ingest-football-four-leagues-v1.ts';
-import {envelope,sha,json} from './ingest-football-epl-historical-archive-v1.ts';
-import {stageInventory} from './audit-football-four-leagues-stages-v1.ts';
+import {LEAGUES,expandAudit,seasonWindowAudit} from './ingest-football-four-leagues-v1';
+import {envelope,sha,json} from './ingest-football-epl-historical-archive-v1';
+import {stageInventory} from './audit-football-four-leagues-stages-v1';
 function fixture(leagueId:number,leagueName:string,season:number,id:number,home=1,away=2) {
   return {fixture:{id,date:`${season}-08-15T19:00:00Z`,status:{short:'FT'}},league:{id:leagueId,name:leagueName,season,round:'Regular Season - 1'},teams:{home:{id:home,name:`Team ${home}`},away:{id:away,name:`Team ${away}`}},score:{fulltime:{home:2,away:1}},goals:{home:2,away:1}};
 }

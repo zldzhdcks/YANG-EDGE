@@ -505,7 +505,7 @@ async function main() {
     const gameData = toGameData(pred);
     const commenceEst = estimateCommenceMs(pred);
 
-    let game: GameTimeline = prev
+    const game: GameTimeline = prev
       ? {
           ...prev,
           baselinePick: pred.baselinePick,

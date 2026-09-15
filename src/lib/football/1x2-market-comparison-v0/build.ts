@@ -111,9 +111,6 @@ export function assertMarketComparisonIntegrity(
   }
   if (doc.researchOnly !== true) errors.push("RESEARCH_ONLY");
   if (doc.engineAdmission !== "PROHIBITED") errors.push("ENGINE_ADMISSION");
-  if (doc.predictionInput !== true && doc.predictionInput !== false) {
-    errors.push("PREDICTION_INPUT");
-  }
   if (doc.predictionInput !== false) errors.push("PREDICTION_INPUT_NOT_FALSE");
   if (doc.resultDataUsed !== false) errors.push("RESULT_DATA");
   if (doc.existingOdds1x2V1Written !== false) errors.push("ODDS_V1_WRITTEN");

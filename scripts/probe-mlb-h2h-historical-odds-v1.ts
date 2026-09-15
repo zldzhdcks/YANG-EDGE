@@ -167,7 +167,7 @@ async function main() {
     errorBodySnippet: string | null;
   }> = [];
 
-  let remainingBefore = sportsUsage.remaining;
+  const remainingBefore = sportsUsage.remaining;
   let planBlocked = false;
   let providerError = false;
 

@@ -388,7 +388,7 @@ export async function gradeMlbPredictionsV1(input: {
 
     // --- Official track ---
     let officialGradeResult: PredictionGrade = "NO_PICK";
-    let officialEligible = inputStatus === "ELIGIBLE" && officialPickSide != null;
+    const officialEligible = inputStatus === "ELIGIBLE" && officialPickSide != null;
     if (officialPickSide != null) {
       officialSampleCount += 1;
       if (matchStatus === "ID_MISMATCH" || matchStatus === "DUPLICATE_MATCH") {

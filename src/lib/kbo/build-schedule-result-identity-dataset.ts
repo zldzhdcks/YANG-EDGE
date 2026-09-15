@@ -296,7 +296,7 @@ export function buildKboScheduleResultIdentityDocument(
   const missing = [...(input.providerMissing ?? [])];
 
   const rows: KboScheduleResultIdentityRow[] = [];
-  let missingProviderGameId = missing.filter((m) =>
+  const missingProviderGameId = missing.filter((m) =>
     m.includes("PROVIDER_GAME_ID_MISSING"),
   ).length;
 

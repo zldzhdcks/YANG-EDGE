@@ -37,7 +37,7 @@ export function regionsFromRemainder(input: {
     grouped.set(idx, list);
   }
   const bandIndexes = [...grouped.keys()].sort((a, b) => a - b);
-  const regions = bandIndexes.map((bandIndex, regionIndex) => {
+  const regions: RawFieldRegionCandidateV0[] = bandIndexes.map((bandIndex, regionIndex) => {
     const frags = grouped.get(bandIndex)!;
     return {
       regionIndex,

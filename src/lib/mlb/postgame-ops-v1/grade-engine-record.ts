@@ -73,8 +73,8 @@ export async function gradeEngineRecommendationRecord(input: {
     };
   }
 
-  let gradedById = new Map<string, Record<string, unknown>>();
-  let resultById = new Map<string, Record<string, unknown>>();
+  const gradedById = new Map<string, Record<string, unknown>>();
+  const resultById = new Map<string, Record<string, unknown>>();
   try {
     const graded = asRecord(
       JSON.parse(

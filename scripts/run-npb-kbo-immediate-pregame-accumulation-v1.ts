@@ -840,7 +840,7 @@ async function runKbo(dateKst: string) {
   }
 
   t = Date.now();
-  let oddsList: OddsGameRow[] = [];
+  const oddsList: OddsGameRow[] = [];
   let oddsFetchedAt = collectedAt;
   let sportKey: string | null = null;
   try {

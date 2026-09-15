@@ -670,7 +670,7 @@ async function main() {
   };
 
   // API-BASEBALL: 대상일 + lookback 날짜 존재 확인 (불펜 세부 없음)
-  let apiBaseballGameCounts: Record<string, number> = {};
+  const apiBaseballGameCounts: Record<string, number> = {};
   try {
     const cache = JSON.parse(await readFile(PATHS.resultsCache, "utf8")) as {
       results?: unknown[];

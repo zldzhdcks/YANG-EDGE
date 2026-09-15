@@ -563,8 +563,8 @@ export async function buildTravelRestDatasetV1(input: {
       : "SINGLE";
 
     let joinQuality: "MATCHED" | "MISSING_PREVIOUS" = "MISSING_PREVIOUS";
-    let travel: TravelSnapshot = emptyTravelSnapshot();
-    let rest: RestSnapshot = emptyRestSnapshot(dhStatus);
+    const travel: TravelSnapshot = emptyTravelSnapshot();
+    const rest: RestSnapshot = emptyRestSnapshot(dhStatus);
 
     if (currentGame && currentIdx >= 0) {
       rest.consecutiveHomeGames = countConsecutive(

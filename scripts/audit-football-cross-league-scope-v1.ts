@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
-import {scope,evaluationTargets,ordered,LEAGUE_RULES,type ScopeRow} from './football-cross-league-scope-v1.ts';
+import {scope,evaluationTargets,ordered,LEAGUE_RULES,type ScopeRow} from './football-cross-league-scope-v1';
 export const hash=(v:string|Buffer)=>createHash('sha256').update(v).digest('hex');
 export function canonical(v:unknown):string {
   if(Array.isArray(v))return `[${v.map(canonical).join(',')}]`;
