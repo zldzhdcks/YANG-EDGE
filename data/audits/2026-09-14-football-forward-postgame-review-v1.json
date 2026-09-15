@@ -1,0 +1,429 @@
+{
+  "payload": {
+    "schemaVersion": "yang-edge-2026-09-14-football-forward-postgame-review-v1",
+    "operatingDateUtc": "2026-09-14",
+    "scorecardContract": "FOOTBALL_FORWARD_DAILY_SCORECARD_V1",
+    "postgameContract": "FOOTBALL_FORWARD_POSTGAME_COLLECTION_V1",
+    "layer": "MODEL_FORWARD",
+    "INTERPRETATION": "EARLY_DESCRIPTIVE_ONLY",
+    "SAMPLE_INSUFFICIENT": true,
+    "ENGINE_CHANGED": "NO",
+    "WEIGHTS_CHANGED": "NO",
+    "THRESHOLD_CHANGED": "NO",
+    "V3_CODE_CHANGED": "NO",
+    "V31_CODE_CHANGED": "NO",
+    "PREGAME_MUTATED": "NO",
+    "POSTGAME_MUTATES_PREGAME": "NO",
+    "NEW_PREDICTION_CREATED": "NO",
+    "MODEL_FORWARD_POSTGAME_GRADE_WRITTEN": "YES",
+    "ODDS_USED": false,
+    "reviewedAt": "2026-09-15T00:26:55.239Z",
+    "store": "LOCAL_ONLY football-v31-research-console-v1 data/cache/research/football/forward-shadow-v1/MODEL_FORWARD",
+    "officialCollectorRunSha256": "c1180ab03f560fe7868bf9e1c237c3830d001259cce430dc09ce41580c34a20e",
+    "counts": {
+      "screenshots": null,
+      "scheduled": 5,
+      "eligible": 5,
+      "predicted": 5,
+      "pass": 0,
+      "missed": 0,
+      "gradedPredicted": 5,
+      "predictedCorrect": 4,
+      "predictedIncorrect": 1,
+      "accuracy": 0.8,
+      "pendingPredicted": 0,
+      "pendingPass": 0
+    },
+    "classDistribution": {
+      "HOME": {
+        "predicted": 4,
+        "actual": 3,
+        "correct": 3
+      },
+      "DRAW": {
+        "predicted": 0,
+        "actual": 0,
+        "correct": 0
+      },
+      "AWAY": {
+        "predicted": 1,
+        "actual": 2,
+        "correct": 1
+      }
+    },
+    "probabilityBuckets": {
+      "requested": [
+        {
+          "bucket": "40_50",
+          "sample": 1,
+          "correct": 1,
+          "accuracy": 1,
+          "sampleInsufficient": true
+        },
+        {
+          "bucket": "50_60",
+          "sample": 2,
+          "correct": 1,
+          "accuracy": 0.5,
+          "sampleInsufficient": true
+        },
+        {
+          "bucket": "60_70",
+          "sample": 1,
+          "correct": 1,
+          "accuracy": 1,
+          "sampleInsufficient": true
+        },
+        {
+          "bucket": "70_PLUS",
+          "sample": 1,
+          "correct": 1,
+          "accuracy": 1,
+          "sampleInsufficient": true
+        }
+      ],
+      "belowRequestedFloor": {
+        "bucket": "LT_40",
+        "sample": 0,
+        "correct": 0,
+        "accuracy": null,
+        "sampleInsufficient": true
+      },
+      "note": "N=5 PREDICTED. All buckets are descriptive only and below Forward milestone N=25. Do not combine with 2026-09-13 <45% observations to change a threshold."
+    },
+    "predicted": [
+      {
+        "fixtureId": 1550118,
+        "leagueId": 135,
+        "league": "Serie A",
+        "homeTeam": "Como",
+        "awayTeam": "Parma",
+        "kickoffUtc": "2026-09-14T16:30:00.000Z",
+        "kickoffKst": "2026-09-15T01:30:00.000+09:00",
+        "predictionCreatedAt": "2026-09-13T07:32:19.083Z",
+        "sealedAt": "2026-09-13T07:32:19.096Z",
+        "predictionCreatedAtBeforeKickoff": true,
+        "sealedAtBeforeKickoff": true,
+        "snapshotSha256": "eb0ab56e240d4e3c40a179c48b1acd0fd4052d3979884e6446f606aa288f857d",
+        "inputSnapshotHash": "b29c9efe4442c5563730ce040404c4f6947b0cf787ea743c2e2d68b3f6ece9fb",
+        "modelVersion": "football-poisson-research-v1",
+        "modelSourceHash": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+        "trainingMatchCount": 394,
+        "homeRelevantSampleCount": 18,
+        "awayRelevantSampleCount": 19,
+        "TARGET_RESULT_DATA_USED": false,
+        "PAST_COMPLETED_RESULT_DATA_USED": true,
+        "ODDS_USED": false,
+        "MARKET_USED": false,
+        "PROVIDER_PREDICTION_USED": false,
+        "OWNER_SHADOW_USED": false,
+        "EXTERNAL_SHADOW_USED": false,
+        "actualScore": {
+          "home": 2,
+          "away": 1
+        },
+        "actualClass": "HOME",
+        "fixtureStatus": "FT",
+        "resultSourceHash": "5aaeb1d6e30e9ea1324a4d1c05098cb367fb846d1498e666a6fd9f980088bb99",
+        "resultProviderFetchedAt": "2026-09-15T00:22:59.619Z",
+        "kickoffUnchanged": true,
+        "status": "PREDICTED",
+        "predictedClass": "HOME",
+        "pHome": 0.6073358882366924,
+        "pDraw": 0.2554329337313946,
+        "pAway": 0.13723117803191295,
+        "predictedClassProbability": 0.6073358882366924,
+        "probabilityBucket": "60_70",
+        "verdict": "CORRECT",
+        "correct1X2": true,
+        "gradeSha256": "a5b48b9856447ebfb7bb97233a2134bf2ff2d3f755e827e9e05c1f3148cba6f3"
+      },
+      {
+        "fixtureId": 1550125,
+        "leagueId": 135,
+        "league": "Serie A",
+        "homeTeam": "Torino",
+        "awayTeam": "AS Roma",
+        "kickoffUtc": "2026-09-14T16:30:00.000Z",
+        "kickoffKst": "2026-09-15T01:30:00.000+09:00",
+        "predictionCreatedAt": "2026-09-13T07:32:19.115Z",
+        "sealedAt": "2026-09-13T07:32:19.129Z",
+        "predictionCreatedAtBeforeKickoff": true,
+        "sealedAtBeforeKickoff": true,
+        "snapshotSha256": "11475a58abd7afa3c18a16707cbb3f9941d460f72e3ab1a9f9dfdc438b597662",
+        "inputSnapshotHash": "e3f1fec2718efad7a752d4ab5bc0b1d0328b290f3da1a9e215fd9a393d2bbb88",
+        "modelVersion": "football-poisson-research-v1",
+        "modelSourceHash": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+        "trainingMatchCount": 394,
+        "homeRelevantSampleCount": 19,
+        "awayRelevantSampleCount": 19,
+        "TARGET_RESULT_DATA_USED": false,
+        "PAST_COMPLETED_RESULT_DATA_USED": true,
+        "ODDS_USED": false,
+        "MARKET_USED": false,
+        "PROVIDER_PREDICTION_USED": false,
+        "OWNER_SHADOW_USED": false,
+        "EXTERNAL_SHADOW_USED": false,
+        "actualScore": {
+          "home": 0,
+          "away": 2
+        },
+        "actualClass": "AWAY",
+        "fixtureStatus": "FT",
+        "resultSourceHash": "32765437e0241f95abbb9eb6c16d83047d96dfa26bb07556320a407109041afc",
+        "resultProviderFetchedAt": "2026-09-15T00:23:34.518Z",
+        "kickoffUnchanged": true,
+        "status": "PREDICTED",
+        "predictedClass": "AWAY",
+        "pHome": 0.2607676826377493,
+        "pDraw": 0.22560257628714872,
+        "pAway": 0.513629741075102,
+        "predictedClassProbability": 0.513629741075102,
+        "probabilityBucket": "50_60",
+        "verdict": "CORRECT",
+        "correct1X2": true,
+        "gradeSha256": "61658c25f959b058c1246100fedbea5a80b4a94cda9ad167e8a4b8c0d4a84bd2"
+      },
+      {
+        "fixtureId": 1550120,
+        "leagueId": 135,
+        "league": "Serie A",
+        "homeTeam": "Inter",
+        "awayTeam": "Udinese",
+        "kickoffUtc": "2026-09-14T18:45:00.000Z",
+        "kickoffKst": "2026-09-15T03:45:00.000+09:00",
+        "predictionCreatedAt": "2026-09-13T07:32:19.144Z",
+        "sealedAt": "2026-09-13T07:32:19.157Z",
+        "predictionCreatedAtBeforeKickoff": true,
+        "sealedAtBeforeKickoff": true,
+        "snapshotSha256": "a97d5490816f4aebcf25e95a630f9ef846828279239a766d84373e23721da59f",
+        "inputSnapshotHash": "2abc923c8a9fb58377a0dcf8ef95934e724956c4b86303c555b8f23ae876f2c0",
+        "modelVersion": "football-poisson-research-v1",
+        "modelSourceHash": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+        "trainingMatchCount": 394,
+        "homeRelevantSampleCount": 19,
+        "awayRelevantSampleCount": 19,
+        "TARGET_RESULT_DATA_USED": false,
+        "PAST_COMPLETED_RESULT_DATA_USED": true,
+        "ODDS_USED": false,
+        "MARKET_USED": false,
+        "PROVIDER_PREDICTION_USED": false,
+        "OWNER_SHADOW_USED": false,
+        "EXTERNAL_SHADOW_USED": false,
+        "actualScore": {
+          "home": 5,
+          "away": 3
+        },
+        "actualClass": "HOME",
+        "fixtureStatus": "FT",
+        "resultSourceHash": "4cee29a227b2996c9a68c2e08de74c5db918567251b0ba30934865715e06c008",
+        "resultProviderFetchedAt": "2026-09-15T00:23:06.538Z",
+        "kickoffUnchanged": true,
+        "status": "PREDICTED",
+        "predictedClass": "HOME",
+        "pHome": 0.7014081054649614,
+        "pDraw": 0.16112227396743514,
+        "pAway": 0.13746962056760287,
+        "predictedClassProbability": 0.7014081054649614,
+        "probabilityBucket": "70_PLUS",
+        "verdict": "CORRECT",
+        "correct1X2": true,
+        "gradeSha256": "52cab59cc4ac54e530e775d1652ec139266c2eb7ee113ca3992cfe3805e28731"
+      },
+      {
+        "fixtureId": 1557402,
+        "leagueId": 39,
+        "league": "EPL",
+        "homeTeam": "Leeds",
+        "awayTeam": "Newcastle",
+        "kickoffUtc": "2026-09-14T19:00:00.000Z",
+        "kickoffKst": "2026-09-15T04:00:00.000+09:00",
+        "predictionCreatedAt": "2026-09-13T07:32:19.175Z",
+        "sealedAt": "2026-09-13T07:32:19.187Z",
+        "predictionCreatedAtBeforeKickoff": true,
+        "sealedAtBeforeKickoff": true,
+        "snapshotSha256": "765df183bbe9287e573d33fbe3429d6f3f9d14440036d251992d94ffe9a15ece",
+        "inputSnapshotHash": "0c0e173d31fcda51ee7f36c1a2322b1405297a0dc2c1c020f7911abeea1e6d10",
+        "modelVersion": "football-poisson-research-v1",
+        "modelSourceHash": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+        "trainingMatchCount": 387,
+        "homeRelevantSampleCount": 18,
+        "awayRelevantSampleCount": 18,
+        "TARGET_RESULT_DATA_USED": false,
+        "PAST_COMPLETED_RESULT_DATA_USED": true,
+        "ODDS_USED": false,
+        "MARKET_USED": false,
+        "PROVIDER_PREDICTION_USED": false,
+        "OWNER_SHADOW_USED": false,
+        "EXTERNAL_SHADOW_USED": false,
+        "actualScore": {
+          "home": 4,
+          "away": 1
+        },
+        "actualClass": "HOME",
+        "fixtureStatus": "FT",
+        "resultSourceHash": "e63a8d1cd5def512c85a887d89f6cce6aa29daa2c219706b0e777415fe547480",
+        "resultProviderFetchedAt": "2026-09-15T00:23:48.779Z",
+        "kickoffUnchanged": true,
+        "status": "PREDICTED",
+        "predictedClass": "HOME",
+        "pHome": 0.46205349562863274,
+        "pDraw": 0.2599226755583936,
+        "pAway": 0.2780238288129736,
+        "predictedClassProbability": 0.46205349562863274,
+        "probabilityBucket": "40_50",
+        "verdict": "CORRECT",
+        "correct1X2": true,
+        "gradeSha256": "fdf90726b2d8e6dabde16979f25596038e6c7e896682113480a3d30bcd9fe159"
+      },
+      {
+        "fixtureId": 1570382,
+        "leagueId": 140,
+        "league": "La Liga",
+        "homeTeam": "Villarreal",
+        "awayTeam": "Real Betis",
+        "kickoffUtc": "2026-09-14T19:00:00.000Z",
+        "kickoffKst": "2026-09-15T04:00:00.000+09:00",
+        "predictionCreatedAt": "2026-09-13T07:32:19.202Z",
+        "sealedAt": "2026-09-13T07:32:19.214Z",
+        "predictionCreatedAtBeforeKickoff": true,
+        "sealedAtBeforeKickoff": true,
+        "snapshotSha256": "87c0cde921d789cda936e1e07c6a882b1bdcb932218f5e15432611b3d0bc785b",
+        "inputSnapshotHash": "36dc912cfa170965032a88dc13ea59c5549696dd6a9d751f43def753a60500ab",
+        "modelVersion": "football-poisson-research-v1",
+        "modelSourceHash": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+        "trainingMatchCount": 394,
+        "homeRelevantSampleCount": 18,
+        "awayRelevantSampleCount": 19,
+        "TARGET_RESULT_DATA_USED": false,
+        "PAST_COMPLETED_RESULT_DATA_USED": true,
+        "ODDS_USED": false,
+        "MARKET_USED": false,
+        "PROVIDER_PREDICTION_USED": false,
+        "OWNER_SHADOW_USED": false,
+        "EXTERNAL_SHADOW_USED": false,
+        "actualScore": {
+          "home": 1,
+          "away": 2
+        },
+        "actualClass": "AWAY",
+        "fixtureStatus": "FT",
+        "resultSourceHash": "b4ecbb1f6c4ef9b3079aa4f534c42cb15c8607de2bb2ca856b378f35dc4ad84b",
+        "resultProviderFetchedAt": "2026-09-15T00:24:31.952Z",
+        "kickoffUnchanged": true,
+        "status": "PREDICTED",
+        "predictedClass": "HOME",
+        "pHome": 0.5772128344523599,
+        "pDraw": 0.19639118638345474,
+        "pAway": 0.22639597916418538,
+        "predictedClassProbability": 0.5772128344523599,
+        "probabilityBucket": "50_60",
+        "verdict": "WRONG",
+        "correct1X2": false,
+        "gradeSha256": "6f580b60d01d99e315355bb12783cb1385704fce7fb0c2f2b9208c0399c6d0b2"
+      }
+    ],
+    "pass": [],
+    "miss": [],
+    "leakage": {
+      "TARGET_RESULT_DATA_USED": false,
+      "POSTGAME_DATA_USED_IN_PREDICTION": false,
+      "ODDS_USED": false,
+      "MARKET_USED": false,
+      "PROVIDER_PREDICTION_USED": false,
+      "predictionCreatedAtBeforeKickoff": true,
+      "sealedAtBeforeKickoff": true,
+      "sealedSnapshotHashesUnchanged": true,
+      "officialFtUsedForReviewOnly": true,
+      "requests": 5,
+      "leakDetected": false
+    },
+    "successReview": [
+      {
+        "fixtureId": 1550118,
+        "fixture": "Como vs Parma",
+        "predictedClass": "HOME",
+        "actualClass": "HOME",
+        "actualScore": {
+          "home": 2,
+          "away": 1
+        },
+        "predictedClassProbability": 0.6073358882366924,
+        "note": "Sealed pregame class matched official FT 1X2. No model update."
+      },
+      {
+        "fixtureId": 1550125,
+        "fixture": "Torino vs AS Roma",
+        "predictedClass": "AWAY",
+        "actualClass": "AWAY",
+        "actualScore": {
+          "home": 0,
+          "away": 2
+        },
+        "predictedClassProbability": 0.513629741075102,
+        "note": "Sealed pregame class matched official FT 1X2. No model update."
+      },
+      {
+        "fixtureId": 1550120,
+        "fixture": "Inter vs Udinese",
+        "predictedClass": "HOME",
+        "actualClass": "HOME",
+        "actualScore": {
+          "home": 5,
+          "away": 3
+        },
+        "predictedClassProbability": 0.7014081054649614,
+        "note": "Sealed pregame class matched official FT 1X2. No model update."
+      },
+      {
+        "fixtureId": 1557402,
+        "fixture": "Leeds vs Newcastle",
+        "predictedClass": "HOME",
+        "actualClass": "HOME",
+        "actualScore": {
+          "home": 4,
+          "away": 1
+        },
+        "predictedClassProbability": 0.46205349562863274,
+        "note": "Sealed pregame class matched official FT 1X2. No model update."
+      }
+    ],
+    "failureReview": [
+      {
+        "fixtureId": 1570382,
+        "fixture": "Villarreal vs Real Betis",
+        "predictedClass": "HOME",
+        "actualClass": "AWAY",
+        "actualScore": {
+          "home": 1,
+          "away": 2
+        },
+        "pHome": 0.5772128344523599,
+        "pDraw": 0.19639118638345474,
+        "pAway": 0.22639597916418538,
+        "trainingMatchCount": 394,
+        "homeRelevantSampleCount": 18,
+        "awayRelevantSampleCount": 19,
+        "availableInputOnly": true,
+        "modelChangeProposed": false,
+        "hypotheses": [
+          {
+            "id": "SIDE_REVERSAL",
+            "text": "Official FT reversed the sealed 1X2 side (HOME 1-2 AWAY). Single-match observation only.",
+            "status": "HYPOTHESIS_ONLY"
+          },
+          {
+            "id": "NOT_LOW_MAX_CLASS",
+            "text": "Sealed predicted-class probability was 57.7% (50-60 bucket), not below 45%. This row does not support a <45% threshold rule, including when read next to 2026-09-13 failures.",
+            "status": "HYPOTHESIS_ONLY"
+          }
+        ]
+      }
+    ],
+    "thresholdChange": {
+      "proposed": false,
+      "reason": "Forward checkpoint N=25 not reached. 2026-09-13 low-confidence failures plus this 50-60 miss are EARLY_DESCRIPTIVE_ONLY and must not retune max-class or probability floors."
+    }
+  },
+  "sha256": "d6c10556746357e3fe3dda2aa73b000b29939d8e9c59500b5a3c8e39eb1b6491"
+}
