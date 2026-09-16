@@ -26,5 +26,6 @@ export function emptyExpectedXiNotCollected(input: {
     evidenceProvenance: "CONTRACT_ONLY_NO_ROWS",
     predictionInput: false,
     engineInput: false,
+    engineAdmission: false,
   };
 }

@@ -361,7 +361,7 @@ async function main() {
       playerName: "Nameless Trialist",
     });
     assert.equal(namelessIdentity.canonicalPlayerId, null);
-    assert.equal(namelessIdentity.identityStatus, "PLAYER_IDENTITY_REVIEW_REQUIRED");
+    assert.equal(namelessIdentity.identityStatus, "PLAYER_ID_UNRESOLVED");
 
     const identitySource = readFileSync(
       path.join(cwd, "src/lib/football/player-context-foundation-v1/identity.ts"),
@@ -390,7 +390,7 @@ async function main() {
       true,
     );
     const unnamed = squadDs.players.find((p) => p.name === "Nameless Trialist");
-    assert.equal(unnamed?.identityStatus, "PLAYER_IDENTITY_REVIEW_REQUIRED");
+    assert.equal(unnamed?.identityStatus, "PLAYER_ID_UNRESOLVED");
 
     const emptySquad = replayNormalizeFootballSquad(
       syntheticSquadObservation(SYNTHETIC_PREGAME_AT, SYNTHETIC_EMPTY_SQUAD_RAW),

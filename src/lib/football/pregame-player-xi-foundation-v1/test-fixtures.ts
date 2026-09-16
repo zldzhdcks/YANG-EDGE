@@ -2,7 +2,7 @@
  * Synthetic TEST DATA for football player/XI foundation parsers.
  * Not research evidence. Must not be stored under data/research/.
  */
-import type { FootballRawPointInTimeObservationV1 } from "./types";
+import { FOOTBALL_V4_PUBLIC_DISPLAY_RIGHTS, type FootballRawPointInTimeObservationV1 } from "./types";
 
 export const SYNTHETIC_FIXTURE_ID = "1234567";
 export const SYNTHETIC_KICKOFF = "2026-09-01T19:00:00.000Z";
@@ -128,7 +128,9 @@ export function syntheticInjuriesObservation(
     overwriteForbidden: true,
     predictionInput: false,
     engineInput: false,
+    engineAdmission: false,
     researchOnly: true,
+    PUBLIC_DISPLAY_RIGHTS: FOOTBALL_V4_PUBLIC_DISPLAY_RIGHTS,
     syntheticTestData: true,
     raw: SYNTHETIC_INJURIES_RAW,
   };
@@ -154,7 +156,9 @@ export function syntheticLineupsObservation(
     overwriteForbidden: true,
     predictionInput: false,
     engineInput: false,
+    engineAdmission: false,
     researchOnly: true,
+    PUBLIC_DISPLAY_RIGHTS: FOOTBALL_V4_PUBLIC_DISPLAY_RIGHTS,
     syntheticTestData: true,
     raw: SYNTHETIC_LINEUPS_RAW,
   };

@@ -112,7 +112,7 @@ function main() {
       canonicalTeamId: null,
       playerName: "Nameless Trialist",
     });
-    assert.equal(playerNoId.identityStatus, "PLAYER_IDENTITY_REVIEW_REQUIRED");
+    assert.equal(playerNoId.identityStatus, "PLAYER_ID_UNRESOLVED");
 
     const mappedUnknown = mapApiFootballInjuryAvailability({
       typeRaw: "Medical Review",
@@ -152,7 +152,7 @@ function main() {
     assert.equal(unknown?.reasonNormalized, null);
 
     const nameless = pregameInj.rows.find((r) => r.player.playerName === "Nameless Trialist");
-    assert.equal(nameless?.player.identityStatus, "PLAYER_IDENTITY_REVIEW_REQUIRED");
+    assert.equal(nameless?.player.identityStatus, "PLAYER_ID_UNRESOLVED");
     assert.equal(nameless?.player.providerPlayerId, null);
 
     const blockedInj = replayNormalizeFootballInjuries(

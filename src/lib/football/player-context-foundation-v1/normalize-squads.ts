@@ -5,7 +5,7 @@
  * Squad membership at observedAt is roster evidence only.
  * It does not imply starter, availability, or expected XI.
  */
-import { resolveFootballPlayerIdentity, resolvePlayerContextTeamAttachment } from "./identity";
+import { resolveFootballPlayerIdentity, resolvePlayerContextTeamAttachment, isFootballPlayerIdentityIncomplete } from "./identity";
 import { asNullableId, asNullableNumber, asNullableString } from "./read-fields";
 import { classifyPlayerContextTemporal } from "./temporal";
 import type {
@@ -43,7 +43,7 @@ function qualityForSquad(input: {
   if (input.identityBlocked) return "IDENTITY_BLOCKED";
   if (input.postKickoffOnly) return "POST_KICKOFF_ONLY";
   if (input.players.length === 0) return "EMPTY_PROVIDER_RESPONSE";
-  if (input.players.some((p) => p.identityStatus === "PLAYER_IDENTITY_REVIEW_REQUIRED")) {
+  if (input.players.some((p) => isFootballPlayerIdentityIncomplete(p.identityStatus))) {
     return "PARTIAL";
   }
   return "COMPLETE";

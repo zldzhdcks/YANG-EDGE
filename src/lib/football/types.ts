@@ -209,12 +209,28 @@ export type FootballProvider = {
     raw: unknown;
     usage: FootballUsageMeta;
     cached: boolean;
+    /**
+     * Local client fetch clock (ISO-8601). NOT a provider publication time.
+     * API-Football /injuries payloads do not include providerPublishedAt.
+     * Cache hits reuse the clock stored with the first fetch of this key.
+     */
+    fetchedAt: string | null;
+    /** Always null: this endpoint does not publish a source clock. */
+    providerPublishedAt: null;
   }>;
 
   getLineups(params: { fixtureId: number }): Promise<{
     raw: unknown;
     usage: FootballUsageMeta;
     cached: boolean;
+    /**
+     * Local client fetch clock (ISO-8601). NOT a provider publication time.
+     * API-Football /fixtures/lineups payloads do not include providerPublishedAt.
+     * Cache hits reuse the clock stored with the first fetch of this key.
+     */
+    fetchedAt: string | null;
+    /** Always null: this endpoint does not publish a source clock. */
+    providerPublishedAt: null;
   }>;
 
   getPlayers(params: GetPlayersParams): Promise<GetPlayersResult>;

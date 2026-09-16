@@ -1,11 +1,18 @@
 /**
  * Normalize API-Football /injuries raw response.
  * Pure / deterministic / network-free. observedAt comes from metadata.
+ *
+ * Absence from this feed is not AVAILABLE. Do not auto-generate AVAILABLE rows.
+ * UNKNOWN stays UNKNOWN. Suspension mapping is not expanded beyond the explicit mapper.
  */
 import { createHash } from "node:crypto";
 import { resolveFootballTeamAttachment } from "./identity-attach";
-import { resolveFootballPlayerIdentity } from "./player-identity";
-import { classifyFootballObservationPhase } from "./temporal";
+import {
+  isFootballPlayerIdentityIncomplete,
+  resolveFootballPlayerIdentity,
+} from "./player-identity";
+import { classifyFootballV4TemporalProvenance } from "./temporal";
+import { FOOTBALL_V4_PUBLIC_DISPLAY_RIGHTS } from "./types";
 import type {
   FootballAvailabilityDatasetV1,
   FootballAvailabilityNormalizeMeta,
@@ -75,7 +82,7 @@ function qualityForAvailability(input: {
     input.rows.some(
       (r) =>
         r.availabilityStatus === "UNKNOWN" ||
-        r.player.identityStatus === "PLAYER_IDENTITY_REVIEW_REQUIRED",
+        isFootballPlayerIdentityIncomplete(r.player.identityStatus),
     )
   ) {
     return "PARTIAL";
@@ -87,9 +94,11 @@ export function normalizeApiFootballInjuries(
   raw: unknown,
   meta: FootballAvailabilityNormalizeMeta,
 ): FootballAvailabilityDatasetV1 {
-  const temporal = classifyFootballObservationPhase({
+  const temporal = classifyFootballV4TemporalProvenance({
     observedAt: meta.observedAt,
-    fixtureKickoff: meta.fixtureKickoff,
+    kickoffUtc: meta.fixtureKickoff,
+    providerFetchedAt: meta.providerFetchedAt,
+    providerPublishedAt: meta.providerPublishedAt,
   });
   const items = asArray(raw);
   const sourceArtifactHash = meta.sourceArtifactHash || hashRaw(raw);
@@ -139,7 +148,9 @@ export function normalizeApiFootballInjuries(
       },
       predictionInput: false,
       engineInput: false,
+      engineAdmission: false,
       researchOnly: true,
+      PUBLIC_DISPLAY_RIGHTS: FOOTBALL_V4_PUBLIC_DISPLAY_RIGHTS,
     };
   });
 
@@ -158,8 +169,8 @@ export function normalizeApiFootballInjuries(
     counts: {
       rawRows: items.length,
       normalizedRows: rows.length,
-      unknownPlayerIdentityRows: rows.filter(
-        (r) => r.player.identityStatus === "PLAYER_IDENTITY_REVIEW_REQUIRED",
+      unknownPlayerIdentityRows: rows.filter((r) =>
+        isFootballPlayerIdentityIncomplete(r.player.identityStatus),
       ).length,
       unknownAvailabilityRows: rows.filter((r) => r.availabilityStatus === "UNKNOWN").length,
       teamsObserved: teams.size,
@@ -168,5 +179,7 @@ export function normalizeApiFootballInjuries(
     predictionConnected: false,
     predictionInput: false,
     engineInput: false,
+    engineAdmission: false,
+    PUBLIC_DISPLAY_RIGHTS: FOOTBALL_V4_PUBLIC_DISPLAY_RIGHTS,
   };
 }

@@ -7,7 +7,7 @@
  * Provider typo `appearences` is mapped to appearances.
  */
 import { createHash } from "node:crypto";
-import { resolveFootballPlayerIdentity, resolvePlayerContextTeamAttachment } from "./identity";
+import { resolveFootballPlayerIdentity, resolvePlayerContextTeamAttachment, isFootballPlayerIdentityIncomplete } from "./identity";
 import { asNullableBoolean, asNullableId, asNullableNumber, asNullableString } from "./read-fields";
 import { classifyPlayerContextTemporal } from "./temporal";
 import type {
@@ -88,11 +88,7 @@ function qualityForPlayers(input: {
     return "POST_KICKOFF_ONLY";
   }
   if (input.truncated) return "TRUNCATED_PAGINATION";
-  if (
-    input.rows.some(
-      (r) => r.identity.identityStatus === "PLAYER_IDENTITY_REVIEW_REQUIRED",
-    )
-  ) {
+  if (input.rows.some((r) => isFootballPlayerIdentityIncomplete(r.identity.identityStatus))) {
     return "PARTIAL";
   }
   return "COMPLETE";
@@ -268,8 +264,8 @@ export function normalizeApiFootballPlayers(
     counts: {
       rawPlayerItems: items.length,
       normalizedRows: rows.length,
-      unknownPlayerIdentityRows: rows.filter(
-        (r) => r.identity.identityStatus === "PLAYER_IDENTITY_REVIEW_REQUIRED",
+      unknownPlayerIdentityRows: rows.filter((r) =>
+        isFootballPlayerIdentityIncomplete(r.identity.identityStatus),
       ).length,
       multiContextPlayers,
     },

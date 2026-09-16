@@ -1,0 +1,188 @@
+{
+  "schemaVersion": "FOOTBALL_V4_PHASE0_IMPLEMENTATION_AUDIT_V1",
+  "artifactKind": "IMPLEMENTATION_STATE_SEALED",
+  "createdAt": "2026-09-16T00:41:00.000Z",
+  "sealedAt": "2026-09-16T02:13:00.000Z",
+  "VERDICT": "V4_PHASE0_VALIDATED",
+  "V4_CURRENT_STATE": "RESEARCH_FOUNDATION_PARTIAL_ENGINE_NOT_IMPLEMENTED",
+  "V4_PHASE0_CODE_STATUS": "V4_PHASE0_VALIDATED",
+  "VALIDATION_STATUS": "PASS",
+  "TESTS_EXECUTED": true,
+  "API_CALLS": 0,
+  "LIVE_WRITES": 0,
+  "PROVIDER_LIVE_CALLS_THIS_MISSION": 0,
+  "V4_ENGINE_IMPLEMENTED": false,
+  "V4_ENGINE_ADMISSION_ALLOWED": false,
+  "ENGINE_CONNECTED": false,
+  "PREDICTION_CONNECTED": false,
+  "COMMIT_CREATED": false,
+  "PUSHES": 0,
+  "BRANCH_CHANGES": 0,
+  "PROTECTED_FILES_MODIFIED": 0,
+  "blockersStillOpen": [
+    "NONEMPTY_XI_STILL_REQUIRED",
+    "TEMPORAL_PUBLISHED_AT_STILL_MISSING",
+    "CANONICAL_PLAYER_REGISTRY_STILL_MISSING",
+    "PUBLIC_RIGHTS_STILL_UNRESOLVED"
+  ],
+  "history": {
+    "implementationDraft": {
+      "artifactKind": "IMPLEMENTATION_STATE_DRAFT",
+      "createdAt": "2026-09-16T00:41:00.000Z",
+      "createdAtNote": "Unattended implementation write. No commands, tests, API, or git were executed in that mission.",
+      "VERDICT": "IMPLEMENTED_NOT_VALIDATED",
+      "V4_PHASE0_CODE_STATUS": "IMPLEMENTED_NOT_VALIDATED",
+      "TESTS_EXECUTED": false,
+      "COMMANDS_EXECUTED": false,
+      "API_CALLS": 0,
+      "gitStatus": "NOT_EXECUTED",
+      "doNotClaim": {
+        "testsPass": "NOT_CLAIMED_TESTS_NOT_EXECUTED",
+        "coverageNumbers": "NOT_COMPUTED",
+        "apiResults": "NO_API_CALLS"
+      },
+      "staticSelfReviewNote": "Static read only. No tsc/eslint/test execution."
+    }
+  },
+  "implementation": {
+    "temporal": "classifyFootballV4TemporalProvenance in pregame-player-xi-foundation-v1/temporal.ts",
+    "identity": "resolveFootballPlayerIdentity + PLAYER_ID_UNRESOLVED; MATCHED only with canonicalMappingPresent",
+    "lineup": "empty raw [] => NOT_AVAILABLE; UNCLASSIFIED not coerced to CONFIRMED/PREDICTED",
+    "injury": "mapper unchanged; empty feed does not create AVAILABLE",
+    "providerFetchedAt": "getLineups/getInjuries local fetch clock; providerPublishedAt always null",
+    "persist": "planner + writer with executeWrite default false; write not executed",
+    "snapshot": "buildFootballV4PlayerContextSnapshot; missing sections NOT_AVAILABLE",
+    "coverage": "READY/PARTIAL/MISSING/BLOCKED; score fields explicit null"
+  },
+  "files": {
+    "modified": [
+      "src/lib/football/pregame-player-xi-foundation-v1/types.ts",
+      "src/lib/football/pregame-player-xi-foundation-v1/temporal.ts",
+      "src/lib/football/pregame-player-xi-foundation-v1/player-identity.ts",
+      "src/lib/football/pregame-player-xi-foundation-v1/normalize-lineups.ts",
+      "src/lib/football/pregame-player-xi-foundation-v1/normalize-injuries.ts",
+      "src/lib/football/pregame-player-xi-foundation-v1/replay.ts",
+      "src/lib/football/pregame-player-xi-foundation-v1/expected-xi.ts",
+      "src/lib/football/pregame-player-xi-foundation-v1/player-feature.ts",
+      "src/lib/football/pregame-player-xi-foundation-v1/test-fixtures.ts",
+      "src/lib/football/types.ts",
+      "src/lib/football/api-football-provider.ts",
+      "src/lib/football/dummy-football-provider.ts",
+      "src/lib/football/player-context-foundation-v1/identity.ts",
+      "src/lib/football/player-context-foundation-v1/paths.ts",
+      "src/lib/football/player-context-foundation-v1/normalize-players.ts",
+      "src/lib/football/player-context-foundation-v1/normalize-squads.ts",
+      "scripts/test-football-pregame-player-xi-foundation-v1.ts",
+      "scripts/test-football-player-context-foundation-v1.ts",
+      "package.json"
+    ],
+    "created": [
+      "src/lib/football/v4-phase0-foundation-v1/types.ts",
+      "src/lib/football/v4-phase0-foundation-v1/persist.ts",
+      "src/lib/football/v4-phase0-foundation-v1/snapshot.ts",
+      "src/lib/football/v4-phase0-foundation-v1/coverage.ts",
+      "src/lib/football/v4-phase0-foundation-v1/index.ts",
+      "scripts/test-football-v4-phase0-v1.ts",
+      "docs/FOOTBALL_V4_PHASE0_IMPLEMENTATION_V1.md",
+      "data/audits/football-v4-phase0-implementation-v1.json"
+    ],
+    "protectedModified": []
+  },
+  "validation": {
+    "validatedAt": "2026-09-16T02:08:00.000Z",
+    "VERDICT": "V4_PHASE0_VALIDATED",
+    "VALIDATION_STATUS": "PASS",
+    "TESTS_EXECUTED": true,
+    "V4_ENGINE_IMPLEMENTED": false,
+    "V4_ENGINE_ADMISSION_ALLOWED": false,
+    "API_CALLS": 0,
+    "LIVE_WRITES": 0,
+    "tests": {
+      "test:football-v4-phase0-v1": {
+        "exitCode": 0,
+        "result": "PASS",
+        "notes": "emptyLineup NOT_AVAILABLE; engineAdmission false"
+      },
+      "test:football-pregame-player-xi-foundation-v1": {
+        "exitCode": 0,
+        "result": "PASS",
+        "fetchCalls": 0,
+        "engineConnected": false,
+        "predictionConnected": false
+      },
+      "test:football-player-context-foundation-v1": {
+        "firstRun": {
+          "exitCode": 1,
+          "result": "FAIL",
+          "error": "esbuild TransformError Unexpected ) in normalize-players.ts:93 trailing comma after if-condition expression"
+        },
+        "afterMinimalFix": {
+          "exitCode": 0,
+          "result": "PASS",
+          "providerLiveCalls": 0,
+          "predictionsCalls": 0,
+          "engineConnected": false,
+          "predictionConnected": false
+        },
+        "syntaxFix": {
+          "file": "src/lib/football/player-context-foundation-v1/normalize-players.ts",
+          "change": "Removed invalid trailing comma in qualityForPlayers if (rows.some(...),)",
+          "scope": "V4_PHASE0_ONLY"
+        }
+      }
+    },
+    "confirmed": {
+      "emptyLineupNotAvailable": true,
+      "missingProviderIdUnresolved": true,
+      "providerIdOnly": true,
+      "matchedNotAutoCreated": true,
+      "postKickoffPregameEligibleFalse": true,
+      "missingPublishedAtTemporalPartial": true,
+      "emptyInjuryDoesNotCreateAvailable": true,
+      "unknownPreserved": true,
+      "engineAdmissionFalse": true,
+      "playerScoreAndWeightNullOnly": true
+    },
+    "static": {
+      "v4Eslint": {
+        "command": "npx eslint <v4-phase0-touched-files>",
+        "exitCode": 0,
+        "result": "PASS"
+      },
+      "v4TscFiltered": {
+        "command": "npx tsc --noEmit",
+        "globalErrorCount": 96,
+        "preAstraBaselineErrorCount": 96,
+        "v4FileErrorCount": 0,
+        "note": "Global tsc remains Pre-Astra KNOWN_FAIL. No errors in V4 Phase 0 touched files."
+      },
+      "globalLintNotUsedAsV4Regression": true
+    },
+    "forbidden": {
+      "poissonImport": 0,
+      "forwardPredictionImport": 0,
+      "v3V31Import": 0,
+      "MODEL_FORWARDModified": 0,
+      "sealedArtifactModified": 0,
+      "astraUiModified": 0,
+      "protectedDiff": []
+    }
+  },
+  "sealRevalidation": {
+    "sealedAt": "2026-09-16T02:13:00.000Z",
+    "VALIDATION_STATUS": "PASS",
+    "tests": {
+      "test:football-v4-phase0-v1": "PASS",
+      "test:football-pregame-player-xi-foundation-v1": "PASS",
+      "test:football-player-context-foundation-v1": "PASS"
+    },
+    "v4Eslint": "PASS",
+    "globalTscErrorCount": 96,
+    "preAstraBaselineErrorCount": 96,
+    "v4FileErrorCount": 0,
+    "API_CALLS": 0,
+    "LIVE_WRITES": 0,
+    "protectedDiff": []
+  },
+  "sha256": "a0687b155a4d4b392bf6295b8b9c8567d9659aec0f2696ca879b63999f24c24f"
+}

@@ -269,8 +269,17 @@ export class ApiFootballProvider implements FootballProvider {
       raw: unknown;
       usage: FootballUsageMeta;
       cached: boolean;
+      fetchedAt: string | null;
+      providerPublishedAt: null;
     }>(cacheKey);
-    if (cached) return { ...cached, cached: true };
+    if (cached) {
+      return {
+        ...cached,
+        cached: true,
+        fetchedAt: cached.fetchedAt ?? null,
+        providerPublishedAt: null,
+      };
+    }
 
     const query: Record<string, string> = {};
     if (params.fixtureId != null) query.fixture = String(params.fixtureId);
@@ -289,10 +298,14 @@ export class ApiFootballProvider implements FootballProvider {
       query,
     );
     assertNoApiErrors(json.errors, "/injuries");
+    // Local client clock only. Do not treat as providerPublishedAt.
+    const fetchedAt = new Date().toISOString();
     const result = {
       raw: json.response ?? [],
       usage,
       cached: false as const,
+      fetchedAt,
+      providerPublishedAt: null,
     };
     // TODO: 경기 임박 시 TTL 더 짧게
     setFootballCache(cacheKey, result, SHORT_CACHE_TTL_MS);
@@ -308,23 +321,42 @@ export class ApiFootballProvider implements FootballProvider {
       raw: unknown;
       usage: FootballUsageMeta;
       cached: boolean;
+      fetchedAt: string | null;
+      providerPublishedAt: null;
     }>(cacheKey);
-    if (cached) return { ...cached, cached: true };
+    if (cached) {
+      return {
+        ...cached,
+        cached: true,
+        fetchedAt: cached.fetchedAt ?? null,
+        providerPublishedAt: null,
+      };
+    }
 
     const { json, usage } = await this.getJson<ApiFootballEnvelope<unknown>>(
       "/fixtures/lineups",
       { fixture: String(params.fixtureId) },
     );
     assertNoApiErrors(json.errors, "/fixtures/lineups");
+    // Local client clock only. Do not treat as providerPublishedAt.
+    const fetchedAt = new Date().toISOString();
     const result = {
       raw: json.response ?? [],
       usage,
       cached: false as const,
+      fetchedAt,
+      providerPublishedAt: null,
     };
     setFootballCache(cacheKey, result, SHORT_CACHE_TTL_MS);
     return result;
   }
 
+  /**
+   * TODO(design only): GET /fixtures/players is NOT implemented and MUST NOT be
+   * auto-wired to pregame research. That endpoint is post-match player stats
+   * and carries pregame leakage risk. Do not add a live client method here
+   * without an attended leakage review.
+   */
   async getPlayers(params: GetPlayersParams): Promise<GetPlayersResult> {
     const maxPages = clampPlayersMaxPages(params.maxPages);
     const query = buildApiFootballPlayersQuery({

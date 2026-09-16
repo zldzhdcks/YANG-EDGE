@@ -28,6 +28,9 @@ export function replayNormalizeFootballInjuries(
     observedAt: observation.observedAt,
     fixtureKickoff: observation.fixtureKickoff,
     providerFixtureId: observation.providerFixtureId,
+    providerFetchedAt: observation.providerFetchedAt ?? meta.providerFetchedAt ?? null,
+    providerPublishedAt: observation.providerPublishedAt ?? meta.providerPublishedAt ?? null,
+    snapshotCreatedAt: observation.snapshotCreatedAt ?? meta.snapshotCreatedAt ?? null,
   });
 }
 
@@ -47,5 +50,8 @@ export function replayNormalizeFootballLineups(
     observedAt: observation.observedAt,
     fixtureKickoff: observation.fixtureKickoff,
     providerFixtureId: observation.providerFixtureId,
+    providerFetchedAt: observation.providerFetchedAt ?? meta.providerFetchedAt ?? null,
+    providerPublishedAt: observation.providerPublishedAt ?? meta.providerPublishedAt ?? null,
+    snapshotCreatedAt: observation.snapshotCreatedAt ?? meta.snapshotCreatedAt ?? null,
   });
 }

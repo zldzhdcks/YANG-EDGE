@@ -14,15 +14,36 @@ export const FOOTBALL_PLAYER_XI_PROVIDER = "api-football" as const;
 export type FootballPlayerIdentityStatus =
   | "MATCHED"
   | "PROVIDER_ID_ONLY"
-  | "PLAYER_IDENTITY_REVIEW_REQUIRED";
+  | "PLAYER_IDENTITY_REVIEW_REQUIRED"
+  | "PLAYER_ID_UNRESOLVED";
+
+export const FOOTBALL_V4_PUBLIC_DISPLAY_RIGHTS = "UNRESOLVED" as const;
+
+export type FootballV4PublicDisplayRights = typeof FOOTBALL_V4_PUBLIC_DISPLAY_RIGHTS;
+
+export type FootballV4TemporalStatus =
+  | "TEMPORAL_VERIFIED"
+  | "TEMPORAL_PARTIAL"
+  | "TEMPORAL_EVIDENCE_MISSING"
+  | "POST_KICKOFF_OBSERVATION";
+
+export type FootballXiAvailabilityStatus =
+  | "CONFIRMED_XI"
+  | "PREDICTED_XI"
+  | "PARTIAL_XI"
+  | "NOT_AVAILABLE"
+  | "UNCLASSIFIED_PROVIDER_LINEUP";
 
 export type FootballPlayerIdentityV1 = {
   provider: typeof FOOTBALL_PLAYER_XI_PROVIDER;
   providerPlayerId: string | null;
   providerTeamId: string | null;
   canonicalTeamId: string | null;
-  /** YANG canonical player ID is never silently equal to providerPlayerId. */
-  canonicalPlayerId: null;
+  /**
+   * YANG canonical player ID. Never silently copied from providerPlayerId.
+   * MATCHED is allowed only when a real mapping supplies this value.
+   */
+  canonicalPlayerId: string | null;
   playerName: string | null;
   providerReportedPlayerName: string | null;
   identityStatus: FootballPlayerIdentityStatus;
@@ -53,6 +74,7 @@ export type FootballDatasetQuality =
   | "COMPLETE"
   | "PARTIAL"
   | "EMPTY_PROVIDER_RESPONSE"
+  | "NOT_AVAILABLE"
   | "IDENTITY_BLOCKED"
   | "POST_KICKOFF_ONLY";
 
@@ -74,11 +96,20 @@ export type FootballRawPointInTimeObservationV1 = {
   isBeforeKickoff: boolean;
   pregameEligible: boolean;
   observationPhase: FootballObservationPhase;
+  /** Local collector/fetch clock. Not a provider publication time. */
+  providerFetchedAt?: string | null;
+  /** Provider publication clock. Absent on API-Football lineup/injury payloads. */
+  providerPublishedAt?: string | null;
+  snapshotCreatedAt?: string | null;
+  temporalStatus?: FootballV4TemporalStatus;
   appendOnly: true;
   overwriteForbidden: true;
   predictionInput: false;
   engineInput: false;
+  /** Existing sealed raw files omit this. New Phase 0 writers must set false. */
+  engineAdmission?: false;
   researchOnly: true;
+  PUBLIC_DISPLAY_RIGHTS?: FootballV4PublicDisplayRights;
   /** Synthetic test data must set this true and must not be stored as research evidence. */
   syntheticTestData: boolean;
   raw: unknown;
@@ -110,7 +141,9 @@ export type FootballAvailabilityRowV1 = {
   >;
   predictionInput: false;
   engineInput: false;
+  engineAdmission: false;
   researchOnly: true;
+  PUBLIC_DISPLAY_RIGHTS: FootballV4PublicDisplayRights;
 };
 
 export type FootballXiPlayerV1 = {
@@ -144,6 +177,11 @@ export type FootballXiObservationV1 = {
   isBeforeKickoff: boolean;
   pregameEligible: boolean;
   observationPhase: FootballObservationPhase;
+  providerFetchedAt: string | null;
+  providerPublishedAt: string | null;
+  snapshotCreatedAt: string | null;
+  temporalStatus: FootballV4TemporalStatus;
+  strictReplayEligible: boolean;
   sourceProvider: typeof FOOTBALL_PLAYER_XI_PROVIDER;
   sourceArtifactHash: string;
   teams: FootballXiTeamObservationV1[];
@@ -153,7 +191,9 @@ export type FootballXiObservationV1 = {
   >;
   predictionInput: false;
   engineInput: false;
+  engineAdmission: false;
   researchOnly: true;
+  PUBLIC_DISPLAY_RIGHTS: FootballV4PublicDisplayRights;
 };
 
 /**
@@ -172,6 +212,7 @@ export type FootballExpectedXiContractV1 = {
   evidenceProvenance: string;
   predictionInput: false;
   engineInput: false;
+  engineAdmission: false;
 };
 
 /**
@@ -195,6 +236,7 @@ export type FootballPlayerFeatureContractV1 = {
   filled: false;
   predictionInput: false;
   engineInput: false;
+  engineAdmission: false;
 };
 
 export type FootballAvailabilityNormalizeMeta = {
@@ -204,6 +246,10 @@ export type FootballAvailabilityNormalizeMeta = {
   providerFixtureId: string;
   sourceArtifactHash: string;
   identityGate: FootballIdentityGateResult;
+  /** Local fetch clock only. Not providerPublishedAt. */
+  providerFetchedAt?: string | null;
+  providerPublishedAt?: string | null;
+  snapshotCreatedAt?: string | null;
   homeProviderTeamId?: string | null;
   awayProviderTeamId?: string | null;
   homeProviderTeamName?: string | null;
@@ -236,6 +282,8 @@ export type FootballAvailabilityDatasetV1 = {
   predictionConnected: false;
   predictionInput: false;
   engineInput: false;
+  engineAdmission: false;
+  PUBLIC_DISPLAY_RIGHTS: FootballV4PublicDisplayRights;
 };
 
 export type FootballXiDatasetV1 = {
@@ -245,6 +293,7 @@ export type FootballXiDatasetV1 = {
   sourceArtifactHash: string;
   observation: FootballXiObservationV1;
   quality: FootballDatasetQuality;
+  xiAvailabilityStatus: FootballXiAvailabilityStatus;
   counts: {
     rawRows: number;
     normalizedRows: number;
@@ -257,4 +306,6 @@ export type FootballXiDatasetV1 = {
   predictionConnected: false;
   predictionInput: false;
   engineInput: false;
+  engineAdmission: false;
+  PUBLIC_DISPLAY_RIGHTS: FootballV4PublicDisplayRights;
 };

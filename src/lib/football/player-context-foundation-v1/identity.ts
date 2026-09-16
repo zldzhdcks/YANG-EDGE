@@ -5,10 +5,10 @@
  */
 import { resolveProviderTeam } from "../core/team-catalog";
 import type { FootballIdentityGateResult } from "../foundation/types";
-import { resolveFootballPlayerIdentity } from "../pregame-player-xi-foundation-v1/player-identity";
+import { resolveFootballPlayerIdentity, isFootballPlayerIdentityIncomplete } from "../pregame-player-xi-foundation-v1/player-identity";
 import type { FootballCoachIdentityStatus, FootballCoachIdentityV1 } from "./types";
 
-export { resolveFootballPlayerIdentity };
+export { resolveFootballPlayerIdentity, isFootballPlayerIdentityIncomplete };
 
 export function resolveFootballCoachIdentity(input: {
   providerCoachId: string | number | null | undefined;

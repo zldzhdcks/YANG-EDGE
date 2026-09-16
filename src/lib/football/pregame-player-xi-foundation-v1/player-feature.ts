@@ -34,5 +34,6 @@ export function emptyPlayerFeatureContract(input: {
     filled: false,
     predictionInput: false,
     engineInput: false,
+    engineAdmission: false,
   };
 }

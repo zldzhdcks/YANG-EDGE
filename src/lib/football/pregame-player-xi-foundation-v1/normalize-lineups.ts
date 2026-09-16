@@ -2,15 +2,22 @@
  * Normalize API-Football /fixtures/lineups raw response.
  * Pure / deterministic / network-free.
  * Does not classify EXPECTED_XI. Does not invent missing players.
+ * Empty raw [] is NOT_AVAILABLE — not a confirmed empty XI.
+ * Position tokens (including G) are stored as provided. No GK inference from name/number.
  */
 import { createHash } from "node:crypto";
 import { resolveFootballTeamAttachment } from "./identity-attach";
-import { resolveFootballPlayerIdentity } from "./player-identity";
-import { classifyFootballObservationPhase } from "./temporal";
+import {
+  isFootballPlayerIdentityIncomplete,
+  resolveFootballPlayerIdentity,
+} from "./player-identity";
+import { classifyFootballV4TemporalProvenance } from "./temporal";
+import { FOOTBALL_V4_PUBLIC_DISPLAY_RIGHTS } from "./types";
 import type {
   FootballDatasetQuality,
   FootballLineupNormalizeMeta,
   FootballLineupObservationType,
+  FootballXiAvailabilityStatus,
   FootballXiDatasetV1,
   FootballXiPlayerV1,
   FootballXiTeamObservationV1,
@@ -62,6 +69,7 @@ function mapPlayers(
         playerName: row.player?.name ?? null,
       }),
       number: typeof row.player?.number === "number" ? row.player.number : null,
+      // Raw provider position token. Do not infer GK from name or shirt number.
       position: row.player?.pos?.trim() ? row.player.pos.trim() : null,
       grid: row.player?.grid?.trim() ? row.player.grid.trim() : null,
     }));
@@ -83,14 +91,14 @@ function qualityForXi(input: {
   if (input.identityBlocked && input.teams.every((t) => !t.operatorGameAttached)) {
     return "IDENTITY_BLOCKED";
   }
-  if (input.rawRows === 0) return "EMPTY_PROVIDER_RESPONSE";
+  if (input.rawRows === 0) return "NOT_AVAILABLE";
   if (!input.pregameEligible) return "POST_KICKOFF_ONLY";
   const starters = input.teams.reduce((n, t) => n + t.startingXI.length, 0);
   if (starters === 0) return "PARTIAL";
   if (
     input.teams.some((t) =>
-      [...t.startingXI, ...t.substitutes].some(
-        (p) => p.player.identityStatus === "PLAYER_IDENTITY_REVIEW_REQUIRED",
+      [...t.startingXI, ...t.substitutes].some((p) =>
+        isFootballPlayerIdentityIncomplete(p.player.identityStatus),
       ),
     )
   ) {
@@ -99,18 +107,45 @@ function qualityForXi(input: {
   return "COMPLETE";
 }
 
+/**
+ * Do not coerce UNCLASSIFIED_PROVIDER_LINEUP into CONFIRMED_XI or PREDICTED_XI
+ * unless the collector supplied OFFICIAL_CONFIRMED. API-Football /fixtures/lineups
+ * does not distinguish predicted vs confirmed on its own.
+ */
+function xiAvailabilityStatus(input: {
+  rawRows: number;
+  teams: FootballXiTeamObservationV1[];
+  observationType: FootballLineupObservationType;
+}): FootballXiAvailabilityStatus {
+  if (input.rawRows === 0 || input.teams.length === 0) return "NOT_AVAILABLE";
+  const starters = input.teams.reduce((n, t) => n + t.startingXI.length, 0);
+  if (starters === 0) return "PARTIAL_XI";
+  if (
+    input.observationType === "CONFIRMED" &&
+    input.teams.every((t) => t.startingXI.length >= 11)
+  ) {
+    return "CONFIRMED_XI";
+  }
+  return "UNCLASSIFIED_PROVIDER_LINEUP";
+}
+
 export function normalizeApiFootballLineups(
   raw: unknown,
   meta: FootballLineupNormalizeMeta,
 ): FootballXiDatasetV1 {
-  const temporal = classifyFootballObservationPhase({
+  const temporal = classifyFootballV4TemporalProvenance({
     observedAt: meta.observedAt,
-    fixtureKickoff: meta.fixtureKickoff,
+    kickoffUtc: meta.fixtureKickoff,
+    providerFetchedAt: meta.providerFetchedAt,
+    providerPublishedAt: meta.providerPublishedAt,
   });
   const items = asArray(raw);
   const sourceArtifactHash = meta.sourceArtifactHash || hashRaw(raw);
   const identityBlocked = meta.identityGate.verdict !== "PASS";
   const observationType = lineupType(meta.lineupSemantic);
+  const providerFetchedAt = meta.providerFetchedAt ?? null;
+  const providerPublishedAt = meta.providerPublishedAt ?? null;
+  const snapshotCreatedAt = meta.snapshotCreatedAt ?? null;
 
   const teams: FootballXiTeamObservationV1[] = items.map((item) => {
     const providerTeamId = item.team?.id == null ? null : String(item.team.id);
@@ -142,8 +177,8 @@ export function normalizeApiFootballLineups(
   const unknownPlayerIdentityRows = teams.reduce(
     (n, t) =>
       n +
-      [...t.startingXI, ...t.substitutes].filter(
-        (p) => p.player.identityStatus === "PLAYER_IDENTITY_REVIEW_REQUIRED",
+      [...t.startingXI, ...t.substitutes].filter((p) =>
+        isFootballPlayerIdentityIncomplete(p.player.identityStatus),
       ).length,
     0,
   );
@@ -156,6 +191,11 @@ export function normalizeApiFootballLineups(
     isBeforeKickoff: temporal.isBeforeKickoff,
     pregameEligible: temporal.pregameEligible,
     observationPhase: temporal.observationPhase,
+    providerFetchedAt,
+    providerPublishedAt,
+    snapshotCreatedAt,
+    temporalStatus: temporal.temporalStatus,
+    strictReplayEligible: temporal.strictReplayEligible,
     sourceProvider: "api-football" as const,
     sourceArtifactHash,
     teams,
@@ -166,7 +206,9 @@ export function normalizeApiFootballLineups(
     },
     predictionInput: false as const,
     engineInput: false as const,
+    engineAdmission: false as const,
     researchOnly: true as const,
+    PUBLIC_DISPLAY_RIGHTS: FOOTBALL_V4_PUBLIC_DISPLAY_RIGHTS,
   };
 
   return {
@@ -181,6 +223,11 @@ export function normalizeApiFootballLineups(
       identityBlocked,
       pregameEligible: temporal.pregameEligible,
     }),
+    xiAvailabilityStatus: xiAvailabilityStatus({
+      rawRows: items.length,
+      teams,
+      observationType,
+    }),
     counts: {
       rawRows: items.length,
       normalizedRows: teams.length,
@@ -193,5 +240,7 @@ export function normalizeApiFootballLineups(
     predictionConnected: false,
     predictionInput: false,
     engineInput: false,
+    engineAdmission: false,
+    PUBLIC_DISPLAY_RIGHTS: FOOTBALL_V4_PUBLIC_DISPLAY_RIGHTS,
   };
 }

@@ -40,3 +40,17 @@ export function footballCoachesObservationRel(input: {
   const stamp = stampObservedAt(input.observedAt);
   return `${FOOTBALL_PLAYER_CONTEXT_RAW_ROOT}/coaches/${input.providerTeamId}/${stamp}-v1.json`;
 }
+
+export function footballV4PlayerContextSnapshotRel(input: {
+  observedAt: string;
+  providerFixtureId?: string | null;
+  providerTeamId?: string | null;
+}): string {
+  const stamp = stampObservedAt(input.observedAt);
+  const scope = input.providerFixtureId
+    ? `fixture-${input.providerFixtureId}`
+    : input.providerTeamId
+      ? `team-${input.providerTeamId}`
+      : "unscoped";
+  return `${FOOTBALL_PLAYER_CONTEXT_RAW_ROOT}/snapshots/${scope}/${stamp}-v1.json`;
+}

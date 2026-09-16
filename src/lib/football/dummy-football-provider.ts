@@ -63,12 +63,24 @@ export class DummyFootballProvider implements FootballProvider {
 
   async getInjuries(params: GetInjuriesParams) {
     void params;
-    return { raw: [], usage: emptyFootballUsage(), cached: false };
+    return {
+      raw: [],
+      usage: emptyFootballUsage(),
+      cached: false,
+      fetchedAt: null,
+      providerPublishedAt: null,
+    };
   }
 
   async getLineups(params: { fixtureId: number }) {
     void params;
-    return { raw: [], usage: emptyFootballUsage(), cached: false };
+    return {
+      raw: [],
+      usage: emptyFootballUsage(),
+      cached: false,
+      fetchedAt: null,
+      providerPublishedAt: null,
+    };
   }
 
   async getPlayers(params: GetPlayersParams): Promise<GetPlayersResult> {
