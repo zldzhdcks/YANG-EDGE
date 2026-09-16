@@ -1,0 +1,620 @@
+{
+  "payload": {
+    "schemaVersion": "FOOTBALL_V4_PLAYER_LINEUP_PRE_DESIGN_AUDIT_V1",
+    "auditedAt": "2026-09-16T00:28:29.682Z",
+    "VERDICT": "V4_PRE_DESIGN_READY",
+    "mission": "AUDIT_DESIGN_PRE_DESIGN_ONLY",
+    "V4_ENGINE_IMPLEMENTED": false,
+    "V4_WEIGHTS_CREATED": false,
+    "V4_PLAYER_SCORE_CREATED": false,
+    "ENGINE_CONNECTED": false,
+    "PREDICTION_CONNECTED": false,
+    "PROVIDER_LIVE_CALLS_THIS_MISSION": 0,
+    "recovery": {
+      "branch": "agent/cursor/football-v31-third-real-batch-preflight-v1",
+      "HEAD": "955a3ab23aea0ee5e78864a473b00539911e17d2",
+      "originMain": "1b90cdd3d406dd2991f79fe0836c32d8ba08e4b9",
+      "recentLog": [
+        "955a3ab research: seal football 1x2 odds market comparison audit v1",
+        "eaa3687 fix: clean pre-astra repository build baseline",
+        "62c3013 research: add football forward cumulative evaluation v1",
+        "7dfab86 research: seal 2026-09-14 football forward postgame review",
+        "a86c2a2 research: seal football v3 prototype ui contract"
+      ]
+    },
+    "engineLineage": {
+      "V1": {
+        "name": "Official Forward",
+        "model": "football-poisson-research-v1",
+        "paths": [
+          "src/lib/football/poisson-research-v1/index.ts",
+          "docs/FOOTBALL_FORWARD_SHADOW_V1.md",
+          "docs/FOOTBALL_FORWARD_DAILY_OPERATIONS_V1.md"
+        ],
+        "predictFootballInputs": [
+          "target",
+          "cutoffAt",
+          "history"
+        ],
+        "playerFieldsOnPredictFootball": false
+      },
+      "V2_H2": {
+        "name": "Unpromoted research backbone",
+        "paths": [
+          "docs/FOOTBALL_POISSON_V2_ALGORITHM_DESIGN_FREEZE_V1.md",
+          "docs/FOOTBALL_POISSON_V2_EXPOSED_EVALUATION_V1.md"
+        ],
+        "promoted": false
+      },
+      "V3": {
+        "name": "xG / Total Shots / Shots on Goal",
+        "paths": [
+          "docs/FOOTBALL_V3_FEATURE_RESEARCH_PROTOCOL_V1.md",
+          "docs/FOOTBALL_V3_FEATURE_RESEARCH_PROTOCOL_V1.json"
+        ],
+        "quote": "라인업·부상·징계는 V4이다."
+      },
+      "V31": {
+        "name": "R1 / R3 Independent Holdout SCREEN_NO",
+        "paths": [
+          "docs/FOOTBALL_V31_INCREMENTAL_FEATURE_RESEARCH_PROTOCOL_V1.md",
+          "docs/FOOTBALL_V31_2025_INDEPENDENT_HOLDOUT_EVALUATION_V1.md"
+        ],
+        "quote": "lineups/injuries/suspensions는 V4다."
+      },
+      "V4": {
+        "protocolStage": "Lineup / Injury / Suspension / Player Identity",
+        "protocolConfirmedInRepo": true,
+        "engineImplemented": false,
+        "uiLabel": "FUTURE / NOT IMPLEMENTED",
+        "paths": [
+          "docs/FOOTBALL_V3_RESEARCH_UI_CONTRACT_V1.md",
+          "data/audits/football-v3-research-ui-contract-v1.json",
+          "data/audits/football-v3-v31-closure-audit-v1.json"
+        ],
+        "notFootballV4": [
+          "src/lib/proto-round-ocr-v4-design-v0/"
+        ]
+      }
+    },
+    "inventory": {
+      "mlbKboNpbExcluded": true,
+      "rows": [
+        {
+          "PATH": "src/lib/football/pregame-player-xi-foundation-v1/",
+          "SPORT": "football",
+          "PURPOSE": "Pregame XI and availability normalize/replay foundation",
+          "SOURCE": "API-Football contracts",
+          "USED_BY_PREDICTION": false,
+          "USED_BY_RESEARCH": true,
+          "TEMPORAL_STATUS": "observedAt_lt_kickoff_gate",
+          "CURRENT_STATUS": "RESEARCH_FOUNDATION"
+        },
+        {
+          "PATH": "src/lib/football/player-context-foundation-v1/",
+          "SPORT": "football",
+          "PURPOSE": "Players/squads/coaches normalize foundation",
+          "SOURCE": "API-Football /players /players/squads /coachs",
+          "USED_BY_PREDICTION": false,
+          "USED_BY_RESEARCH": true,
+          "TEMPORAL_STATUS": "observedAt_gate_or_RESEARCH_WITHOUT_TARGET_FIXTURE",
+          "CURRENT_STATUS": "CODE_ONLY_NO_RAW"
+        },
+        {
+          "PATH": "src/lib/football/api-football-provider.ts",
+          "SPORT": "football",
+          "PURPOSE": "Provider client getLineups getInjuries getPlayers getPlayerSquad getCoaches",
+          "SOURCE": "API-Football",
+          "USED_BY_PREDICTION": false,
+          "USED_BY_RESEARCH": true,
+          "TEMPORAL_STATUS": "fetch_clock_not_persisted_as_providerFetchedAt",
+          "CURRENT_STATUS": "WIRED"
+        },
+        {
+          "PATH": "data/research/football/raw/player-xi-v1/lineups/",
+          "SPORT": "football",
+          "PURPOSE": "Immutable lineup observations",
+          "SOURCE": "getLineups via 2026-08-30 coverage collector",
+          "USED_BY_PREDICTION": false,
+          "USED_BY_RESEARCH": true,
+          "TEMPORAL_STATUS": "PRE_GAME envelopes",
+          "CURRENT_STATUS": "16_FILES_EMPTY_RAW"
+        },
+        {
+          "PATH": "data/research/football/raw/player-xi-v1/injuries/",
+          "SPORT": "football",
+          "PURPOSE": "Immutable injury observations",
+          "SOURCE": "getInjuries via 2026-08-30 coverage collector",
+          "USED_BY_PREDICTION": false,
+          "USED_BY_RESEARCH": true,
+          "TEMPORAL_STATUS": "PRE_GAME",
+          "CURRENT_STATUS": "16_FILES_NONEMPTY_RAW"
+        },
+        {
+          "PATH": "data/research/football/raw/player-context-v1/",
+          "SPORT": "football",
+          "PURPOSE": "Designed raw root for players/squads/coaches",
+          "SOURCE": "paths.ts conceptualRoot",
+          "USED_BY_PREDICTION": false,
+          "USED_BY_RESEARCH": false,
+          "TEMPORAL_STATUS": "N_A",
+          "CURRENT_STATUS": "DIRECTORY_MISSING"
+        },
+        {
+          "PATH": "data/audits/football-pregame-player-xi-foundation-v1.json",
+          "SPORT": "football",
+          "PURPOSE": "Foundation audit seal",
+          "SOURCE": "2026-08-26",
+          "USED_BY_PREDICTION": false,
+          "USED_BY_RESEARCH": true,
+          "TEMPORAL_STATUS": "N_A",
+          "CURRENT_STATUS": "SEALED"
+        },
+        {
+          "PATH": "data/audits/football-player-stats-squad-coach-foundation-v1.json",
+          "SPORT": "football",
+          "PURPOSE": "Stats/squad/coach foundation audit seal",
+          "SOURCE": "2026-08-26",
+          "USED_BY_PREDICTION": false,
+          "USED_BY_RESEARCH": true,
+          "TEMPORAL_STATUS": "N_A",
+          "CURRENT_STATUS": "SEALED"
+        },
+        {
+          "PATH": "scripts/audit-2026-08-30-pregame-input-coverage-v1.ts",
+          "SPORT": "football",
+          "PURPOSE": "Coverage collector that wrote player-xi-v1 raw files",
+          "SOURCE": "API-Football live at capture",
+          "USED_BY_PREDICTION": false,
+          "USED_BY_RESEARCH": true,
+          "TEMPORAL_STATUS": "collector_observedAt",
+          "CURRENT_STATUS": "USED_ONCE"
+        },
+        {
+          "PATH": "docs/research/FOOTBALL_PLAYER_DATA_INTAKE_PRIORITY_V1.md",
+          "SPORT": "football",
+          "PURPOSE": "Intake priority P0/P1/P2",
+          "SOURCE": "design",
+          "USED_BY_PREDICTION": false,
+          "USED_BY_RESEARCH": true,
+          "TEMPORAL_STATUS": "N_A",
+          "CURRENT_STATUS": "DESIGN"
+        },
+        {
+          "PATH": "src/constants/dummyAnalysisData.ts",
+          "SPORT": "dummy",
+          "PURPOSE": "Public analysis placeholder injuries",
+          "SOURCE": "not provider",
+          "USED_BY_PREDICTION": false,
+          "USED_BY_RESEARCH": false,
+          "TEMPORAL_STATUS": "N_A",
+          "CURRENT_STATUS": "DUMMY_NOT_EVIDENCE"
+        },
+        {
+          "PATH": "src/lib/public-analysis/project-fallbacks.ts",
+          "SPORT": "football",
+          "PURPOSE": "Public projection lineup/injuries null",
+          "SOURCE": "fail-closed",
+          "USED_BY_PREDICTION": false,
+          "USED_BY_RESEARCH": false,
+          "TEMPORAL_STATUS": "N_A",
+          "CURRENT_STATUS": "NOT_WIRED"
+        }
+      ],
+      "rawObservationCensus": {
+        "lineupFiles": 16,
+        "lineupFixtures": 16,
+        "lineupEmptyRaw": 16,
+        "lineupNonemptyRaw": 0,
+        "injuryFiles": 16,
+        "injuryFixtures": 16,
+        "injuryEmptyRaw": 0,
+        "injuryNonemptyRaw": 16,
+        "playerContextFiles": 0,
+        "predictionInputTrueCount": 0
+      },
+      "collectionLayerExists": true,
+      "engineInputExists": false
+    },
+    "providerCapability": {
+      "providerName": "API-Football (API-Sports)",
+      "client": "src/lib/football/api-football-provider.ts",
+      "newProviderIntroduced": false,
+      "liveCallsThisMission": 0,
+      "endpoints": [
+        {
+          "name": "lineups",
+          "endpoint": "/fixtures/lineups",
+          "module": "getLineups",
+          "fixtureId": true,
+          "playerId": "inside raw startXI.player.id when payload nonempty",
+          "teamId": "inside raw team.id",
+          "lineupAvailability": "method yes; persisted payloads empty",
+          "confirmedVsPredicted": "default UNCLASSIFIED_PROVIDER_LINEUP; CONFIRMED requires collector OFFICIAL_CONFIRMED",
+          "timestamps": {
+            "providerPublishedAt": false,
+            "providerFetchedAt": false,
+            "observedAt": "on raw observation envelope",
+            "usageMeta": "requestsRemaining/requestsLimit only"
+          },
+          "persistence": "data/research/football/raw/player-xi-v1/lineups/"
+        },
+        {
+          "name": "injuries",
+          "endpoint": "/injuries",
+          "module": "getInjuries",
+          "fixtureId": true,
+          "playerId": true,
+          "teamId": true,
+          "injuryAvailability": true,
+          "suspensionAvailability": "inferred from type/reason text only",
+          "timestamps": {
+            "fixtureDateOnPayload": true,
+            "providerPublishedAt": false,
+            "observedAt": "on raw observation envelope"
+          },
+          "persistence": "data/research/football/raw/player-xi-v1/injuries/"
+        },
+        {
+          "name": "players",
+          "endpoint": "/players",
+          "module": "getPlayers",
+          "persistence": "none; player-context-v1 missing",
+          "note": "yang-edge-provider-capability-audit-v1 text 'no getPlayers' is stale versus current client"
+        },
+        {
+          "name": "squads",
+          "endpoint": "/players/squads",
+          "module": "getPlayerSquad",
+          "impliesStarter": false,
+          "persistence": "none"
+        },
+        {
+          "name": "coaches",
+          "endpoint": "/coachs",
+          "module": "getCoaches",
+          "persistence": "none"
+        },
+        {
+          "name": "fixturesPlayers",
+          "endpoint": "/fixtures/players",
+          "module": null,
+          "implemented": false
+        }
+      ],
+      "legalLicenseNote": "Same API-Sports terms. Public/commercial display requires review. Do not resell the feed.",
+      "licenseClass": "PUBLIC_DISPLAY_REQUIRES_REVIEW"
+    },
+    "temporalContract": {
+      "existingGate": {
+        "module": "src/lib/football/pregame-player-xi-foundation-v1/temporal.ts",
+        "rule": "observedAt < fixtureKickoff => PRE_GAME / pregameEligible=true",
+        "equalOrAfter": "POST_KICKOFF_INVALID_FOR_PREGAME",
+        "noDateNowInNormalizers": true
+      },
+      "proposedRequiredTimestamps": [
+        "providerPublishedAt",
+        "providerFetchedAt",
+        "observedAt",
+        "snapshotCreatedAt",
+        "kickoffUtc"
+      ],
+      "proposedEligibility": {
+        "providerPublishedAt_le_cutoff": true,
+        "observedAt_lt_kickoff": true,
+        "snapshotCreatedAt_lt_kickoff": true,
+        "missingPublishedAt": "TEMPORAL_EVIDENCE_MISSING; not PREGAME_VERIFIED for engine"
+      },
+      "postgameActualXiAsPregameInput": "FORBIDDEN",
+      "postgameXiAllowedFor": [
+        "review",
+        "label"
+      ]
+    },
+    "playerIdentityContract": {
+      "existingModule": "src/lib/football/pregame-player-xi-foundation-v1/player-identity.ts",
+      "priority": [
+        "providerPlayerId",
+        "canonicalPlayerId",
+        "teamId+providerPlayerId"
+      ],
+      "canonicalPlayerIdToday": null,
+      "fuzzyNameMatch": false,
+      "resultBasedIdentity": false,
+      "existingStatuses": [
+        "MATCHED",
+        "PROVIDER_ID_ONLY",
+        "PLAYER_IDENTITY_REVIEW_REQUIRED"
+      ],
+      "matchedUnusedUntilRegistry": true,
+      "v4ReadoutAlias": {
+        "PROVIDER_ID_ONLY": "PLAYER_ID_VERIFIED_AT_PROVIDER_GRAIN_ONLY",
+        "PLAYER_IDENTITY_REVIEW_REQUIRED": "PLAYER_ID_REVIEW_REQUIRED",
+        "missingProviderPlayerId": "PLAYER_ID_UNRESOLVED"
+      }
+    },
+    "startingXiProposedContract": {
+      "reuseTypes": [
+        "FootballXiObservationV1",
+        "FootballXiPlayerV1",
+        "FootballLineupObservationType"
+      ],
+      "fields": [
+        "fixtureId",
+        "teamId",
+        "playerId",
+        "playerName",
+        "position",
+        "starter",
+        "goalkeeper",
+        "formation",
+        "lineupStatus",
+        "sourceProvider",
+        "providerPublishedAt",
+        "providerFetchedAt",
+        "observedAt",
+        "pregameEligible",
+        "strictReplayEligible",
+        "engineAdmission"
+      ],
+      "states": [
+        "CONFIRMED_XI",
+        "PREDICTED_XI",
+        "PARTIAL_XI",
+        "NOT_AVAILABLE"
+      ],
+      "doNotMixConfirmedAndPredicted": true,
+      "currentStoredLineups": "NOT_AVAILABLE_EMPTY_RAW",
+      "expectedXiV1": "NOT_COLLECTED_IN_V1",
+      "engineAdmissionDefault": false
+    },
+    "injurySuspensionContract": {
+      "existingEnum": [
+        "AVAILABLE",
+        "OUT",
+        "DOUBTFUL",
+        "QUESTIONABLE",
+        "SUSPENDED",
+        "UNKNOWN"
+      ],
+      "v4InjuredMapsTo": "OUT plus reasonRaw",
+      "absenceFromInjuriesFeedDoesNotImplyAvailable": true,
+      "unknownMustNotBecomeZeroImpact": true,
+      "expectedReturnOnProviderPayload": false,
+      "dedicatedSuspensionEndpoint": false,
+      "mapper": "mapApiFootballInjuryAvailability"
+    },
+    "playerStrengthResearchRequirements": {
+      "scoresCreatedThisMission": false,
+      "weightsCreatedThisMission": false,
+      "neededLater": [
+        "minutes",
+        "starts",
+        "goals",
+        "assists",
+        "xG_xA_availability",
+        "goalkeeper_role",
+        "team_dependency",
+        "historical_sample"
+      ],
+      "xG_xA_onApiFootballBeginnerFields": "NOT_AVAILABLE",
+      "layers": {
+        "DATA_AVAILABLE": "injury raw yes; lineup payload no; player-context raw no",
+        "FEATURE_CANDIDATE": "FootballPlayerFeatureContractV1.filled=false",
+        "ENGINE_ADMITTED": false
+      },
+      "famousPlayerArbitraryWeight": "FORBIDDEN"
+    },
+    "goalkeeperKeyPlayer": {
+      "goalkeeperIdentifiableAsProviderPosition": "FIELD_EXISTS_UNAUDITED_NO_NONEMPTY_XI",
+      "goalkeeperBooleanOnXiPlayerType": false,
+      "keyPlayerManualLabel": false,
+      "keyPlayerPopularity": false,
+      "keyPlayerMarketValue": false,
+      "keyPlayerFuture": "metric_candidates_after_identity_and_temporal_gates"
+    },
+    "failClosed": {
+      "codes": [
+        "V4_REQUIRED_DATA_MISSING",
+        "LINEUP_NOT_CONFIRMED",
+        "PLAYER_IDENTITY_UNRESOLVED",
+        "TEMPORAL_EVIDENCE_MISSING"
+      ],
+      "missingV4DoesNotForceV1Pass": true,
+      "recommended": {
+        "V1": "Official Forward fallback continues on scores/schedule",
+        "V4": "Research PASS / no V4 output"
+      },
+      "automaticPromotion": false
+    },
+    "researchArchitecture": {
+      "phase0": "Data collection only",
+      "phase1": "Coverage / identity / temporal audit",
+      "phase2": "Player/lineup feature candidate research",
+      "phase3": "Retrospective backtest",
+      "phase4": "Independent holdout",
+      "phase5": "Prospective shadow not MODEL_FORWARD",
+      "phase6": "Promotion review",
+      "alignedToExistingYangEdgeProtocol": true
+    },
+    "officialForwardSeparation": {
+      "RESEARCH_ONLY": true,
+      "SHADOW_ONLY": true,
+      "changeOfficialForwardNow": false,
+      "backfillSealedPredictions": false,
+      "rewriteV1HistoricalResults": false
+    },
+    "rightsCompliance": {
+      "provider": "API-Football",
+      "internalResearch": "EXISTING_RESEARCH_RAW_WITH_UNRESOLVED_PUBLIC_RIGHTS",
+      "publicDisplay": "UNRESOLVED",
+      "commercialDisplay": "UNRESOLVED",
+      "PUBLIC_DISPLAY_RIGHTS": "UNRESOLVED",
+      "rawProviderLineupPlayerPublicUiAutoAllowed": false,
+      "licenseClassFromCapabilityAudit": "PUBLIC_DISPLAY_REQUIRES_REVIEW"
+    },
+    "uiFutureContract": {
+      "v4Node": "FUTURE RESEARCH",
+      "currentUi": "NOT IMPLEMENTED",
+      "officialPredictionMustNotShowXiInjuryAsEvidence": true,
+      "publicProjectionLineup": null,
+      "publicProjectionInjuries": null
+    },
+    "gapMatrix": {
+      "StartingXI": {
+        "status": "PARTIAL",
+        "path": "data/research/football/raw/player-xi-v1/lineups/"
+      },
+      "PlayerIdentity": {
+        "status": "PARTIAL",
+        "path": "src/lib/football/pregame-player-xi-foundation-v1/player-identity.ts"
+      },
+      "PlayerStats": {
+        "status": "PARTIAL",
+        "path": "src/lib/football/player-context-foundation-v1/"
+      },
+      "Injury": {
+        "status": "PARTIAL",
+        "path": "data/research/football/raw/player-xi-v1/injuries/"
+      },
+      "Suspension": {
+        "status": "PARTIAL",
+        "path": "src/lib/football/pregame-player-xi-foundation-v1/normalize-injuries.ts"
+      },
+      "Goalkeeper": {
+        "status": "PARTIAL",
+        "path": "src/lib/football/pregame-player-xi-foundation-v1/normalize-lineups.ts"
+      },
+      "TemporalEvidence": {
+        "status": "PARTIAL",
+        "path": "src/lib/football/pregame-player-xi-foundation-v1/temporal.ts"
+      },
+      "Rights": {
+        "status": "BLOCKED",
+        "path": "src/lib/research/provider-capability-audit-v1/inventory.ts"
+      },
+      "Storage": {
+        "status": "PARTIAL",
+        "path": "src/lib/football/pregame-player-xi-foundation-v1/paths.ts"
+      },
+      "Builder": {
+        "status": "PARTIAL",
+        "path": "scripts/audit-2026-08-30-pregame-input-coverage-v1.ts"
+      },
+      "ResearchFeature": {
+        "status": "MISSING",
+        "path": "src/lib/football/pregame-player-xi-foundation-v1/player-feature.ts"
+      },
+      "Backtest": {
+        "status": "MISSING",
+        "path": null
+      },
+      "Shadow": {
+        "status": "MISSING",
+        "path": null
+      },
+      "EngineAdmission": {
+        "status": "BLOCKED",
+        "path": "src/lib/football/poisson-research-v1/index.ts"
+      }
+    },
+    "p0p1p2": {
+      "P0": [
+        {
+          "purpose": "Keep Official V1 frozen; no V4 engine start",
+          "expectedFiles": [],
+          "risk": "accidental Forward edit",
+          "prerequisite": "this pre-design"
+        },
+        {
+          "purpose": "Treat empty lineups as NOT_AVAILABLE not confirmed-absent",
+          "expectedFiles": [
+            "data/research/football/raw/player-xi-v1/lineups/"
+          ],
+          "risk": "false empty XI",
+          "prerequisite": "existing getLineups semantics"
+        },
+        {
+          "purpose": "Keep CONFIRMED vs PREDICTED unmixed; rights UNRESOLVED",
+          "expectedFiles": [
+            "docs/FOOTBALL_V3_RESEARCH_UI_CONTRACT_V1.md"
+          ],
+          "risk": "public raw XI",
+          "prerequisite": "capability audit licenseClass"
+        }
+      ],
+      "P1": [
+        {
+          "purpose": "Append-only nonempty lineup harvest",
+          "expectedFiles": [
+            "data/research/football/raw/player-xi-v1/lineups/"
+          ],
+          "risk": "post-kickoff capture leakage",
+          "prerequisite": "temporal fail-closed"
+        },
+        {
+          "purpose": "Persist player-context-v1 as-of stats",
+          "expectedFiles": [
+            "data/research/football/raw/player-context-v1/"
+          ],
+          "risk": "season stats not reconstructable as-of kickoff",
+          "prerequisite": "getPlayers + cutoff"
+        },
+        {
+          "purpose": "Optional /fixtures/players contract on existing client only",
+          "expectedFiles": [
+            "src/lib/football/api-football-provider.ts"
+          ],
+          "risk": "live-match leakage; new provider forbidden",
+          "prerequisite": "quota + legal review"
+        }
+      ],
+      "P2": [
+        {
+          "purpose": "Fill research feature candidates without weights",
+          "expectedFiles": [
+            "src/lib/football/pregame-player-xi-foundation-v1/player-feature.ts"
+          ],
+          "risk": "invented player score",
+          "prerequisite": "P1 as-of data"
+        },
+        {
+          "purpose": "V4 retrospective/shadow not MODEL_FORWARD",
+          "expectedFiles": [
+            "new shadow root later"
+          ],
+          "risk": "rewriting V1 history",
+          "prerequisite": "holdout protocol"
+        }
+      ]
+    },
+    "protectedPathsUntouched": [
+      "Official Forward",
+      "poisson-research-v1",
+      "V3/V3.1",
+      "holdout",
+      "sealed Prediction",
+      "Forward postgame",
+      "cumulative evaluation",
+      "Astra Prototype UI branch"
+    ],
+    "companionDoc": {
+      "path": "docs/FOOTBALL_V4_PLAYER_LINEUP_RESEARCH_PRE_DESIGN_V1.md",
+      "sha256": "5229b63aac09ac09e82115f509e5ba6c201e39f2574e3c88b88b6aa6c1170711"
+    },
+    "flags": {
+      "V4_CURRENT_STATE": "RESEARCH_FOUNDATION_PARTIAL_ENGINE_NOT_IMPLEMENTED",
+      "STARTING_XI_DATA_EXISTS": "PARTIAL",
+      "PLAYER_IDENTITY_LAYER_EXISTS": "PARTIAL",
+      "INJURY_DATA_EXISTS": "PARTIAL",
+      "SUSPENSION_DATA_EXISTS": "PARTIAL",
+      "TEMPORAL_CONTRACT_READY": "PARTIAL",
+      "ENGINE_ADMISSION_ALLOWED": false,
+      "OFFICIAL_FORWARD_CHANGED": false,
+      "V3_V31_CHANGED": false,
+      "ASTRA_UI_CHANGED": false,
+      "V4_PRE_DESIGN_READY": true
+    }
+  },
+  "sha256": "c5b7e5f23c6396e093d1c57a142f24bfa64732c4d56c5f55fcd62923c68478cc"
+}
