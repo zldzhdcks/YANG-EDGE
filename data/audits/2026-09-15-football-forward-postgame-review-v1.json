@@ -1,0 +1,313 @@
+{
+  "payload": {
+    "schemaVersion": "yang-edge-2026-09-15-football-forward-postgame-review-v1",
+    "operatingDateUtc": "2026-09-15",
+    "scorecardContract": "FOOTBALL_FORWARD_DAILY_SCORECARD_V1",
+    "postgameContract": "FOOTBALL_FORWARD_POSTGAME_COLLECTION_V1",
+    "layer": "MODEL_FORWARD",
+    "INTERPRETATION": "EARLY_DESCRIPTIVE_ONLY",
+    "SAMPLE_INSUFFICIENT": true,
+    "ENGINE_CHANGED": "NO",
+    "WEIGHTS_CHANGED": "NO",
+    "THRESHOLD_CHANGED": "NO",
+    "V3_CODE_CHANGED": "NO",
+    "V31_CODE_CHANGED": "NO",
+    "PREGAME_MUTATED": "NO",
+    "POSTGAME_MUTATES_PREGAME": "NO",
+    "NEW_PREDICTION_CREATED": "NO",
+    "MODEL_FORWARD_POSTGAME_GRADE_WRITTEN": "YES",
+    "ODDS_USED": false,
+    "reviewedAt": "2026-09-16T02:31:07.824Z",
+    "store": "LOCAL_ONLY football-v31-research-console-v1 data/cache/research/football/forward-shadow-v1/MODEL_FORWARD",
+    "officialCollectorRunSha256": "d3294950990bca83134a69d82fc62858d45b9faf4eb4094f8d83bfefdf38007b",
+    "counts": {
+      "screenshots": null,
+      "scheduled": 3,
+      "eligible": 3,
+      "predicted": 3,
+      "pass": 0,
+      "missed": 0,
+      "gradedPredicted": 3,
+      "predictedCorrect": 2,
+      "predictedIncorrect": 1,
+      "accuracy": 0.6666666666666666,
+      "pendingPredicted": 0,
+      "pendingPass": 0
+    },
+    "classDistribution": {
+      "HOME": {
+        "predicted": 2,
+        "actual": 1,
+        "correct": 1
+      },
+      "DRAW": {
+        "predicted": 0,
+        "actual": 0,
+        "correct": 0
+      },
+      "AWAY": {
+        "predicted": 1,
+        "actual": 2,
+        "correct": 1
+      }
+    },
+    "probabilityBuckets": {
+      "requested": [
+        {
+          "bucket": "40_50",
+          "sample": 1,
+          "correct": 1,
+          "accuracy": 1,
+          "sampleInsufficient": true
+        },
+        {
+          "bucket": "50_60",
+          "sample": 2,
+          "correct": 1,
+          "accuracy": 0.5,
+          "sampleInsufficient": true
+        },
+        {
+          "bucket": "60_70",
+          "sample": 0,
+          "correct": 0,
+          "accuracy": null,
+          "sampleInsufficient": true
+        },
+        {
+          "bucket": "70_PLUS",
+          "sample": 0,
+          "correct": 0,
+          "accuracy": null,
+          "sampleInsufficient": true
+        }
+      ],
+      "belowRequestedFloor": {
+        "bucket": "LT_40",
+        "sample": 0,
+        "correct": 0,
+        "accuracy": null,
+        "sampleInsufficient": true
+      },
+      "note": "N=3 PREDICTED. All buckets are descriptive only and below Forward milestone N=25. Do not combine with prior days to change a threshold."
+    },
+    "predicted": [
+      {
+        "fixtureId": 1570391,
+        "leagueId": 140,
+        "league": "La Liga",
+        "homeTeam": "Rayo Vallecano",
+        "awayTeam": "Espanyol",
+        "kickoffUtc": "2026-09-15T17:00:00.000Z",
+        "kickoffKst": "2026-09-16T02:00:00.000+09:00",
+        "predictionCreatedAt": "2026-09-13T07:32:19.232Z",
+        "sealedAt": "2026-09-13T07:32:19.245Z",
+        "predictionCreatedAtBeforeKickoff": true,
+        "sealedAtBeforeKickoff": true,
+        "snapshotSha256": "1ee55348311f9bb6d1ea93ca09af07797c26f28a2342e5afddccedd2b90a82f7",
+        "inputSnapshotHash": "2b833adf86a02e5043b46989bb79ce84002bad5121cdcce805361860d927497c",
+        "modelVersion": "football-poisson-research-v1",
+        "modelSourceHash": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+        "trainingMatchCount": 394,
+        "homeRelevantSampleCount": 20,
+        "awayRelevantSampleCount": 20,
+        "TARGET_RESULT_DATA_USED": false,
+        "PAST_COMPLETED_RESULT_DATA_USED": true,
+        "ODDS_USED": false,
+        "MARKET_USED": false,
+        "PROVIDER_PREDICTION_USED": false,
+        "OWNER_SHADOW_USED": false,
+        "EXTERNAL_SHADOW_USED": false,
+        "actualScore": {
+          "home": 2,
+          "away": 1
+        },
+        "actualClass": "HOME",
+        "fixtureStatus": "FT",
+        "resultSourceHash": "9e8c44161cfc38c434208cdafc6576c02871f300195309e51fb5934b7bd813ef",
+        "resultProviderFetchedAt": "2026-09-16T02:28:54.492Z",
+        "kickoffUnchanged": true,
+        "status": "PREDICTED",
+        "predictedClass": "HOME",
+        "pHome": 0.47097878045947716,
+        "pDraw": 0.27617762315792255,
+        "pAway": 0.25284359638260023,
+        "predictedClassProbability": 0.47097878045947716,
+        "probabilityBucket": "40_50",
+        "verdict": "CORRECT",
+        "correct1X2": true,
+        "gradeSha256": "d69b280f15ec829d573cb8a9ed1852a718fbb6b15948b4295cacba60e30f148c"
+      },
+      {
+        "fixtureId": 1570383,
+        "leagueId": 140,
+        "league": "La Liga",
+        "homeTeam": "Alaves",
+        "awayTeam": "Valencia",
+        "kickoffUtc": "2026-09-15T18:00:00.000Z",
+        "kickoffKst": "2026-09-16T03:00:00.000+09:00",
+        "predictionCreatedAt": "2026-09-13T07:32:19.259Z",
+        "sealedAt": "2026-09-13T07:32:19.271Z",
+        "predictionCreatedAtBeforeKickoff": true,
+        "sealedAtBeforeKickoff": true,
+        "snapshotSha256": "0a05ee2c2fa540b88c91c2670d6b5ee3b03ce16da13e56274e34c618575992e7",
+        "inputSnapshotHash": "9f5a5b17c258291d6c3d91da36b3e2994611cc7da6e107fb2351806c1c0e52c7",
+        "modelVersion": "football-poisson-research-v1",
+        "modelSourceHash": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+        "trainingMatchCount": 394,
+        "homeRelevantSampleCount": 20,
+        "awayRelevantSampleCount": 20,
+        "TARGET_RESULT_DATA_USED": false,
+        "PAST_COMPLETED_RESULT_DATA_USED": true,
+        "ODDS_USED": false,
+        "MARKET_USED": false,
+        "PROVIDER_PREDICTION_USED": false,
+        "OWNER_SHADOW_USED": false,
+        "EXTERNAL_SHADOW_USED": false,
+        "actualScore": {
+          "home": 0,
+          "away": 1
+        },
+        "actualClass": "AWAY",
+        "fixtureStatus": "FT",
+        "resultSourceHash": "bacd2073c0455d78288c783ee48fbcd7260a4a5e430191900e140aeedbc721b8",
+        "resultProviderFetchedAt": "2026-09-16T02:28:40.257Z",
+        "kickoffUnchanged": true,
+        "status": "PREDICTED",
+        "predictedClass": "HOME",
+        "pHome": 0.5046458583640867,
+        "pDraw": 0.24242103910253024,
+        "pAway": 0.25293310253338314,
+        "predictedClassProbability": 0.5046458583640867,
+        "probabilityBucket": "50_60",
+        "verdict": "WRONG",
+        "correct1X2": false,
+        "gradeSha256": "fa687cdaa4310c606cd9b2e9db1865efeb4d6ddd81eb705f736e39166dc086a5"
+      },
+      {
+        "fixtureId": 1570388,
+        "leagueId": 140,
+        "league": "La Liga",
+        "homeTeam": "Elche",
+        "awayTeam": "Real Madrid",
+        "kickoffUtc": "2026-09-15T19:30:00.000Z",
+        "kickoffKst": "2026-09-16T04:30:00.000+09:00",
+        "predictionCreatedAt": "2026-09-13T07:32:19.288Z",
+        "sealedAt": "2026-09-13T07:32:19.301Z",
+        "predictionCreatedAtBeforeKickoff": true,
+        "sealedAtBeforeKickoff": true,
+        "snapshotSha256": "8ab5dc66c93c9d2e77064daefd4c7a432c6d94a95cc30d9667fb77dd37e59f12",
+        "inputSnapshotHash": "223a2d903c5ce8a0201e5e8f4c6ddb56f09e7b82a96c2e9f8114d4228c8a3e7c",
+        "modelVersion": "football-poisson-research-v1",
+        "modelSourceHash": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+        "trainingMatchCount": 394,
+        "homeRelevantSampleCount": 19,
+        "awayRelevantSampleCount": 20,
+        "TARGET_RESULT_DATA_USED": false,
+        "PAST_COMPLETED_RESULT_DATA_USED": true,
+        "ODDS_USED": false,
+        "MARKET_USED": false,
+        "PROVIDER_PREDICTION_USED": false,
+        "OWNER_SHADOW_USED": false,
+        "EXTERNAL_SHADOW_USED": false,
+        "actualScore": {
+          "home": 2,
+          "away": 3
+        },
+        "actualClass": "AWAY",
+        "fixtureStatus": "FT",
+        "resultSourceHash": "b7eef145f07680a09b3ed55e170862a5aae308d33e79b104148129401c8adb79",
+        "resultProviderFetchedAt": "2026-09-16T02:28:47.599Z",
+        "kickoffUnchanged": true,
+        "status": "PREDICTED",
+        "predictedClass": "AWAY",
+        "pHome": 0.2481811969929305,
+        "pDraw": 0.23927532221014972,
+        "pAway": 0.5125434807969197,
+        "predictedClassProbability": 0.5125434807969197,
+        "probabilityBucket": "50_60",
+        "verdict": "CORRECT",
+        "correct1X2": true,
+        "gradeSha256": "9cb2569ec11e994e61ea4de5ccce3e696487e70effe1b83109f36c9473e196a3"
+      }
+    ],
+    "pass": [],
+    "miss": [],
+    "leakage": {
+      "TARGET_RESULT_DATA_USED": false,
+      "POSTGAME_DATA_USED_IN_PREDICTION": false,
+      "ODDS_USED": false,
+      "MARKET_USED": false,
+      "PROVIDER_PREDICTION_USED": false,
+      "predictionCreatedAtBeforeKickoff": true,
+      "sealedAtBeforeKickoff": true,
+      "sealedSnapshotHashesUnchanged": true,
+      "officialFtUsedForReviewOnly": true,
+      "requests": 3,
+      "leakDetected": false
+    },
+    "successReview": [
+      {
+        "fixtureId": 1570391,
+        "fixture": "Rayo Vallecano vs Espanyol",
+        "predictedClass": "HOME",
+        "actualClass": "HOME",
+        "actualScore": {
+          "home": 2,
+          "away": 1
+        },
+        "predictedClassProbability": 0.47097878045947716,
+        "note": "Sealed pregame class matched official FT 1X2. No model update."
+      },
+      {
+        "fixtureId": 1570388,
+        "fixture": "Elche vs Real Madrid",
+        "predictedClass": "AWAY",
+        "actualClass": "AWAY",
+        "actualScore": {
+          "home": 2,
+          "away": 3
+        },
+        "predictedClassProbability": 0.5125434807969197,
+        "note": "Sealed pregame class matched official FT 1X2. No model update."
+      }
+    ],
+    "failureReview": [
+      {
+        "fixtureId": 1570383,
+        "fixture": "Alaves vs Valencia",
+        "predictedClass": "HOME",
+        "actualClass": "AWAY",
+        "actualScore": {
+          "home": 0,
+          "away": 1
+        },
+        "pHome": 0.5046458583640867,
+        "pDraw": 0.24242103910253024,
+        "pAway": 0.25293310253338314,
+        "trainingMatchCount": 394,
+        "homeRelevantSampleCount": 20,
+        "awayRelevantSampleCount": 20,
+        "availableInputOnly": true,
+        "modelChangeProposed": false,
+        "hypotheses": [
+          {
+            "id": "SIDE_REVERSAL",
+            "text": "Official FT reversed the sealed 1X2 side (HOME 0-1 AWAY). Single-match observation only.",
+            "status": "HYPOTHESIS_ONLY"
+          },
+          {
+            "id": "NOT_LOW_MAX_CLASS",
+            "text": "Sealed predicted-class probability was 50.5% (50-60 bucket). This row does not authorize a threshold rule.",
+            "status": "HYPOTHESIS_ONLY"
+          }
+        ]
+      }
+    ],
+    "thresholdChange": {
+      "proposed": false,
+      "reason": "Forward checkpoint N=25 not reached. UTC 2026-09-15 results are EARLY_DESCRIPTIVE_ONLY and must not retune max-class or probability floors."
+    }
+  },
+  "sha256": "17c9186d07f862695d4aa272c73af3b87e14ae15d846c5897b1768f06d812ba7"
+}

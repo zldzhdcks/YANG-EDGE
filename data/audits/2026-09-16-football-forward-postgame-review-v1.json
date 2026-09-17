@@ -1,0 +1,185 @@
+{
+  "payload": {
+    "schemaVersion": "yang-edge-2026-09-16-football-forward-postgame-review-v1",
+    "operatingDateUtc": "2026-09-16",
+    "scorecardContract": "FOOTBALL_FORWARD_DAILY_SCORECARD_V1",
+    "postgameContract": "FOOTBALL_FORWARD_POSTGAME_COLLECTION_V1",
+    "layer": "MODEL_FORWARD",
+    "INTERPRETATION": "EARLY_DESCRIPTIVE_ONLY",
+    "SAMPLE_INSUFFICIENT": true,
+    "ENGINE_CHANGED": "NO",
+    "WEIGHTS_CHANGED": "NO",
+    "THRESHOLD_CHANGED": "NO",
+    "V3_CODE_CHANGED": "NO",
+    "V31_CODE_CHANGED": "NO",
+    "V4_ENGINE_USED": "NO",
+    "PREGAME_MUTATED": "NO",
+    "POSTGAME_MUTATES_PREGAME": "NO",
+    "NEW_PREDICTION_CREATED": "NO",
+    "MODEL_FORWARD_POSTGAME_GRADE_WRITTEN": "YES",
+    "ODDS_USED": false,
+    "ODDS_USED_IN_PREDICTION": false,
+    "ENGINE_CHANGE_ALLOWED": false,
+    "reviewedAt": "2026-09-17T00:26:53.506Z",
+    "store": "LOCAL_ONLY football-v31-research-console-v1 data/cache/research/football/forward-shadow-v1/MODEL_FORWARD",
+    "officialCollectorRunSha256": "d609e7f7b4f4dbd3d59e75821fec0b5fac3c0a6243c5f28fbaf158955e15ce55",
+    "counts": {
+      "scheduled": 4,
+      "eligible": 4,
+      "predicted": 2,
+      "pass": 2,
+      "missed": 0,
+      "gradedPredicted": 1,
+      "predictedCorrect": 1,
+      "predictedIncorrect": 0,
+      "accuracy": 1,
+      "pendingPredicted": 1,
+      "pendingPass": 1,
+      "postponedUngraded": 1
+    },
+    "predicted": [
+      {
+        "fixtureId": 1570384,
+        "leagueId": 140,
+        "league": "La Liga",
+        "homeTeam": "Atletico Madrid",
+        "awayTeam": "Osasuna",
+        "kickoffUtc": "2026-09-16T17:00:00.000Z",
+        "kickoffKst": "2026-09-17T02:00:00.000+09:00",
+        "predictionCreatedAt": "2026-09-13T07:32:19.316Z",
+        "sealedAt": "2026-09-13T07:32:19.328Z",
+        "predictionCreatedAtBeforeKickoff": true,
+        "sealedAtBeforeKickoff": true,
+        "snapshotSha256": "e0f45915d25510f425d09422c49b1ffd93a94bc381f1f972e602b848a2321279",
+        "inputSnapshotHash": "bee34fe03e05bbe0f40a582f10d45fd216159a11f1b9f70ea4a7d4eaad54abc0",
+        "modelVersion": "football-poisson-research-v1",
+        "modelSourceHash": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+        "trainingMatchCount": 394,
+        "homeRelevantSampleCount": 20,
+        "awayRelevantSampleCount": 19,
+        "TARGET_RESULT_DATA_USED": false,
+        "PAST_COMPLETED_RESULT_DATA_USED": true,
+        "ODDS_USED": false,
+        "MARKET_USED": false,
+        "PROVIDER_PREDICTION_USED": false,
+        "actualScore": {
+          "home": 4,
+          "away": 0
+        },
+        "actualClass": "HOME",
+        "fixtureStatus": "FT",
+        "resultSourceHash": "ffe2d2a3ea4858f9b2bf2b6b3b32afeb80327046d3414da811d21b2db78b51bb",
+        "resultProviderFetchedAt": "2026-09-17T00:25:09.824Z",
+        "kickoffUnchanged": true,
+        "status": "PREDICTED",
+        "predictedClass": "HOME",
+        "pHome": 0.651740651443368,
+        "pDraw": 0.20697027918600847,
+        "pAway": 0.14128906937062352,
+        "predictedClassProbability": 0.651740651443368,
+        "probabilityBucket": "60_70",
+        "verdict": "CORRECT",
+        "correct1X2": true,
+        "gradeSha256": "1af389bc062e8d243a16ddbbad0b021ea0ca0282303822be04ca1c5b9aeed1fd",
+        "marketObservation": {
+          "source": "data/research/football/2026-09-17-1x2-odds-v1.json",
+          "layer": "DESCRIPTIVE_OBSERVATION_ONLY",
+          "classification": "MODEL_MARKET_ALIGNMENT",
+          "predictiveEvidence": false,
+          "medianDevigHome": 0.6896547862524129,
+          "medianDevigDraw": 0.19906248980895508,
+          "medianDevigAway": 0.10979982820120104,
+          "note": "Sealed HOME and market medianDevig HOME were the same side. Alignment is not treated as predictive evidence."
+        }
+      }
+    ],
+    "postponed": [
+      {
+        "fixtureId": 1570389,
+        "leagueId": 140,
+        "league": "La Liga",
+        "homeTeam": "Levante",
+        "awayTeam": "Athletic Club",
+        "kickoffUtc": "2026-09-16T19:30:00.000Z",
+        "kickoffKst": "2026-09-17T04:30:00.000+09:00",
+        "sealedAt": "2026-09-13T07:32:19.417Z",
+        "snapshotSha256": "0badcd6813c4746031d2e592eefd32105a65e65309802083febff554b7385479",
+        "modelVersion": "football-poisson-research-v1",
+        "modelSourceHash": "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf",
+        "status": "POSTPONED_UNGRADED",
+        "predictedClass": "HOME",
+        "pHome": 0.4886305838397061,
+        "pDraw": 0.23319031221746087,
+        "pAway": 0.2781791039428331,
+        "collectorStatus": "NON_FT_PENDING",
+        "GRADE": false,
+        "CORRECT": null,
+        "WRONG": null,
+        "includedInCumulativeN": false,
+        "SEAL_REUSE_ON_RESCHEDULE": false,
+        "note": "Official collector returned NON_FT_PENDING. Operator status POSTPONED (weather/pitch). Do not grade. Do not reuse this seal for a new kickoff without a separate temporal-validity review."
+      }
+    ],
+    "pass": [
+      {
+        "fixtureId": 1570387,
+        "fixture": "Deportivo La Coruna vs Sevilla",
+        "passReason": [
+          "INSUFFICIENT_HOME_HISTORY"
+        ],
+        "collectorStatus": "GRADED",
+        "actualScore": {
+          "home": 0,
+          "away": 1
+        },
+        "actualClass": "AWAY",
+        "correct1X2": null,
+        "includedInCumulativeN": false
+      },
+      {
+        "fixtureId": 1570385,
+        "fixture": "Barcelona vs Racing Santander",
+        "passReason": [
+          "INSUFFICIENT_AWAY_HISTORY"
+        ],
+        "collectorStatus": "NON_FT_PENDING",
+        "correct1X2": null,
+        "includedInCumulativeN": false
+      }
+    ],
+    "miss": [],
+    "leakage": {
+      "TARGET_RESULT_DATA_USED": false,
+      "POSTGAME_DATA_USED_IN_PREDICTION": false,
+      "ODDS_USED": false,
+      "MARKET_USED": false,
+      "PROVIDER_PREDICTION_USED": false,
+      "predictionCreatedAtBeforeKickoff": true,
+      "sealedAtBeforeKickoff": true,
+      "sealedSnapshotHashesUnchanged": true,
+      "officialFtUsedForReviewOnly": true,
+      "postponedNotGraded": true,
+      "leakDetected": false
+    },
+    "successReview": [
+      {
+        "fixtureId": 1570384,
+        "fixture": "Atletico Madrid vs Osasuna",
+        "predictedClass": "HOME",
+        "actualClass": "HOME",
+        "actualScore": {
+          "home": 4,
+          "away": 0
+        },
+        "predictedClassProbability": 0.651740651443368,
+        "note": "Sealed pregame class matched official FT 1X2. No model update."
+      }
+    ],
+    "failureReview": [],
+    "thresholdChange": {
+      "proposed": false,
+      "reason": "Forward checkpoint N=25 not reached. UTC 2026-09-16 Atletico CORRECT and Levante POSTPONED_UNGRADED are EARLY_DESCRIPTIVE_ONLY and must not retune thresholds. Market alignment is descriptive only."
+    }
+  },
+  "sha256": "6738fdf620c3fb7694da8e5ea9941db90458a7a6faaae6f3130fafceab22a381"
+}
