@@ -23,13 +23,21 @@ export const MAC_OPS_LOCK_TTL_MS = 30 * 60_000;
 export const MAC_OPS_LOCK_HEARTBEAT_INTERVAL_MS = 5 * 60_000;
 
 /**
- * Recovery-guard leftover TTL. The critical section is milliseconds.
- * An expired guard may be reclaimed only by atomically renaming it away
- * (exclusive ownership of that inode), then `wx`-creating a replacement.
- * Never unlink the canonical recovery-guard path. If `wx` loses to a
- * fresh guard in the gap, fail closed and leave that fresh guard intact.
+ * Recovery-guard leftover TTL. Used only to classify a leftover file as
+ * fresh vs expired for operator-visible fail-closed status.
+ *
+ * AUTO_STALE_RECLAIM=false. An expired recovery guard is NEVER renamed,
+ * unlinked, or replaced automatically. Only the current owner may unlink
+ * its own guardId on release.
+ *
+ * Manual recovery (document only; no cleanup command in this mission):
+ * verify no YANG EDGE operations process is running, confirm the guard
+ * is expired, inspect main-lock ownership, then remove leftover files
+ * on the physical Mac mini during hardware validation.
  */
 export const MAC_OPS_RECOVERY_LOCK_TTL_MS = 60_000;
+
+export const RECOVERY_GUARD_STALE = "RECOVERY_GUARD_STALE";
 
 export const MAC_OPS_RECOMMENDED_TICK_MINUTES = 5;
 
@@ -53,13 +61,25 @@ export type MacOpsLockOutcome =
   | "LOCK_RELEASED"
   | "LOCK_AVAILABLE"
   | "LOCK_HELD"
-  | "LOCK_SERIALIZATION_BUSY";
+  | "LOCK_SERIALIZATION_BUSY"
+  | "LOCK_RECOVERY_GUARD_STALE";
 
 export type MacOpsLeaseRefreshOutcome =
   | "LEASE_REFRESHED"
   | "LEASE_NOT_OWNER"
   | "LEASE_MISSING"
-  | "LEASE_SERIALIZATION_BUSY";
+  | "LEASE_SERIALIZATION_BUSY"
+  | "LEASE_SERIALIZATION_STALE";
+
+export type MacOpsRecoveryGuardInspectStatus =
+  | "GUARD_ABSENT"
+  | "GUARD_BUSY"
+  | "GUARD_STALE";
+
+export type MacOpsRecoveryGuardAcquireStatus =
+  | "GUARD_ACQUIRED"
+  | "GUARD_BUSY"
+  | "GUARD_STALE";
 
 export type MacOpsLockRecord = {
   version: typeof MAC_OPS_NODE_VERSION;
@@ -84,6 +104,7 @@ export type MacOpsHealthReceipt = {
   quotaStatus: OddsQuotaReadStatus | null;
   lastErrorCode: string | null;
   headCommit: string | null;
+  recoveryGuardStatus: MacOpsRecoveryGuardInspectStatus;
 };
 
 export type MacOpsPreflightReport = {
@@ -106,6 +127,7 @@ export type MacOpsPreflightReport = {
   quotaStatus: OddsQuotaReadStatus | null;
   quotaRemaining: number | null;
   mutex: MacOpsLockOutcome;
+  recoveryGuardStatus: MacOpsRecoveryGuardInspectStatus;
   nodeExecPath: string;
   localTsx: string;
   localTsxPresent: boolean;

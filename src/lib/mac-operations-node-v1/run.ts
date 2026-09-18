@@ -13,6 +13,7 @@ import { MAC_OPS_EXIT, type MacOpsExitCode } from "./exit-codes";
 import {
   acquireMacOpsLock,
   inspectMacOpsLock,
+  inspectMacOpsRecoveryGuard,
   releaseMacOpsLock,
   startMacOpsLockHeartbeat,
   writeMacOpsJsonAtomic,
@@ -25,6 +26,7 @@ import {
 import {
   MAC_OPS_HEALTH_REL,
   MAC_OPS_NODE_VERSION,
+  RECOVERY_GUARD_STALE,
   type ArtifactPresence,
   type MacOpsHealthReceipt,
   type MacOpsMode,
@@ -165,6 +167,16 @@ export async function runMacOperationsNode(
   void MLB_STATS_AUTOMATION_ALLOWED;
 
   const mutexInspect = await inspectMacOpsLock({ cwd, now });
+  const recoveryGuardStatus = await inspectMacOpsRecoveryGuard({ cwd, now });
+  if (
+    recoveryGuardStatus === "GUARD_STALE" &&
+    status === "READY_FOR_UNATTENDED_ODDS"
+  ) {
+    status = "CONFIG_FAILURE";
+    exitCode = MAC_OPS_EXIT.CONFIG_FAILURE;
+    lastErrorCode = RECOVERY_GUARD_STALE;
+  }
+
   const report: MacOpsPreflightReport = {
     version: MAC_OPS_NODE_VERSION,
     runId,
@@ -185,6 +197,7 @@ export async function runMacOperationsNode(
     quotaStatus: quota.readStatus,
     quotaRemaining: quota.remaining,
     mutex: mutexInspect,
+    recoveryGuardStatus,
     nodeExecPath,
     localTsx,
     localTsxPresent,
@@ -212,6 +225,7 @@ export async function runMacOperationsNode(
       quotaStatus: quota.readStatus,
       lastErrorCode,
       headCommit: input.headCommit ?? null,
+      recoveryGuardStatus,
     });
     emit(report, null);
     return report;
@@ -231,30 +245,45 @@ export async function runMacOperationsNode(
       quotaStatus: quota.readStatus,
       lastErrorCode,
       headCommit: input.headCommit ?? null,
+      recoveryGuardStatus,
     });
     emit(report, null);
     return report;
   }
 
   const lock = await acquireMacOpsLock({ cwd, runId, now });
-  if (lock.outcome === "LOCK_ALREADY_HELD") {
-    report.status = "DUPLICATE_TICK";
-    report.exitCode = MAC_OPS_EXIT.DUPLICATE_TICK;
-    report.lastErrorCode = "LOCK_ALREADY_HELD";
-    report.mutex = "LOCK_ALREADY_HELD";
+  if (
+    lock.outcome === "LOCK_ALREADY_HELD" ||
+    lock.outcome === "LOCK_SERIALIZATION_BUSY" ||
+    lock.outcome === "LOCK_RECOVERY_GUARD_STALE"
+  ) {
+    if (lock.outcome === "LOCK_RECOVERY_GUARD_STALE") {
+      report.status = "CONFIG_FAILURE";
+      report.exitCode = MAC_OPS_EXIT.CONFIG_FAILURE;
+      report.lastErrorCode = RECOVERY_GUARD_STALE;
+      report.mutex = "LOCK_RECOVERY_GUARD_STALE";
+      report.recoveryGuardStatus = "GUARD_STALE";
+      report.readyForUnattendedOdds = false;
+    } else {
+      report.status = "DUPLICATE_TICK";
+      report.exitCode = MAC_OPS_EXIT.DUPLICATE_TICK;
+      report.lastErrorCode = lock.outcome;
+      report.mutex = lock.outcome;
+    }
     await writeHealth(cwd, {
       runId,
       startedAt,
       finishedAt: new Date().toISOString(),
       dateKst,
       mode: "RUN",
-      status: "DUPLICATE_TICK",
-      exitCode: MAC_OPS_EXIT.DUPLICATE_TICK,
+      status: report.status,
+      exitCode: report.exitCode,
       schedulerRunId: null,
       quotaSource: quota.source,
       quotaStatus: quota.readStatus,
-      lastErrorCode: "LOCK_ALREADY_HELD",
+      lastErrorCode: report.lastErrorCode,
       headCommit: input.headCommit ?? null,
+      recoveryGuardStatus: report.recoveryGuardStatus,
     });
     emit(report, null);
     return report;
@@ -302,6 +331,7 @@ export async function runMacOperationsNode(
     quotaStatus: quota.readStatus,
     lastErrorCode: report.lastErrorCode,
     headCommit: input.headCommit ?? null,
+    recoveryGuardStatus: report.recoveryGuardStatus,
   });
   emit(report, schedulerRunId);
   return report;
@@ -337,6 +367,7 @@ function baseReport(input: {
     quotaStatus: "QUOTA_RECEIPT_MISSING",
     quotaRemaining: null,
     mutex: "LOCK_AVAILABLE",
+    recoveryGuardStatus: "GUARD_ABSENT",
     nodeExecPath: absoluteNodeExecPath(),
     localTsx: "",
     localTsxPresent: false,
@@ -382,6 +413,7 @@ function emit(
     ODDS_ARTIFACT: report.oddsArtifact,
     ODDS_PLAN_CONFIRMED: report.oddsPlanConfirmed,
     ODDS_API_KEY_PRESENT: report.oddsApiKeyPresent,
+    RECOVERY_GUARD: report.recoveryGuardStatus,
     LAST_ERROR: report.lastErrorCode,
   });
 }

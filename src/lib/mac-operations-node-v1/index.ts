@@ -9,6 +9,7 @@ export {
   MAC_OPS_RECOVERY_LOCK_REL,
   MAC_OPS_RECOVERY_LOCK_TTL_MS,
   MAC_OPS_RECOMMENDED_TICK_MINUTES,
+  RECOVERY_GUARD_STALE,
 } from "./types";
 export type {
   MacOpsHealthReceipt,
@@ -16,11 +17,14 @@ export type {
   MacOpsLockOutcome,
   MacOpsMode,
   MacOpsPreflightReport,
+  MacOpsRecoveryGuardAcquireStatus,
+  MacOpsRecoveryGuardInspectStatus,
   MacOpsStatus,
 } from "./types";
 export {
   acquireMacOpsLock,
   inspectMacOpsLock,
+  inspectMacOpsRecoveryGuard,
   macOpsLockPath,
   macOpsRecoveryLockPath,
   readMacOpsLock,

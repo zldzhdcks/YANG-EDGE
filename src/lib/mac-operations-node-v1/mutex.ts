@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { randomBytes } from "node:crypto";
 import { mkdir, open, readFile, rename, unlink, writeFile } from "node:fs/promises";
 import { hostname } from "node:os";
@@ -12,32 +13,36 @@ import {
   type MacOpsLeaseRefreshOutcome,
   type MacOpsLockOutcome,
   type MacOpsLockRecord,
+  type MacOpsRecoveryGuardAcquireStatus,
+  type MacOpsRecoveryGuardInspectStatus,
 } from "./types";
 
 export type MacOpsLockTestHooks = {
   afterInitialRead?: (record: MacOpsLockRecord | null) => Promise<void>;
   beforeRecoveryGuardAttempt?: () => Promise<void>;
   afterRecoveryGuardAcquired?: () => Promise<void>;
+  afterRecoveryGuardObserved?: (
+    record: MacOpsRecoveryGuardRecord | null,
+  ) => Promise<void>;
   beforeUnlinkStale?: (record: MacOpsLockRecord) => Promise<void>;
   afterUnlinkStale?: () => Promise<void>;
   beforeMainExclusiveCreate?: () => Promise<void>;
   afterRecoveryGuardReleased?: () => Promise<void>;
   beforeLeaseRefreshWrite?: (record: MacOpsLockRecord) => Promise<void>;
-  afterStaleGuardRenamed?: () => Promise<void>;
 };
 
-type RecoveryGuardHandle = {
-  acquired: boolean;
-  release: () => Promise<void>;
-};
-
-type RecoveryGuardRecord = {
+export type MacOpsRecoveryGuardRecord = {
   version: typeof MAC_OPS_NODE_VERSION;
   kind: "recovery-guard";
   guardId: string;
   pid: number;
   startedAt: string;
   expiresAt: string;
+};
+
+type RecoveryGuardHandle = {
+  status: MacOpsRecoveryGuardAcquireStatus;
+  release: () => Promise<void>;
 };
 
 const RECOVERY_GUARD_RETRY = 3;
@@ -77,7 +82,7 @@ function isLockRecord(v: unknown): v is MacOpsLockRecord {
   );
 }
 
-function isRecoveryGuardRecord(v: unknown): v is RecoveryGuardRecord {
+function isRecoveryGuardRecord(v: unknown): v is MacOpsRecoveryGuardRecord {
   if (typeof v !== "object" || v == null) return false;
   const o = v as Record<string, unknown>;
   return (
@@ -104,7 +109,7 @@ export async function readMacOpsLock(
 
 async function readRecoveryGuard(
   cwd: string,
-): Promise<RecoveryGuardRecord | null> {
+): Promise<MacOpsRecoveryGuardRecord | null> {
   try {
     const raw = await readFile(macOpsRecoveryLockPath(cwd), "utf8");
     const parsed = JSON.parse(raw) as unknown;
@@ -123,7 +128,7 @@ export function isMacOpsLockExpired(
 }
 
 function isRecoveryGuardExpired(
-  record: RecoveryGuardRecord,
+  record: MacOpsRecoveryGuardRecord,
   now: Date,
 ): boolean {
   const exp = Date.parse(record.expiresAt);
@@ -166,6 +171,26 @@ async function overwriteJson(filePath: string, value: unknown): Promise<void> {
   await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, "utf8");
 }
 
+function classifyPresentGuard(
+  record: MacOpsRecoveryGuardRecord,
+  now: Date,
+): Exclude<MacOpsRecoveryGuardAcquireStatus, "GUARD_ACQUIRED"> {
+  return isRecoveryGuardExpired(record, now) ? "GUARD_STALE" : "GUARD_BUSY";
+}
+
+export async function inspectMacOpsRecoveryGuard(input: {
+  cwd: string;
+  now?: Date;
+}): Promise<MacOpsRecoveryGuardInspectStatus> {
+  const now = input.now ?? new Date();
+  const filePath = macOpsRecoveryLockPath(input.cwd);
+  const existing = await readRecoveryGuard(input.cwd);
+  if (!existing) {
+    return existsSync(filePath) ? "GUARD_STALE" : "GUARD_ABSENT";
+  }
+  return classifyPresentGuard(existing, now);
+}
+
 async function tryAcquireRecoveryGuard(input: {
   cwd: string;
   now: Date;
@@ -176,7 +201,7 @@ async function tryAcquireRecoveryGuard(input: {
   await input.hooks?.beforeRecoveryGuardAttempt?.();
 
   const guardId = randomBytes(8).toString("hex");
-  const record: RecoveryGuardRecord = {
+  const record: MacOpsRecoveryGuardRecord = {
     version: MAC_OPS_NODE_VERSION,
     kind: "recovery-guard",
     guardId,
@@ -187,10 +212,12 @@ async function tryAcquireRecoveryGuard(input: {
     ).toISOString(),
   };
 
-  const notAcquired: RecoveryGuardHandle = {
-    acquired: false,
+  const idle = (
+    status: Exclude<MacOpsRecoveryGuardAcquireStatus, "GUARD_ACQUIRED">,
+  ): RecoveryGuardHandle => ({
+    status,
     release: async () => undefined,
-  };
+  });
 
   const release = async (): Promise<void> => {
     const current = await readRecoveryGuard(input.cwd);
@@ -201,40 +228,22 @@ async function tryAcquireRecoveryGuard(input: {
   };
 
   if (await exclusiveCreateJson(filePath, record)) {
-    return { acquired: true, release };
+    return { status: "GUARD_ACQUIRED", release };
   }
 
-  const existing = await readRecoveryGuard(input.cwd);
+  let existing = await readRecoveryGuard(input.cwd);
+  await input.hooks?.afterRecoveryGuardObserved?.(existing);
+  existing = await readRecoveryGuard(input.cwd);
+
   if (!existing) {
+    if (existsSync(filePath)) return idle("GUARD_STALE");
     if (await exclusiveCreateJson(filePath, record)) {
-      return { acquired: true, release };
+      return { status: "GUARD_ACQUIRED", release };
     }
-    return notAcquired;
+    return idle("GUARD_BUSY");
   }
 
-  if (!isRecoveryGuardExpired(existing, input.now)) {
-    return notAcquired;
-  }
-
-  const reclaimPath = `${filePath}.reclaim.${guardId}`;
-  try {
-    await rename(filePath, reclaimPath);
-  } catch {
-    return notAcquired;
-  }
-
-  try {
-    await input.hooks?.afterStaleGuardRenamed?.();
-    if (await exclusiveCreateJson(filePath, record)) {
-      await unlink(reclaimPath).catch(() => undefined);
-      return { acquired: true, release };
-    }
-    await unlink(reclaimPath).catch(() => undefined);
-    return notAcquired;
-  } catch {
-    await unlink(reclaimPath).catch(() => undefined);
-    return notAcquired;
-  }
+  return idle(classifyPresentGuard(existing, input.now));
 }
 
 export async function inspectMacOpsLock(input: {
@@ -257,7 +266,11 @@ export async function acquireMacOpsLock(input: {
 }): Promise<{
   outcome: Extract<
     MacOpsLockOutcome,
-    "LOCK_ACQUIRED" | "LOCK_ALREADY_HELD" | "LOCK_STALE_RECOVERED"
+    | "LOCK_ACQUIRED"
+    | "LOCK_ALREADY_HELD"
+    | "LOCK_STALE_RECOVERED"
+    | "LOCK_SERIALIZATION_BUSY"
+    | "LOCK_RECOVERY_GUARD_STALE"
   >;
   record: MacOpsLockRecord | null;
 }> {
@@ -294,7 +307,7 @@ export async function acquireMacOpsLock(input: {
   }
 
   const raced = await readMacOpsLock(input.cwd);
-  return { outcome: "LOCK_ALREADY_HELD", record: raced };
+  return { outcome: "LOCK_SERIALIZATION_BUSY", record: raced };
 }
 
 async function recoverStaleMainLock(input: {
@@ -306,7 +319,10 @@ async function recoverStaleMainLock(input: {
 }): Promise<{
   outcome: Extract<
     MacOpsLockOutcome,
-    "LOCK_ALREADY_HELD" | "LOCK_STALE_RECOVERED"
+    | "LOCK_ALREADY_HELD"
+    | "LOCK_STALE_RECOVERED"
+    | "LOCK_SERIALIZATION_BUSY"
+    | "LOCK_RECOVERY_GUARD_STALE"
   >;
   record: MacOpsLockRecord | null;
 } | null> {
@@ -315,7 +331,13 @@ async function recoverStaleMainLock(input: {
     now: input.now,
     hooks: input.hooks,
   });
-  if (!guard.acquired) return null;
+  if (guard.status === "GUARD_STALE") {
+    return {
+      outcome: "LOCK_RECOVERY_GUARD_STALE",
+      record: await readMacOpsLock(input.cwd),
+    };
+  }
+  if (guard.status !== "GUARD_ACQUIRED") return null;
 
   try {
     await input.hooks?.afterRecoveryGuardAcquired?.();
@@ -372,9 +394,12 @@ export async function refreshMacOpsLockLease(input: {
     now,
     hooks: input.hooks,
   });
-  if (!guard.acquired) {
+  if (guard.status !== "GUARD_ACQUIRED") {
     const latest = await readMacOpsLock(input.cwd);
     if (!latest) return { outcome: "LEASE_MISSING", record: null };
+    if (guard.status === "GUARD_STALE") {
+      return { outcome: "LEASE_SERIALIZATION_STALE", record: latest };
+    }
     return { outcome: "LEASE_SERIALIZATION_BUSY", record: latest };
   }
 
@@ -443,9 +468,8 @@ export async function releaseMacOpsLock(input: {
     now,
     hooks: input.hooks,
   });
-  if (!guard.acquired) {
-    return "LOCK_SERIALIZATION_BUSY";
-  }
+  if (guard.status === "GUARD_STALE") return "LOCK_RECOVERY_GUARD_STALE";
+  if (guard.status !== "GUARD_ACQUIRED") return "LOCK_SERIALIZATION_BUSY";
   try {
     await input.hooks?.afterRecoveryGuardAcquired?.();
     const existing = await readMacOpsLock(input.cwd);
