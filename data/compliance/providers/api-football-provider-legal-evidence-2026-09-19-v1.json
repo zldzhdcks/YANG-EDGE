@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "API_FOOTBALL_PROVIDER_LEGAL_EVIDENCE_V1",
+  "provider": "API-SPORTS / API-Football",
+  "evidenceDate": "2026-09-19",
+  "source": "API-SPORTS Dashboard AI Support Q1-Q15 Provider Licensing Inquiry",
+  "inquiryScope": "Provider licensing: automation, storage/cache, derived/model input, public factual display, derived public analysis, redistribution, visual assets, commercial use, attribution",
+  "termsCrossCheck": "API-SPORTS Terms of Service",
+  "termsLastUpdated": "2025-05-21",
+  "supersedes": "API_FOOTBALL_PUBLIC_DISPLAY=HOLD",
+  "scopeStatuses": {
+    "API_FOOTBALL_LAUNCHD": "LEGAL_PASS",
+    "API_FOOTBALL_RAW_STORAGE": "LEGAL_CONDITIONAL",
+    "API_FOOTBALL_CACHE": "LEGAL_CONDITIONAL",
+    "API_FOOTBALL_HISTORICAL_RETENTION": "LEGAL_CONDITIONAL",
+    "API_FOOTBALL_DERIVED_STORAGE": "LEGAL_PASS",
+    "API_FOOTBALL_PREDICTION_INPUT": "LEGAL_PASS",
+    "API_FOOTBALL_AI_ML_INPUT": "LEGAL_PASS",
+    "API_FOOTBALL_PUBLIC_FIXTURE_DISPLAY": "LEGAL_CONDITIONAL",
+    "API_FOOTBALL_TEAM_NAME_DISPLAY": "LEGAL_CONDITIONAL",
+    "API_FOOTBALL_LEAGUE_NAME_DISPLAY": "LEGAL_CONDITIONAL",
+    "API_FOOTBALL_DERIVED_PUBLIC_ANALYSIS": "LEGAL_CONDITIONAL",
+    "API_FOOTBALL_RAW_RESALE": "LEGAL_BLOCK",
+    "API_FOOTBALL_RAW_API_REDISTRIBUTION": "LEGAL_BLOCK",
+    "API_FOOTBALL_CUSTOMER_DATA_FEED": "LEGAL_BLOCK",
+    "API_FOOTBALL_TEAM_LOGO": "LEGAL_REVIEW_REQUIRED",
+    "API_FOOTBALL_LEAGUE_LOGO": "LEGAL_REVIEW_REQUIRED",
+    "API_FOOTBALL_PLAYER_PHOTO": "LEGAL_REVIEW_REQUIRED",
+    "API_FOOTBALL_BRANDED_IMAGE": "LEGAL_REVIEW_REQUIRED",
+    "API_FOOTBALL_COMMERCIAL_USE": "LEGAL_REVIEW_REQUIRED",
+    "API_FOOTBALL_ATTRIBUTION": "NOT_REQUIRED_BY_PROVIDER"
+  },
+  "conditions": {
+    "launchd": [
+      "official API key",
+      "actual subscription quota respected",
+      "per-minute rate limit respected",
+      "API key never stored in Repository/Git"
+    ],
+    "launchdDoesNotMean": [
+      "enable launchd now",
+      "create plist now",
+      "choose polling cadence now",
+      "ignore quota/rate limits"
+    ],
+    "storage": [
+      "internal storage permitted",
+      "caching permitted",
+      "no documented maximum retention period",
+      "internal historical retention permitted",
+      "retention after subscription termination permitted",
+      "stored raw/cached data MUST NOT become an external API/feed/resale product"
+    ],
+    "publicFactualDisplay": {
+      "providerInterpretation": "factual display in YANG EDGE application/site is not treated as raw-data resale",
+      "coveredFields": [
+        "team names",
+        "league / competition names",
+        "match date",
+        "kickoff time",
+        "match status"
+      ],
+      "thirdPartyRights": "Provider agreement does not grant every League / Federation / Event Organizer third-party right",
+      "newCompetitionPolicy": "NEW PUBLIC COMPETITION → LEAGUE RIGHTS REVIEW → LEGAL RESULT → PUBLIC ENABLE",
+      "unreviewedDefault": {
+        "PUBLIC_EXPANSION_ALLOWED": false
+      },
+      "currentPublicExposure": {
+        "frozen": true,
+        "routes": ["/games", "/api/football/fixtures"],
+        "competitionLevelReviewExists": false
+      }
+    },
+    "derivedPublicAnalysis": "Provider permits independently calculated outputs (prediction, probability, analysis, model output, derived metric) subject to applicable third-party competition rights. No new public exposure in this record.",
+    "redistributionProhibited": [
+      "raw API-Football data resale",
+      "a YANG EDGE API exposing API-Football data",
+      "customer-facing raw data feed",
+      "rename-and-republish raw fields",
+      "subset raw-field resale"
+    ],
+    "visualAssets": "No expansion before rights confirmation. Public prototype remains text-first.",
+    "commercialUse": "Do not interpret API-Football Terms as a YANG EDGE-wide Commercial Legal Pass. COMMERCIAL RELEASE GATE → competition rights review → legal result → enable.",
+    "attribution": "API-Football itself does not currently require attribution based on the Provider response. Future league-specific agreements may still require attribution."
+  },
+  "reReviewTriggers": [
+    "Provider Terms change",
+    "public competition expansion",
+    "commercial release",
+    "logo/image use",
+    "customer-facing API/feed proposal",
+    "material product architecture change"
+  ],
+  "operationalActivationRemaining": [
+    "actual subscription/quota evidence",
+    "actual rate-limit evidence",
+    "key presence boolean",
+    "operational scheduling design",
+    "Mac environment readiness"
+  ],
+  "secrets": "none"
+}
