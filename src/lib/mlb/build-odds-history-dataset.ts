@@ -20,6 +20,11 @@ import type { OddsBookmaker, OddsData } from "../odds/types";
 import type { OddsPriceFormat } from "../odds/normalize-odds-price";
 import { loadMlbScheduleArtifact } from "./build-mlb-schedule-artifact";
 import {
+  indexMlbOddsRowsByEventId,
+  mlbEventIdFromGamePk,
+  mlbIdentityFromScheduleGame,
+} from "./event-identity";
+import {
   EMPTY_PREDICTION_HASH,
   parseOptionalPredictionSnapshot,
   type MlbOptionalPredictionSnapshot,
@@ -708,6 +713,7 @@ function computeMovement(
 
 async function loadPreviousOddsRows(
   dateKst: string,
+  scheduleGames: MlbScheduleArtifactGame[],
 ): Promise<Map<string, OddsHistoryDatasetRow>> {
   const prevPath = path.join(
     process.cwd(),
@@ -719,9 +725,16 @@ async function loadPreviousOddsRows(
     const root = JSON.parse(await readFile(prevPath, "utf8")) as {
       rows?: OddsHistoryDatasetRow[];
     };
+    const identity = scheduleGames
+      .map((g) => mlbIdentityFromScheduleGame(g as unknown as Record<string, unknown>))
+      .filter((g): g is NonNullable<typeof g> => g != null);
+    const indexed = indexMlbOddsRowsByEventId(
+      (root.rows ?? []) as unknown as Record<string, unknown>[],
+      identity,
+    );
     const map = new Map<string, OddsHistoryDatasetRow>();
-    for (const row of root.rows ?? []) {
-      if (row.gameId) map.set(row.gameId, row);
+    for (const [eventId, row] of indexed) {
+      map.set(eventId, row as unknown as OddsHistoryDatasetRow);
     }
     return map;
   } catch {
@@ -906,7 +919,7 @@ export async function buildOddsHistoryDatasetV1(input: {
       : null;
   const predictionHash = optionalPrediction?.hash ?? EMPTY_PREDICTION_HASH;
 
-  const previousRows = await loadPreviousOddsRows(input.dateKst);
+  const previousRows = await loadPreviousOddsRows(input.dateKst, schedule.games);
   const hasPreviousSnapshot = previousRows.size > 0;
 
   const oddsFetch = await fetchOddsApiEventsForDate(
@@ -1071,7 +1084,8 @@ export async function buildOddsHistoryDatasetV1(input: {
         )
       : null;
 
-    const prev = previousRows.get(game.internalGameId) ?? null;
+    const eventId = mlbEventIdFromGamePk(game.gamePk);
+    const prev = previousRows.get(eventId) ?? null;
     let openingOdds: number | null = null;
     let latestOdds: number | null = null;
 
@@ -1176,6 +1190,8 @@ export async function buildOddsHistoryDatasetV1(input: {
       gameDate: input.dateKst,
       gameId: game.internalGameId,
       internalGameId: game.internalGameId,
+      eventId,
+      gamePk: game.gamePk,
       homeTeam: game.homeTeam,
       awayTeam: game.awayTeam,
       startTimeKst: game.startTimeKst,

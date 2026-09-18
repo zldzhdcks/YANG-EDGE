@@ -4,6 +4,12 @@
 import { createHash } from "node:crypto";
 import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
+import {
+  groupMlbDatasetRowsByEventId,
+  mlbEventIdForDatasetRow,
+  mlbIdentityFromScheduleGame,
+  type MlbScheduleIdentityGame,
+} from "../event-identity";
 
 function asRecord(v: unknown): Record<string, unknown> | null {
   return typeof v === "object" && v !== null && !Array.isArray(v)
@@ -68,9 +74,13 @@ export type ScheduleAudit = {
   earliestStart: string | null;
   latestStart: string | null;
   duplicateGameIds: string[];
+  duplicateMatchupIds: string[];
   warnings: string[];
   games: Array<{
+    /** Operational event id (`mlb-game-${gamePk}`). */
     gameId: string;
+    eventId: string;
+    matchupId: string;
     gamePk: number | null;
     homeTeam: string;
     awayTeam: string;
@@ -99,6 +109,7 @@ export async function auditSchedule(
     earliestStart: null,
     latestStart: null,
     duplicateGameIds: [],
+    duplicateMatchupIds: [],
     warnings: ["SCHEDULE_ARTIFACT_MISSING"],
     games: [],
   };
@@ -115,8 +126,10 @@ export async function auditSchedule(
   if (!dateKstMatch) warnings.push("SCHEDULE_DATE_MISMATCH");
 
   const rawGames = asArr(doc?.games);
-  const seen = new Map<string, number>();
+  const seenEvent = new Map<string, number>();
+  const seenMatchup = new Map<string, number>();
   const duplicateGameIds: string[] = [];
+  const duplicateMatchupIds: string[] = [];
   const games: ScheduleAudit["games"] = [];
   let cancelled = 0;
   let postponed = 0;
@@ -128,13 +141,18 @@ export async function auditSchedule(
   for (const raw of rawGames) {
     const g = asRecord(raw);
     if (!g) continue;
-    const gameId =
-      asString(g.internalGameId) ?? asString(g.gameId) ?? "";
-    if (!gameId) {
+    const identity = mlbIdentityFromScheduleGame(g);
+    if (!identity) {
       warnings.push("SCHEDULE_GAME_MISSING_ID");
       continue;
     }
-    seen.set(gameId, (seen.get(gameId) ?? 0) + 1);
+    seenEvent.set(identity.eventId, (seenEvent.get(identity.eventId) ?? 0) + 1);
+    if (identity.matchupId) {
+      seenMatchup.set(
+        identity.matchupId,
+        (seenMatchup.get(identity.matchupId) ?? 0) + 1,
+      );
+    }
     const commence = asString(g.commenceTimeUtc);
     if (commence) starts.push(commence);
     const status =
@@ -156,18 +174,24 @@ export async function auditSchedule(
       pregameGames++;
     }
     games.push({
-      gameId,
-      gamePk: asNumber(g.gamePk),
+      gameId: identity.eventId,
+      eventId: identity.eventId,
+      matchupId: identity.matchupId,
+      gamePk: identity.gamePk,
       homeTeam: asString(g.homeTeam) ?? "",
       awayTeam: asString(g.awayTeam) ?? "",
       commenceTimeUtc: commence,
       status,
     });
   }
-  for (const [id, n] of seen) {
+  for (const [id, n] of seenEvent) {
     if (n > 1) duplicateGameIds.push(id);
   }
+  for (const [id, n] of seenMatchup) {
+    if (n > 1) duplicateMatchupIds.push(id);
+  }
   if (duplicateGameIds.length) warnings.push("DUPLICATE_GAME_IDS");
+  if (duplicateMatchupIds.length) warnings.push("DUPLICATE_MATCHUP_IDS");
 
   starts.sort();
   return {
@@ -184,9 +208,25 @@ export async function auditSchedule(
     earliestStart: starts[0] ?? null,
     latestStart: starts[starts.length - 1] ?? null,
     duplicateGameIds,
+    duplicateMatchupIds,
     warnings,
     games,
   };
+}
+
+function identityFromAuditGames(
+  scheduleGames: Array<{
+    eventId?: string;
+    gameId: string;
+    gamePk: number | null;
+    matchupId?: string;
+  }>,
+): MlbScheduleIdentityGame[] {
+  return scheduleGames.map((g) => ({
+    eventId: g.eventId ?? g.gameId,
+    gamePk: g.gamePk,
+    matchupId: g.matchupId ?? "",
+  }));
 }
 
 export type LineupSlateClass =
@@ -222,6 +262,12 @@ export async function auditStarter(
   dateKst: string,
   cwd: string,
   scheduleGameIds: string[],
+  scheduleGames: Array<{
+    eventId?: string;
+    gameId: string;
+    gamePk: number | null;
+    matchupId?: string;
+  }> = [],
 ): Promise<DatasetAudit> {
   const rel = artifactPaths(dateKst).starter;
   const loaded = await readJson(rel, cwd);
@@ -242,22 +288,27 @@ export async function auditStarter(
   const generatedAt = metaGeneratedAt(doc) ?? loaded.mtime;
   const rows = asArr(doc?.rows);
   const summary = asRecord(doc?.summary);
-  const byGame = new Set<string>();
+  const identity = identityFromAuditGames(
+    scheduleGames.length
+      ? scheduleGames
+      : scheduleGameIds.map((id) => ({
+          eventId: id,
+          gameId: id,
+          gamePk: null,
+          matchupId: "",
+        })),
+  );
+  const { byEventId, ambiguousRows } = groupMlbDatasetRowsByEventId(
+    rows,
+    identity,
+  );
   let bothSides = 0;
-  const sides = new Map<string, Set<string>>();
-  for (const raw of rows) {
-    const r = asRecord(raw);
-    const id = asString(r?.gameId);
-    const side = asString(r?.side);
-    if (!id || !side) continue;
-    byGame.add(id);
-    const set = sides.get(id) ?? new Set();
-    set.add(side);
-    sides.set(id, set);
-  }
   for (const id of scheduleGameIds) {
-    const s = sides.get(id);
-    if (s?.has("home") && s?.has("away")) bothSides++;
+    const list = byEventId.get(id) ?? [];
+    const sides = new Set(
+      list.map((r) => asString(r.side)).filter((s): s is string => Boolean(s)),
+    );
+    if (sides.has("home") && sides.has("away")) bothSides++;
   }
   const warnings: string[] = [];
   if ((asNumber(summary?.targetGameIncludedInStats) ?? 0) > 0) {
@@ -266,18 +317,20 @@ export async function auditStarter(
   if ((asNumber(summary?.cutoffViolations) ?? 0) > 0) {
     warnings.push("STARTER_CUTOFF_VIOLATIONS");
   }
+  if (ambiguousRows > 0) warnings.push("IDENTITY_AMBIGUOUS");
   return {
     exists: true,
     path: rel,
     hash: loaded.hash,
     rows: rows.length,
-    collectedGames: byGame.size,
+    collectedGames: byEventId.size,
     generatedAt,
     observedAt: generatedAt,
     warnings,
     detail: {
       bothSidesReady: bothSides,
       scheduleGames: scheduleGameIds.length,
+      identityAmbiguousRows: ambiguousRows,
       targetGameIncludedInStats:
         asNumber(summary?.targetGameIncludedInStats) ?? 0,
       cutoffViolations: asNumber(summary?.cutoffViolations) ?? 0,
@@ -289,6 +342,12 @@ export async function auditOdds(
   dateKst: string,
   cwd: string,
   scheduleGameIds: string[],
+  scheduleGames: Array<{
+    eventId?: string;
+    gameId: string;
+    gamePk: number | null;
+    matchupId?: string;
+  }> = [],
 ): Promise<DatasetAudit> {
   const rel = artifactPaths(dateKst).odds;
   const loaded = await readJson(rel, cwd);
@@ -308,15 +367,37 @@ export async function auditOdds(
   const doc = asRecord(loaded.data);
   const generatedAt = metaGeneratedAt(doc) ?? loaded.mtime;
   const rows = asArr(doc?.rows);
+  const identity = identityFromAuditGames(
+    scheduleGames.length
+      ? scheduleGames
+      : scheduleGameIds.map((id) => ({
+          eventId: id,
+          gameId: id,
+          gamePk: null,
+          matchupId: "",
+        })),
+  );
+  const want = new Set(scheduleGameIds);
   let collected = 0;
   let completeMl = 0;
   let afterCutoff = 0;
+  let identityAmbiguousRows = 0;
   let observedAt: string | null = generatedAt;
+  const collectedEvents = new Set<string>();
+  const completeMlEvents = new Set<string>();
   for (const raw of rows) {
     const r = asRecord(raw);
-    const id = asString(r?.gameId);
-    if (!id || !scheduleGameIds.includes(id)) continue;
-    if (asString(r?.collectionStatus) === "COLLECTED") collected++;
+    if (!r) continue;
+    const resolved = mlbEventIdForDatasetRow(r, identity);
+    if (resolved.ambiguous) {
+      identityAmbiguousRows += 1;
+      continue;
+    }
+    const id = resolved.eventId;
+    if (!id || !want.has(id)) continue;
+    if (asString(r?.collectionStatus) === "COLLECTED") {
+      collectedEvents.add(id);
+    }
     const markets = asArr(r?.markets);
     let home: number | null = null;
     let away: number | null = null;
@@ -328,7 +409,9 @@ export async function auditOdds(
       if (sel === "home") home = price;
       if (sel === "away") away = price;
     }
-    if (home != null && away != null && home > 1 && away > 1) completeMl++;
+    if (home != null && away != null && home > 1 && away > 1) {
+      completeMlEvents.add(id);
+    }
     const captured = asString(r?.capturedAt);
     const cutoff = asString(r?.cutoffTime);
     observedAt = betterIso(
@@ -345,11 +428,14 @@ export async function auditOdds(
       afterCutoff++;
     }
   }
+  collected = collectedEvents.size;
+  completeMl = completeMlEvents.size;
   const warnings: string[] = [];
   if (afterCutoff > 0) warnings.push("ODDS_AFTER_CUTOFF_ROWS");
   if (completeMl < scheduleGameIds.length) {
     warnings.push("ODDS_MONEYLINE_INCOMPLETE_SLATE");
   }
+  if (identityAmbiguousRows > 0) warnings.push("IDENTITY_AMBIGUOUS");
   return {
     exists: true,
     path: rel,
@@ -363,6 +449,7 @@ export async function auditOdds(
       moneylineCompleteGames: completeMl,
       afterCutoffRows: afterCutoff,
       scheduleGames: scheduleGameIds.length,
+      identityAmbiguousRows,
       oddsFormat: asString(doc?.oddsFormat) ?? "DECIMAL",
     },
   };
@@ -421,6 +508,12 @@ export async function auditLineup(
   dateKst: string,
   cwd: string,
   scheduleGameIds: string[],
+  scheduleGames: Array<{
+    eventId?: string;
+    gameId: string;
+    gamePk: number | null;
+    matchupId?: string;
+  }> = [],
 ): Promise<DatasetAudit> {
   const rel = artifactPaths(dateKst).lineup;
   const loaded = await readJson(rel, cwd);
@@ -442,21 +535,31 @@ export async function auditLineup(
         notConfirmedOrMissing: scheduleGameIds.length,
         slateClass: "NOT_COLLECTED" satisfies LineupSlateClass,
         scheduleGames: scheduleGameIds.length,
+        identityAmbiguousRows: 0,
       },
     };
   }
   const doc = asRecord(loaded.data);
   const generatedAt = metaGeneratedAt(doc) ?? loaded.mtime;
   const rows = asArr(doc?.rows);
-  const byGame = new Map<string, Record<string, unknown>[]>();
+  const identity = identityFromAuditGames(
+    scheduleGames.length
+      ? scheduleGames
+      : scheduleGameIds.map((id) => ({
+          eventId: id,
+          gameId: id,
+          gamePk: null,
+          matchupId: "",
+        })),
+  );
+  const { byEventId, ambiguousRows } = groupMlbDatasetRowsByEventId(
+    rows,
+    identity,
+  );
   let observedAt: string | null = generatedAt;
   for (const raw of rows) {
     const r = asRecord(raw);
-    const id = asString(r?.gameId);
-    if (!r || !id) continue;
-    const list = byGame.get(id) ?? [];
-    list.push(r);
-    byGame.set(id, list);
+    if (!r) continue;
     observedAt = betterIso(
       observedAt,
       asString(r?.generatedAt) ??
@@ -471,7 +574,7 @@ export async function auditLineup(
   let notReleased = 0;
   let notCollected = 0;
   for (const id of scheduleGameIds) {
-    const klass = classifyLineupGameRows(byGame.get(id) ?? []);
+    const klass = classifyLineupGameRows(byEventId.get(id) ?? []);
     if (klass === "CONFIRMED_COMPLETE") confirmed++;
     else if (klass === "PARTIAL") partial++;
     else if (klass === "NOT_RELEASED") notReleased++;
@@ -485,16 +588,18 @@ export async function auditLineup(
     scheduleGames: scheduleGameIds.length,
   });
   const notConfirmedOrMissing = scheduleGameIds.length - confirmed;
+  const warnings: string[] = [];
+  if (confirmed < scheduleGameIds.length) warnings.push("LINEUP_NOT_FULLY_CONFIRMED");
+  if (ambiguousRows > 0) warnings.push("IDENTITY_AMBIGUOUS");
   return {
     exists: true,
     path: rel,
     hash: loaded.hash,
     rows: rows.length,
-    collectedGames: byGame.size,
+    collectedGames: byEventId.size,
     generatedAt,
     observedAt,
-    warnings:
-      confirmed < scheduleGameIds.length ? ["LINEUP_NOT_FULLY_CONFIRMED"] : [],
+    warnings,
     detail: {
       confirmedCompleteGames: confirmed,
       partialGames: partial,
@@ -503,6 +608,7 @@ export async function auditLineup(
       notConfirmedOrMissing,
       slateClass,
       scheduleGames: scheduleGameIds.length,
+      identityAmbiguousRows: ambiguousRows,
     },
   };
 }

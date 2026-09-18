@@ -21,7 +21,10 @@ function toLegacyRow(
 ): Record<string, unknown> {
   const mp = game.marketPredictions[0]!;
   return {
-    predictionId: `${game.gameId}:mlb-baseline-v0`,
+    predictionId: `${game.eventId}:mlb-baseline-v0`,
+    eventId: game.eventId,
+    gamePk: game.gamePk,
+    matchupId: game.matchupId,
     gameId: game.gameId,
     externalId: game.externalId,
     dateKst: game.dateKst,

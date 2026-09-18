@@ -2,6 +2,15 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { AnalysisData, StartingPitcher } from "@/types/engine-analysis";
+import {
+  groupMlbDatasetRowsByEventId,
+  indexMlbOddsRowsByEventId,
+  mlbEventIdFromGamePk,
+  mlbIdentityFromScheduleGame,
+  parsePositiveMlbGamePk,
+  MLB_IDENTITY_AMBIGUOUS,
+  type MlbScheduleIdentityGame,
+} from "./event-identity";
 import { MLB_DAILY_RESEARCH_SUMMARY_SCHEMA } from "./mlb-daily-research-summary-types";
 
 export type PredictionBlockedReason =
@@ -34,6 +43,9 @@ export type MlbPredictionInputManifest = {
 };
 
 export type MlbPredictionConsumerGameInput = {
+  eventId: string;
+  gamePk: number;
+  matchupId: string;
   gameId: string;
   externalId: string | null;
   dateKst: string;
@@ -137,17 +149,15 @@ function emptyStanding() {
   };
 }
 
-function groupRowsByGame(rows: unknown[]): Map<string, Record<string, unknown>[]> {
-  const map = new Map<string, Record<string, unknown>[]>();
-  for (const raw of rows) {
-    const row = asRecord(raw);
-    const gameId = asString(row?.gameId);
-    if (!row || !gameId) continue;
-    const list = map.get(gameId) ?? [];
-    list.push(row);
-    map.set(gameId, list);
+function scheduleIdentityFromGames(rawGames: unknown[]): MlbScheduleIdentityGame[] {
+  const out: MlbScheduleIdentityGame[] = [];
+  for (const raw of rawGames) {
+    const game = asRecord(raw);
+    if (!game) continue;
+    const identity = mlbIdentityFromScheduleGame(game);
+    if (identity) out.push(identity);
   }
-  return map;
+  return out;
 }
 
 function starterPitcherFromRow(
@@ -389,14 +399,15 @@ export async function loadMlbPredictionConsumerInput(
     };
   }
 
-  const starterByGame = groupRowsByGame(starterRows);
-  const lineupByGame = groupRowsByGame(lineupRows);
-  const oddsByGame = new Map<string, Record<string, unknown>>();
-  for (const raw of oddsRows) {
-    const row = asRecord(raw);
-    const gameId = asString(row?.gameId);
-    if (row && gameId) oddsByGame.set(gameId, row);
-  }
+  const scheduleIdentity = scheduleIdentityFromGames(scheduleGames);
+  const { byEventId: starterByEvent, ambiguousRows: starterAmbiguous } =
+    groupMlbDatasetRowsByEventId(starterRows, scheduleIdentity);
+  const { byEventId: lineupByEvent, ambiguousRows: lineupAmbiguous } =
+    groupMlbDatasetRowsByEventId(lineupRows, scheduleIdentity);
+  const oddsByEvent = indexMlbOddsRowsByEventId(
+    oddsRows.map((row) => asRecord(row)).filter((row): row is Record<string, unknown> => row != null),
+    scheduleIdentity,
+  );
 
   const manifestWarnings: string[] = [];
   if (starterRef.status !== "READY") manifestWarnings.push(`STARTER_DATASET_${starterRef.status}`);
@@ -422,14 +433,18 @@ export async function loadMlbPredictionConsumerInput(
   const games: MlbPredictionConsumerGameInput[] = [];
   for (const rawGame of scheduleGames) {
     const game = asRecord(rawGame);
-    const gameId = asString(game?.internalGameId);
+    const identity = game ? mlbIdentityFromScheduleGame(game) : null;
     const commenceTimeUtc = asString(game?.commenceTimeUtc);
-    if (!game || !gameId || !commenceTimeUtc) continue;
+    const gamePk = identity?.gamePk ?? parsePositiveMlbGamePk(game?.gamePk);
+    if (!game || !identity || gamePk == null || !commenceTimeUtc) continue;
+    const eventId = mlbEventIdFromGamePk(gamePk);
+    const matchupId = identity.matchupId;
+    const gameId = matchupId || eventId;
 
     const warnings: string[] = [];
     let inputStatus: PredictionInputStatus = "ELIGIBLE";
 
-    const starterGameRows = starterByGame.get(gameId) ?? [];
+    const starterGameRows = starterByEvent.get(eventId) ?? [];
     const starterHome =
       starterGameRows.find((row) => asString(row.side) === "home") ?? null;
     const starterAway =
@@ -440,6 +455,7 @@ export async function loadMlbPredictionConsumerInput(
     if (!starterHome && !starterAway) {
       inputStatus = "BLOCKED";
       warnings.push("STARTER_NOT_COLLECTED");
+      if (starterAmbiguous > 0) warnings.push(MLB_IDENTITY_AMBIGUOUS);
     } else if (!hasHomeStarterId && !hasAwayStarterId) {
       inputStatus = "BLOCKED";
       warnings.push("STARTER_IDENTITY_MISSING_BOTH_SIDES");
@@ -448,7 +464,7 @@ export async function loadMlbPredictionConsumerInput(
       warnings.push("STARTER_IDENTITY_PARTIAL");
     }
 
-    const lineupGameRows = lineupByGame.get(gameId) ?? [];
+    const lineupGameRows = lineupByEvent.get(eventId) ?? [];
     const confirmedLineups =
       lineupGameRows.length >= 2 &&
       lineupGameRows.every(
@@ -459,7 +475,11 @@ export async function loadMlbPredictionConsumerInput(
     if (!confirmedLineups) {
       if (inputStatus !== "BLOCKED") inputStatus = "LIMITED_INPUT";
       warnings.push(
-        lineupGameRows.length === 0 ? "LINEUP_NOT_COLLECTED" : "LINEUP_NOT_CONFIRMED",
+        lineupGameRows.length === 0
+          ? lineupAmbiguous > 0
+            ? MLB_IDENTITY_AMBIGUOUS
+            : "LINEUP_NOT_COLLECTED"
+          : "LINEUP_NOT_CONFIRMED",
       );
     }
     for (const row of lineupGameRows) {
@@ -472,7 +492,7 @@ export async function loadMlbPredictionConsumerInput(
       }
     }
 
-    const oddsRow = oddsByGame.get(gameId) ?? null;
+    const oddsRow = oddsByEvent.get(eventId) ?? null;
     const { homeOdds, awayOdds } = extractMoneylineOdds(oddsRow);
     const oddsCollected = asString(oddsRow?.collectionStatus) === "COLLECTED";
     if (!oddsCollected || homeOdds == null || awayOdds == null) {
@@ -493,8 +513,11 @@ export async function loadMlbPredictionConsumerInput(
     });
 
     games.push({
+      eventId,
+      gamePk,
+      matchupId,
       gameId,
-      externalId: gameId.replace(/^mlb-/, "") || null,
+      externalId: String(gamePk),
       dateKst: asString(summary.dateKst) ?? dateKst,
       startTimeKst: asString(game.startTimeKst) ?? "",
       commenceTimeUtc,
@@ -511,7 +534,7 @@ export async function loadMlbPredictionConsumerInput(
     });
   }
 
-  games.sort((a, b) => a.gameId.localeCompare(b.gameId));
+  games.sort((a, b) => a.eventId.localeCompare(b.eventId));
 
   const inputManifestBase = {
     schemaVersion: "mlb-prediction-input-manifest-v1" as const,
@@ -551,10 +574,13 @@ export async function loadMlbPredictionConsumerInput(
       manifestWarnings.concat(
         games
           .filter((game) => game.inputStatus !== "ELIGIBLE")
-          .map((game) => `${game.gameId}:${game.inputStatus}`),
+          .map((game) => `${game.eventId}:${game.inputStatus}`),
       ),
     ),
     games: games.map((game) => ({
+      eventId: game.eventId,
+      gamePk: game.gamePk,
+      matchupId: game.matchupId,
       gameId: game.gameId,
       commenceTimeUtc: game.commenceTimeUtc,
       inputStatus: game.inputStatus,

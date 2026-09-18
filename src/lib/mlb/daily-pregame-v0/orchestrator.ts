@@ -4,6 +4,10 @@
  */
 import { mkdir, writeFile, readFile, copyFile } from "node:fs/promises";
 import path from "node:path";
+import {
+  MLB_AMBIGUOUS_MATCHUP_ID,
+  resolveMlbRequestedGameIds,
+} from "@/lib/mlb/event-identity";
 import { spawnLocalTsxScript } from "./spawn";
 import {
   buildPredictionSnapshotV0,
@@ -176,11 +180,15 @@ function verifySnapshotDoc(doc: {
   const errors: string[] = [];
   const seen = new Set<string>();
   for (const p of doc.predictions) {
+    const eventId = String(p.eventId ?? "");
+    const gamePk = String(p.gamePk ?? "");
     const id = String(p.gameId ?? "");
     const ext = String(p.externalId ?? "");
     const start = String(p.startTimeKst ?? p.commenceTimeUtc ?? "");
-    // Doubleheaders may share team-slug gameId; disambiguate by start time.
-    const key = `${id}::${ext}::${start}`;
+    const key =
+      eventId || gamePk
+        ? `event:${eventId || gamePk}`
+        : `${id}::${ext}::${start}`;
     if (!id) errors.push("MISSING_GAME_ID");
     if (seen.has(key)) errors.push(`DUP_GAME_KEY_${id}`);
     seen.add(key);
@@ -260,6 +268,17 @@ export async function runMlbDailyPregameV0(
 
   // ---- SCHEDULE ----
   let schedule = await auditSchedule(dateKst, cwd);
+  let requestedIds = resolveMlbRequestedGameIds(
+    schedule.games,
+    options.gameIds,
+  );
+  if (requestedIds.ambiguousRequested.length) {
+    warnings.push(MLB_AMBIGUOUS_MATCHUP_ID);
+    blockingIssues.push(MLB_AMBIGUOUS_MATCHUP_ID);
+  }
+  const resolvedFilterIds = options.gameIds?.length
+    ? requestedIds.eventIds
+    : null;
   if (shouldRun("SCHEDULE")) {
     const t0 = Date.now();
     if (schedule.exists && !schedule.dateKstMatch) {
@@ -278,7 +297,7 @@ export async function runMlbDailyPregameV0(
       const cutoffPreview = evaluateCutoffGate({
         schedule,
         asOfIso,
-        gameIds: options.gameIds,
+        gameIds: resolvedFilterIds ?? undefined,
       });
       const decision = decideMlbDailyCollection({
         window,
@@ -388,30 +407,33 @@ export async function runMlbDailyPregameV0(
     stages.push(emptyStage("SCHEDULE", "SKIPPED"));
   }
 
-  const scheduleIds = schedule.games
-    .filter((g) => {
-      const st = g.status.toUpperCase();
-      return !st.includes("CANCEL") && !st.includes("POSTPON");
-    })
-    .map((g) => g.gameId);
-  const filterIds = options.gameIds?.length
-    ? scheduleIds.filter((id) => options.gameIds!.includes(id))
-    : scheduleIds;
+  requestedIds = resolveMlbRequestedGameIds(schedule.games, options.gameIds);
+  if (
+    requestedIds.ambiguousRequested.length &&
+    !blockingIssues.includes(MLB_AMBIGUOUS_MATCHUP_ID)
+  ) {
+    warnings.push(MLB_AMBIGUOUS_MATCHUP_ID);
+    blockingIssues.push(MLB_AMBIGUOUS_MATCHUP_ID);
+  }
+  const resolvedFilterIdsAfter = options.gameIds?.length
+    ? requestedIds.eventIds
+    : null;
+  const filterIds = requestedIds.eventIds;
 
   const effectiveEarliestStart = deriveEffectiveEarliestStart({
     games: schedule.games,
-    filterIds: options.gameIds?.length ? filterIds : null,
+    filterIds: resolvedFilterIdsAfter,
     fallbackEarliestStart: schedule.earliestStart,
   });
 
   const cutoffForCollect = evaluateCutoffGate({
     schedule,
     asOfIso,
-    gameIds: options.gameIds,
+    gameIds: resolvedFilterIdsAfter ?? undefined,
   });
 
   // ---- STARTER ----
-  let starter = await auditStarter(dateKst, cwd, filterIds);
+  let starter = await auditStarter(dateKst, cwd, filterIds, schedule.games);
   let summaryEarly = await auditSummary(dateKst, cwd);
   let summaryDoc: unknown = null;
   if (summaryEarly.exists) {
@@ -518,7 +540,7 @@ export async function runMlbDailyPregameV0(
       );
       providerCalls += 1;
       writesPerformed += code === 0 ? 1 : 0;
-      starter = await auditStarter(dateKst, cwd, filterIds);
+      starter = await auditStarter(dateKst, cwd, filterIds, schedule.games);
       summaryEarly = await auditSummary(dateKst, cwd);
       if (summaryEarly.exists) {
         try {
@@ -574,7 +596,7 @@ export async function runMlbDailyPregameV0(
   }
 
   // ---- ODDS ----
-  let odds = await auditOdds(dateKst, cwd, filterIds);
+  let odds = await auditOdds(dateKst, cwd, filterIds, schedule.games);
   let oddsUsability = evaluateOddsUsability(odds, filterIds.length);
   if (shouldRun("ODDS")) {
     const t0 = Date.now();
@@ -680,7 +702,7 @@ export async function runMlbDailyPregameV0(
       );
       providerCalls += 1;
       writesPerformed += code === 0 ? 1 : 0;
-      odds = await auditOdds(dateKst, cwd, filterIds);
+      odds = await auditOdds(dateKst, cwd, filterIds, schedule.games);
       oddsUsability = evaluateOddsUsability(odds, filterIds.length);
       if (oddsUsability.usability === "ARTIFACT_PRESENT_UNUSABLE") {
         blockingIssues.push("ODDS_MISSING_ALL");
@@ -712,7 +734,7 @@ export async function runMlbDailyPregameV0(
   }
 
   // ---- LINEUP ----
-  let lineup = await auditLineup(dateKst, cwd, filterIds);
+  let lineup = await auditLineup(dateKst, cwd, filterIds, schedule.games);
   if (shouldRun("LINEUP")) {
     const t0 = Date.now();
     const decision = decideMlbDailyCollection({
@@ -794,7 +816,7 @@ export async function runMlbDailyPregameV0(
       );
       providerCalls += 1;
       writesPerformed += code === 0 ? 1 : 0;
-      lineup = await auditLineup(dateKst, cwd, filterIds);
+      lineup = await auditLineup(dateKst, cwd, filterIds, schedule.games);
       stages.push(
         emptyStage("LINEUP", lineup.exists ? "SUCCESS" : "PARTIAL", {
           outputPaths: [lineup.path],
@@ -816,7 +838,7 @@ export async function runMlbDailyPregameV0(
   const cutoffGate = evaluateCutoffGate({
     schedule,
     asOfIso,
-    gameIds: options.gameIds,
+    gameIds: resolvedFilterIdsAfter ?? undefined,
   });
   if (shouldRun("INPUT_AUDIT")) {
     const t0 = Date.now();
@@ -889,6 +911,7 @@ export async function runMlbDailyPregameV0(
       identityStatus: schedule.duplicateGameIds.length
         ? "DUPLICATE_IDS"
         : "OK",
+      duplicateMatchupIds: schedule.duplicateMatchupIds,
       starterUsability: starterUsability.usability,
       oddsUsability: oddsUsability.usability,
       enforcePregameGates,
@@ -1090,7 +1113,7 @@ export async function runMlbDailyPregameV0(
         const load = await loadAndPredictMlbV0({
           dateKst,
           cwd,
-          gameIds: options.gameIds,
+          gameIds: filterIds,
           observationOnly: options.observationOnly,
           useMarketPrior,
         });
@@ -1231,7 +1254,7 @@ export async function runMlbDailyPregameV0(
       const load2 = await loadAndPredictMlbV0({
         dateKst,
         cwd,
-        gameIds: options.gameIds,
+        gameIds: filterIds,
         observationOnly: options.observationOnly,
         useMarketPrior: options.useMarketPrior !== false,
         predictedAtOverride: fixedPredictedAt,

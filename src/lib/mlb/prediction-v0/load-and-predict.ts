@@ -4,6 +4,11 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import {
+  groupMlbDatasetRowsByEventId,
+  indexMlbOddsRowsByEventId,
+  type MlbScheduleIdentityGame,
+} from "@/lib/mlb/event-identity";
+import {
   loadMlbPredictionConsumerInput,
   type MlbPredictionConsumerLoad,
 } from "@/lib/mlb/load-mlb-prediction-consumer-input";
@@ -132,30 +137,27 @@ export async function loadAndPredictMlbV0(
   const starterRows = Array.isArray(starterDoc?.rows) ? starterDoc!.rows : [];
   const lineupRows = Array.isArray(lineupDoc?.rows) ? lineupDoc!.rows : [];
   const oddsRows = Array.isArray(oddsDoc?.rows) ? oddsDoc!.rows : [];
-  const oddsByGame = new Map<string, Record<string, unknown>>();
-  for (const raw of oddsRows) {
-    const row = asRecord(raw);
-    const id = asString(row?.gameId);
-    if (row && id) oddsByGame.set(id, row);
-  }
-  const starterByGame = new Map<string, Record<string, unknown>[]>();
-  for (const raw of starterRows) {
-    const row = asRecord(raw);
-    const id = asString(row?.gameId);
-    if (!row || !id) continue;
-    const list = starterByGame.get(id) ?? [];
-    list.push(row);
-    starterByGame.set(id, list);
-  }
-  const lineupByGame = new Map<string, Record<string, unknown>[]>();
-  for (const raw of lineupRows) {
-    const row = asRecord(raw);
-    const id = asString(row?.gameId);
-    if (!row || !id) continue;
-    const list = lineupByGame.get(id) ?? [];
-    list.push(row);
-    lineupByGame.set(id, list);
-  }
+  const scheduleIdentity: MlbScheduleIdentityGame[] = consumer.games.map(
+    (g) => ({
+      eventId: g.eventId,
+      gamePk: g.gamePk,
+      matchupId: g.matchupId,
+    }),
+  );
+  const oddsByGame = indexMlbOddsRowsByEventId(
+    oddsRows
+      .map((raw) => asRecord(raw))
+      .filter((row): row is Record<string, unknown> => row != null),
+    scheduleIdentity,
+  );
+  const { byEventId: starterByGame } = groupMlbDatasetRowsByEventId(
+    starterRows,
+    scheduleIdentity,
+  );
+  const { byEventId: lineupByGame } = groupMlbDatasetRowsByEventId(
+    lineupRows,
+    scheduleIdentity,
+  );
 
   const filterIds = options.gameIds?.length
     ? new Set(options.gameIds)
@@ -163,9 +165,15 @@ export async function loadAndPredictMlbV0(
 
   const games: GamePredictionV0[] = [];
   for (const g of consumer.games) {
-    if (filterIds && !filterIds.has(g.gameId)) continue;
+    if (
+      filterIds &&
+      !filterIds.has(g.eventId) &&
+      !filterIds.has(String(g.gamePk))
+    ) {
+      continue;
+    }
 
-    const sRows = starterByGame.get(g.gameId) ?? [];
+    const sRows = starterByGame.get(g.eventId) ?? [];
     const homeRow =
       sRows.find((r) => asString(r.side) === "home") ?? null;
     const awayRow =
@@ -250,7 +258,7 @@ export async function loadAndPredictMlbV0(
       },
     });
 
-    const lRows = lineupByGame.get(g.gameId) ?? [];
+    const lRows = lineupByGame.get(g.eventId) ?? [];
     const confirmed =
       lRows.length >= 2 &&
       lRows.every(
@@ -283,7 +291,7 @@ export async function loadAndPredictMlbV0(
       },
     });
 
-    const oddsRow = oddsByGame.get(g.gameId) ?? null;
+    const oddsRow = oddsByGame.get(g.eventId) ?? null;
     const oddsCapturedAt = asString(oddsRow?.capturedAt);
 
     const market = buildMarketFeature({
@@ -397,6 +405,9 @@ export async function loadAndPredictMlbV0(
         : Math.round((mp.homeProbability - 0.5) * 60 * 10) / 10;
 
     games.push({
+      eventId: g.eventId,
+      gamePk: g.gamePk,
+      matchupId: g.matchupId,
       gameId: g.gameId,
       externalId: g.externalId,
       dateKst: g.dateKst,
@@ -465,7 +476,7 @@ export async function loadAndPredictMlbV0(
     });
   }
 
-  games.sort((a, b) => a.gameId.localeCompare(b.gameId));
+  games.sort((a, b) => a.eventId.localeCompare(b.eventId));
 
   return {
     kind: "ready",

@@ -47,6 +47,7 @@ export function buildEngineRecommendationRecord(input: {
     .map((c) => ({
       date: input.dateKst,
       gamePk: c.gamePk,
+      eventId: c.eventId,
       gameId: c.gameId,
       pick: c.pickTeam,
       tier: c.tier as "STRONG" | "GOOD",

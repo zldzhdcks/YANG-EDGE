@@ -67,6 +67,7 @@ export type EngineRecommendationRecordV1 = {
   picks: Array<{
     date: string;
     gamePk: number | null;
+    eventId?: string | null;
     gameId: string;
     pick: string | null;
     tier: "STRONG" | "GOOD";

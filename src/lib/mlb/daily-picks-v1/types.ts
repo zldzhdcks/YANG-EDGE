@@ -32,6 +32,7 @@ export type DailyPickReasonCode =
 
 export type DailyPickCard = {
   gameId: string;
+  eventId: string | null;
   gamePk: number | null;
   detailHref: string | null;
   tier: DailyPickTier;

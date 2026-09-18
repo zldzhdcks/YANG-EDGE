@@ -74,6 +74,9 @@ export type OddsHistoryDatasetRow = {
   gameId: string;
   /** Alias for consumers expecting internalGameId naming. */
   internalGameId?: string;
+  /** Additive event identity. Present on newly built rows only. */
+  eventId?: string;
+  gamePk?: number;
   homeTeam: string;
   awayTeam: string;
   startTimeKst?: string | null;

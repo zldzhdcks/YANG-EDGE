@@ -1,4 +1,8 @@
 import { readFile } from "node:fs/promises";
+import {
+  mlbGamePkFromEventId,
+  parsePositiveMlbGamePk,
+} from "./event-identity";
 import { loadMlbScheduleArtifact, writeJsonAtomic } from "./build-mlb-schedule-artifact";
 import {
   MLB_GRADED_PREDICTIONS_SCHEMA,
@@ -89,21 +93,31 @@ function resolveGamePk(
   index: ScheduleIndex,
 ): { gamePk: number | null; matchStatus: MatchStatus; warnings: string[] } {
   const warnings: string[] = [];
+  const eventPk =
+    parsePositiveMlbGamePk(pred.gamePk) ??
+    mlbGamePkFromEventId(asString(pred.eventId)) ??
+    parsePositiveMlbGamePk(pred.externalId);
+  if (eventPk != null) {
+    return { gamePk: eventPk, matchStatus: "MATCHED", warnings };
+  }
+
   const gameId = asString(pred.gameId);
+  const matchupId = asString(pred.matchupId) ?? gameId;
   const homeTeam = asString(pred.homeTeam) ?? "";
   const awayTeam = asString(pred.awayTeam) ?? "";
 
-  if (gameId && index.byInternalId.has(gameId)) {
-    if (index.duplicateInternalIds.has(gameId)) {
+  if (matchupId && index.byInternalId.has(matchupId)) {
+    if (index.duplicateInternalIds.has(matchupId)) {
       return {
         gamePk: null,
         matchStatus: "DUPLICATE_MATCH",
         warnings: [
+          "IDENTITY_AMBIGUOUS",
           "schedule artifact contains duplicate internalGameId for this game",
         ],
       };
     }
-    const row = index.byInternalId.get(gameId)!;
+    const row = index.byInternalId.get(matchupId)!;
     if (row.homeTeam !== homeTeam || row.awayTeam !== awayTeam) {
       return {
         gamePk: row.gamePk,
@@ -126,7 +140,7 @@ function resolveGamePk(
     return {
       gamePk: null,
       matchStatus: "DUPLICATE_MATCH",
-      warnings: ["multiple schedule rows for date+home+away"],
+      warnings: ["IDENTITY_AMBIGUOUS", "multiple schedule rows for date+home+away"],
     };
   }
 

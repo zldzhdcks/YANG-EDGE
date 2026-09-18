@@ -2,6 +2,11 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { abbreviateTeamName } from "@/lib/mlb/review-classify-v2";
 import { asNumber, asRecord, asString } from "@/lib/mlb/mlb-review-utils";
+import {
+  mlbEventIdFromGamePk,
+  mlbGamePkFromEventId,
+  parsePositiveMlbGamePk,
+} from "@/lib/mlb/event-identity";
 import { failureCauseLabel } from "@/lib/mlb/research-ux-v1/category-labels";
 import {
   assessSlateRecommendationProvenance,
@@ -430,13 +435,6 @@ export async function loadDailyPicksV1(input: {
       : "RECONSTRUCTED";
   };
 
-  const gamePkById = new Map<string, number>();
-  for (const g of schedule?.games ?? []) {
-    const id = asString(g.internalGameId);
-    const pk = asNumber(g.gamePk);
-    if (id && pk != null) gamePkById.set(id, pk);
-  }
-
   const warningCounts: Record<string, number> = {};
   const drafted: DailyPickCard[] = [];
 
@@ -460,7 +458,22 @@ export async function loadDailyPicksV1(input: {
     }
 
     const stars = starsForTier(tier);
-    const gamePk = gamePkById.get(gameId) ?? null;
+    const matchupId = asString(pred.matchupId) ?? asString(pred.gameId);
+    let gamePk =
+      parsePositiveMlbGamePk(pred.gamePk) ??
+      mlbGamePkFromEventId(asString(pred.eventId)) ??
+      parsePositiveMlbGamePk(pred.externalId);
+    if (gamePk == null && matchupId) {
+      const hits = (schedule?.games ?? []).filter(
+        (g) => asString(g.internalGameId) === matchupId,
+      );
+      if (hits.length === 1) {
+        gamePk = parsePositiveMlbGamePk(hits[0]?.gamePk);
+      }
+    }
+    const eventId =
+      asString(pred.eventId) ??
+      (gamePk != null ? mlbEventIdFromGamePk(gamePk) : null);
     const pickTeam =
       asString(pred.baselinePick) ??
       asString(asRecord(pred.researchBaseline)?.pick);
@@ -478,6 +491,7 @@ export async function loadDailyPicksV1(input: {
 
     drafted.push({
       gameId,
+      eventId,
       gamePk,
       detailHref:
         gamePk != null
@@ -592,7 +606,12 @@ export async function loadDailyPicksV1(input: {
     });
     // Enrich inputStatus from cards
     for (const p of built.picks) {
-      const card = [...strongPicks, ...goodPicks].find((c) => c.gameId === p.gameId);
+      const card = [...strongPicks, ...goodPicks].find(
+        (c) =>
+          (p.eventId && c.eventId === p.eventId) ||
+          (p.gamePk != null && c.gamePk === p.gamePk) ||
+          c.gameId === p.gameId,
+      );
       if (card) p.inputStatus = card.inputStatus;
     }
     const sealed = await sealEngineRecommendationRecordIfAbsent({

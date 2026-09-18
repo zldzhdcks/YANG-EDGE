@@ -160,8 +160,12 @@ export function evaluateCutoffGate(input: {
   const active = input.schedule.games.filter((g) => {
     const st = g.status.toUpperCase();
     if (st.includes("CANCEL") || st.includes("POSTPON")) return false;
-    if (input.gameIds?.length && !input.gameIds.includes(g.gameId)) return false;
-    return true;
+    if (!input.gameIds?.length) return true;
+    const operationalId = g.eventId ?? g.gameId;
+    return (
+      input.gameIds.includes(operationalId) ||
+      input.gameIds.includes(g.gameId)
+    );
   });
   let gamesAfterStart = 0;
   const starts: string[] = [];

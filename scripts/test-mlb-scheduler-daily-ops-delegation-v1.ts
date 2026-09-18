@@ -88,14 +88,14 @@ function assertNoLegacyMlbScripts(action: RunnerAction | null | undefined) {
 }
 
 async function main() {
-  // 1. MLB canonical ID prefers internalGameId over gamePk
+  // 1. MLB canonical ID is eventId from gamePk (`mlb-game-${gamePk}`)
   assert.equal(
     canonicalSchedulerGameId("MLB", {
       gamePk: 777,
       gameId: "numeric-fallback",
       internalGameId: "mlb-baltimore-orioles-new-york-yankees",
     }),
-    "mlb-baltimore-orioles-new-york-yankees",
+    "mlb-game-777",
   );
   assert.equal(
     canonicalSchedulerGameId("KBO", {
@@ -122,7 +122,7 @@ async function main() {
     dateKst: DATE,
     cwd: idCwd,
   });
-  assert.equal(loaded.games[0]?.gameId, "mlb-baltimore-orioles-new-york-yankees");
+  assert.equal(loaded.games[0]?.gameId, "mlb-game-777");
 
   // 2–7. Stage → Daily Ops window mapping; no legacy scripts
   const map: Array<[SchedulerGameInput["gameId"], number, string]> = [
@@ -381,15 +381,24 @@ async function main() {
   assert.equal(
     predictionRowMatchesSchedulerGameId(
       { gameId: "mlb-locked", externalId: "1" },
-      "mlb-locked",
+      "mlb-game-1",
+      { league: "MLB" },
     ),
     true,
+  );
+  assert.equal(
+    predictionRowMatchesSchedulerGameId(
+      { gameId: "mlb-locked", externalId: "1" },
+      "mlb-game-2",
+      { league: "MLB" },
+    ),
+    false,
   );
   assert.equal(
     await detectLockedPrediction({
       league: "MLB",
       dateKst: DATE,
-      gameId: "mlb-locked",
+      gameId: "mlb-game-1",
       cwd: predCwd,
     }),
     true,
@@ -398,7 +407,7 @@ async function main() {
     await detectLockedPrediction({
       league: "MLB",
       dateKst: DATE,
-      gameId: "mlb-open",
+      gameId: "mlb-game-2",
       cwd: predCwd,
     }),
     false,
@@ -419,12 +428,12 @@ async function main() {
       return 0;
     },
   });
-  assert.equal(r15.plans.find((p) => p.gameId === "mlb-locked")?.errorCode, "ALREADY_LOCKED");
-  const openPlan = r15.plans.find((p) => p.gameId === "mlb-open");
+  assert.equal(r15.plans.find((p) => p.gameId === "mlb-game-1")?.errorCode, "ALREADY_LOCKED");
+  const openPlan = r15.plans.find((p) => p.gameId === "mlb-game-2");
   assert.equal(openPlan?.stage, "PREGAME_LOCK");
   assert.equal(openPlan?.action?.actionId, "RUN_MLB_DAILY_OPS");
   assert.equal(windowFromArgs(openPlan?.action?.args), "LOCK");
-  assert.deepEqual(gameIdsFromArgs(calls15[0]?.args), ["mlb-open"]);
+  assert.deepEqual(gameIdsFromArgs(calls15[0]?.args), ["mlb-game-2"]);
   assert.equal(calls15.length, 1);
 
   // 16–17. Scheduler CLI quota flows; null omitted
@@ -622,10 +631,13 @@ async function main() {
       earliestStart: early,
       latestStart: late,
       duplicateGameIds: [],
+      duplicateMatchupIds: [],
       warnings: [],
       games: [
         {
           gameId: "early",
+          eventId: "early",
+          matchupId: "early",
           gamePk: 1,
           homeTeam: "",
           awayTeam: "",
@@ -634,6 +646,8 @@ async function main() {
         },
         {
           gameId: "late",
+          eventId: "late",
+          matchupId: "late",
           gamePk: 2,
           homeTeam: "",
           awayTeam: "",

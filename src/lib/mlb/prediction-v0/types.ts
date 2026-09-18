@@ -106,6 +106,9 @@ export type MarketPredictionV0 = {
 };
 
 export type GamePredictionV0 = {
+  eventId: string;
+  gamePk: number;
+  matchupId: string;
   gameId: string;
   externalId: string | null;
   dateKst: string;

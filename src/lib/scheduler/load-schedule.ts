@@ -4,6 +4,13 @@
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import {
+  mlbEventIdFromGamePk,
+  mlbGamePkFromEventId,
+  mlbIdentityFromScheduleGame,
+  mlbPredictionRowMatchesEvent,
+  parsePositiveMlbGamePk,
+} from "../mlb/event-identity";
 import { mlbPredictionSnapshotRel } from "../mlb/mlb-prediction-review-paths";
 import type { SchedulerGameInput, SchedulerLeague } from "./types";
 
@@ -30,7 +37,7 @@ function asNonEmptyString(v: unknown): string | null {
 
 /**
  * Canonical Scheduler game ID.
- * MLB Daily Ops filters on internalGameId — prefer that over numeric gamePk.
+ * MLB operational id is eventId (`mlb-game-${gamePk}`). Matchup slug is not unique.
  * KBO/NPB keep the historical gamePk-first order.
  */
 export function canonicalSchedulerGameId(
@@ -38,10 +45,14 @@ export function canonicalSchedulerGameId(
   g: Record<string, unknown>,
 ): string {
   if (league === "MLB") {
+    const pk = parsePositiveMlbGamePk(g.gamePk);
+    if (pk != null) return mlbEventIdFromGamePk(pk);
+    const identity = mlbIdentityFromScheduleGame(g);
+    if (identity?.eventId) return identity.eventId;
     return (
+      asNonEmptyString(g.eventId) ??
       asNonEmptyString(g.internalGameId) ??
       asNonEmptyString(g.gameId) ??
-      asNonEmptyString(g.gamePk) ??
       "unknown"
     );
   }
@@ -67,13 +78,31 @@ function predictionRows(doc: unknown): Array<Record<string, unknown>> {
     .filter((row): row is Record<string, unknown> => row != null);
 }
 
-/** Structured match: Official V0 gameId, then externalId fallback. */
+/**
+ * Structured MLB lock match: eventId, then gamePk, then externalId == String(gamePk).
+ * Legacy slug match is only allowed when the caller proves matchup uniqueness.
+ * KBO/NPB keep gameId then externalId.
+ */
 export function predictionRowMatchesSchedulerGameId(
   row: Record<string, unknown>,
   schedulerGameId: string,
+  context?: {
+    league?: SchedulerLeague;
+    matchupId?: string | null;
+    matchupUniqueOnDate?: boolean;
+  },
 ): boolean {
   const want = schedulerGameId.trim();
   if (!want) return false;
+  if (context?.league === "MLB" || mlbGamePkFromEventId(want) != null) {
+    return mlbPredictionRowMatchesEvent({
+      row,
+      eventId: want,
+      gamePk: mlbGamePkFromEventId(want) ?? parsePositiveMlbGamePk(want),
+      matchupId: context?.matchupId ?? null,
+      matchupUniqueOnDate: Boolean(context?.matchupUniqueOnDate),
+    });
+  }
   const gameId = asNonEmptyString(row.gameId);
   if (gameId === want) return true;
   const externalId = asNonEmptyString(row.externalId);
@@ -142,8 +171,35 @@ export async function detectLockedPrediction(input: {
     try {
       const raw = await readFile(official, "utf8");
       const doc = JSON.parse(raw) as unknown;
+      const schedulePath = path.join(
+        cwd,
+        scheduleRel("MLB", input.dateKst),
+      );
+      let matchupId: string | null = null;
+      let matchupUniqueOnDate = false;
+      try {
+        const scheduleRaw = await readFile(schedulePath, "utf8");
+        const scheduleDoc = JSON.parse(scheduleRaw) as {
+          games?: Array<Record<string, unknown>>;
+        };
+        const identities = (scheduleDoc.games ?? [])
+          .map((g) => mlbIdentityFromScheduleGame(g))
+          .filter((g): g is NonNullable<typeof g> => g != null);
+        const target = identities.find((g) => g.eventId === input.gameId);
+        matchupId = target?.matchupId ?? null;
+        matchupUniqueOnDate = Boolean(
+          matchupId &&
+            identities.filter((g) => g.matchupId === matchupId).length === 1,
+        );
+      } catch {
+        /* schedule optional for lock probe */
+      }
       return predictionRows(doc).some((row) =>
-        predictionRowMatchesSchedulerGameId(row, input.gameId),
+        predictionRowMatchesSchedulerGameId(row, input.gameId, {
+          league: "MLB",
+          matchupId,
+          matchupUniqueOnDate,
+        }),
       );
     } catch {
       return false;

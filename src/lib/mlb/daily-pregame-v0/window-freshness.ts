@@ -413,6 +413,7 @@ export function parseMlbDailyOpsQuotaRemaining(raw: string): number {
 export function deriveEffectiveEarliestStart(input: {
   games: Array<{
     gameId: string;
+    eventId?: string;
     commenceTimeUtc?: string | null;
     scheduledStartTime?: string | null;
   }>;
@@ -425,7 +426,7 @@ export function deriveEffectiveEarliestStart(input: {
   }
   const want = new Set(ids);
   const starts = input.games
-    .filter((g) => want.has(g.gameId))
+    .filter((g) => want.has(g.eventId ?? g.gameId) || want.has(g.gameId))
     .map((g) => g.commenceTimeUtc ?? g.scheduledStartTime ?? null)
     .filter((s): s is string => Boolean(s && String(s).trim()))
     .map((s) => ({ s, t: Date.parse(s) }))
