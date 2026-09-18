@@ -68,6 +68,11 @@ export default function PickCard({ pick }: PickCardProps) {
   return (
     <AnalysisNavLink
       gameId={pick.gameId}
+      identity={{
+        league: pick.league,
+        homeTeam: pick.homeTeam,
+        awayTeam: pick.awayTeam,
+      }}
       className={cn(
         "group block w-full rounded-2xl border p-5 transition-colors sm:p-6",
         isTop

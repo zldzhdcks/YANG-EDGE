@@ -2,26 +2,47 @@ import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import PublicAnalysisViewer from "@/components/analysis/public/PublicAnalysisViewer";
-import { buildGamesBackPath } from "@/lib/datetime/games-date";
+import {
+  buildGamesBackPath,
+  parseAnalysisPresentationIdentityFromSearch,
+} from "@/lib/datetime/games-date";
 import { loadPublicGameAnalysis } from "@/lib/public-analysis/load-public-game-analysis";
+
+type AnalysisSearch = {
+  fromDate?: string;
+  sport?: string;
+  league?: string;
+  homeTeam?: string;
+  awayTeam?: string;
+  startTime?: string;
+};
 
 type AnalysisPageProps = {
   params: Promise<{ gameId: string }>;
-  searchParams: Promise<{ fromDate?: string }>;
+  searchParams: Promise<AnalysisSearch>;
 };
 
 export const dynamic = "force-dynamic";
+
+async function loadAnalysisPage(input: {
+  gameId: string;
+  search: AnalysisSearch;
+}) {
+  const listIdentity = parseAnalysisPresentationIdentityFromSearch(input.search);
+  return loadPublicGameAnalysis({
+    publicGameId: input.gameId,
+    fromDate: input.search.fromDate,
+    listIdentity,
+  });
+}
 
 export async function generateMetadata({
   params,
   searchParams,
 }: AnalysisPageProps): Promise<Metadata> {
   const { gameId } = await params;
-  const { fromDate } = await searchParams;
-  const { view } = await loadPublicGameAnalysis({
-    publicGameId: gameId,
-    fromDate,
-  });
+  const search = await searchParams;
+  const { view } = await loadAnalysisPage({ gameId, search });
   const titleBase =
     view.game.homeTeam && view.game.awayTeam
       ? `${view.game.homeTeam} vs ${view.game.awayTeam}`
@@ -39,12 +60,9 @@ export default async function AnalysisPage({
   searchParams,
 }: AnalysisPageProps) {
   const { gameId } = await params;
-  const { fromDate } = await searchParams;
-  const { view } = await loadPublicGameAnalysis({
-    publicGameId: gameId,
-    fromDate,
-  });
-  const gamesBackHref = buildGamesBackPath(fromDate, view.game.dateKst);
+  const search = await searchParams;
+  const { view } = await loadAnalysisPage({ gameId, search });
+  const gamesBackHref = buildGamesBackPath(search.fromDate, view.game.dateKst);
 
   return (
     <>

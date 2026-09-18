@@ -87,6 +87,12 @@ function BestPickCard({ pick }: { pick: TodayEdgePick }) {
 
       <AnalysisNavLink
         gameId={pick.gameId}
+        identity={{
+          league: pick.league,
+          homeTeam: pick.home,
+          awayTeam: pick.away,
+          startTime: pick.startTimeKst,
+        }}
         className="mt-auto pt-5 text-sm font-medium text-blue-400 hover:text-blue-300 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
       >
         분석 보기 →

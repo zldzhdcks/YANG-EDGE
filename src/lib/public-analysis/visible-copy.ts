@@ -2,6 +2,8 @@ import { formatKoreanDateTime, formatOdds, matchHeaderMeta } from "./format-disp
 import type { PublicGameAnalysisViewV1 } from "@/types/public-game-analysis-view";
 
 const STATIC_PUBLIC_LABELS = [
+  "빠른 경기 프리뷰",
+  "현재 분석 상태",
   "YANG EDGE 핵심 판단",
   "경기 핵심 포인트",
   "최근 흐름",
@@ -22,6 +24,7 @@ export function visiblePublicAnalysisCopy(view: PublicGameAnalysisViewV1): strin
     view.game.awayTeam,
     view.analysis.headline,
     view.analysis.description,
+    ...view.quickPreview.sentences,
     view.analysis.predictedSide,
     view.analysis.probability != null ? String(view.analysis.probability) : null,
     ...view.context.keyPoints,
@@ -60,4 +63,6 @@ export const PUBLIC_FORBIDDEN_COPY = [
   "PASS_MISSED_PRE_GAME_WINDOW",
   "IDENTITY_REVIEW_REQUIRED",
   "THE_ODDS_API",
+  "새 분석 화면으로 이전 중",
+  "옮겨지지 않았습니다",
 ] as const;

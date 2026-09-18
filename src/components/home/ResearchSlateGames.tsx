@@ -41,6 +41,12 @@ export default function ResearchSlateGames({
                 </div>
                 <AnalysisNavLink
                   gameId={game.gameId}
+                  identity={{
+                    league: game.league,
+                    homeTeam: game.homeTeam,
+                    awayTeam: game.awayTeam,
+                    startTime: game.startTimeKst,
+                  }}
                   className="inline-flex text-sm font-medium text-blue-400 hover:text-blue-300"
                 >
                   연구 보기

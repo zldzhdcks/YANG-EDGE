@@ -164,6 +164,12 @@ function PickCard({
 
       <AnalysisNavLink
         gameId={pick.gameId}
+        identity={{
+          league: pick.league,
+          homeTeam: pick.home,
+          awayTeam: pick.away,
+          startTime: pick.startTimeKst,
+        }}
         className="mt-4 inline-flex text-sm font-medium text-blue-400 hover:text-blue-300"
       >
         연구 분석 보기

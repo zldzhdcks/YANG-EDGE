@@ -12,7 +12,8 @@ export type DailyCState =
   | "PASS_PROVIDER_NOT_SUPPORTED"
   | "PASS_MISSED_PRE_GAME_WINDOW"
   | "PASS_ENGINE_NOT_APPROVED"
-  | "PASS_OTHER_EXPLICIT_REASON";
+  | "PASS_OTHER_EXPLICIT_REASON"
+  | "PASS_COMPETITION_REVIEW_REQUIRED";
 
 export type PublicCStateCopy = {
   state: PublicAnalysisState;
@@ -58,6 +59,11 @@ const C_STATE_COPY: Record<DailyCState, PublicCStateCopy> = {
     headline: "경기 분석 준비 중",
     description: "이 경기의 분석 정보를 확인하고 있습니다.",
   },
+  PASS_COMPETITION_REVIEW_REQUIRED: {
+    state: "ANALYSIS_PREPARING",
+    headline: "경기 분석 준비 중",
+    description: "이 경기의 분석 정보를 확인하고 있습니다.",
+  },
 };
 
 export function isDailyCState(raw: string): raw is DailyCState {
@@ -71,4 +77,26 @@ export function publicCopyForCState(raw: string | null | undefined): PublicCStat
     headline: "경기 분석 준비 중",
     description: "이 경기의 분석 정보를 확인하고 있습니다.",
   };
+}
+
+export function publicAnalysisStatusLabel(
+  state: PublicAnalysisState,
+  officialPredictionAvailable: boolean,
+): string {
+  if (officialPredictionAvailable) return "공식 분석 있음";
+  switch (state) {
+    case "OFFICIAL_PREDICTION_DEFERRED":
+      return "공식 승패 분석 보류";
+    case "PREGAME_ANALYSIS_UNAVAILABLE":
+      return "사전 분석 미제공";
+    case "ANALYSIS_EXPANDING":
+      return "분석 준비 중";
+    case "LEGACY_MIGRATING":
+      return "공식 상세 분석 미제공";
+    case "YANG_EDGE_ANALYSIS":
+    case "ANALYSIS_PREPARING":
+    case "UNRESOLVED":
+    default:
+      return "분석 준비 중";
+  }
 }

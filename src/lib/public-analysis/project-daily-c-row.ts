@@ -8,6 +8,7 @@ import {
   type PublicGameAnalysisViewV1,
   type PublicMarketBenchmark,
 } from "@/types/public-game-analysis-view";
+import { EMPTY_QUICK_PREVIEW } from "./project-quick-preview";
 
 function sportForDisplay(sport: string): "baseball" | "football" | undefined {
   if (sport === "KBO" || sport === "NPB") return "baseball";
@@ -57,6 +58,16 @@ function projectMarket(
   };
 }
 
+export function isOfficialDailyCPrediction(row: DailyCGameRow): boolean {
+  const side = row.independentPrediction.predictedSide;
+  return (
+    row.cState === "PREDICTION" &&
+    row.independentPrediction.created === true &&
+    typeof side === "string" &&
+    side.trim() !== ""
+  );
+}
+
 export function projectDailyCRowToPublicView(input: {
   publicGameId: string;
   dateKst: string;
@@ -71,7 +82,7 @@ export function projectDailyCRowToPublicView(input: {
   const homeTeam = displayTeam(homeSource, row);
   const awayTeam = displayTeam(awaySource, row);
   const pred = row.independentPrediction;
-  const officialPredictionAvailable = pred.created === true;
+  const officialPredictionAvailable = isOfficialDailyCPrediction(row);
   const market = projectMarket(row, homeTeam, awayTeam);
 
   return {
@@ -93,6 +104,7 @@ export function projectDailyCRowToPublicView(input: {
       probability: officialPredictionAvailable ? pred.independentProbability : null,
       confidence: officialPredictionAvailable ? pred.confidence : null,
     },
+    quickPreview: EMPTY_QUICK_PREVIEW,
     context: {
       keyPoints: [],
       recentForm: input.recentForm

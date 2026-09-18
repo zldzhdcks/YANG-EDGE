@@ -1,3 +1,4 @@
+import { EMPTY_QUICK_PREVIEW } from "./project-quick-preview";
 import {
   PUBLIC_ANALYSIS_DISCLAIMER,
   PUBLIC_LEGACY_MIGRATION_DESCRIPTION,
@@ -40,6 +41,7 @@ export function unresolvedPublicView(
       probability: null,
       confidence: null,
     },
+    quickPreview: EMPTY_QUICK_PREVIEW,
     context: {
       keyPoints: [],
       recentForm: null,
@@ -140,6 +142,7 @@ export function projectLegacyResearchToPublicView(input: {
           probability: null,
           confidence: null,
         },
+    quickPreview: EMPTY_QUICK_PREVIEW,
     context: {
       keyPoints: [],
       recentForm: null,

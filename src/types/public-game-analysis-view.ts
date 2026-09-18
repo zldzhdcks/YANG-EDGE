@@ -55,6 +55,17 @@ export type PublicTeamMetricsData = {
   note: string;
 };
 
+export type PublicQuickPreviewBasis =
+  | "ANALYSIS_IDENTITY"
+  | "LIST_METADATA"
+  | "NONE";
+
+export type PublicQuickPreview = {
+  available: boolean;
+  sentences: string[];
+  basis: PublicQuickPreviewBasis;
+};
+
 export type PublicGameAnalysisViewV1 = {
   game: {
     gameId: string;
@@ -74,6 +85,7 @@ export type PublicGameAnalysisViewV1 = {
     probability: number | null;
     confidence: number | null;
   };
+  quickPreview: PublicQuickPreview;
   context: {
     keyPoints: string[];
     recentForm: PublicRecentForm | null;
@@ -99,7 +111,6 @@ export const PUBLIC_MARKET_REFERENCE_NOTE =
 export const PUBLIC_UNRESOLVED_HEADLINE = "경기 분석 정보를 준비하고 있습니다.";
 export const PUBLIC_UNRESOLVED_DESCRIPTION =
   "이 경기의 분석 정보를 확인하고 있습니다.";
-export const PUBLIC_LEGACY_MIGRATION_HEADLINE =
-  "이 경기는 현재 새 분석 화면으로 이전 중입니다.";
+export const PUBLIC_LEGACY_MIGRATION_HEADLINE = "공식 상세 분석 미제공";
 export const PUBLIC_LEGACY_MIGRATION_DESCRIPTION =
-  "표시할 수 있는 경기 분석이 아직 이 화면으로 옮겨지지 않았습니다.";
+  "현재 이 경기의 공식 상세 분석은 제공되지 않습니다. 확인 가능한 경기 정보만 안내하며 근거 없는 승패 방향은 제시하지 않습니다.";

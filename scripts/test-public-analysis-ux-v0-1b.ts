@@ -39,6 +39,8 @@ function listPublicComponentFiles(): string[] {
     "src/app/analysis/[gameId]/page.tsx",
     "src/components/analysis/public/PublicAnalysisViewer.tsx",
     "src/components/analysis/public/PublicAnalysisHeader.tsx",
+    "src/components/analysis/public/PublicQuickPreview.tsx",
+    "src/components/analysis/public/PublicAnalysisStatus.tsx",
     "src/components/analysis/public/PublicAnalysisDecision.tsx",
     "src/components/analysis/public/PublicKeyPoints.tsx",
     "src/components/analysis/public/PublicRecentForm.tsx",

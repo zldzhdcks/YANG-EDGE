@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import { buildAnalysisPath } from "@/lib/datetime/games-date";
+import type { AnalysisPresentationIdentity } from "@/lib/datetime/games-date";
 import EdgeEngineLoader from "@/components/ui/EdgeEngineLoader";
 import { cn } from "@/utils/cn";
 
@@ -24,6 +25,8 @@ type AnalysisNavLinkProps = {
   gameId: string;
   /** /games 목록 날짜 (YYYY-MM-DD) — 복귀 UX용 */
   fromDate?: string;
+  /** Display fallback only. Never used as a research join key. */
+  identity?: AnalysisPresentationIdentity | null;
   children: ReactNode;
   className?: string;
 };
@@ -31,6 +34,7 @@ type AnalysisNavLinkProps = {
 export default function AnalysisNavLink({
   gameId,
   fromDate,
+  identity,
   children,
   className,
 }: AnalysisNavLinkProps) {
@@ -52,7 +56,7 @@ export default function AnalysisNavLink({
       if (isLoading) return;
 
       setIsLoading(true);
-      const path = buildAnalysisPath(gameId, fromDate ?? undefined);
+      const path = buildAnalysisPath(gameId, fromDate ?? undefined, identity);
       const delay = getAnalysisDelayMs();
 
       if (timerRef.current != null) {
@@ -64,7 +68,7 @@ export default function AnalysisNavLink({
         router.push(path);
       }, delay);
     },
-    [isLoading, gameId, fromDate, router],
+    [isLoading, gameId, fromDate, identity, router],
   );
 
   return (

@@ -4,11 +4,13 @@
  */
 
 import { isValidKstDateString } from "@/lib/datetime/games-date";
+import type { AnalysisPresentationIdentity } from "@/lib/datetime/games-date";
 import { getKstToday } from "@/lib/datetime/kst";
 import { loadDailyCArtifact } from "./load-daily-c-artifact";
 import { loadKboRecentFormForOperatorGame } from "./load-kbo-recent-form";
 import { resolveDailyCRowByPublicGameId } from "./game-id-resolver";
 import { projectDailyCRowToPublicView } from "./project-daily-c-row";
+import { finalizePublicAnalysisView } from "./finalize-public-view";
 import {
   projectLegacyResearchToPublicView,
   unresolvedPublicView,
@@ -44,17 +46,23 @@ export async function loadPublicGameAnalysis(input: {
   publicGameId: string;
   fromDate?: string | null;
   cwd?: string;
+  /** Display fallback only. Never used as a Daily C / research join key. */
+  listIdentity?: AnalysisPresentationIdentity | null;
 }): Promise<LoadPublicGameAnalysisResult> {
   const publicGameId = normalizePublicGameId(input.publicGameId);
   const dateKst = preferredDateKst(input.fromDate);
   const cwd = input.cwd ?? process.cwd();
+  const listIdentity = input.listIdentity ?? null;
 
   const artifact = await loadDailyCArtifact({ dateKst, cwd });
   if (artifact) {
     const match = resolveDailyCRowByPublicGameId(publicGameId, artifact.games);
     if (!match) {
       return {
-        view: unresolvedPublicView(publicGameId, dateKst),
+        view: finalizePublicAnalysisView(
+          unresolvedPublicView(publicGameId, dateKst),
+          listIdentity,
+        ),
         resolution: {
           matched: false,
           source: "unresolved",
@@ -79,13 +87,16 @@ export async function loadPublicGameAnalysis(input: {
         : null;
 
     return {
-      view: projectDailyCRowToPublicView({
-        publicGameId,
-        dateKst,
-        row: match.row,
-        recentForm,
-        updatedAt: match.row.marketBenchmark.observedAt,
-      }),
+      view: finalizePublicAnalysisView(
+        projectDailyCRowToPublicView({
+          publicGameId,
+          dateKst,
+          row: match.row,
+          recentForm,
+          updatedAt: match.row.marketBenchmark.observedAt,
+        }),
+        listIdentity,
+      ),
       resolution: {
         matched: true,
         source: "daily-c",
@@ -102,11 +113,14 @@ export async function loadPublicGameAnalysis(input: {
     );
     const research = await loadResearchAnalysisView(publicGameId);
     return {
-      view: projectLegacyResearchToPublicView({
-        publicGameId,
-        dateKst,
-        research,
-      }),
+      view: finalizePublicAnalysisView(
+        projectLegacyResearchToPublicView({
+          publicGameId,
+          dateKst,
+          research,
+        }),
+        listIdentity,
+      ),
       resolution: {
         matched: research.gameInfo.availability === "COLLECTED",
         source: "legacy-research",
@@ -117,7 +131,10 @@ export async function loadPublicGameAnalysis(input: {
     };
   } catch {
     return {
-      view: unresolvedPublicView(publicGameId, dateKst),
+      view: finalizePublicAnalysisView(
+        unresolvedPublicView(publicGameId, dateKst),
+        listIdentity,
+      ),
       resolution: {
         matched: false,
         source: "unresolved",

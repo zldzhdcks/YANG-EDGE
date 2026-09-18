@@ -1,5 +1,7 @@
 import type { PublicGameAnalysisViewV1 } from "@/types/public-game-analysis-view";
 import PublicAnalysisHeader from "./PublicAnalysisHeader";
+import PublicQuickPreview from "./PublicQuickPreview";
+import PublicAnalysisStatus from "./PublicAnalysisStatus";
 import PublicAnalysisDecision from "./PublicAnalysisDecision";
 import PublicKeyPoints from "./PublicKeyPoints";
 import PublicRecentForm from "./PublicRecentForm";
@@ -19,6 +21,8 @@ export default function PublicAnalysisViewer({ view, gamesBackHref }: Props) {
   return (
     <div className="mx-auto max-w-3xl space-y-5 px-4 py-8 sm:px-6 sm:py-10">
       <PublicAnalysisHeader view={view} gamesBackHref={gamesBackHref} />
+      <PublicQuickPreview preview={view.quickPreview} />
+      <PublicAnalysisStatus view={view} />
       <PublicAnalysisDecision view={view} />
       <PublicKeyPoints points={view.context.keyPoints} />
       <PublicRecentForm recentForm={view.context.recentForm} />

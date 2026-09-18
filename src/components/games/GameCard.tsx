@@ -389,6 +389,13 @@ export default function GameCard({
     <AnalysisNavLink
       gameId={getResearchAnalysisGameId(game)}
       fromDate={fromDate}
+      identity={{
+        sport: game.sport,
+        league: game.league,
+        homeTeam: game.homeTeam,
+        awayTeam: game.awayTeam,
+        startTime: game.startTime,
+      }}
       className={wrapperClass}
     >
       {isCompact ? (

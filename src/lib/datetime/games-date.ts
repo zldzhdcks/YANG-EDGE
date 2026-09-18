@@ -37,15 +37,87 @@ export function buildGamesPath(dateKst: string): string {
   return `/games?date=${encodeURIComponent(dateKst)}`;
 }
 
+/** Presentation-only list identity. Not a research/Provider join key. */
+export type AnalysisPresentationIdentity = {
+  sport?: string | null;
+  league?: string | null;
+  homeTeam?: string | null;
+  awayTeam?: string | null;
+  startTime?: string | null;
+};
+
+const IDENTITY_FIELD_MAX_LEN = 80;
+
+export function sanitizeAnalysisIdentityField(
+  raw: unknown,
+): string | null {
+  if (typeof raw !== "string") return null;
+  const trimmed = raw.trim().replace(/[\u0000-\u001f\u007f]/g, "");
+  if (!trimmed) return null;
+  if (trimmed.includes("\0") || trimmed.includes("..")) return null;
+  return trimmed.length > IDENTITY_FIELD_MAX_LEN
+    ? trimmed.slice(0, IDENTITY_FIELD_MAX_LEN)
+    : trimmed;
+}
+
+export function sanitizeAnalysisPresentationIdentity(
+  identity?: AnalysisPresentationIdentity | null,
+): AnalysisPresentationIdentity | null {
+  if (!identity) return null;
+  const sport = sanitizeAnalysisIdentityField(identity.sport);
+  const league = sanitizeAnalysisIdentityField(identity.league);
+  const homeTeam = sanitizeAnalysisIdentityField(identity.homeTeam);
+  const awayTeam = sanitizeAnalysisIdentityField(identity.awayTeam);
+  const startTime = sanitizeAnalysisIdentityField(identity.startTime);
+  if (!sport && !league && !homeTeam && !awayTeam && !startTime) return null;
+  return { sport, league, homeTeam, awayTeam, startTime };
+}
+
+function firstSearchValue(
+  value: string | string[] | undefined,
+): string | undefined {
+  if (Array.isArray(value)) return value[0];
+  return value;
+}
+
+export function parseAnalysisPresentationIdentityFromSearch(
+  search:
+    | Record<string, string | string[] | undefined>
+    | null
+    | undefined,
+): AnalysisPresentationIdentity | null {
+  if (!search) return null;
+  return sanitizeAnalysisPresentationIdentity({
+    sport: firstSearchValue(search.sport),
+    league: firstSearchValue(search.league),
+    homeTeam: firstSearchValue(search.homeTeam),
+    awayTeam: firstSearchValue(search.awayTeam),
+    startTime: firstSearchValue(search.startTime),
+  });
+}
+
+/**
+ * Public analysis URL. Optional identity is display fallback only.
+ * Existing `buildAnalysisPath(gameId, fromDate)` calls remain valid.
+ */
 export function buildAnalysisPath(
   gameId: string,
   fromDate?: string | null,
+  identity?: AnalysisPresentationIdentity | null,
 ): string {
   const base = `/analysis/${encodeURIComponent(gameId)}`;
+  const params = new URLSearchParams();
   if (fromDate && isValidKstDateString(fromDate)) {
-    return `${base}?fromDate=${encodeURIComponent(fromDate)}`;
+    params.set("fromDate", fromDate);
   }
-  return base;
+  const safe = sanitizeAnalysisPresentationIdentity(identity);
+  if (safe?.sport) params.set("sport", safe.sport);
+  if (safe?.league) params.set("league", safe.league);
+  if (safe?.homeTeam) params.set("homeTeam", safe.homeTeam);
+  if (safe?.awayTeam) params.set("awayTeam", safe.awayTeam);
+  if (safe?.startTime) params.set("startTime", safe.startTime);
+  const qs = params.toString();
+  return qs ? `${base}?${qs}` : base;
 }
 
 /**

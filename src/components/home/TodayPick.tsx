@@ -158,6 +158,11 @@ export default function TodayPick({ result }: TodayPickProps) {
           <TodayPickReasons reasons={pick.reasons} />
           <AnalysisNavLink
             gameId={pick.gameId}
+            identity={{
+              league: pick.league,
+              homeTeam: pick.homeTeam,
+              awayTeam: pick.awayTeam,
+            }}
             className="inline-flex w-fit shrink-0 self-end text-sm font-medium whitespace-nowrap text-blue-400 hover:text-blue-300"
           >
             {SAMPLE_ANALYSIS_CTA}
