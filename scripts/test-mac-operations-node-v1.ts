@@ -150,6 +150,40 @@ function writeLock(
   );
 }
 
+function writeRecoveryGuard(
+  cwd: string,
+  partial: {
+    guardId?: string;
+    pid?: number;
+    startedAt?: string;
+    expiresAt?: string;
+  } = {},
+) {
+  mkdirSync(path.dirname(macOpsRecoveryLockPath(cwd)), { recursive: true });
+  writeFileSync(
+    macOpsRecoveryLockPath(cwd),
+    `${JSON.stringify(
+      {
+        version: "mac-operations-node-v1",
+        kind: "recovery-guard",
+        guardId: partial.guardId ?? "stale-guard",
+        pid: partial.pid ?? 1,
+        startedAt: partial.startedAt ?? "2026-09-01T00:00:00.000Z",
+        expiresAt: partial.expiresAt ?? "2026-09-01T00:00:30.000Z",
+      },
+      null,
+      2,
+    )}\n`,
+    "utf8",
+  );
+}
+
+function readRecoveryGuardFile(cwd: string): Record<string, unknown> | null {
+  const abs = macOpsRecoveryLockPath(cwd);
+  if (!existsSync(abs)) return null;
+  return JSON.parse(readFileSync(abs, "utf8")) as Record<string, unknown>;
+}
+
 async function main() {
   assert.equal(MLB_STATS_AUTOMATION_ALLOWED, false);
   assert.equal(getKstDateString(NOW), DATE_KST);
@@ -735,7 +769,10 @@ async function main() {
       assert.ok(rec);
       if (acq.outcome === "LOCK_STALE_RECOVERED") {
         assert.equal(rec?.runId, "recoverer");
-        assert.equal(hb.outcome, "LEASE_NOT_OWNER");
+        assert.ok(
+          hb.outcome === "LEASE_NOT_OWNER" ||
+            hb.outcome === "LEASE_SERIALIZATION_BUSY",
+        );
       } else {
         assert.equal(acq.outcome, "LOCK_ALREADY_HELD");
         assert.equal(hb.outcome, "LEASE_REFRESHED");
@@ -833,6 +870,219 @@ async function main() {
         { cwd: REPO, encoding: "utf8" },
       );
       assert.ok(recoveryIgnore.includes(MAC_OPS_RECOVERY_LOCK_REL));
+    }
+
+    // 49–52 concurrent stale recovery-guard reclaim (overlapping async)
+    {
+      const cwd = tmpCwd();
+      writeLock(cwd, { runId: "stale-main" });
+      writeRecoveryGuard(cwd, { guardId: "expired-shared" });
+      const go = deferred();
+      let waiting = 0;
+      let concurrentGuards = 0;
+      let maxGuards = 0;
+      const barrierHooks = {
+        beforeRecoveryGuardAttempt: async () => {
+          waiting += 1;
+          if (waiting === 2) go.resolve();
+          await go.promise;
+        },
+        afterRecoveryGuardAcquired: async () => {
+          concurrentGuards += 1;
+          maxGuards = Math.max(maxGuards, concurrentGuards);
+        },
+        afterRecoveryGuardReleased: async () => {
+          concurrentGuards -= 1;
+        },
+      };
+      const [a, b] = await Promise.all([
+        acquireMacOpsLock({
+          cwd,
+          runId: "reclaim-a",
+          now: NOW,
+          hooks: barrierHooks,
+        }),
+        acquireMacOpsLock({
+          cwd,
+          runId: "reclaim-b",
+          now: NOW,
+          hooks: barrierHooks,
+        }),
+      ]);
+      assert.ok(maxGuards <= 1);
+      const recovered = [a, b].filter((r) => r.outcome === "LOCK_STALE_RECOVERED");
+      const held = [a, b].filter((r) => r.outcome === "LOCK_ALREADY_HELD");
+      assert.equal(recovered.length, 1);
+      assert.equal(held.length, 1);
+      const winner = recovered[0];
+      const rec = await readMacOpsLock(cwd);
+      assert.equal(rec?.runId, winner?.record?.runId);
+      assert.equal(existsSync(macOpsRecoveryLockPath(cwd)), false);
+      const leftovers = readdirSync(path.dirname(macOpsRecoveryLockPath(cwd))).filter(
+        (n) => n.includes(".reclaim."),
+      );
+      assert.deepEqual(leftovers, []);
+      await releaseMacOpsLock({ cwd, runId: rec!.runId });
+    }
+
+    // 50–51 loser / fresh-guard inject: never delete the replacement
+    {
+      const cwd = tmpCwd();
+      writeLock(cwd, { runId: "stale-main" });
+      writeRecoveryGuard(cwd, { guardId: "expired-observed" });
+      const freshExpires = new Date(NOW.getTime() + 60_000).toISOString();
+      const result = await acquireMacOpsLock({
+        cwd,
+        runId: "attacker",
+        now: NOW,
+        hooks: {
+          afterStaleGuardRenamed: async () => {
+            writeRecoveryGuard(cwd, {
+              guardId: "winner-fresh",
+              pid: 77,
+              startedAt: NOW.toISOString(),
+              expiresAt: freshExpires,
+            });
+          },
+        },
+      });
+      assert.equal(result.outcome, "LOCK_ALREADY_HELD");
+      const guard = readRecoveryGuardFile(cwd);
+      assert.equal(guard?.guardId, "winner-fresh");
+      const rec = await readMacOpsLock(cwd);
+      assert.equal(rec?.runId, "stale-main");
+    }
+
+    // 53–54 release when recovery guard busy → no unguarded unlink
+    {
+      const cwd = tmpCwd();
+      const owner = await acquireMacOpsLock({ cwd, runId: "owner", now: NOW });
+      assert.equal(owner.outcome, "LOCK_ACQUIRED");
+      const hold = deferred();
+      const resume = deferred();
+      const refreshP = refreshMacOpsLockLease({
+        cwd,
+        runId: "owner",
+        now: NOW,
+        hooks: {
+          afterRecoveryGuardAcquired: async () => {
+            hold.resolve();
+            await resume.promise;
+          },
+        },
+      });
+      await hold.promise;
+      const busy = await releaseMacOpsLock({ cwd, runId: "owner", now: NOW });
+      assert.equal(busy, "LOCK_SERIALIZATION_BUSY");
+      assert.equal(existsSync(macOpsLockPath(cwd)), true);
+      const recDuring = await readMacOpsLock(cwd);
+      assert.equal(recDuring?.runId, "owner");
+      resume.resolve();
+      const refreshed = await refreshP;
+      assert.equal(refreshed.outcome, "LEASE_REFRESHED");
+      const released = await releaseMacOpsLock({ cwd, runId: "owner", now: NOW });
+      assert.equal(released, "LOCK_RELEASED");
+      assert.equal(existsSync(macOpsLockPath(cwd)), false);
+    }
+
+    // 55 heartbeat + release + stale recovery remain serialized
+    {
+      const cwd = tmpCwd();
+      writeLock(cwd, {
+        pid: process.pid,
+        runId: "old-owner",
+        startedAt: "2026-09-01T00:00:00.000Z",
+        expiresAt: "2026-09-01T00:20:00.000Z",
+      });
+      const go = deferred();
+      let waiting = 0;
+      let concurrentGuards = 0;
+      let maxGuards = 0;
+      const barrierHooks = {
+        beforeRecoveryGuardAttempt: async () => {
+          waiting += 1;
+          if (waiting === 3) go.resolve();
+          await go.promise;
+        },
+        afterRecoveryGuardAcquired: async () => {
+          concurrentGuards += 1;
+          maxGuards = Math.max(maxGuards, concurrentGuards);
+        },
+        afterRecoveryGuardReleased: async () => {
+          concurrentGuards -= 1;
+        },
+      };
+      const [acq, hb, rel] = await Promise.all([
+        acquireMacOpsLock({
+          cwd,
+          runId: "recoverer",
+          now: NOW,
+          hooks: barrierHooks,
+        }),
+        refreshMacOpsLockLease({
+          cwd,
+          runId: "old-owner",
+          now: NOW,
+          hooks: barrierHooks,
+        }),
+        releaseMacOpsLock({
+          cwd,
+          runId: "old-owner",
+          now: NOW,
+          hooks: barrierHooks,
+        }),
+      ]);
+      assert.ok(maxGuards <= 1);
+      assert.ok(
+        rel === "LOCK_RELEASED" ||
+          rel === "LOCK_SERIALIZATION_BUSY" ||
+          rel === "LOCK_HELD" ||
+          rel === "LOCK_AVAILABLE",
+      );
+      const rec = await readMacOpsLock(cwd);
+      if (acq.outcome === "LOCK_STALE_RECOVERED") {
+        assert.equal(rec?.runId, "recoverer");
+      } else if (rel === "LOCK_RELEASED") {
+        assert.equal(rec, null);
+      } else if (hb.outcome === "LEASE_REFRESHED") {
+        assert.equal(rec?.runId, "old-owner");
+      }
+      assert.equal(existsSync(macOpsRecoveryLockPath(cwd)), false);
+    }
+
+    // 56 abandoned main lock still recoverable after TTL
+    {
+      const cwd = tmpCwd();
+      const t0 = NOW;
+      await acquireMacOpsLock({ cwd, runId: "abandoned", now: t0, ttlMs: 1000 });
+      assert.equal(existsSync(macOpsRecoveryLockPath(cwd)), false);
+      const tExpired = new Date(t0.getTime() + 1001);
+      const recovered = await acquireMacOpsLock({
+        cwd,
+        runId: "later-tick",
+        now: tExpired,
+      });
+      assert.equal(recovered.outcome, "LOCK_STALE_RECOVERED");
+      const rec = await readMacOpsLock(cwd);
+      assert.equal(rec?.runId, "later-tick");
+      await releaseMacOpsLock({ cwd, runId: "later-tick" });
+    }
+
+    // 59 runtime files remain Git-ignored
+    {
+      const reclaimRel = `${MAC_OPS_RECOVERY_LOCK_REL}.reclaim.fixture`;
+      const recoveryIgnore = execFileSync(
+        "git",
+        ["check-ignore", "-v", MAC_OPS_RECOVERY_LOCK_REL],
+        { cwd: REPO, encoding: "utf8" },
+      );
+      const reclaimIgnore = execFileSync(
+        "git",
+        ["check-ignore", "-v", reclaimRel],
+        { cwd: REPO, encoding: "utf8" },
+      );
+      assert.ok(recoveryIgnore.includes(MAC_OPS_RECOVERY_LOCK_REL));
+      assert.ok(reclaimIgnore.includes("reclaim"));
     }
 
     assert.equal(MAC_OPS_LOCK_TTL_MS, 30 * 60_000);

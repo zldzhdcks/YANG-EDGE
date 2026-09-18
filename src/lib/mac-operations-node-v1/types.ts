@@ -23,9 +23,11 @@ export const MAC_OPS_LOCK_TTL_MS = 30 * 60_000;
 export const MAC_OPS_LOCK_HEARTBEAT_INTERVAL_MS = 5 * 60_000;
 
 /**
- * Recovery-guard leftover TTL. The critical section is milliseconds
- * (re-read / optional unlink / wx, or lease overwrite). 60s reclaims a
- * crash leftover without approaching the 30-minute main lease.
+ * Recovery-guard leftover TTL. The critical section is milliseconds.
+ * An expired guard may be reclaimed only by atomically renaming it away
+ * (exclusive ownership of that inode), then `wx`-creating a replacement.
+ * Never unlink the canonical recovery-guard path. If `wx` loses to a
+ * fresh guard in the gap, fail closed and leave that fresh guard intact.
  */
 export const MAC_OPS_RECOVERY_LOCK_TTL_MS = 60_000;
 
@@ -50,12 +52,14 @@ export type MacOpsLockOutcome =
   | "LOCK_STALE_RECOVERED"
   | "LOCK_RELEASED"
   | "LOCK_AVAILABLE"
-  | "LOCK_HELD";
+  | "LOCK_HELD"
+  | "LOCK_SERIALIZATION_BUSY";
 
 export type MacOpsLeaseRefreshOutcome =
   | "LEASE_REFRESHED"
   | "LEASE_NOT_OWNER"
-  | "LEASE_MISSING";
+  | "LEASE_MISSING"
+  | "LEASE_SERIALIZATION_BUSY";
 
 export type MacOpsLockRecord = {
   version: typeof MAC_OPS_NODE_VERSION;
