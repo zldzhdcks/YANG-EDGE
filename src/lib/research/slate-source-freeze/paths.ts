@@ -1,4 +1,5 @@
 import path from "node:path";
+import { scheduledStartRepresentsDateKst } from "../../betman/daily-slate/schedule-date-kst";
 import {
   RESEARCH_SLATE_SOURCE_FREEZE_MECHANISM,
   RESEARCH_SLATE_SOURCE_FREEZE_SCHEMA_VERSION,
@@ -131,5 +132,5 @@ export function gameRepresentsDateKst(
   scheduledStartTimeKst: string,
   dateKst: string,
 ): boolean {
-  return scheduledStartTimeKst.startsWith(dateKst);
+  return scheduledStartRepresentsDateKst(scheduledStartTimeKst, dateKst);
 }
