@@ -3,7 +3,7 @@
  * Does not change Engine / Prediction / weights / datasets.
  */
 
-import type { DailyOverallStatus, DailyPregameReport } from "@/lib/mlb/daily-pregame-v0";
+import type { DailyOverallStatus, DailyPregameReport, MlbDailyOpsWindow } from "@/lib/mlb/daily-pregame-v0";
 import type { SlateProvenanceBanner } from "@/lib/mlb/recommendation-provenance-v1";
 
 export const MLB_DAILY_OPS_SCHEMA = "yang-edge-mlb-daily-ops-v1" as const;
@@ -81,6 +81,7 @@ export type MlbDailyOpsReport = {
   dateKst: string;
   dryRun: boolean;
   noProvider: boolean;
+  window: MlbDailyOpsWindow | null;
   generatedAt: string;
   /** True only when pregame snapshot exists, before first pitch, verify PASS. */
   opsSuccess: boolean;

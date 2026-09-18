@@ -11,7 +11,8 @@ import {
   formatMlbDailyOpsFailureBlock,
   runMlbDailyOpsV1,
 } from "../src/lib/mlb/daily-ops-v1";
-import type { DailyStageName } from "../src/lib/mlb/daily-pregame-v0";
+import type { DailyStageName, MlbDailyOpsWindow } from "../src/lib/mlb/daily-pregame-v0";
+import { parseMlbDailyOpsWindow } from "../src/lib/mlb/daily-pregame-v0";
 
 function usage(): string {
   return `Usage:
@@ -31,6 +32,7 @@ Options:
   --no-seal              Do not seal recommendation delivery record
   --stop-after <STAGE>
   --resume-from <STAGE>
+  --window T90|T60|T45|T30|LOCK
   --help
 
 Stages (reused): SCHEDULE → STARTER → ODDS → LINEUP → DAILY_RESEARCH_SUMMARY
@@ -54,6 +56,7 @@ function parseArgs(argv: string[]) {
   let noSeal = false;
   let stopAfter: DailyStageName | undefined;
   let resumeFrom: DailyStageName | undefined;
+  let window: MlbDailyOpsWindow | undefined;
   const gameIds: string[] = [];
 
   const stages = new Set([
@@ -126,6 +129,12 @@ function parseArgs(argv: string[]) {
       resumeFrom = s as DailyStageName;
       continue;
     }
+    if (a === "--window") {
+      const s = argv[++i];
+      if (!s) throw new Error("Missing --window value");
+      window = parseMlbDailyOpsWindow(s);
+      continue;
+    }
     if (!a.startsWith("-") && /^\d{4}-\d{2}-\d{2}$/.test(a) && !dateKst) {
       dateKst = a;
       continue;
@@ -142,10 +151,16 @@ function parseArgs(argv: string[]) {
     skipLineup,
     observationOnly,
     useMarketPrior,
-    writePrediction: !dryRun && !noWrite && !assessOnly,
-    sealDeliveryRecord: !noSeal && !dryRun && !assessOnly,
+    writePrediction:
+      !dryRun &&
+      !noWrite &&
+      !assessOnly &&
+      (window == null || window === "LOCK"),
+    sealDeliveryRecord:
+      !noSeal && !dryRun && !assessOnly && (window == null || window === "LOCK"),
     stopAfter,
     resumeFrom,
+    window,
     gameIds,
   };
 }
@@ -178,6 +193,7 @@ async function main() {
     stopAfter: opts.stopAfter,
     resumeFrom: opts.resumeFrom,
     writePrediction: opts.writePrediction,
+    window: opts.window,
   });
 
   if (opts.json) {

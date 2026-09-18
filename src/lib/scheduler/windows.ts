@@ -40,3 +40,39 @@ export const DEFAULT_LOCK_TTL_MS = {
 
 export const QUOTA_WARN_REMAINING = 20;
 export const QUOTA_BLOCK_REMAINING = 10;
+
+export type MlbOpsFreshnessWindow = keyof typeof DEFAULT_WINDOWS;
+
+/**
+ * Operations freshness only — NOT an Engine / prediction / weight threshold.
+ * Window W is entered at scheduledStart − DEFAULT_WINDOWS[W].fromMinutes.
+ * An observation produced before that instant is not a fresh observation for W.
+ */
+export function mlbOpsWindowEnteredAtMs(
+  scheduledStartIso: string,
+  window: MlbOpsFreshnessWindow,
+): number | null {
+  const startMs = Date.parse(scheduledStartIso);
+  if (!Number.isFinite(startMs)) return null;
+  return startMs - DEFAULT_WINDOWS[window].fromMinutes * 60_000;
+}
+
+/**
+ * True iff observedAt is at or after the named window opened for this start.
+ * Missing timestamps are not fresh (cannot prove ARTIFACT_FRESH).
+ */
+export function isMlbOpsWindowFresh(input: {
+  observedAtMs: number | null;
+  scheduledStartIso: string | null;
+  window: MlbOpsFreshnessWindow;
+}): boolean {
+  if (input.observedAtMs == null || input.scheduledStartIso == null) {
+    return false;
+  }
+  const entered = mlbOpsWindowEnteredAtMs(
+    input.scheduledStartIso,
+    input.window,
+  );
+  if (entered == null) return false;
+  return input.observedAtMs >= entered;
+}

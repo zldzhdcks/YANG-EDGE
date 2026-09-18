@@ -7,6 +7,7 @@ import {
   runMlbDailyPregameV0,
   type DailyPregameOptions,
   type DailyStageName,
+  type MlbDailyOpsWindow,
 } from "@/lib/mlb/daily-pregame-v0";
 import { DAILY_PREDICTION_SNAPSHOT_MISSING } from "@/lib/mlb/prediction-continuity-guard-v1";
 import { assessSlateRecommendationProvenance } from "@/lib/mlb/recommendation-provenance-v1";
@@ -44,6 +45,8 @@ export type MlbDailyOpsOptions = {
   enforcePregameGates?: boolean;
   /** Skip spawning collectors; assess + provenance only (tests / dashboard). */
   assessOnly?: boolean;
+  window?: MlbDailyOpsWindow | null;
+  quotaRemaining?: number | null;
 };
 
 function mapFailureFromPregame(input: {
@@ -118,7 +121,10 @@ export async function runMlbDailyOpsV1(
   const noProvider = Boolean(options.noProvider) || dryRun;
   const assessOnly = Boolean(options.assessOnly);
   const sealDelivery =
-    options.sealDeliveryRecord !== false && !dryRun && !assessOnly;
+    options.sealDeliveryRecord !== false &&
+    !dryRun &&
+    !assessOnly &&
+    (options.window == null || options.window === "LOCK");
 
   const recentDates =
     options.recentDates ??
@@ -146,11 +152,15 @@ export async function runMlbDailyOpsV1(
       stopAfter: options.stopAfter,
       resumeFrom: options.resumeFrom,
       writePrediction:
-        options.writePrediction !== undefined
-          ? options.writePrediction
-          : !dryRun,
+        options.window != null && options.window !== "LOCK"
+          ? false
+          : options.writePrediction !== undefined
+            ? options.writePrediction
+            : !dryRun,
       asOf: options.asOf,
       enforcePregameGates: options.enforcePregameGates,
+      window: options.window ?? null,
+      quotaRemaining: options.quotaRemaining ?? null,
     };
     pregame = await runMlbDailyPregameV0(pregameOpts);
     providerCalls = pregame.providerCalls;
@@ -213,6 +223,7 @@ export async function runMlbDailyOpsV1(
     dateKst,
     dryRun: dryRun || assessOnly,
     noProvider,
+    window: options.window ?? null,
     generatedAt: new Date().toISOString(),
     opsSuccess,
     lifecycle: day.lifecycle,

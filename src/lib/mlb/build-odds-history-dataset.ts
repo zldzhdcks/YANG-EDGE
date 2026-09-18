@@ -6,7 +6,7 @@
  * Movement compares only against a previous odds-history artifact for the same date.
  */
 import { createHash } from "node:crypto";
-import { access, mkdir, readFile, writeFile } from "node:fs/promises";
+import { access, mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { GameData } from "@/types/game";
 import { removeBookmakerMargin } from "../market/remove-bookmaker-margin";
@@ -114,24 +114,125 @@ function oddsCacheFileKey(params: Record<string, string>): string {
     .join("__");
 }
 
+export type OddsRawCacheProvenance =
+  | "CACHE_HIT_FRESH"
+  | "CACHE_HIT_LEGACY"
+  | "CACHE_MISS"
+  | "CACHE_STALE_REFRESH_REQUIRED"
+  | "NETWORK_REFRESH";
+
+export type OddsRawCacheLoadResult = {
+  body: unknown;
+  provenance: OddsRawCacheProvenance;
+  cachedAt: string | null;
+  usedNetwork: boolean;
+};
+
+export type OddsRawCacheLoadOptions = {
+  cwd?: string;
+  asOfMs?: number;
+  /** Null/undefined = unlimited age (legacy research reuse). */
+  maxAgeMs?: number | null;
+  /** When true, stale cache triggers fetcher. Default true if maxAgeMs set. */
+  refreshStale?: boolean;
+  usage: CacheUsageStats;
+};
+
+export function oddsResearchRawCacheFile(
+  cacheKey: string,
+  cwd = process.cwd(),
+): string {
+  return path.join(oddsResearchCacheRoot(cwd), `${cacheKey}.json`);
+}
+
+/**
+ * Odds research raw cache.
+ * Historical files remain raw JSON bodies (no envelope rewrite).
+ * Freshness uses filesystem mtime vs asOf/maxAge — not a second cache.
+ */
+export async function loadOddsResearchRawJson(
+  cacheKey: string,
+  fetcher: () => Promise<unknown>,
+  options: OddsRawCacheLoadOptions,
+): Promise<OddsRawCacheLoadResult> {
+  const cwd = options.cwd ?? process.cwd();
+  const file = oddsResearchRawCacheFile(cacheKey, cwd);
+  const asOfMs = options.asOfMs ?? Date.now();
+  const maxAgeMs =
+    options.maxAgeMs == null || !Number.isFinite(options.maxAgeMs)
+      ? null
+      : options.maxAgeMs;
+  const refreshStale = options.refreshStale ?? maxAgeMs != null;
+  const usage = options.usage;
+
+  let cachedBody: unknown = null;
+  let cachedAt: string | null = null;
+  let ageMs: number | null = null;
+  try {
+    const raw = await readFile(file, "utf8");
+    cachedBody = JSON.parse(raw) as unknown;
+    const st = await stat(file);
+    cachedAt = st.mtime.toISOString();
+    ageMs = asOfMs - st.mtimeMs;
+  } catch {
+    cachedBody = null;
+  }
+
+  if (cachedBody != null && maxAgeMs == null) {
+    usage.rawHit += 1;
+    return {
+      body: cachedBody,
+      provenance: "CACHE_HIT_LEGACY",
+      cachedAt,
+      usedNetwork: false,
+    };
+  }
+
+  if (cachedBody != null && ageMs != null && ageMs <= maxAgeMs!) {
+    usage.rawHit += 1;
+    return {
+      body: cachedBody,
+      provenance: "CACHE_HIT_FRESH",
+      cachedAt,
+      usedNetwork: false,
+    };
+  }
+
+  if (cachedBody != null && !refreshStale) {
+    // Stale: do NOT count as a fresh cache hit.
+    return {
+      body: cachedBody,
+      provenance: "CACHE_STALE_REFRESH_REQUIRED",
+      cachedAt,
+      usedNetwork: false,
+    };
+  }
+
+  const isMiss = cachedBody == null;
+  if (isMiss) usage.rawMiss += 1;
+  usage.networkCalls += 1;
+  const body = await fetcher();
+  await mkdir(path.dirname(file), { recursive: true });
+  await writeFile(file, `${JSON.stringify(body, null, 2)}\n`, "utf8");
+  return {
+    body,
+    provenance: isMiss ? "CACHE_MISS" : "NETWORK_REFRESH",
+    cachedAt: new Date(asOfMs).toISOString(),
+    usedNetwork: true,
+  };
+}
+
 async function getRawOddsJson(
   cacheKey: string,
   fetcher: () => Promise<unknown>,
   usage: CacheUsageStats,
+  cacheOpts?: Omit<OddsRawCacheLoadOptions, "usage">,
 ): Promise<unknown> {
-  const file = path.join(oddsResearchCacheRoot(), `${cacheKey}.json`);
-  try {
-    const raw = await readFile(file, "utf8");
-    usage.rawHit += 1;
-    return JSON.parse(raw) as unknown;
-  } catch {
-    usage.rawMiss += 1;
-    usage.networkCalls += 1;
-    const body = await fetcher();
-    await mkdir(path.dirname(file), { recursive: true });
-    await writeFile(file, `${JSON.stringify(body, null, 2)}\n`, "utf8");
-    return body;
-  }
+  const loaded = await loadOddsResearchRawJson(cacheKey, fetcher, {
+    ...cacheOpts,
+    usage,
+  });
+  return loaded.body;
 }
 
 function teamsMatchForOdds(a: string, b: string): boolean {
@@ -554,6 +655,7 @@ type ProviderFetchResult = {
 async function fetchOddsApiEventsForDate(
   dateKst: string,
   usage: CacheUsageStats,
+  cacheOpts?: Omit<OddsRawCacheLoadOptions, "usage">,
 ): Promise<ProviderFetchResult> {
   const apiKey = (process.env.ODDS_API_KEY ?? "").trim();
   const baseUrl =
@@ -581,6 +683,7 @@ async function fetchOddsApiEventsForDate(
         return res.json();
       },
       usage,
+      cacheOpts,
     )) as unknown[];
 
     for (const raw of Array.isArray(sportsBody) ? sportsBody : []) {
@@ -630,6 +733,7 @@ async function fetchOddsApiEventsForDate(
         return res.json();
       },
       usage,
+      cacheOpts,
     );
 
     return {
@@ -703,6 +807,8 @@ export function assertOddsHistoryDatasetIntegrity(
 export async function buildOddsHistoryDatasetV1(input: {
   dateKst: string;
   predictionRaw?: string | null;
+  cwd?: string;
+  oddsRawCache?: Omit<OddsRawCacheLoadOptions, "usage">;
 }): Promise<BuildOddsHistoryDatasetResult> {
   const usage = createCacheUsage();
 
@@ -719,7 +825,13 @@ export async function buildOddsHistoryDatasetV1(input: {
   const previousRows = await loadPreviousOddsRows(input.dateKst);
   const hasPreviousSnapshot = previousRows.size > 0;
 
-  const oddsFetch = await fetchOddsApiEventsForDate(input.dateKst, usage);
+  const oddsFetch = await fetchOddsApiEventsForDate(
+    input.dateKst,
+    usage,
+    input.oddsRawCache
+      ? { cwd: input.cwd, ...input.oddsRawCache }
+      : { cwd: input.cwd },
+  );
   const generatedAt = new Date().toISOString();
   const rows: OddsHistoryDatasetRow[] = [];
 

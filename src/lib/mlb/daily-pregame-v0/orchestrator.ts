@@ -17,6 +17,7 @@ import {
   auditDomesticMarkets,
   auditLineup,
   auditOdds,
+  auditPredictionSnapshot,
   auditSchedule,
   auditStarter,
   auditSummary,
@@ -37,7 +38,15 @@ import type {
   DailyStageName,
   DailyStageResult,
   DailyStageStatus,
+  MlbDailyOpsWindow,
 } from "./types";
+import {
+  decideMlbDailyCollection,
+  decidePredictionPersist,
+  windowAllowsPredictionPersist,
+  type MlbCollectionDecision,
+} from "./window-freshness";
+import type { LineupSlateClass } from "./audit-artifacts";
 
 export type DailyPregameOptions = {
   dateKst: string;
@@ -60,6 +69,13 @@ export type DailyPregameOptions = {
    * Defaults to true when writing a real prediction; false for dry-run historical.
    */
   enforcePregameGates?: boolean;
+  /** Ops window. Unset preserves legacy artifact-exists skip + prediction allowed. */
+  window?: MlbDailyOpsWindow | null;
+  /**
+   * Odds-API remaining quota when known. Null = refresh must not silently
+   * spawn (QUOTA_DECISION_EXTERNAL). Not Scheduler wiring.
+   */
+  quotaRemaining?: number | null;
 };
 
 export const MLB_DAILY_PREGAME_STAGE_ORDER: DailyStageName[] = [
@@ -111,6 +127,36 @@ function recommendedRunAt(earliestStart: string | null): string | null {
   return new Date(t - 90 * 60 * 1000).toISOString();
 }
 
+function collectionDetail(
+  decision: MlbCollectionDecision,
+  extra: Record<string, unknown> = {},
+): Record<string, unknown> {
+  return {
+    collectionDecision: decision.code,
+    collectionAction: decision.action,
+    spawnRequested: decision.spawnRequested,
+    spawnAllowed: decision.spawnAllowed,
+    artifactExists: decision.exists,
+    artifactFresh: decision.fresh,
+    providerPolicy: decision.providerPolicy,
+    notes: decision.notes,
+    ...extra,
+  };
+}
+
+function lineupClassOf(lineup: { detail: Record<string, unknown> }): LineupSlateClass {
+  const raw = String(lineup.detail.slateClass ?? "");
+  if (
+    raw === "CONFIRMED_COMPLETE" ||
+    raw === "PARTIAL" ||
+    raw === "NOT_RELEASED" ||
+    raw === "NOT_COLLECTED"
+  ) {
+    return raw;
+  }
+  return "NOT_COLLECTED";
+}
+
 function verifySnapshotDoc(doc: {
   meta: Record<string, unknown>;
   predictions: Array<Record<string, unknown>>;
@@ -159,13 +205,18 @@ export async function runMlbDailyPregameV0(
   const cwd = options.cwd ?? process.cwd();
   const dryRun = Boolean(options.dryRun);
   const noProvider = Boolean(options.noProvider) || dryRun;
+  const window: MlbDailyOpsWindow | null = options.window ?? null;
+  const quotaRemaining =
+    options.quotaRemaining === undefined ? null : options.quotaRemaining;
+  const allowPredictionPersist = windowAllowsPredictionPersist(window);
   const writePrediction =
-    (options.writePrediction !== false) && !dryRun;
+    allowPredictionPersist && (options.writePrediction !== false) && !dryRun;
   const dateKst = options.dateKst;
   const generatedAt = new Date().toISOString();
   const asOfIso = options.asOf ?? generatedAt;
   const enforcePregameGates =
-    options.enforcePregameGates ?? writePrediction;
+    options.enforcePregameGates ??
+    (writePrediction || window === "LOCK");
   const useMarketPrior = options.useMarketPrior !== false;
   const stages: DailyStageResult[] = [];
   const blockingIssues: string[] = [];
@@ -207,72 +258,113 @@ export async function runMlbDailyPregameV0(
         }),
       );
       blockingIssues.push("SCHEDULE_DATE_MISMATCH");
-    } else if (schedule.exists && schedule.dateKstMatch) {
-      scheduleUsable = true;
-      stages.push(
-        emptyStage("SCHEDULE", "ALREADY_COMPLETE", {
-          outputPaths: [schedule.path],
-          activeGames: schedule.pregameGames,
-          rows: schedule.totalGames,
-          readyGames: schedule.pregameGames,
-          warnings: schedule.warnings,
-          durationMs: Date.now() - t0,
-          detail: {
-            cancelled: schedule.cancelled,
-            postponed: schedule.postponed,
-            started: schedule.started,
-            final: schedule.final,
-            earliestStart: schedule.earliestStart,
-            latestStart: schedule.latestStart,
-          },
-        }),
-      );
-    } else if (noProvider) {
-      stages.push(
-        emptyStage("SCHEDULE", "BLOCKED", {
-          outputPaths: [schedule.path],
-          blockers: ["SCHEDULE_ARTIFACT_MISSING"],
-          errorCode: "SCHEDULE_ARTIFACT_MISSING",
-          message: "Schedule artifact missing; Provider call skipped",
-          durationMs: Date.now() - t0,
-          detail: { wouldRun: true, runner: "research:mlb-schedule" },
-        }),
-      );
-      blockingIssues.push("SCHEDULE_ARTIFACT_MISSING");
     } else {
-      // Real collection
-      const code = await spawnLocalTsxScript(
-        "scripts/build-mlb-schedule-artifact-v1.ts",
-        [dateKst],
-      );
-      providerCalls += 1;
-      writesPerformed += code === 0 ? 1 : 0;
-      schedule = await auditSchedule(dateKst, cwd);
-      scheduleUsable = schedule.exists && schedule.dateKstMatch;
-      stages.push(
-        emptyStage(
-          "SCHEDULE",
-          code === 0 && scheduleUsable ? "SUCCESS" : "FAILED",
-          {
+      const cutoffPreview = evaluateCutoffGate({
+        schedule,
+        asOfIso,
+        gameIds: options.gameIds,
+      });
+      const decision = decideMlbDailyCollection({
+        window,
+        dataset: "SCHEDULE",
+        exists: schedule.exists,
+        scheduleDateValid: schedule.dateKstMatch,
+        cutoffBlocked: Boolean(window) && cutoffPreview.blocked,
+        quotaRemaining,
+      });
+      const doSpawn =
+        decision.spawnRequested && decision.spawnAllowed && !noProvider;
+      const providerPolicy =
+        decision.spawnRequested && noProvider
+          ? "PROVIDER_REQUIRED"
+          : decision.providerPolicy;
+      const dExtra = collectionDetail(decision, { providerPolicy });
+
+      if (decision.action === "BLOCK") {
+        if (schedule.exists && schedule.dateKstMatch) scheduleUsable = true;
+        stages.push(
+          emptyStage("SCHEDULE", "BLOCKED", {
             outputPaths: [schedule.path],
-            providerCalls: 1,
+            blockers: [decision.code],
+            errorCode: decision.code,
+            durationMs: Date.now() - t0,
+            detail: dExtra,
+          }),
+        );
+      } else if (schedule.exists && schedule.dateKstMatch && !doSpawn) {
+        scheduleUsable = true;
+        const skipStatus: DailyStageStatus =
+          window == null ? "ALREADY_COMPLETE" : "SKIPPED";
+        stages.push(
+          emptyStage("SCHEDULE", skipStatus, {
+            outputPaths: [schedule.path],
             activeGames: schedule.pregameGames,
             rows: schedule.totalGames,
-            blockers: scheduleUsable
-              ? []
-              : schedule.exists
-                ? ["SCHEDULE_DATE_MISMATCH"]
-                : ["SCHEDULE_COLLECTION_FAILED"],
+            readyGames: schedule.pregameGames,
+            warnings: schedule.warnings,
             durationMs: Date.now() - t0,
-          },
-        ),
-      );
-      if (!scheduleUsable) {
-        blockingIssues.push(
-          schedule.exists
-            ? "SCHEDULE_DATE_MISMATCH"
-            : "SCHEDULE_COLLECTION_FAILED",
+            detail: {
+              cancelled: schedule.cancelled,
+              postponed: schedule.postponed,
+              started: schedule.started,
+              final: schedule.final,
+              earliestStart: schedule.earliestStart,
+              latestStart: schedule.latestStart,
+              ...dExtra,
+            },
+          }),
         );
+      } else if (!doSpawn) {
+        stages.push(
+          emptyStage("SCHEDULE", "BLOCKED", {
+            outputPaths: [schedule.path],
+            blockers: ["SCHEDULE_ARTIFACT_MISSING"],
+            errorCode: "SCHEDULE_ARTIFACT_MISSING",
+            message: "Schedule artifact missing; Provider call skipped",
+            durationMs: Date.now() - t0,
+            detail: {
+              wouldRun: decision.spawnRequested,
+              runner: "research:mlb-schedule",
+              ...dExtra,
+            },
+          }),
+        );
+        blockingIssues.push("SCHEDULE_ARTIFACT_MISSING");
+      } else {
+        const code = await spawnLocalTsxScript(
+          "scripts/build-mlb-schedule-artifact-v1.ts",
+          [dateKst],
+        );
+        providerCalls += 1;
+        writesPerformed += code === 0 ? 1 : 0;
+        schedule = await auditSchedule(dateKst, cwd);
+        scheduleUsable = schedule.exists && schedule.dateKstMatch;
+        stages.push(
+          emptyStage(
+            "SCHEDULE",
+            code === 0 && scheduleUsable ? "SUCCESS" : "FAILED",
+            {
+              outputPaths: [schedule.path],
+              providerCalls: 1,
+              activeGames: schedule.pregameGames,
+              rows: schedule.totalGames,
+              blockers: scheduleUsable
+                ? []
+                : schedule.exists
+                  ? ["SCHEDULE_DATE_MISMATCH"]
+                  : ["SCHEDULE_COLLECTION_FAILED"],
+              durationMs: Date.now() - t0,
+              detail: dExtra,
+            },
+          ),
+        );
+        if (!scheduleUsable) {
+          blockingIssues.push(
+            schedule.exists
+              ? "SCHEDULE_DATE_MISMATCH"
+              : "SCHEDULE_COLLECTION_FAILED",
+          );
+        }
       }
     }
   } else {
@@ -289,6 +381,12 @@ export async function runMlbDailyPregameV0(
   const filterIds = options.gameIds?.length
     ? scheduleIds.filter((id) => options.gameIds!.includes(id))
     : scheduleIds;
+
+  const cutoffForCollect = evaluateCutoffGate({
+    schedule,
+    asOfIso,
+    gameIds: options.gameIds,
+  });
 
   // ---- STARTER ----
   let starter = await auditStarter(dateKst, cwd, filterIds);
@@ -310,17 +408,49 @@ export async function runMlbDailyPregameV0(
   });
   if (shouldRun("STARTER")) {
     const t0 = Date.now();
+    const decision = decideMlbDailyCollection({
+      window,
+      dataset: "STARTER",
+      exists: starter.exists,
+      observedAtIso: starter.observedAt,
+      earliestStartIso: schedule.earliestStart,
+      cutoffBlocked: Boolean(window) && cutoffForCollect.blocked,
+      quotaRemaining,
+    });
+    const doSpawn =
+      decision.spawnRequested && decision.spawnAllowed && !noProvider;
+    const providerPolicy =
+      decision.spawnRequested && noProvider
+        ? "PROVIDER_REQUIRED"
+        : decision.providerPolicy;
+    const dExtra = collectionDetail(decision, { providerPolicy });
+
     if (!scheduleUsable) {
       stages.push(
         emptyStage("STARTER", "BLOCKED", {
           blockers: ["SCHEDULE_REQUIRED"],
           durationMs: Date.now() - t0,
+          detail: dExtra,
         }),
       );
-    } else if (starter.exists) {
+    } else if (decision.action === "BLOCK") {
+      stages.push(
+        emptyStage("STARTER", "BLOCKED", {
+          outputPaths: starter.exists ? [starter.path] : [],
+          blockers: [decision.code],
+          errorCode: decision.code,
+          durationMs: Date.now() - t0,
+          detail: { ...starter.detail, ...dExtra },
+        }),
+      );
+    } else if (starter.exists && !doSpawn) {
       const st = stageStatusForUsability(starterUsability.usability);
       const stageStatus: DailyStageStatus =
-        st === "WOULD_RUN" ? "PARTIAL" : st;
+        window != null
+          ? "SKIPPED"
+          : st === "WOULD_RUN"
+            ? "PARTIAL"
+            : st;
       stages.push(
         emptyStage("STARTER", stageStatus, {
           outputPaths: [starter.path],
@@ -341,6 +471,7 @@ export async function runMlbDailyPregameV0(
             ...starter.detail,
             usability: starterUsability.usability,
             builderExitCode: starterUsability.builderExitCode,
+            ...dExtra,
           },
         }),
       );
@@ -348,13 +479,13 @@ export async function runMlbDailyPregameV0(
       if (starterUsability.usability === "INTEGRITY_FAILED") {
         blockingIssues.push("STARTER_INTEGRITY_FAILED");
       }
-    } else if (noProvider) {
+    } else if (!doSpawn) {
       stages.push(
         emptyStage("STARTER", "WOULD_RUN", {
           outputPaths: [starter.path],
           blockers: ["STARTER_ARTIFACT_MISSING"],
           durationMs: Date.now() - t0,
-          detail: { wouldRun: true, runner: "research:starter" },
+          detail: { wouldRun: true, runner: "research:starter", ...dExtra },
         }),
       );
       warnings.push("STARTER_ARTIFACT_MISSING");
@@ -425,17 +556,51 @@ export async function runMlbDailyPregameV0(
   let oddsUsability = evaluateOddsUsability(odds, filterIds.length);
   if (shouldRun("ODDS")) {
     const t0 = Date.now();
+    const decision = decideMlbDailyCollection({
+      window,
+      dataset: "ODDS",
+      exists: odds.exists,
+      observedAtIso: odds.observedAt,
+      earliestStartIso: schedule.earliestStart,
+      cutoffBlocked: Boolean(window) && cutoffForCollect.blocked,
+      quotaRemaining,
+    });
+    const doSpawn =
+      decision.spawnRequested && decision.spawnAllowed && !noProvider;
+    const providerPolicy =
+      decision.spawnRequested && noProvider
+        ? "PROVIDER_REQUIRED"
+        : decision.providerPolicy;
+    const dExtra = collectionDetail(decision, { providerPolicy });
+
     if (!scheduleUsable) {
       stages.push(
         emptyStage("ODDS", "BLOCKED", {
           blockers: ["SCHEDULE_REQUIRED"],
           durationMs: Date.now() - t0,
+          detail: dExtra,
         }),
       );
-    } else if (odds.exists) {
-      const st = stageStatusForUsability(oddsUsability.usability);
+    } else if (decision.action === "BLOCK") {
       stages.push(
-        emptyStage("ODDS", st === "WOULD_RUN" ? "PARTIAL" : st, {
+        emptyStage("ODDS", "BLOCKED", {
+          outputPaths: odds.exists ? [odds.path] : [],
+          blockers: [decision.code],
+          errorCode: decision.code,
+          durationMs: Date.now() - t0,
+          detail: { ...odds.detail, ...dExtra },
+        }),
+      );
+    } else if (odds.exists && !doSpawn && !decision.spawnRequested) {
+      const st = stageStatusForUsability(oddsUsability.usability);
+      const stageStatus: DailyStageStatus =
+        window != null
+          ? "SKIPPED"
+          : st === "WOULD_RUN"
+            ? "PARTIAL"
+            : st;
+      stages.push(
+        emptyStage("ODDS", stageStatus, {
           outputPaths: [odds.path],
           rows: odds.rows,
           readyGames: Number(odds.detail.moneylineCompleteGames ?? 0),
@@ -450,6 +615,7 @@ export async function runMlbDailyPregameV0(
             ...odds.detail,
             usability: oddsUsability.usability,
             collectedGames: oddsUsability.collectedGames,
+            ...dExtra,
           },
         }),
       );
@@ -457,20 +623,24 @@ export async function runMlbDailyPregameV0(
       if (oddsUsability.usability === "ARTIFACT_PRESENT_UNUSABLE") {
         blockingIssues.push("ODDS_MISSING_ALL");
       }
-    } else if (noProvider) {
+    } else if (!doSpawn) {
       stages.push(
         emptyStage("ODDS", "WOULD_RUN", {
           outputPaths: [odds.path],
-          blockers: ["ODDS_ARTIFACT_MISSING"],
+          blockers: odds.exists ? [decision.code] : ["ODDS_ARTIFACT_MISSING"],
           durationMs: Date.now() - t0,
           detail: {
-            wouldRun: true,
+            wouldRun: decision.spawnRequested,
             runner: "research:mlb-odds",
-            quotaGate: "UNKNOWN — cache/artifact first",
+            quotaGate:
+              providerPolicy === "QUOTA_DECISION_EXTERNAL"
+                ? "QUOTA_DECISION_EXTERNAL"
+                : "UNKNOWN — cache/artifact first",
+            ...dExtra,
           },
         }),
       );
-      warnings.push("ODDS_ARTIFACT_MISSING");
+      if (!odds.exists) warnings.push("ODDS_ARTIFACT_MISSING");
     } else {
       const code = await spawnLocalTsxScript(
         "scripts/build-mlb-odds-history-dataset-v1.ts",
@@ -513,6 +683,24 @@ export async function runMlbDailyPregameV0(
   let lineup = await auditLineup(dateKst, cwd, filterIds);
   if (shouldRun("LINEUP")) {
     const t0 = Date.now();
+    const decision = decideMlbDailyCollection({
+      window,
+      dataset: "LINEUP",
+      exists: lineup.exists,
+      observedAtIso: lineup.observedAt,
+      earliestStartIso: schedule.earliestStart,
+      cutoffBlocked: Boolean(window) && cutoffForCollect.blocked,
+      lineupClass: lineupClassOf(lineup),
+      quotaRemaining,
+    });
+    const doSpawn =
+      decision.spawnRequested && decision.spawnAllowed && !noProvider;
+    const providerPolicy =
+      decision.spawnRequested && noProvider
+        ? "PROVIDER_REQUIRED"
+        : decision.providerPolicy;
+    const dExtra = collectionDetail(decision, { providerPolicy });
+
     if (options.skipLineup) {
       stages.push(
         emptyStage("LINEUP", "SKIPPED", {
@@ -525,31 +713,48 @@ export async function runMlbDailyPregameV0(
         emptyStage("LINEUP", "BLOCKED", {
           blockers: ["SCHEDULE_REQUIRED"],
           durationMs: Date.now() - t0,
+          detail: dExtra,
         }),
       );
-    } else if (lineup.exists) {
+    } else if (decision.action === "BLOCK") {
       stages.push(
-        emptyStage("LINEUP", "ALREADY_COMPLETE", {
+        emptyStage("LINEUP", "BLOCKED", {
+          outputPaths: lineup.exists ? [lineup.path] : [],
+          blockers: [decision.code],
+          errorCode: decision.code,
+          durationMs: Date.now() - t0,
+          detail: { ...lineup.detail, ...dExtra },
+        }),
+      );
+    } else if (lineup.exists && !doSpawn && !decision.spawnRequested) {
+      const skipStatus: DailyStageStatus =
+        window == null ? "ALREADY_COMPLETE" : "SKIPPED";
+      stages.push(
+        emptyStage("LINEUP", skipStatus, {
           outputPaths: [lineup.path],
           rows: lineup.rows,
           readyGames: Number(lineup.detail.confirmedCompleteGames ?? 0),
           activeGames: filterIds.length,
           warnings: lineup.warnings,
           durationMs: Date.now() - t0,
-          detail: lineup.detail,
+          detail: { ...lineup.detail, ...dExtra },
         }),
       );
       warnings.push(...lineup.warnings);
-    } else if (noProvider) {
+    } else if (!doSpawn) {
       stages.push(
         emptyStage("LINEUP", "WOULD_RUN", {
           outputPaths: [lineup.path],
-          warnings: ["LINEUP_ARTIFACT_MISSING"],
+          warnings: lineup.exists ? [decision.code] : ["LINEUP_ARTIFACT_MISSING"],
           durationMs: Date.now() - t0,
-          detail: { wouldRun: true, runner: "research:mlb-lineup" },
+          detail: {
+            wouldRun: decision.spawnRequested,
+            runner: "research:mlb-lineup",
+            ...dExtra,
+          },
         }),
       );
-      warnings.push("LINEUP_ARTIFACT_MISSING");
+      if (!lineup.exists) warnings.push("LINEUP_ARTIFACT_MISSING");
     } else {
       const code = await spawnLocalTsxScript(
         "scripts/build-mlb-lineup-dataset-v1.ts",
@@ -564,6 +769,7 @@ export async function runMlbDailyPregameV0(
           providerCalls: 1,
           rows: lineup.rows,
           durationMs: Date.now() - t0,
+          detail: dExtra,
         }),
       );
     }
@@ -746,6 +952,37 @@ export async function runMlbDailyPregameV0(
   let snapshotDoc: ReturnType<typeof buildPredictionSnapshotV0> | null = null;
   if (shouldRun("PREDICTION_V0")) {
     const t0 = Date.now();
+    const predSnap = await auditPredictionSnapshot(dateKst, cwd);
+    const persistPlan = decidePredictionPersist({
+      window,
+      predictionExists: predSnap.exists,
+      cutoffBlocked: cutoffGate.blocked && (enforcePregameGates || window === "LOCK"),
+    });
+    if (persistPlan.code === "NON_LOCK_WINDOW_NO_PREDICTION") {
+      stages.push(
+        emptyStage("PREDICTION_V0", "SKIPPED", {
+          durationMs: Date.now() - t0,
+          detail: {
+            collectionDecision: persistPlan.code,
+            persist: false,
+            window,
+          },
+        }),
+      );
+    } else if (persistPlan.code === "ALREADY_LOCKED") {
+      stages.push(
+        emptyStage("PREDICTION_V0", "ALREADY_COMPLETE", {
+          outputPaths: [predSnap.path],
+          durationMs: Date.now() - t0,
+          detail: {
+            collectionDecision: "ALREADY_LOCKED",
+            persist: false,
+            window,
+            generatedAt: predSnap.generatedAt,
+          },
+        }),
+      );
+    } else {
     const summaryNow = await auditSummary(dateKst, cwd);
     const freezeBlockers: string[] = [];
     if (!scheduleUsable) freezeBlockers.push("SCHEDULE_REQUIRED");
@@ -930,6 +1167,7 @@ export async function runMlbDailyPregameV0(
         blockingIssues.push("PREDICTION_EXCEPTION");
       }
     }
+    }
   } else {
     stages.push(emptyStage("PREDICTION_V0", "SKIPPED"));
   }
@@ -1019,7 +1257,8 @@ export async function runMlbDailyPregameV0(
   if (
     continuity.opsFailure &&
     !dryRunContinuityOk &&
-    !blockingIssues.includes("BLOCKED_AFTER_START")
+    !blockingIssues.includes("BLOCKED_AFTER_START") &&
+    allowPredictionPersist
   ) {
     blockingIssues.push(DAILY_PREDICTION_SNAPSHOT_MISSING);
     warnings.push("OPERATIONS_FAILURE_NO_PREGAME_SNAPSHOT");
@@ -1045,7 +1284,7 @@ export async function runMlbDailyPregameV0(
     nextAction = "WAIT_NEXT_SLATE_BEFORE_COMMENCE";
   } else if (
     blockingIssues.includes(DAILY_PREDICTION_SNAPSHOT_MISSING) ||
-    (continuity.opsFailure && !dryRunContinuityOk)
+    (continuity.opsFailure && !dryRunContinuityOk && allowPredictionPersist)
   ) {
     overall = "DAILY_PREDICTION_SNAPSHOT_MISSING";
     nextAction = "RUN_PREDICTION_V0_BEFORE_FIRST_PITCH";
@@ -1116,6 +1355,7 @@ export async function runMlbDailyPregameV0(
     overall,
     dryRun,
     noProvider,
+    window,
     generatedAt,
     stages,
     schedule: schedule.exists

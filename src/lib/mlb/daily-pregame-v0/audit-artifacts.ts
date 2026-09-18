@@ -189,15 +189,34 @@ export async function auditSchedule(
   };
 }
 
+export type LineupSlateClass =
+  | "NOT_COLLECTED"
+  | "NOT_RELEASED"
+  | "PARTIAL"
+  | "CONFIRMED_COMPLETE";
+
 export type DatasetAudit = {
   exists: boolean;
   path: string;
   hash: string | null;
   rows: number;
   collectedGames: number;
+  generatedAt: string | null;
+  observedAt: string | null;
   warnings: string[];
   detail: Record<string, unknown>;
 };
+
+function betterIso(a: string | null, b: string | null): string | null {
+  if (!a) return b;
+  if (!b) return a;
+  return Date.parse(a) >= Date.parse(b) ? a : b;
+}
+
+function metaGeneratedAt(doc: Record<string, unknown> | null): string | null {
+  const meta = asRecord(doc?.meta);
+  return asString(meta?.generatedAt) ?? asString(doc?.generatedAt);
+}
 
 export async function auditStarter(
   dateKst: string,
@@ -213,11 +232,14 @@ export async function auditStarter(
       hash: null,
       rows: 0,
       collectedGames: 0,
+      generatedAt: null,
+      observedAt: null,
       warnings: ["STARTER_ARTIFACT_MISSING"],
       detail: {},
     };
   }
   const doc = asRecord(loaded.data);
+  const generatedAt = metaGeneratedAt(doc) ?? loaded.mtime;
   const rows = asArr(doc?.rows);
   const summary = asRecord(doc?.summary);
   const byGame = new Set<string>();
@@ -250,6 +272,8 @@ export async function auditStarter(
     hash: loaded.hash,
     rows: rows.length,
     collectedGames: byGame.size,
+    generatedAt,
+    observedAt: generatedAt,
     warnings,
     detail: {
       bothSidesReady: bothSides,
@@ -275,15 +299,19 @@ export async function auditOdds(
       hash: null,
       rows: 0,
       collectedGames: 0,
+      generatedAt: null,
+      observedAt: null,
       warnings: ["ODDS_ARTIFACT_MISSING"],
       detail: {},
     };
   }
   const doc = asRecord(loaded.data);
+  const generatedAt = metaGeneratedAt(doc) ?? loaded.mtime;
   const rows = asArr(doc?.rows);
   let collected = 0;
   let completeMl = 0;
   let afterCutoff = 0;
+  let observedAt: string | null = generatedAt;
   for (const raw of rows) {
     const r = asRecord(raw);
     const id = asString(r?.gameId);
@@ -303,6 +331,10 @@ export async function auditOdds(
     if (home != null && away != null && home > 1 && away > 1) completeMl++;
     const captured = asString(r?.capturedAt);
     const cutoff = asString(r?.cutoffTime);
+    observedAt = betterIso(
+      observedAt,
+      captured ?? asString(r?.fetchedAt) ?? asString(r?.artifactGeneratedAt),
+    );
     if (
       captured &&
       cutoff &&
@@ -324,6 +356,8 @@ export async function auditOdds(
     hash: loaded.hash,
     rows: rows.length,
     collectedGames: collected,
+    generatedAt,
+    observedAt,
     warnings,
     detail: {
       moneylineCompleteGames: completeMl,
@@ -332,6 +366,55 @@ export async function auditOdds(
       oddsFormat: asString(doc?.oddsFormat) ?? "DECIMAL",
     },
   };
+}
+
+export function classifyLineupGameRows(
+  rows: Record<string, unknown>[],
+): LineupSlateClass {
+  if (rows.length === 0) return "NOT_COLLECTED";
+  const confirmedComplete =
+    rows.length >= 2 &&
+    rows.every(
+      (row) =>
+        asString(row.collectionStatus) === "CONFIRMED" &&
+        asString(row.lineupStatus) === "COMPLETE",
+    );
+  if (confirmedComplete) return "CONFIRMED_COMPLETE";
+  const statuses = rows.map((row) => asString(row.collectionStatus));
+  const lineupStatuses = rows.map((row) => asString(row.lineupStatus));
+  if (statuses.some((s) => s === "NOT_RELEASED") || statuses.every((s) => !s)) {
+    return "NOT_RELEASED";
+  }
+  if (
+    statuses.some((s) => s === "PARTIAL") ||
+    lineupStatuses.some((s) => s === "INCOMPLETE")
+  ) {
+    return "PARTIAL";
+  }
+  return "PARTIAL";
+}
+
+export function classifyLineupSlate(input: {
+  confirmedCompleteGames: number;
+  partialGames: number;
+  notReleasedGames: number;
+  notCollectedGames: number;
+  scheduleGames: number;
+}): LineupSlateClass {
+  if (input.scheduleGames === 0 && input.confirmedCompleteGames === 0) {
+    return "NOT_COLLECTED";
+  }
+  if (input.partialGames > 0) return "PARTIAL";
+  if (input.notReleasedGames > 0 || input.notCollectedGames > 0) {
+    return "NOT_RELEASED";
+  }
+  if (
+    input.confirmedCompleteGames > 0 &&
+    input.confirmedCompleteGames >= input.scheduleGames
+  ) {
+    return "CONFIRMED_COMPLETE";
+  }
+  return "NOT_COLLECTED";
 }
 
 export async function auditLineup(
@@ -348,13 +431,25 @@ export async function auditLineup(
       hash: null,
       rows: 0,
       collectedGames: 0,
+      generatedAt: null,
+      observedAt: null,
       warnings: ["LINEUP_ARTIFACT_MISSING"],
-      detail: { confirmedCompleteGames: 0 },
+      detail: {
+        confirmedCompleteGames: 0,
+        partialGames: 0,
+        notReleasedGames: 0,
+        notCollectedGames: scheduleGameIds.length,
+        notConfirmedOrMissing: scheduleGameIds.length,
+        slateClass: "NOT_COLLECTED" satisfies LineupSlateClass,
+        scheduleGames: scheduleGameIds.length,
+      },
     };
   }
   const doc = asRecord(loaded.data);
+  const generatedAt = metaGeneratedAt(doc) ?? loaded.mtime;
   const rows = asArr(doc?.rows);
   const byGame = new Map<string, Record<string, unknown>[]>();
+  let observedAt: string | null = generatedAt;
   for (const raw of rows) {
     const r = asRecord(raw);
     const id = asString(r?.gameId);
@@ -362,38 +457,77 @@ export async function auditLineup(
     const list = byGame.get(id) ?? [];
     list.push(r);
     byGame.set(id, list);
+    observedAt = betterIso(
+      observedAt,
+      asString(r?.generatedAt) ??
+        asString(r?.sourceTimestamp) ??
+        asString(r?.fetchedAt) ??
+        asString(r?.artifactGeneratedAt) ??
+        asString(r?.lineupConfirmedAt),
+    );
   }
   let confirmed = 0;
+  let partial = 0;
   let notReleased = 0;
+  let notCollected = 0;
   for (const id of scheduleGameIds) {
-    const list = byGame.get(id) ?? [];
-    if (list.length === 0) {
-      notReleased++;
-      continue;
-    }
-    const ok =
-      list.length >= 2 &&
-      list.every(
-        (row) =>
-          asString(row.collectionStatus) === "CONFIRMED" &&
-          asString(row.lineupStatus) === "COMPLETE",
-      );
-    if (ok) confirmed++;
-    else notReleased++;
+    const klass = classifyLineupGameRows(byGame.get(id) ?? []);
+    if (klass === "CONFIRMED_COMPLETE") confirmed++;
+    else if (klass === "PARTIAL") partial++;
+    else if (klass === "NOT_RELEASED") notReleased++;
+    else notCollected++;
   }
+  const slateClass = classifyLineupSlate({
+    confirmedCompleteGames: confirmed,
+    partialGames: partial,
+    notReleasedGames: notReleased,
+    notCollectedGames: notCollected,
+    scheduleGames: scheduleGameIds.length,
+  });
+  const notConfirmedOrMissing = scheduleGameIds.length - confirmed;
   return {
     exists: true,
     path: rel,
     hash: loaded.hash,
     rows: rows.length,
     collectedGames: byGame.size,
+    generatedAt,
+    observedAt,
     warnings:
       confirmed < scheduleGameIds.length ? ["LINEUP_NOT_FULLY_CONFIRMED"] : [],
     detail: {
       confirmedCompleteGames: confirmed,
-      notConfirmedOrMissing: notReleased,
+      partialGames: partial,
+      notReleasedGames: notReleased,
+      notCollectedGames: notCollected,
+      notConfirmedOrMissing,
+      slateClass,
       scheduleGames: scheduleGameIds.length,
     },
+  };
+}
+
+export async function auditPredictionSnapshot(
+  dateKst: string,
+  cwd: string,
+): Promise<{
+  exists: boolean;
+  path: string;
+  generatedAt: string | null;
+  hash: string | null;
+}> {
+  const rel = artifactPaths(dateKst).prediction;
+  const loaded = await readJson(rel, cwd);
+  if (!loaded.ok) {
+    return { exists: false, path: rel, generatedAt: null, hash: null };
+  }
+  const doc = asRecord(loaded.data);
+  const predictions = asArr(doc?.predictions);
+  return {
+    exists: predictions.length > 0,
+    path: rel,
+    generatedAt: metaGeneratedAt(doc),
+    hash: loaded.hash,
   };
 }
 
