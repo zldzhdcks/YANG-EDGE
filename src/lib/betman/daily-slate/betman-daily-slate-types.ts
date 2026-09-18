@@ -7,6 +7,12 @@ export type BetmanDailySlateSourceType =
 
 export type BetmanDailySlateReviewStatus = "DRAFT" | "VERIFIED" | "REJECTED";
 
+/** Explicit operator attestation that the slate is the complete observed set. */
+export type BetmanScopeCompletenessStatus =
+  | "UNVERIFIED"
+  | "INCOMPLETE"
+  | "COMPLETE";
+
 export type BetmanSupportedSport =
   | "BASEBALL"
   | "SOCCER"
@@ -81,6 +87,8 @@ export type BetmanDailySlateInputV1 = {
   enteredAt: string | null;
   reviewedAt: string | null;
   reviewStatus: BetmanDailySlateReviewStatus;
+  /** Defaults to UNVERIFIED when absent on older drafts. */
+  scopeCompletenessStatus?: BetmanScopeCompletenessStatus;
   games: BetmanDailySlateGameInput[];
 };
 

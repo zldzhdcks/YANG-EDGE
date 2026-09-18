@@ -1,9 +1,7 @@
 import { readFileSync, existsSync } from "node:fs";
 import path from "node:path";
-import {
-  betmanFullSlateRel,
-  operatorBetmanDailySlateRel,
-} from "./paths";
+import { isResearchSlateSourceFreezeDocument } from "../slate-source-freeze";
+import { researchSlateSourceFreezeRel } from "./paths";
 import {
   isSupportedResearchSport,
   normalizeSport,
@@ -30,107 +28,6 @@ export type SourceAdmissionOutcome =
   | { kind: "INVALID"; rel: string; message: string }
   | { kind: "CONFLICT"; rel: string; message: string }
   | { kind: "OK"; payload: AdmittedSourcePayload };
-
-function asRecord(v: unknown): Record<string, unknown> | null {
-  return v != null && typeof v === "object" && !Array.isArray(v)
-    ? (v as Record<string, unknown>)
-    : null;
-}
-
-function asString(v: unknown): string | null {
-  return typeof v === "string" && v.trim() !== "" ? v.trim() : null;
-}
-
-function readSourceFile(
-  cwd: string,
-  rel: string,
-): { text: string; sha256: string } | null {
-  const abs = path.join(cwd, rel);
-  if (!existsSync(abs)) return null;
-  const text = readFileSync(abs, "utf8");
-  return { text, sha256: sha256Text(text) };
-}
-
-function admitOperatorGame(
-  raw: Record<string, unknown>,
-  dateKst: string,
-):
-  | { kind: "ADMIT"; target: ResearchTargetGame }
-  | { kind: "EXCLUDE"; exclusion: ResearchTargetExclusion }
-  | { kind: "CONFLICT"; message: string } {
-  const operatorSlateGameId = asString(raw.operatorSlateGameId);
-  const sportRaw = asString(raw.sport);
-  const homeTeamRaw = asString(raw.homeTeamRaw);
-  const awayTeamRaw = asString(raw.awayTeamRaw);
-  const reviewStatus = asString(raw.reviewStatus);
-
-  if (!operatorSlateGameId || !sportRaw || !homeTeamRaw || !awayTeamRaw) {
-    return {
-      kind: "EXCLUDE",
-      exclusion: {
-        operatorSlateGameId,
-        sport: sportRaw,
-        reason: "MISSING_IDENTITY_FIELDS",
-      },
-    };
-  }
-
-  if (reviewStatus === "REJECTED") {
-    return {
-      kind: "EXCLUDE",
-      exclusion: {
-        operatorSlateGameId,
-        sport: sportRaw,
-        reason: "REJECTED_REVIEW",
-      },
-    };
-  }
-
-  const sport = normalizeSport(sportRaw);
-  if (!isSupportedResearchSport(sport)) {
-    return {
-      kind: "EXCLUDE",
-      exclusion: {
-        operatorSlateGameId,
-        sport,
-        reason: "UNSUPPORTED_SPORT",
-        detail: sportRaw,
-      },
-    };
-  }
-
-  const scheduledStartTimeKst = asString(raw.scheduledStartTimeKst);
-  if (
-    scheduledStartTimeKst &&
-    /^\d{4}-\d{2}-\d{2}/.test(scheduledStartTimeKst) &&
-    !scheduledStartTimeKst.startsWith(dateKst)
-  ) {
-    return {
-      kind: "EXCLUDE",
-      exclusion: {
-        operatorSlateGameId,
-        sport,
-        reason: "DATE_MISMATCH",
-        detail: scheduledStartTimeKst,
-      },
-    };
-  }
-
-  return {
-    kind: "ADMIT",
-    target: {
-      targetId: operatorSlateGameId,
-      operatorSlateGameId,
-      sport,
-      competitionNameRaw: asString(raw.competitionNameRaw),
-      homeTeamRaw,
-      awayTeamRaw,
-      scheduledStartTimeKst,
-      providerGameId: asString(raw.providerGameId),
-      providerFixtureId: asString(raw.providerFixtureId),
-    },
-  };
-}
 
 function dedupeTargets(
   targets: ResearchTargetGame[],
@@ -160,152 +57,64 @@ function dedupeTargets(
   return { ok: true, targets: [...byId.values()], exclusions };
 }
 
-function admitOperatorBetmanSlate(
-  dateKst: string,
-  cwd: string,
-): SourceAdmissionOutcome {
-  const rel = operatorBetmanDailySlateRel(dateKst);
-  const file = readSourceFile(cwd, rel);
-  if (!file) return { kind: "MISSING" };
-
-  let parsed: unknown;
-  try {
-    parsed = JSON.parse(file.text);
-  } catch {
-    return { kind: "INVALID", rel, message: "JSON_PARSE_FAILED" };
-  }
-  const doc = asRecord(parsed);
-  if (!doc) return { kind: "INVALID", rel, message: "NOT_OBJECT" };
-  if (doc.schemaVersion !== "betman-daily-slate-v1") {
-    return { kind: "INVALID", rel, message: "SCHEMA_MISMATCH" };
-  }
-  if (asString(doc.targetDateKst) !== dateKst) {
-    return { kind: "INVALID", rel, message: "DATE_MISMATCH" };
-  }
-  if (!Array.isArray(doc.games)) {
-    return { kind: "INVALID", rel, message: "GAMES_NOT_ARRAY" };
-  }
-
-  const targets: ResearchTargetGame[] = [];
-  const exclusions: ResearchTargetExclusion[] = [];
-  for (const row of doc.games) {
-    const rec = asRecord(row);
-    if (!rec) {
-      exclusions.push({
-        operatorSlateGameId: null,
-        sport: null,
-        reason: "MISSING_IDENTITY_FIELDS",
-        detail: "NON_OBJECT_GAME",
-      });
-      continue;
-    }
-    const outcome = admitOperatorGame(rec, dateKst);
-    if (outcome.kind === "ADMIT") targets.push(outcome.target);
-    else if (outcome.kind === "EXCLUDE") exclusions.push(outcome.exclusion);
-    else return { kind: "CONFLICT", rel, message: outcome.message };
-  }
-
-  const deduped = dedupeTargets(targets, exclusions);
-  if (!deduped.ok) {
-    return { kind: "CONFLICT", rel, message: deduped.message };
-  }
-
-  return {
-    kind: "OK",
-    payload: {
-      class: "OPERATOR_BETMAN_DAILY_SLATE",
-      rel,
-      sha256: file.sha256,
-      rawText: file.text,
-      targets: deduped.targets,
-      exclusions: deduped.exclusions,
-    },
-  };
-}
-
 /**
- * Full-slate artifact is admissible only when operator input was entered
- * (not the empty NOT_ENTERED placeholder).
+ * Admit research targets ONLY from a committed research slate source freeze.
+ * Raw operator input and legacy betman-full-slate cannot bypass this gate.
  */
-function admitBetmanFullSlate(
-  dateKst: string,
-  cwd: string,
-): SourceAdmissionOutcome {
-  const rel = betmanFullSlateRel(dateKst);
-  const file = readSourceFile(cwd, rel);
-  if (!file) return { kind: "MISSING" };
+export function admitResearchTargetScopeSource(input: {
+  dateKst: string;
+  cwd?: string;
+}): SourceAdmissionOutcome {
+  const cwd = input.cwd ?? process.cwd();
+  const rel = researchSlateSourceFreezeRel(input.dateKst);
+  const abs = path.join(cwd, rel);
+  if (!existsSync(abs)) return { kind: "MISSING" };
+
+  let rawText: string;
+  try {
+    rawText = readFileSync(abs, "utf8");
+  } catch {
+    return { kind: "INVALID", rel, message: "FREEZE_UNREADABLE" };
+  }
 
   let parsed: unknown;
   try {
-    parsed = JSON.parse(file.text);
+    parsed = JSON.parse(rawText);
   } catch {
     return { kind: "INVALID", rel, message: "JSON_PARSE_FAILED" };
   }
-  const doc = asRecord(parsed);
-  const meta = asRecord(doc?.meta);
-  if (!doc || !meta) return { kind: "INVALID", rel, message: "NOT_OBJECT" };
-  if (meta.schemaVersion !== "betman-full-slate-v1") {
-    return { kind: "INVALID", rel, message: "SCHEMA_MISMATCH" };
+
+  if (!isResearchSlateSourceFreezeDocument(parsed)) {
+    return { kind: "INVALID", rel, message: "FREEZE_SCHEMA_INVALID" };
   }
-  if (asString(meta.targetDateKst) !== dateKst) {
+  if (parsed.dateKst !== input.dateKst) {
     return { kind: "INVALID", rel, message: "DATE_MISMATCH" };
-  }
-  if (asString(meta.operatorInputStatus) === "NOT_ENTERED") {
-    // Committed empty placeholder is not an admitted cohort source.
-    return { kind: "MISSING" };
-  }
-  if (!Array.isArray(doc.games)) {
-    return { kind: "INVALID", rel, message: "GAMES_NOT_ARRAY" };
   }
 
   const targets: ResearchTargetGame[] = [];
   const exclusions: ResearchTargetExclusion[] = [];
-  for (const row of doc.games) {
-    const rec = asRecord(row);
-    if (!rec) {
-      exclusions.push({
-        operatorSlateGameId: null,
-        sport: null,
-        reason: "MISSING_IDENTITY_FIELDS",
-      });
-      continue;
-    }
-    const operatorSlateGameId = asString(rec.operatorSlateGameId);
-    const sportRaw = asString(rec.sport);
-    const homeTeamRaw = asString(rec.homeTeam) ?? asString(rec.homeTeamRaw);
-    const awayTeamRaw = asString(rec.awayTeam) ?? asString(rec.awayTeamRaw);
-    const supportedSport = rec.supportedSport === true;
 
-    if (!operatorSlateGameId || !sportRaw || !homeTeamRaw || !awayTeamRaw) {
+  for (const game of parsed.games) {
+    const sport = normalizeSport(game.sport);
+    if (!isSupportedResearchSport(sport)) {
       exclusions.push({
-        operatorSlateGameId,
-        sport: sportRaw,
-        reason: "MISSING_IDENTITY_FIELDS",
-      });
-      continue;
-    }
-    const sport = normalizeSport(sportRaw);
-    if (!supportedSport || !isSupportedResearchSport(sport)) {
-      exclusions.push({
-        operatorSlateGameId,
+        operatorSlateGameId: game.operatorSlateGameId,
         sport,
         reason: "UNSUPPORTED_SPORT",
+        detail: game.sport,
       });
       continue;
     }
     targets.push({
-      targetId: operatorSlateGameId,
-      operatorSlateGameId,
+      targetId: game.operatorSlateGameId,
+      operatorSlateGameId: game.operatorSlateGameId,
       sport,
-      competitionNameRaw:
-        asString(asRecord(rec.competition)?.nameRaw) ??
-        asString(rec.competitionNameRaw),
-      homeTeamRaw,
-      awayTeamRaw,
-      scheduledStartTimeKst:
-        asString(rec.startTimeKst) ?? asString(rec.scheduledStartTimeKst),
-      providerGameId: asString(rec.providerGameId),
-      providerFixtureId: asString(rec.providerFixtureId),
+      competitionNameRaw: game.competitionNameRaw,
+      homeTeamRaw: game.homeTeamRaw,
+      awayTeamRaw: game.awayTeamRaw,
+      scheduledStartTimeKst: game.scheduledStartTimeKst,
+      providerGameId: game.providerGameId,
+      providerFixtureId: game.providerFixtureId,
     });
   }
 
@@ -317,31 +126,12 @@ function admitBetmanFullSlate(
   return {
     kind: "OK",
     payload: {
-      class: "BETMAN_FULL_SLATE",
+      class: "RESEARCH_SLATE_SOURCE_FREEZE",
       rel,
-      sha256: file.sha256,
-      rawText: file.text,
+      sha256: sha256Text(rawText),
+      rawText,
       targets: deduped.targets,
       exclusions: deduped.exclusions,
     },
   };
-}
-
-/**
- * Admit the first legally usable deterministic slate source.
- * Never uses public listing runtime, Forward operational cache, or live providers.
- */
-export function admitResearchTargetScopeSource(input: {
-  dateKst: string;
-  cwd?: string;
-}): SourceAdmissionOutcome {
-  const cwd = input.cwd ?? process.cwd();
-
-  const operator = admitOperatorBetmanSlate(input.dateKst, cwd);
-  if (operator.kind !== "MISSING") return operator;
-
-  const full = admitBetmanFullSlate(input.dateKst, cwd);
-  if (full.kind !== "MISSING") return full;
-
-  return { kind: "MISSING" };
 }

@@ -50,9 +50,7 @@ export type ScopeResolutionState =
   | "TARGET_SCOPE_CONFLICT"
   | "SCOPE_LOCK_CONFLICT";
 
-export type ResearchTargetSourceClass =
-  | "OPERATOR_BETMAN_DAILY_SLATE"
-  | "BETMAN_FULL_SLATE";
+export type ResearchTargetSourceClass = "RESEARCH_SLATE_SOURCE_FREEZE";
 
 export type ResearchTargetExclusionReason =
   | "UNSUPPORTED_SPORT"

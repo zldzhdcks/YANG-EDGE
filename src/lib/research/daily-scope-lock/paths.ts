@@ -36,6 +36,10 @@ export function betmanFullSlateRel(dateKst: string): string {
   return `data/research/daily-slates/${dateKst}-betman-full-slate-v1.json`;
 }
 
+export function researchSlateSourceFreezeRel(dateKst: string): string {
+  return `data/research/daily-slates/${dateKst}-research-slate-source-freeze-v1.json`;
+}
+
 /** Legacy Daily C Stage A path — do not write target-level locks here. */
 export function legacyDailyScopeLockRel(dateKst: string): string {
   return `data/audits/${dateKst}-daily-scope-lock-v1.json`;
@@ -67,8 +71,7 @@ function isSourceRef(v: unknown): v is ResearchTargetScopeSourceRef {
   const rec = asRecord(v);
   if (!rec) return false;
   return (
-    (rec.class === "OPERATOR_BETMAN_DAILY_SLATE" ||
-      rec.class === "BETMAN_FULL_SLATE") &&
+    rec.class === "RESEARCH_SLATE_SOURCE_FREEZE" &&
     typeof rec.rel === "string" &&
     typeof rec.sha256 === "string"
   );

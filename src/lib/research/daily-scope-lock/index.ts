@@ -26,6 +26,7 @@ export {
   isResearchTargetScopeLockDocument,
   legacyDailyScopeLockRel,
   operatorBetmanDailySlateRel,
+  researchSlateSourceFreezeRel,
   researchTargetScopeLockAbs,
   researchTargetScopeLockRel,
 } from "./paths";
