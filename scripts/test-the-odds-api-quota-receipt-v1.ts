@@ -5,6 +5,7 @@
  *   npm run test:the-odds-api-quota-receipt-v1
  */
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import {
   existsSync,
   mkdirSync,
@@ -15,6 +16,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { parseOddsQuotaBootstrapCli } from "./write-odds-quota-bootstrap-receipt-v1";
 import { runMlbDailyOpsV1 } from "../src/lib/mlb/daily-ops-v1";
 import {
   buildOddsQuotaBootstrapReceipt,
@@ -144,6 +146,7 @@ async function main() {
     "utf8",
   );
   assert.equal(receiptSrc.includes("465"), false);
+  assert.equal(receiptSrc.includes("requestsUsed == null\n      ? 0"), false);
 
   assert.equal(MLB_STATS_AUTOMATION_ALLOWED, false);
 
@@ -184,12 +187,18 @@ async function main() {
   assert.equal(receiptContainsForbiddenSecrets(JSON.parse(text)), false);
   const persisted = JSON.parse(text) as {
     requestsRemaining: number;
+    requestsUsed: number | null;
+    requestsLast: number | null;
     source: string;
     provider: string;
   };
   assert.equal(persisted.requestsRemaining, 465);
   assert.equal(persisted.source, "RESPONSE_HEADERS");
   assert.equal(persisted.provider, "THE_ODDS_API");
+  assert.equal(typeof persisted.requestsUsed, "number");
+  assert.equal(typeof persisted.requestsLast, "number");
+  assert.equal(persisted.requestsUsed, 35);
+  assert.equal(persisted.requestsLast, 3);
   if (prevKey === undefined) delete process.env.ODDS_API_KEY;
   else process.env.ODDS_API_KEY = prevKey;
 
@@ -505,6 +514,252 @@ async function main() {
     assert.equal(report.quotaSource, "NONE");
     assert.equal(report.pregame?.quotaSource, "NONE");
     assert.equal(report.failure?.reason, "QUOTA_DECISION_EXTERNAL");
+  }
+
+  // 21. operator bootstrap with omitted used → requestsUsed=null
+  {
+    const omittedUsed = buildOddsQuotaBootstrapReceipt({
+      planName: ODDS_OPERATOR_PLAN_EVIDENCE.planName,
+      requestsRemaining: 10,
+      requestsLast: 1,
+      evidenceDate: ODDS_OPERATOR_PLAN_EVIDENCE.evidenceDate,
+      observedAt: RECEIPT_NOW.toISOString(),
+    });
+    assert.equal(omittedUsed.requestsUsed, null);
+    assert.equal(omittedUsed.requestsLast, 1);
+    const cli = parseOddsQuotaBootstrapCli([
+      "--plan-name",
+      "Free",
+      "--remaining",
+      "10",
+      "--last",
+      "1",
+      "--evidence-date",
+      "2026-09-19",
+    ]);
+    assert.equal(cli.used, null);
+  }
+
+  // 22. operator bootstrap with omitted last → requestsLast=null
+  {
+    const omittedLast = buildOddsQuotaBootstrapReceipt({
+      planName: ODDS_OPERATOR_PLAN_EVIDENCE.planName,
+      requestsRemaining: 10,
+      requestsUsed: 1,
+      evidenceDate: ODDS_OPERATOR_PLAN_EVIDENCE.evidenceDate,
+      observedAt: RECEIPT_NOW.toISOString(),
+    });
+    assert.equal(omittedLast.requestsLast, null);
+    assert.equal(omittedLast.requestsUsed, 1);
+    const cli = parseOddsQuotaBootstrapCli([
+      "--plan-name",
+      "Free",
+      "--remaining",
+      "10",
+      "--used",
+      "1",
+      "--evidence-date",
+      "2026-09-19",
+    ]);
+    assert.equal(cli.last, null);
+  }
+
+  // 23. current evidence fixture: remaining=465 used=35 last omitted → last=null
+  {
+    const evidence = buildOddsQuotaBootstrapReceipt({
+      planName: ODDS_OPERATOR_PLAN_EVIDENCE.planName,
+      requestsRemaining: 465,
+      requestsUsed: 35,
+      evidenceDate: ODDS_OPERATOR_PLAN_EVIDENCE.evidenceDate,
+      observedAt: RECEIPT_NOW.toISOString(),
+    });
+    assert.equal(evidence.requestsRemaining, 465);
+    assert.equal(evidence.requestsUsed, 35);
+    assert.equal(evidence.requestsLast, null);
+    const cli = parseOddsQuotaBootstrapCli([
+      "--plan-name",
+      "Free",
+      "--remaining",
+      "465",
+      "--used",
+      "35",
+      "--evidence-date",
+      "2026-09-19",
+    ]);
+    assert.equal(cli.remaining, 465);
+    assert.equal(cli.used, 35);
+    assert.equal(cli.last, null);
+  }
+
+  // 24. RESPONSE_HEADERS with missing used → QUOTA_RECEIPT_NOT_UPDATED
+  {
+    const cwd = tmpCwd();
+    const missingUsed = await writeOddsQuotaReceiptFromHeaders({
+      headers: headers({
+        "x-requests-remaining": "10",
+        "x-requests-last": "1",
+      }),
+      cwd,
+      now: RECEIPT_NOW,
+    });
+    assert.equal(missingUsed.updated, false);
+    assert.equal(missingUsed.reason, ODDS_QUOTA_RECEIPT_NOT_UPDATED);
+    const parsed = parseOddsQuotaReceiptHeaders(
+      headers({
+        "x-requests-remaining": "10",
+        "x-requests-last": "1",
+      }),
+    );
+    assert.equal(parsed.ok, false);
+    if (!parsed.ok) assert.equal(parsed.field, "used");
+    assert.equal(existsSync(path.join(cwd, ODDS_QUOTA_RECEIPT_REL)), false);
+  }
+
+  // 25. RESPONSE_HEADERS with missing last → QUOTA_RECEIPT_NOT_UPDATED
+  {
+    const cwd = tmpCwd();
+    const missingLast = await writeOddsQuotaReceiptFromHeaders({
+      headers: headers({
+        "x-requests-remaining": "10",
+        "x-requests-used": "1",
+      }),
+      cwd,
+      now: RECEIPT_NOW,
+    });
+    assert.equal(missingLast.updated, false);
+    assert.equal(missingLast.reason, ODDS_QUOTA_RECEIPT_NOT_UPDATED);
+    const parsed = parseOddsQuotaReceiptHeaders(
+      headers({
+        "x-requests-remaining": "10",
+        "x-requests-used": "1",
+      }),
+    );
+    assert.equal(parsed.ok, false);
+    if (!parsed.ok) assert.equal(parsed.field, "last");
+    assert.equal(existsSync(path.join(cwd, ODDS_QUOTA_RECEIPT_REL)), false);
+  }
+
+  // 26. RESPONSE_HEADERS valid → used/last numbers
+  {
+    const cwd = tmpCwd();
+    const headerWrite = await writeOddsQuotaReceiptFromHeaders({
+      headers: headers({
+        "x-requests-remaining": "465",
+        "x-requests-used": "35",
+        "x-requests-last": "3",
+      }),
+      cwd,
+      now: RECEIPT_NOW,
+    });
+    assert.equal(headerWrite.updated, true);
+    if (headerWrite.updated) {
+      assert.equal(typeof headerWrite.receipt.requestsUsed, "number");
+      assert.equal(typeof headerWrite.receipt.requestsLast, "number");
+      assert.equal(headerWrite.receipt.requestsUsed, 35);
+      assert.equal(headerWrite.receipt.requestsLast, 3);
+      assert.equal(headerWrite.receipt.source, "RESPONSE_HEADERS");
+    }
+  }
+
+  // 27. nullable bootstrap used/last does not change quota eligibility
+  {
+    const cwdAvail = tmpCwd();
+    const avail = buildOddsQuotaBootstrapReceipt({
+      planName: ODDS_OPERATOR_PLAN_EVIDENCE.planName,
+      requestsRemaining: 465,
+      requestsUsed: 35,
+      evidenceDate: ODDS_OPERATOR_PLAN_EVIDENCE.evidenceDate,
+      observedAt: RECEIPT_NOW.toISOString(),
+    });
+    assert.equal(avail.requestsLast, null);
+    await writeOddsQuotaReceipt(avail, cwdAvail);
+    const readAvail = await readOddsQuotaReceipt({
+      cwd: cwdAvail,
+      now: RECEIPT_NOW,
+    });
+    assert.equal(readAvail.status, "QUOTA_AVAILABLE");
+    assert.equal(readAvail.remaining, 465);
+    assert.equal(readAvail.allowsSpawn, true);
+    const resolvedAvail = await resolveOddsQuotaInput({
+      cliQuotaRemaining: null,
+      unattended: true,
+      cwd: cwdAvail,
+      now: RECEIPT_NOW,
+    });
+    assert.equal(resolvedAvail.source, "RECEIPT");
+    assert.equal(resolvedAvail.remaining, 465);
+
+    const cwdZeroNull = tmpCwd();
+    const zeroNull = buildOddsQuotaBootstrapReceipt({
+      planName: ODDS_OPERATOR_PLAN_EVIDENCE.planName,
+      requestsRemaining: 0,
+      evidenceDate: ODDS_OPERATOR_PLAN_EVIDENCE.evidenceDate,
+      observedAt: RECEIPT_NOW.toISOString(),
+    });
+    assert.equal(zeroNull.requestsUsed, null);
+    assert.equal(zeroNull.requestsLast, null);
+    await writeOddsQuotaReceipt(zeroNull, cwdZeroNull);
+    const readZero = await readOddsQuotaReceipt({
+      cwd: cwdZeroNull,
+      now: RECEIPT_NOW,
+    });
+    assert.equal(readZero.status, "QUOTA_ZERO");
+    assert.equal(readZero.allowsSpawn, false);
+  }
+
+  // 28. runtime receipt canonical path is Git-ignored
+  {
+    const ignore = execFileSync(
+      "git",
+      ["check-ignore", "-v", ODDS_QUOTA_RECEIPT_REL],
+      { cwd: REPO, encoding: "utf8" },
+    );
+    assert.ok(ignore.includes(".gitignore"));
+    assert.ok(ignore.includes(ODDS_QUOTA_RECEIPT_REL));
+  }
+
+  // 29. no tracked bootstrap receipt remains in repository
+  {
+    const tracked = execFileSync(
+      "git",
+      ["ls-files", "--", ODDS_QUOTA_RECEIPT_REL],
+      { cwd: REPO, encoding: "utf8" },
+    ).trim();
+    assert.equal(tracked, "");
+  }
+
+  // 30. mock runtime receipt update does not alter repository-tracked fixture files
+  {
+    const repoReceiptAbs = path.join(REPO, ODDS_QUOTA_RECEIPT_REL);
+    const beforeTracked = execFileSync("git", ["ls-files"], {
+      cwd: REPO,
+      encoding: "utf8",
+    });
+    const beforeRepoReceipt = existsSync(repoReceiptAbs)
+      ? readFileSync(repoReceiptAbs, "utf8")
+      : null;
+    const cwd = tmpCwd();
+    const mockWrite = await writeOddsQuotaReceiptFromHeaders({
+      headers: headers({
+        "x-requests-remaining": "400",
+        "x-requests-used": "40",
+        "x-requests-last": "2",
+      }),
+      cwd,
+      now: RECEIPT_NOW,
+    });
+    assert.equal(mockWrite.updated, true);
+    assert.equal(existsSync(path.join(cwd, ODDS_QUOTA_RECEIPT_REL)), true);
+    const afterTracked = execFileSync("git", ["ls-files"], {
+      cwd: REPO,
+      encoding: "utf8",
+    });
+    assert.equal(afterTracked, beforeTracked);
+    const afterRepoReceipt = existsSync(repoReceiptAbs)
+      ? readFileSync(repoReceiptAbs, "utf8")
+      : null;
+    assert.equal(afterRepoReceipt, beforeRepoReceipt);
+    assert.equal(path.resolve(cwd) === path.resolve(REPO), false);
   }
 
   console.log("test:the-odds-api-quota-receipt-v1 PASS");

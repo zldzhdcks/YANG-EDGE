@@ -42,8 +42,8 @@ export type OddsQuotaReceipt = {
   planConfirmed: boolean;
   observedAt: string;
   requestsRemaining: number;
-  requestsUsed: number;
-  requestsLast: number;
+  requestsUsed: number | null;
+  requestsLast: number | null;
   source: OddsQuotaReceiptSource;
   resetCycle: typeof ODDS_QUOTA_RESET_CYCLE;
   resetAtUtc: string | null;
@@ -121,8 +121,14 @@ export function parseOddsQuotaReceiptHeaders(headers: {
   const remainingRaw = headers.get("x-requests-remaining");
   const usedRaw = headers.get("x-requests-used");
   const lastRaw = headers.get("x-requests-last");
-  if (remainingRaw == null || usedRaw == null || lastRaw == null) {
+  if (remainingRaw == null) {
     return { ok: false, reason: ODDS_QUOTA_RECEIPT_NOT_UPDATED, field: "missing" };
+  }
+  if (usedRaw == null) {
+    return { ok: false, reason: ODDS_QUOTA_RECEIPT_NOT_UPDATED, field: "used" };
+  }
+  if (lastRaw == null) {
+    return { ok: false, reason: ODDS_QUOTA_RECEIPT_NOT_UPDATED, field: "last" };
   }
   const remaining = nonNegativeInteger(remainingRaw);
   if (remaining == null) {
@@ -167,38 +173,59 @@ export async function writeJsonAtomic(
   }
 }
 
+function isNonNegativeIntegerValue(v: unknown): v is number {
+  return typeof v === "number" && Number.isInteger(v) && v >= 0 && Number.isFinite(v);
+}
+
+function isNullableNonNegativeIntegerValue(v: unknown): v is number | null {
+  return v === null || isNonNegativeIntegerValue(v);
+}
+
 function isOddsQuotaReceipt(v: unknown): v is OddsQuotaReceipt {
   if (typeof v !== "object" || v == null || Array.isArray(v)) return false;
   const o = v as Record<string, unknown>;
-  return (
-    o.version === ODDS_QUOTA_RECEIPT_VERSION &&
-    o.provider === ODDS_QUOTA_PROVIDER &&
-    typeof o.planName === "string" &&
-    o.planName.trim().length > 0 &&
-    typeof o.planConfirmed === "boolean" &&
-    typeof o.observedAt === "string" &&
-    Number.isFinite(Date.parse(o.observedAt)) &&
-    typeof o.requestsRemaining === "number" &&
-    Number.isInteger(o.requestsRemaining) &&
-    o.requestsRemaining >= 0 &&
-    typeof o.requestsUsed === "number" &&
-    Number.isInteger(o.requestsUsed) &&
-    o.requestsUsed >= 0 &&
-    typeof o.requestsLast === "number" &&
-    Number.isInteger(o.requestsLast) &&
-    o.requestsLast >= 0 &&
-    (o.source === "RESPONSE_HEADERS" || o.source === "OPERATOR_BOOTSTRAP") &&
-    o.resetCycle === ODDS_QUOTA_RESET_CYCLE &&
-    typeof o.evidenceDate === "string" &&
-    !receiptContainsForbiddenSecrets(v)
-  );
+  if (
+    o.version !== ODDS_QUOTA_RECEIPT_VERSION ||
+    o.provider !== ODDS_QUOTA_PROVIDER ||
+    typeof o.planName !== "string" ||
+    o.planName.trim().length === 0 ||
+    typeof o.planConfirmed !== "boolean" ||
+    typeof o.observedAt !== "string" ||
+    !Number.isFinite(Date.parse(o.observedAt)) ||
+    !isNonNegativeIntegerValue(o.requestsRemaining) ||
+    !isNullableNonNegativeIntegerValue(o.requestsUsed) ||
+    !isNullableNonNegativeIntegerValue(o.requestsLast) ||
+    (o.source !== "RESPONSE_HEADERS" && o.source !== "OPERATOR_BOOTSTRAP") ||
+    o.resetCycle !== ODDS_QUOTA_RESET_CYCLE ||
+    typeof o.evidenceDate !== "string" ||
+    receiptContainsForbiddenSecrets(v)
+  ) {
+    return false;
+  }
+  if (o.source === "RESPONSE_HEADERS") {
+    return (
+      isNonNegativeIntegerValue(o.requestsUsed) &&
+      isNonNegativeIntegerValue(o.requestsLast)
+    );
+  }
+  return true;
+}
+
+function bootstrapOptionalCount(
+  value: number | null | undefined,
+  label: "USED" | "LAST",
+): number | null {
+  if (value === undefined || value === null) return null;
+  const parsed = nonNegativeInteger(String(value));
+  if (parsed == null) throw new Error(`BOOTSTRAP_${label}_INVALID`);
+  return parsed;
 }
 
 export function buildOddsQuotaBootstrapReceipt(input: {
   planName: string;
   requestsRemaining: number;
-  requestsUsed?: number;
-  requestsLast?: number;
+  requestsUsed?: number | null;
+  requestsLast?: number | null;
   evidenceDate: string;
   observedAt?: string;
   planConfirmed?: boolean;
@@ -207,16 +234,8 @@ export function buildOddsQuotaBootstrapReceipt(input: {
   if (remaining == null) {
     throw new Error("BOOTSTRAP_REMAINING_INVALID");
   }
-  const used =
-    input.requestsUsed == null
-      ? 0
-      : nonNegativeInteger(String(input.requestsUsed));
-  const last =
-    input.requestsLast == null
-      ? 0
-      : nonNegativeInteger(String(input.requestsLast));
-  if (used == null) throw new Error("BOOTSTRAP_USED_INVALID");
-  if (last == null) throw new Error("BOOTSTRAP_LAST_INVALID");
+  const used = bootstrapOptionalCount(input.requestsUsed, "USED");
+  const last = bootstrapOptionalCount(input.requestsLast, "LAST");
   const observedAt = input.observedAt ?? new Date().toISOString();
   if (!Number.isFinite(Date.parse(observedAt))) {
     throw new Error("BOOTSTRAP_OBSERVED_AT_INVALID");

@@ -3,7 +3,7 @@
  *
  * Remaining credits are CLI input — never hardcoded.
  *
- *   npx tsx scripts/write-odds-quota-bootstrap-receipt-v1.ts --plan-name Free --remaining 465 --evidence-date 2026-09-19
+ *   npx tsx scripts/write-odds-quota-bootstrap-receipt-v1.ts --plan-name <name> --remaining <n> --evidence-date YYYY-MM-DD [--used n] [--last n]
  */
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -22,8 +22,8 @@ function usage(): never {
 export function parseOddsQuotaBootstrapCli(argv: string[]) {
   let planName = "";
   let remaining: number | null = null;
-  let used: number | undefined;
-  let last: number | undefined;
+  let used: number | null = null;
+  let last: number | null = null;
   let evidenceDate = "";
   let observedAt: string | undefined;
   for (let i = 0; i < argv.length; i++) {
@@ -52,8 +52,12 @@ async function main() {
     observedAt: parsed.observedAt,
   });
   const filePath = await writeOddsQuotaReceipt(receipt);
+  const usedOut = receipt.requestsUsed == null ? "null" : String(receipt.requestsUsed);
+  const lastOut = receipt.requestsLast == null ? "null" : String(receipt.requestsLast);
   console.log(`WROTE ${path.relative(process.cwd(), filePath)}`);
-  console.log(`remaining=${receipt.requestsRemaining} source=${receipt.source}`);
+  console.log(
+    `remaining=${receipt.requestsRemaining} used=${usedOut} last=${lastOut} source=${receipt.source}`,
+  );
 }
 
 if (
