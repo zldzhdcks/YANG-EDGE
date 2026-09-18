@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "API_FOOTBALL_DERIVED_LINEUP_INJURY_LEGAL_EVIDENCE_V1",
+  "provider": "API-SPORTS / API-Football",
+  "decisionDate": "2026-09-19",
+  "evidenceDate": "2026-09-19",
+  "scope": "Derived lineup / injury / availability analysis legal-state sync",
+  "source": "YANG EDGE Legal Room — API-Football derived player-data analysis scopes",
+  "legalStatuses": {
+    "API_FOOTBALL_LINEUP_INTERNAL_INPUT": "LEGAL_PASS",
+    "API_FOOTBALL_INJURY_INTERNAL_INPUT": "LEGAL_PASS",
+    "API_FOOTBALL_AVAILABILITY_INTERNAL_INPUT": "LEGAL_PASS",
+    "API_FOOTBALL_DERIVED_ANALYSIS_GENERATION": "LEGAL_PASS",
+    "API_FOOTBALL_DERIVED_ANALYSIS_PUBLIC_DISPLAY": "LEGAL_CONDITIONAL",
+    "API_FOOTBALL_RAW_LINEUP_PUBLICATION": "LEGAL_REVIEW_REQUIRED",
+    "API_FOOTBALL_RAW_INJURY_PUBLICATION": "LEGAL_REVIEW_REQUIRED",
+    "API_FOOTBALL_RAW_PLAYER_AVAILABILITY_PUBLICATION": "LEGAL_REVIEW_REQUIRED",
+    "API_FOOTBALL_COMPETITION_THIRD_PARTY_RIGHTS": "LEGAL_REVIEW_REQUIRED"
+  },
+  "scopeStatuses": {
+    "API_FOOTBALL_LINEUP_INTERNAL_INPUT": "LEGAL_PASS",
+    "API_FOOTBALL_INJURY_INTERNAL_INPUT": "LEGAL_PASS",
+    "API_FOOTBALL_AVAILABILITY_INTERNAL_INPUT": "LEGAL_PASS",
+    "API_FOOTBALL_DERIVED_ANALYSIS_GENERATION": "LEGAL_PASS",
+    "API_FOOTBALL_DERIVED_ANALYSIS_PUBLIC_DISPLAY": "LEGAL_CONDITIONAL",
+    "API_FOOTBALL_RAW_LINEUP_PUBLICATION": "LEGAL_REVIEW_REQUIRED",
+    "API_FOOTBALL_RAW_INJURY_PUBLICATION": "LEGAL_REVIEW_REQUIRED",
+    "API_FOOTBALL_RAW_PLAYER_AVAILABILITY_PUBLICATION": "LEGAL_REVIEW_REQUIRED",
+    "API_FOOTBALL_COMPETITION_THIRD_PARTY_RIGHTS": "LEGAL_REVIEW_REQUIRED"
+  },
+  "allowedArchitecture": "API-Football raw pregame data → internal feature extraction → YANG EDGE independent analysis → derived YANG EDGE statement → Public UI",
+  "rawPublicationRestrictions": [
+    "full Starting XI publication",
+    "full Bench publication",
+    "full Injury list publication",
+    "player availability table publication",
+    "raw provider field dump",
+    "renamed raw feed",
+    "customer-facing provider data API/feed"
+  ],
+  "competitionRightsRequirement": "PUBLIC COMPETITION → RIGHTS REVIEW → LEGAL RESULT → PUBLIC ENABLE",
+  "commercialReReviewRequirement": "Commercial release / expanded public player-data surfaces require separate Legal Room re-review",
+  "coexistsWith": {
+    "API_FOOTBALL_DERIVED_PUBLIC_ANALYSIS": "LEGAL_CONDITIONAL",
+    "note": "Generic derived-public-analysis status remains. Granular player-data scopes do not collapse into it."
+  },
+  "implementationNote": "Legal permission is not analytical evidence and does not implement lineup/injury features, public UI, Engine, or competition enablement.",
+  "secretFree": true
+}

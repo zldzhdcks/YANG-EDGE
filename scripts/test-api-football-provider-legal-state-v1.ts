@@ -26,6 +26,7 @@ import {
   API_FOOTBALL_LAUNCHD_ENABLED,
   API_FOOTBALL_LEAGUE_LOGO,
   API_FOOTBALL_LEAGUE_NAME_DISPLAY,
+  API_FOOTBALL_DERIVED_LINEUP_INJURY_LEGAL_EVIDENCE_REL,
   API_FOOTBALL_LEGAL_EVIDENCE_DATE,
   API_FOOTBALL_LEGAL_EVIDENCE_REL,
   API_FOOTBALL_LEGAL_STATE,
@@ -44,6 +45,7 @@ import {
   LEGAL_CONDITIONAL,
   LEGAL_PASS,
   LEGAL_REVIEW_REQUIRED,
+  loadApiFootballDerivedLineupInjuryLegalEvidence,
   loadApiFootballLegalEvidence,
   NOT_REQUIRED_BY_PROVIDER,
   PUBLIC_EXPANSION_ALLOWED_DEFAULT,
@@ -199,6 +201,13 @@ test("22 legal state contains no secrets", () => {
     readFileSync(join(process.cwd(), API_FOOTBALL_LEGAL_EVIDENCE_REL), "utf8"),
     "evidence",
   );
+  assertNoSecrets(
+    readFileSync(
+      join(process.cwd(), API_FOOTBALL_DERIVED_LINEUP_INJURY_LEGAL_EVIDENCE_REL),
+      "utf8",
+    ),
+    "derived-evidence",
+  );
   assertNoSecrets(JSON.stringify(API_FOOTBALL_LEGAL_STATE), "runtime");
 });
 
@@ -234,6 +243,8 @@ test("25 PROVIDER_CALLS=0", () => {
   }) as typeof fetch;
   try {
     loadApiFootballLegalEvidence();
+    loadApiFootballDerivedLineupInjuryLegalEvidence();
+    assertApiFootballLegalStateMatchesEvidence();
     evaluateCompetitionPublicExpansion({ providerCompetitionId: "140" });
   } finally {
     globalThis.fetch = originalFetch;

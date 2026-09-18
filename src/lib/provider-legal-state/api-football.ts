@@ -41,6 +41,45 @@ export const API_FOOTBALL_LEAGUE_NAME_DISPLAY: ProviderLegalStatus =
 export const API_FOOTBALL_DERIVED_PUBLIC_ANALYSIS: ProviderLegalStatus =
   LEGAL_CONDITIONAL;
 
+/**
+ * Granular player-data / derived-analysis legal scopes (2026-09-19 sync).
+ * LEGAL_PASS on internal input is not analysis implementation and not raw publication.
+ */
+export const API_FOOTBALL_LINEUP_INTERNAL_INPUT: ProviderLegalStatus = LEGAL_PASS;
+export const API_FOOTBALL_INJURY_INTERNAL_INPUT: ProviderLegalStatus = LEGAL_PASS;
+export const API_FOOTBALL_AVAILABILITY_INTERNAL_INPUT: ProviderLegalStatus =
+  LEGAL_PASS;
+export const API_FOOTBALL_DERIVED_ANALYSIS_GENERATION: ProviderLegalStatus =
+  LEGAL_PASS;
+export const API_FOOTBALL_DERIVED_ANALYSIS_PUBLIC_DISPLAY: ProviderLegalStatus =
+  LEGAL_CONDITIONAL;
+export const API_FOOTBALL_RAW_LINEUP_PUBLICATION: ProviderLegalStatus =
+  LEGAL_REVIEW_REQUIRED;
+export const API_FOOTBALL_RAW_INJURY_PUBLICATION: ProviderLegalStatus =
+  LEGAL_REVIEW_REQUIRED;
+export const API_FOOTBALL_RAW_PLAYER_AVAILABILITY_PUBLICATION: ProviderLegalStatus =
+  LEGAL_REVIEW_REQUIRED;
+export const API_FOOTBALL_COMPETITION_THIRD_PARTY_RIGHTS: ProviderLegalStatus =
+  LEGAL_REVIEW_REQUIRED;
+
+export const API_FOOTBALL_DERIVED_LINEUP_INJURY_LEGAL_EVIDENCE_REL =
+  "data/compliance/providers/api-football-derived-lineup-injury-legal-evidence-2026-09-19-v1.json" as const;
+
+export const API_FOOTBALL_PLAYER_DATA_ANALYSIS = {
+  lineupInternalInput: API_FOOTBALL_LINEUP_INTERNAL_INPUT,
+  injuryInternalInput: API_FOOTBALL_INJURY_INTERNAL_INPUT,
+  availabilityInternalInput: API_FOOTBALL_AVAILABILITY_INTERNAL_INPUT,
+  derivedAnalysisGeneration: API_FOOTBALL_DERIVED_ANALYSIS_GENERATION,
+  derivedAnalysisPublicDisplay: API_FOOTBALL_DERIVED_ANALYSIS_PUBLIC_DISPLAY,
+  rawLineupPublication: API_FOOTBALL_RAW_LINEUP_PUBLICATION,
+  rawInjuryPublication: API_FOOTBALL_RAW_INJURY_PUBLICATION,
+  rawAvailabilityPublication: API_FOOTBALL_RAW_PLAYER_AVAILABILITY_PUBLICATION,
+  competitionThirdPartyRights: API_FOOTBALL_COMPETITION_THIRD_PARTY_RIGHTS,
+  allowedArchitecture:
+    "API-Football raw pregame data → internal feature extraction → YANG EDGE independent analysis → derived YANG EDGE statement → Public UI",
+  note: "Legal permission is not analytical evidence. Deterministic YANG EDGE metrics/rules are still required before any derived wording. Raw XI / injury / availability tables remain LEGAL_REVIEW_REQUIRED.",
+} as const;
+
 export const API_FOOTBALL_RAW_RESALE: ProviderLegalStatus = LEGAL_BLOCK;
 export const API_FOOTBALL_RAW_API_REDISTRIBUTION: ProviderLegalStatus =
   LEGAL_BLOCK;
@@ -119,6 +158,15 @@ export const API_FOOTBALL_SCOPE_STATUSES = {
   API_FOOTBALL_TEAM_NAME_DISPLAY,
   API_FOOTBALL_LEAGUE_NAME_DISPLAY,
   API_FOOTBALL_DERIVED_PUBLIC_ANALYSIS,
+  API_FOOTBALL_LINEUP_INTERNAL_INPUT,
+  API_FOOTBALL_INJURY_INTERNAL_INPUT,
+  API_FOOTBALL_AVAILABILITY_INTERNAL_INPUT,
+  API_FOOTBALL_DERIVED_ANALYSIS_GENERATION,
+  API_FOOTBALL_DERIVED_ANALYSIS_PUBLIC_DISPLAY,
+  API_FOOTBALL_RAW_LINEUP_PUBLICATION,
+  API_FOOTBALL_RAW_INJURY_PUBLICATION,
+  API_FOOTBALL_RAW_PLAYER_AVAILABILITY_PUBLICATION,
+  API_FOOTBALL_COMPETITION_THIRD_PARTY_RIGHTS,
   API_FOOTBALL_RAW_RESALE,
   API_FOOTBALL_RAW_API_REDISTRIBUTION,
   API_FOOTBALL_CUSTOMER_DATA_FEED,
@@ -170,6 +218,7 @@ export const API_FOOTBALL_LEGAL_STATE = {
       "NEW PUBLIC COMPETITION → LEAGUE RIGHTS REVIEW → LEGAL RESULT → PUBLIC ENABLE",
   },
   derivedPublicAnalysis: API_FOOTBALL_DERIVED_PUBLIC_ANALYSIS,
+  playerDataAnalysis: API_FOOTBALL_PLAYER_DATA_ANALYSIS,
   redistribution: {
     rawResale: API_FOOTBALL_RAW_RESALE,
     rawApiRedistribution: API_FOOTBALL_RAW_API_REDISTRIBUTION,
