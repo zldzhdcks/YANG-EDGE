@@ -20,6 +20,7 @@ export function resolveLeagueAction(input: {
   noProvider: boolean;
   cwd?: string;
   quotaRemaining?: number | null;
+  quotaSource?: "CLI" | "RECEIPT" | "NONE";
   rehearsal?: boolean;
   rehearsalAsOf?: string;
   unattended?: boolean;

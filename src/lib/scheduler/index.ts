@@ -115,6 +115,7 @@ export async function planGame(input: {
   noProvider: boolean;
   existingState?: import("./types").SchedulerStateArtifact | null;
   quotaRemaining?: number | null;
+  quotaSource?: "CLI" | "RECEIPT" | "NONE";
   cwd?: string;
   rehearsal?: boolean;
   rehearsalAsOf?: string;
@@ -236,6 +237,7 @@ export async function planGame(input: {
     noProvider: input.noProvider,
     cwd: input.cwd,
     quotaRemaining: input.quotaRemaining,
+    quotaSource: input.quotaSource,
     rehearsal: input.rehearsal,
     rehearsalAsOf: input.rehearsalAsOf,
     unattended: input.unattended,
@@ -581,6 +583,7 @@ export async function runPregameScheduler(
         noProvider,
         existingState: state,
         quotaRemaining,
+        quotaSource,
         cwd,
         rehearsal,
         rehearsalAsOf: options.rehearsalAsOf,
@@ -654,6 +657,7 @@ export async function runPregameScheduler(
         gameIds: members.map((m) => m.gameId),
         noProvider,
         quotaRemaining,
+        quotaSource,
         rehearsal,
         rehearsalAsOf: options.rehearsalAsOf,
         unattended,

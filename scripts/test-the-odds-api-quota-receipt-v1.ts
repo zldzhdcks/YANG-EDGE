@@ -360,9 +360,7 @@ async function main() {
     assert.equal(result.audit.quotaSource, "RECEIPT");
     const daily = calls.find((c) => c.actionId === "RUN_MLB_DAILY_OPS");
     assert.ok(daily);
-    const i = daily!.args?.indexOf("--quota-remaining") ?? -1;
-    assert.ok(i >= 0);
-    assert.equal(daily!.args?.[i + 1], "465");
+    assert.equal(daily!.args?.includes("--quota-remaining"), false);
     assert.ok(daily!.args?.includes("--unattended"));
   }
 

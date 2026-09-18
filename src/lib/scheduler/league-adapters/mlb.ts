@@ -34,6 +34,7 @@ export function buildMlbDailyOpsRunnerAction(input: {
   gameIds: string[];
   noProvider: boolean;
   quotaRemaining?: number | null;
+  quotaSource?: "CLI" | "RECEIPT" | "NONE";
   rehearsal?: boolean;
   rehearsalAsOf?: string;
   unattended?: boolean;
@@ -42,7 +43,11 @@ export function buildMlbDailyOpsRunnerAction(input: {
   for (const id of input.gameIds) {
     args.push("--game-id", id);
   }
-  if (input.quotaRemaining != null) {
+  const forwardCliQuota =
+    input.quotaSource !== "RECEIPT" &&
+    input.quotaSource !== "NONE" &&
+    input.quotaRemaining != null;
+  if (forwardCliQuota) {
     args.push("--quota-remaining", String(input.quotaRemaining));
   }
   if (input.noProvider || input.rehearsal) {
@@ -75,6 +80,7 @@ export function mlbAction(input: {
   includePostgame: boolean;
   noProvider: boolean;
   quotaRemaining?: number | null;
+  quotaSource?: "CLI" | "RECEIPT" | "NONE";
   rehearsal?: boolean;
   rehearsalAsOf?: string;
   unattended?: boolean;
@@ -92,6 +98,7 @@ export function mlbAction(input: {
       gameIds: [input.gameId],
       noProvider,
       quotaRemaining: input.quotaRemaining,
+      quotaSource: input.quotaSource,
       rehearsal: input.rehearsal,
       rehearsalAsOf: input.rehearsalAsOf,
       unattended: input.unattended,
