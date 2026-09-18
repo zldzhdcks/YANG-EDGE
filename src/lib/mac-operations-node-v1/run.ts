@@ -14,6 +14,7 @@ import {
   acquireMacOpsLock,
   inspectMacOpsLock,
   releaseMacOpsLock,
+  startMacOpsLockHeartbeat,
   writeMacOpsJsonAtomic,
 } from "./mutex";
 import {
@@ -260,44 +261,31 @@ export async function runMacOperationsNode(
   }
   report.mutex = lock.outcome;
 
+  const heartbeat = startMacOpsLockHeartbeat({ cwd, runId });
   let schedulerRunId: string | null = null;
   try {
     if (!input.executeScheduler) {
       report.status = "CONFIG_FAILURE";
       report.exitCode = MAC_OPS_EXIT.CONFIG_FAILURE;
       report.lastErrorCode = "LIVE_RUN_REQUIRES_EXPLICIT_EXECUTOR_IN_THIS_MISSION";
-      await writeHealth(cwd, {
-        runId,
-        startedAt,
-        finishedAt: new Date().toISOString(),
-        dateKst,
-        mode: "RUN",
-        status: "CONFIG_FAILURE",
-        exitCode: MAC_OPS_EXIT.CONFIG_FAILURE,
-        schedulerRunId: null,
-        quotaSource: quota.source,
-        quotaStatus: quota.readStatus,
-        lastErrorCode: report.lastErrorCode,
-        headCommit: input.headCommit ?? null,
-      });
-      emit(report, null);
-      return report;
-    }
-    const spawned = await input.executeScheduler({
-      dateKst,
-      repoRoot,
-      args: schedulerUnattendedArgs(dateKst),
-    });
-    schedulerRunId = spawned.schedulerRunId ?? null;
-    if (spawned.exitCode !== 0) {
-      report.status = "EXECUTION_FAILURE";
-      report.exitCode = MAC_OPS_EXIT.EXECUTION_FAILURE;
-      report.lastErrorCode = "SCHEDULER_EXIT_NONZERO";
     } else {
-      report.status = "HEALTHY";
-      report.exitCode = MAC_OPS_EXIT.HEALTHY;
+      const spawned = await input.executeScheduler({
+        dateKst,
+        repoRoot,
+        args: schedulerUnattendedArgs(dateKst),
+      });
+      schedulerRunId = spawned.schedulerRunId ?? null;
+      if (spawned.exitCode !== 0) {
+        report.status = "EXECUTION_FAILURE";
+        report.exitCode = MAC_OPS_EXIT.EXECUTION_FAILURE;
+        report.lastErrorCode = "SCHEDULER_EXIT_NONZERO";
+      } else {
+        report.status = "HEALTHY";
+        report.exitCode = MAC_OPS_EXIT.HEALTHY;
+      }
     }
   } finally {
+    heartbeat.stop();
     await releaseMacOpsLock({ cwd, runId });
   }
 

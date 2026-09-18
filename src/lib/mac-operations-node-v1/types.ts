@@ -4,6 +4,8 @@ import type { OddsQuotaReadStatus, OddsQuotaSource } from "../odds/quota-receipt
 export const MAC_OPS_NODE_VERSION = "mac-operations-node-v1" as const;
 
 export const MAC_OPS_LOCK_REL = "data/ops/locks/mac-operations-node-v1.lock";
+export const MAC_OPS_RECOVERY_LOCK_REL =
+  "data/ops/locks/mac-operations-node-v1.recovery.lock";
 export const MAC_OPS_HEALTH_REL = "data/ops/health/mac-operations-node-v1.json";
 
 /**
@@ -13,6 +15,19 @@ export const MAC_OPS_HEALTH_REL = "data/ops/health/mac-operations-node-v1.json";
  * under 5-minute launchd cadence without releasing a live collector.
  */
 export const MAC_OPS_LOCK_TTL_MS = 30 * 60_000;
+
+/**
+ * Owner lease heartbeat. Comfortably below 30-minute TTL so a live RUN
+ * cannot be stale-recovered. Does not change the 5-minute launchd tick.
+ */
+export const MAC_OPS_LOCK_HEARTBEAT_INTERVAL_MS = 5 * 60_000;
+
+/**
+ * Recovery-guard leftover TTL. The critical section is milliseconds
+ * (re-read / optional unlink / wx, or lease overwrite). 60s reclaims a
+ * crash leftover without approaching the 30-minute main lease.
+ */
+export const MAC_OPS_RECOVERY_LOCK_TTL_MS = 60_000;
 
 export const MAC_OPS_RECOMMENDED_TICK_MINUTES = 5;
 
@@ -36,6 +51,11 @@ export type MacOpsLockOutcome =
   | "LOCK_RELEASED"
   | "LOCK_AVAILABLE"
   | "LOCK_HELD";
+
+export type MacOpsLeaseRefreshOutcome =
+  | "LEASE_REFRESHED"
+  | "LEASE_NOT_OWNER"
+  | "LEASE_MISSING";
 
 export type MacOpsLockRecord = {
   version: typeof MAC_OPS_NODE_VERSION;
