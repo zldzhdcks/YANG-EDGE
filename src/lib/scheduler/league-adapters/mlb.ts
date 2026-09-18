@@ -34,6 +34,8 @@ export function buildMlbDailyOpsRunnerAction(input: {
   gameIds: string[];
   noProvider: boolean;
   quotaRemaining?: number | null;
+  rehearsal?: boolean;
+  rehearsalAsOf?: string;
 }): RunnerAction {
   const args = ["--date", input.dateKst, "--window", input.window];
   for (const id of input.gameIds) {
@@ -42,8 +44,14 @@ export function buildMlbDailyOpsRunnerAction(input: {
   if (input.quotaRemaining != null) {
     args.push("--quota-remaining", String(input.quotaRemaining));
   }
-  if (input.noProvider) {
+  if (input.noProvider || input.rehearsal) {
     args.push("--no-provider");
+  }
+  if (input.rehearsal) {
+    args.push("--no-write", "--no-seal");
+    if (input.rehearsalAsOf) {
+      args.push("--rehearsal-as-of", input.rehearsalAsOf);
+    }
   }
   return {
     kind: "SPAWN_TSX",
@@ -64,6 +72,8 @@ export function mlbAction(input: {
   includePostgame: boolean;
   noProvider: boolean;
   quotaRemaining?: number | null;
+  rehearsal?: boolean;
+  rehearsalAsOf?: string;
 }): RunnerAction {
   const { stage, dateKst, includePostgame, noProvider } = input;
   const providerNote = noProvider
@@ -78,6 +88,8 @@ export function mlbAction(input: {
       gameIds: [input.gameId],
       noProvider,
       quotaRemaining: input.quotaRemaining,
+      rehearsal: input.rehearsal,
+      rehearsalAsOf: input.rehearsalAsOf,
     });
   }
 

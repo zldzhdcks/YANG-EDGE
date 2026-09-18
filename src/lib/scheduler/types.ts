@@ -200,6 +200,9 @@ export type SchedulerAuditArtifact = {
   generatedAt: string;
   schedulerRunId: string;
   dryRun: boolean;
+  persist?: boolean;
+  rehearsal?: boolean;
+  rehearsalAsOf?: string | null;
   totalGames: number;
   stageCounts: Partial<Record<PregameSchedulerStage, number>>;
   success: number;
@@ -237,4 +240,11 @@ export type OrchestratorOptions = {
   executeRunner?: (action: RunnerAction) => Promise<number>;
   /** Provider quota remaining for gate tests / ops. */
   quotaRemaining?: number | null;
+  /**
+   * Safe operational rehearsal: execute the delegated child with
+   * persist=false, noProvider=true, no historical as-of persistence.
+   * Control-plane only — not research evidence.
+   */
+  rehearsal?: boolean;
+  rehearsalAsOf?: string;
 };

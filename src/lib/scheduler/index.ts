@@ -111,6 +111,8 @@ export async function planGame(input: {
   existingState?: import("./types").SchedulerStateArtifact | null;
   quotaRemaining?: number | null;
   cwd?: string;
+  rehearsal?: boolean;
+  rehearsalAsOf?: string;
 }): Promise<SchedulerGamePlan> {
   const warnings: string[] = [];
   const resolved = resolveStage({
@@ -228,6 +230,8 @@ export async function planGame(input: {
     noProvider: input.noProvider,
     cwd: input.cwd,
     quotaRemaining: input.quotaRemaining,
+    rehearsal: input.rehearsal,
+    rehearsalAsOf: input.rehearsalAsOf,
   });
 
   const quota = evaluateQuotaGate(input.quotaRemaining);
@@ -461,7 +465,11 @@ export async function runPregameScheduler(
   const started = Date.now();
   const now = options.now ?? new Date();
   const cwd = options.cwd ?? process.cwd();
-  const persist = options.persist ?? !options.dryRun;
+  const rehearsal = Boolean(options.rehearsal);
+  const dryRun = rehearsal ? false : options.dryRun;
+  const persist = rehearsal ? false : (options.persist ?? !dryRun);
+  const noProvider = rehearsal ? true : options.noProvider;
+  const includePostgame = rehearsal ? false : options.includePostgame;
   const schedulerRunId = newSchedulerRunId(now);
   const leagues: SchedulerLeague[] =
     options.league === "ALL" ? ["MLB", "KBO", "NPB"] : [options.league];
@@ -510,8 +518,8 @@ export async function runPregameScheduler(
       dateKst: options.dateKst,
       cwd,
       persist,
-      dryRun: options.dryRun,
-      noProvider: options.noProvider,
+      dryRun,
+      noProvider,
       schedulerRunId,
       now,
       executeRunner: options.executeRunner,
@@ -520,7 +528,7 @@ export async function runPregameScheduler(
 
     const planned: SchedulerGamePlan[] = [];
     for (const game of games) {
-      if (!options.fixtureGames) {
+      if (!options.fixtureGames && !rehearsal) {
         const locked = await detectLockedPrediction({
           league,
           dateKst: options.dateKst,
@@ -536,11 +544,13 @@ export async function runPregameScheduler(
         game,
         now,
         forceStage: options.forceStage,
-        includePostgame: options.includePostgame,
-        noProvider: options.noProvider,
+        includePostgame,
+        noProvider,
         existingState: state,
         quotaRemaining: options.quotaRemaining,
         cwd,
+        rehearsal,
+        rehearsalAsOf: options.rehearsalAsOf,
       });
       planned.push(plan);
       stageCounts[plan.stage] = (stageCounts[plan.stage] ?? 0) + 1;
@@ -550,7 +560,7 @@ export async function runPregameScheduler(
 
     const persistPlan = async (plan: SchedulerGamePlan) => {
       allPlans.push(plan);
-      if (persist && !options.dryRun) {
+      if (persist && !dryRun) {
         const rec = toStageRecord(plan, schedulerRunId, now);
         state = upsertGameStage(
           state,
@@ -561,7 +571,7 @@ export async function runPregameScheduler(
       }
     };
 
-    if (options.dryRun) {
+    if (dryRun) {
       for (const plan of planned) {
         await persistPlan(
           plan.executionStatus === "READY"
@@ -608,8 +618,10 @@ export async function runPregameScheduler(
         dateKst: options.dateKst,
         window,
         gameIds: members.map((m) => m.gameId),
-        noProvider: options.noProvider,
+        noProvider,
         quotaRemaining: options.quotaRemaining,
+        rehearsal,
+        rehearsalAsOf: options.rehearsalAsOf,
       });
       const startedAt = new Date().toISOString();
       const spawn = await runSpawnAction(ctx, action);
@@ -711,7 +723,7 @@ export async function runPregameScheduler(
       }
     }
 
-    if (persist && !options.dryRun) {
+    if (persist && !dryRun) {
       await saveSchedulerState(state, cwd);
     }
   }
@@ -723,7 +735,7 @@ export async function runPregameScheduler(
   const skipped = allPlans.filter((p) => p.executionStatus === "SKIPPED").length;
 
   let overallStatus: SchedulerAuditArtifact["overallStatus"] = "SUCCESS";
-  if (options.dryRun) overallStatus = "DRY_RUN";
+  if (dryRun) overallStatus = "DRY_RUN";
   else if (globalBlocker) overallStatus = "FAILED";
   else if (failed > 0 && success + pass > 0) overallStatus = "PARTIAL_SUCCESS";
   else if (failed > 0) overallStatus = "FAILED";
@@ -738,7 +750,10 @@ export async function runPregameScheduler(
     league: options.league,
     generatedAt: new Date().toISOString(),
     schedulerRunId,
-    dryRun: options.dryRun,
+    dryRun,
+    persist,
+    rehearsal,
+    rehearsalAsOf: options.rehearsalAsOf ?? null,
     totalGames: allPlans.length,
     stageCounts,
     success,
@@ -747,17 +762,17 @@ export async function runPregameScheduler(
     failed,
     skipped,
     duplicatePrevented,
-    providerCalls: options.dryRun ? 0 : providerCalls,
+    providerCalls: dryRun ? 0 : providerCalls,
     quotaWarnings,
     cutoffViolations,
-    leakageRisk: options.dryRun ? "NONE" : cutoffViolations > 0 ? "WARN" : "NONE",
+    leakageRisk: dryRun ? "NONE" : cutoffViolations > 0 ? "WARN" : "NONE",
     lockConflicts,
     durationMs: Date.now() - started,
     overallStatus,
     games: allPlans,
   };
 
-  if (persist && !options.dryRun) {
+  if (persist && !dryRun) {
     await saveSchedulerAudit(audit, options.league, options.dateKst, cwd);
   }
 

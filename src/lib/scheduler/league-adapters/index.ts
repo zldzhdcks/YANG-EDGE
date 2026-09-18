@@ -20,6 +20,8 @@ export function resolveLeagueAction(input: {
   noProvider: boolean;
   cwd?: string;
   quotaRemaining?: number | null;
+  rehearsal?: boolean;
+  rehearsalAsOf?: string;
 }): RunnerAction {
   switch (input.league) {
     case "MLB":

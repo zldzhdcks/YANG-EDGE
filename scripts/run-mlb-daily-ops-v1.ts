@@ -19,6 +19,20 @@ import {
   parseMlbDailyOpsWindow,
 } from "../src/lib/mlb/daily-pregame-v0";
 
+export function parseRehearsalAsOfIso(raw: string): string {
+  const s = raw.trim();
+  if (
+    !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/.test(s)
+  ) {
+    throw new Error(`REHEARSAL_AS_OF_INVALID_ISO:${raw}`);
+  }
+  const t = Date.parse(s);
+  if (!Number.isFinite(t)) {
+    throw new Error(`REHEARSAL_AS_OF_INVALID_ISO:${raw}`);
+  }
+  return s;
+}
+
 function usage(): string {
   return `Usage:
   npm run ops:mlb-daily -- YYYY-MM-DD
@@ -39,6 +53,7 @@ Options:
   --resume-from <STAGE>
   --window T90|T60|T45|T30|LOCK
   --quota-remaining <non-negative integer>
+  --rehearsal-as-of <ISO>  Requires --no-provider --no-write --no-seal
   --help
 
 Stages (reused): SCHEDULE → STARTER → ODDS → LINEUP → DAILY_RESEARCH_SUMMARY
@@ -64,6 +79,7 @@ export function parseMlbDailyOpsCliArgs(argv: string[]) {
   let resumeFrom: DailyStageName | undefined;
   let window: MlbDailyOpsWindow | undefined;
   let quotaRemaining: number | null = null;
+  let rehearsalAsOfRaw: string | undefined;
   const gameIds: string[] = [];
 
   const stages = new Set([
@@ -148,11 +164,27 @@ export function parseMlbDailyOpsCliArgs(argv: string[]) {
       quotaRemaining = parseMlbDailyOpsQuotaRemaining(s);
       continue;
     }
+    if (a === "--rehearsal-as-of") {
+      const s = argv[++i];
+      if (!s) throw new Error("REHEARSAL_AS_OF_MISSING_VALUE");
+      rehearsalAsOfRaw = s;
+      continue;
+    }
     if (!a.startsWith("-") && /^\d{4}-\d{2}-\d{2}$/.test(a) && !dateKst) {
       dateKst = a;
       continue;
     }
     throw new Error(`Unknown argument: ${a}`);
+  }
+
+  let rehearsalAsOf: string | undefined;
+  if (rehearsalAsOfRaw) {
+    if (!noProvider || !noWrite || !noSeal) {
+      throw new Error(
+        "REHEARSAL_AS_OF_REQUIRES_NO_PROVIDER_NO_WRITE_NO_SEAL",
+      );
+    }
+    rehearsalAsOf = parseRehearsalAsOfIso(rehearsalAsOfRaw);
   }
 
   return {
@@ -176,6 +208,8 @@ export function parseMlbDailyOpsCliArgs(argv: string[]) {
     window,
     quotaRemaining,
     gameIds,
+    rehearsalAsOf: rehearsalAsOf ?? null,
+    asOf: rehearsalAsOf,
   };
 }
 
@@ -209,6 +243,7 @@ async function main() {
     writePrediction: opts.writePrediction,
     window: opts.window,
     quotaRemaining: opts.quotaRemaining,
+    asOf: opts.asOf,
   });
 
   if (opts.json) {
