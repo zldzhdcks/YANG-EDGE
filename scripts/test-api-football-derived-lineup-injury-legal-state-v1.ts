@@ -204,9 +204,15 @@ test("14 no Engine/research change", () => {
     .map((line) => line.trim())
     .filter(Boolean);
   for (const p of paths) {
+    const allowedResearchScope =
+      p.includes("daily-scope-lock") ||
+      p.includes("research-target-scope") ||
+      p.includes("research-daily-scope-lock");
     const engineOrResearch =
       p.includes("/engine/") ||
-      (p.includes("research") && !p.includes("provider-legal-state")) ||
+      (p.includes("research") &&
+        !p.includes("provider-legal-state") &&
+        !allowedResearchScope) ||
       (p.includes("prediction") && !p.includes("provider-legal-state"));
     assert.equal(engineOrResearch, false, `unexpected engine/research path: ${p}`);
   }

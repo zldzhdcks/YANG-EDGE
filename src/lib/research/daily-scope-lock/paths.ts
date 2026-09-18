@@ -1,7 +1,11 @@
 import path from "node:path";
 import {
-  DAILY_SCOPE_LOCK_SCHEMA_VERSION,
+  LEGACY_DAILY_SCOPE_LOCK_SCHEMA_VERSION,
   RESEARCH_TARGET_SCOPE_LOCK_MECHANISM,
+  RESEARCH_TARGET_SCOPE_LOCK_POLICY_VERSION,
+  RESEARCH_TARGET_SCOPE_LOCK_SCHEMA_VERSION,
+  type ResearchTargetScopeLockDocument,
+  type ResearchTargetScopeSourceRef,
 } from "./types";
 
 export function assertExplicitDateKst(dateKst: string): string {
@@ -32,8 +36,14 @@ export function betmanFullSlateRel(dateKst: string): string {
   return `data/research/daily-slates/${dateKst}-betman-full-slate-v1.json`;
 }
 
-export function researchTargetScopeLockRel(dateKst: string): string {
+/** Legacy Daily C Stage A path — do not write target-level locks here. */
+export function legacyDailyScopeLockRel(dateKst: string): string {
   return `data/audits/${dateKst}-daily-scope-lock-v1.json`;
+}
+
+/** New research-target cohort path — distinct from legacy Daily C. */
+export function researchTargetScopeLockRel(dateKst: string): string {
+  return `data/audits/${dateKst}-research-target-scope-lock-v1.json`;
 }
 
 export function researchTargetScopeLockAbs(
@@ -43,22 +53,81 @@ export function researchTargetScopeLockAbs(
   return path.join(cwd, researchTargetScopeLockRel(dateKst));
 }
 
+function asRecord(v: unknown): Record<string, unknown> | null {
+  return v != null && typeof v === "object" && !Array.isArray(v)
+    ? (v as Record<string, unknown>)
+    : null;
+}
+
+function asString(v: unknown): string | null {
+  return typeof v === "string" && v.trim() !== "" ? v.trim() : null;
+}
+
+function isSourceRef(v: unknown): v is ResearchTargetScopeSourceRef {
+  const rec = asRecord(v);
+  if (!rec) return false;
+  return (
+    (rec.class === "OPERATOR_BETMAN_DAILY_SLATE" ||
+      rec.class === "BETMAN_FULL_SLATE") &&
+    typeof rec.rel === "string" &&
+    typeof rec.sha256 === "string"
+  );
+}
+
+/**
+ * Strict type guard for the new target-level research scope lock.
+ * Legacy Daily C documents always fail.
+ */
 export function isResearchTargetScopeLockDocument(
   value: unknown,
-): value is {
-  schemaVersion: string;
-  lockMechanism?: string;
-  dateKst: string;
-} {
-  if (value == null || typeof value !== "object" || Array.isArray(value)) {
+): value is ResearchTargetScopeLockDocument {
+  const doc = asRecord(value);
+  if (!doc) return false;
+  if (doc.schemaVersion !== RESEARCH_TARGET_SCOPE_LOCK_SCHEMA_VERSION) {
     return false;
   }
-  const doc = value as Record<string, unknown>;
-  return (
-    doc.schemaVersion === DAILY_SCOPE_LOCK_SCHEMA_VERSION &&
+  if (doc.lockMechanism !== RESEARCH_TARGET_SCOPE_LOCK_MECHANISM) {
+    return false;
+  }
+  if (doc.policyVersion !== RESEARCH_TARGET_SCOPE_LOCK_POLICY_VERSION) {
+    return false;
+  }
+  if (typeof doc.dateKst !== "string") return false;
+  if (typeof doc.targetCount !== "number" || !Number.isFinite(doc.targetCount)) {
+    return false;
+  }
+  if (!Array.isArray(doc.targets)) return false;
+  if (!isSourceRef(doc.source)) return false;
+  return true;
+}
+
+export type LegacyDailyScopeClassification =
+  | "LEGACY_DAILY_SCOPE_LOCK"
+  | "RESEARCH_TARGET_SCOPE_LOCK"
+  | "UNKNOWN";
+
+/**
+ * Classify a parsed audit JSON without casting.
+ * Legacy schema without the new mechanism is LEGACY_DAILY_SCOPE_LOCK.
+ */
+export function classifyScopeLockDocument(
+  value: unknown,
+): LegacyDailyScopeClassification {
+  if (isResearchTargetScopeLockDocument(value)) {
+    return "RESEARCH_TARGET_SCOPE_LOCK";
+  }
+  const doc = asRecord(value);
+  if (!doc) return "UNKNOWN";
+  if (
+    doc.schemaVersion === LEGACY_DAILY_SCOPE_LOCK_SCHEMA_VERSION &&
     typeof doc.dateKst === "string" &&
-    (doc.lockMechanism === undefined ||
-      doc.lockMechanism === RESEARCH_TARGET_SCOPE_LOCK_MECHANISM ||
-      typeof doc.lockMechanism === "string")
-  );
+    doc.lockMechanism !== RESEARCH_TARGET_SCOPE_LOCK_MECHANISM
+  ) {
+    return "LEGACY_DAILY_SCOPE_LOCK";
+  }
+  return "UNKNOWN";
+}
+
+export function isLegacyDailyScopeLockDocument(value: unknown): boolean {
+  return classifyScopeLockDocument(value) === "LEGACY_DAILY_SCOPE_LOCK";
 }

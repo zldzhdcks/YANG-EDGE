@@ -1,14 +1,18 @@
 import { mkdir, open, readFile } from "node:fs/promises";
 import path from "node:path";
 import {
-  DAILY_SCOPE_LOCK_SCHEMA_VERSION,
   RESEARCH_TARGET_SCOPE_LOCK_MECHANISM,
   RESEARCH_TARGET_SCOPE_LOCK_POLICY_VERSION,
+  RESEARCH_TARGET_SCOPE_LOCK_SCHEMA_VERSION,
   type ResearchTargetScopeLockDocument,
   type ResearchTargetScopeLockResult,
 } from "./types";
 import { admitResearchTargetScopeSource } from "./admit-source";
-import { assertExplicitDateKst, researchTargetScopeLockRel } from "./paths";
+import {
+  assertExplicitDateKst,
+  isResearchTargetScopeLockDocument,
+  researchTargetScopeLockRel,
+} from "./paths";
 import {
   semanticLockFingerprint,
   sortExclusionsDeterministic,
@@ -32,7 +36,7 @@ function buildDocument(input: {
   }
   const empty = targets.length === 0;
   return {
-    schemaVersion: DAILY_SCOPE_LOCK_SCHEMA_VERSION,
+    schemaVersion: RESEARCH_TARGET_SCOPE_LOCK_SCHEMA_VERSION,
     lockMechanism: RESEARCH_TARGET_SCOPE_LOCK_MECHANISM,
     policyVersion: RESEARCH_TARGET_SCOPE_LOCK_POLICY_VERSION,
     dateKst: input.dateKst,
@@ -82,6 +86,7 @@ function fingerprintDoc(doc: ResearchTargetScopeLockDocument): string {
   });
 }
 
+/** Exclusive create via wx. Not temp+fsync+rename crash-atomic publication. */
 async function exclusiveWriteJson(
   absPath: string,
   value: unknown,
@@ -124,7 +129,8 @@ function missingResult(dateKst: string): ResearchTargetScopeLockResult {
 
 /**
  * Build and immutably lock the research-target cohort for an explicit KST date.
- * Does not invent a slate when none exists.
+ * Writes only to `{date}-research-target-scope-lock-v1.json`.
+ * Legacy Daily C `{date}-daily-scope-lock-v1.json` is never written or required.
  */
 export async function lockResearchTargetScope(input: {
   dateKst: string;
@@ -226,9 +232,9 @@ export async function lockResearchTargetScope(input: {
     };
   }
 
-  let existing: ResearchTargetScopeLockDocument;
+  let existingParsed: unknown;
   try {
-    existing = JSON.parse(existingRaw) as ResearchTargetScopeLockDocument;
+    existingParsed = JSON.parse(existingRaw);
   } catch {
     return {
       dateKst,
@@ -245,23 +251,37 @@ export async function lockResearchTargetScope(input: {
     };
   }
 
+  if (!isResearchTargetScopeLockDocument(existingParsed)) {
+    return {
+      dateKst,
+      status: "SCOPE_LOCK_CONFLICT",
+      lockCreated: false,
+      targetCount: null,
+      targetCountAuthoritative: false,
+      excludedCount: 0,
+      outputPath: outputRel,
+      sourcePath: payload.rel,
+      sourceStatus: "FOUND",
+      document: null,
+      message: "EXISTING_LOCK_NOT_RESEARCH_TARGET_SCHEMA",
+    };
+  }
+
   if (
-    existing.schemaVersion === DAILY_SCOPE_LOCK_SCHEMA_VERSION &&
-    existing.dateKst === dateKst &&
-    existing.lockMechanism === RESEARCH_TARGET_SCOPE_LOCK_MECHANISM &&
-    fingerprintDoc(existing) === fingerprintDoc(document)
+    existingParsed.dateKst === dateKst &&
+    fingerprintDoc(existingParsed) === fingerprintDoc(document)
   ) {
     return {
       dateKst,
       status: "IDEMPOTENT_EXISTING",
       lockCreated: false,
-      targetCount: existing.targetCount,
+      targetCount: existingParsed.targetCount,
       targetCountAuthoritative: true,
-      excludedCount: existing.exclusions?.length ?? 0,
+      excludedCount: existingParsed.exclusions.length,
       outputPath: outputRel,
       sourcePath: payload.rel,
       sourceStatus: "FOUND",
-      document: existing,
+      document: existingParsed,
       message: "Existing lock is semantically identical; no rewrite.",
     };
   }
@@ -270,7 +290,7 @@ export async function lockResearchTargetScope(input: {
     dateKst,
     status: "SCOPE_LOCK_CONFLICT",
     lockCreated: false,
-    targetCount: existing.targetCount ?? null,
+    targetCount: existingParsed.targetCount,
     targetCountAuthoritative: false,
     excludedCount: 0,
     outputPath: outputRel,

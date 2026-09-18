@@ -49,7 +49,7 @@ async function main() {
   const coverage = verifyDecisionCoverage({
     scopeLock: result.document,
     sealedDecisionTargetIds: [],
-    sourceMissing: result.status === "TARGET_SCOPE_SOURCE_MISSING",
+    scopeResolution: result.status,
   });
 
   console.log(`DATE=${dateKst}`);
@@ -57,13 +57,17 @@ async function main() {
   console.log(`LOCK_STATUS=${result.status}`);
   console.log(
     `TARGET_COUNT=${
-      result.targetCountAuthoritative ? String(result.targetCount) : "NOT_AUTHORITATIVE"
+      result.targetCountAuthoritative
+        ? String(result.targetCount)
+        : "NOT_AUTHORITATIVE"
     }`,
   );
   console.log(`EXCLUDED_COUNT=${result.excludedCount}`);
   console.log(`OUTPUT_PATH=${result.outputPath ?? "NONE"}`);
   console.log(`LOCK_CREATED=${result.lockCreated}`);
   console.log(`COVERAGE_STATUS=${coverage.status}`);
+  console.log(`COVERAGE_REASON=${coverage.reason ?? "NONE"}`);
+  console.log(`EXCLUSIVE_CREATE=wx`);
   console.log(`MESSAGE=${result.message}`);
 
   if (

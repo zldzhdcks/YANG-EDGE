@@ -2,13 +2,16 @@
  * Current-date research target scope lock v1.
  *
  * Defines WHICH games are research targets for an explicit KST date.
- * Does not collect evidence, predict, pass, or publish.
+ * Distinct from legacy Daily C Stage A (`yang-edge-daily-scope-lock-v1`).
  */
 export const RESEARCH_TARGET_SCOPE_LOCK_MECHANISM =
   "research-target-scope-lock-v1" as const;
 
-/** Compatible historical schema name used by Daily C Stage A artifacts. */
-export const DAILY_SCOPE_LOCK_SCHEMA_VERSION =
+export const RESEARCH_TARGET_SCOPE_LOCK_SCHEMA_VERSION =
+  "yang-edge-research-target-scope-lock-v1" as const;
+
+/** Legacy Daily C Stage A schema — incompatible with target-level locks. */
+export const LEGACY_DAILY_SCOPE_LOCK_SCHEMA_VERSION =
   "yang-edge-daily-scope-lock-v1" as const;
 
 export const RESEARCH_TARGET_SCOPE_LOCK_POLICY_VERSION =
@@ -26,7 +29,26 @@ export type ResearchTargetScopeStatus =
 export type DecisionCoverageStatus =
   | "COVERAGE_COMPLETE"
   | "COVERAGE_INCOMPLETE"
-  | "TARGET_SCOPE_SOURCE_MISSING";
+  | "TARGET_SCOPE_SOURCE_MISSING"
+  | "COVERAGE_NOT_EVALUABLE";
+
+export type DecisionCoverageReason =
+  | "TARGET_SCOPE_SOURCE_MISSING"
+  | "TARGET_SCOPE_SOURCE_INVALID"
+  | "TARGET_SCOPE_CONFLICT"
+  | "SCOPE_LOCK_CONFLICT"
+  | "SCOPE_RESOLUTION_UNKNOWN"
+  | "AUTHORITATIVE_SCOPE"
+  | null;
+
+export type ScopeResolutionState =
+  | "LOCKED"
+  | "IDEMPOTENT_EXISTING"
+  | "TARGET_SCOPE_NO_ADMISSIBLE_TARGETS"
+  | "TARGET_SCOPE_SOURCE_MISSING"
+  | "TARGET_SCOPE_SOURCE_INVALID"
+  | "TARGET_SCOPE_CONFLICT"
+  | "SCOPE_LOCK_CONFLICT";
 
 export type ResearchTargetSourceClass =
   | "OPERATOR_BETMAN_DAILY_SLATE"
@@ -66,7 +88,7 @@ export type ResearchTargetScopeSourceRef = {
 };
 
 export type ResearchTargetScopeLockDocument = {
-  schemaVersion: typeof DAILY_SCOPE_LOCK_SCHEMA_VERSION;
+  schemaVersion: typeof RESEARCH_TARGET_SCOPE_LOCK_SCHEMA_VERSION;
   lockMechanism: typeof RESEARCH_TARGET_SCOPE_LOCK_MECHANISM;
   policyVersion: typeof RESEARCH_TARGET_SCOPE_LOCK_POLICY_VERSION;
   dateKst: string;
@@ -118,6 +140,7 @@ export type ResearchTargetScopeLockResult = {
 
 export type DecisionCoverageResult = {
   status: DecisionCoverageStatus;
+  reason: DecisionCoverageReason;
   lockedTargetCount: number | null;
   sealedDecisionCount: number;
   missingTargetIds: string[];
