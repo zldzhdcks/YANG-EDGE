@@ -6,18 +6,9 @@
  *
  * Date omitted → current KST (same rule as daily:mlb-pregame-v0).
  */
-import { getKstToday } from "../src/lib/datetime/kst";
-import {
-  formatMlbDailyOpsFailureBlock,
-  runMlbDailyOpsV1,
-} from "../src/lib/mlb/daily-ops-v1";
-import type { DailyStageName, MlbDailyOpsWindow } from "../src/lib/mlb/daily-pregame-v0";
-import {
-  parseMlbDailyOpsQuotaRemaining,
-  parseMlbDailyOpsWindow,
-} from "../src/lib/mlb/daily-pregame-v0";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
+import { getKstToday } from "../src/lib/datetime/kst";
 import {
   formatMlbDailyOpsFailureBlock,
   runMlbDailyOpsV1,
@@ -189,7 +180,7 @@ export function parseMlbDailyOpsCliArgs(argv: string[]) {
 }
 
 async function main() {
-  let opts: ReturnType<typeof parseArgs>;
+  let opts: ReturnType<typeof parseMlbDailyOpsCliArgs>;
   try {
     opts = parseMlbDailyOpsCliArgs(process.argv.slice(2));
   } catch (e) {
