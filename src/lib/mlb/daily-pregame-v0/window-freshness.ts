@@ -4,7 +4,7 @@
  * Controls COLLECTION only. Consumer gates still own PREDICTION eligibility.
  * Freshness is operations/scheduler window-entry, not an Engine threshold.
  */
-import { isMlbOpsWindowFresh } from "@/lib/scheduler/windows";
+import { isMlbOpsWindowFresh, mlbOpsWindowEnteredAtMs } from "@/lib/scheduler/windows";
 import type { LineupSlateClass } from "./audit-artifacts";
 import type {
   CollectionDecisionCode,
@@ -390,4 +390,128 @@ export function decidePredictionPersist(input: {
     return { persist: false, code: "ALREADY_LOCKED" };
   }
   return { persist: true, code: "ELIGIBLE" };
+}
+
+export function parseMlbDailyOpsQuotaRemaining(raw: string): number {
+  const v = raw.trim();
+  if (!/^(0|[1-9]\d*)$/.test(v)) {
+    throw new Error(
+      `Invalid --quota-remaining ${raw}. Expected non-negative integer.`,
+    );
+  }
+  return Number(v);
+}
+
+export function mlbOddsCacheFreshSinceIso(input: {
+  window: MlbDailyOpsWindow | null | undefined;
+  earliestStartIso: string | null | undefined;
+}): string | null {
+  const window = input.window ?? null;
+  if (window !== "T60" && window !== "T30") return null;
+  if (!input.earliestStartIso) return null;
+  const entered = mlbOpsWindowEnteredAtMs(input.earliestStartIso, window);
+  if (entered == null) return null;
+  return new Date(entered).toISOString();
+}
+
+export type MlbWindowRunOutcome =
+  | "SUCCESS"
+  | "ACTION_REQUIRED"
+  | "BLOCKED"
+  | "FAILED";
+
+const COLLECTOR_STAGES = new Set(["SCHEDULE", "STARTER", "ODDS", "LINEUP"]);
+
+/**
+ * Collection-window run result. Does not require a Prediction snapshot.
+ */
+export function evaluateCollectionWindowRun(pregame: {
+  stages: Array<{
+    stage: string;
+    status: string;
+    blockers: string[];
+    errorCode?: string | null;
+    detail?: Record<string, unknown>;
+  }>;
+  blockingIssues: string[];
+}): {
+  outcome: MlbWindowRunOutcome;
+  reason: string | null;
+  stage: string | null;
+  nextAction: string | null;
+} {
+  const afterStart =
+    pregame.blockingIssues.includes("BLOCKED_AFTER_START") ||
+    pregame.stages.some(
+      (s) =>
+        s.blockers.includes("BLOCKED_AFTER_START") ||
+        s.detail?.collectionDecision === "BLOCKED_AFTER_START",
+    );
+  if (afterStart) {
+    return {
+      outcome: "BLOCKED",
+      reason: "BLOCKED_AFTER_START",
+      stage: "PREDICTION_V0",
+      nextAction: "WAIT_NEXT_SLATE_BEFORE_COMMENCE",
+    };
+  }
+
+  for (const s of pregame.stages) {
+    if (!COLLECTOR_STAGES.has(s.stage)) continue;
+    if (s.status === "FAILED") {
+      return {
+        outcome: "FAILED",
+        reason: s.errorCode ?? "COLLECTOR_FAILED",
+        stage: s.stage,
+        nextAction: "INSPECT_PREGAME_REPORT",
+      };
+    }
+  }
+
+  for (const s of pregame.stages) {
+    if (!COLLECTOR_STAGES.has(s.stage)) continue;
+    const d = s.detail ?? {};
+    const spawnRequested = d.spawnRequested === true;
+    const spawned = s.status === "SUCCESS" || s.status === "PARTIAL";
+    if (!spawnRequested || spawned) continue;
+
+    const policy = String(d.providerPolicy ?? "");
+    const decision = String(d.collectionDecision ?? "");
+    if (policy === "QUOTA_DECISION_EXTERNAL") {
+      return {
+        outcome: "ACTION_REQUIRED",
+        reason: "QUOTA_DECISION_EXTERNAL",
+        stage: s.stage,
+        nextAction: "SUPPLY_QUOTA_REMAINING_THEN_RERUN",
+      };
+    }
+    if (policy === "PROVIDER_REQUIRED") {
+      return {
+        outcome: "ACTION_REQUIRED",
+        reason: "PROVIDER_REQUIRED",
+        stage: s.stage,
+        nextAction: "RERUN_WITH_PROVIDER_AND_QUOTA",
+      };
+    }
+    if (
+      decision === "COLLECT_MISSING" ||
+      decision === "REFRESH_STALE" ||
+      decision === "REFRESH_PARTIAL" ||
+      decision === "REFRESH_NOT_RELEASED"
+    ) {
+      return {
+        outcome: "ACTION_REQUIRED",
+        reason: decision,
+        stage: s.stage,
+        nextAction: "COMPLETE_WINDOW_COLLECTION",
+      };
+    }
+  }
+
+  return {
+    outcome: "SUCCESS",
+    reason: null,
+    stage: null,
+    nextAction: null,
+  };
 }

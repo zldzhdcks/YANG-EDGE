@@ -43,6 +43,7 @@ import type {
 import {
   decideMlbDailyCollection,
   decidePredictionPersist,
+  mlbOddsCacheFreshSinceIso,
   windowAllowsPredictionPersist,
   type MlbCollectionDecision,
 } from "./window-freshness";
@@ -76,6 +77,15 @@ export type DailyPregameOptions = {
    * spawn (QUOTA_DECISION_EXTERNAL). Not Scheduler wiring.
    */
   quotaRemaining?: number | null;
+  /**
+   * Inject collector spawn (tests). Default: local tsx script.
+   * Never used to call live providers from tests.
+   */
+  spawnCollector?: (
+    scriptRel: string,
+    args: string[],
+    cwd?: string,
+  ) => Promise<number>;
 };
 
 export const MLB_DAILY_PREGAME_STAGE_ORDER: DailyStageName[] = [
@@ -208,6 +218,10 @@ export async function runMlbDailyPregameV0(
   const window: MlbDailyOpsWindow | null = options.window ?? null;
   const quotaRemaining =
     options.quotaRemaining === undefined ? null : options.quotaRemaining;
+  const spawnCollector =
+    options.spawnCollector ??
+    ((scriptRel: string, args: string[]) =>
+      spawnLocalTsxScript(scriptRel, args, cwd));
   const allowPredictionPersist = windowAllowsPredictionPersist(window);
   const writePrediction =
     allowPredictionPersist && (options.writePrediction !== false) && !dryRun;
@@ -331,7 +345,7 @@ export async function runMlbDailyPregameV0(
         );
         blockingIssues.push("SCHEDULE_ARTIFACT_MISSING");
       } else {
-        const code = await spawnLocalTsxScript(
+        const code = await spawnCollector(
           "scripts/build-mlb-schedule-artifact-v1.ts",
           [dateKst],
         );
@@ -490,7 +504,7 @@ export async function runMlbDailyPregameV0(
       );
       warnings.push("STARTER_ARTIFACT_MISSING");
     } else {
-      const code = await spawnLocalTsxScript(
+      const code = await spawnCollector(
         "scripts/run-mlb-starter-accumulation-with-summary-v1.ts",
         [dateKst],
       );
@@ -642,9 +656,19 @@ export async function runMlbDailyPregameV0(
       );
       if (!odds.exists) warnings.push("ODDS_ARTIFACT_MISSING");
     } else {
-      const code = await spawnLocalTsxScript(
+      const oddsArgs = [dateKst];
+      if (decision.action === "REFRESH") {
+        const freshSince = mlbOddsCacheFreshSinceIso({
+          window,
+          earliestStartIso: schedule.earliestStart,
+        });
+        if (freshSince) {
+          oddsArgs.push("--cache-fresh-since", freshSince, "--as-of", asOfIso);
+        }
+      }
+      const code = await spawnCollector(
         "scripts/build-mlb-odds-history-dataset-v1.ts",
-        [dateKst],
+        oddsArgs,
       );
       providerCalls += 1;
       writesPerformed += code === 0 ? 1 : 0;
@@ -666,7 +690,7 @@ export async function runMlbDailyPregameV0(
             providerCalls: 1,
             rows: odds.rows,
             durationMs: Date.now() - t0,
-            detail: { usability: oddsUsability.usability },
+            detail: { usability: oddsUsability.usability, ...dExtra },
             blockers:
               oddsUsability.usability === "ARTIFACT_PRESENT_UNUSABLE"
                 ? oddsUsability.reasonCodes
@@ -756,7 +780,7 @@ export async function runMlbDailyPregameV0(
       );
       if (!lineup.exists) warnings.push("LINEUP_ARTIFACT_MISSING");
     } else {
-      const code = await spawnLocalTsxScript(
+      const code = await spawnCollector(
         "scripts/build-mlb-lineup-dataset-v1.ts",
         [dateKst],
       );
@@ -808,9 +832,14 @@ export async function runMlbDailyPregameV0(
       blockers.push("MARKET_PRIOR_REQUIRES_ODDS");
     }
 
-    // Ensure daily summary for prediction consumer
-    if (!summary.exists && !noProvider && scheduleUsable) {
-      const code = await spawnLocalTsxScript(
+    // Ensure daily summary for prediction consumer (LOCK / legacy only).
+    if (
+      !summary.exists &&
+      !noProvider &&
+      scheduleUsable &&
+      allowPredictionPersist
+    ) {
+      const code = await spawnCollector(
         "scripts/build-mlb-daily-research-v1.ts",
         [dateKst],
       );

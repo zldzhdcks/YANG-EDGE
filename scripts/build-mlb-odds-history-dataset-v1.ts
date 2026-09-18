@@ -10,20 +10,18 @@
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { writeJsonAtomic } from "../src/lib/mlb/build-mlb-schedule-artifact";
 import {
   assertOddsHistoryDatasetIntegrity,
   buildOddsHistoryDatasetV1,
+  oddsRawCacheFromBuilderArgs,
+  parseMlbOddsHistoryBuilderArgs,
 } from "../src/lib/mlb/build-odds-history-dataset";
 import {
   EMPTY_PREDICTION_HASH,
   readOptionalPredictionSnapshot,
 } from "../src/lib/mlb/load-mlb-schedule-targets";
-
-const DATE =
-  process.argv[2]?.trim() ||
-  process.env.MLB_TARGET_DATE_KST?.trim() ||
-  "";
 
 function sha256(text: string): string {
   return createHash("sha256").update(text, "utf8").digest("hex");
@@ -38,13 +36,24 @@ async function readHashIfExists(rel: string): Promise<string | null> {
 }
 
 async function main() {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(DATE)) {
-    console.error("Usage: npm run research:mlb-odds -- YYYY-MM-DD");
+  let parsed;
+  try {
+    parsed = parseMlbOddsHistoryBuilderArgs(process.argv.slice(2));
+  } catch (e) {
+    console.error(e instanceof Error ? e.message : e);
+    console.error("Usage: npm run research:mlb-odds -- YYYY-MM-DD [--cache-fresh-since ISO --as-of ISO]");
     process.exitCode = 1;
     return;
   }
+  const DATE = parsed.dateKst;
+  const oddsRawCache = oddsRawCacheFromBuilderArgs(parsed);
 
   console.log(`=== MLB Independent Odds Intake v1 (${DATE}) ===`);
+  if (parsed.cacheFreshSinceIso) {
+    console.log(
+      `cache-fresh-since=${parsed.cacheFreshSinceIso} as-of=${parsed.asOfIso ?? "now"}`,
+    );
+  }
 
   const optionalPrediction = await readOptionalPredictionSnapshot(DATE);
   const predictionRaw = optionalPrediction?.raw ?? null;
@@ -82,6 +91,7 @@ async function main() {
   const first = await buildOddsHistoryDatasetV1({
     dateKst: DATE,
     predictionRaw,
+    oddsRawCache,
   });
   const integrity = assertOddsHistoryDatasetIntegrity(first.document);
   if (integrity.length > 0) {
@@ -91,6 +101,7 @@ async function main() {
   const second = await buildOddsHistoryDatasetV1({
     dateKst: DATE,
     predictionRaw,
+    oddsRawCache,
   });
   const hashMatched =
     first.document.meta.resultHashSha256 ===
@@ -337,7 +348,12 @@ async function main() {
   console.log("MLB_INDEPENDENT_ODDS_V1_COMPLETE");
 }
 
-main().catch((e) => {
-  console.error(e instanceof Error ? e.message : e);
-  process.exitCode = 1;
-});
+if (
+  process.argv[1] &&
+  pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url
+) {
+  main().catch((e) => {
+    console.error(e instanceof Error ? e.message : e);
+    process.exitCode = 1;
+  });
+}

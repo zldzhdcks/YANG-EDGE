@@ -20,11 +20,14 @@ import {
   formatMlbDailyOpsOperatorSummary,
 } from "./operator-summary";
 import type {
+  MlbDailyOpsContract,
   MlbDailyOpsFailure,
   MlbDailyOpsReport,
   MlbDailyOpsStageName,
+  MlbWindowRunOutcome,
 } from "./types";
 import { MLB_DAILY_OPS_SCHEMA } from "./types";
+import { evaluateCollectionWindowRun } from "@/lib/mlb/daily-pregame-v0";
 
 export type MlbDailyOpsOptions = {
   dateKst: string;
@@ -47,6 +50,7 @@ export type MlbDailyOpsOptions = {
   assessOnly?: boolean;
   window?: MlbDailyOpsWindow | null;
   quotaRemaining?: number | null;
+  spawnCollector?: DailyPregameOptions["spawnCollector"];
 };
 
 function mapFailureFromPregame(input: {
@@ -161,6 +165,7 @@ export async function runMlbDailyOpsV1(
       enforcePregameGates: options.enforcePregameGates,
       window: options.window ?? null,
       quotaRemaining: options.quotaRemaining ?? null,
+      spawnCollector: options.spawnCollector,
     };
     pregame = await runMlbDailyPregameV0(pregameOpts);
     providerCalls = pregame.providerCalls;
@@ -185,32 +190,69 @@ export async function runMlbDailyOpsV1(
     cwd,
   });
 
+  const window = options.window ?? null;
+  const opsContract: MlbDailyOpsContract =
+    window == null
+      ? "LEGACY_SNAPSHOT"
+      : window === "LOCK"
+        ? "PREGAME_LOCK"
+        : "COLLECTION_WINDOW";
+
   let failure: MlbDailyOpsFailure | null = null;
-  if (!day.snapshotVerified) {
-    if (pregame) {
-      failure = mapFailureFromPregame({
-        overall: pregame.overall,
-        blockingIssues: pregame.blockingIssues,
-        nextAction: pregame.nextAction,
-        snapshotVerified: day.snapshotVerified,
-      });
-    } else if (day.provenanceStatus === "NO_PREGAME_SNAPSHOT") {
+  let windowOutcome: MlbWindowRunOutcome = "FAILED";
+  let opsSuccess = false;
+
+  if (opsContract === "COLLECTION_WINDOW") {
+    if (!pregame) {
+      windowOutcome = "FAILED";
       failure = {
-        stage: "PREDICTION_V0",
-        reason: DAILY_PREDICTION_SNAPSHOT_MISSING,
-        nextAction: "RUN_PREDICTION_V0_BEFORE_FIRST_PITCH",
+        stage: "ORCHESTRATOR",
+        reason: "COLLECTION_WINDOW_NO_PREGAME",
+        nextAction: "RUN_DAILY_OPS_WITHOUT_ASSESS_ONLY",
       };
     } else {
-      failure = {
-        stage: "PROVENANCE_VERIFY" as MlbDailyOpsStageName,
-        reason: day.provenanceStatus,
-        nextAction: day.nextAction,
-      };
+      const evalWin = evaluateCollectionWindowRun(pregame);
+      windowOutcome = evalWin.outcome;
+      opsSuccess = evalWin.outcome === "SUCCESS";
+      if (!opsSuccess) {
+        failure = {
+          stage: (evalWin.stage as MlbDailyOpsStageName) ?? "ORCHESTRATOR",
+          reason: evalWin.reason ?? evalWin.outcome,
+          nextAction: evalWin.nextAction ?? "COMPLETE_WINDOW_COLLECTION",
+        };
+      }
+    }
+  } else {
+    opsSuccess = day.snapshotVerified === true;
+    windowOutcome = opsSuccess
+      ? "SUCCESS"
+      : pregame?.overall === "BLOCKED_AFTER_START" ||
+          pregame?.blockingIssues.includes("BLOCKED_AFTER_START")
+        ? "BLOCKED"
+        : "FAILED";
+    if (!day.snapshotVerified) {
+      if (pregame) {
+        failure = mapFailureFromPregame({
+          overall: pregame.overall,
+          blockingIssues: pregame.blockingIssues,
+          nextAction: pregame.nextAction,
+          snapshotVerified: day.snapshotVerified,
+        });
+      } else if (day.provenanceStatus === "NO_PREGAME_SNAPSHOT") {
+        failure = {
+          stage: "PREDICTION_V0",
+          reason: DAILY_PREDICTION_SNAPSHOT_MISSING,
+          nextAction: "RUN_PREDICTION_V0_BEFORE_FIRST_PITCH",
+        };
+      } else {
+        failure = {
+          stage: "PROVENANCE_VERIFY" as MlbDailyOpsStageName,
+          reason: day.provenanceStatus,
+          nextAction: day.nextAction,
+        };
+      }
     }
   }
-
-  // Pipeline can look SUCCESS but still fail ops without verified snapshot
-  const opsSuccess = day.snapshotVerified === true;
 
   const operatorSummaryText = formatMlbDailyOpsOperatorSummary({
     day,
@@ -226,6 +268,8 @@ export async function runMlbDailyOpsV1(
     window: options.window ?? null,
     generatedAt: new Date().toISOString(),
     opsSuccess,
+    opsContract,
+    windowOutcome,
     lifecycle: day.lifecycle,
     pregameOverall: pregame?.overall ?? null,
     failure: opsSuccess ? null : failure,

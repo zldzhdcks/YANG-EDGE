@@ -12,7 +12,21 @@ import {
   runMlbDailyOpsV1,
 } from "../src/lib/mlb/daily-ops-v1";
 import type { DailyStageName, MlbDailyOpsWindow } from "../src/lib/mlb/daily-pregame-v0";
-import { parseMlbDailyOpsWindow } from "../src/lib/mlb/daily-pregame-v0";
+import {
+  parseMlbDailyOpsQuotaRemaining,
+  parseMlbDailyOpsWindow,
+} from "../src/lib/mlb/daily-pregame-v0";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
+import {
+  formatMlbDailyOpsFailureBlock,
+  runMlbDailyOpsV1,
+} from "../src/lib/mlb/daily-ops-v1";
+import type { DailyStageName, MlbDailyOpsWindow } from "../src/lib/mlb/daily-pregame-v0";
+import {
+  parseMlbDailyOpsQuotaRemaining,
+  parseMlbDailyOpsWindow,
+} from "../src/lib/mlb/daily-pregame-v0";
 
 function usage(): string {
   return `Usage:
@@ -33,6 +47,7 @@ Options:
   --stop-after <STAGE>
   --resume-from <STAGE>
   --window T90|T60|T45|T30|LOCK
+  --quota-remaining <non-negative integer>
   --help
 
 Stages (reused): SCHEDULE → STARTER → ODDS → LINEUP → DAILY_RESEARCH_SUMMARY
@@ -43,7 +58,7 @@ Ops success requires pre-game Snapshot Verify PASS.
 `;
 }
 
-function parseArgs(argv: string[]) {
+export function parseMlbDailyOpsCliArgs(argv: string[]) {
   let dateKst: string | null = null;
   let dryRun = false;
   let noProvider = false;
@@ -57,6 +72,7 @@ function parseArgs(argv: string[]) {
   let stopAfter: DailyStageName | undefined;
   let resumeFrom: DailyStageName | undefined;
   let window: MlbDailyOpsWindow | undefined;
+  let quotaRemaining: number | null = null;
   const gameIds: string[] = [];
 
   const stages = new Set([
@@ -135,6 +151,12 @@ function parseArgs(argv: string[]) {
       window = parseMlbDailyOpsWindow(s);
       continue;
     }
+    if (a === "--quota-remaining") {
+      const s = argv[++i];
+      if (!s) throw new Error("Missing --quota-remaining value");
+      quotaRemaining = parseMlbDailyOpsQuotaRemaining(s);
+      continue;
+    }
     if (!a.startsWith("-") && /^\d{4}-\d{2}-\d{2}$/.test(a) && !dateKst) {
       dateKst = a;
       continue;
@@ -161,6 +183,7 @@ function parseArgs(argv: string[]) {
     stopAfter,
     resumeFrom,
     window,
+    quotaRemaining,
     gameIds,
   };
 }
@@ -168,7 +191,7 @@ function parseArgs(argv: string[]) {
 async function main() {
   let opts: ReturnType<typeof parseArgs>;
   try {
-    opts = parseArgs(process.argv.slice(2));
+    opts = parseMlbDailyOpsCliArgs(process.argv.slice(2));
   } catch (e) {
     if (e instanceof Error && e.message === "HELP") {
       console.log(usage());
@@ -194,6 +217,7 @@ async function main() {
     resumeFrom: opts.resumeFrom,
     writePrediction: opts.writePrediction,
     window: opts.window,
+    quotaRemaining: opts.quotaRemaining,
   });
 
   if (opts.json) {
@@ -230,7 +254,12 @@ async function main() {
   }
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+if (
+  process.argv[1] &&
+  pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url
+) {
+  main().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}

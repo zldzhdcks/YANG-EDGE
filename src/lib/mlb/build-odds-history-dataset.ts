@@ -133,8 +133,13 @@ export type OddsRawCacheLoadOptions = {
   asOfMs?: number;
   /** Null/undefined = unlimited age (legacy research reuse). */
   maxAgeMs?: number | null;
-  /** When true, stale cache triggers fetcher. Default true if maxAgeMs set. */
+  /** When true, stale cache triggers fetcher. Default true if a freshness bound is set. */
   refreshStale?: boolean;
+  /**
+   * Window-entry bound. Cache mtime >= freshSinceMs → CACHE_HIT_FRESH.
+   * Preferred over maxAgeMs for T60/T30 refresh (not an Engine threshold).
+   */
+  freshSinceMs?: number | null;
   usage: CacheUsageStats;
 };
 
@@ -143,6 +148,69 @@ export function oddsResearchRawCacheFile(
   cwd = process.cwd(),
 ): string {
   return path.join(oddsResearchCacheRoot(cwd), `${cacheKey}.json`);
+}
+
+export type MlbOddsHistoryBuilderArgs = {
+  dateKst: string;
+  cacheFreshSinceIso: string | null;
+  asOfIso: string | null;
+};
+
+/**
+ * Internal collector CLI: date positional or --date,
+ * optional --cache-fresh-since / --as-of for window refresh.
+ */
+export function parseMlbOddsHistoryBuilderArgs(
+  argv: string[],
+): MlbOddsHistoryBuilderArgs {
+  let dateKst: string | null = null;
+  let cacheFreshSinceIso: string | null = null;
+  let asOfIso: string | null = null;
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i]!;
+    if (a === "--date") {
+      dateKst = argv[++i] ?? null;
+      continue;
+    }
+    if (a === "--cache-fresh-since") {
+      cacheFreshSinceIso = argv[++i] ?? null;
+      continue;
+    }
+    if (a === "--as-of") {
+      asOfIso = argv[++i] ?? null;
+      continue;
+    }
+    if (!a.startsWith("-") && /^\d{4}-\d{2}-\d{2}$/.test(a) && !dateKst) {
+      dateKst = a;
+      continue;
+    }
+    throw new Error(`Unknown odds-builder argument: ${a}`);
+  }
+  if (!dateKst || !/^\d{4}-\d{2}-\d{2}$/.test(dateKst)) {
+    throw new Error("Usage: build-mlb-odds-history-dataset-v1.ts YYYY-MM-DD");
+  }
+  if (cacheFreshSinceIso != null && !Number.isFinite(Date.parse(cacheFreshSinceIso))) {
+    throw new Error(`Invalid --cache-fresh-since ${cacheFreshSinceIso}`);
+  }
+  if (asOfIso != null && !Number.isFinite(Date.parse(asOfIso))) {
+    throw new Error(`Invalid --as-of ${asOfIso}`);
+  }
+  return { dateKst, cacheFreshSinceIso, asOfIso };
+}
+
+export function oddsRawCacheFromBuilderArgs(
+  args: MlbOddsHistoryBuilderArgs,
+  cwd?: string,
+): Omit<OddsRawCacheLoadOptions, "usage"> | undefined {
+  if (!args.cacheFreshSinceIso) return cwd ? { cwd } : undefined;
+  const freshSinceMs = Date.parse(args.cacheFreshSinceIso);
+  const asOfMs = args.asOfIso ? Date.parse(args.asOfIso) : Date.now();
+  return {
+    cwd,
+    asOfMs,
+    freshSinceMs,
+    refreshStale: true,
+  };
 }
 
 /**
@@ -162,23 +230,34 @@ export async function loadOddsResearchRawJson(
     options.maxAgeMs == null || !Number.isFinite(options.maxAgeMs)
       ? null
       : options.maxAgeMs;
-  const refreshStale = options.refreshStale ?? maxAgeMs != null;
+  const freshSinceMs =
+    options.freshSinceMs == null || !Number.isFinite(options.freshSinceMs)
+      ? null
+      : options.freshSinceMs;
+  const freshnessBoundMs =
+    freshSinceMs != null
+      ? freshSinceMs
+      : maxAgeMs != null
+        ? asOfMs - maxAgeMs
+        : null;
+  const refreshStale =
+    options.refreshStale ?? freshnessBoundMs != null;
   const usage = options.usage;
 
   let cachedBody: unknown = null;
   let cachedAt: string | null = null;
-  let ageMs: number | null = null;
+  let mtimeMs: number | null = null;
   try {
     const raw = await readFile(file, "utf8");
     cachedBody = JSON.parse(raw) as unknown;
     const st = await stat(file);
     cachedAt = st.mtime.toISOString();
-    ageMs = asOfMs - st.mtimeMs;
+    mtimeMs = st.mtimeMs;
   } catch {
     cachedBody = null;
   }
 
-  if (cachedBody != null && maxAgeMs == null) {
+  if (cachedBody != null && freshnessBoundMs == null) {
     usage.rawHit += 1;
     return {
       body: cachedBody,
@@ -188,7 +267,12 @@ export async function loadOddsResearchRawJson(
     };
   }
 
-  if (cachedBody != null && ageMs != null && ageMs <= maxAgeMs!) {
+  if (
+    cachedBody != null &&
+    mtimeMs != null &&
+    freshnessBoundMs != null &&
+    mtimeMs >= freshnessBoundMs
+  ) {
     usage.rawHit += 1;
     return {
       body: cachedBody,

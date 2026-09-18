@@ -4,7 +4,15 @@
  */
 
 import type { DailyOverallStatus, DailyPregameReport, MlbDailyOpsWindow } from "@/lib/mlb/daily-pregame-v0";
+import type { MlbWindowRunOutcome } from "@/lib/mlb/daily-pregame-v0/window-freshness";
 import type { SlateProvenanceBanner } from "@/lib/mlb/recommendation-provenance-v1";
+
+export type MlbDailyOpsContract =
+  | "COLLECTION_WINDOW"
+  | "PREGAME_LOCK"
+  | "LEGACY_SNAPSHOT";
+
+export type { MlbWindowRunOutcome };
 
 export const MLB_DAILY_OPS_SCHEMA = "yang-edge-mlb-daily-ops-v1" as const;
 
@@ -83,8 +91,13 @@ export type MlbDailyOpsReport = {
   noProvider: boolean;
   window: MlbDailyOpsWindow | null;
   generatedAt: string;
-  /** True only when pregame snapshot exists, before first pitch, verify PASS. */
+  /**
+   * LOCK / legacy: snapshot verified.
+   * Collection windows (T90–T30): requested collection completed safely.
+   */
   opsSuccess: boolean;
+  opsContract: MlbDailyOpsContract;
+  windowOutcome: MlbWindowRunOutcome;
   lifecycle: MlbDailyOpsLifecycleStatus;
   pregameOverall: DailyOverallStatus | null;
   failure: MlbDailyOpsFailure | null;
