@@ -220,6 +220,7 @@ export type SchedulerAuditArtifact = {
   lockConflicts: number;
   durationMs: number;
   overallStatus: "SUCCESS" | "PARTIAL_SUCCESS" | "FAILED" | "DRY_RUN";
+  quotaSource?: "CLI" | "RECEIPT" | "NONE";
   games: SchedulerGamePlan[];
 };
 

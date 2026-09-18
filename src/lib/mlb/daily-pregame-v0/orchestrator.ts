@@ -54,6 +54,7 @@ import {
 } from "./window-freshness";
 import type { LineupSlateClass } from "./audit-artifacts";
 import type { CollectionProviderPolicy } from "./types";
+import { resolveOddsQuotaInput } from "@/lib/odds/quota-receipt-v1";
 
 const LEGAL_PROVIDER_POLICIES = new Set<CollectionProviderPolicy>([
   "LEGAL_PROVIDER_AUTOMATION_BLOCKED",
@@ -273,8 +274,13 @@ export async function runMlbDailyPregameV0(
   const dryRun = Boolean(options.dryRun);
   const noProvider = Boolean(options.noProvider) || dryRun;
   const window: MlbDailyOpsWindow | null = options.window ?? null;
-  const quotaRemaining =
-    options.quotaRemaining === undefined ? null : options.quotaRemaining;
+  const quotaResolved = await resolveOddsQuotaInput({
+    cliQuotaRemaining: options.quotaRemaining,
+    unattended: Boolean(options.unattended),
+    cwd,
+    now: options.asOf ? new Date(options.asOf) : new Date(),
+  });
+  const quotaRemaining = quotaResolved.remaining;
   const spawnCollector =
     options.spawnCollector ??
     ((scriptRel: string, args: string[]) =>
@@ -1550,16 +1556,30 @@ export async function runMlbDailyPregameV0(
     latestStart: schedule.latestStart,
     recommendedNextRunAt: recommendedRunAt(effectiveEarliestStart),
     providerQuota: {
-      remaining: null,
-      status: "UNKNOWN",
-      note: noProvider
-        ? "no-provider/dry-run — quota not queried"
-        : "Query Odds API remaining headers on real odds stage",
+      remaining: quotaRemaining,
+      status:
+        quotaResolved.source === "NONE" || quotaRemaining == null
+          ? "UNKNOWN"
+          : quotaRemaining <= 0
+            ? "BLOCK"
+            : "OK",
+      note:
+        quotaResolved.source === "CLI"
+          ? "QUOTA_SOURCE=CLI"
+          : quotaResolved.source === "RECEIPT"
+            ? `QUOTA_SOURCE=RECEIPT${quotaResolved.readStatus ? `:${quotaResolved.readStatus}` : ""}`
+            : noProvider
+              ? "no-provider/dry-run — quota not queried"
+              : quotaResolved.readStatus
+                ? `QUOTA_SOURCE=NONE:${quotaResolved.readStatus}`
+                : "QUOTA_SOURCE=NONE",
     },
     blockingIssues: uniqueBlockers,
     warnings: uniqueWarnings,
     providerCalls,
     writesPerformed,
     nextAction,
+    quotaSource: quotaResolved.source,
+    quotaReadStatus: quotaResolved.readStatus,
   };
 }

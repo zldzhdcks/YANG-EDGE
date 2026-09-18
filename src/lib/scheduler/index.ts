@@ -16,6 +16,7 @@ import {
 } from "./lock-store";
 import { detectLockedPrediction, loadScheduleGames } from "./load-schedule";
 import { evaluateQuotaGate } from "./quota-gate";
+import { resolveOddsQuotaInput } from "../odds/quota-receipt-v1";
 import { isMlbStatsCollectorScript } from "../provider-automation-policy";
 import {
   buildLockKey,
@@ -62,6 +63,7 @@ export type OrchestratorResult = {
   plans: SchedulerGamePlan[];
   providerCalls: number;
   globalBlocker?: string;
+  quotaSource?: "CLI" | "RECEIPT" | "NONE";
 };
 
 function planIsExecutableNow(plan: SchedulerGamePlan): boolean {
@@ -488,6 +490,14 @@ export async function runPregameScheduler(
   const noProvider = rehearsal ? true : options.noProvider;
   const includePostgame = rehearsal ? false : options.includePostgame;
   const unattended = rehearsal ? false : Boolean(options.unattended);
+  const quotaResolved = await resolveOddsQuotaInput({
+    cliQuotaRemaining: options.quotaRemaining,
+    unattended,
+    cwd,
+    now,
+  });
+  const quotaRemaining = quotaResolved.remaining;
+  const quotaSource = quotaResolved.source;
   const schedulerRunId = newSchedulerRunId(now);
   const leagues: SchedulerLeague[] =
     options.league === "ALL" ? ["MLB", "KBO", "NPB"] : [options.league];
@@ -570,7 +580,7 @@ export async function runPregameScheduler(
         includePostgame,
         noProvider,
         existingState: state,
-        quotaRemaining: options.quotaRemaining,
+        quotaRemaining,
         cwd,
         rehearsal,
         rehearsalAsOf: options.rehearsalAsOf,
@@ -643,7 +653,7 @@ export async function runPregameScheduler(
         window,
         gameIds: members.map((m) => m.gameId),
         noProvider,
-        quotaRemaining: options.quotaRemaining,
+        quotaRemaining,
         rehearsal,
         rehearsalAsOf: options.rehearsalAsOf,
         unattended,
@@ -780,6 +790,7 @@ export async function runPregameScheduler(
     rehearsal,
     rehearsalAsOf: options.rehearsalAsOf ?? null,
     unattended,
+    quotaSource,
     totalGames: allPlans.length,
     stageCounts,
     success,
@@ -808,6 +819,7 @@ export async function runPregameScheduler(
     plans: allPlans,
     providerCalls: audit.providerCalls,
     globalBlocker,
+    quotaSource,
   };
 }
 

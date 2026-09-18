@@ -125,4 +125,6 @@ export type DailyPregameReport = {
   providerCalls: number;
   writesPerformed: number;
   nextAction: string | null;
+  quotaSource?: "CLI" | "RECEIPT" | "NONE";
+  quotaReadStatus?: string | null;
 };

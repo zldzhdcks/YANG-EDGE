@@ -15,6 +15,7 @@ import {
   normalizeTeamNameForOdds,
 } from "../odds/match-odds-to-game";
 import { buildOddsData } from "../odds/odds-provider";
+import { writeOddsQuotaReceiptFromHeaders } from "../odds/quota-receipt-v1";
 import { marketProbabilityFromDecimalPair } from "../odds/normalize-odds-price";
 import type { OddsBookmaker, OddsData } from "../odds/types";
 import type { OddsPriceFormat } from "../odds/normalize-odds-price";
@@ -747,6 +748,7 @@ type ProviderFetchResult = {
   events: OddsData[];
   fetched: boolean;
   error: string | null;
+  quotaReceipt: "UPDATED" | "QUOTA_RECEIPT_NOT_UPDATED" | "SKIPPED_NO_NETWORK";
 };
 
 async function fetchOddsApiEventsForDate(
@@ -758,6 +760,7 @@ async function fetchOddsApiEventsForDate(
   const baseUrl =
     (process.env.ODDS_API_BASE_URL ?? "").trim() ||
     "https://api.the-odds-api.com/v4";
+  const cwd = cacheOpts?.cwd;
 
   if (!apiKey) {
     return {
@@ -765,6 +768,7 @@ async function fetchOddsApiEventsForDate(
       events: [],
       fetched: false,
       error: "ODDS_API_KEY is not configured.",
+      quotaReceipt: "SKIPPED_NO_NETWORK",
     };
   }
 
@@ -799,6 +803,7 @@ async function fetchOddsApiEventsForDate(
         events: [],
         fetched: false,
         error: "MLB sport key not found in Odds API /sports.",
+        quotaReceipt: "SKIPPED_NO_NETWORK",
       };
     }
 
@@ -813,6 +818,7 @@ async function fetchOddsApiEventsForDate(
       oddsFormat: "decimal",
     };
 
+    let oddsHeaders: Headers | null = null;
     const body = await getRawOddsJson(
       oddsCacheFileKey(params),
       async () => {
@@ -827,17 +833,28 @@ async function fetchOddsApiEventsForDate(
         url.searchParams.set("oddsFormat", "decimal");
         const res = await fetch(url.toString(), { cache: "no-store" });
         if (!res.ok) throw new Error(`Odds API odds HTTP ${res.status}`);
+        oddsHeaders = res.headers;
         return res.json();
       },
       usage,
       cacheOpts,
     );
 
+    let quotaReceipt: ProviderFetchResult["quotaReceipt"] = "SKIPPED_NO_NETWORK";
+    if (oddsHeaders) {
+      const written = await writeOddsQuotaReceiptFromHeaders({
+        headers: oddsHeaders,
+        cwd,
+      });
+      quotaReceipt = written.updated ? "UPDATED" : "QUOTA_RECEIPT_NOT_UPDATED";
+    }
+
     return {
       sportKey: resolvedSportKey,
       events: parseTheOddsApiEvents(body, resolvedSportKey, "decimal"),
       fetched: true,
       error: null,
+      quotaReceipt,
     };
   } catch (e) {
     return {
@@ -845,6 +862,7 @@ async function fetchOddsApiEventsForDate(
       events: [],
       fetched: false,
       error: e instanceof Error ? e.message : String(e),
+      quotaReceipt: "SKIPPED_NO_NETWORK",
     };
   }
 }

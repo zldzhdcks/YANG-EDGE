@@ -288,6 +288,8 @@ export async function runMlbDailyOpsV1(
     provenance,
     writesPerformed,
     providerCalls,
+    quotaSource: pregame?.quotaSource,
+    quotaReadStatus: pregame?.quotaReadStatus ?? null,
   };
 }
 

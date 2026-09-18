@@ -108,4 +108,6 @@ export type MlbDailyOpsReport = {
   provenance: Omit<SlateProvenanceBanner, never> | null;
   writesPerformed: number;
   providerCalls: number;
+  quotaSource?: "CLI" | "RECEIPT" | "NONE";
+  quotaReadStatus?: string | null;
 };
