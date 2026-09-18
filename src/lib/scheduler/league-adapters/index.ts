@@ -4,7 +4,11 @@ import type {
   SchedulerLeague,
 } from "../types";
 import { kboAction } from "./kbo";
-import { mlbAction } from "./mlb";
+import {
+  buildMlbDailyOpsRunnerAction,
+  mlbAction,
+  mlbDailyOpsWindowForStage,
+} from "./mlb";
 import { npbAction } from "./npb";
 
 export function resolveLeagueAction(input: {
@@ -15,6 +19,7 @@ export function resolveLeagueAction(input: {
   includePostgame: boolean;
   noProvider: boolean;
   cwd?: string;
+  quotaRemaining?: number | null;
 }): RunnerAction {
   switch (input.league) {
     case "MLB":
@@ -26,4 +31,4 @@ export function resolveLeagueAction(input: {
   }
 }
 
-export { mlbAction, kboAction, npbAction };
+export { mlbAction, kboAction, npbAction, buildMlbDailyOpsRunnerAction, mlbDailyOpsWindowForStage };

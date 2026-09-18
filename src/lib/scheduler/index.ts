@@ -6,6 +6,10 @@ import { createHash, randomBytes } from "node:crypto";
 import { computeInputHash, findSuccessfulStage } from "./idempotency";
 import { resolveLeagueAction } from "./league-adapters";
 import {
+  buildMlbDailyOpsRunnerAction,
+  mlbDailyOpsWindowForStage,
+} from "./league-adapters/mlb";
+import {
   acquireLock,
   MemoryLockStore,
   releaseLock,
@@ -38,6 +42,14 @@ import type {
 /** Injected by CLI / tests — Scheduler core must not import scripts/. */
 export type RunnerExecutor = (action: RunnerAction) => Promise<number>;
 
+const MLB_BATCH_STAGE_ORDER: PregameSchedulerStage[] = [
+  "T90_COLLECTION",
+  "T60_REFRESH",
+  "T45_LINEUP_CHECK",
+  "T30_FINAL_CHECK",
+  "PREGAME_LOCK",
+];
+
 export function newSchedulerRunId(now = new Date()): string {
   const stamp = now.toISOString().replace(/[-:]/g, "").replace(/\.\d+Z$/, "Z");
   return `sch-${stamp}-${randomBytes(3).toString("hex")}`;
@@ -50,6 +62,43 @@ export type OrchestratorResult = {
   providerCalls: number;
   globalBlocker?: string;
 };
+
+function planIsExecutableNow(plan: SchedulerGamePlan): boolean {
+  if (
+    plan.executionStatus === "BLOCKED" ||
+    plan.executionStatus === "SKIPPED" ||
+    plan.executionStatus === "NOT_IMPLEMENTED" ||
+    plan.executionStatus === "MANUAL_REQUIRED" ||
+    plan.executionStatus === "INPUT_VALIDATION_FAILED" ||
+    plan.executionStatus === "PENDING" ||
+    !plan.action ||
+    plan.action.kind === "NOOP_CHECK"
+  ) {
+    return false;
+  }
+  return plan.executionStatus === "READY";
+}
+
+function isMlbDelegatedDailyOpsPlan(plan: SchedulerGamePlan): boolean {
+  return (
+    plan.league === "MLB" &&
+    plan.action?.providerGuard === "DELEGATED" &&
+    plan.action.kind === "SPAWN_TSX" &&
+    mlbDailyOpsWindowForStage(plan.stage) != null
+  );
+}
+
+/** Spawn Daily Ops under --no-provider; skip generic provider-capable runners. */
+export function shouldSpawnSchedulerAction(
+  action: RunnerAction,
+  noProvider: boolean,
+): boolean {
+  if (action.kind !== "SPAWN_TSX" || !action.scriptRel) return false;
+  if (!noProvider) return true;
+  if (action.safeWhenNoProvider) return true;
+  if (!action.mayCallProvider) return true;
+  return false;
+}
 
 export async function planGame(input: {
   league: SchedulerLeague;
@@ -178,6 +227,7 @@ export async function planGame(input: {
     includePostgame: input.includePostgame,
     noProvider: input.noProvider,
     cwd: input.cwd,
+    quotaRemaining: input.quotaRemaining,
   });
 
   const quota = evaluateQuotaGate(input.quotaRemaining);
@@ -188,7 +238,11 @@ export async function planGame(input: {
         : `QUOTA_WARNING: remaining=${quota.remaining}`,
     );
   }
-  if (!quota.allowProvider && action.mayCallProvider) {
+  const delegated = action.providerGuard === "DELEGATED";
+  if (delegated) {
+    warnings.push("QUOTA_DELEGATED_TO_DAILY_OPS");
+  }
+  if (!quota.allowProvider && action.mayCallProvider && !delegated) {
     return {
       league: input.league,
       gameId: input.game.gameId,
@@ -250,6 +304,157 @@ export async function planGame(input: {
   };
 }
 
+type ExecuteCtx = {
+  league: SchedulerLeague;
+  dateKst: string;
+  cwd: string;
+  persist: boolean;
+  dryRun: boolean;
+  noProvider: boolean;
+  schedulerRunId: string;
+  now: Date;
+  executeRunner?: (action: RunnerAction) => Promise<number>;
+  memoryLocks: MemoryLockStore;
+};
+
+async function tryAcquirePlanLock(
+  ctx: ExecuteCtx,
+  plan: SchedulerGamePlan,
+): Promise<{ ok: boolean; plan: SchedulerGamePlan }> {
+  if (ctx.dryRun) {
+    const acq = ctx.memoryLocks.acquire({
+      lockKey: plan.lockKey,
+      league: ctx.league,
+      dateKst: ctx.dateKst,
+      gameId: plan.gameId,
+      stage: plan.stage,
+      schedulerRunId: ctx.schedulerRunId,
+      now: ctx.now,
+    });
+    if (!acq.ok) {
+      return {
+        ok: false,
+        plan: {
+          ...plan,
+          executionStatus: "SKIPPED",
+          errorCode: "SKIPPED_DUPLICATE_RUN",
+          triggerReason: "DUPLICATE_RUN",
+        },
+      };
+    }
+    return { ok: true, plan };
+  }
+  if (!ctx.persist) return { ok: true, plan };
+  const acq = await acquireLock({
+    cwd: ctx.cwd,
+    league: ctx.league,
+    dateKst: ctx.dateKst,
+    gameId: plan.gameId,
+    stage: plan.stage,
+    lockKey: plan.lockKey,
+    schedulerRunId: ctx.schedulerRunId,
+    now: ctx.now,
+  });
+  if (!acq.ok) {
+    return {
+      ok: false,
+      plan: {
+        ...plan,
+        executionStatus: "SKIPPED",
+        errorCode: "SKIPPED_DUPLICATE_RUN",
+        triggerReason: "DUPLICATE_RUN",
+      },
+    };
+  }
+  return { ok: true, plan };
+}
+
+async function releasePlanLock(
+  ctx: ExecuteCtx,
+  plan: SchedulerGamePlan,
+): Promise<void> {
+  if (ctx.dryRun) {
+    ctx.memoryLocks.release(ctx.league, ctx.dateKst, plan.gameId);
+    return;
+  }
+  if (!ctx.persist) return;
+  await releaseLock({
+    cwd: ctx.cwd,
+    league: ctx.league,
+    dateKst: ctx.dateKst,
+    gameId: plan.gameId,
+  });
+}
+
+async function runSpawnAction(
+  ctx: ExecuteCtx,
+  action: RunnerAction,
+): Promise<{
+  status: SchedulerExecutionStatus;
+  errorCode: StageStateRecord["errorCode"];
+  countedProviderCall: boolean;
+  warnings: string[];
+}> {
+  const warnings: string[] = [];
+  if (!shouldSpawnSchedulerAction(action, ctx.noProvider)) {
+    if (ctx.noProvider && action.mayCallProvider) {
+      return {
+        status: "SKIPPED",
+        errorCode: null,
+        countedProviderCall: false,
+        warnings: ["no-provider: spawn skipped"],
+      };
+    }
+    return {
+      status: "SUCCESS",
+      errorCode: null,
+      countedProviderCall: false,
+      warnings,
+    };
+  }
+
+  const exec = ctx.executeRunner;
+  if (!exec) {
+    return {
+      status: "FAILED",
+      errorCode: "RUNNER_NOT_FOUND",
+      countedProviderCall: false,
+      warnings,
+    };
+  }
+  try {
+    const code = await exec(action);
+    const countedProviderCall =
+      Boolean(action.mayCallProvider) && !ctx.noProvider;
+    if (countedProviderCall && action.providerGuard === "DELEGATED") {
+      warnings.push(
+        "DELEGATED_PROVIDER_ACCOUNTING: counted 1 daily-ops process",
+      );
+    }
+    if (code !== 0) {
+      return {
+        status: "FAILED",
+        errorCode: "RUNNER_EXIT_NONZERO",
+        countedProviderCall,
+        warnings,
+      };
+    }
+    return {
+      status: "SUCCESS",
+      errorCode: null,
+      countedProviderCall,
+      warnings,
+    };
+  } catch {
+    return {
+      status: "FAILED",
+      errorCode: "RUNNER_NOT_FOUND",
+      countedProviderCall: false,
+      warnings,
+    };
+  }
+}
+
 export async function runPregameScheduler(
   options: OrchestratorOptions,
 ): Promise<OrchestratorResult> {
@@ -300,6 +505,20 @@ export async function runPregameScheduler(
         ? await loadSchedulerState(league, options.dateKst, cwd)
         : null) ?? emptyState(league, options.dateKst);
 
+    const ctx: ExecuteCtx = {
+      league,
+      dateKst: options.dateKst,
+      cwd,
+      persist,
+      dryRun: options.dryRun,
+      noProvider: options.noProvider,
+      schedulerRunId,
+      now,
+      executeRunner: options.executeRunner,
+      memoryLocks,
+    };
+
+    const planned: SchedulerGamePlan[] = [];
     for (const game of games) {
       if (!options.fixtureGames) {
         const locked = await detectLockedPrediction({
@@ -311,7 +530,7 @@ export async function runPregameScheduler(
         if (locked) game.lockedPredictionExists = true;
       }
 
-      let plan = await planGame({
+      const plan = await planGame({
         league,
         dateKst: options.dateKst,
         game,
@@ -323,136 +542,151 @@ export async function runPregameScheduler(
         quotaRemaining: options.quotaRemaining,
         cwd,
       });
-
+      planned.push(plan);
       stageCounts[plan.stage] = (stageCounts[plan.stage] ?? 0) + 1;
       if (plan.warnings.some((w) => w.startsWith("QUOTA_"))) quotaWarnings += 1;
       if (plan.errorCode === "BLOCKED_AFTER_START") cutoffViolations += 1;
+    }
 
-      if (
-        options.dryRun ||
-        plan.executionStatus === "BLOCKED" ||
-        plan.executionStatus === "SKIPPED" ||
-        plan.executionStatus === "NOT_IMPLEMENTED" ||
-        plan.executionStatus === "MANUAL_REQUIRED" ||
-        plan.executionStatus === "INPUT_VALIDATION_FAILED" ||
-        plan.executionStatus === "PENDING" ||
-        !plan.action ||
-        plan.action.kind === "NOOP_CHECK"
-      ) {
-        if (options.dryRun && plan.executionStatus === "READY") {
-          plan = { ...plan, triggerReason: "DRY_RUN" };
+    const persistPlan = async (plan: SchedulerGamePlan) => {
+      allPlans.push(plan);
+      if (persist && !options.dryRun) {
+        const rec = toStageRecord(plan, schedulerRunId, now);
+        state = upsertGameStage(
+          state,
+          plan.gameId,
+          plan.scheduledStartTime,
+          rec,
+        );
+      }
+    };
+
+    if (options.dryRun) {
+      for (const plan of planned) {
+        await persistPlan(
+          plan.executionStatus === "READY"
+            ? { ...plan, triggerReason: "DRY_RUN" }
+            : plan,
+        );
+      }
+      continue;
+    }
+
+    const mlbBatches = new Map<PregameSchedulerStage, SchedulerGamePlan[]>();
+    const perGame: SchedulerGamePlan[] = [];
+    for (const plan of planned) {
+      if (!planIsExecutableNow(plan)) {
+        await persistPlan(plan);
+        continue;
+      }
+      if (isMlbDelegatedDailyOpsPlan(plan)) {
+        const list = mlbBatches.get(plan.stage) ?? [];
+        list.push(plan);
+        mlbBatches.set(plan.stage, list);
+      } else {
+        perGame.push(plan);
+      }
+    }
+
+    const runMlbBatch = async (batch: SchedulerGamePlan[]) => {
+      const members: SchedulerGamePlan[] = [];
+      for (const plan of batch) {
+        const acq = await tryAcquirePlanLock(ctx, plan);
+        if (!acq.ok) {
+          duplicatePrevented += 1;
+          lockConflicts += 1;
+          await persistPlan(acq.plan);
+          continue;
         }
-        allPlans.push(plan);
-        if (persist && !options.dryRun) {
-          const rec = toStageRecord(plan, schedulerRunId, now);
+        members.push(acq.plan);
+      }
+      if (members.length === 0) return;
+
+      const window = mlbDailyOpsWindowForStage(members[0]!.stage);
+      if (!window) return;
+      const action = buildMlbDailyOpsRunnerAction({
+        dateKst: options.dateKst,
+        window,
+        gameIds: members.map((m) => m.gameId),
+        noProvider: options.noProvider,
+        quotaRemaining: options.quotaRemaining,
+      });
+      const startedAt = new Date().toISOString();
+      const spawn = await runSpawnAction(ctx, action);
+      if (spawn.countedProviderCall) providerCalls += 1;
+
+      for (const plan of members) {
+        const updated: SchedulerGamePlan = {
+          ...plan,
+          action,
+          executionStatus: spawn.status,
+          errorCode: spawn.errorCode ?? plan.errorCode,
+          warnings: [...plan.warnings, ...spawn.warnings],
+        };
+        allPlans.push(updated);
+        if (persist) {
+          const rec: StageStateRecord = {
+            stage: updated.stage,
+            status: spawn.status,
+            attemptNumber: 1,
+            schedulerRunId,
+            startedAt,
+            finishedAt: new Date().toISOString(),
+            inputHash: updated.inputHash,
+            outputHash: null,
+            outputArtifacts: [],
+            warnings: updated.warnings,
+            errorCode: spawn.errorCode,
+          };
           state = upsertGameStage(
             state,
-            plan.gameId,
-            plan.scheduledStartTime,
+            updated.gameId,
+            updated.scheduledStartTime,
             rec,
           );
+          await releasePlanLock(ctx, updated);
         }
+      }
+    };
+
+    for (const stage of MLB_BATCH_STAGE_ORDER) {
+      const batch = mlbBatches.get(stage);
+      if (batch?.length) await runMlbBatch(batch);
+    }
+    for (const [stage, batch] of mlbBatches) {
+      if (!MLB_BATCH_STAGE_ORDER.includes(stage) && batch.length) {
+        await runMlbBatch(batch);
+      }
+    }
+
+    for (const plan0 of perGame) {
+      const acq = await tryAcquirePlanLock(ctx, plan0);
+      if (!acq.ok) {
+        duplicatePrevented += 1;
+        lockConflicts += 1;
+        await persistPlan(acq.plan);
         continue;
       }
-
-      // Acquire lock
-      let lockOk = true;
-      if (options.dryRun) {
-        // dry-run: memory only, do not persist
-        const acq = memoryLocks.acquire({
-          lockKey: plan.lockKey,
-          league,
-          dateKst: options.dateKst,
-          gameId: plan.gameId,
-          stage: plan.stage,
-          schedulerRunId,
-          now,
-        });
-        if (!acq.ok) {
-          lockOk = false;
-          duplicatePrevented += 1;
-          lockConflicts += 1;
-          plan = {
-            ...plan,
-            executionStatus: "SKIPPED",
-            errorCode: "SKIPPED_DUPLICATE_RUN",
-            triggerReason: "DUPLICATE_RUN",
-          };
-        }
-      } else if (persist) {
-        const acq = await acquireLock({
-          cwd,
-          league,
-          dateKst: options.dateKst,
-          gameId: plan.gameId,
-          stage: plan.stage,
-          lockKey: plan.lockKey,
-          schedulerRunId,
-          now,
-        });
-        if (!acq.ok) {
-          lockOk = false;
-          duplicatePrevented += 1;
-          lockConflicts += 1;
-          plan = {
-            ...plan,
-            executionStatus: "SKIPPED",
-            errorCode: "SKIPPED_DUPLICATE_RUN",
-            triggerReason: "DUPLICATE_RUN",
-          };
-        }
-      }
-
-      if (!lockOk) {
-        allPlans.push(plan);
-        continue;
-      }
-
-      // Execute runner
-      let status: SchedulerExecutionStatus = "SUCCESS";
-      let errorCode: StageStateRecord["errorCode"] = null;
+      let plan = acq.plan;
       const startedAt = new Date().toISOString();
       const action = plan.action;
-
-      if (
-        action &&
-        action.kind === "SPAWN_TSX" &&
-        action.scriptRel &&
-        !options.noProvider
-      ) {
-        const exec = options.executeRunner;
-        if (!exec) {
-          status = "FAILED";
-          errorCode = "RUNNER_NOT_FOUND";
-        } else {
-          try {
-            const code = await exec(action);
-            if (action.mayCallProvider) providerCalls += 1;
-            if (code !== 0) {
-              status = "FAILED";
-              errorCode = "RUNNER_EXIT_NONZERO";
-            }
-          } catch {
-            status = "FAILED";
-            errorCode = "RUNNER_NOT_FOUND";
-          }
-        }
-      } else if (action && options.noProvider && action.mayCallProvider) {
-        status = "SKIPPED";
-        errorCode = null;
-        plan = {
-          ...plan,
-          warnings: [...plan.warnings, "no-provider: spawn skipped"],
-        };
+      let status: SchedulerExecutionStatus = "SUCCESS";
+      let errorCode: StageStateRecord["errorCode"] = null;
+      const extraWarnings: string[] = [];
+      if (action) {
+        const spawn = await runSpawnAction(ctx, action);
+        status = spawn.status;
+        errorCode = spawn.errorCode;
+        extraWarnings.push(...spawn.warnings);
+        if (spawn.countedProviderCall) providerCalls += 1;
       }
-
       plan = {
         ...plan,
         executionStatus: status,
         errorCode: errorCode ?? plan.errorCode,
+        warnings: [...plan.warnings, ...extraWarnings],
       };
       allPlans.push(plan);
-
       if (persist) {
         const rec: StageStateRecord = {
           stage: plan.stage,
@@ -473,12 +707,7 @@ export async function runPregameScheduler(
           plan.scheduledStartTime,
           rec,
         );
-        await releaseLock({
-          cwd,
-          league,
-          dateKst: options.dateKst,
-          gameId: plan.gameId,
-        });
+        await releasePlanLock(ctx, plan);
       }
     }
 

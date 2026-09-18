@@ -4,11 +4,14 @@
  * npm run scheduler:pregame -- --date 2026-08-01 --league MLB --dry-run
  */
 
+import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { spawnLocalTsxScript } from "./lib/spawn-local-tsx";
 import {
   formatDryRunText,
   runPregameScheduler,
 } from "../src/lib/scheduler";
+import { parseMlbDailyOpsQuotaRemaining } from "../src/lib/mlb/daily-pregame-v0";
 import type {
   OrchestratorOptions,
   PregameSchedulerStage,
@@ -27,11 +30,12 @@ Options:
   --no-provider
   --include-postgame
   --json
+  --quota-remaining <non-negative integer>
 `);
   process.exit(2);
 }
 
-function parseArgs(argv: string[]): OrchestratorOptions {
+export function parsePregameSchedulerCliArgs(argv: string[]): OrchestratorOptions {
   let dateKst = "";
   let league: SchedulerLeague | "ALL" = "MLB";
   let dryRun = false;
@@ -40,6 +44,7 @@ function parseArgs(argv: string[]): OrchestratorOptions {
   let noProvider = false;
   let includePostgame = false;
   let json = false;
+  let quotaRemaining: number | null = null;
 
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]!;
@@ -55,7 +60,14 @@ function parseArgs(argv: string[]): OrchestratorOptions {
     else if (a === "--no-provider") noProvider = true;
     else if (a === "--include-postgame") includePostgame = true;
     else if (a === "--json") json = true;
-    else if (a === "--help" || a === "-h") usage();
+    else if (a === "--quota-remaining") {
+      const s = argv[++i];
+      if (!s) {
+        console.error("Missing --quota-remaining value");
+        usage();
+      }
+      quotaRemaining = parseMlbDailyOpsQuotaRemaining(s);
+    } else if (a === "--help" || a === "-h") usage();
   }
 
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dateKst)) {
@@ -72,6 +84,7 @@ function parseArgs(argv: string[]): OrchestratorOptions {
     noProvider,
     includePostgame,
     json,
+    quotaRemaining,
     persist: !dryRun,
     executeRunner: async (action: RunnerAction) => {
       if (action.kind !== "SPAWN_TSX" || !action.scriptRel) return 1;
@@ -81,7 +94,7 @@ function parseArgs(argv: string[]): OrchestratorOptions {
 }
 
 async function main(): Promise<void> {
-  const opts = parseArgs(process.argv.slice(2));
+  const opts = parsePregameSchedulerCliArgs(process.argv.slice(2));
   const result = await runPregameScheduler(opts);
 
   if (result.globalBlocker) {
@@ -119,7 +132,12 @@ async function main(): Promise<void> {
   if (result.audit.overallStatus === "FAILED") process.exit(1);
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+if (
+  process.argv[1] &&
+  pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url
+) {
+  main().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}

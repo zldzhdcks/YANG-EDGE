@@ -4,6 +4,7 @@
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { mlbPredictionSnapshotRel } from "../mlb/mlb-prediction-review-paths";
 import type { SchedulerGameInput, SchedulerLeague } from "./types";
 
 function scheduleRel(league: SchedulerLeague, dateKst: string): string {
@@ -13,6 +14,70 @@ function scheduleRel(league: SchedulerLeague, dateKst: string): string {
     league.toLowerCase(),
     `${dateKst}-schedule-v1.json`,
   );
+}
+
+function asRecord(v: unknown): Record<string, unknown> | null {
+  return typeof v === "object" && v !== null && !Array.isArray(v)
+    ? (v as Record<string, unknown>)
+    : null;
+}
+
+function asNonEmptyString(v: unknown): string | null {
+  if (typeof v === "string" && v.trim() !== "") return v.trim();
+  if (typeof v === "number" && Number.isFinite(v)) return String(v);
+  return null;
+}
+
+/**
+ * Canonical Scheduler game ID.
+ * MLB Daily Ops filters on internalGameId — prefer that over numeric gamePk.
+ * KBO/NPB keep the historical gamePk-first order.
+ */
+export function canonicalSchedulerGameId(
+  league: SchedulerLeague,
+  g: Record<string, unknown>,
+): string {
+  if (league === "MLB") {
+    return (
+      asNonEmptyString(g.internalGameId) ??
+      asNonEmptyString(g.gameId) ??
+      asNonEmptyString(g.gamePk) ??
+      "unknown"
+    );
+  }
+  return (
+    asNonEmptyString(g.gamePk) ??
+    asNonEmptyString(g.gameId) ??
+    asNonEmptyString(g.internalGameId) ??
+    "unknown"
+  );
+}
+
+export function mlbOfficialPredictionRel(dateKst: string): string {
+  return mlbPredictionSnapshotRel(dateKst);
+}
+
+function predictionRows(doc: unknown): Array<Record<string, unknown>> {
+  const rec = asRecord(doc);
+  if (!rec) return [];
+  const raw = rec.predictions ?? rec.games;
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .map((row) => asRecord(row))
+    .filter((row): row is Record<string, unknown> => row != null);
+}
+
+/** Structured match: Official V0 gameId, then externalId fallback. */
+export function predictionRowMatchesSchedulerGameId(
+  row: Record<string, unknown>,
+  schedulerGameId: string,
+): boolean {
+  const want = schedulerGameId.trim();
+  if (!want) return false;
+  const gameId = asNonEmptyString(row.gameId);
+  if (gameId === want) return true;
+  const externalId = asNonEmptyString(row.externalId);
+  return externalId === want;
 }
 
 export async function loadScheduleGames(input: {
@@ -39,9 +104,7 @@ export async function loadScheduleGames(input: {
   }
 
   let games: SchedulerGameInput[] = doc.games.map((g) => {
-    const gameId =
-      String(g.gamePk ?? g.gameId ?? g.internalGameId ?? "").trim() ||
-      "unknown";
+    const gameId = canonicalSchedulerGameId(input.league, g);
     const scheduledStartTime = String(
       g.scheduledStartTime ?? g.commenceTimeUtc ?? "",
     );
@@ -74,26 +137,28 @@ export async function detectLockedPrediction(input: {
   cwd?: string;
 }): Promise<boolean> {
   const cwd = input.cwd ?? process.cwd();
-  const candidates =
-    input.league === "MLB"
-      ? [
-          path.join(
-            cwd,
-            "data",
-            "predictions",
-            "mlb",
-            `${input.dateKst}-prediction-snapshot-v1.json`,
-          ),
-        ]
-      : [
-          path.join(
-            cwd,
-            "data",
-            "predictions",
-            input.league.toLowerCase(),
-            `${input.dateKst}-prediction-snapshot-v1.json`,
-          ),
-        ];
+  if (input.league === "MLB") {
+    const official = path.join(cwd, mlbOfficialPredictionRel(input.dateKst));
+    try {
+      const raw = await readFile(official, "utf8");
+      const doc = JSON.parse(raw) as unknown;
+      return predictionRows(doc).some((row) =>
+        predictionRowMatchesSchedulerGameId(row, input.gameId),
+      );
+    } catch {
+      return false;
+    }
+  }
+
+  const candidates = [
+    path.join(
+      cwd,
+      "data",
+      "predictions",
+      input.league.toLowerCase(),
+      `${input.dateKst}-prediction-snapshot-v1.json`,
+    ),
+  ];
   for (const p of candidates) {
     try {
       const raw = await readFile(p, "utf8");

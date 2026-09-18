@@ -102,6 +102,16 @@ export type RunnerAction = {
   args?: string[];
   /** Expected to call providers when executed for real. */
   mayCallProvider: boolean;
+  /**
+   * DELEGATED: child owns Odds quota / provider policy (MLB Daily Ops).
+   * Scheduler must not globally block the batch for low Odds quota.
+   */
+  providerGuard?: "DEFAULT" | "DELEGATED";
+  /**
+   * If true, Scheduler still spawns the child when --no-provider
+   * (child receives --no-provider). MLB Daily Ops only.
+   */
+  safeWhenNoProvider?: boolean;
 };
 
 export type SchedulerGameInput = {

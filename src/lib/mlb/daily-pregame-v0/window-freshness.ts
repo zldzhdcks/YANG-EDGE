@@ -244,14 +244,16 @@ export function decideMlbDailyCollection(input: {
 
   if (input.dataset === "ODDS") {
     if (!exists) {
+      // Windowed missing Odds is a Provider call — same quota gate as stale refresh.
+      const provider = refreshProviderPolicy({ quotaRemaining });
       return base("ODDS", false, {
         spawnRequested: true,
-        spawnAllowed: true,
+        spawnAllowed: provider.spawnAllowed,
         action: "COLLECT",
         code: "COLLECT_MISSING",
         fresh: false,
-        providerPolicy: "NONE",
-        notes: [],
+        providerPolicy: provider.providerPolicy,
+        notes: ["WINDOWED_ODDS_MISSING_QUOTA_GATED"],
       });
     }
     if (window === "T90" || window === "T45") {
@@ -400,6 +402,36 @@ export function parseMlbDailyOpsQuotaRemaining(raw: string): number {
     );
   }
   return Number(v);
+}
+
+/**
+ * Freshness / cache reference start for a Daily Ops run.
+ * When filterIds are supplied, only those games count — an earlier
+ * unrelated slate game must not poison later-window batches.
+ * No filter → preserve full-slate earliestStart.
+ */
+export function deriveEffectiveEarliestStart(input: {
+  games: Array<{
+    gameId: string;
+    commenceTimeUtc?: string | null;
+    scheduledStartTime?: string | null;
+  }>;
+  filterIds?: string[] | null;
+  fallbackEarliestStart?: string | null;
+}): string | null {
+  const ids = input.filterIds;
+  if (!ids?.length) {
+    return input.fallbackEarliestStart ?? null;
+  }
+  const want = new Set(ids);
+  const starts = input.games
+    .filter((g) => want.has(g.gameId))
+    .map((g) => g.commenceTimeUtc ?? g.scheduledStartTime ?? null)
+    .filter((s): s is string => Boolean(s && String(s).trim()))
+    .map((s) => ({ s, t: Date.parse(s) }))
+    .filter((x) => Number.isFinite(x.t))
+    .sort((a, b) => a.t - b.t);
+  return starts[0]?.s ?? input.fallbackEarliestStart ?? null;
 }
 
 export function mlbOddsCacheFreshSinceIso(input: {

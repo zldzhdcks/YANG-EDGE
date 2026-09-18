@@ -23,6 +23,7 @@ import {
 import {
   decideMlbDailyCollection,
   decidePredictionPersist,
+  deriveEffectiveEarliestStart,
   parseMlbDailyOpsWindow,
   runMlbDailyPregameV0,
 } from "../src/lib/mlb/daily-pregame-v0";
@@ -185,6 +186,60 @@ async function runWindow(input: {
 async function main() {
   assert.equal(parseMlbDailyOpsWindow("t60"), "T60");
   assert.throws(() => parseMlbDailyOpsWindow("T99"), /Invalid --window/);
+
+  const missingOddsUnknown = decideMlbDailyCollection({
+    window: "T60",
+    dataset: "ODDS",
+    exists: false,
+    quotaRemaining: null,
+  });
+  assert.equal(missingOddsUnknown.code, "COLLECT_MISSING");
+  assert.equal(missingOddsUnknown.spawnAllowed, false);
+  assert.equal(missingOddsUnknown.providerPolicy, "QUOTA_DECISION_EXTERNAL");
+
+  const missingOddsZero = decideMlbDailyCollection({
+    window: "T60",
+    dataset: "ODDS",
+    exists: false,
+    quotaRemaining: 0,
+  });
+  assert.equal(missingOddsZero.spawnAllowed, false);
+
+  const missingOddsOk = decideMlbDailyCollection({
+    window: "T60",
+    dataset: "ODDS",
+    exists: false,
+    quotaRemaining: 465,
+  });
+  assert.equal(missingOddsOk.spawnAllowed, true);
+  assert.equal(missingOddsOk.providerPolicy, "NONE");
+
+  const missingOddsLegacy = decideMlbDailyCollection({
+    window: null,
+    dataset: "ODDS",
+    exists: false,
+  });
+  assert.equal(missingOddsLegacy.spawnAllowed, true);
+  assert.equal(missingOddsLegacy.providerPolicy, "NONE");
+
+  const scopedStart = deriveEffectiveEarliestStart({
+    games: [
+      { gameId: "early", commenceTimeUtc: "2099-06-15T12:00:00.000Z" },
+      { gameId: "late", commenceTimeUtc: "2099-06-15T14:00:00.000Z" },
+    ],
+    filterIds: ["late"],
+    fallbackEarliestStart: "2099-06-15T12:00:00.000Z",
+  });
+  assert.equal(scopedStart, "2099-06-15T14:00:00.000Z");
+  assert.equal(
+    deriveEffectiveEarliestStart({
+      games: [
+        { gameId: "early", commenceTimeUtc: "2099-06-15T12:00:00.000Z" },
+      ],
+      fallbackEarliestStart: "2099-06-15T12:00:00.000Z",
+    }),
+    "2099-06-15T12:00:00.000Z",
+  );
 
   const t60Open = mlbOpsWindowEnteredAtMs(START, "T60");
   assert.equal(t60Open, START_MS - 75 * 60_000);

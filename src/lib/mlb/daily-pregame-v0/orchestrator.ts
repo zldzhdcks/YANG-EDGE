@@ -43,6 +43,7 @@ import type {
 import {
   decideMlbDailyCollection,
   decidePredictionPersist,
+  deriveEffectiveEarliestStart,
   mlbOddsCacheFreshSinceIso,
   windowAllowsPredictionPersist,
   type MlbCollectionDecision,
@@ -73,8 +74,9 @@ export type DailyPregameOptions = {
   /** Ops window. Unset preserves legacy artifact-exists skip + prediction allowed. */
   window?: MlbDailyOpsWindow | null;
   /**
-   * Odds-API remaining quota when known. Null = refresh must not silently
-   * spawn (QUOTA_DECISION_EXTERNAL). Not Scheduler wiring.
+   * Odds-API remaining quota when known. Null = windowed Odds collect/refresh
+   * must not silently spawn (QUOTA_DECISION_EXTERNAL). Scheduler may pass
+   * --quota-remaining through. Lineup/starter are not Odds-quota gated.
    */
   quotaRemaining?: number | null;
   /**
@@ -396,6 +398,12 @@ export async function runMlbDailyPregameV0(
     ? scheduleIds.filter((id) => options.gameIds!.includes(id))
     : scheduleIds;
 
+  const effectiveEarliestStart = deriveEffectiveEarliestStart({
+    games: schedule.games,
+    filterIds: options.gameIds?.length ? filterIds : null,
+    fallbackEarliestStart: schedule.earliestStart,
+  });
+
   const cutoffForCollect = evaluateCutoffGate({
     schedule,
     asOfIso,
@@ -427,7 +435,7 @@ export async function runMlbDailyPregameV0(
       dataset: "STARTER",
       exists: starter.exists,
       observedAtIso: starter.observedAt,
-      earliestStartIso: schedule.earliestStart,
+      earliestStartIso: effectiveEarliestStart,
       cutoffBlocked: Boolean(window) && cutoffForCollect.blocked,
       quotaRemaining,
     });
@@ -575,7 +583,7 @@ export async function runMlbDailyPregameV0(
       dataset: "ODDS",
       exists: odds.exists,
       observedAtIso: odds.observedAt,
-      earliestStartIso: schedule.earliestStart,
+      earliestStartIso: effectiveEarliestStart,
       cutoffBlocked: Boolean(window) && cutoffForCollect.blocked,
       quotaRemaining,
     });
@@ -660,7 +668,7 @@ export async function runMlbDailyPregameV0(
       if (decision.action === "REFRESH") {
         const freshSince = mlbOddsCacheFreshSinceIso({
           window,
-          earliestStartIso: schedule.earliestStart,
+          earliestStartIso: effectiveEarliestStart,
         });
         if (freshSince) {
           oddsArgs.push("--cache-fresh-since", freshSince, "--as-of", asOfIso);
@@ -712,7 +720,7 @@ export async function runMlbDailyPregameV0(
       dataset: "LINEUP",
       exists: lineup.exists,
       observedAtIso: lineup.observedAt,
-      earliestStartIso: schedule.earliestStart,
+      earliestStartIso: effectiveEarliestStart,
       cutoffBlocked: Boolean(window) && cutoffForCollect.blocked,
       lineupClass: lineupClassOf(lineup),
       quotaRemaining,
@@ -1450,9 +1458,9 @@ export async function runMlbDailyPregameV0(
         ? "Dry-run: in-memory RESEARCH_BASELINE_V0 snapshot computed (file not written)."
         : continuity.plainLanguage,
     },
-    earliestStart: schedule.earliestStart,
+    earliestStart: effectiveEarliestStart,
     latestStart: schedule.latestStart,
-    recommendedNextRunAt: recommendedRunAt(schedule.earliestStart),
+    recommendedNextRunAt: recommendedRunAt(effectiveEarliestStart),
     providerQuota: {
       remaining: null,
       status: "UNKNOWN",
