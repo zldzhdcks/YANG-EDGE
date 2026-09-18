@@ -3,6 +3,8 @@ import path from "node:path";
 import { getCompetitionProfileById } from "../competition";
 import { COMMITTED_SCHEDULE_DIR_REL } from "./constants";
 import { fail, FORWARD_READ_MODEL_ERROR } from "./errors";
+import { identitiesEqual, mergeCommittedIdentityEvidence } from "./identity-equal";
+import { loadCommittedPostgameReviewIdentityIndex } from "./identity-postgame-review";
 import type { ResolvedFixtureIdentity } from "./types";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -15,9 +17,17 @@ function nonEmptyString(value: unknown): string | null {
 
 const SCHEDULE_FILE_RE = /^\d{4}-\d{2}-\d{2}-schedule-v1\.json$/;
 
-function parseScheduleIdentities(
-  raw: unknown,
-): ResolvedFixtureIdentity[] {
+/**
+ * SOURCE_PATH_PATTERN=data/research/football/YYYY-MM-DD-schedule-v1.json
+ * SCHEMA_VERSION=football-schedule-v1
+ * FIXTURE_KEY=providerMatchId
+ * HOME_TEAM_FIELD=homeTeamName
+ * AWAY_TEAM_FIELD=awayTeamName
+ * COMPETITION_FIELD=competitionId → committed competition profile canonicalName
+ * SOURCE_STAGE=schedule
+ * IDENTITY_ONLY=true
+ */
+export function parseScheduleIdentities(raw: unknown): ResolvedFixtureIdentity[] {
   if (!isRecord(raw) || !isRecord(raw.meta) || !Array.isArray(raw.rows)) {
     return [];
   }
@@ -40,18 +50,6 @@ function parseScheduleIdentities(
     out.push({ fixtureId, league, homeTeam, awayTeam });
   }
   return out;
-}
-
-function identitiesEqual(
-  a: ResolvedFixtureIdentity,
-  b: ResolvedFixtureIdentity,
-): boolean {
-  return (
-    a.fixtureId === b.fixtureId &&
-    a.league === b.league &&
-    a.homeTeam === b.homeTeam &&
-    a.awayTeam === b.awayTeam
-  );
 }
 
 /**
@@ -91,3 +89,25 @@ export function loadCommittedScheduleIdentityIndex(
   }
   return index;
 }
+
+/**
+ * Merge committed schedule + Official Forward postgame review identity evidence.
+ * Exact fixtureId join only. Conflict fails closed.
+ */
+export function loadCommittedIdentityIndex(
+  rootDir: string,
+): Map<number, ResolvedFixtureIdentity> {
+  return mergeCommittedIdentityEvidence([
+    [...loadCommittedScheduleIdentityIndex(rootDir).values()],
+    [...loadCommittedPostgameReviewIdentityIndex(rootDir).values()],
+  ]);
+}
+
+export {
+  identitiesEqual,
+  mergeCommittedIdentityEvidence,
+} from "./identity-equal";
+export {
+  loadCommittedPostgameReviewIdentityIndex,
+  parseFootballForwardPostgameReviewIdentities,
+} from "./identity-postgame-review";

@@ -100,8 +100,8 @@ export type LoadForwardReadModelInput = {
   /** Injected eval envelope or payload. When set, the committed file is not read. */
   document?: unknown;
   /**
-   * Optional identity join. `undefined` loads committed schedule artifacts.
-   * An empty map leaves every event UNRESOLVED.
+   * Optional identity join. `undefined` loads committed schedule + postgame
+   * review artifacts. An empty map leaves every event UNRESOLVED.
    */
   identityIndex?: ReadonlyMap<number, ResolvedFixtureIdentity>;
 };

@@ -24,6 +24,7 @@ import {
   API_FOOTBALL_PUBLIC_FIXTURE_DISPLAY,
 } from "../src/lib/provider-legal-state";
 import FootballForwardResearchDashboard from "../src/components/internal/football/forward/FootballForwardResearchDashboard";
+import FootballForwardEventCard from "../src/components/internal/football/forward/FootballForwardEventCard";
 import FootballForwardErrorState from "../src/components/internal/football/forward/FootballForwardErrorState";
 
 const ROOT = process.cwd();
@@ -117,12 +118,28 @@ test("6 resolved identity displays names", () => {
 test("7 UNRESOLVED identity retains event and displays fixtureId", () => {
   const { model, html } = renderDashboard();
   const unresolved = model.gradedEvents.filter((e) => e.identityStatus === "UNRESOLVED");
-  assert.ok(unresolved.length > 0);
   for (const event of unresolved) {
     assert.ok(html.includes(`data-forward-event="${event.fixtureId}"`));
     assert.ok(html.includes(`Fixture #${event.fixtureId}`));
   }
-  assert.ok(html.includes("팀 정보 미해결"));
+  if (unresolved.length > 0) {
+    assert.ok(html.includes("팀 정보 미해결"));
+  }
+  const sample = model.gradedEvents[0];
+  assert.ok(sample);
+  const synthetic = {
+    ...sample,
+    identityStatus: "UNRESOLVED" as const,
+    league: null,
+    homeTeam: null,
+    awayTeam: null,
+  };
+  const cardHtml = renderToStaticMarkup(
+    createElement(FootballForwardEventCard, { event: synthetic }),
+  );
+  assert.ok(cardHtml.includes(`data-forward-event="${synthetic.fixtureId}"`));
+  assert.ok(cardHtml.includes(`Fixture #${synthetic.fixtureId}`));
+  assert.ok(cardHtml.includes("팀 정보 미해결"));
 });
 
 test("8 HOME/DRAW/AWAY probabilities display correctly", () => {

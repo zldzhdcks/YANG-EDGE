@@ -1,5 +1,5 @@
 import { DEFAULT_FORWARD_EVAL_REL } from "./constants";
-import { loadCommittedScheduleIdentityIndex } from "./identity";
+import { loadCommittedIdentityIndex } from "./identity";
 import {
   readCommittedEvalDocument,
   resolveEvalPath,
@@ -31,7 +31,15 @@ export type {
   LoadForwardReadModelInput,
   ResolvedFixtureIdentity,
 } from "./types";
-export { loadCommittedScheduleIdentityIndex } from "./identity";
+export {
+  identitiesEqual,
+  loadCommittedIdentityIndex,
+  loadCommittedPostgameReviewIdentityIndex,
+  loadCommittedScheduleIdentityIndex,
+  mergeCommittedIdentityEvidence,
+  parseFootballForwardPostgameReviewIdentities,
+  parseScheduleIdentities,
+} from "./identity";
 
 /**
  * Server-only Official Forward evidence read model.
@@ -50,7 +58,7 @@ export function loadFootballForwardEvidenceReadModel(
       : readCommittedEvalDocument(resolveEvalPath(rootDir, evalRel));
   const payload = unwrapEvalPayload(document);
   const identityIndex =
-    input.identityIndex ?? loadCommittedScheduleIdentityIndex(rootDir);
+    input.identityIndex ?? loadCommittedIdentityIndex(rootDir);
   return buildForwardReadModelFromPayload({
     payload,
     generatedFrom,

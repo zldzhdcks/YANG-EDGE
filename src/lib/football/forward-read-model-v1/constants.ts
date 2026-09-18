@@ -15,6 +15,14 @@ export const DEFAULT_FORWARD_EVAL_REL =
 
 export const COMMITTED_SCHEDULE_DIR_REL = "data/research/football" as const;
 
+export const COMMITTED_POSTGAME_REVIEW_DIR_REL = "data/audits" as const;
+
+export const FOOTBALL_FORWARD_POSTGAME_REVIEW_FILE_RE =
+  /^\d{4}-\d{2}-\d{2}-football-forward-postgame-review-v1\.json$/;
+
+export const FOOTBALL_FORWARD_POSTGAME_REVIEW_SCHEMA_RE =
+  /^yang-edge-\d{4}-\d{2}-\d{2}-football-forward-postgame-review-v1$/;
+
 export const ODDS_ROLE_OBSERVATION_ONLY = "OBSERVATION_ONLY" as const;
 
 export const PROBABILITY_SUM_EPSILON = 1e-6;
