@@ -6,8 +6,11 @@
  */
 import { isMlbOpsWindowFresh, mlbOpsWindowEnteredAtMs } from "@/lib/scheduler/windows";
 import type { LineupSlateClass } from "./audit-artifacts";
+import type { ExecutionContext } from "@/lib/provider-automation-policy";
+import { evaluateUnattendedCollectorSpawn } from "@/lib/provider-automation-policy";
 import type {
   CollectionDecisionCode,
+  CollectionProviderPolicy,
   MlbDailyOpsWindow,
 } from "./types";
 import { MLB_DAILY_OPS_WINDOWS } from "./types";
@@ -30,7 +33,7 @@ export type MlbCollectionDecision = {
   exists: boolean;
   /** ARTIFACT_FRESH — null when existence-only skip (T90) or N/A */
   fresh: boolean | null;
-  providerPolicy: "NONE" | "PROVIDER_REQUIRED" | "QUOTA_DECISION_EXTERNAL";
+  providerPolicy: CollectionProviderPolicy;
   notes: string[];
 };
 
@@ -145,7 +148,7 @@ export function decideLegacyCollection(input: {
   });
 }
 
-export function decideMlbDailyCollection(input: {
+export type MlbCollectionPolicyInput = {
   window: MlbDailyOpsWindow | null | undefined;
   dataset: MlbDailyCollectDataset;
   exists: boolean;
@@ -155,7 +158,77 @@ export function decideMlbDailyCollection(input: {
   cutoffBlocked?: boolean;
   lineupClass?: LineupSlateClass;
   quotaRemaining?: number | null;
-}): MlbCollectionDecision {
+  executionContext?: ExecutionContext;
+  genericProviderLaunchd?: boolean;
+  oddsPlanConfirmed?: boolean;
+  oddsApiKeyPresent?: boolean;
+};
+
+export function applyUnattendedProviderAutomationPolicy(
+  decision: MlbCollectionDecision,
+  input: Pick<
+    MlbCollectionPolicyInput,
+    | "executionContext"
+    | "genericProviderLaunchd"
+    | "oddsPlanConfirmed"
+    | "oddsApiKeyPresent"
+  >,
+): MlbCollectionDecision {
+  const executionContext = input.executionContext ?? "MANUAL_RESEARCH";
+  if (executionContext !== "UNATTENDED_AUTOMATION") return decision;
+  if (!decision.spawnRequested) return decision;
+  if (
+    decision.code === "BLOCKED_LOCK_WINDOW" ||
+    decision.code === "BLOCKED_AFTER_START"
+  ) {
+    return decision;
+  }
+
+  const verdict = evaluateUnattendedCollectorSpawn({
+    collector: decision.dataset,
+    executionContext,
+    genericProviderLaunchd: input.genericProviderLaunchd,
+    oddsPlanConfirmed: input.oddsPlanConfirmed,
+    oddsApiKeyPresent: input.oddsApiKeyPresent,
+  });
+  if (verdict.spawnAllowed) return decision;
+
+  const code: CollectionDecisionCode =
+    verdict.reason === "PLAN_UNKNOWN"
+      ? "PLAN_UNKNOWN"
+      : verdict.reason === "LEGAL_CONDITIONAL_UNMET"
+        ? "LEGAL_CONDITIONAL_UNMET"
+        : "LEGAL_PROVIDER_AUTOMATION_BLOCKED";
+  const providerPolicy: CollectionProviderPolicy = code;
+
+  return {
+    ...decision,
+    spawnAllowed: false,
+    action: "BLOCK",
+    code,
+    providerPolicy,
+    notes: [
+      ...decision.notes,
+      `PROVIDER=${verdict.provider}`,
+      `LEGAL_STATUS=${verdict.legalStatus}`,
+      `EXECUTION_CONTEXT=${executionContext}`,
+      ...(input.genericProviderLaunchd
+        ? ["GENERIC_PROVIDER_LAUNCHD_CANNOT_OVERRIDE_MLB_STATS_HOLD"]
+        : []),
+    ],
+  };
+}
+
+export function decideMlbDailyCollection(
+  input: MlbCollectionPolicyInput,
+): MlbCollectionDecision {
+  return applyUnattendedProviderAutomationPolicy(
+    decideMlbDailyCollectionFreshness(input),
+    input,
+  );
+}
+
+function decideMlbDailyCollectionFreshness(input: MlbCollectionPolicyInput): MlbCollectionDecision {
   const window = input.window ?? null;
   if (window == null) {
     return decideLegacyCollection({
@@ -510,6 +583,38 @@ export function evaluateCollectionWindowRun(pregame: {
 
     const policy = String(d.providerPolicy ?? "");
     const decision = String(d.collectionDecision ?? "");
+    const legalBlock =
+      policy === "LEGAL_PROVIDER_AUTOMATION_BLOCKED" ||
+      decision === "LEGAL_PROVIDER_AUTOMATION_BLOCKED" ||
+      s.blockers.includes("LEGAL_PROVIDER_AUTOMATION_BLOCKED") ||
+      s.errorCode === "LEGAL_PROVIDER_AUTOMATION_BLOCKED";
+    if (legalBlock) {
+      return {
+        outcome: "ACTION_REQUIRED",
+        reason: "LEGAL_PROVIDER_AUTOMATION_BLOCKED",
+        stage: s.stage,
+        nextAction: "DO_NOT_UNATTENDED_SPAWN_MLB_STATS_API",
+      };
+    }
+    if (policy === "PLAN_UNKNOWN" || decision === "PLAN_UNKNOWN") {
+      return {
+        outcome: "ACTION_REQUIRED",
+        reason: "PLAN_UNKNOWN",
+        stage: s.stage,
+        nextAction: "CONFIRM_ODDS_PLAN_BEFORE_LIVE_AUTOMATION",
+      };
+    }
+    if (
+      policy === "LEGAL_CONDITIONAL_UNMET" ||
+      decision === "LEGAL_CONDITIONAL_UNMET"
+    ) {
+      return {
+        outcome: "ACTION_REQUIRED",
+        reason: "LEGAL_CONDITIONAL_UNMET",
+        stage: s.stage,
+        nextAction: "SATISFY_ODDS_CONDITIONAL_REQUIREMENTS",
+      };
+    }
     if (policy === "QUOTA_DECISION_EXTERNAL") {
       return {
         outcome: "ACTION_REQUIRED",

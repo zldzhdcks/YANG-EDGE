@@ -16,6 +16,7 @@ import {
 } from "./lock-store";
 import { detectLockedPrediction, loadScheduleGames } from "./load-schedule";
 import { evaluateQuotaGate } from "./quota-gate";
+import { isMlbStatsCollectorScript } from "../provider-automation-policy";
 import {
   buildLockKey,
   resolveStage,
@@ -92,8 +93,10 @@ function isMlbDelegatedDailyOpsPlan(plan: SchedulerGamePlan): boolean {
 export function shouldSpawnSchedulerAction(
   action: RunnerAction,
   noProvider: boolean,
+  unattended = false,
 ): boolean {
   if (action.kind !== "SPAWN_TSX" || !action.scriptRel) return false;
+  if (unattended && isMlbStatsCollectorScript(action.scriptRel)) return false;
   if (!noProvider) return true;
   if (action.safeWhenNoProvider) return true;
   if (!action.mayCallProvider) return true;
@@ -113,6 +116,7 @@ export async function planGame(input: {
   cwd?: string;
   rehearsal?: boolean;
   rehearsalAsOf?: string;
+  unattended?: boolean;
 }): Promise<SchedulerGamePlan> {
   const warnings: string[] = [];
   const resolved = resolveStage({
@@ -232,6 +236,7 @@ export async function planGame(input: {
     quotaRemaining: input.quotaRemaining,
     rehearsal: input.rehearsal,
     rehearsalAsOf: input.rehearsalAsOf,
+    unattended: input.unattended,
   });
 
   const quota = evaluateQuotaGate(input.quotaRemaining);
@@ -275,7 +280,10 @@ export async function planGame(input: {
     errorCode = "NOT_IMPLEMENTED";
   } else if (action.kind === "MANUAL_REQUIRED") {
     executionStatus = "MANUAL_REQUIRED";
-    errorCode = "MANUAL_REQUIRED";
+    errorCode =
+      action.actionId === "LEGAL_PROVIDER_AUTOMATION_BLOCKED"
+        ? "LEGAL_PROVIDER_AUTOMATION_BLOCKED"
+        : "MANUAL_REQUIRED";
   } else if (action.kind === "INPUT_VALIDATION_FAILED") {
     executionStatus = "INPUT_VALIDATION_FAILED";
     errorCode = "INPUT_VALIDATION_FAILED";
@@ -315,6 +323,7 @@ type ExecuteCtx = {
   persist: boolean;
   dryRun: boolean;
   noProvider: boolean;
+  unattended: boolean;
   schedulerRunId: string;
   now: Date;
   executeRunner?: (action: RunnerAction) => Promise<number>;
@@ -400,7 +409,15 @@ async function runSpawnAction(
   warnings: string[];
 }> {
   const warnings: string[] = [];
-  if (!shouldSpawnSchedulerAction(action, ctx.noProvider)) {
+  if (!shouldSpawnSchedulerAction(action, ctx.noProvider, ctx.unattended)) {
+    if (ctx.unattended && isMlbStatsCollectorScript(action.scriptRel)) {
+      return {
+        status: "BLOCKED",
+        errorCode: "LEGAL_PROVIDER_AUTOMATION_BLOCKED",
+        countedProviderCall: false,
+        warnings: ["LEGAL_PROVIDER_AUTOMATION_BLOCKED:MLB_STATS_API"],
+      };
+    }
     if (ctx.noProvider && action.mayCallProvider) {
       return {
         status: "SKIPPED",
@@ -470,6 +487,7 @@ export async function runPregameScheduler(
   const persist = rehearsal ? false : (options.persist ?? !dryRun);
   const noProvider = rehearsal ? true : options.noProvider;
   const includePostgame = rehearsal ? false : options.includePostgame;
+  const unattended = rehearsal ? false : Boolean(options.unattended);
   const schedulerRunId = newSchedulerRunId(now);
   const leagues: SchedulerLeague[] =
     options.league === "ALL" ? ["MLB", "KBO", "NPB"] : [options.league];
@@ -502,8 +520,12 @@ export async function runPregameScheduler(
         });
         games = loaded.games;
       } catch (e) {
-        globalBlocker =
+        const msg =
           e instanceof Error ? e.message : "SCHEDULE_ARTIFACT_MISSING";
+        globalBlocker =
+          unattended && league === "MLB"
+            ? "LEGAL_PROVIDER_AUTOMATION_BLOCKED:MLB_STATS_API"
+            : msg;
         break;
       }
     }
@@ -520,6 +542,7 @@ export async function runPregameScheduler(
       persist,
       dryRun,
       noProvider,
+      unattended,
       schedulerRunId,
       now,
       executeRunner: options.executeRunner,
@@ -551,6 +574,7 @@ export async function runPregameScheduler(
         cwd,
         rehearsal,
         rehearsalAsOf: options.rehearsalAsOf,
+        unattended,
       });
       planned.push(plan);
       stageCounts[plan.stage] = (stageCounts[plan.stage] ?? 0) + 1;
@@ -622,6 +646,7 @@ export async function runPregameScheduler(
         quotaRemaining: options.quotaRemaining,
         rehearsal,
         rehearsalAsOf: options.rehearsalAsOf,
+        unattended,
       });
       const startedAt = new Date().toISOString();
       const spawn = await runSpawnAction(ctx, action);
@@ -754,6 +779,7 @@ export async function runPregameScheduler(
     persist,
     rehearsal,
     rehearsalAsOf: options.rehearsalAsOf ?? null,
+    unattended,
     totalGames: allPlans.length,
     stageCounts,
     success,

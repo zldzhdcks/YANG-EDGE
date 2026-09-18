@@ -51,6 +51,10 @@ export type MlbDailyOpsOptions = {
   window?: MlbDailyOpsWindow | null;
   quotaRemaining?: number | null;
   spawnCollector?: DailyPregameOptions["spawnCollector"];
+  unattended?: boolean;
+  oddsPlanConfirmed?: boolean;
+  oddsApiKeyPresent?: boolean;
+  genericProviderLaunchd?: boolean;
 };
 
 function mapFailureFromPregame(input: {
@@ -166,6 +170,10 @@ export async function runMlbDailyOpsV1(
       window: options.window ?? null,
       quotaRemaining: options.quotaRemaining ?? null,
       spawnCollector: options.spawnCollector,
+      unattended: options.unattended,
+      oddsPlanConfirmed: options.oddsPlanConfirmed,
+      oddsApiKeyPresent: options.oddsApiKeyPresent,
+      genericProviderLaunchd: options.genericProviderLaunchd,
     };
     pregame = await runMlbDailyPregameV0(pregameOpts);
     providerCalls = pregame.providerCalls;

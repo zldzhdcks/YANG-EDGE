@@ -22,6 +22,7 @@ export function resolveLeagueAction(input: {
   quotaRemaining?: number | null;
   rehearsal?: boolean;
   rehearsalAsOf?: string;
+  unattended?: boolean;
 }): RunnerAction {
   switch (input.league) {
     case "MLB":

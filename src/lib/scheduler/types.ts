@@ -65,7 +65,8 @@ export type SchedulerErrorCode =
   | "INPUT_VALIDATION_FAILED"
   | "EXECUTION_FAILED_NO_SNAPSHOT"
   | "PASS_RECORDED"
-  | "READY_FOR_POSTGAME";
+  | "READY_FOR_POSTGAME"
+  | "LEGAL_PROVIDER_AUTOMATION_BLOCKED";
 
 export type WindowId = "T90" | "T60" | "T45" | "T30" | "LOCK" | "POST_START";
 
@@ -203,6 +204,7 @@ export type SchedulerAuditArtifact = {
   persist?: boolean;
   rehearsal?: boolean;
   rehearsalAsOf?: string | null;
+  unattended?: boolean;
   totalGames: number;
   stageCounts: Partial<Record<PregameSchedulerStage, number>>;
   success: number;
@@ -247,4 +249,9 @@ export type OrchestratorOptions = {
    */
   rehearsal?: boolean;
   rehearsalAsOf?: string;
+  /**
+   * Unattended / production automation (launchd). Distinct from
+   * MANUAL_RESEARCH. MLB Stats API collectors must not spawn.
+   */
+  unattended?: boolean;
 };

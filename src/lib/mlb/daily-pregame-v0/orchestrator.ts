@@ -53,6 +53,13 @@ import {
   type MlbCollectionDecision,
 } from "./window-freshness";
 import type { LineupSlateClass } from "./audit-artifacts";
+import type { CollectionProviderPolicy } from "./types";
+
+const LEGAL_PROVIDER_POLICIES = new Set<CollectionProviderPolicy>([
+  "LEGAL_PROVIDER_AUTOMATION_BLOCKED",
+  "PLAN_UNKNOWN",
+  "LEGAL_CONDITIONAL_UNMET",
+]);
 
 export type DailyPregameOptions = {
   dateKst: string;
@@ -92,6 +99,20 @@ export type DailyPregameOptions = {
     args: string[],
     cwd?: string,
   ) => Promise<number>;
+  /**
+   * Unattended / launchd automation. Distinct from MANUAL_RESEARCH.
+   * When true, MLB Stats API collectors must not spawn.
+   */
+  unattended?: boolean;
+  /** Test / ops injection. Exact `true` from ODDS_PLAN_CONFIRMED otherwise. */
+  oddsPlanConfirmed?: boolean;
+  /** Test injection. Env presence otherwise — never logs the key. */
+  oddsApiKeyPresent?: boolean;
+  /**
+   * Generic PROVIDER_LAUNCHD. Must not override MLB Stats legal HOLD.
+   * Tests inject this to prove the generic flag cannot authorize Stats spawn.
+   */
+  genericProviderLaunchd?: boolean;
 };
 
 export const MLB_DAILY_PREGAME_STAGE_ORDER: DailyStageName[] = [
@@ -158,6 +179,32 @@ function collectionDetail(
     notes: decision.notes,
     ...extra,
   };
+}
+
+function automationCollectionFields(options: DailyPregameOptions) {
+  return {
+    executionContext: options.unattended
+      ? ("UNATTENDED_AUTOMATION" as const)
+      : ("MANUAL_RESEARCH" as const),
+    genericProviderLaunchd: options.genericProviderLaunchd,
+    oddsPlanConfirmed: options.oddsPlanConfirmed,
+    oddsApiKeyPresent: options.oddsApiKeyPresent,
+  };
+}
+
+function resolvedCollectionProviderPolicy(
+  decision: MlbCollectionDecision,
+  noProvider: boolean,
+): CollectionProviderPolicy {
+  if (LEGAL_PROVIDER_POLICIES.has(decision.providerPolicy)) {
+    return decision.providerPolicy;
+  }
+  if (decision.spawnRequested && noProvider) return "PROVIDER_REQUIRED";
+  return decision.providerPolicy;
+}
+
+function isLegalCollectionBlock(decision: MlbCollectionDecision): boolean {
+  return LEGAL_PROVIDER_POLICIES.has(decision.providerPolicy);
 }
 
 function lineupClassOf(lineup: { detail: Record<string, unknown> }): LineupSlateClass {
@@ -306,17 +353,21 @@ export async function runMlbDailyPregameV0(
         scheduleDateValid: schedule.dateKstMatch,
         cutoffBlocked: Boolean(window) && cutoffPreview.blocked,
         quotaRemaining,
+        ...automationCollectionFields(options),
       });
       const doSpawn =
         decision.spawnRequested && decision.spawnAllowed && !noProvider;
-      const providerPolicy =
-        decision.spawnRequested && noProvider
-          ? "PROVIDER_REQUIRED"
-          : decision.providerPolicy;
+      const providerPolicy = resolvedCollectionProviderPolicy(
+        decision,
+        noProvider,
+      );
       const dExtra = collectionDetail(decision, { providerPolicy });
 
       if (decision.action === "BLOCK") {
         if (schedule.exists && schedule.dateKstMatch) scheduleUsable = true;
+        if (isLegalCollectionBlock(decision)) {
+          blockingIssues.push(decision.code);
+        }
         stages.push(
           emptyStage("SCHEDULE", "BLOCKED", {
             outputPaths: [schedule.path],
@@ -460,13 +511,14 @@ export async function runMlbDailyPregameV0(
       earliestStartIso: effectiveEarliestStart,
       cutoffBlocked: Boolean(window) && cutoffForCollect.blocked,
       quotaRemaining,
+      ...automationCollectionFields(options),
     });
     const doSpawn =
       decision.spawnRequested && decision.spawnAllowed && !noProvider;
-    const providerPolicy =
-      decision.spawnRequested && noProvider
-        ? "PROVIDER_REQUIRED"
-        : decision.providerPolicy;
+    const providerPolicy = resolvedCollectionProviderPolicy(
+      decision,
+      noProvider,
+    );
     const dExtra = collectionDetail(decision, { providerPolicy });
 
     if (!scheduleUsable) {
@@ -478,6 +530,9 @@ export async function runMlbDailyPregameV0(
         }),
       );
     } else if (decision.action === "BLOCK") {
+      if (isLegalCollectionBlock(decision)) {
+        blockingIssues.push(decision.code);
+      }
       stages.push(
         emptyStage("STARTER", "BLOCKED", {
           outputPaths: starter.exists ? [starter.path] : [],
@@ -608,13 +663,14 @@ export async function runMlbDailyPregameV0(
       earliestStartIso: effectiveEarliestStart,
       cutoffBlocked: Boolean(window) && cutoffForCollect.blocked,
       quotaRemaining,
+      ...automationCollectionFields(options),
     });
     const doSpawn =
       decision.spawnRequested && decision.spawnAllowed && !noProvider;
-    const providerPolicy =
-      decision.spawnRequested && noProvider
-        ? "PROVIDER_REQUIRED"
-        : decision.providerPolicy;
+    const providerPolicy = resolvedCollectionProviderPolicy(
+      decision,
+      noProvider,
+    );
     const dExtra = collectionDetail(decision, { providerPolicy });
 
     if (!scheduleUsable) {
@@ -626,6 +682,9 @@ export async function runMlbDailyPregameV0(
         }),
       );
     } else if (decision.action === "BLOCK") {
+      if (isLegalCollectionBlock(decision)) {
+        blockingIssues.push(decision.code);
+      }
       stages.push(
         emptyStage("ODDS", "BLOCKED", {
           outputPaths: odds.exists ? [odds.path] : [],
@@ -746,13 +805,14 @@ export async function runMlbDailyPregameV0(
       cutoffBlocked: Boolean(window) && cutoffForCollect.blocked,
       lineupClass: lineupClassOf(lineup),
       quotaRemaining,
+      ...automationCollectionFields(options),
     });
     const doSpawn =
       decision.spawnRequested && decision.spawnAllowed && !noProvider;
-    const providerPolicy =
-      decision.spawnRequested && noProvider
-        ? "PROVIDER_REQUIRED"
-        : decision.providerPolicy;
+    const providerPolicy = resolvedCollectionProviderPolicy(
+      decision,
+      noProvider,
+    );
     const dExtra = collectionDetail(decision, { providerPolicy });
 
     if (options.skipLineup) {
@@ -771,6 +831,9 @@ export async function runMlbDailyPregameV0(
         }),
       );
     } else if (decision.action === "BLOCK") {
+      if (isLegalCollectionBlock(decision)) {
+        blockingIssues.push(decision.code);
+      }
       stages.push(
         emptyStage("LINEUP", "BLOCKED", {
           outputPaths: lineup.exists ? [lineup.path] : [],
@@ -1338,7 +1401,9 @@ export async function runMlbDailyPregameV0(
     nextAction = "FIX_SCHEDULE_DATE_MISMATCH";
   } else if (!scheduleUsable) {
     overall = "BLOCKED_MISSING_SCHEDULE";
-    nextAction = "RUN_SCHEDULE_COLLECTION";
+    nextAction = blockingIssues.includes("LEGAL_PROVIDER_AUTOMATION_BLOCKED")
+      ? "LEGAL_PROVIDER_AUTOMATION_BLOCKED"
+      : "RUN_SCHEDULE_COLLECTION";
   } else if (blockingIssues.includes("BLOCKED_AFTER_START")) {
     overall = "BLOCKED_AFTER_START";
     nextAction = "WAIT_NEXT_SLATE_BEFORE_COMMENCE";

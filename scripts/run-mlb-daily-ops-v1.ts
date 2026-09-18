@@ -54,6 +54,7 @@ Options:
   --window T90|T60|T45|T30|LOCK
   --quota-remaining <non-negative integer>
   --rehearsal-as-of <ISO>  Requires --no-provider --no-write --no-seal
+  --unattended             Launchd / production automation (MLB Stats blocked)
   --help
 
 Stages (reused): SCHEDULE → STARTER → ODDS → LINEUP → DAILY_RESEARCH_SUMMARY
@@ -80,6 +81,7 @@ export function parseMlbDailyOpsCliArgs(argv: string[]) {
   let window: MlbDailyOpsWindow | undefined;
   let quotaRemaining: number | null = null;
   let rehearsalAsOfRaw: string | undefined;
+  let unattended = false;
   const gameIds: string[] = [];
 
   const stages = new Set([
@@ -170,6 +172,10 @@ export function parseMlbDailyOpsCliArgs(argv: string[]) {
       rehearsalAsOfRaw = s;
       continue;
     }
+    if (a === "--unattended") {
+      unattended = true;
+      continue;
+    }
     if (!a.startsWith("-") && /^\d{4}-\d{2}-\d{2}$/.test(a) && !dateKst) {
       dateKst = a;
       continue;
@@ -179,6 +185,9 @@ export function parseMlbDailyOpsCliArgs(argv: string[]) {
 
   let rehearsalAsOf: string | undefined;
   if (rehearsalAsOfRaw) {
+    if (unattended) {
+      throw new Error("UNATTENDED_CONFLICT: --unattended cannot be combined with --rehearsal-as-of");
+    }
     if (!noProvider || !noWrite || !noSeal) {
       throw new Error(
         "REHEARSAL_AS_OF_REQUIRES_NO_PROVIDER_NO_WRITE_NO_SEAL",
@@ -210,6 +219,7 @@ export function parseMlbDailyOpsCliArgs(argv: string[]) {
     gameIds,
     rehearsalAsOf: rehearsalAsOf ?? null,
     asOf: rehearsalAsOf,
+    unattended,
   };
 }
 
@@ -244,6 +254,7 @@ async function main() {
     window: opts.window,
     quotaRemaining: opts.quotaRemaining,
     asOf: opts.asOf,
+    unattended: opts.unattended,
   });
 
   if (opts.json) {

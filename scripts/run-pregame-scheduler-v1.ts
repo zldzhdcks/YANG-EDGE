@@ -39,6 +39,7 @@ Options:
   --quota-remaining <non-negative integer>
   --rehearsal
   --rehearsal-as-of <ISO>
+  --unattended
 `);
   process.exit(2);
 }
@@ -69,6 +70,7 @@ export function parsePregameSchedulerCliArgs(argv: string[]): OrchestratorOption
   let quotaRemaining: number | null = null;
   let rehearsal = false;
   let rehearsalAsOfRaw: string | undefined;
+  let unattended = false;
 
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]!;
@@ -92,6 +94,7 @@ export function parsePregameSchedulerCliArgs(argv: string[]): OrchestratorOption
       }
       quotaRemaining = parseMlbDailyOpsQuotaRemaining(s);
     } else if (a === "--rehearsal") rehearsal = true;
+    else if (a === "--unattended") unattended = true;
     else if (a === "--rehearsal-as-of") {
       rehearsalAsOfRaw = argv[++i];
       if (!rehearsalAsOfRaw) {
@@ -119,6 +122,11 @@ export function parsePregameSchedulerCliArgs(argv: string[]): OrchestratorOption
   if (rehearsal && league !== "MLB") {
     throw new Error("REHEARSAL_MLB_ONLY");
   }
+  if (rehearsal && unattended) {
+    throw new Error(
+      "UNATTENDED_CONFLICT: --unattended cannot be combined with --rehearsal",
+    );
+  }
 
   const rehearsalAsOf = rehearsalAsOfRaw
     ? parseRehearsalAsOfIso(rehearsalAsOfRaw)
@@ -137,6 +145,7 @@ export function parsePregameSchedulerCliArgs(argv: string[]): OrchestratorOption
     persist: rehearsal ? false : !dryRun,
     rehearsal,
     rehearsalAsOf,
+    unattended: rehearsal ? false : unattended,
     now: rehearsalAsOf ? new Date(rehearsalAsOf) : undefined,
     executeRunner: async (action: RunnerAction) => {
       if (action.kind !== "SPAWN_TSX" || !action.scriptRel) return 1;

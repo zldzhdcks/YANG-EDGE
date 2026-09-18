@@ -36,6 +36,7 @@ export function buildMlbDailyOpsRunnerAction(input: {
   quotaRemaining?: number | null;
   rehearsal?: boolean;
   rehearsalAsOf?: string;
+  unattended?: boolean;
 }): RunnerAction {
   const args = ["--date", input.dateKst, "--window", input.window];
   for (const id of input.gameIds) {
@@ -52,6 +53,8 @@ export function buildMlbDailyOpsRunnerAction(input: {
     if (input.rehearsalAsOf) {
       args.push("--rehearsal-as-of", input.rehearsalAsOf);
     }
+  } else if (input.unattended) {
+    args.push("--unattended");
   }
   return {
     kind: "SPAWN_TSX",
@@ -74,6 +77,7 @@ export function mlbAction(input: {
   quotaRemaining?: number | null;
   rehearsal?: boolean;
   rehearsalAsOf?: string;
+  unattended?: boolean;
 }): RunnerAction {
   const { stage, dateKst, includePostgame, noProvider } = input;
   const providerNote = noProvider
@@ -90,11 +94,21 @@ export function mlbAction(input: {
       quotaRemaining: input.quotaRemaining,
       rehearsal: input.rehearsal,
       rehearsalAsOf: input.rehearsalAsOf,
+      unattended: input.unattended,
     });
   }
 
   switch (stage) {
     case "SCHEDULE_DISCOVERY":
+      if (input.unattended) {
+        return {
+          kind: "MANUAL_REQUIRED",
+          actionId: "LEGAL_PROVIDER_AUTOMATION_BLOCKED",
+          description:
+            "Unattended MLB Stats API schedule bootstrap is legally blocked",
+          mayCallProvider: false,
+        };
+      }
       return {
         kind: "SPAWN_TSX",
         actionId: "RUN_MLB_SCHEDULE",
