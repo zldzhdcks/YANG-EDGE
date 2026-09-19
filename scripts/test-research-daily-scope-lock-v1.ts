@@ -344,6 +344,55 @@ test("coverage semantics preserved", () => {
   );
 });
 
+test("coverage rejects duplicate and out-of-scope terminal decisions", () => {
+  for (const ids of [["A", "A"], ["A", "OUTSIDE"]]) {
+    assert.equal(verifyDecisionCoverage({
+      scopeLock: fakeLock(["A"]),
+      sealedDecisionTargetIds: ids,
+      scopeResolution: "LOCKED",
+    }).status, "COVERAGE_INCOMPLETE");
+  }
+  assert.equal(verifyDecisionCoverage({
+    scopeLock: fakeLock(["A", "A"]),
+    sealedDecisionTargetIds: ["A"],
+    scopeResolution: "LOCKED",
+  }).status, "COVERAGE_INCOMPLETE");
+});
+
+test("coverage consumes one-shot iterable once and preserves exact counts", () => {
+  function* decisions() { yield "A"; yield "B"; }
+  const result = verifyDecisionCoverage({
+    scopeLock: fakeLock(["A", "B"]),
+    sealedDecisionTargetIds: decisions(),
+    scopeResolution: "LOCKED",
+  });
+  assert.equal(result.status, "COVERAGE_COMPLETE");
+  assert.equal(result.sealedDecisionCount, 2);
+  const duplicate = verifyDecisionCoverage({
+    scopeLock: fakeLock(["A"]),
+    sealedDecisionTargetIds: ["A", "A"],
+    scopeResolution: "LOCKED",
+  });
+  assert.equal(duplicate.sealedDecisionCount, 2);
+});
+
+test("coverage rejects denominator mismatch and unexpected decisions on empty scope", () => {
+  for (const field of ["targetCount", "officialDenominator"] as const) {
+    const lock = fakeLock(["A"]);
+    lock[field] = 2;
+    assert.equal(verifyDecisionCoverage({
+      scopeLock: lock,
+      sealedDecisionTargetIds: ["A"],
+      scopeResolution: "LOCKED",
+    }).status, "COVERAGE_INCOMPLETE");
+  }
+  assert.equal(verifyDecisionCoverage({
+    scopeLock: fakeLock([]),
+    sealedDecisionTargetIds: ["OUTSIDE"],
+    scopeResolution: "TARGET_SCOPE_NO_ADMISSIBLE_TARGETS",
+  }).status, "COVERAGE_INCOMPLETE");
+});
+
 test("stable ordering helper", () => {
   assert.deepEqual(
     sortTargetsDeterministic([

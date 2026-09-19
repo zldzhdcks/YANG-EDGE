@@ -23,7 +23,10 @@ export function verifyDecisionCoverage(input: {
   sealedDecisionTargetIds: Iterable<string>;
   scopeResolution: ScopeResolutionState | null;
 }): DecisionCoverageResult {
-  const sealedCount = [...input.sealedDecisionTargetIds].length;
+  // Materialize once: callers may supply a generator. Preserve multiplicity
+  // so two terminal decisions for one target cannot masquerade as one.
+  const decisionIds = [...input.sealedDecisionTargetIds];
+  const sealedCount = decisionIds.length;
   const resolution = input.scopeResolution;
 
   if (resolution == null) {
@@ -95,7 +98,7 @@ export function verifyDecisionCoverage(input: {
 
   const lockedIds = input.scopeLock.targets.map((t) => t.targetId);
   const lockedSet = new Set(lockedIds);
-  const sealed = [...new Set(input.sealedDecisionTargetIds)];
+  const sealed = [...new Set(decisionIds)];
   const sealedSet = new Set(sealed);
 
   const missingTargetIds = lockedIds
@@ -107,12 +110,17 @@ export function verifyDecisionCoverage(input: {
 
   return {
     status:
-      missingTargetIds.length === 0
+      missingTargetIds.length === 0 &&
+      unexpectedDecisionIds.length === 0 &&
+      sealed.length === sealedCount &&
+      lockedSet.size === lockedIds.length &&
+      input.scopeLock.targetCount === lockedIds.length &&
+      input.scopeLock.officialDenominator === lockedIds.length
         ? "COVERAGE_COMPLETE"
         : "COVERAGE_INCOMPLETE",
     reason: "AUTHORITATIVE_SCOPE",
     lockedTargetCount: lockedIds.length,
-    sealedDecisionCount: sealed.length,
+    sealedDecisionCount: sealedCount,
     missingTargetIds,
     unexpectedDecisionIds,
     targetCountAuthoritative: true,
