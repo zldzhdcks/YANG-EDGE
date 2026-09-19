@@ -220,7 +220,7 @@ async function main() {
     baseline: fixtureBaseline(),
     baselineRel: "b.json",
     result: fixtureResult({
-      resultStatus: "NOT_FINAL",
+      resultStatus: "NOT_FINAL" as FootballOfficialResultArtifactV0["matches"][number]["resultStatus"],
       gradingAllowed: false,
       oneXTwoOutcome: null,
       usability: "NOT_FINAL",

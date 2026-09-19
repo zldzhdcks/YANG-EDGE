@@ -1,0 +1,860 @@
+{
+  "mission": "CLEAN_BASELINE_V1",
+  "startHead": "4bf84c7e64d427b4e43033ea85349248b9f7a792",
+  "reportingRuleCommit": "213c873f2dd987b64c0cd6688666ead4ee0ce13a",
+  "typecheckCommand": "node node_modules/typescript/bin/tsc --noEmit --incremental false --pretty false",
+  "packageTypecheckScript": false,
+  "beforeErrors": 100,
+  "beforeFiles": 32,
+  "afterErrors": 0,
+  "categories": {
+    "A": 30,
+    "C": 20,
+    "E": 1,
+    "B": 11,
+    "D": 38
+  },
+  "diagnostics": [
+    {
+      "file": "scripts/audit-2026-08-19-operator-scope-join-v1.ts",
+      "line": 378,
+      "column": 16,
+      "code": "TS2367",
+      "message": "This comparison appears to be unintentional because the types '\"IDENTITY_BLOCKED\" | \"NOT_FOUND\" | \"UNREGISTERED_COMPETITION\"' and '\"MATCHED_REGISTERED\"' have no overlap.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/audit-2026-08-19-operator-scope-join-v1.ts",
+      "line": 381,
+      "column": 16,
+      "code": "TS2367",
+      "message": "This comparison appears to be unintentional because the types '\"IDENTITY_BLOCKED\" | \"NOT_FOUND\" | \"UNREGISTERED_COMPETITION\"' and '\"MATCHED_BUT_UNSUPPORTED_FORMAT\"' have no overlap.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/audit-2026-08-20-pregame-input-close-v1.ts",
+      "line": 563,
+      "column": 11,
+      "code": "TS2367",
+      "message": "This comparison appears to be unintentional because the types '\"UNKNOWN\" | \"NOT_OBSERVED\"' and '\"LATE\"' have no overlap.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/audit-2026-08-26-prediction-pass-reconciliation-v1.ts",
+      "line": 286,
+      "column": 7,
+      "code": "TS2367",
+      "message": "This comparison appears to be unintentional because the types '\"PASS_IDENTITY_REVIEW_REQUIRED\" | \"PASS_PROVIDER_NOT_SUPPORTED\" | \"PASS_MISSED_PRE_GAME_WINDOW\" | \"PASS_ENGINE_NOT_APPROVED\" | \"PASS_OTHER_EXPLICIT_REASON\"' and '\"PREDICTION\"' have no overlap.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/audit-2026-08-28-scope-slate-recovery-v1.ts",
+      "line": 631,
+      "column": 18,
+      "code": "TS2339",
+      "message": "Property 'providerFixtureId' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; competitionRegistryJoin: string; matchId: null; scheduledStartAt: null; pregameEligibilityStatus: string; ... 15 more ...; teamLabelStatus?: string | undefined; } | { ...; } | { ...; } | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-28-scope-slate-recovery-v1.ts",
+      "line": 690,
+      "column": 52,
+      "code": "TS2339",
+      "message": "Property 'canonicalHome' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; scheduledStartAt: null; pregameEligibilityStatus: string; gamePk: null; joinReasons: string[]; scopeAccountingState: string; ... 13 more ...; teamLabelStatus?: string | undefined; } | { ...; } | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-28-scope-slate-recovery-v1.ts",
+      "line": 690,
+      "column": 71,
+      "code": "TS2339",
+      "message": "Property 'canonicalAway' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; scheduledStartAt: null; pregameEligibilityStatus: string; gamePk: null; joinReasons: string[]; scopeAccountingState: string; ... 13 more ...; teamLabelStatus?: string | undefined; } | { ...; } | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-29-prediction-pass-reconciliation-v1.ts",
+      "line": 56,
+      "column": 31,
+      "code": "TS2367",
+      "message": "This comparison appears to be unintentional because the types 'false' and 'true' have no overlap.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/audit-2026-08-29-scope-slate-recovery-v1.ts",
+      "line": 529,
+      "column": 13,
+      "code": "TS2339",
+      "message": "Property 'scopeMembership' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; scheduledStartAt: null; pregameEligibilityStatus: string; gamePk: null; joinReasons: string[]; scopeAccountingState: string; ... 13 more ...; teamLabelStatus?: string | undefined; } | ... 5 more ... | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-29-scope-slate-recovery-v1.ts",
+      "line": 622,
+      "column": 18,
+      "code": "TS2339",
+      "message": "Property 'providerFixtureId' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; competitionRegistryJoin: string; matchId: null; scheduledStartAt: null; pregameEligibilityStatus: string; ... 15 more ...; teamLabelStatus?: string | undefined; } | { ...; } | { ...; } | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-29-scope-slate-recovery-v1.ts",
+      "line": 690,
+      "column": 52,
+      "code": "TS2339",
+      "message": "Property 'canonicalHome' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; scheduledStartAt: null; pregameEligibilityStatus: string; gamePk: null; joinReasons: string[]; scopeAccountingState: string; ... 13 more ...; teamLabelStatus?: string | undefined; } | { ...; } | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-29-scope-slate-recovery-v1.ts",
+      "line": 690,
+      "column": 71,
+      "code": "TS2339",
+      "message": "Property 'canonicalAway' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; scheduledStartAt: null; pregameEligibilityStatus: string; gamePk: null; joinReasons: string[]; scopeAccountingState: string; ... 13 more ...; teamLabelStatus?: string | undefined; } | { ...; } | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-29-scope-slate-recovery-v1.ts",
+      "line": 769,
+      "column": 26,
+      "code": "TS2339",
+      "message": "Property 'scopeMembership' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; scheduledStartAt: null; pregameEligibilityStatus: string; gamePk: null; joinReasons: string[]; scopeAccountingState: string; ... 13 more ...; teamLabelStatus?: string | undefined; } | ... 5 more ... | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-29-scope-slate-recovery-v1.ts",
+      "line": 928,
+      "column": 26,
+      "code": "TS2339",
+      "message": "Property 'scopeMembership' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; scheduledStartAt: null; pregameEligibilityStatus: string; gamePk: null; joinReasons: string[]; scopeAccountingState: string; ... 13 more ...; teamLabelStatus?: string | undefined; } | ... 5 more ... | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-30-prediction-pass-reconciliation-v1.ts",
+      "line": 72,
+      "column": 31,
+      "code": "TS2367",
+      "message": "This comparison appears to be unintentional because the types 'false' and 'true' have no overlap.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/audit-2026-08-30-pregame-input-coverage-v1.ts",
+      "line": 945,
+      "column": 34,
+      "code": "TS2339",
+      "message": "Property 'summary' does not exist on type '{ candidateStatus?: string | undefined; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-30-pregame-input-coverage-v1.ts",
+      "line": 946,
+      "column": 44,
+      "code": "TS2339",
+      "message": "Property 'providerCalls' does not exist on type '{ candidateStatus?: string | undefined; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-30-pregame-input-coverage-v1.ts",
+      "line": 947,
+      "column": 39,
+      "code": "TS2339",
+      "message": "Property 'providerCalls' does not exist on type '{ candidateStatus?: string | undefined; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-30-pregame-input-coverage-v1.ts",
+      "line": 947,
+      "column": 61,
+      "code": "TS7006",
+      "message": "Parameter 'c' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/audit-2026-08-30-scope-slate-recovery-v1.ts",
+      "line": 549,
+      "column": 13,
+      "code": "TS2339",
+      "message": "Property 'scopeMembership' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; scheduledStartAt: null; pregameEligibilityStatus: string; gamePk: null; joinReasons: string[]; scopeAccountingState: string; ... 13 more ...; teamLabelStatus?: string | undefined; } | ... 5 more ... | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-30-scope-slate-recovery-v1.ts",
+      "line": 625,
+      "column": 49,
+      "code": "TS2339",
+      "message": "Property 'gamePk' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; competitionRegistryJoin: string; matchId: null; scheduledStartAt: null; pregameEligibilityStatus: string; ... 16 more ...; teamLabelStatus?: string | undefined; } | { ...; } | { ...; } | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-30-scope-slate-recovery-v1.ts",
+      "line": 642,
+      "column": 18,
+      "code": "TS2339",
+      "message": "Property 'providerFixtureId' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; competitionRegistryJoin: string; matchId: null; scheduledStartAt: null; pregameEligibilityStatus: string; ... 16 more ...; teamLabelStatus?: string | undefined; } | { ...; } | { ...; } | { ...; } | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-30-scope-slate-recovery-v1.ts",
+      "line": 713,
+      "column": 52,
+      "code": "TS2339",
+      "message": "Property 'canonicalHome' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; competitionRegistryJoin: string; matchId: null; scheduledStartAt: null; pregameEligibilityStatus: string; ... 16 more ...; teamLabelStatus?: string | undefined; } | { ...; } | { ...; } | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-30-scope-slate-recovery-v1.ts",
+      "line": 713,
+      "column": 71,
+      "code": "TS2339",
+      "message": "Property 'canonicalAway' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; competitionRegistryJoin: string; matchId: null; scheduledStartAt: null; pregameEligibilityStatus: string; ... 16 more ...; teamLabelStatus?: string | undefined; } | { ...; } | { ...; } | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-30-scope-slate-recovery-v1.ts",
+      "line": 715,
+      "column": 48,
+      "code": "TS2339",
+      "message": "Property 'gamePk' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; competitionRegistryJoin: string; matchId: null; scheduledStartAt: null; pregameEligibilityStatus: string; ... 16 more ...; teamLabelStatus?: string | undefined; } | { ...; } | { ...; } | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-30-scope-slate-recovery-v1.ts",
+      "line": 792,
+      "column": 26,
+      "code": "TS2339",
+      "message": "Property 'scopeMembership' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; scheduledStartAt: null; pregameEligibilityStatus: string; gamePk: null; joinReasons: string[]; scopeAccountingState: string; ... 13 more ...; teamLabelStatus?: string | undefined; } | ... 5 more ... | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/audit-2026-08-30-scope-slate-recovery-v1.ts",
+      "line": 952,
+      "column": 26,
+      "code": "TS2339",
+      "message": "Property 'scopeMembership' does not exist on type '{ identityStatus: string; mappingStatus: string; scheduleJoinStatus: string; scheduledStartAt: null; pregameEligibilityStatus: string; gamePk: null; joinReasons: string[]; scopeAccountingState: string; ... 13 more ...; teamLabelStatus?: string | undefined; } | ... 5 more ... | { ...; }'.",
+      "category": "C"
+    },
+    {
+      "file": "scripts/discover-football-2026-08-18-la-liga-odds-identity-v0.ts",
+      "line": 94,
+      "column": 28,
+      "code": "TS18047",
+      "message": "'row.kickoffTimeUtc' is possibly 'null'.",
+      "category": "E"
+    },
+    {
+      "file": "scripts/football-v31-r1-second-real-batch-seal-v1/test-v1.ts",
+      "line": 54,
+      "column": 18,
+      "code": "TS2698",
+      "message": "Spread types may only be created from object types.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/map-football-2026-08-16-batch-2207-fixtures-v1.ts",
+      "line": 374,
+      "column": 9,
+      "code": "TS2367",
+      "message": "This comparison appears to be unintentional because the types '\"MATCHED_EXACT\" | \"MATCHED_TIME_TOLERANCE\" | \"MATCHED_WITH_COMPETITION_LABEL_DIFFERENCE\" | \"DROPPED_UNREGISTERED_COMPETITION\"' and '\"RAW_LABEL_UNCERTAIN\"' have no overlap.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-18-batch-2253-operator-observations-intake-v0.ts",
+      "line": 118,
+      "column": 6,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-18-batch-2253-operator-observations-intake-v0.ts",
+      "line": 121,
+      "column": 40,
+      "code": "TS7006",
+      "message": "Parameter 'm' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-19-daily-scope-lock-v1.ts",
+      "line": 66,
+      "column": 44,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-19-daily-scope-lock-v1.ts",
+      "line": 67,
+      "column": 43,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-19-daily-scope-lock-v1.ts",
+      "line": 69,
+      "column": 25,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-19-daily-scope-lock-v1.ts",
+      "line": 71,
+      "column": 24,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-19-daily-scope-lock-v1.ts",
+      "line": 72,
+      "column": 24,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-19-daily-scope-lock-v1.ts",
+      "line": 75,
+      "column": 6,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-19-daily-scope-lock-v1.ts",
+      "line": 82,
+      "column": 25,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-19-daily-scope-lock-v1.ts",
+      "line": 82,
+      "column": 49,
+      "code": "TS7006",
+      "message": "Parameter 'pk' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-20-daily-scope-lock-v1.ts",
+      "line": 89,
+      "column": 44,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-20-daily-scope-lock-v1.ts",
+      "line": 90,
+      "column": 43,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-20-daily-scope-lock-v1.ts",
+      "line": 91,
+      "column": 43,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-20-daily-scope-lock-v1.ts",
+      "line": 92,
+      "column": 46,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-20-daily-scope-lock-v1.ts",
+      "line": 94,
+      "column": 25,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-20-daily-scope-lock-v1.ts",
+      "line": 96,
+      "column": 24,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-20-daily-scope-lock-v1.ts",
+      "line": 98,
+      "column": 24,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-20-daily-scope-lock-v1.ts",
+      "line": 99,
+      "column": 24,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-20-daily-scope-lock-v1.ts",
+      "line": 104,
+      "column": 6,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-20-daily-scope-lock-v1.ts",
+      "line": 107,
+      "column": 6,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-20-daily-scope-lock-v1.ts",
+      "line": 129,
+      "column": 38,
+      "code": "TS7006",
+      "message": "Parameter 'r' implicitly has an 'any' type.",
+      "category": "A"
+    },
+    {
+      "file": "scripts/test-2026-08-26-stage-e-result-grade-v1.ts",
+      "line": 325,
+      "column": 33,
+      "code": "TS2339",
+      "message": "Property 'resultState' does not exist on type '{ predictionHit: null; gradeState: string; predictionCreated: boolean; }'.",
+      "category": "B"
+    },
+    {
+      "file": "scripts/test-2026-08-26-stage-e-result-grade-v1.ts",
+      "line": 325,
+      "column": 61,
+      "code": "TS2339",
+      "message": "Property 'coverageGapClass' does not exist on type '{ predictionHit: null; gradeState: string; predictionCreated: boolean; }'.",
+      "category": "B"
+    },
+    {
+      "file": "scripts/test-2026-08-30-scope-slate-recovery-v1.ts",
+      "line": 85,
+      "column": 5,
+      "code": "TS2769",
+      "message": "No overload matches this call.",
+      "category": "B"
+    },
+    {
+      "file": "scripts/test-2026-08-30-scope-slate-recovery-v1.ts",
+      "line": 90,
+      "column": 5,
+      "code": "TS2769",
+      "message": "No overload matches this call.",
+      "category": "B"
+    },
+    {
+      "file": "scripts/test-2026-08-30-scope-slate-recovery-v1.ts",
+      "line": 107,
+      "column": 5,
+      "code": "TS2769",
+      "message": "No overload matches this call.",
+      "category": "B"
+    },
+    {
+      "file": "scripts/test-football-forward-identity-completion-v1.ts",
+      "line": 566,
+      "column": 22,
+      "code": "TS2339",
+      "message": "Property 'integrity' does not exist on type 'ForwardGradedEvent'.",
+      "category": "B"
+    },
+    {
+      "file": "scripts/test-football-market-baseline-postgame-review-v0.ts",
+      "line": 223,
+      "column": 7,
+      "code": "TS2322",
+      "message": "Type '\"NOT_FINAL\"' is not assignable to type 'FootballResultStatus | undefined'.",
+      "category": "B"
+    },
+    {
+      "file": "scripts/test-football-odds-bridge-candidate-intake-v1.ts",
+      "line": 132,
+      "column": 9,
+      "code": "TS2416",
+      "message": "Property 'getOdds' in type 'RecordingProvider' is not assignable to the same property in base type 'OddsProvider'.",
+      "category": "B"
+    },
+    {
+      "file": "scripts/test-mlb-batter-pregame-ops-v0.ts",
+      "line": 169,
+      "column": 25,
+      "code": "TS1355",
+      "message": "A 'const' assertions can only be applied to references to enum members, or string, number, boolean, array, or object literals.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-daily-ops-window-execution-v1.ts",
+      "line": 30,
+      "column": 41,
+      "code": "TS5097",
+      "message": "An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-external-replication-labels-2025.ts",
+      "line": 330,
+      "column": 5,
+      "code": "TS2322",
+      "message": "Type '\"S\"' is not assignable to type '\"R\"'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-external-replication-v2c-protocol-2025.ts",
+      "line": 294,
+      "column": 5,
+      "code": "TS2322",
+      "message": "Type '2' is not assignable to type '1'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-external-replication-v2c-protocol-2025.ts",
+      "line": 304,
+      "column": 5,
+      "code": "TS2322",
+      "message": "Type 'true' is not assignable to type 'false'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-external-replication-v2c-protocol-2025.ts",
+      "line": 314,
+      "column": 5,
+      "code": "TS2322",
+      "message": "Type 'true' is not assignable to type 'false'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-logistic-streak-rest-ablation-v2b.ts",
+      "line": 317,
+      "column": 16,
+      "code": "TS18046",
+      "message": "'trained.audit.logitShift' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-logistic-streak-rest-ablation-v2b.ts",
+      "line": 318,
+      "column": 16,
+      "code": "TS18046",
+      "message": "'trained.audit.ablation' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-logistic-streak-rest-ablation-v2b.ts",
+      "line": 326,
+      "column": 16,
+      "code": "TS18046",
+      "message": "'trained.rolling.folds' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-logistic-streak-rest-ablation-v2b.ts",
+      "line": 327,
+      "column": 16,
+      "code": "TS18046",
+      "message": "'trained.rolling.folds' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-logistic-streak-rest-ablation-v2b.ts",
+      "line": 328,
+      "column": 16,
+      "code": "TS18046",
+      "message": "'trained.rolling.folds' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-logistic-streak-rest-ablation-v2b.ts",
+      "line": 329,
+      "column": 16,
+      "code": "TS18046",
+      "message": "'trained.rolling.folds' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-logistic-streak-rest-ablation-v2b.ts",
+      "line": 478,
+      "column": 37,
+      "code": "TS18046",
+      "message": "'trained.audit.validationMetrics' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-logistic-streak-rest-ablation-v2b.ts",
+      "line": 479,
+      "column": 35,
+      "code": "TS18046",
+      "message": "'trained.audit.validationMetrics' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-safe-a-materialization-v1.ts",
+      "line": 276,
+      "column": 22,
+      "code": "TS2339",
+      "message": "Property 'independentModelSample' does not exist on type 'MlbIndependentFeatureRowV1'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-safe-a-materialization-v1.ts",
+      "line": 1433,
+      "column": 42,
+      "code": "TS2339",
+      "message": "Property 'officialDate' does not exist on type '{}'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-safe-a-materialization-v1.ts",
+      "line": 1434,
+      "column": 42,
+      "code": "TS2339",
+      "message": "Property 'safeResultApplyDate' does not exist on type '{}'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-safe-a-materialization-v1.ts",
+      "line": 1435,
+      "column": 42,
+      "code": "TS2339",
+      "message": "Property 'officialDate' does not exist on type '{}'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-safe-a-materialization-v1.ts",
+      "line": 1436,
+      "column": 42,
+      "code": "TS2339",
+      "message": "Property 'safeResultApplyDate' does not exist on type '{}'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-safe-a-materialization-v1.ts",
+      "line": 1437,
+      "column": 42,
+      "code": "TS2339",
+      "message": "Property 'officialDate' does not exist on type '{}'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-independent-safe-a-materialization-v1.ts",
+      "line": 1438,
+      "column": 42,
+      "code": "TS2339",
+      "message": "Property 'safeResultApplyDate' does not exist on type '{}'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-mlb-recommendation-pick-probability-semantics-v1.ts",
+      "line": 142,
+      "column": 9,
+      "code": "TS2741",
+      "message": "Property 'eventId' is missing in type '{ gameId: string; gamePk: number; detailHref: null; tier: \"GOOD\"; stars: 4; starLabel: string; matchupLine: string; pickTeam: string; pickSide: \"AWAY\"; modelProbabilityPercent: number | null; ... 7 more ...; provenance: { ...; }; }' but required in type 'DailyPickCard'.",
+      "category": "D"
+    },
+    {
+      "file": "scripts/test-proto-round-ground-truth-v0.ts",
+      "line": 906,
+      "column": 30,
+      "code": "TS2339",
+      "message": "Property 'targetRowGeometry' does not exist on type '{ sourceImageSha256: string; sourceFileName: string; visualRowIndex: number; annotationStatus: string; screenRowIdentifierRaw: string | null; screenDateRaw: string | null; screenTimeRaw: string | null; ... 7 more ...; annotatorNotes: string | null; }'.",
+      "category": "B"
+    },
+    {
+      "file": "scripts/test-research-terminal-decision-v1.ts",
+      "line": 98,
+      "column": 84,
+      "code": "TS2322",
+      "message": "Type '{ identityEvidenceHash: string; kind: \"MLB_SEALED_RESEARCH_V0\"; snapshotHash: string; scopeSha256: string; } | { identityEvidenceHash: string; kind: \"FOOTBALL_FORWARD_V1\"; fixtureId: number; snapshotHash: string; scopeSha256: string; }' is not assignable to type 'PredictionReference'.",
+      "category": "B"
+    },
+    {
+      "file": "scripts/test-yang-edge-prediction-methodology-audit-v1.ts",
+      "line": 123,
+      "column": 5,
+      "code": "TS2739",
+      "message": "Type '{ statusPorcelain: string[]; }' is missing the following properties from type '{ branch: string; head: string; originMain: string; ahead: number; behind: number; statusPorcelain: string[]; }': branch, head, originMain, ahead, behind",
+      "category": "B"
+    },
+    {
+      "file": "src/lib/mlb/independent-model-v1/validate.ts",
+      "line": 238,
+      "column": 9,
+      "code": "TS18046",
+      "message": "'raw.winsBefore' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "src/lib/mlb/independent-model-v1/validate.ts",
+      "line": 238,
+      "column": 26,
+      "code": "TS18046",
+      "message": "'raw.lossesBefore' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "src/lib/mlb/independent-model-v1/validate.ts",
+      "line": 253,
+      "column": 19,
+      "code": "TS2345",
+      "message": "Argument of type '{} | undefined' is not assignable to parameter of type 'number'.",
+      "category": "D"
+    },
+    {
+      "file": "src/lib/mlb/independent-model-v1/validate.ts",
+      "line": 253,
+      "column": 38,
+      "code": "TS18046",
+      "message": "'raw.winsBefore' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "src/lib/mlb/independent-model-v1/validate.ts",
+      "line": 253,
+      "column": 55,
+      "code": "TS18046",
+      "message": "'raw.gamesPlayedBefore' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "src/lib/mlb/independent-model-v1/validate.ts",
+      "line": 281,
+      "column": 41,
+      "code": "TS2345",
+      "message": "Argument of type 'unknown' is not assignable to parameter of type 'number'.",
+      "category": "D"
+    },
+    {
+      "file": "src/lib/mlb/independent-model-v1/validate.ts",
+      "line": 295,
+      "column": 11,
+      "code": "TS2345",
+      "message": "Argument of type '{} | undefined' is not assignable to parameter of type 'number'.",
+      "category": "D"
+    },
+    {
+      "file": "src/lib/mlb/independent-model-v1/validate.ts",
+      "line": 331,
+      "column": 9,
+      "code": "TS18046",
+      "message": "'raw.currentWinStreakBefore' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "src/lib/mlb/independent-model-v1/validate.ts",
+      "line": 331,
+      "column": 43,
+      "code": "TS18046",
+      "message": "'raw.currentLossStreakBefore' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "src/lib/mlb/independent-model-v1/validate.ts",
+      "line": 336,
+      "column": 9,
+      "code": "TS18046",
+      "message": "'raw.currentWinStreakBefore' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "src/lib/mlb/independent-model-v1/validate.ts",
+      "line": 336,
+      "column": 38,
+      "code": "TS18046",
+      "message": "'raw.gamesPlayedBefore' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "src/lib/mlb/independent-model-v1/validate.ts",
+      "line": 337,
+      "column": 9,
+      "code": "TS18046",
+      "message": "'raw.currentLossStreakBefore' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "src/lib/mlb/independent-model-v1/validate.ts",
+      "line": 337,
+      "column": 39,
+      "code": "TS18046",
+      "message": "'raw.gamesPlayedBefore' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "src/lib/mlb/independent-model-v1/validate.ts",
+      "line": 429,
+      "column": 5,
+      "code": "TS18046",
+      "message": "'value.headToHeadHomeWinsBefore' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "src/lib/mlb/independent-model-v1/validate.ts",
+      "line": 429,
+      "column": 38,
+      "code": "TS18046",
+      "message": "'value.headToHeadAwayWinsBefore' is of type 'unknown'.",
+      "category": "D"
+    },
+    {
+      "file": "src/lib/mlb/independent-multiseason-development-v1/materialize-safe-a-2023.ts",
+      "line": 943,
+      "column": 5,
+      "code": "TS2322",
+      "message": "Type 'number' is not assignable to type '0'.",
+      "category": "D"
+    }
+  ],
+  "evidenceFilesVerified": 2432,
+  "evidenceChanged": [],
+  "preservedUntracked": [
+    "data/audits/2026-09-19-human-confirmation-resume-v1.json",
+    "data/audits/2026-09-19-human-operator-review-pack-v1.md",
+    "data/audits/2026-09-19-human-review-blockers-v1.json",
+    "data/audits/2026-09-19-human-review-second-pass-v1.json",
+    "data/audits/2026-09-19-inbox-111-slate-extraction-review-v1.md",
+    "data/audits/2026-09-19-inbox-111-slate-extraction-v1.json",
+    "data/audits/2026-09-19-pregame-leakage-preflight-v1.json",
+    "data/audits/2026-09-19-pregame-preflight-tests-v1.json",
+    "data/audits/2026-09-19-pregame-production-deep-preflight-v1.md",
+    "data/audits/2026-09-19-pregame-time-window-map-v1.md",
+    "data/audits/2026-09-19-terminal-decision-infrastructure-preflight-v1.json",
+    "data/audits/2026-09-19-terminal-decision-infrastructure-preflight-v1.md",
+    "data/audits/2026-09-20-early-prep-audit-v1.json",
+    "data/audits/2026-09-20-human-operator-review-pack-v1.md",
+    "data/audits/2026-09-20-human-special-confirmation-v1.json",
+    "data/audits/2026-09-20-inbox-111-reconciliation-v1.json",
+    "data/audits/2026-09-20-prediction-path-design-v1.md",
+    "data/audits/2026-09-20-prediction-readiness-matrix-v1.json",
+    "data/audits/2026-09-20-prediction-readiness-matrix-v1.md",
+    "data/audits/2026-09-20-pregame-time-window-map-v1.md",
+    "data/audits/football-v3-2025-revalidation-holdout-v1.json",
+    "data/audits/football-v3-revalidation-execution-freeze-v1.json",
+    "data/audits/football-v3-revalidation-gate-v1.json",
+    "docs/research/FOOTBALL_V3_REVALIDATION_GATE_V1.md",
+    "scripts/audit-football-v3-revalidation-v1.ts",
+    "scripts/football-v3-holdout-revalidation-v1/frozen/scripts/football-poisson-v2-draw-research/contracts-v1.ts",
+    "scripts/football-v3-holdout-revalidation-v1/frozen/scripts/football-poisson-v2-draw-research/evaluation-v1/contracts-evaluation-v1.ts",
+    "scripts/football-v3-holdout-revalidation-v1/frozen/scripts/football-poisson-v2-draw-research/evaluation-v1/numerics-v1.ts",
+    "scripts/football-v3-holdout-revalidation-v1/frozen/scripts/football-poisson-v2-draw-research/evaluator-v1.ts",
+    "scripts/football-v3-holdout-revalidation-v1/frozen/scripts/football-poisson-v2-draw-research/numerics-v1.ts",
+    "scripts/football-v3-holdout-revalidation-v1/frozen/scripts/football-v3-feature-research-v1/candidate-v1.ts",
+    "scripts/football-v3-holdout-revalidation-v1/frozen/scripts/football-v3-feature-research-v1/contracts-v1.ts",
+    "scripts/football-v3-holdout-revalidation-v1/frozen/scripts/football-v3-feature-research-v1/feature-state-v1.ts",
+    "scripts/football-v3-holdout-revalidation-v1/frozen/scripts/football-v3-feature-research-v1/metrics-v1.ts",
+    "scripts/football-v3-holdout-revalidation-v1/mirror.cjs",
+    "scripts/football-v3-holdout-revalidation-v1/report.cjs",
+    "scripts/football-v3-holdout-revalidation-v1/run-v1.ts"
+  ]
+}

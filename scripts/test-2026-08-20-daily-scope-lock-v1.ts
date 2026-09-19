@@ -86,25 +86,25 @@ async function main() {
   assert.equal(join.football.notFound, 0);
   assert.equal(join.football.registeredMatched, 0);
 
-  const copa = join.football.joins.filter((r) => r.rawLeagueLabel === "코파리베");
-  const mls = join.football.joins.filter((r) => r.rawLeagueLabel === "MLS");
-  const ucl = join.football.joins.filter((r) => r.rawLeagueLabel === "UCL");
-  const laliga = join.football.joins.filter((r) => r.rawLeagueLabel === "라리가");
+  const copa = join.football.joins.filter((r: {rawLeagueLabel: string}) => r.rawLeagueLabel === "코파리베");
+  const mls = join.football.joins.filter((r: {rawLeagueLabel: string}) => r.rawLeagueLabel === "MLS");
+  const ucl = join.football.joins.filter((r: {rawLeagueLabel: string}) => r.rawLeagueLabel === "UCL");
+  const laliga = join.football.joins.filter((r: {rawLeagueLabel: string}) => r.rawLeagueLabel === "라리가");
   assert.equal(copa.length, 3);
-  assert.ok(copa.every((r) => r.status === "UNREGISTERED_COMPETITION"));
+  assert.ok(copa.every((r: {status: string}) => r.status === "UNREGISTERED_COMPETITION"));
   assert.equal(mls.length, 15);
-  assert.ok(mls.every((r) => r.status === "UNREGISTERED_COMPETITION"));
+  assert.ok(mls.every((r: {status: string}) => r.status === "UNREGISTERED_COMPETITION"));
   assert.equal(ucl.length, 4);
-  assert.ok(ucl.every((r) => r.status === "IDENTITY_BLOCKED"));
-  assert.ok(ucl.every((r) => r.fixtureId == null));
+  assert.ok(ucl.every((r: {status: string}) => r.status === "IDENTITY_BLOCKED"));
+  assert.ok(ucl.every((r: {fixtureId?: number | null}) => r.fixtureId == null));
   assert.equal(laliga.length, 1);
   assert.equal(laliga[0]?.status, "IDENTITY_BLOCKED");
 
   const tbTor = join.mlb.joins.find(
-    (r) => r.rawHome === "템파레이" && r.rawAway === "토론블루",
+    (r: {rawHome: string; rawAway: string}) => r.rawHome === "템파레이" && r.rawAway === "토론블루",
   );
   const kcAth = join.mlb.joins.find(
-    (r) => r.rawHome === "캔자로알" && r.rawAway === "애슬레틱",
+    (r: {rawHome: string; rawAway: string}) => r.rawHome === "캔자로알" && r.rawAway === "애슬레틱",
   );
   assert.ok(tbTor);
   assert.equal(tbTor.status, "IDENTITY_BLOCKED");
@@ -126,7 +126,7 @@ async function main() {
   assert.equal(join.expectedLineups.matchedUnique, 13);
 
   const confirmedPks = new Set(
-    join.confirmedLineups.joins.map((r) => r.lineupGamePk),
+    join.confirmedLineups.joins.map((r: {lineupGamePk: number | null}) => r.lineupGamePk),
   );
   assert.equal(confirmedPks.size, 3);
   assert.ok(confirmedPks.has(823342));

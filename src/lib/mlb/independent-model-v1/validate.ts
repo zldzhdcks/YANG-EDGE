@@ -111,7 +111,7 @@ function isNonNegInt(value: unknown): value is number {
 
 const RATE_ABS_TOLERANCE = 1e-6;
 
-function isRate(value: unknown): boolean {
+function isRate(value: unknown): value is number | null {
   return (
     value === null ||
     (typeof value === "number" &&
@@ -235,7 +235,7 @@ function validateTeamSide(
   if (!lossesOk) errors.push(`${path}.lossesBefore:INVALID`);
 
   if (gamesOk && winsOk && lossesOk) {
-    if (raw.winsBefore + raw.lossesBefore !== raw.gamesPlayedBefore) {
+    if ((raw.winsBefore as number) + (raw.lossesBefore as number) !== (raw.gamesPlayedBefore as number)) {
       errors.push(`${path}:FEATURE_SEASON_RECORD_MISMATCH`);
     }
   }
@@ -250,7 +250,7 @@ function validateTeamSide(
     } else if (raw.winRateBefore === null) {
       errors.push(`${path}:FEATURE_WIN_RATE_REQUIRED`);
     } else if (
-      !ratesMatch(raw.winRateBefore, raw.winsBefore / raw.gamesPlayedBefore)
+      !ratesMatch(raw.winRateBefore, (raw.winsBefore as number) / (raw.gamesPlayedBefore as number))
     ) {
       errors.push(`${path}:FEATURE_WIN_RATE_INCONSISTENT`);
     }
@@ -278,7 +278,7 @@ function validateTeamSide(
       last5RateChecked = true;
       const last5Total =
         (raw.last5WinsBefore as number) + (raw.last5LossesBefore as number);
-      const expectedLast5 = Math.min(5, raw.gamesPlayedBefore);
+      const expectedLast5 = Math.min(5, (raw.gamesPlayedBefore as number));
       if (last5Total !== expectedLast5) {
         errors.push(`${path}:FEATURE_LAST5_COUNT_SUM`);
       }
@@ -328,13 +328,13 @@ function validateTeamSide(
   if (!winStreakOk) errors.push(`${path}.currentWinStreakBefore:INVALID`);
   if (!lossStreakOk) errors.push(`${path}.currentLossStreakBefore:INVALID`);
   if (winStreakOk && lossStreakOk) {
-    if (raw.currentWinStreakBefore > 0 && raw.currentLossStreakBefore > 0) {
+    if ((raw.currentWinStreakBefore as number) > 0 && (raw.currentLossStreakBefore as number) > 0) {
       errors.push(`${path}:FEATURE_STREAK_MUTUAL_EXCLUSION`);
     }
     if (gamesOk) {
       if (
-        raw.currentWinStreakBefore > raw.gamesPlayedBefore ||
-        raw.currentLossStreakBefore > raw.gamesPlayedBefore
+        (raw.currentWinStreakBefore as number) > (raw.gamesPlayedBefore as number) ||
+        (raw.currentLossStreakBefore as number) > (raw.gamesPlayedBefore as number)
       ) {
         errors.push(`${path}:FEATURE_STREAK_EXCEEDS_GAMES`);
       }
@@ -426,7 +426,7 @@ export function validateIndependentFeatureRowV1(
     h2hGamesOk &&
     h2hHomeOk &&
     h2hAwayOk &&
-    value.headToHeadHomeWinsBefore + value.headToHeadAwayWinsBefore !==
+    (value.headToHeadHomeWinsBefore as number) + (value.headToHeadAwayWinsBefore as number) !==
       value.headToHeadGamesBefore
   ) {
     errors.push("FEATURE_H2H_RECORD_MISMATCH");

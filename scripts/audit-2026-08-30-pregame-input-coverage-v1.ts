@@ -250,6 +250,8 @@ export async function runB2(cwd = process.cwd()) {
   if (existsSync(existingAbs)) {
     const existing = JSON.parse(readFileSync(existingAbs, "utf8")) as {
       candidateStatus?: string;
+      summary: Record<string, unknown>;
+      providerCalls: Array<{network: boolean}>;
     };
     if (existing.candidateStatus === "SEALED") {
       assertUnchanged(cwd, SEALED_STAGE_A, "SEALED_2026_08_30_STAGE_A");

@@ -63,23 +63,23 @@ async function main() {
   assert.equal(join.football.notFound, 0);
   assert.equal(join.football.registeredMatched, 0);
 
-  const copa = join.football.joins.filter((r) => r.rawLeagueLabel === "코파리베");
-  const ucl = join.football.joins.filter((r) => r.rawLeagueLabel === "UCL");
+  const copa = join.football.joins.filter((r: {rawLeagueLabel: string}) => r.rawLeagueLabel === "코파리베");
+  const ucl = join.football.joins.filter((r: {rawLeagueLabel: string}) => r.rawLeagueLabel === "UCL");
   assert.equal(copa.length, 3);
-  assert.ok(copa.every((r) => r.status === "UNREGISTERED_COMPETITION"));
+  assert.ok(copa.every((r: {status: string}) => r.status === "UNREGISTERED_COMPETITION"));
   assert.equal(ucl.length, 3);
-  assert.ok(ucl.every((r) => r.status === "IDENTITY_BLOCKED"));
-  assert.ok(ucl.every((r) => r.fixtureId == null));
+  assert.ok(ucl.every((r: {status: string}) => r.status === "IDENTITY_BLOCKED"));
+  assert.ok(ucl.every((r: {fixtureId?: number | null}) => r.fixtureId == null));
 
   const cinStl = join.mlb.joins.find(
-    (r) => r.rawHome === "신시레즈" && r.rawAway === "세인카디",
+    (r: {rawHome: string; rawAway: string}) => r.rawHome === "신시레즈" && r.rawAway === "세인카디",
   );
   assert.ok(cinStl);
   assert.equal(cinStl.status, "MATCHED_REGISTERED");
   assert.equal(cinStl.gamePk, 824475);
 
   const gamePks = new Set(
-    join.mlb.joins.map((r) => r.gamePk).filter((pk): pk is number => pk != null),
+    join.mlb.joins.map((r: {gamePk: number | null}) => r.gamePk).filter((pk: number | null): pk is number => pk != null),
   );
   assert.equal(gamePks.size, 15);
 

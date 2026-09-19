@@ -322,7 +322,7 @@ async function main() {
       assert.equal(v2.resultCoverage.fullFinalClaim, false);
       assert.notEqual(v2.resultCoverage.finalOfScope, "26_OF_26");
       assert.equal(
-        v2.games.every((g) => g.resultState !== "LIVE" || g.coverageGapClass == null),
+        v2.games.every((g) => (g as typeof g & {resultState?: string}).resultState !== "LIVE" || (g as typeof g & {coverageGapClass?: string | null}).coverageGapClass == null),
         true,
       );
     }

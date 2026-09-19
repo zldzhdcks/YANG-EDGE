@@ -375,10 +375,10 @@ export async function auditOperatorScopeJoin(cwd = process.cwd()) {
         fbDoc.meta.droppedUnregisteredCompetition,
       observedExpected: FOOTBALL_OBSERVED,
       registeredMatched: footballJoins.filter(
-        (r) => r.status === "MATCHED_REGISTERED",
+        (r) => (r.status as string) === "MATCHED_REGISTERED",
       ).length,
       unsupported: footballJoins.filter(
-        (r) => r.status === "MATCHED_BUT_UNSUPPORTED_FORMAT",
+        (r) => (r.status as string) === "MATCHED_BUT_UNSUPPORTED_FORMAT",
       ).length,
       screenshotIdentityBlocked: footballJoins.filter(
         (r) => r.status === "IDENTITY_BLOCKED",

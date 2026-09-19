@@ -537,7 +537,7 @@ export function sha256FileBytes(filePath: string): string {
 export function assertFeatureSourceIdentity2023(
   source: MultiseasonDevelopmentSourceArtifact2023,
   artifact: MlbIndependentFeatureArtifactV1,
-): number {
+): 0 {
   const byPk = new Map(source.games.map((g) => [g.gamePk, g]));
   let mismatch = 0;
   for (const row of artifact.rows) {

@@ -27,7 +27,7 @@ import { runMlbDailyOpsV1 } from "../src/lib/mlb/daily-ops-v1";
 import {
   parseMlbDailyOpsQuotaRemaining,
 } from "../src/lib/mlb/daily-pregame-v0";
-import { parseMlbDailyOpsCliArgs } from "./run-mlb-daily-ops-v1.ts";
+import { parseMlbDailyOpsCliArgs } from "./run-mlb-daily-ops-v1";
 import { DAILY_PREDICTION_SNAPSHOT_MISSING } from "../src/lib/mlb/prediction-continuity-guard-v1";
 
 const DATE = "2099-06-15";

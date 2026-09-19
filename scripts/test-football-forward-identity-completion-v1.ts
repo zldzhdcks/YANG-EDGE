@@ -563,7 +563,7 @@ test("20 postgame identity source does not copy score/result into prediction", (
   assert.equal(event.actualClass, "HOME");
   assert.equal(event.correct, true);
   assert.equal(event.probabilities.home, 0.5);
-  assert.equal(event.integrity ? undefined : undefined, undefined);
+  assert.equal((event as typeof event & { integrity?: unknown }).integrity ? undefined : undefined, undefined);
   assert.equal(model.integrity.postgameDataUsedInPrediction, false);
 });
 

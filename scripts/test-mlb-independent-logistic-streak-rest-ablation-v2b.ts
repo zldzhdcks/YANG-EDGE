@@ -314,8 +314,8 @@ function main(): void {
   assert.equal(trained.model.featureSpec.missingIndicators, 22);
   assert.equal(trained.model.featureSpec.modelDimensions, 45);
   assert.equal(trained.model.v2aBaselineModelCoreHash, V2A_CORE);
-  assert.equal(trained.audit.logitShift.logitShiftReconciliation, "PASS");
-  assert.equal(trained.audit.ablation.EXACT_STREAK_REST_ABLATION, "PASS");
+  assert.equal((trained.audit.logitShift as {logitShiftReconciliation: string}).logitShiftReconciliation, "PASS");
+  assert.equal((trained.audit.ablation as {EXACT_STREAK_REST_ABLATION: string}).EXACT_STREAK_REST_ABLATION, "PASS");
   assert.equal(trained.audit.TRAIN_INTERNAL_ROLLING_COMPLETE, true);
   assert.equal(trained.audit.V2B_SPEC_FROZEN, true);
   assert.equal(trained.audit.V2B_FULL_TRAIN_MODEL_FIT, true);
@@ -323,10 +323,10 @@ function main(): void {
   assert.equal(trained.audit.VALIDATION_EVALUATION_AFTER_MODEL_FREEZE, true);
   assert.equal(trained.audit.LATE_ONLY_FEATURE_ADDED, false);
   assert.equal(trained.audit.T3H_COMPATIBILITY_CHANGED, false);
-  assert.equal(trained.rolling.folds.length, 3);
-  assert.equal(trained.rolling.folds[0].id, "FOLD_1");
-  assert.equal(trained.rolling.folds[1].id, "FOLD_2");
-  assert.equal(trained.rolling.folds[2].id, "FOLD_3");
+  assert.equal((trained.rolling.folds as Array<{id: string}>).length, 3);
+  assert.equal((trained.rolling.folds as Array<{id: string}>)[0].id, "FOLD_1");
+  assert.equal((trained.rolling.folds as Array<{id: string}>)[1].id, "FOLD_2");
+  assert.equal((trained.rolling.folds as Array<{id: string}>)[2].id, "FOLD_3");
   const holdoutSet = new Set(split.holdoutGamePks);
   assert.equal(
     trained.evaluation.train.some((r) => holdoutSet.has(r.gamePk)),
@@ -475,8 +475,8 @@ function main(): void {
 
   console.log(`modelCoreHash=${trained.model.modelCoreHash}`);
   console.log(`VALIDATION_rocAuc=${trained.audit.validationRocAuc}`);
-  console.log(`VALIDATION_logLoss=${trained.audit.validationMetrics.logLoss}`);
-  console.log(`VALIDATION_brier=${trained.audit.validationMetrics.brierScore}`);
+  console.log(`VALIDATION_logLoss=${(trained.audit.validationMetrics as {logLoss: number}).logLoss}`);
+  console.log(`VALIDATION_brier=${(trained.audit.validationMetrics as {brierScore: number}).brierScore}`);
   console.log(`researchInterpretation=${trained.audit.researchInterpretation}`);
   console.log("HOLDOUT_EVALUATED = NO");
   console.log("test:mlb-independent-logistic-streak-rest-ablation-v2b PASS");

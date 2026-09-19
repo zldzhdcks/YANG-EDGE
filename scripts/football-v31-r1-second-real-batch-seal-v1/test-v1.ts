@@ -51,7 +51,7 @@ test('preflight audit hash binding',()=>{
  assert.equal(digest(seal.payload),PREFLIGHT_AUDIT_SHA);
  const file=join(tempRoot(),'bad-preflight.json');
  mkdirSync(dirname(file),{recursive:true});
- writeSeal(file,{...seal.payload,discoveryAt:'1999-01-01T00:00:00.000Z'});
+ writeSeal(file,{...(seal.payload as Record<string, unknown>),discoveryAt:'1999-01-01T00:00:00.000Z'});
  assert.throws(()=>loadReadyTargets(file),/PREFLIGHT_AUDIT_HASH/);
 });
 

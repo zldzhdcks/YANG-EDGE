@@ -129,7 +129,7 @@ class RecordingProvider implements OddsProvider {
     this.listEventsCalls += 1;
     return { events: this.byKey[sportKey] ?? [], usage: emptyUsage() };
   }
-  async getOdds() {
+  async getOdds(): Promise<never> {
     this.getOddsCalls += 1;
     throw new Error("GET_ODDS_CALLED");
   }

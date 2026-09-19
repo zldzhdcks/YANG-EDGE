@@ -140,6 +140,7 @@ function main() {
 
   // Isolated temp fixture: future seal uses selected-pick %
   const card: DailyPickCard = {
+    eventId: "synthetic-event",
     gameId: "mlb-2026-08-13-tmp",
     gamePk: 824967,
     detailHref: null,

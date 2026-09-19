@@ -283,7 +283,7 @@ export function computeIndependentDecision(input: {
     passReasons.push("PASS_OTHER_EXPLICIT_REASON");
   }
 
-  if (cState === "PREDICTION") {
+  if ((cState as string) === "PREDICTION") {
     throw new Error("UNEXPECTED_PREDICTION_WITHOUT_APPROVED_ENGINE");
   }
 

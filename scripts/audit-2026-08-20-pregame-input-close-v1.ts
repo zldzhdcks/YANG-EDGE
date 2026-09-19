@@ -560,7 +560,7 @@ async function buildPregameInputCloseDocument(cwd: string) {
         awaySel.lineupSelectionStatus === "OPERATOR_EXPECTED") &&
       operatorLineupTiming !== "PRE_GAME"
     ) {
-      if (operatorLineupTiming === "LATE") lateSelected += 1;
+      if ((operatorLineupTiming as string) === "LATE") lateSelected += 1;
       else unknownSelected += 1;
     }
 

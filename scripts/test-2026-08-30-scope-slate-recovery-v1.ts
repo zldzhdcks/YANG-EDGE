@@ -46,7 +46,7 @@ async function main() {
   assert.equal(slate.excludedCrossDateRows.length, 20);
   assert.ok(
     slate.excludedCrossDateRows.every(
-      (r: { displayedDateKst: string; scopeMembership: string }) =>
+      (r: { displayedDateKst: string; scopeMembership?: string }) =>
         r.displayedDateKst === "2026-08-29" &&
         r.scopeMembership === "EXCLUDED_NON_TARGET_DATE",
     ),
@@ -82,12 +82,12 @@ async function main() {
   assert.equal(result.slate.status, "SCOPE_LOCK_CANDIDATE_READY");
 
   const officialFootball = result.structured.footballOddsFixtures.filter(
-    (r: { scopeMembership: string }) =>
+    (r: { scopeMembership?: string }) =>
       r.scopeMembership === "IN_TARGET_DATE_SCOPE",
   );
   assert.equal(officialFootball.length, 29);
   const matchedFootball = officialFootball.filter(
-    (r: { scopeAccountingState: string }) =>
+    (r: { scopeAccountingState?: string }) =>
       r.scopeAccountingState === "SCHEDULE_MATCHED",
   );
   assert.equal(matchedFootball.length, 2);
@@ -104,7 +104,7 @@ async function main() {
     ),
   );
   const identityFootball = officialFootball.filter(
-    (r: { scopeAccountingState: string }) =>
+    (r: { scopeAccountingState?: string }) =>
       r.scopeAccountingState === "IDENTITY_REVIEW_REQUIRED",
   );
   assert.equal(identityFootball.length, 27);

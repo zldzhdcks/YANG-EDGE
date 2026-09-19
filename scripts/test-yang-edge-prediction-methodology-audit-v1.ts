@@ -103,7 +103,7 @@ async function main() {
     historical: typeof historical;
     classificationCounts: Record<string, number>;
     scorecardRecommendation: { startIndependentSampleAtZero: boolean };
-    gitBefore: { statusPorcelain: string[] };
+    gitBefore: Parameters<typeof buildAuditDocument>[0]["gitBefore"];
   };
   assert.equal(frozen.schemaVersion, PREDICTION_METHODOLOGY_AUDIT_V1_SCHEMA);
   assert.equal(frozen.independentModelSample, 0);

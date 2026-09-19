@@ -327,7 +327,7 @@ function main(): void {
       homeTeamId: 147,
       awayTeamId: 111,
     }),
-    gameType: "S",
+    gameType: "S" as "R", // Deliberately invalid validator input.
   });
   assert.equal(invalidGameType.kind, "EXCLUDE");
   if (invalidGameType.kind === "EXCLUDE") {

@@ -95,7 +95,7 @@ test("reviewed exact operator bridge admits Forward reference and rejects tamper
   const file=join(dir,`${sha("synthetic-0")}.json`);json(file,e);
   const req={...request,predictionReference:{...request.predictionReference,identityEvidenceHash:e.sha256}};
   const writer=createTerminalWriter(cwd,()=>now);
-  assert.throws(()=>writer({...req,predictionReference:{...req.predictionReference,identityEvidenceHash:"bad"}}));
+  assert.throws(()=>writer({...req,predictionReference:({...req.predictionReference,identityEvidenceHash:"bad"} as typeof req.predictionReference)}));
   const duplicate=join(dir,`${sha("synthetic-1")}.json`);json(duplicate,envelope({binding:{...binding,targetId:"synthetic-1"},sourceUtf8}));
   assert.throws(()=>writer(req),/DUPLICATE_PROVIDER/);rmSync(duplicate);
   json(file,envelope({binding:{...binding,homeProviderId:2},sourceUtf8}));assert.throws(()=>writer(req));json(file,e);

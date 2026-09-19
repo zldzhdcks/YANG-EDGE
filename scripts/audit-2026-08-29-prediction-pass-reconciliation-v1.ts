@@ -53,7 +53,7 @@ function inspectOfficialMlbEngine() {
   const marketPriorActive =
     MLB_PREDICTION_V0_WEIGHTS.marketPrior.status !== "DISABLED" &&
     MLB_PREDICTION_V0_WEIGHTS.marketPrior.value !== 0;
-  const officialPickEnabled = MLB_PREDICTION_V0_OFFICIAL.enableOfficialPick === true;
+  const officialPickEnabled = (MLB_PREDICTION_V0_OFFICIAL.enableOfficialPick as boolean) === true;
   const approved =
     officialPickEnabled &&
     MLB_PREDICTION_V0_STATUS !== "RESEARCH_BASELINE_V0" &&

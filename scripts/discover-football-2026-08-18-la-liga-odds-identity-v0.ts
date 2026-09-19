@@ -91,7 +91,7 @@ async function main() {
       kickoffDeltaMinutes: deltaMinutes,
       exactCommenceTime:
         e.commenceTime === row.kickoffTimeUtc ||
-        e.commenceTime === row.kickoffTimeUtc.replace(".000Z", "Z"),
+        e.commenceTime === row.kickoffTimeUtc?.replace(".000Z", "Z"),
       withinJoinTolerance:
         deltaMinutes != null &&
         Math.abs(deltaMinutes) <= FOOTBALL_ODDS_KICKOFF_TOLERANCE_MINUTES,

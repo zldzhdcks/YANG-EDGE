@@ -371,7 +371,7 @@ async function main() {
       } else if (
         mappingStatus !== "PROVIDER_NOT_FOUND" &&
         mappingStatus !== "AMBIGUOUS" &&
-        mappingStatus !== "RAW_LABEL_UNCERTAIN"
+        (mappingStatus as string) !== "RAW_LABEL_UNCERTAIN"
       ) {
         usedFixtureIds.add(chosen.fx.fixtureId);
       }

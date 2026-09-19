@@ -273,7 +273,7 @@ function main(): void {
     assert.equal(row.cutoffTime, null);
     assert.equal(row.temporalPolicy, "HISTORICAL_RECONSTRUCTION_D1");
     assert.equal(row.temporalPhase, "HISTORICAL_RECONSTRUCTION");
-    assert.equal(row.independentModelSample, undefined);
+    assert.equal((row as typeof row & { independentModelSample?: never }).independentModelSample, undefined);
   }
   assert.equal(artifact.independentModelSample, 0);
   assert.equal(artifact.datasetReady, false);
@@ -1420,7 +1420,7 @@ function main(): void {
     assert.equal(replay.audit.leakageChecks.crossDateResultAppliedToOriginalDate, false);
     assert.equal(replay.audit.leakageChecks.marketFieldsPresent, false);
     assert.equal(realAudit.unusualProvenance.finalRollingStateMatchesSource, true);
-    const resumeByPk = new Map(
+    const resumeByPk = new Map<number, {officialDate: string; safeResultApplyDate: string | null}>(
       realAudit.unusualProvenance.resumeCases.map(
         (c: {
           gamePk: number;

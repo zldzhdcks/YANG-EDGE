@@ -166,7 +166,7 @@ function expectedObs(gamePk: number): MlbExpectedLineupObservationV0 {
       displayName: `${prefix} ${i + 1}`,
       position: "RF",
       bats: "R",
-      providerPlayerId: null as const,
+      providerPlayerId: null,
     }));
   return {
     schemaVersion: "mlb-expected-lineup-observation-v0",

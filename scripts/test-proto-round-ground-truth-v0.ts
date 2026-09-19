@@ -903,7 +903,7 @@ async function main() {
     init.discoveryAnnotation.records[0]!.targetRowGeometry,
   );
   const mutateGeometry = structuredClone(importPayload);
-  mutateGeometry.records[0]!.targetRowGeometry = {
+  (mutateGeometry.records[0]! as typeof mutateGeometry.records[number] & {targetRowGeometry: unknown}).targetRowGeometry = {
     ...init.discoveryAnnotation.records[0]!.targetRowGeometry,
     topY: 0,
   };

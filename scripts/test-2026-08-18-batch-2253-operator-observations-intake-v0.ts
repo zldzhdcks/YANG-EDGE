@@ -115,10 +115,10 @@ async function main() {
   }
 
   const cubs = document.domesticOdds.find(
-    (r) => r.rawHomeLabel === "시카컵스" && r.rawAwayLabel === "시카화이",
+    (r: {rawHomeLabel: string; rawAwayLabel: string}) => r.rawHomeLabel === "시카컵스" && r.rawAwayLabel === "시카화이",
   );
   assert.ok(cubs);
-  const cubsTotal = cubs.markets.find((m) => m.rawMarketLabel === "U 8.5");
+  const cubsTotal = cubs.markets.find((m: {rawMarketLabel: string}) => m.rawMarketLabel === "U 8.5");
   assert.ok(cubsTotal);
   assert.equal(cubsTotal.awayPrice, null);
   assert.equal(cubsTotal.rawValueStatus, "NOT_FULLY_VISIBLE");

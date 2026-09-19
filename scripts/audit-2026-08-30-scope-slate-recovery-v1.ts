@@ -64,6 +64,12 @@ type ObservedRow = {
   formalObservedAt: string;
   sourceFileModifiedAt: string;
   markets: Array<{ rowIds: number[] }>;
+  scopeMembership?: string;
+  scopeAccountingState?: string;
+  providerFixtureId?: string | null;
+  gamePk?: number | null;
+  canonicalHome?: string | null;
+  canonicalAway?: string | null;
   teamLabelStatus?: string;
   identityStatus?: string;
   mappingStatus?: string;

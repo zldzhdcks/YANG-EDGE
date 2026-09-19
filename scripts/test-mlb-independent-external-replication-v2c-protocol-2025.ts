@@ -291,7 +291,7 @@ function main(): void {
   const mutatedAggregate = clone(ok.protocol) as FrozenV2cExternalReplicationProtocol2025;
   mutatedAggregate.aggregateOnlyRules = {
     ...mutatedAggregate.aggregateOnlyRules,
-    EXTERNAL_AGGREGATE_EVALUATION_COUNT: 2,
+    EXTERNAL_AGGREGATE_EVALUATION_COUNT: 2 as 1, // Deliberately invalid frozen contract.
   };
   assertThrowsCode(
     () => assertFrozenV2cExternalReplicationProtocol2025(mutatedAggregate),
@@ -301,7 +301,7 @@ function main(): void {
   const mutatedCandidate = clone(ok.protocol) as FrozenV2cExternalReplicationProtocol2025;
   mutatedCandidate.candidatePolicy = {
     ...mutatedCandidate.candidatePolicy,
-    V2C_MODEL_CANDIDATE_AUTOMATIC_AFTER_EXTERNAL: true,
+    V2C_MODEL_CANDIDATE_AUTOMATIC_AFTER_EXTERNAL: true as false, // Negative test.
   };
   assertThrowsCode(
     () => assertFrozenV2cExternalReplicationProtocol2025(mutatedCandidate),
@@ -311,7 +311,7 @@ function main(): void {
   const mutatedHoldout = clone(ok.protocol) as FrozenV2cExternalReplicationProtocol2025;
   mutatedHoldout.holdoutPolicy = {
     ...mutatedHoldout.holdoutPolicy,
-    evaluated: true,
+    evaluated: true as false, // Negative test.
   };
   assertThrowsCode(
     () => assertFrozenV2cExternalReplicationProtocol2025(mutatedHoldout),
