@@ -1,0 +1,26 @@
+/** Synthetic schema/provenance audit only. Passing tests establish limitations, not admission. */
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {evaluateFootballIdentityGate} from '../src/lib/football/foundation/identity-gate';
+import {normalizeApiFootballLineups,normalizeApiFootballInjuries,resolveFootballPlayerIdentity} from '../src/lib/football/pregame-player-xi-foundation-v1';
+import {classifyFootballV4TemporalProvenance} from '../src/lib/football/pregame-player-xi-foundation-v1/temporal';
+import {SYNTHETIC_LINEUPS_RAW,SYNTHETIC_INJURIES_RAW,SYNTHETIC_FIXTURE_ID,SYNTHETIC_KICKOFF,SYNTHETIC_PREGAME_AT} from '../src/lib/football/pregame-player-xi-foundation-v1/test-fixtures';
+const gate=evaluateFootballIdentityGate({provider:'api-football',fixtureId:SYNTHETIC_FIXTURE_ID,competitionId:'fb-comp-api-football-39',season:'2025',kickoffUtc:SYNTHETIC_KICKOFF,homeTeamId:'33',awayTeamId:'40',neutralVenue:false,status:'SCHEDULED'});
+const meta={observationId:'SYNTHETIC_ADMISSION_AUDIT',observedAt:SYNTHETIC_PREGAME_AT,fixtureKickoff:SYNTHETIC_KICKOFF,providerFixtureId:SYNTHETIC_FIXTURE_ID,sourceArtifactHash:'synthetic-only',identityGate:gate};
+const clone=<T>(x:T):T=>JSON.parse(JSON.stringify(x));
+test('provider id is not a canonical registry entry',()=>assert.equal(resolveFootballPlayerIdentity({providerPlayerId:1,providerTeamId:33,canonicalTeamId:null,playerName:'Same Name'}).identityStatus,'PROVIDER_ID_ONLY'));
+test('missing id cannot become matched from name',()=>assert.equal(resolveFootballPlayerIdentity({providerPlayerId:null,providerTeamId:33,canonicalTeamId:null,playerName:'Same Name'}).identityStatus,'PLAYER_ID_UNRESOLVED'));
+test('empty XI is missing, not healthy or confirmed',()=>assert.equal(normalizeApiFootballLineups([],meta).xiAvailabilityStatus,'NOT_AVAILABLE'));
+test('limitation: 12 starters are still marked confirmed by current normalizer',()=>{const x=clone(SYNTHETIC_LINEUPS_RAW);x[0].startXI.push(clone(x[0].startXI[0]));assert.equal(normalizeApiFootballLineups(x,{...meta,lineupSemantic:'OFFICIAL_CONFIRMED'}).xiAvailabilityStatus,'CONFIRMED_XI');});
+test('limitation: duplicate starter identity survives normalization',()=>{const x=clone(SYNTHETIC_LINEUPS_RAW);x[0].startXI[1]=clone(x[0].startXI[0]);const r=normalizeApiFootballLineups(x,meta).observation.teams[0].startingXI;assert.equal(r[0].player.providerPlayerId,r[1].player.providerPlayerId);});
+test('substitutes separate; goalkeeper is raw position token',()=>{const r=normalizeApiFootballLineups(SYNTHETIC_LINEUPS_RAW,meta).observation.teams[0];assert.equal(r.startingXI.length,11);assert.equal(r.substitutes.length,2);assert.equal(r.startingXI[0].position,'G');});
+test('limitation: injury payload fixture mismatch is not checked',()=>{const x=clone(SYNTHETIC_INJURIES_RAW);x[0].fixture.id=987654;const r=normalizeApiFootballInjuries(x,meta);assert.equal(r.rows[0].providerFixtureId,SYNTHETIC_FIXTURE_ID);});
+test('limitation: duplicate injury rows are retained',()=>{const x=clone(SYNTHETIC_INJURIES_RAW);assert.equal(normalizeApiFootballInjuries([x[0],x[0]],meta).rows.length,2);});
+test('empty injury does not generate AVAILABLE; unknown stays unknown',()=>{assert.equal(normalizeApiFootballInjuries([],meta).rows.length,0);assert.equal(normalizeApiFootballInjuries(SYNTHETIC_INJURIES_RAW,meta).rows[3].availabilityStatus,'UNKNOWN');});
+test('suspension representation exists without completeness claim',()=>assert.equal(normalizeApiFootballInjuries(SYNTHETIC_INJURIES_RAW,meta).rows[2].availabilityStatus,'SUSPENDED'));
+test('limitation: after-cutoff but before-kickoff can be TEMPORAL_VERIFIED',()=>{const cutoff='2026-09-01T17:00:00Z';assert(Date.parse(SYNTHETIC_PREGAME_AT)>Date.parse(cutoff));assert.equal(classifyFootballV4TemporalProvenance({observedAt:SYNTHETIC_PREGAME_AT,kickoffUtc:SYNTHETIC_KICKOFF,providerFetchedAt:SYNTHETIC_PREGAME_AT,providerPublishedAt:SYNTHETIC_PREGAME_AT}).temporalStatus,'TEMPORAL_VERIFIED');});
+test('publication clock missing remains partial',()=>assert.equal(classifyFootballV4TemporalProvenance({observedAt:SYNTHETIC_PREGAME_AT,kickoffUtc:SYNTHETIC_KICKOFF}).temporalStatus,'TEMPORAL_PARTIAL'));
+test('at kickoff remains forbidden',()=>assert.equal(classifyFootballV4TemporalProvenance({observedAt:SYNTHETIC_KICKOFF,kickoffUtc:SYNTHETIC_KICKOFF}).pregameEligible,false));
+test('limitation: writer has check-then-write without exclusive create',()=>{const s=readFileSync('src/lib/football/v4-phase0-foundation-v1/persist.ts','utf8');assert(s.includes('existsSync(abs)'));assert(s.includes('await writeFile(abs,'));assert(!s.includes('flag: "wx"'));});
+test('normalizers never admit engine inputs',()=>{assert.equal(normalizeApiFootballLineups(SYNTHETIC_LINEUPS_RAW,meta).engineAdmission,false);assert.equal(normalizeApiFootballInjuries(SYNTHETIC_INJURIES_RAW,meta).engineAdmission,false);});
