@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "research:collect-football-pregame-evidence": "tsx --env-file=.env.local scripts/collect-football-pregame-fixture-evidence-v1.ts",
+    "research:football-locked-sealed-forward": "tsx scripts/run-football-locked-sealed-forward-v1.ts",
+    "research:mlb-sealed-input-check": "tsx scripts/run-mlb-sealed-input-v1.ts",
+    "test:real-input-chain-v1": "tsx scripts/test-real-input-chain-v1.ts",
     "research:precutoff-status": "tsx scripts/research-precutoff-status-v1.ts",
     "test:precutoff-infrastructure-v1": "tsx scripts/test-precutoff-infrastructure-v1.ts",
     "dev": "next dev",

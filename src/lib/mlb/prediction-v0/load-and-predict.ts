@@ -2,6 +2,8 @@
  * Load MLB pregame inputs for prediction v0 (no result artifacts).
  */
 import { readFile } from "node:fs/promises";
+import assert from "node:assert/strict";
+import { loadSealedMlbInput, type MlbManifestTarget } from "./sealed-input-manifest";
 import path from "node:path";
 import {
   groupMlbDatasetRowsByEventId,
@@ -65,6 +67,9 @@ export type PredictV0Options = {
   useMarketPrior?: boolean;
   /** Override predictedAt for determinism tests. */
   predictedAtOverride?: string | null;
+  sealedInput?: { path: string; sha256: string; scopeSha256: string; target: MlbManifestTarget };
+  /** Explicit offline legacy audit only. Never admitted to future production. */
+  legacyOfflineResearch?: boolean;
 };
 
 export type PredictV0LoadResult =
@@ -86,11 +91,17 @@ export async function loadAndPredictMlbV0(
   const useMarketPrior = options.useMarketPrior !== false;
   const observationOnly = Boolean(options.observationOnly);
 
+  if(!options.sealedInput && options.legacyOfflineResearch!==true)return {kind:"blocked",reason:"REQUIRED_INPUT_INVALID",message:"SEALED_INPUT_MANIFEST_REQUIRED",warnings:["NO_LATEST_FILE_FALLBACK"]};
+
   if (cwd !== process.cwd()) {
     // Consumer loader resolves artifacts from process.cwd(); callers must chdir
     // or run from repo root. We keep an explicit check for tests.
   }
-  const consumer = await loadMlbPredictionConsumerInput(options.dateKst);
+  const sealed = options.sealedInput ? loadSealedMlbInput(cwd,options.sealedInput.path,options.sealedInput.sha256,options.sealedInput.target,options.sealedInput.scopeSha256) : null;
+  if(sealed){assert.equal(options.dateKst,sealed.manifest.target.dateKst);assert.ok(!options.predictedAtOverride,'SEALED_CLOCK_OVERRIDE_FORBIDDEN');}
+  // Both consumer and enrichment parse the same hash-verified in-memory bytes.
+  const readInput = sealed ? sealed.readJson : (rel:string)=>readJson(rel,cwd);
+  const consumer = await loadMlbPredictionConsumerInput(options.dateKst,readInput);
 
   if (consumer.kind === "blocked") {
     return {
@@ -101,12 +112,12 @@ export async function loadAndPredictMlbV0(
     };
   }
 
-  const predictedAt =
-    options.predictedAtOverride?.trim() || consumer.predictedAt;
+  let predictedAt =
+    sealed?.executionAt || options.predictedAtOverride?.trim() || consumer.predictedAt;
 
   // Enrich from raw starter/lineup docs for provenance (re-read via manifest paths)
   const summaryRel = `data/research/mlb/${options.dateKst}-daily-research-summary-v1.json`;
-  const summary = asRecord(await readJson(summaryRel, cwd));
+  const summary = asRecord(await readInput(summaryRel));
   const datasets = Array.isArray(asRecord(summary?.researchReady)?.datasets)
     ? (asRecord(summary?.researchReady)!.datasets as unknown[])
     : [];
@@ -121,10 +132,10 @@ export async function loadAndPredictMlbV0(
   const oddsArt = findArt("Odds");
   const lineupArt = findArt("Lineup");
   const starterDoc = starterArt
-    ? asRecord(await readJson(starterArt, cwd))
+    ? asRecord(await readInput(starterArt))
     : null;
-  const lineupDoc = lineupArt ? asRecord(await readJson(lineupArt, cwd)) : null;
-  const oddsDoc = oddsArt ? asRecord(await readJson(oddsArt, cwd)) : null;
+  const lineupDoc = lineupArt ? asRecord(await readInput(lineupArt)) : null;
+  const oddsDoc = oddsArt ? asRecord(await readInput(oddsArt)) : null;
   const starterMetaGeneratedAt =
     asString(asRecord(starterDoc?.meta)?.generatedAt) ??
     asString(starterDoc?.generatedAt);
@@ -360,6 +371,7 @@ export async function loadAndPredictMlbV0(
       "STARTER_IDENTITY_MISSING_BOTH_SIDES",
     );
 
+    if(sealed){predictedAt=new Date().toISOString();assert.ok(Date.parse(predictedAt)<Date.parse(sealed.manifest.target.scheduledStart),'PREGAME_WINDOW_MISSED');}
     const mp = computeMoneylinePrediction({
       homeStarter,
       awayStarter,
@@ -478,11 +490,16 @@ export async function loadAndPredictMlbV0(
 
   games.sort((a, b) => a.eventId.localeCompare(b.eventId));
 
+  if(sealed){
+    assert.equal(games.length,1,'SEALED_TARGET_COUNT');assert.equal(games[0].gamePk,sealed.manifest.target.gamePk);
+    assert.ok(Date.now()<Date.parse(sealed.manifest.target.scheduledStart),'PREGAME_WINDOW_MISSED');
+  }
+
   return {
     kind: "ready",
     dateKst: options.dateKst,
     predictedAt,
-    inputManifestHash: consumer.inputManifest.inputHash,
+    inputManifestHash: sealed?.hash ?? consumer.inputManifest.inputHash,
     games,
     sourceSnapshotVersions: consumer.sourceSnapshotVersions,
     consumer,

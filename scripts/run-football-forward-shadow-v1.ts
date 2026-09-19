@@ -20,7 +20,7 @@ export function projectCompleted(r:RawSchedule & {score:{fulltime:{home:number;a
   const goals=r.score.fulltime;for(const g of [goals.home,goals.away])assert.ok(Number.isSafeInteger(g)&&g>=0,'MISSING_FT_SCORE');
   return {providerFixtureId:f.fixtureId,kickoffUtc:f.kickoffUtc,leagueId,homeTeamId:f.homeTeam.id,awayTeamId:f.awayTeam.id,fixtureStatus:'FT',fullTimeHomeGoals:goals.home,fullTimeAwayGoals:goals.away,providerFetchedAt:fetchedAt,sourceHash};
 }
-export async function run(){
+export async function run(options: {collectionOnly?:boolean} = {}){
   const local=resolve(root,'data/cache/research/football/forward-shadow-v1');
   for(const layer of Object.values(LAYERS))mkdirSync(join(local,layer),{recursive:true});
   restoreScheduleLedger(local);
@@ -62,6 +62,13 @@ export async function run(){
   const modelRoot=join(local,LAYERS.MODEL_FORWARD),runs=join(modelRoot,'runs');mkdirSync(runs,{recursive:true});
   const runId=startedAt.replace(/[:.]/g,'-')+'-'+randomUUID();
   writeOnce(join(runs,runId+'-schedule.json'),JSON.stringify(envelope({startedAt,seasons,fixtures:ordered,coverageComplete:failures.length===0,failures}),null,2)+'\n');
+  // Collection-only handoff: actual observation times are preserved, never inferred.
+  const historyReferences=[];
+  for(const [leagueId,observations] of histories){
+    const history=envelope({schemaVersion:'football-forward-observed-history-v1',sealedAt:new Date().toISOString(),observations});
+    const path=join(runs,`${runId}-history-${leagueId}.json`);writeOnce(path,JSON.stringify(history,null,2)+'\n');historyReferences.push({leagueId,path,sha256:history.sha256});
+  }
+  if(options.collectionOnly){const result=envelope({status:'COLLECTION_ONLY',coverageComplete:failures.length===0,historyReferences,failures,providerCalls:calls,predictions:0});console.log(JSON.stringify(result,null,2));return result;}
   // Frozen model requires observedAt strictly before cutoff, including millisecond boundaries.
   await new Promise(r=>setTimeout(r,2));
   const frozen=[];for(const f of ordered)try{
@@ -82,7 +89,7 @@ export async function run(){
   writeOnce(join(runs,runId+'-report.json'),JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result,null,2));return result;
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
-  assert.ok(process.argv.length===3&&['--run','--watch'].includes(process.argv[2]));
-  if(process.argv[2]==='--run')run().then(r=>{if(!r.payload.coverageComplete)process.exitCode=1;}).catch(e=>{console.error(e);process.exitCode=1;});
+  assert.ok(process.argv.length===3&&['--run','--watch','--collect-only'].includes(process.argv[2]));
+  if(process.argv[2]==='--run'||process.argv[2]==='--collect-only')run({collectionOnly:process.argv[2]==='--collect-only'}).then(r=>{if(!r.payload.coverageComplete)process.exitCode=1;}).catch(e=>{console.error(e);process.exitCode=1;});
   else{const cycle=async()=>{try{await run();}catch(e){console.error(String(e));}setTimeout(cycle,6*3600000);};cycle();}
 }

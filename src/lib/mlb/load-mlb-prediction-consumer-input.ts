@@ -306,10 +306,11 @@ function sortAndUnique(values: string[]): string[] {
 
 export async function loadMlbPredictionConsumerInput(
   dateKst: string,
+  readInput: (path: string) => Promise<unknown | null> = readJson,
 ): Promise<MlbPredictionConsumerLoad> {
   const summaryRel = `data/research/mlb/${dateKst}-daily-research-summary-v1.json`;
   const createdAt = new Date().toISOString();
-  const summaryRaw = await readJson(summaryRel);
+  const summaryRaw = await readInput(summaryRel);
   if (!summaryRaw) {
     return {
       kind: "blocked",
@@ -354,10 +355,10 @@ export async function loadMlbPredictionConsumerInput(
   }
 
   const [scheduleRaw, starterRaw, oddsRaw, lineupRaw] = await Promise.all([
-    readJson(scheduleRef.artifact),
-    readJson(starterRef.artifact),
-    readJson(oddsRef.artifact),
-    readJson(lineupRef.artifact),
+    readInput(scheduleRef.artifact),
+    readInput(starterRef.artifact),
+    readInput(oddsRef.artifact),
+    readInput(lineupRef.artifact),
   ]);
   const scheduleDoc = asRecord(scheduleRaw);
   const starterDoc = asRecord(starterRaw);

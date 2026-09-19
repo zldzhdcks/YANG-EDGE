@@ -37,3 +37,17 @@ export function assertOneToOneBindings(bindings: ExactBinding[]) {
   assert.equal(new Set(bindings.map(b=>b.targetId)).size,bindings.length,"DUPLICATE_OPERATOR_TARGET");
   assert.equal(new Set(bindings.map(b=>b.providerFixtureId)).size,bindings.length,"DUPLICATE_PROVIDER_FIXTURE");
 }
+
+/** Provider-ID-first discovery from already verified identity claims; never name similarity. */
+export function selectExactFixture(claim: {fixtureId?:number;homeTeamId?:number;awayTeamId?:number;leagueId:number;kickoff:string;verified:boolean}, fixtures:PregameIdentity[], now:string) {
+  if(!claim.verified || claim.homeTeamId===undefined || claim.awayTeamId===undefined)return {status:'NO_PROVIDER_EVIDENCE' as const};
+  const candidates=fixtures.filter(f=>claim.fixtureId!==undefined?f.fixtureId===claim.fixtureId:f.homeTeamId===claim.homeTeamId&&f.awayTeamId===claim.awayTeamId&&f.leagueId===claim.leagueId&&instant(f.kickoffUtc)===instant(claim.kickoff));
+  if(candidates.length>1)return {status:'AMBIGUOUS' as const};
+  if(!candidates.length){
+    const reversed=fixtures.some(f=>f.homeTeamId===claim.awayTeamId&&f.awayTeamId===claim.homeTeamId&&f.leagueId===claim.leagueId&&instant(f.kickoffUtc)===instant(claim.kickoff));
+    return {status:reversed?'CONFLICT' as const:'NO_PROVIDER_EVIDENCE' as const};
+  }
+  const f=candidates[0];
+  if(f.provider!=='API_FOOTBALL'||f.status!=='NS'||f.homeTeamId!==claim.homeTeamId||f.awayTeamId!==claim.awayTeamId||f.leagueId!==claim.leagueId||instant(f.kickoffUtc)!==instant(claim.kickoff)||instant(f.observedAt)>instant(now)||instant(now)>=instant(f.kickoffUtc))return {status:'CONFLICT' as const};
+  return {status:'EXACT_MATCH' as const,fixture:f};
+}
