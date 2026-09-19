@@ -1,0 +1,70 @@
+{
+  "payload": {
+    "schemaVersion": "football-v4-research-admission-protocol-seal-v1",
+    "sealedAt": "2026-09-19T17:13:50.764Z",
+    "baseSha": "aa28b4241d8b72f6c62c9a0369aa65ca46ffa34b",
+    "document": {
+      "path": "docs/research/FOOTBALL_V4_RESEARCH_ADMISSION_PROTOCOL_V1.md",
+      "sha256": "770671febabb106b38d7990a9947ce54d5f33edfdd9461715ebf50c62b1bb3e8"
+    },
+    "evidence": [
+      {
+        "path": "data/audits/football-v3-revalidation-gate-v1.json",
+        "fileSha256": "30d6c0753bc4b722f5042f198a6d5ca1cfd34828451a0cc5846056203571cddf",
+        "payloadSha256": "40a98c473e9b98120761e0413f32dff66a8d18ab594ed2e01f8f54de1baa7e60"
+      },
+      {
+        "path": "data/audits/football-v3-revalidation-execution-freeze-v1.json",
+        "fileSha256": "2a940c8c7bf943acde2204680d07493c7713cf623a76f1bcac7655a3954ab1ba",
+        "payloadSha256": "6220b6f99e85a0e17ed0fcd729c56e8d204b16dec9cc3b252833169f3eafdbc2"
+      },
+      {
+        "path": "data/audits/football-v3-2025-revalidation-holdout-v1.json",
+        "fileSha256": "43827f0c7d50edd3a0c31cb49e64c375b2b89d7fd33944a66b17950c46b659e9",
+        "payloadSha256": "0d8355651a6d3c419a01ea8a2a5ede51e2ab25b1bc14fd9bb00aa87accfb5533"
+      },
+      {
+        "path": "data/audits/football-v31-2025-independent-holdout-evaluation-v1.json",
+        "fileSha256": "5a5cea669af6dfdd3568ee52d6f65fe6cc514750cd67ebe10bb06af862b87440",
+        "payloadSha256": "8ab3dcfd3245490e6b622c1e11def19b026405a9e1a6fd2a07a4610c89fff0c5"
+      }
+    ],
+    "v3Status": "RESEARCH_CLOSED_UNPROMOTED",
+    "v31Status": "RESEARCH_CLOSED_UNPROMOTED",
+    "v4Phase": 0,
+    "engineImplemented": false,
+    "admissionAllowed": false,
+    "shadowAllowed": false,
+    "admittedFeatures": [],
+    "candidateScopes": [
+      "football-v4-a-xi-v1",
+      "football-v4-b-availability-v1",
+      "football-v4-c-player-impact-v1"
+    ],
+    "prospectivePolicy": {
+      "status": "PROPOSED_REQUIRES_PRE_ENROLLMENT_RATIFICATION",
+      "checkpoints": [
+        25,
+        50,
+        100,
+        200
+      ],
+      "proposedPerLeagueMinimum": 100,
+      "proposedTotalMinimum": 400,
+      "automaticPromotion": false
+    },
+    "holdoutStatus": "HOLDOUT_NOT_AVAILABLE_YET",
+    "engineChanged": false,
+    "weightsChanged": false,
+    "thresholdsChanged": false,
+    "featureSetChanged": false,
+    "providerDataCalls": 0,
+    "validation": {
+      "parentHashes": "PASS",
+      "closureOutcomes": "PASS",
+      "requiredProtocolFields": "PASS"
+    },
+    "final": "V4_RESEARCH_PROTOCOL_READY"
+  },
+  "sha256": "378b4a96d8efac522ebf748b4869ad402672de202379d65e4dbd5b5f0ed37b13"
+}
