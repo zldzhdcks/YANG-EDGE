@@ -1,0 +1,60 @@
+{
+  "payload": {
+    "schemaVersion": "football-v4-prospective-evaluation-policy-ratification-v1",
+    "ratifiedAt": "2026-09-19T17:38:02.079Z",
+    "authority": "OWNER_MISSION_FOOTBALL_V4_PROSPECTIVE_EVIDENCE_FOUNDATION_V1",
+    "startHead": "d82d9a8db393f6e419e4d35982a7ab5da6a99a78",
+    "policyRatified": true,
+    "ratificationScope": "Review checkpoints and final minimum evidence floor only; not statistical power certification, feature admission, shadow or promotion",
+    "newProspectiveRules": true,
+    "existingOfficialRule": false,
+    "reviewCheckpoints": [
+      25,
+      50,
+      100,
+      200
+    ],
+    "finalEvaluationMinimum": {
+      "perLeague": 100,
+      "total": 400,
+      "leagues": [
+        39,
+        140,
+        135,
+        78
+      ],
+      "allFrozenPromotionGuards": true
+    },
+    "autoPromotion": false,
+    "remainingPreShadowRequirements": [
+      "candidate/feature/algorithm freeze",
+      "rights and temporal proof",
+      "grade completion and collection horizon policy",
+      "dependency-aware uncertainty and multiple-candidate review",
+      "tested implementation and separate shadow authorization"
+    ],
+    "temporalAmendment": {
+      "observedAt": "<= collectedAt",
+      "asOf": "<= collectedAt",
+      "collectedAt": "< predictionCutoff",
+      "predictionCutoff": "<= scheduledStart",
+      "publicationTimestamp": "separate; missing never fabricated",
+      "supersedes": "Only the asOf ordering in earlier proposal for NEW foundation envelopes; no old artifacts rewritten"
+    },
+    "parentDocuments": [
+      {
+        "path": "docs/research/FOOTBALL_V4_PROSPECTIVE_EVALUATION_POLICY_V1.md",
+        "sha256": "40982c1e6815b6d6573090c8f7590b432e1250ea2bb877daf1b4a4716088812d"
+      },
+      {
+        "path": "docs/research/FOOTBALL_V4_RESEARCH_ADMISSION_PROTOCOL_V1.md",
+        "sha256": "770671febabb106b38d7990a9947ce54d5f33edfdd9461715ebf50c62b1bb3e8"
+      }
+    ],
+    "conflictingApprovedPolicyFound": false,
+    "resultDataAccessed": false,
+    "engineChanged": false,
+    "shadowAllowed": false
+  },
+  "sha256": "577b41af0ed0e0c8d4c569597839b2535fc8125fd6c499d7693d019fb2cc518f"
+}
