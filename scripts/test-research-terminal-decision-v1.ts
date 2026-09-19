@@ -8,13 +8,15 @@ import { freezeResearchSlateSource } from "../src/lib/research/slate-source-free
 import { lockResearchTargetScope, operatorBetmanDailySlateRel } from "../src/lib/research/daily-scope-lock";
 import { createTerminalWriter, loadScope, pregameEligibility, readDecisionCoverage, terminalRoot, type Request } from "../src/lib/research/terminal-decision";
 import { envelope, sha } from "../src/lib/research/terminal-decision/evidence";
+import { advancePregame } from "../src/lib/research/terminal-decision/lifecycle";
+import { sealTerminalDecision } from "../src/lib/research/terminal-decision";
 
 const date = "2030-01-10", now = Date.parse("2030-01-10T08:00:00Z"), start = "2030-01-10T19:00:00+09:00";
 function json(file: string, value: unknown) { mkdirSync(join(file, ".."), { recursive: true }); writeFileSync(file, JSON.stringify(value, null, 2) + "\n"); }
-async function fixture(t: any, count = 1) {
+async function fixture(t: any, count = 1, operatorPatch: Record<string,unknown> = {}) {
   const cwd = mkdtempSync(join(tmpdir(), "ye-terminal-test-")); t.after(() => rmSync(cwd, { recursive: true, force: true }));
   const games = Array.from({ length: count }, (_, i) => ({ operatorSlateGameId: `synthetic-${i}`, sport: "SOCCER", competitionNameRaw: "EPL", competitionNameKo: null, operatorGameNumber: null, operatorMarketId: null, homeTeamRaw: "Home", awayTeamRaw: "Away", scheduledStartTimeKst: start, operatorHomeAwayStatus: "VERIFIED", marketRuleStatus: "VERIFIED", marketTypeRaw: null, marketSelections: [], reviewStatus: "VERIFIED", sourceReference: null, providerGameId: null, providerFixtureId: "123", capturedAt: null, manualIdentityReference: null, notes: null }));
-  json(join(cwd, operatorBetmanDailySlateRel(date)), { schemaVersion: "betman-daily-slate-v1", targetDateKst: date, sourceType: "OPERATOR_MANUAL", capturedAt: null, enteredAt: null, reviewedAt: "2030-01-10T01:00:00Z", reviewStatus: "VERIFIED", scopeCompletenessStatus: "COMPLETE", games });
+  json(join(cwd, operatorBetmanDailySlateRel(date)), { schemaVersion: "betman-daily-slate-v1", targetDateKst: date, sourceType: "OPERATOR_MANUAL", capturedAt: null, enteredAt: null, reviewedAt: "2030-01-10T01:00:00Z", reviewStatus: "VERIFIED", scopeCompletenessStatus: "COMPLETE", games: games.map(g=>({...g,...operatorPatch})) });
   await freezeResearchSlateSource({ cwd, dateKst: date, frozenAt: "2030-01-10T02:00:00Z" });
   // Isolated temporary Git fixture only. Never commit in the real repository.
   const git = (...args: string[]) => execFileSync("git", ["-c", `safe.directory=${cwd.replace(/\\/g, "/")}`, ...args], { cwd, stdio: "pipe" });
@@ -36,6 +38,18 @@ function prediction(cwd: string, scopeHash: string): Request {
 test("missing scope is not authoritative zero", t => {
   const cwd = mkdtempSync(join(tmpdir(), "ye-terminal-missing-")); t.after(() => rmSync(cwd, { recursive: true, force: true }));
   assert.equal(readDecisionCoverage(cwd, date).status, "BLOCKED_NO_SCOPE");
+});
+
+test("production lifecycle leaves recoverable blockers unresolved without writes", async t => {
+  const {cwd, request}=await fixture(t);
+  for (const readiness of ["IDENTITY_BLOCKED","AS_OF_BLOCKED"] as const) {
+    const result=advancePregame(cwd,date,"synthetic-0",readiness);
+    assert.equal(result.audit.plan.action,"WAIT");assert.equal(result.write,null);
+  }
+  assert.equal(readDecisionCoverage(cwd,date).status,"COVERAGE_INCOMPLETE");
+  assert.equal(readDecisionCoverage(cwd,date).TERMINAL_DECISION_COUNT,0);
+  assert.throws(()=>sealTerminalDecision({...request,type:"PASS",reason:"PASS_IDENTITY_REVIEW_REQUIRED"},cwd),/RECOVERABLE/);
+  assert.throws(()=>sealTerminalDecision({...request,type:"PASS",reason:"PASS_REQUIRED_PREGAME_DATA_MISSING"},cwd),/RECOVERABLE/);
 });
 test("PASS first write, restart idempotence, conflict, immutable bytes and complete", async t => {
   const { cwd, request } = await fixture(t);
@@ -69,6 +83,23 @@ test("existing prediction reference works, no probabilities accepted by writer",
   assert.throws(() => createTerminalWriter(cwd, () => now)({ ...request, pHome: 0.9 } as any));
   assert.equal(createTerminalWriter(cwd, () => now)(request).status, "SUCCESS");
   assert.equal(readDecisionCoverage(cwd, date).SEALED_PREDICTION_COUNT, 1);
+});
+
+test("reviewed exact operator bridge admits Forward reference and rejects tampering", async t => {
+  const {cwd,scope}=await fixture(t,1,{homeTeamRaw:"홈",awayTeamRaw:"원정",competitionNameRaw:"테스트",providerFixtureId:null});
+  const request=prediction(cwd,scope.hash);assert.equal(request.type,"PREDICTION");if(request.type!=="PREDICTION")return;
+  const sourceUtf8=JSON.stringify({provider:"API_FOOTBALL",fixtureId:123,leagueId:39,season:2029,kickoffUtc:start,homeTeamId:1,homeTeamName:"Home",awayTeamId:2,awayTeamName:"Away",status:"NS",observedAt:"2030-01-10T04:00:00Z"});
+  const binding={targetId:"synthetic-0",scopeSha256:scope.hash,homeRaw:"홈",awayRaw:"원정",competitionRaw:"테스트",providerFixtureId:123,homeProviderId:1,awayProviderId:2,leagueId:39,season:2029,scheduledStart:start,reviewStatus:"VERIFIED",reviewedAt:"2030-01-10T05:00:00Z",evidenceSha256:sha(sourceUtf8)};
+  const e=envelope({binding,sourceUtf8});
+  const dir=join(cwd,"data/research/football/operator-identity-bridges",scope.hash);
+  const file=join(dir,`${sha("synthetic-0")}.json`);json(file,e);
+  const req={...request,predictionReference:{...request.predictionReference,identityEvidenceHash:e.sha256}};
+  const writer=createTerminalWriter(cwd,()=>now);
+  assert.throws(()=>writer({...req,predictionReference:{...req.predictionReference,identityEvidenceHash:"bad"}}));
+  const duplicate=join(dir,`${sha("synthetic-1")}.json`);json(duplicate,envelope({binding:{...binding,targetId:"synthetic-1"},sourceUtf8}));
+  assert.throws(()=>writer(req),/DUPLICATE_PROVIDER/);rmSync(duplicate);
+  json(file,envelope({binding:{...binding,homeProviderId:2},sourceUtf8}));assert.throws(()=>writer(req));json(file,e);
+  assert.equal(writer(req).status,"SUCCESS");assert.equal(readDecisionCoverage(cwd,date).SEALED_PREDICTION_COUNT,1);
 });
 test("uncommitted frozen source cannot supply authoritative zero", async t => {
   const { cwd } = await fixture(t, 0);

@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+export { resolveExactPregameIdentity, assertOneToOneBindings } from "./exact-pregame-identity";
 import path from "node:path";
 import { getKboIdentityProvider } from "../../kbo/kbo-identity-feature-flag";
 import { getKboIdentityArtifactPath } from "../../kbo/kbo-identity-artifact-path";

@@ -83,7 +83,15 @@ export function createTerminalWriter(cwd: string, clock: () => number = Date.now
     return { status: "SUCCESS", path: dir };
   };
 }
-export const sealTerminalDecision = (request: Request, cwd = process.cwd()) => createTerminalWriter(cwd)(request);
+export const sealTerminalDecision = (request: Request, cwd = process.cwd()) => {
+  // Existing evidence is still validated by the original reader. The new policy
+  // affects new production writes only; it never invalidates historical PASS.
+  const existing = existsSync(join(terminalRoot(cwd, request.dateKst), sha(request.targetId)));
+  if (!existing && request.type === "PASS") {
+    assert.ok(!["PASS_IDENTITY_REVIEW_REQUIRED", "PASS_COMPETITION_REVIEW_REQUIRED", "PASS_REQUIRED_PREGAME_DATA_MISSING"].includes(request.reason), "RECOVERABLE_BLOCKER_IS_NON_TERMINAL");
+  }
+  return createTerminalWriter(cwd)(request);
+};
 
 /** Read-only; malformed files and abandoned reservations are visible invalid decisions. */
 export function readDecisionCoverage(cwd: string, dateKst: string) {

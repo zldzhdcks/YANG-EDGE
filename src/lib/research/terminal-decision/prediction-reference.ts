@@ -1,16 +1,19 @@
 import assert from "node:assert/strict";
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import type { ResearchTargetGame } from "../daily-scope-lock";
-import { canonical, readEnvelope, time } from "./evidence";
+import { canonical, readEnvelope, time, sha } from "./evidence";
+import { resolveExactPregameIdentity, assertOneToOneBindings } from "../../betman/daily-slate/exact-pregame-identity";
 
-export type PredictionReference = { kind: "FOOTBALL_FORWARD_V1"; fixtureId: number; snapshotHash: string; scopeSha256: string };
+export type PredictionReference = { kind: "FOOTBALL_FORWARD_V1"; fixtureId: number; snapshotHash: string; scopeSha256: string; identityEvidenceHash?: string };
 /** Only the existing immutable Forward v1 format is admitted. No engine import. */
 export function validatePredictionReference(cwd: string, target: ResearchTargetGame, scopeHash: string, ref: PredictionReference, createdAt: string) {
-  assert.equal(canonical(Object.keys(ref).sort()), canonical(["kind", "fixtureId", "snapshotHash", "scopeSha256"].sort()), "UNSUPPORTED_REFERENCE_FIELDS");
+  const keys = ["kind", "fixtureId", "snapshotHash", "scopeSha256", ...(ref.identityEvidenceHash === undefined ? [] : ["identityEvidenceHash"])];
+  assert.equal(canonical(Object.keys(ref).sort()), canonical(keys.sort()), "UNSUPPORTED_REFERENCE_FIELDS");
   assert.equal(ref.kind, "FOOTBALL_FORWARD_V1"); assert.equal(ref.scopeSha256, scopeHash);
   assert.ok(Number.isSafeInteger(ref.fixtureId) && ref.fixtureId > 0);
-  assert.equal(target.sport, "SOCCER"); assert.equal(target.providerFixtureId, String(ref.fixtureId));
+  assert.equal(target.sport, "SOCCER");
+  if (ref.identityEvidenceHash === undefined) assert.equal(target.providerFixtureId, String(ref.fixtureId));
   const dir = join(cwd, "data/cache/research/football/forward-shadow-v1/MODEL_FORWARD/fixtures", String(ref.fixtureId));
   for (const name of ["invalid.json", "miss.json", "first-seen-after-kickoff.json"]) assert.ok(!existsSync(join(dir, name)), "INVALID_FORWARD_SEAL");
   const s = readEnvelope(join(dir, "snapshot.json"));
@@ -23,9 +26,23 @@ export function validatePredictionReference(cwd: string, target: ResearchTargetG
   assert.equal(p.status, "PREDICTED"); assert.equal(p.modelVersion, "football-poisson-research-v1");
   assert.equal(p.modelSourceHash, "6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf");
   // Exact identity only. Korean aliases require a separately reviewed bridge; never fuzzy match.
-  assert.equal(p.homeTeam.name, target.homeTeamRaw); assert.equal(p.awayTeam.name, target.awayTeamRaw);
-  const leagues: Record<string, number> = { EPL: 39, "La Liga": 140, "Serie A": 135, Bundesliga: 78 };
-  assert.equal(leagues[target.competitionNameRaw ?? ""], p.leagueId); assert.ok(p.leagueId);
+  if (ref.identityEvidenceHash !== undefined) {
+    const bridgeDir = join(cwd,"data/research/football/operator-identity-bridges",scopeHash);
+    const e=readEnvelope(join(bridgeDir,`${sha(target.targetId)}.json`));
+    assert.equal(e.sha256,ref.identityEvidenceHash);
+    assert.deepEqual(Object.keys(e.payload).sort(),["binding","sourceUtf8"].sort());
+    const bindings=readdirSync(bridgeDir).filter(n=>n.endsWith('.json')).map(n=>readEnvelope(join(bridgeDir,n)).payload.binding);
+    assertOneToOneBindings(bindings);
+    const identity=resolveExactPregameIdentity(target,scopeHash,e.payload.binding,Buffer.from(e.payload.sourceUtf8,'utf8'),p.predictionCreatedAt);
+    assert.ok(time(identity.observedAt)<=time(p.cutoffAt),"IDENTITY_AFTER_INPUT_CUTOFF");
+    assert.equal(identity.fixtureId,ref.fixtureId);assert.equal(identity.leagueId,p.leagueId);
+    assert.equal(identity.homeTeamId,p.homeTeam.id);assert.equal(identity.awayTeamId,p.awayTeam.id);
+    assert.equal(identity.homeTeamName,p.homeTeam.name);assert.equal(identity.awayTeamName,p.awayTeam.name);
+  } else {
+    assert.equal(p.homeTeam.name, target.homeTeamRaw); assert.equal(p.awayTeam.name, target.awayTeamRaw);
+    const leagues: Record<string, number> = { EPL: 39, "La Liga": 140, "Serie A": 135, Bundesliga: 78 };
+    assert.equal(leagues[target.competitionNameRaw ?? ""], p.leagueId); assert.ok(p.leagueId);
+  }
   const start = time(target.scheduledStartTimeKst!);
   assert.equal(time(p.kickoffUtc), start);
   assert.ok(time(p.cutoffAt) <= time(p.predictionCreatedAt));
