@@ -1,0 +1,145 @@
+{
+  "payload": {
+    "schemaVersion": "football-v4-prospective-evidence-foundation-v1",
+    "createdAt": "2026-09-19T17:51:32.382Z",
+    "startHead": "d82d9a8db393f6e419e4d35982a7ab5da6a99a78",
+    "policyCommit": "e6d67852051ad4558d5b576c7cde6ef639ab2163",
+    "policyFileSha256": "daae0ceaab3e7837fda5e7a53b68b5f7a2599a55e5ba57547a57ccffa176bf00",
+    "policyRatified": true,
+    "reviewCheckpoints": [
+      25,
+      50,
+      100,
+      200
+    ],
+    "finalEvaluationMinimum": {
+      "perLeague": 100,
+      "total": 400,
+      "allFrozenGuards": true
+    },
+    "autoPromotion": false,
+    "files": [
+      {
+        "path": "src/lib/football/v4-prospective-evidence-v1/collector.ts",
+        "sha256": "cf76e95be0ae8be37e5f54c9298213bbbcb428299550aa0f982cf91a2385a171"
+      },
+      {
+        "path": "src/lib/football/v4-prospective-evidence-v1/contracts.ts",
+        "sha256": "538daa448c13c3ef7fdcb9d8b401e26296ae078772fd88bfc65db1a71be35a4d"
+      },
+      {
+        "path": "src/lib/football/v4-prospective-evidence-v1/provider.ts",
+        "sha256": "f5077667c587c71ce3a87dc2a795477aa4426b174c524c13dff3f30c2c2c6834"
+      },
+      {
+        "path": "src/lib/football/v4-prospective-evidence-v1/registry.ts",
+        "sha256": "e707701ff3e4743eab645c85181c1aac445f699c3bda715f6a479a7e9f1c1d3a"
+      },
+      {
+        "path": "src/lib/football/v4-prospective-evidence-v1/store.ts",
+        "sha256": "e2a548ba1b031aa98b0b6264dad7ea72531cca555f5da29d4eee80d9ead35c08"
+      },
+      {
+        "path": "src/lib/football/v4-prospective-evidence-v1/validate.ts",
+        "sha256": "6f169e81cb03784f30d16c2b5cf9495e66046d5d74898d38c714ce871ec57cff"
+      },
+      {
+        "path": "scripts/run-football-v4-prospective-evidence-v1.ts",
+        "sha256": "e843bdc150799eeeae90c6682d788655227d70fa02cf927176fcb45287703617"
+      },
+      {
+        "path": "scripts/test-football-v4-prospective-evidence-v1.ts",
+        "sha256": "a084e041e1c47fea98aa0fb2c29b085cf971b6cdab41b093858213d20de34761"
+      },
+      {
+        "path": "docs/research/FOOTBALL_V4_PROSPECTIVE_EVIDENCE_FOUNDATION_V1.md",
+        "sha256": "d5262ca8639e1f7b9aa5df1372f48b4f10328f250d91a57ebdd42a6c0eb6e37d"
+      }
+    ],
+    "identity": {
+      "registryImplemented": true,
+      "providerIdFirst": true,
+      "transferHistorySupported": true,
+      "sameNameSafe": true,
+      "fuzzyMatching": false,
+      "realPlayerRecordsCreated": 0
+    },
+    "temporal": {
+      "observedAt": "<= collectedAt",
+      "asOf": "<= collectedAt",
+      "collectedAt": "< predictionCutoff",
+      "predictionCutoff": "<= scheduledStart",
+      "collectorMarginSeconds": 60,
+      "publicationProofNotFabricated": true
+    },
+    "snapshot": {
+      "appendOnly": true,
+      "atomicPublication": "fsync temporary file then no-replace hard link",
+      "idempotentReplay": true,
+      "overwriteConflict": true,
+      "exactIdAndHashRequired": true
+    },
+    "injuryDuplicateAudit": {
+      "observedRows": 262,
+      "identicalSerializedRepeats": 131,
+      "location": "Already present in saved raw",
+      "cause": "Upstream duplication plausible; wire evidence absent; definitive cause unproven",
+      "temporalObservationsNeverDedupedTogether": true
+    },
+    "suspensionCompleteness": "UNVERIFIED",
+    "playerStatsHistoricalBackfillSafe": false,
+    "collector": {
+      "futureAuthoritativeScopeRequired": true,
+      "realProviderCalls": 0,
+      "defaultPlanOnly": true,
+      "pollMinutesBeforeKickoff": [
+        60,
+        40,
+        30,
+        20
+      ],
+      "requestSpacingMs": 6500,
+      "durableUtcDayRequestCap": 16,
+      "accountQuotaMustBeAllocatedSeparately": true,
+      "restartSafe": true,
+      "uncertainJobsRequireAttendedRecovery": true
+    },
+    "candidates": {
+      "A": {
+        "pipelineReady": true,
+        "admitted": false
+      },
+      "B": {
+        "pipelineReady": true,
+        "admitted": false,
+        "suspensionComplete": false
+      },
+      "C": {
+        "pipelineReady": true,
+        "admitted": false,
+        "dataThroughUnverified": true
+      }
+    },
+    "tests": {
+      "focusedPassed": 33,
+      "focusedFailed": 0,
+      "phase0Regression": "PASS",
+      "typecheck": "PASS scoped"
+    },
+    "resultDataAccessed": false,
+    "liveDataAccessed": false,
+    "postgameAccessed": false,
+    "gradeDataAccessed": false,
+    "performanceMetricsAccessed": false,
+    "officialEngine": "V1",
+    "v4EngineImplemented": false,
+    "v4ShadowAllowed": false,
+    "engineChanged": false,
+    "weightsChanged": false,
+    "thresholdsChanged": false,
+    "featureSetChanged": false,
+    "featureSet": "NONE_ADMITTED",
+    "final": "V4_EVIDENCE_FOUNDATION_READY"
+  },
+  "sha256": "92098ab9efba74683f54de2c8ffa027ecdd4e9dadadf4bc9536fe1deb6c1b4ef"
+}
