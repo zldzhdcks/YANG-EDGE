@@ -61,6 +61,7 @@ export type PublicQuickPreviewBasis =
   | "NONE";
 
 export type PublicQuickPreview = {
+  priority?: ReturnType<typeof import("../lib/public-analysis/preview-priority").mandatoryPreviewContract>;
   available: boolean;
   sentences: string[];
   basis: PublicQuickPreviewBasis;

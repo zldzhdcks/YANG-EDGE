@@ -1,6 +1,7 @@
 import type { AnalysisPresentationIdentity } from "@/lib/datetime/games-date";
 import { applyListIdentityFallback } from "./apply-list-identity";
 import { projectQuickPreview } from "./project-quick-preview";
+import { mandatoryPreviewContract, type PreviewPriorityInput } from "./preview-priority";
 import type { PublicGameAnalysisViewV1 } from "@/types/public-game-analysis-view";
 
 function identityBasis(
@@ -16,11 +17,12 @@ function identityBasis(
 export function finalizePublicAnalysisView(
   view: PublicGameAnalysisViewV1,
   listIdentity?: AnalysisPresentationIdentity | null,
+  priorityContext?: Pick<PreviewPriorityInput, "previewPriority" | "matchKind">,
 ): PublicGameAnalysisViewV1 {
   const filled = applyListIdentityFallback(view, listIdentity);
   return {
     ...filled,
-    quickPreview: projectQuickPreview({
+    quickPreview: { ...projectQuickPreview({
       homeTeam: filled.game.homeTeam,
       awayTeam: filled.game.awayTeam,
       league: filled.game.league,
@@ -28,6 +30,15 @@ export function finalizePublicAnalysisView(
       state: filled.analysis.state,
       officialPredictionAvailable: filled.analysis.officialPredictionAvailable,
       identityBasis: identityBasis(view.game, filled.game),
-    }),
+    }), priority: mandatoryPreviewContract({
+      targetId: filled.game.gameId,
+      sport: filled.game.sport,
+      home: filled.game.homeTeam,
+      away: filled.game.awayTeam,
+      ...priorityContext,
+      predictionAvailable: filled.analysis.officialPredictionAvailable,
+      predictionReason: filled.analysis.description,
+      updatedAt: filled.meta.updatedAt,
+    }) },
   };
 }
