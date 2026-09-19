@@ -65,11 +65,16 @@ export async function collectMlbInputManifest(root:string,manifestPath:string,ta
 }
 
 export function loadSealedMlbInput(root:string,path:string,expectedHash:string,target:MlbManifestTarget,scopeSha256:string){
+  return inspectSealedMlbInputAt(root,path,expectedHash,target,scopeSha256,new Date().toISOString());
+}
+
+/** Receipt audit only. Prediction always uses loadSealedMlbInput's real clock. */
+export function inspectSealedMlbInputAt(root:string,path:string,expectedHash:string,target:MlbManifestTarget,scopeSha256:string,executionAt:string){
   assert.equal(target.dateKst,new Date(time(target.scheduledStart)+9*3600000).toISOString().slice(0,10),'TARGET_DATE_MISMATCH');
   const e=readEnvelope(safePath(root,path));assert.equal(e.sha256,expectedHash,'MANIFEST_HASH_MISMATCH');const m=e.payload as MlbSealedManifest;
   assert.equal(m.schemaVersion,'mlb-pregame-input-manifest-v1');assert.deepEqual(m.target,target,'MANIFEST_TARGET_MISMATCH');assert.equal(m.scopeSha256,scopeSha256,'MANIFEST_SCOPE_MISMATCH');
   assert.deepEqual(m.inputs.map(i=>i.artifactType).sort(),[...DATASETS,'Summary'].sort(),'REQUIRED_INPUTS');
-  const executionAt=new Date().toISOString();assert.ok(time(m.sealedAt)<=time(executionAt)&&time(executionAt)<time(target.scheduledStart),'AS_OF_UNSAFE');
+  assert.ok(time(m.sealedAt)<=time(executionAt)&&time(executionAt)<time(target.scheduledStart),'AS_OF_UNSAFE');
   const sources=new Map<string,string>();const docs:Record<string,any>={};
   for(const i of m.inputs){
     assert.ok(time(i.collectedAt)<=time(i.observedAt)&&time(i.observedAt)<=time(i.asOf)&&time(i.asOf)<=time(m.sealedAt)&&time(i.sourceAsOf)<=time(i.observedAt),'AS_OF_UNSAFE');

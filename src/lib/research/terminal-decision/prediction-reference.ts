@@ -4,10 +4,12 @@ import { join } from "node:path";
 import type { ResearchTargetGame } from "../daily-scope-lock";
 import { canonical, readEnvelope, time, sha } from "./evidence";
 import { resolveExactPregameIdentity, assertOneToOneBindings } from "../../betman/daily-slate/exact-pregame-identity";
+import {validateMlbReference,type MlbPredictionReference} from './mlb-reference';
 
-export type PredictionReference = { kind: "FOOTBALL_FORWARD_V1"; fixtureId: number; snapshotHash: string; scopeSha256: string; identityEvidenceHash?: string };
+export type PredictionReference = { kind: "FOOTBALL_FORWARD_V1"; fixtureId: number; snapshotHash: string; scopeSha256: string; identityEvidenceHash?: string } | MlbPredictionReference;
 /** Only the existing immutable Forward v1 format is admitted. No engine import. */
 export function validatePredictionReference(cwd: string, target: ResearchTargetGame, scopeHash: string, ref: PredictionReference, createdAt: string) {
+  if(ref.kind==='MLB_SEALED_RESEARCH_V0')return validateMlbReference(cwd,target,scopeHash,ref,createdAt);
   const keys = ["kind", "fixtureId", "snapshotHash", "scopeSha256", ...(ref.identityEvidenceHash === undefined ? [] : ["identityEvidenceHash"])];
   assert.equal(canonical(Object.keys(ref).sort()), canonical(keys.sort()), "UNSUPPORTED_REFERENCE_FIELDS");
   assert.equal(ref.kind, "FOOTBALL_FORWARD_V1"); assert.equal(ref.scopeSha256, scopeHash);

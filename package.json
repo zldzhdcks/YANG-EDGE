@@ -356,7 +356,9 @@
     "test:football-forward-internal-prototype-v1": "tsx scripts/test-football-forward-internal-prototype-v1.ts",
     "eval:football-forward-cumulative-v1": "tsx scripts/football-forward-cumulative-evaluation-v1.ts --run",
     "research:decision-coverage": "tsx scripts/research-decision-coverage-v1.ts",
-    "test:research-terminal-decision-v1": "tsx scripts/test-research-terminal-decision-v1.ts"
+    "test:research-terminal-decision-v1": "tsx scripts/test-research-terminal-decision-v1.ts",
+    "research:daily-pregame-production": "node --env-file-if-exists=.env.local --import tsx scripts/run-daily-pregame-production-v1.ts",
+    "test:next-slate-production-v1": "tsx scripts/test-next-slate-production-v1.ts"
   },
   "engines": {
     "node": ">=20.9.0"
