@@ -1,4 +1,5 @@
 import {applyFootballDepth} from './load-football-research-depth';
+import {applyCanonicalProbabilities} from './canonical-research-probability';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync,readdirSync} from 'node:fs';
 import {join,resolve} from 'node:path';
@@ -58,6 +59,7 @@ export function loadResearchExplorer(batch:string,date:string,cwd=process.cwd())
   for(const d of details)if(d.preview){d.players=d.preview.teams.map(team=>{const c=ctx.teams.find((x:any)=>x.teamId===team.id&&x.fixtureId===d.preview!.fixtureId);if(!c)return{teamId:team.id,name:team.name,roles:null};const candidates=playerEvidenceFromContext(c,registry,d.preview!.createdAt);return{teamId:team.id,name:team.name,roles:safeResearchPlayers(candidates),observedAt:c.playerReceipts.map((r:any)=>r.providerFetchedAt).sort().at(-1)};});}
  }
  }catch{for(const d of details){d.players=[];d.line.quality.push('PLAYER_EVIDENCE_UNAVAILABLE');}}
+ applyCanonicalProbabilities(details.map(d=>d.line),cwd,selected.binding!.scopeSha256);
  applyFootballDepth(details,cwd,selected.binding!.scopeSha256);
  return{batch,date,scopeHash:selected.binding!.scopeSha256,lines:details.map(d=>d.line),details,total:lock.targetCount};
 }
