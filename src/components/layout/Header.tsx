@@ -23,12 +23,14 @@ export default function Header() {
   }, [isMenuOpen]);
 
   function isActive(href: string) {
-    return pathname === href || pathname.startsWith(`${href}/`);
+    if (href.includes('#')) return false;
+    const route = href.split('?')[0];
+    return pathname === route || (route !== '/' && !!pathname?.startsWith(`${route}/`));
   }
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#09090b]/90 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link
           href="/"
           onClick={() => setIsMenuOpen(false)}
