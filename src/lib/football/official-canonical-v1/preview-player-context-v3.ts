@@ -29,17 +29,23 @@ export function selectRoleContext(players:PlayerEvidence[],cutoff:string,targetI
 }
 
 export function playerEvidenceFromContext(context:any,registry:any[],cutoff:string):PlayerEvidence[]{
- assert(context.leagueId===140&&context.season===2026,'CONTEXT_SCOPE');
+ assert(Number.isSafeInteger(context.leagueId)&&Number.isSafeInteger(context.season),'CONTEXT_SCOPE');
  assert(context.playerReceipts.length>0&&context.playerReceipts.every((r:any)=>Date.parse(r.providerFetchedAt)<=Date.parse(cutoff)),'PLAYER_TIME');
  return context.players.flatMap((p:any)=>{
-  const membership=registry.filter((m:any)=>m.provider==='api-football'&&m.providerPlayerId===String(p.player.id)&&m.teamProviderId===String(context.teamId)&&m.competitionProviderId==='140'&&m.season==='2026'&&m.verificationStatus==='EXACT'&&Date.parse(m.recordedAt)<=Date.parse(cutoff)&&Date.parse(m.validFrom)<=Date.parse(cutoff)&&(!m.validTo||Date.parse(m.validTo)>Date.parse(cutoff)));
+  const membership=registry.filter((m:any)=>m.provider==='api-football'&&m.providerPlayerId===String(p.player.id)&&m.teamProviderId===String(context.teamId)&&m.competitionProviderId===String(context.leagueId)&&m.season===String(context.season)&&m.verificationStatus==='EXACT'&&Date.parse(m.recordedAt)<=Date.parse(cutoff)&&Date.parse(m.validFrom)<=Date.parse(cutoff)&&(!m.validTo||Date.parse(m.validTo)>Date.parse(cutoff)));
   if(membership.length!==1)return[];
-  const stats=p.statistics.filter((s:any)=>s.team.id===context.teamId&&s.league.id===140&&s.league.season===2026);assert(stats.length<=1,'STAT_IDENTITY');if(!stats.length)return[];
+  const stats=p.statistics.filter((s:any)=>s.team.id===context.teamId&&s.league.id===context.leagueId&&s.league.season===context.season);assert(stats.length<=1,'STAT_IDENTITY');if(!stats.length)return[];
   const s=stats[0],axes:Record<string,number>={};
   // Only already observed basic provider counters. Ratings and advanced metrics are never read.
   if(positive(s.passes?.total))axes.BUILD_UP=s.passes.total;
   if(positive(s.tackles?.total))axes.DEFENSIVE_IMPACT=s.tackles.total;
   if(s.games.position==='Goalkeeper'&&positive(s.goals?.saves))axes.SHOT_STOPPING=s.goals.saves;
+  if(positive(s.goals?.total))axes.SCORING=s.goals.total;
+  if(positive(s.goals?.assists))axes.CREATION=s.goals.assists;
+  if(positive(s.shots?.total))axes.SHOTS=s.shots.total;
+  if(positive(s.passes?.key))axes.KEY_PASSES=s.passes.key;
+  if(positive(s.tackles?.interceptions))axes.INTERCEPTIONS=s.tackles.interceptions;
+  if(positive(s.tackles?.blocks))axes.BLOCKS=s.tackles.blocks;
   const n=(v:any)=>typeof v==='number'&&Number.isFinite(v)&&v>=0?v:null;
   return[{id:p.player.id,name:membership[0].displayNameRaw,position:s.games.position,role:s.games.position==='Goalkeeper'?'GK':'UNRESOLVED',minutes:n(s.games.minutes)??0,starts:n(s.games.lineups)??0,goals:n(s.goals.total),assists:n(s.goals.assists),axes,sourceHashes:context.playerReceipts.map((r:any)=>r.sha256)}];
  });

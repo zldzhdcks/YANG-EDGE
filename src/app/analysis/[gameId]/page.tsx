@@ -8,6 +8,15 @@ import {
 } from "@/lib/datetime/games-date";
 import { loadPublicGameAnalysis } from "@/lib/public-analysis/load-public-game-analysis";
 
+import {ownerRichPreviewEnabled} from '@/lib/public-analysis/load-owner-rich-preview';
+import {loadResearchExplorer} from '@/lib/public-analysis/load-research-explorer';
+import {TODAY_RESEARCH_BATCH,TODAY_RESEARCH_DATE} from '@/lib/public-analysis/research-explorer-contract';
+import UniversalResearch from '@/components/research/UniversalResearch';
+function researchDetail(gameId:string,date?:string){
+ if(!ownerRichPreviewEnabled()||date!==TODAY_RESEARCH_DATE)return null;
+ // Explicit active batch configuration, never a date-based batch discovery.
+ return loadResearchExplorer(TODAY_RESEARCH_BATCH,TODAY_RESEARCH_DATE).details.find(d=>d.line.targetId===gameId)??null;
+}
 type AnalysisSearch = {
   fromDate?: string;
   sport?: string;
@@ -42,6 +51,8 @@ export async function generateMetadata({
 }: AnalysisPageProps): Promise<Metadata> {
   const { gameId } = await params;
   const search = await searchParams;
+  const research = researchDetail(gameId, search.fromDate);
+  if (research) return { title: `${research.line.home} vs ${research.line.away} · Research | YANG EDGE`, robots: { index: false, follow: false } };
   const { view } = await loadAnalysisPage({ gameId, search });
   const titleBase =
     view.game.homeTeam && view.game.awayTeam
@@ -61,6 +72,8 @@ export default async function AnalysisPage({
 }: AnalysisPageProps) {
   const { gameId } = await params;
   const search = await searchParams;
+  const research = researchDetail(gameId, search.fromDate);
+  if (research) return <><Header /><main><UniversalResearch detail={research} /></main><Footer /></>;
   const { view } = await loadAnalysisPage({ gameId, search });
   const gamesBackHref = buildGamesBackPath(search.fromDate, view.game.dateKst);
 

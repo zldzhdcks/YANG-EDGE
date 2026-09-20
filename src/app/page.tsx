@@ -10,10 +10,18 @@ import { getKstToday } from '@/lib/datetime/kst';
 import ResearchShowcase from '@/components/home/ResearchShowcase';
 import {isAtleticoShowcase,SHOWCASE_DATE} from '@/lib/public-analysis/engine-lab';
 import OwnerPreviewNotice from '@/components/analysis/public/OwnerPreviewNotice';
+import {ownerRichPreviewEnabled} from '@/lib/public-analysis/load-owner-rich-preview';
+import {loadResearchExplorer} from '@/lib/public-analysis/load-research-explorer';
+import {TODAY_RESEARCH_BATCH,TODAY_RESEARCH_DATE} from '@/lib/public-analysis/research-explorer-contract';
+import ResearchHome from '@/components/research/ResearchHome';
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
+  if(ownerRichPreviewEnabled()){
+    const data=loadResearchExplorer(TODAY_RESEARCH_BATCH,TODAY_RESEARCH_DATE);
+    return <><Header/><ResearchHome data={data}/><Footer/></>;
+  }
   const richPreviews = loadOwnerRichPreviews(getKstToday());
   const showcase=richPreviews.find(x=>isAtleticoShowcase(x.preview));
   const edgePickResult = await loadTodayEdgePicks();
