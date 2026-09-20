@@ -1,0 +1,386 @@
+YANG EDGE — ROUND 111 ODDS-DERIVED SLATE ADMISSION V1
+
+사용자가 Round 111 신규 배당 전사 검토를 완료했다.
+
+현재 검토 대상:
+
+ROUND=111
+GAMES=61
+
+DATE_COUNTS:
+2026-09-20=50
+2026-09-21=11
+
+SPORT_COUNTS:
+SOCCER=42
+BASEBALL=11
+BASKETBALL=3
+VOLLEYBALL=5
+
+BLANK_ODDS_ROWS:
+3316
+3383
+3474
+3484
+
+BLANK_ODDS_STATUS:
+NOT_AVAILABLE_OR_NOT_POSTED
+
+MLB:
+이번 odds source에는 배당 미게시로 제외
+기존 MLB target 삭제 금지
+
+Priority:
+
+Manchester City vs Sunderland
+2026-09-20 22:00 KST
+MANDATORY_PREVIEW=true
+
+Atlético Madrid vs Real Madrid
+2026-09-20 23:15 KST
+MANDATORY_PREVIEW=true
+
+==================================================
+1. HUMAN CONFIRMATION
+==================================================
+
+이번 mission은 사용자의 명시적 확인 이후에만 진행한다.
+
+확인된 항목:
+
+- 61경기 전체
+- 날짜 분리
+- 팀명
+- 홈/원정
+- 경기시간
+- 시장 의미
+- 빈 배당 null 처리
+- 2-way 시장 중앙 "-"는 draw missing 아님
+
+사용자 확인이 실제로 존재하지 않으면 중단:
+
+FINAL=HUMAN_CONFIRMATION_REQUIRED
+
+==================================================
+2. NEW SLATE ADMISSION
+==================================================
+
+중요:
+
+이번 61경기는 기존 authoritative scope에 exact match가 0건이다.
+
+따라서 기존 scope에 덮어쓰기/강제 join 금지.
+
+Round 111의 별도 신규 slate candidate로 처리한다.
+
+기존:
+
+9/19 scope
+9/20 previous scope
+
+수정 금지.
+
+새 source evidence에서 새로운 Operator Slate candidate를 생성한다.
+
+==================================================
+3. DATE SEPARATION
+==================================================
+
+KST 기준으로 반드시 분리:
+
+2026-09-20
+2026-09-21
+
+각 날짜를 독립 Source Freeze / Scope Lock 대상으로 본다.
+
+9/21 경기를 9/20 scope에 넣지 않는다.
+
+==================================================
+4. ODDS SOURCE AS SOURCE EVIDENCE
+==================================================
+
+배당표 이미지에서 확인 가능한:
+
+sport
+competition
+scheduledStart
+home
+away
+
+를 새 slate source evidence로 사용한다.
+
+단 사용자가 확인하지 않은 필드는 추측 금지.
+
+odds 값 자체와 fixture identity를 분리 보존한다.
+
+==================================================
+5. BLANK ODDS
+==================================================
+
+rows:
+
+3316
+3383
+3474
+3484
+
+ODDS_VALUE=null
+
+ODDS_STATUS=NOT_AVAILABLE_OR_NOT_POSTED
+
+유지.
+
+금지:
+
+0
+1.00
+carry-forward
+other provider substitution
+
+==================================================
+6. MLB
+==================================================
+
+MLB가 이번 odds image에 없다는 것은:
+
+ODDS_NOT_POSTED_YET
+
+이지:
+
+NO_MLB_GAMES
+
+가 아니다.
+
+MLB 관련 기존 target 삭제 금지.
+
+이번 odds-derived slate에서 MLB가 식별되지 않는다면
+별도 NOT_INCLUDED_IN_CURRENT_ODDS_SOURCE 상태만 기록.
+
+==================================================
+7. PRIORITY TARGETS
+==================================================
+
+반드시 확인:
+
+Manchester City vs Sunderland
+
+Atlético Madrid vs Real Madrid
+
+둘 모두:
+
+MANDATORY_PREVIEW=true
+
+Prediction 가능 여부와 무관하게 Preview pipeline 유지.
+
+==================================================
+8. HUMAN-VERIFIED OPERATOR SLATE
+==================================================
+
+사용자 확인 후에만:
+
+reviewStatus=VERIFIED
+scopeCompletenessStatus=COMPLETE
+reviewedAt=<actual confirmation time>
+
+생성.
+
+이후 validator 실행.
+
+==================================================
+9. SOURCE FREEZE
+==================================================
+
+날짜별로:
+
+2026-09-20
+2026-09-21
+
+각각 독립 freeze.
+
+기존 sealed source 수정 금지.
+
+새 artifact path/version을 사용한다.
+
+==================================================
+10. TARGET SCOPE LOCK
+==================================================
+
+새 freeze를 기반으로 날짜별 새 Target Scope Lock을 만든다.
+
+기존 scope 파일을 overwrite하지 않는다.
+
+필요하면 versioned scope artifact 사용.
+
+보고:
+
+DATE=
+TARGET_COUNT=
+SPORT_BREAKDOWN=
+
+==================================================
+11. CURRENT WINDOW AUDIT
+==================================================
+
+2026-09-20 targets에 대해 최신 KST 기준:
+
+WINDOW_OPEN
+PREGAME_WINDOW_MISSED
+
+재평가.
+
+Result/live 조회 금지.
+
+Recoverable blocker는:
+
+PENDING/BLOCKED
+
+유지.
+
+조기 PASS 금지.
+
+==================================================
+12. OFFICIAL V1
+==================================================
+
+조건을 통과한 Football target은
+Official V1 Prediction을 실행 가능.
+
+필수:
+
+scope locked
+window open
+exact provider identity
+supported competition
+as-of safe
+valid input
+
+Prediction layer:
+
+NETWORK_CALLS=0
+PROVIDER_CALLS=0
+
+==================================================
+13. MANDATORY PREVIEW
+==================================================
+
+Manchester City vs Sunderland
+
+Atlético Madrid vs Real Madrid
+
+Preview는 반드시 생성.
+
+Allowed:
+
+FULL_PREVIEW
+LIMITED_PREVIEW
+PREVIEW_AWAITING_UPDATE
+
+금지:
+
+PASS
+SKIPPED
+NO_PREVIEW
+
+Official Prediction이 unavailable이어도 Preview 유지.
+
+==================================================
+14. V4 REAL EVIDENCE
+==================================================
+
+미래 Football target 중 cutoff 전인 경기에는:
+
+XI
+Injury
+Player Stats
+
+prospective evidence collector 실행 가능.
+
+단:
+
+V4 Prediction 금지
+V4 Shadow 금지
+Feature 자동 admission 금지
+
+==================================================
+15. PRIORITY TIMING
+==================================================
+
+Manchester City kickoff:
+22:00 KST
+
+Atlético vs Real kickoff:
+23:15 KST
+
+기존 XI poll policy에 따라
+cutoff 전 evidence observation을 놓치지 않는다.
+
+==================================================
+16. FINAL REPORT
+==================================================
+
+YANG EDGE — ROUND 111 NEW SLATE ADMISSION V1
+
+HUMAN
+CONFIRMED=
+REVIEWED_AT=
+
+ROUND
+ROUND=111
+TOTAL_GAMES=61
+
+DATE_2026_09_20
+TARGETS=
+SOCCER=
+BASEBALL=
+BASKETBALL=
+VOLLEYBALL=
+FREEZE=
+SCOPE_LOCK=
+
+DATE_2026_09_21
+TARGETS=
+SOCCER=
+BASEBALL=
+BASKETBALL=
+VOLLEYBALL=
+FREEZE=
+SCOPE_LOCK=
+
+ODDS
+FULL=
+BLANK=
+ZERO_FILLED=0
+
+PRIORITY
+MANCHESTER_CITY=
+ATLETICO_REAL=
+
+WINDOW
+AUDIT_TIME_KST=
+OPEN=
+MISSED=
+
+OFFICIAL_V1
+PREDICTIONS=
+PENDING=
+PASSES=
+
+PREVIEW
+MANCHESTER_CITY_STATUS=
+ATLETICO_REAL_STATUS=
+
+V4
+REAL_EVIDENCE_COLLECTION=
+XI=
+INJURY=
+PLAYER_STATS=
+FEATURES_ADMITTED=0
+ENGINE_IMPLEMENTED=false
+
+INTEGRITY
+EXISTING_SCOPE_OVERWRITTEN=false
+RETROACTIVE_PREDICTIONS=0
+RESULT_DATA_ACCESSED=false
+LIVE_DATA_ACCESSED=false
+
+FINAL=

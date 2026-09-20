@@ -1,0 +1,167 @@
+{
+  "schemaVersion": "round-111-odds-new-slate-admission-v1",
+  "namespace": "data/research/slate-batches/round-111-odds-new-v1",
+  "pathResolution": "All source.rel and artifact paths inside this batch resolve relative to this namespace, NOT repository root. Do not pass the batch to default production/V4 runners: they are not namespace-aware.",
+  "reviewedAt": "2026-09-20T03:36:00.044Z",
+  "sourceRel": "data/audits/2026-09-20-round-111-odds-new-v1.json",
+  "sourceSha256": "dc65b901059b2b9fda0a92cc8a3c86673c728d47238e227179cab9d0cf0f3e7d",
+  "dates": {
+    "2026-09-20": {
+      "targetCount": 50,
+      "sports": {
+        "BASEBALL": 11,
+        "BASKETBALL": 3,
+        "SOCCER": 31,
+        "VOLLEYBALL": 5
+      },
+      "freezeReady": true,
+      "freeze": "SOURCE_FREEZE_CREATED",
+      "scopeLock": "LOCKED",
+      "excluded": 0,
+      "artifacts": [
+        {
+          "path": "data/operator-input/betman/2026-09-20-daily-slate-v1.json",
+          "sha256": "5e5bcb1fbe17bb070ee2188d4777086ffa178513a32ee84ebb933d573ccd6f87"
+        },
+        {
+          "path": "data/research/daily-slates/2026-09-20-research-slate-source-freeze-v1.json",
+          "sha256": "26af6f4b3bca8bddc25b20ce6ecfd66ea2cbb10119df782396f867bb24b99b4a"
+        },
+        {
+          "path": "data/audits/2026-09-20-research-target-scope-lock-v1.json",
+          "sha256": "ee07df7cc50a0ab21ed7d228cd585f22777c92a5c5ab0cc7e43fe8cbce87ccbd"
+        }
+      ],
+      "validation": {
+        "status": "FREEZE_READY",
+        "blockingReasons": []
+      }
+    },
+    "2026-09-21": {
+      "targetCount": 11,
+      "sports": {
+        "SOCCER": 11
+      },
+      "freezeReady": true,
+      "freeze": "SOURCE_FREEZE_CREATED",
+      "scopeLock": "LOCKED",
+      "excluded": 0,
+      "artifacts": [
+        {
+          "path": "data/operator-input/betman/2026-09-21-daily-slate-v1.json",
+          "sha256": "fb32332e81f9358d4534a551ca4868d917fd91e86ea3b93c5050a3dfa8a670d2"
+        },
+        {
+          "path": "data/research/daily-slates/2026-09-21-research-slate-source-freeze-v1.json",
+          "sha256": "d684260d1fc6fa4b1211661e06fad0ca245809a2f7f8ada7118d7dafbfd9b466"
+        },
+        {
+          "path": "data/audits/2026-09-21-research-target-scope-lock-v1.json",
+          "sha256": "525efad73933ad8296b346cecfb80fd9a30d70aa1591c0b4ce9d65ecda7faab5"
+        }
+      ],
+      "validation": {
+        "status": "FREEZE_READY",
+        "blockingReasons": []
+      }
+    }
+  },
+  "auditTime": "2026-09-20T03:36:00.101Z",
+  "totalGames": 61,
+  "odds": {
+    "full": 298,
+    "blank": 4,
+    "zeroFilled": 0,
+    "blankRows": [
+      "3316",
+      "3383",
+      "3474",
+      "3484"
+    ],
+    "valuesRemainInSeparateSource": true
+  },
+  "mlb": "NOT_INCLUDED_IN_CURRENT_ODDS_SOURCE; existing targets unchanged",
+  "windowsByDate": {
+    "2026-09-20": {
+      "open": 50,
+      "missed": 0
+    },
+    "2026-09-21": {
+      "open": 11,
+      "missed": 0
+    }
+  },
+  "officialV1": {
+    "predictions": 0,
+    "pending": 61,
+    "passes": 0,
+    "productionReady": false
+  },
+  "v4": {
+    "collection": "BLOCKED_NOT_EXECUTED",
+    "xi": 0,
+    "injury": 0,
+    "playerStats": 0,
+    "featuresAdmitted": 0,
+    "engineImplemented": false,
+    "watchStarted": false,
+    "blockers": [
+      "COMMITTED_BATCH_SCOPE_RESOLVER_REQUIRED",
+      "EXACT_PROVIDER_BRIDGE_REQUIRED",
+      "REGISTRY_AND_RIGHTS_MANIFEST_REQUIRED"
+    ]
+  },
+  "protectedFiles": [
+    {
+      "path": "data/operator-input/betman/2026-09-19-daily-slate-v1.json",
+      "sha256": "77a39c24007e901da463f74b7f455d7fa7eaf8ce6b4d647f1158a05f2a12b384"
+    },
+    {
+      "path": "data/research/daily-slates/2026-09-19-research-slate-source-freeze-v1.json",
+      "sha256": "f05686254ce6b64e2b62b2b06faa48595be04712b059376efa6ec3f21d5dc715"
+    },
+    {
+      "path": "data/audits/2026-09-19-research-target-scope-lock-v1.json",
+      "sha256": "b624ed1cd8e530ac61ed2e82bf165df86f59c9cfe382f7b8c159f6494dc21ab4"
+    },
+    {
+      "path": "data/operator-input/betman/2026-09-20-daily-slate-v1.json",
+      "sha256": "4c0b9b59cde70ab6eb0b9741409de45e0043e219edc0134890e7d0262dab8f57"
+    },
+    {
+      "path": "data/research/daily-slates/2026-09-20-research-slate-source-freeze-v1.json",
+      "sha256": "2eeec697fb7c694ebbfad345f881cdbbd4541192e83ca56ecb6211af8ae1462f"
+    },
+    {
+      "path": "data/audits/2026-09-20-research-target-scope-lock-v1.json",
+      "sha256": "d7f421884fc23405fef6b1b1150878b1d51edc7640ca3ac1cb1de9dc5b0f7f78"
+    }
+  ],
+  "integrity": {
+    "existingScopeOverwritten": false,
+    "oddsSourceMutated": false,
+    "retroactivePredictions": 0,
+    "resultDataAccessed": false,
+    "liveDataAccessed": false,
+    "providerCalls": 0,
+    "networkCalls": 0,
+    "modelChanged": false,
+    "weightsChanged": false,
+    "thresholdsChanged": false
+  },
+  "checks": [
+    "61 identity-only games",
+    "50/11 KST separation",
+    "human receipt linked by hash",
+    "all new image hashes unchanged",
+    "duplicate identity and ID checks",
+    "FREEZE_READY both dates",
+    "freeze->operator hash chain",
+    "lock->freeze hash chain",
+    "idempotent freeze/lock byte preservation",
+    "6 original protected files unchanged",
+    "blank odds remain null",
+    "both mandatory previews created"
+  ],
+  "final": "NEW_SLATE_ADMITTED_PRODUCTION_AND_V4_BLOCKED"
+}
