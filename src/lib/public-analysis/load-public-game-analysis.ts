@@ -11,6 +11,8 @@ import { loadKboRecentFormForOperatorGame } from "./load-kbo-recent-form";
 import { resolveDailyCRowByPublicGameId } from "./game-id-resolver";
 import { projectDailyCRowToPublicView } from "./project-daily-c-row";
 import { finalizePublicAnalysisView } from "./finalize-public-view";
+import { loadOwnerRichPreviews, richPreviewView } from './load-owner-rich-preview';
+import {SHOWCASE_TARGET} from './engine-lab';
 import {
   projectLegacyResearchToPublicView,
   unresolvedPublicView,
@@ -53,6 +55,18 @@ export async function loadPublicGameAnalysis(input: {
   const dateKst = preferredDateKst(input.fromDate);
   const cwd = input.cwd ?? process.cwd();
   const listIdentity = input.listIdentity ?? null;
+
+  const richMatches = loadOwnerRichPreviews(dateKst, cwd).filter(x => x.gameIds.includes(publicGameId));
+  if (richMatches.length === 1) {
+    return { view: richPreviewView(richMatches[0].preview, publicGameId), resolution: {
+      matched: true, source: 'canonical-forward-preview', dateKst,
+      operatorGameId: richMatches[0].preview.targetId, reason: 'EXACT_ID_CANONICAL_HASH_VERIFIED',
+    }};
+  }
+
+  // A gated owner article is not proof that its Official Prediction is absent.
+  // Do not fall through into the legacy research reader for this explicit showcase.
+  if(publicGameId===SHOWCASE_TARGET){return{view:unresolvedPublicView(publicGameId,dateKst),resolution:{matched:false,source:'unresolved',dateKst,operatorGameId:SHOWCASE_TARGET,reason:'OWNER_PREVIEW_NOT_CONNECTED'}};}
 
   const artifact = await loadDailyCArtifact({ dateKst, cwd });
   if (artifact) {

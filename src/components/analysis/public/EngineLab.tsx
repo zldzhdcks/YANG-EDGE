@@ -1,0 +1,15 @@
+import type {RichPreview} from '@/lib/football/official-canonical-v1/rich-preview';
+import {engineLabFor} from '@/lib/public-analysis/engine-lab';
+
+export default function EngineLab({preview}:{preview:RichPreview}){
+ const lab=engineLabFor(preview);
+ return <section aria-label="YANG EDGE ENGINE LAB" className="space-y-5 rounded-2xl bg-zinc-900/60 p-5 sm:p-7">
+  <div><p className="text-xs font-semibold tracking-[.18em] text-emerald-400">YANG EDGE ENGINE LAB</p><h2 className="mt-2 text-xl font-semibold text-white">무엇을 보고, 어디까지 검증했을까</h2><p className="mt-2 text-sm leading-6 text-zinc-400">공식 판단과 연구 후보를 구분합니다. 연구가 끝나도 승격 기준을 통과하기 전에는 공식 예측에 반영하지 않습니다.</p></div>
+  <div className="grid gap-4 sm:grid-cols-2">
+   <article className="rounded-xl bg-zinc-950/70 p-5"><p className="text-xs font-medium text-emerald-400">{lab.v1.status}</p><h3 className="mt-2 font-semibold text-white">{lab.v1.name}</h3><p className="mt-3 text-sm leading-6 text-zinc-300">과거 득실점과 홈·원정 기록을 보는 기본 모델입니다. 이번 경기의 공식 판단도 V1입니다.</p><p className="mt-3 text-sm tabular-nums text-white">Atlético {(lab.v1.probabilities.pHome*100).toFixed(2)}% · Draw {(lab.v1.probabilities.pDraw*100).toFixed(2)}% · Real {(lab.v1.probabilities.pAway*100).toFixed(2)}%</p></article>
+   <article className="rounded-xl bg-zinc-950/70 p-5"><p className="text-xs text-zinc-400">RESEARCH · NOT PROMOTED</p><h3 className="mt-2 font-semibold text-white">V2 / H2 — 연구 후보</h3><p className="mt-3 text-sm leading-6 text-zinc-300">공식 모델로 승격되지 않은 연구 계열입니다. 이 경기에서 안전하게 확인된 사전 예측은 연결돼 있지 않습니다.</p><p className="mt-3 text-xs text-zinc-500">This match research prediction: {lab.h2.currentMatch}</p></article>
+   <article className="rounded-xl bg-zinc-950/70 p-5"><p className="text-xs text-zinc-400">RESEARCH CLOSED · NOT PROMOTED</p><h3 className="mt-2 font-semibold text-white">V3 / V3.1 — 슈팅의 질과 양</h3><p className="mt-3 text-sm leading-6 text-zinc-300">xG, 전체 슈팅, 유효 슈팅을 이용한 연구와 Backtest/Holdout 검증을 진행했습니다. 승격 기준을 충족하지 못해 공식 엔진에는 반영하지 않았습니다.</p><p className="mt-3 text-xs text-zinc-500">Current match V3 prediction: {lab.v3.currentMatch}</p><p className="mt-1 text-xs text-zinc-500">V3.1: {lab.v31.currentMatch}</p></article>
+   <article className="rounded-xl bg-zinc-950/70 p-5"><p className="text-xs text-amber-300">{lab.v4.status}</p><h3 className="mt-2 font-semibold text-white">V4 — Player / Lineup / Availability</h3><p className="mt-3 text-sm leading-6 text-zinc-300">선수 소속과 선발·부상 근거를 수집하는 기반을 준비했습니다. 선수 영향과 대체 선수 차이는 연구 단계이며, V4 공식 예측은 아직 구현되지 않았습니다.</p><dl className="mt-3 space-y-2 text-xs text-zinc-400">{[['Player Registry',lab.v4.playerRegistry],['Membership',lab.v4.membership],['XI Evidence Foundation',lab.v4.xiFoundation],['Injury/Suspension Structure',lab.v4.injuryStructure],['Confirmed XI',lab.v4.confirmedXI],['Player Impact Model',lab.v4.playerImpact],['Replacement Delta',lab.v4.replacementDelta],['Lineup Strength Delta',lab.v4.lineupStrengthDelta],['Official Prediction',lab.v4.officialPrediction]].map(([k,v])=><div className="flex flex-wrap justify-between gap-2" key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl></article>
+  </div>
+ </section>;
+}

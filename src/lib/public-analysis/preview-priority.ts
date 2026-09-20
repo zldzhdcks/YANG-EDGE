@@ -57,6 +57,8 @@ export function mandatoryPreviewContract(input: PreviewPriorityInput & {
   return {
     TARGET_ID: input.targetId,
     NARRATIVE_PREVIEW_REQUIRED: true,
+    RICH_PREVIEW_QUALITY: 'LIMITED' as const,
+    GENERIC_FALLBACK_COUNTS_AS_COMPLETE: false,
     NARRATIVE_PREVIEW: limitedNarrativePreview(input.home,input.away,input.predictionAvailable),
     ...priority,
     PREVIEW_STATUS: priority.IDENTITY_REVIEW_REQUIRED || !input.home || !input.away

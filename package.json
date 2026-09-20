@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev:owner-preview": "node scripts/start-owner-preview.mjs",
     "research:collect-football-pregame-evidence": "tsx --env-file=.env.local scripts/collect-football-pregame-fixture-evidence-v1.ts",
     "research:football-locked-sealed-forward": "tsx scripts/run-football-locked-sealed-forward-v1.ts",
     "research:mlb-sealed-input-check": "tsx scripts/run-mlb-sealed-input-v1.ts",

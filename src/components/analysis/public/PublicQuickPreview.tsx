@@ -1,11 +1,13 @@
 import Card from "@/components/ui/Card";
 import type { PublicQuickPreview } from "@/types/public-game-analysis-view";
+import RichMatchPreview from './RichMatchPreview';
 
 export default function PublicQuickPreview({
   preview,
 }: {
   preview: PublicQuickPreview;
 }) {
+  if (preview.rich) return <RichMatchPreview preview={preview.rich} />;
   if (!preview.available || preview.sentences.length === 0) return null;
   return (
     <Card as="section" padding="md" className="rounded-xl">

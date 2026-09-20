@@ -12,7 +12,7 @@ import { getTeamDisplayName } from "@/lib/teams/get-team-display-name";
 
 export type PublicAnalysisResolution = {
   matched: boolean;
-  source: "daily-c" | "legacy-research" | "unresolved";
+  source: "daily-c" | "legacy-research" | "unresolved" | "canonical-forward-preview";
   dateKst: string | null;
   operatorGameId: string | null;
   reason: string;

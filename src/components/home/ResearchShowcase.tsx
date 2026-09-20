@@ -1,0 +1,8 @@
+import type {RichPreview} from '@/lib/football/official-canonical-v1/rich-preview';
+import {SHOWCASE_ROUTE} from '@/lib/public-analysis/engine-lab';
+export default function ResearchShowcase({preview:p}:{preview:RichPreview}){
+ return <section className="mx-auto max-w-5xl space-y-5 px-4 py-8 sm:px-6" aria-label="TODAY'S RESEARCH MATCH">
+  <div className="rounded-2xl bg-zinc-900 p-6 sm:p-8"><p className="text-xs font-semibold tracking-[.18em] text-emerald-400">TODAY&apos;S RESEARCH MATCH</p><h2 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">Atlético Madrid vs Real Madrid</h2><p className="mt-2 text-sm text-zinc-400">2026-09-20 23:15 KST · LOCAL OWNER ONLY</p><p className="mt-5 text-xs text-zinc-500">YANG EDGE V1 · HOME / DRAW / AWAY</p><p className="mt-2 text-2xl font-semibold tabular-nums text-white">{(p.officialV1.pHome*100).toFixed(2)} / {(p.officialV1.pDraw*100).toFixed(2)} / {(p.officialV1.pAway*100).toFixed(2)}</p><a className="mt-6 inline-flex rounded-lg bg-emerald-400 px-5 py-3 text-sm font-semibold text-zinc-950 hover:bg-emerald-300" href={SHOWCASE_ROUTE}>상세 분석 보기 →</a></div>
+  <div aria-label="ENGINE RESEARCH"><h3 className="mb-3 text-xs font-semibold tracking-wider text-zinc-500">ENGINE RESEARCH</h3><div className="grid gap-3 sm:grid-cols-3">{[['V1','Poisson Baseline','OFFICIAL BASELINE'],['V3','xG / Shots / SOT','RESEARCH COMPLETE · NOT PROMOTED'],['V4','Starting XI / Player Impact / Injury','IN DEVELOPMENT']].map(([v,name,status])=><div key={v} className="rounded-xl bg-zinc-900/60 p-5"><p className="text-lg font-semibold text-white">{v}</p><p className="mt-2 text-sm text-zinc-300">{name}</p><p className="mt-3 text-xs leading-5 text-zinc-500">{status}</p></div>)}</div></div>
+ </section>;
+}

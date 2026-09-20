@@ -61,6 +61,8 @@ export type PublicQuickPreviewBasis =
   | "NONE";
 
 export type PublicQuickPreview = {
+  /** Local owner projection only; excluded from public builds by the server loader. */
+  rich?: import('../lib/football/official-canonical-v1/rich-preview').RichPreview;
   priority?: ReturnType<typeof import("../lib/public-analysis/preview-priority").mandatoryPreviewContract>;
   available: boolean;
   sentences: string[];
