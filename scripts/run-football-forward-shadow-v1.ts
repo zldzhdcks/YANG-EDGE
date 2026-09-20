@@ -80,10 +80,10 @@ export async function run(options: {collectionOnly?:boolean} = {}){
   const coverage=auditCoverage(local,[...known.values()],Date.now(),failures.length===0);
   const next=ordered.filter(f=>f.providerStatus==='NS'&&Date.parse(f.kickoffUtc)>Date.now());const slateDate=next[0]?.kickoffUtc.slice(0,10)??null;
   const slate=slateDate?coverage.find(a=>a.payload.date===slateDate):undefined;
-  const predictionReferences=frozen.filter(s=>s.kind==='SEALED'||s.kind==='EXISTING').map(({fixtureId,hash})=>({fixtureId,hash}));
+  const predictionReferences=frozen.filter(s=>s.kind==='SEALED'||s.kind==='EXISTING'||s.kind==='EXISTING_OFFICIAL_PREDICTION').map(({fixtureId,hash})=>({fixtureId,hash}));
   const manifest=predictionReferences.length?envelope({schemaVersion:'FOOTBALL_FORWARD_SNAPSHOT_MANIFEST_V1',snapshots:predictionReferences}):null;
   if(manifest)writeOnce(join(runs,runId+'-snapshot-manifest.json'),JSON.stringify(manifest,null,2)+'\n');
-  const result=envelope({schemaVersion:'FOOTBALL_4_LEAGUE_FORWARD_SHADOW_V1',startedAt,completedAt:new Date().toISOString(),status:failures.length?'BLOCKED_OR_PARTIAL_PROVIDER_COVERAGE':frozen.some(s=>['SEALED','EXISTING'].includes(s.kind))?'LIVE_SNAPSHOTS_SEALED':slateDate?'READY_NO_ELIGIBLE_TARGET':'READY_NO_UPCOMING_SLATE',
+  const result=envelope({schemaVersion:'FOOTBALL_4_LEAGUE_FORWARD_SHADOW_V1',startedAt,completedAt:new Date().toISOString(),status:failures.length?'BLOCKED_OR_PARTIAL_PROVIDER_COVERAGE':frozen.some(s=>['SEALED','EXISTING','EXISTING_OFFICIAL_PREDICTION'].includes(s.kind))?'LIVE_SNAPSHOTS_SEALED':slateDate?'READY_NO_ELIGIBLE_TARGET':'READY_NO_UPCOMING_SLATE',
     firstLiveSlateDate:slateDate,slate:slate?.payload??null,apiCalls:calls,seasons,historyAudits,failures,snapshotReferences:frozen,coverageComplete:failures.length===0,scheduledFixtures:failures.length?null:ordered.length,observedScheduledFixtures:ordered.length,historyPolicy:'ACTUALLY_OBSERVED_PAST_FT_SAME_LEAGUE_365D',
     forwardSnapshotSha256:manifest?.sha256??null,modelVersion:'football-poisson-research-v1',modelSourceHash:MODEL_HASH,MODEL_CHANGED:false,ODDS_USED:false,OWNER_SHADOW_USED:false,EXTERNAL_SHADOW_USED:false,TARGET_RESULT_DATA_USED:false,PAST_COMPLETED_RESULT_DATA_USED:predictionReferences.length?frozen.some(s=>s.pastCompletedResultDataUsed===true):null});
   writeOnce(join(runs,runId+'-report.json'),JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result,null,2));return result;

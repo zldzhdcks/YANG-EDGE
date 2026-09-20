@@ -10,6 +10,7 @@ import {fileURLToPath} from 'node:url';
 import {envelope,MODEL_HASH,readSealed} from './football-forward-shadow-v1';
 import {scheduleState} from './football-forward-schedule-ledger-v1';
 import {validatePregame,validateGrade} from './football-forward-validation-v1';
+import {canonicalGradeAllowed} from '../src/lib/football/official-canonical-v1';
 
 export const SCHEMA_VERSION='FOOTBALL_FORWARD_CUMULATIVE_EVALUATION_V1';
 export const FORWARD_MODEL='football-poisson-research-v1';
@@ -219,6 +220,7 @@ export function evaluateForwardCumulative(root:string,now=Date.now()){
       }
       const snapshot=validatePregame(root,fixtureId);
       const p=snapshot.payload;
+      if(p.status==='PREDICTED'&&!canonicalGradeAllowed(root,fixtureId,snapshot.sha256)){integrityExclusions.push({fixtureId,reason:'DUPLICATE_NONCANONICAL_EXCLUDED'});continue;}
       const receipt=readSealed(join(dir,'seal-receipt.json'));
       const slot=day(p.kickoffUtc);
       slot.scheduled++;

@@ -6,6 +6,7 @@ import {randomUUID} from 'node:crypto';
 import {envelope,readSealed,writeOnce,type Fixture} from './football-forward-shadow-v1';
 import {scheduleState,restoreScheduleLedger} from './football-forward-schedule-ledger-v1';
 import {validatePregame,validateGrade} from './football-forward-validation-v1';
+import {canonicalGradeAllowed} from '../src/lib/football/official-canonical-v1';
 
 export type GradeReference={fixtureId:number;predictionHash:string;gradeHash:string;gradedAt:string};
 export function milestoneCrossings(root:string,references:GradeReference[]){
@@ -43,7 +44,9 @@ export function generateScorecards(root:string,now=Date.now(),discoveryFailed=fa
         if(existsSync(join(dir,'miss.json'))){readSealed(join(dir,'miss.json'));assert.ok(!existsSync(join(dir,'first-seen-after-kickoff.json')),'CONFLICTING_ABSENCE_STATES');missed++;continue;}
         if(existsSync(join(dir,'first-seen-after-kickoff.json'))){readSealed(join(dir,'first-seen-after-kickoff.json'));firstSeenAfterKickoff++;continue;}
         if(!existsSync(file)){if(f.providerStatus==='NS'&&Date.parse(f.kickoffUtc)-now>=60000)eligible++;continue;}
-        const snapshot=validatePregame(root,f.fixtureId),p=snapshot.payload;eligible++;
+        const snapshot=validatePregame(root,f.fixtureId),p=snapshot.payload;
+        if(p.status==='PREDICTED'&&!canonicalGradeAllowed(root,f.fixtureId,snapshot.sha256))continue;
+        eligible++;
         if(p.status==='PASS')pass++;else{predicted++;if(p.predictedClass==='HOME')homePredictions++;else if(p.predictedClass==='DRAW')drawPredictions++;else awayPredictions++;}
         if(!existsSync(join(model,'postgame',f.fixtureId+'.json')))continue;
         const g=validateGrade(root,f.fixtureId,now);graded++;

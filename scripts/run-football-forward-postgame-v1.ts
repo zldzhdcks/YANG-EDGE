@@ -7,6 +7,7 @@ import {randomUUID} from 'node:crypto';
 import {grade,type ResultObservation} from './football-forward-postgame-v1';
 import {validatePregame,validateGrade} from './football-forward-validation-v1';
 import {envelope,sha,writeOnce} from './football-forward-shadow-v1';
+import {canonicalGradeAllowed} from '../src/lib/football/official-canonical-v1';
 type ProviderFixture={fixture:{id:number;date:string;status:{short:string}};league:{id:number};score:{fulltime:{home:number;away:number}}};
 export function projectFt(r:ProviderFixture,id:number,leagueId:number,kickoffUtc:string,providerFetchedAt:string,sourceHash:string):ResultObservation|null{
   assert.equal(r.fixture.id,id,'FIXTURE_ID_MISMATCH');assert.equal(r.league.id,leagueId,'LEAGUE_ID_MISMATCH');
@@ -24,6 +25,7 @@ export async function collectPostgame(root:string,key:string|undefined,options:{
       if(!existsSync(join(fixtures,String(id),'snapshot.json')))continue;
       try{
         const s=validatePregame(root,id),p=s.payload;
+        if(p.status==='PREDICTED'&&!canonicalGradeAllowed(root,id,s.sha256)){rows.push({fixtureId:id,status:'DUPLICATE_NONCANONICAL_EXCLUDED'});continue;}
         if(existsSync(join(model,'postgame',id+'.json'))){validateGrade(root,id,clock());rows.push({fixtureId:id,status:'EXISTING_GRADE_VERIFIED_SKIP'});continue;}
         if(clock()<=Date.parse(p.kickoffUtc)){rows.push({fixtureId:id,status:'PREGAME_PENDING'});continue;}
         assert.ok(key,'MISSING_PROVIDER_KEY');assert.ok(requests<100,'REQUEST_BUDGET_EXHAUSTED');

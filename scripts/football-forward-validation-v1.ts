@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {existsSync} from 'node:fs';
 import {join} from 'node:path';
 import {readSealed,MODEL_HASH} from './football-forward-shadow-v1';
+import {canonicalGradeAllowed} from '../src/lib/football/official-canonical-v1';
 export function validatePregame(root:string,fixtureId:number){
   assert.ok(Number.isSafeInteger(fixtureId)&&fixtureId>0);
   const dir=join(root,'MODEL_FORWARD','fixtures',String(fixtureId));
@@ -23,6 +24,7 @@ export function outcome(score:{home:number;away:number}){
 }
 export function validateGrade(root:string,fixtureId:number,now=Date.now()){
   const snapshot=validatePregame(root,fixtureId),p=snapshot.payload;
+  if(p.status==='PREDICTED')assert(canonicalGradeAllowed(root,fixtureId,snapshot.sha256),'NONCANONICAL_GRADE_EXCLUDED');
   const grade=readSealed(join(root,'MODEL_FORWARD','postgame',fixtureId+'.json')),g=grade.payload;
   assert.equal(g.fixtureId,fixtureId);assert.equal(g.predictionHash,snapshot.sha256);
   const observed=g.providerFetchedAt??g.officialCompletionEvidence?.providerFetchedAt;

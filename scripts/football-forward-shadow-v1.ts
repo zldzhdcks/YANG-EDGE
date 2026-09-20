@@ -5,6 +5,7 @@ import {existsSync,mkdirSync,readFileSync,openSync,writeFileSync,fsyncSync,close
 import {join} from 'node:path';
 import {predictFootball,POLICY} from '../src/lib/football/poisson-research-v1/index';
 import {observeSchedule,scheduleState} from './football-forward-schedule-ledger-v1';
+import {officialContext,canonicalForFixture,withOfficialFixtureLock} from '../src/lib/football/official-canonical-v1';
 export const MODEL_HASH='6efa82f916346599b5e9c6ee4ad768501f7a0d2254dc9d2376acd5df755aadbf';
 export const sha=(v:string)=>createHash('sha256').update(v).digest('hex');
 export function canonical(v:unknown):string {if(Array.isArray(v))return `[${v.map(canonical).join(',')}]`;if(v!==null&&typeof v==='object'){const o=v as Record<string,unknown>;return `{${Object.keys(o).sort().map(k=>`${JSON.stringify(k)}:${canonical(o[k])}`).join(',')}}`;}return JSON.stringify(v);}
@@ -41,6 +42,13 @@ export function recordAbsence(root:string,f:Fixture,now:number){
   writeOnce(late,JSON.stringify(value,null,2)+'\n');return {kind:'FIRST_SEEN_AFTER_KICKOFF' as const,envelope:value};
 }
 export function freeze(root:string,f:Fixture,clock=()=>Date.now(),observations:Completed[]=[]){
+ validateFixture(f);
+ return withOfficialFixtureLock(root,f.fixtureId,()=>{
+  if(officialContext(root).managed){const existing=canonicalForFixture(root,f.fixtureId);if(existing){assert.deepEqual(existing.identity,{leagueId:f.leagueId,season:f.season,homeTeamId:f.homeTeam.id,awayTeamId:f.awayTeam.id},'EXISTING_OFFICIAL_IDENTITY_CONFLICT');assert.equal(existing.scheduledStart,f.kickoffUtc,'EXISTING_OFFICIAL_SCHEDULE_CONFLICT');return{kind:'EXISTING_OFFICIAL_PREDICTION' as const,envelope:existing.snapshot,canonicalRoot:existing.root};}}
+  return freezeLocal(root,f,clock,observations);
+ });
+}
+function freezeLocal(root:string,f:Fixture,clock=()=>Date.now(),observations:Completed[]=[]){
   validateFixture(f);const dir=join(root,LAYERS.MODEL_FORWARD,'fixtures',String(f.fixtureId));mkdirSync(dir,{recursive:true});
   const file=join(dir,'snapshot.json'),miss=join(dir,'miss.json');
   if(existsSync(miss))return {kind:'MISSED' as const,envelope:readSealed(miss)};
@@ -93,6 +101,7 @@ export function auditCoverage(root:string,fixtures:Fixture[],now=Date.now(),prov
   const dates=[...new Set([new Date(now).toISOString().slice(0,10),...fixtures.map(f=>f.kickoffUtc.slice(0,10))])].sort();const audits=[];
   for(const date of dates){const rows=fixtures.filter(f=>f.kickoffUtc.startsWith(date));let predicted=0,pass=0,missed=0,eligible=0,firstSeenAfterKickoff=0;
     for(const f of rows){const dir=join(root,LAYERS.MODEL_FORWARD,'fixtures',String(f.fixtureId));
+      if(officialContext(root).managed&&canonicalForFixture(root,f.fixtureId)){predicted++;eligible++;continue;}
       if(existsSync(join(dir,'miss.json'))){readSealed(join(dir,'miss.json'));missed++;continue;}
       if(existsSync(join(dir,'first-seen-after-kickoff.json'))){readSealed(join(dir,'first-seen-after-kickoff.json'));firstSeenAfterKickoff++;continue;}
       if(existsSync(join(dir,'snapshot.json'))&&existsSync(join(dir,'seal-receipt.json'))){const s=readSealed(join(dir,'snapshot.json')),r=readSealed(join(dir,'seal-receipt.json'));assert.equal(s.sha256,r.payload.snapshotHash);assert.equal(readSealed(join(dir,'input.json')).sha256,s.payload.inputSnapshotHash);assert.ok(Date.parse(r.payload.sealedAt)<Date.parse(s.payload.kickoffUtc));if(s.payload.status==='PREDICTED')predicted++;else pass++;eligible++;}

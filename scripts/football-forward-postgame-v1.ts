@@ -4,9 +4,11 @@ import {existsSync,mkdirSync} from 'node:fs';
 import {join} from 'node:path';
 import {envelope,writeOnce,LAYERS} from './football-forward-shadow-v1';
 import {validatePregame,validateGrade,outcome} from './football-forward-validation-v1';
+import {canonicalGradeAllowed} from '../src/lib/football/official-canonical-v1';
 export type ResultObservation={fixtureId:number;leagueId:number;fixtureStatus:'FT';actualScore:{home:number;away:number};providerFetchedAt:string;sourceHash:string};
 export function grade(root:string,result:ResultObservation,clock=()=>Date.now()){
   const now=clock(),prediction=validatePregame(root,result.fixtureId),p=prediction.payload;
+  if(p.status==='PREDICTED')assert(canonicalGradeAllowed(root,result.fixtureId,prediction.sha256),'NONCANONICAL_GRADE_EXCLUDED');
   if(existsSync(join(root,LAYERS.MODEL_FORWARD,'postgame',result.fixtureId+'.json')))return validateGrade(root,result.fixtureId,now);
   assert.equal(result.fixtureId,p.fixtureId);assert.equal(result.leagueId,p.leagueId);assert.equal(result.fixtureStatus,'FT');
   assert.ok(Date.parse(result.providerFetchedAt)>Date.parse(p.kickoffUtc)&&Date.parse(result.providerFetchedAt)<=now,'NOT_OBSERVED_POSTGAME');

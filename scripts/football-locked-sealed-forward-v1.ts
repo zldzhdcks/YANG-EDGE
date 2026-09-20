@@ -27,6 +27,8 @@ export function runLockedSealedForward(cwd:string,dateKst:string,targetId:string
   if(existsSync(path))assert.equal(readEnvelope(path).sha256,bridge.sha256);else writeOnce(path,JSON.stringify(bridge,null,2)+'\n');
   const root=join(cwd,'data/cache/research/football/forward-shadow-v1');
   const result=freeze(root,fixture,()=>Date.now(),observations);
+  // A later batch must not fabricate an earlier identity observation or rewrite its terminal.
+  if(result.kind==='EXISTING_OFFICIAL_PREDICTION')return {result,terminal:null,readiness:'EXISTING_OFFICIAL_PREDICTION'};
   if(result.envelope?.payload.status!=='PREDICTED')return {result,terminal:null,readiness:'INPUT_WAITING'};
   const terminal=advancePregame(cwd,dateKst,targetId,'PENDING',{prediction:{kind:'FOOTBALL_FORWARD_V1',fixtureId:identity.fixtureId,snapshotHash:result.envelope.sha256,scopeSha256:scope.hash,identityEvidenceHash:bridge.sha256}});
   return {result,terminal,readiness:'SEALED'};
