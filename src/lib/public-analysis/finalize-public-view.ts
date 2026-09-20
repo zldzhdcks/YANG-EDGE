@@ -20,6 +20,7 @@ export function finalizePublicAnalysisView(
   priorityContext?: Pick<PreviewPriorityInput, "previewPriority" | "matchKind">,
 ): PublicGameAnalysisViewV1 {
   const filled = applyListIdentityFallback(view, listIdentity);
+  const priority = mandatoryPreviewContract({targetId:filled.game.gameId,sport:filled.game.sport,home:filled.game.homeTeam,away:filled.game.awayTeam,...priorityContext,predictionAvailable:filled.analysis.officialPredictionAvailable,predictionReason:filled.analysis.description,updatedAt:filled.meta.updatedAt});
   return {
     ...filled,
     quickPreview: { ...projectQuickPreview({
@@ -30,15 +31,6 @@ export function finalizePublicAnalysisView(
       state: filled.analysis.state,
       officialPredictionAvailable: filled.analysis.officialPredictionAvailable,
       identityBasis: identityBasis(view.game, filled.game),
-    }), priority: mandatoryPreviewContract({
-      targetId: filled.game.gameId,
-      sport: filled.game.sport,
-      home: filled.game.homeTeam,
-      away: filled.game.awayTeam,
-      ...priorityContext,
-      predictionAvailable: filled.analysis.officialPredictionAvailable,
-      predictionReason: filled.analysis.description,
-      updatedAt: filled.meta.updatedAt,
-    }) },
+    }), ...(priority?{available:true,sentences:[priority.NARRATIVE_PREVIEW.summary,priority.NARRATIVE_PREVIEW.lineupAnalysis]}:{}), priority },
   };
 }

@@ -1,4 +1,5 @@
 /** Presentation policy only. Never a fixture identity bridge or engine input. */
+import {limitedNarrativePreview} from './limited-narrative-preview';
 export type PreviewPriorityRegistry = {
   teams: readonly string[];
   matches: readonly (readonly [string, string])[];
@@ -6,7 +7,7 @@ export type PreviewPriorityRegistry = {
 };
 
 export const PREVIEW_PRIORITY_REGISTRY: PreviewPriorityRegistry = {
-  teams: ["Manchester City FC", "Manchester City", "Man City", "맨체스터 시티", "맨체스터시티", "맨시티"],
+  teams: ["Manchester City FC", "Manchester City", "Man City", "맨체스터 시티", "맨체스터시티", "맨시티", "맨체스C"],
   // Exact display labels only; this does not bind a provider fixture or date.
   matches: [
     ["Atlético de Madrid", "Real Madrid"],
@@ -55,6 +56,8 @@ export function mandatoryPreviewContract(input: PreviewPriorityInput & {
   if (!priority.PREVIEW_REQUIRED) return null;
   return {
     TARGET_ID: input.targetId,
+    NARRATIVE_PREVIEW_REQUIRED: true,
+    NARRATIVE_PREVIEW: limitedNarrativePreview(input.home,input.away,input.predictionAvailable),
     ...priority,
     PREVIEW_STATUS: priority.IDENTITY_REVIEW_REQUIRED || !input.home || !input.away
       ? "PREVIEW_AWAITING_UPDATE" as const : "LIMITED_PREVIEW" as const,
