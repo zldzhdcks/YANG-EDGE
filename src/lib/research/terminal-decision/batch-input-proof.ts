@@ -10,7 +10,7 @@ export function validateBatchInputProof(root:string,b:{batchId:string;scopeId:st
  const fixture=readEnvelope(resolve(root,inputs.fixtureEvidencePath)),history=readEnvelope(resolve(root,inputs.historyPath));
  assert.equal(fixture.sha256,inputs.fixtureEvidenceHash);assert.equal(history.sha256,inputs.historyHash);
  assert.equal(p.inputSnapshotId,`${b.scopeSha256}:${targetId}`);
- assert.equal(p.inputSha256,sha(canonical({fixtureHash:fixture.sha256,historyHash:history.sha256,targetId,...b})));
+ assert.equal(p.inputSha256,sha(canonical({fixtureHash:fixture.sha256,historyHash:history.sha256,targetId,batchId:b.batchId,scopeId:b.scopeId,scopeSha256:b.scopeSha256})));
  assert.equal(time(p.observedAt),Math.max(time(fixture.payload.observedAt),time(history.payload.sealedAt)));
  assert.equal(time(p.collectedAt),Math.max(time(fixture.payload.collectedAt),time(history.payload.sealedAt)));
  assert(time(p.observedAt)<=time(p.collectedAt)&&time(p.asOf)<=time(p.collectedAt),'PROVENANCE_ORDER');
