@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "internal-squad-membership-rights-v1",
+  "createdAt": "2026-09-20T04:16:54.945Z",
+  "internalCollectionAuthorized": true,
+  "authorizationBasis": "Owner explicitly authorized private prospective collection; provider Chat AI guidance is conditional supporting evidence, not a license.",
+  "sourceTypes": [
+    "XI",
+    "INJURY",
+    "PLAYER_STATS"
+  ],
+  "evidence": {
+    "path": "docs/FOOTBALL_V3_FEATURE_DATA_ACCESS_GATE_V1.json",
+    "sha256": "045d1526d6712e4f85d9472f26fc4ef8b3032886f51e81e060f67dda163872e2"
+  },
+  "sources": [
+    {
+      "source": "API_FOOTBALL",
+      "sourceType": "XI",
+      "endpoint": "/fixtures/lineups",
+      "internalResearchStatus": "CONDITIONAL_SUPPORTED_BY_PROVIDER_CHAT_AI_GUIDANCE",
+      "publicDisplayStatus": "UNCONFIRMED",
+      "commercialStatus": "UNCONFIRMED",
+      "redistributionStatus": "PROHIBITED_UNDER_RECORDED_GUIDANCE",
+      "writtenConfirmation": "NO",
+      "humanSupportConfirmation": false,
+      "formalWrittenLicense": false
+    },
+    {
+      "source": "API_FOOTBALL",
+      "sourceType": "INJURY",
+      "endpoint": "/injuries",
+      "internalResearchStatus": "CONDITIONAL_SUPPORTED_BY_PROVIDER_CHAT_AI_GUIDANCE",
+      "publicDisplayStatus": "UNCONFIRMED",
+      "commercialStatus": "UNCONFIRMED",
+      "redistributionStatus": "PROHIBITED_UNDER_RECORDED_GUIDANCE",
+      "writtenConfirmation": "NO",
+      "humanSupportConfirmation": false,
+      "formalWrittenLicense": false
+    },
+    {
+      "source": "API_FOOTBALL",
+      "sourceType": "PLAYER_STATS",
+      "endpoint": "/players",
+      "internalResearchStatus": "CONDITIONAL_SUPPORTED_BY_PROVIDER_CHAT_AI_GUIDANCE",
+      "publicDisplayStatus": "UNCONFIRMED",
+      "commercialStatus": "UNCONFIRMED",
+      "redistributionStatus": "PROHIBITED_UNDER_RECORDED_GUIDANCE",
+      "writtenConfirmation": "NO",
+      "humanSupportConfirmation": false,
+      "formalWrittenLicense": false
+    }
+  ],
+  "rawProviderDataGitAllowed": false,
+  "featureAdmissionAllowed": false,
+  "membershipEndpoints": [
+    "/players/squads"
+  ],
+  "purpose": "Minimum current roster ID evidence for the four exact priority fixture teams; no scores or player performance features",
+  "authority": "Explicit owner mission ROUND 111 PRIORITY PREVIEW + V4 REGISTRY READINESS V1 section 6; same CONDITIONAL private internal-use basis, no legal upgrade.",
+  "documentation": "https://www.api-football.com/news/post/football-players-squads",
+  "membershipSemantics": "Current club roster observed now. League/season are target fixture context, not an assertion of league registration eligibility. validFrom=actual observation, not transfer date."
+}
