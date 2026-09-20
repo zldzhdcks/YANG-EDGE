@@ -1,0 +1,1441 @@
+{
+  "createdAt": "2026-09-20T09:17:10.457Z",
+  "batch": "round-111-odds-new-v1",
+  "date": "2026-09-20",
+  "scopeHash": "ee07df7cc50a0ab21ed7d228cd585f22777c92a5c5ab0cc7e43fe8cbce87ccbd",
+  "scheduleObservedAt": "2026-09-20T09:13:43.319Z",
+  "scheduleSha256": "5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+  "unresolvedBefore": 29,
+  "counts": {
+    "AMBIGUOUS": 4,
+    "CONFLICT": 5,
+    "TEAM_ID_UNRESOLVED": 2,
+    "EXACT": 18
+  },
+  "newTeamIdentities": 27,
+  "newAliases": 35,
+  "reusedIdentities": 12,
+  "oneOffHardcodeCount": 0,
+  "registryFile": "data\\research\\football\\provider-identity-batch-v1\\alias-registry.json",
+  "providerCalls": 10,
+  "v4ReservedBudgetUsed": 0,
+  "targetResultAccessed": false,
+  "liveDataAccessed": false,
+  "targetPostgameAccessed": false,
+  "newPredictions": 0,
+  "rows": [
+    {
+      "targetId": "BETMAN-20260920-45",
+      "competition": "AG남축",
+      "sourceHome": "이란M",
+      "sourceAway": "중국M",
+      "kickoff": "2026-09-20T14:00:00+09:00",
+      "providerCompetitionId": null,
+      "providerHomeTeamId": null,
+      "providerAwayTeamId": null,
+      "providerFixtureId": null,
+      "identityStatus": "AMBIGUOUS",
+      "identityConfidence": "NOT_ADMITTED",
+      "competitionStatus": "AMBIGUOUS",
+      "homeTeamStatus": "NOT_FOUND",
+      "awayTeamStatus": "NOT_FOUND",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": "SOURCE_MENS_LABEL_DOES_NOT_VERIFY_U23_AGE_CLASS",
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "BASIC",
+      "regressionOnly": false,
+      "identity": null,
+      "researchGapReasons": [
+        "PROVIDER_IDENTITY_UNRESOLVED",
+        "MISSING_CURRENT_SEASON_DATA",
+        "MISSING_RECENT_FORM",
+        "MISSING_HOME_AWAY_SPLIT",
+        "TEMPORAL_EVIDENCE_INCOMPLETE",
+        "SOURCE_MENS_LABEL_DOES_NOT_VERIFY_U23_AGE_CLASS"
+      ],
+      "researchObservedAt": null,
+      "researchHistoryCounts": []
+    },
+    {
+      "targetId": "BETMAN-20260920-54",
+      "competition": "AG남축",
+      "sourceHome": "홍콩M",
+      "sourceAway": "태국M",
+      "kickoff": "2026-09-20T16:00:00+09:00",
+      "providerCompetitionId": null,
+      "providerHomeTeamId": null,
+      "providerAwayTeamId": null,
+      "providerFixtureId": null,
+      "identityStatus": "AMBIGUOUS",
+      "identityConfidence": "NOT_ADMITTED",
+      "competitionStatus": "AMBIGUOUS",
+      "homeTeamStatus": "NOT_FOUND",
+      "awayTeamStatus": "NOT_FOUND",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": "SOURCE_MENS_LABEL_DOES_NOT_VERIFY_U23_AGE_CLASS",
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "BASIC",
+      "regressionOnly": false,
+      "identity": null,
+      "researchGapReasons": [
+        "PROVIDER_IDENTITY_UNRESOLVED",
+        "MISSING_CURRENT_SEASON_DATA",
+        "MISSING_RECENT_FORM",
+        "MISSING_HOME_AWAY_SPLIT",
+        "TEMPORAL_EVIDENCE_INCOMPLETE",
+        "SOURCE_MENS_LABEL_DOES_NOT_VERIFY_U23_AGE_CLASS"
+      ],
+      "researchObservedAt": null,
+      "researchHistoryCounts": []
+    },
+    {
+      "targetId": "BETMAN-20260920-57",
+      "competition": "K리그1",
+      "sourceHome": "강원FC",
+      "sourceAway": "제주SKFC",
+      "kickoff": "2026-09-20T16:30:00+09:00",
+      "providerCompetitionId": 292,
+      "providerHomeTeamId": null,
+      "providerAwayTeamId": null,
+      "providerFixtureId": null,
+      "identityStatus": "CONFLICT",
+      "identityConfidence": "NOT_ADMITTED",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "NOT_FOUND",
+      "awayTeamStatus": "NOT_FOUND",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": "CURRENT_PROVIDER_TEAM_ID_NAME_CONFLICT_WITH_FROZEN_K_LEAGUE_CATALOG",
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "BASIC",
+      "regressionOnly": false,
+      "identity": null,
+      "researchGapReasons": [
+        "PROVIDER_IDENTITY_UNRESOLVED",
+        "MISSING_CURRENT_SEASON_DATA",
+        "MISSING_RECENT_FORM",
+        "MISSING_HOME_AWAY_SPLIT",
+        "TEMPORAL_EVIDENCE_INCOMPLETE",
+        "CURRENT_PROVIDER_TEAM_ID_NAME_CONFLICT_WITH_FROZEN_K_LEAGUE_CATALOG"
+      ],
+      "researchObservedAt": null,
+      "researchHistoryCounts": []
+    },
+    {
+      "targetId": "BETMAN-20260920-58",
+      "competition": "K리그1",
+      "sourceHome": "전북현대",
+      "sourceAway": "광주FC",
+      "kickoff": "2026-09-20T16:30:00+09:00",
+      "providerCompetitionId": 292,
+      "providerHomeTeamId": null,
+      "providerAwayTeamId": null,
+      "providerFixtureId": null,
+      "identityStatus": "CONFLICT",
+      "identityConfidence": "NOT_ADMITTED",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "NOT_FOUND",
+      "awayTeamStatus": "NOT_FOUND",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": "CURRENT_PROVIDER_TEAM_ID_NAME_CONFLICT_WITH_FROZEN_K_LEAGUE_CATALOG",
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "BASIC",
+      "regressionOnly": false,
+      "identity": null,
+      "researchGapReasons": [
+        "PROVIDER_IDENTITY_UNRESOLVED",
+        "MISSING_CURRENT_SEASON_DATA",
+        "MISSING_RECENT_FORM",
+        "MISSING_HOME_AWAY_SPLIT",
+        "TEMPORAL_EVIDENCE_INCOMPLETE",
+        "CURRENT_PROVIDER_TEAM_ID_NAME_CONFLICT_WITH_FROZEN_K_LEAGUE_CATALOG"
+      ],
+      "researchObservedAt": null,
+      "researchHistoryCounts": []
+    },
+    {
+      "targetId": "BETMAN-20260920-59",
+      "competition": "K리그2",
+      "sourceHome": "안산그리",
+      "sourceAway": "충북청주",
+      "kickoff": "2026-09-20T16:30:00+09:00",
+      "providerCompetitionId": 293,
+      "providerHomeTeamId": null,
+      "providerAwayTeamId": 7061,
+      "providerFixtureId": null,
+      "identityStatus": "CONFLICT",
+      "identityConfidence": "NOT_ADMITTED",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "NOT_FOUND",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": "PROVIDER_TEAM_ID_NAME_CONFLICT_WITH_EXISTING_REGISTRY",
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "BASIC",
+      "regressionOnly": false,
+      "identity": null,
+      "researchGapReasons": [
+        "PROVIDER_IDENTITY_UNRESOLVED",
+        "MISSING_CURRENT_SEASON_DATA",
+        "MISSING_RECENT_FORM",
+        "MISSING_HOME_AWAY_SPLIT",
+        "TEMPORAL_EVIDENCE_INCOMPLETE",
+        "PROVIDER_TEAM_ID_NAME_CONFLICT_WITH_EXISTING_REGISTRY"
+      ],
+      "researchObservedAt": null,
+      "researchHistoryCounts": []
+    },
+    {
+      "targetId": "BETMAN-20260920-60",
+      "competition": "K리그2",
+      "sourceHome": "용인FC",
+      "sourceAway": "경남FC",
+      "kickoff": "2026-09-20T16:30:00+09:00",
+      "providerCompetitionId": 293,
+      "providerHomeTeamId": null,
+      "providerAwayTeamId": null,
+      "providerFixtureId": null,
+      "identityStatus": "TEAM_ID_UNRESOLVED",
+      "identityConfidence": "NOT_ADMITTED",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "NOT_FOUND",
+      "awayTeamStatus": "NOT_FOUND",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": "VERIFIED_COMPETITION_SCOPED_ALIAS_REQUIRED",
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "BASIC",
+      "regressionOnly": false,
+      "identity": null,
+      "researchGapReasons": [
+        "PROVIDER_IDENTITY_UNRESOLVED",
+        "MISSING_CURRENT_SEASON_DATA",
+        "MISSING_RECENT_FORM",
+        "MISSING_HOME_AWAY_SPLIT",
+        "TEMPORAL_EVIDENCE_INCOMPLETE",
+        "VERIFIED_COMPETITION_SCOPED_ALIAS_REQUIRED"
+      ],
+      "researchObservedAt": null,
+      "researchHistoryCounts": []
+    },
+    {
+      "targetId": "BETMAN-20260920-62",
+      "competition": "J1리그",
+      "sourceHome": "마치다Z",
+      "sourceAway": "가시와R",
+      "kickoff": "2026-09-20T17:00:00+09:00",
+      "providerCompetitionId": 98,
+      "providerHomeTeamId": 303,
+      "providerAwayTeamId": 281,
+      "providerFixtureId": 1556075,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "BASIC",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1556075,
+        "leagueId": 98,
+        "leagueName": "J1 League",
+        "season": 2027,
+        "kickoff": "2026-09-20T08:00:00.000Z",
+        "homeId": 303,
+        "homeName": "Machida Zelvia",
+        "awayId": 281,
+        "awayName": "Kashiwa Reysol"
+      },
+      "researchGapReasons": [
+        "MISSING_CURRENT_SEASON_DATA",
+        "MISSING_RECENT_FORM",
+        "MISSING_HOME_AWAY_SPLIT",
+        "TEMPORAL_EVIDENCE_INCOMPLETE",
+        "PREGAME_OBSERVATION_WINDOW_CLOSED"
+      ],
+      "researchObservedAt": null,
+      "researchHistoryCounts": []
+    },
+    {
+      "targetId": "BETMAN-20260920-63",
+      "competition": "J1리그",
+      "sourceHome": "G오사카",
+      "sourceAway": "비셀고베",
+      "kickoff": "2026-09-20T17:00:00+09:00",
+      "providerCompetitionId": 98,
+      "providerHomeTeamId": 293,
+      "providerAwayTeamId": 289,
+      "providerFixtureId": 1556073,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "BASIC",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1556073,
+        "leagueId": 98,
+        "leagueName": "J1 League",
+        "season": 2027,
+        "kickoff": "2026-09-20T08:00:00.000Z",
+        "homeId": 293,
+        "homeName": "Gamba Osaka",
+        "awayId": 289,
+        "awayName": "Vissel Kobe"
+      },
+      "researchGapReasons": [
+        "MISSING_CURRENT_SEASON_DATA",
+        "MISSING_RECENT_FORM",
+        "MISSING_HOME_AWAY_SPLIT",
+        "TEMPORAL_EVIDENCE_INCOMPLETE",
+        "PREGAME_OBSERVATION_WINDOW_CLOSED"
+      ],
+      "researchObservedAt": null,
+      "researchHistoryCounts": []
+    },
+    {
+      "targetId": "BETMAN-20260920-64",
+      "competition": "J2리그",
+      "sourceHome": "도치기시",
+      "sourceAway": "V센다이",
+      "kickoff": "2026-09-20T17:00:00+09:00",
+      "providerCompetitionId": 99,
+      "providerHomeTeamId": 7145,
+      "providerAwayTeamId": 286,
+      "providerFixtureId": 1606665,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "BASIC",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1606665,
+        "leagueId": 99,
+        "leagueName": "J2 League",
+        "season": 2026,
+        "kickoff": "2026-09-20T08:00:00.000Z",
+        "homeId": 7145,
+        "homeName": "Tochigi City",
+        "awayId": 286,
+        "awayName": "Vegalta Sendai"
+      },
+      "researchGapReasons": [
+        "MISSING_CURRENT_SEASON_DATA",
+        "MISSING_RECENT_FORM",
+        "MISSING_HOME_AWAY_SPLIT",
+        "TEMPORAL_EVIDENCE_INCOMPLETE",
+        "PREGAME_OBSERVATION_WINDOW_CLOSED"
+      ],
+      "researchObservedAt": null,
+      "researchHistoryCounts": []
+    },
+    {
+      "targetId": "BETMAN-20260920-68",
+      "competition": "AG남축",
+      "sourceHome": "북한M",
+      "sourceAway": "아랍에M",
+      "kickoff": "2026-09-20T19:00:00+09:00",
+      "providerCompetitionId": null,
+      "providerHomeTeamId": null,
+      "providerAwayTeamId": null,
+      "providerFixtureId": null,
+      "identityStatus": "AMBIGUOUS",
+      "identityConfidence": "NOT_ADMITTED",
+      "competitionStatus": "AMBIGUOUS",
+      "homeTeamStatus": "NOT_FOUND",
+      "awayTeamStatus": "NOT_FOUND",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": "SOURCE_MENS_LABEL_DOES_NOT_VERIFY_U23_AGE_CLASS",
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "BASIC",
+      "regressionOnly": false,
+      "identity": null,
+      "researchGapReasons": [
+        "PROVIDER_IDENTITY_UNRESOLVED",
+        "MISSING_CURRENT_SEASON_DATA",
+        "MISSING_RECENT_FORM",
+        "MISSING_HOME_AWAY_SPLIT",
+        "TEMPORAL_EVIDENCE_INCOMPLETE",
+        "SOURCE_MENS_LABEL_DOES_NOT_VERIFY_U23_AGE_CLASS"
+      ],
+      "researchObservedAt": null,
+      "researchHistoryCounts": []
+    },
+    {
+      "targetId": "BETMAN-20260920-69",
+      "competition": "K리그1",
+      "sourceHome": "인천유나",
+      "sourceAway": "대전하나",
+      "kickoff": "2026-09-20T19:00:00+09:00",
+      "providerCompetitionId": 292,
+      "providerHomeTeamId": null,
+      "providerAwayTeamId": null,
+      "providerFixtureId": null,
+      "identityStatus": "CONFLICT",
+      "identityConfidence": "NOT_ADMITTED",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "NOT_FOUND",
+      "awayTeamStatus": "NOT_FOUND",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": "CURRENT_PROVIDER_TEAM_ID_NAME_CONFLICT_WITH_FROZEN_K_LEAGUE_CATALOG",
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "BASIC",
+      "regressionOnly": false,
+      "identity": null,
+      "researchGapReasons": [
+        "PROVIDER_IDENTITY_UNRESOLVED",
+        "MISSING_CURRENT_SEASON_DATA",
+        "MISSING_RECENT_FORM",
+        "MISSING_HOME_AWAY_SPLIT",
+        "TEMPORAL_EVIDENCE_INCOMPLETE",
+        "CURRENT_PROVIDER_TEAM_ID_NAME_CONFLICT_WITH_FROZEN_K_LEAGUE_CATALOG"
+      ],
+      "researchObservedAt": null,
+      "researchHistoryCounts": []
+    },
+    {
+      "targetId": "BETMAN-20260920-70",
+      "competition": "K리그1",
+      "sourceHome": "포항스틸",
+      "sourceAway": "FC서울",
+      "kickoff": "2026-09-20T19:00:00+09:00",
+      "providerCompetitionId": 292,
+      "providerHomeTeamId": null,
+      "providerAwayTeamId": 2766,
+      "providerFixtureId": null,
+      "identityStatus": "CONFLICT",
+      "identityConfidence": "NOT_ADMITTED",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "NOT_FOUND",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": "CURRENT_PROVIDER_TEAM_ID_NAME_CONFLICT_WITH_FROZEN_K_LEAGUE_CATALOG",
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "BASIC",
+      "regressionOnly": false,
+      "identity": null,
+      "researchGapReasons": [
+        "PROVIDER_IDENTITY_UNRESOLVED",
+        "MISSING_CURRENT_SEASON_DATA",
+        "MISSING_RECENT_FORM",
+        "MISSING_HOME_AWAY_SPLIT",
+        "TEMPORAL_EVIDENCE_INCOMPLETE",
+        "CURRENT_PROVIDER_TEAM_ID_NAME_CONFLICT_WITH_FROZEN_K_LEAGUE_CATALOG"
+      ],
+      "researchObservedAt": null,
+      "researchHistoryCounts": []
+    },
+    {
+      "targetId": "BETMAN-20260920-71",
+      "competition": "K리그2",
+      "sourceHome": "김해FC",
+      "sourceAway": "파주프런",
+      "kickoff": "2026-09-20T19:00:00+09:00",
+      "providerCompetitionId": 293,
+      "providerHomeTeamId": null,
+      "providerAwayTeamId": null,
+      "providerFixtureId": null,
+      "identityStatus": "TEAM_ID_UNRESOLVED",
+      "identityConfidence": "NOT_ADMITTED",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "NOT_FOUND",
+      "awayTeamStatus": "NOT_FOUND",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": "VERIFIED_COMPETITION_SCOPED_ALIAS_REQUIRED",
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "BASIC",
+      "regressionOnly": false,
+      "identity": null,
+      "researchGapReasons": [
+        "PROVIDER_IDENTITY_UNRESOLVED",
+        "MISSING_CURRENT_SEASON_DATA",
+        "MISSING_RECENT_FORM",
+        "MISSING_HOME_AWAY_SPLIT",
+        "TEMPORAL_EVIDENCE_INCOMPLETE",
+        "VERIFIED_COMPETITION_SCOPED_ALIAS_REQUIRED"
+      ],
+      "researchObservedAt": null,
+      "researchHistoryCounts": []
+    },
+    {
+      "targetId": "BETMAN-20260920-72",
+      "competition": "K리그2",
+      "sourceHome": "성남FC",
+      "sourceAway": "화성FC",
+      "kickoff": "2026-09-20T19:00:00+09:00",
+      "providerCompetitionId": 293,
+      "providerHomeTeamId": 2757,
+      "providerAwayTeamId": 7087,
+      "providerFixtureId": 1510458,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1510458,
+        "leagueId": 293,
+        "leagueName": "K League 2",
+        "season": 2026,
+        "kickoff": "2026-09-20T10:00:00.000Z",
+        "homeId": 2757,
+        "homeName": "Seongnam FC",
+        "awayId": 7087,
+        "awayName": "Hwaseong"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T09:19:08.957Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 2757,
+          "count": 24
+        },
+        {
+          "teamId": 7087,
+          "count": 25
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-74",
+      "competition": "에레디비",
+      "sourceHome": "페예노르",
+      "sourceAway": "위트레흐",
+      "kickoff": "2026-09-20T19:15:00+09:00",
+      "providerCompetitionId": 88,
+      "providerHomeTeamId": 209,
+      "providerAwayTeamId": 207,
+      "providerFixtureId": 1552176,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1552176,
+        "leagueId": 88,
+        "leagueName": "Eredivisie",
+        "season": 2026,
+        "kickoff": "2026-09-20T10:15:00.000Z",
+        "homeId": 209,
+        "homeName": "Feyenoord",
+        "awayId": 207,
+        "awayName": "Utrecht"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T09:19:15.936Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 209,
+          "count": 6
+        },
+        {
+          "teamId": 207,
+          "count": 6
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-76",
+      "competition": "AG남축",
+      "sourceHome": "키르기M",
+      "sourceAway": "일본M",
+      "kickoff": "2026-09-20T19:30:00+09:00",
+      "providerCompetitionId": null,
+      "providerHomeTeamId": null,
+      "providerAwayTeamId": null,
+      "providerFixtureId": null,
+      "identityStatus": "AMBIGUOUS",
+      "identityConfidence": "NOT_ADMITTED",
+      "competitionStatus": "AMBIGUOUS",
+      "homeTeamStatus": "NOT_FOUND",
+      "awayTeamStatus": "NOT_FOUND",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": "SOURCE_MENS_LABEL_DOES_NOT_VERIFY_U23_AGE_CLASS",
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "BASIC",
+      "regressionOnly": false,
+      "identity": null,
+      "researchGapReasons": [
+        "PROVIDER_IDENTITY_UNRESOLVED",
+        "MISSING_CURRENT_SEASON_DATA",
+        "MISSING_RECENT_FORM",
+        "MISSING_HOME_AWAY_SPLIT",
+        "TEMPORAL_EVIDENCE_INCOMPLETE",
+        "SOURCE_MENS_LABEL_DOES_NOT_VERIFY_U23_AGE_CLASS"
+      ],
+      "researchObservedAt": null,
+      "researchHistoryCounts": []
+    },
+    {
+      "targetId": "BETMAN-20260920-77",
+      "competition": "세리에A",
+      "sourceHome": "피오렌티",
+      "sourceAway": "나폴리",
+      "kickoff": "2026-09-20T19:30:00+09:00",
+      "providerCompetitionId": 135,
+      "providerHomeTeamId": 502,
+      "providerAwayTeamId": 492,
+      "providerFixtureId": 1550130,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1550130,
+        "leagueId": 135,
+        "leagueName": "Serie A",
+        "season": 2026,
+        "kickoff": "2026-09-20T10:30:00.000Z",
+        "homeId": 502,
+        "homeName": "Fiorentina",
+        "awayId": 492,
+        "awayName": "Napoli"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T09:19:22.922Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 502,
+          "count": 4
+        },
+        {
+          "teamId": 492,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-79",
+      "competition": "EFL챔",
+      "sourceHome": "울버햄튼",
+      "sourceAway": "웨스브로",
+      "kickoff": "2026-09-20T20:00:00+09:00",
+      "providerCompetitionId": 40,
+      "providerHomeTeamId": 39,
+      "providerAwayTeamId": 60,
+      "providerFixtureId": 1563177,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1563177,
+        "leagueId": 40,
+        "leagueName": "Championship",
+        "season": 2026,
+        "kickoff": "2026-09-20T11:00:00.000Z",
+        "homeId": 39,
+        "homeName": "Wolves",
+        "awayId": 60,
+        "awayName": "West Brom"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T09:19:29.919Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 39,
+          "count": 6
+        },
+        {
+          "teamId": 60,
+          "count": 7
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-80",
+      "competition": "라리가",
+      "sourceHome": "헤타페",
+      "sourceAway": "말라가",
+      "kickoff": "2026-09-20T21:00:00+09:00",
+      "providerCompetitionId": 140,
+      "providerHomeTeamId": 546,
+      "providerAwayTeamId": 535,
+      "providerFixtureId": 1570398,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1570398,
+        "leagueId": 140,
+        "leagueName": "La Liga",
+        "season": 2026,
+        "kickoff": "2026-09-20T12:00:00.000Z",
+        "homeId": 546,
+        "homeName": "Getafe",
+        "awayId": 535,
+        "awayName": "Malaga"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T09:19:36.905Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 546,
+          "count": 6
+        },
+        {
+          "teamId": 535,
+          "count": 6
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-81",
+      "competition": "EFL챔",
+      "sourceHome": "노리치C",
+      "sourceAway": "볼턴W",
+      "kickoff": "2026-09-20T21:30:00+09:00",
+      "providerCompetitionId": 40,
+      "providerHomeTeamId": 71,
+      "providerAwayTeamId": 68,
+      "providerFixtureId": 1563173,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1563173,
+        "leagueId": 40,
+        "leagueName": "Championship",
+        "season": 2026,
+        "kickoff": "2026-09-20T12:30:00.000Z",
+        "homeId": 71,
+        "homeName": "Norwich",
+        "awayId": 68,
+        "awayName": "Bolton"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T09:19:29.919Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 71,
+          "count": 7
+        },
+        {
+          "teamId": 68,
+          "count": 7
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-82",
+      "competition": "에레디비",
+      "sourceHome": "알크마르",
+      "sourceAway": "텔스타",
+      "kickoff": "2026-09-20T21:30:00+09:00",
+      "providerCompetitionId": 88,
+      "providerHomeTeamId": 201,
+      "providerAwayTeamId": 427,
+      "providerFixtureId": 1552177,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1552177,
+        "leagueId": 88,
+        "leagueName": "Eredivisie",
+        "season": 2026,
+        "kickoff": "2026-09-20T12:30:00.000Z",
+        "homeId": 201,
+        "homeName": "AZ Alkmaar",
+        "awayId": 427,
+        "awayName": "Telstar"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T09:19:15.936Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 201,
+          "count": 6
+        },
+        {
+          "teamId": 427,
+          "count": 6
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-83",
+      "competition": "에레디비",
+      "sourceHome": "트벤테",
+      "sourceAway": "PSV",
+      "kickoff": "2026-09-20T21:30:00+09:00",
+      "providerCompetitionId": 88,
+      "providerHomeTeamId": 415,
+      "providerAwayTeamId": 197,
+      "providerFixtureId": 1552179,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1552179,
+        "leagueId": 88,
+        "leagueName": "Eredivisie",
+        "season": 2026,
+        "kickoff": "2026-09-20T12:30:00.000Z",
+        "homeId": 415,
+        "homeName": "Twente",
+        "awayId": 197,
+        "awayName": "PSV Eindhoven"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T09:19:15.936Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 415,
+          "count": 6
+        },
+        {
+          "teamId": 197,
+          "count": 6
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-84",
+      "competition": "EPL",
+      "sourceHome": "본머스",
+      "sourceAway": "리버풀",
+      "kickoff": "2026-09-20T22:00:00+09:00",
+      "providerCompetitionId": 39,
+      "providerHomeTeamId": 35,
+      "providerAwayTeamId": 40,
+      "providerFixtureId": 1557407,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1557407,
+        "leagueId": 39,
+        "leagueName": "Premier League",
+        "season": 2026,
+        "kickoff": "2026-09-20T13:00:00.000Z",
+        "homeId": 35,
+        "homeName": "Bournemouth",
+        "awayId": 40,
+        "awayName": "Liverpool"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T09:19:44.306Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 35,
+          "count": 4
+        },
+        {
+          "teamId": 40,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-85",
+      "competition": "EPL",
+      "sourceHome": "리즈U",
+      "sourceAway": "크리스털",
+      "kickoff": "2026-09-20T22:00:00+09:00",
+      "providerCompetitionId": 39,
+      "providerHomeTeamId": 63,
+      "providerAwayTeamId": 52,
+      "providerFixtureId": 1557412,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1557412,
+        "leagueId": 39,
+        "leagueName": "Premier League",
+        "season": 2026,
+        "kickoff": "2026-09-20T13:00:00.000Z",
+        "homeId": 63,
+        "homeName": "Leeds",
+        "awayId": 52,
+        "awayName": "Crystal Palace"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T09:19:44.306Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 63,
+          "count": 4
+        },
+        {
+          "teamId": 52,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-86",
+      "competition": "EPL",
+      "sourceHome": "맨체스C",
+      "sourceAway": "선덜랜드",
+      "kickoff": "2026-09-20T22:00:00+09:00",
+      "providerCompetitionId": 39,
+      "providerHomeTeamId": 50,
+      "providerAwayTeamId": 746,
+      "providerFixtureId": 1557413,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "EXACT_PROVIDER_ID",
+      "awayTeamStatus": "EXACT_PROVIDER_ID",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "STANDARD",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": true,
+      "identity": {
+        "fixtureId": 1557413,
+        "leagueId": 39,
+        "leagueName": "Premier League",
+        "season": 2026,
+        "kickoff": "2026-09-20T13:00:00.000Z",
+        "homeId": 50,
+        "homeName": "Manchester City",
+        "awayId": 746,
+        "awayName": "Sunderland"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T08:29:57.583Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 50,
+          "count": 4
+        },
+        {
+          "teamId": 746,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-87",
+      "competition": "세리에A",
+      "sourceHome": "프로시노",
+      "sourceAway": "코모1907",
+      "kickoff": "2026-09-20T22:00:00+09:00",
+      "providerCompetitionId": 135,
+      "providerHomeTeamId": 512,
+      "providerAwayTeamId": 895,
+      "providerFixtureId": 1550131,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1550131,
+        "leagueId": 135,
+        "leagueName": "Serie A",
+        "season": 2026,
+        "kickoff": "2026-09-20T13:00:00.000Z",
+        "homeId": 512,
+        "homeName": "Frosinone",
+        "awayId": 895,
+        "awayName": "Como"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T09:19:22.922Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 512,
+          "count": 4
+        },
+        {
+          "teamId": 895,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-88",
+      "competition": "세리에A",
+      "sourceHome": "파르마",
+      "sourceAway": "제노아",
+      "kickoff": "2026-09-20T22:00:00+09:00",
+      "providerCompetitionId": 135,
+      "providerHomeTeamId": 523,
+      "providerAwayTeamId": 495,
+      "providerFixtureId": 1550134,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1550134,
+        "leagueId": 135,
+        "leagueName": "Serie A",
+        "season": 2026,
+        "kickoff": "2026-09-20T13:00:00.000Z",
+        "homeId": 523,
+        "homeName": "Parma",
+        "awayId": 495,
+        "awayName": "Genoa"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T09:19:22.922Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 523,
+          "count": 4
+        },
+        {
+          "teamId": 495,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-89",
+      "competition": "프리그1",
+      "sourceHome": "AJ오세르",
+      "sourceAway": "브레스트",
+      "kickoff": "2026-09-20T22:00:00+09:00",
+      "providerCompetitionId": 61,
+      "providerHomeTeamId": 108,
+      "providerAwayTeamId": 106,
+      "providerFixtureId": 1552766,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1552766,
+        "leagueId": 61,
+        "leagueName": "Ligue 1",
+        "season": 2026,
+        "kickoff": "2026-09-20T13:00:00.000Z",
+        "homeId": 108,
+        "homeName": "Auxerre",
+        "awayId": 106,
+        "awayName": "Stade Brestois 29"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T09:19:51.299Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 108,
+          "count": 4
+        },
+        {
+          "teamId": 106,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-90",
+      "competition": "분데스리",
+      "sourceHome": "레버쿠젠",
+      "sourceAway": "라이프치",
+      "kickoff": "2026-09-20T22:30:00+09:00",
+      "providerCompetitionId": 78,
+      "providerHomeTeamId": 168,
+      "providerAwayTeamId": 173,
+      "providerFixtureId": 1575169,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1575169,
+        "leagueId": 78,
+        "leagueName": "Bundesliga",
+        "season": 2026,
+        "kickoff": "2026-09-20T13:30:00.000Z",
+        "homeId": 168,
+        "homeName": "Bayer Leverkusen",
+        "awayId": 173,
+        "awayName": "RB Leipzig"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T09:19:58.298Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 168,
+          "count": 3
+        },
+        {
+          "teamId": 173,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-91",
+      "competition": "라리가",
+      "sourceHome": "AT마드",
+      "sourceAway": "레알마드",
+      "kickoff": "2026-09-20T23:15:00+09:00",
+      "providerCompetitionId": 140,
+      "providerHomeTeamId": 530,
+      "providerAwayTeamId": 541,
+      "providerFixtureId": 1570394,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "EXACT_PROVIDER_ID",
+      "awayTeamStatus": "EXACT_PROVIDER_ID",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "STANDARD",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": true,
+      "identity": {
+        "fixtureId": 1570394,
+        "leagueId": 140,
+        "leagueName": "La Liga",
+        "season": 2026,
+        "kickoff": "2026-09-20T14:15:00.000Z",
+        "homeId": 530,
+        "homeName": "Atletico Madrid",
+        "awayId": 541,
+        "awayName": "Real Madrid"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T07:12:06.351Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 530,
+          "count": 6
+        },
+        {
+          "teamId": 541,
+          "count": 6
+        }
+      ]
+    },
+    {
+      "targetId": "BETMAN-20260920-92",
+      "competition": "에레디비",
+      "sourceHome": "네이메헌",
+      "sourceAway": "고어헤드",
+      "kickoff": "2026-09-20T23:45:00+09:00",
+      "providerCompetitionId": 88,
+      "providerHomeTeamId": 413,
+      "providerAwayTeamId": 410,
+      "providerFixtureId": 1552178,
+      "identityStatus": "EXACT",
+      "identityConfidence": "EXACT_ID_AND_SCHEDULE_CROSSCHECK",
+      "competitionStatus": "EXACT",
+      "homeTeamStatus": "ALIAS_VERIFIED",
+      "awayTeamStatus": "ALIAS_VERIFIED",
+      "evidence": [
+        "SCHEDULE_SHA256:5773d935671804feee1571d916dc4cf8c831323a0138ff16648a5dadb1f6267f",
+        "HUMAN_VERIFIED_OPERATOR_SOURCE_FREEZE",
+        "COMPETITION_REGISTRY",
+        "REUSABLE_ALIAS_REGISTRY"
+      ],
+      "failureReason": null,
+      "researchTierBefore": "BASIC",
+      "researchTierAfter": "STANDARD",
+      "regressionOnly": false,
+      "identity": {
+        "fixtureId": 1552178,
+        "leagueId": 88,
+        "leagueName": "Eredivisie",
+        "season": 2026,
+        "kickoff": "2026-09-20T14:45:00.000Z",
+        "homeId": 413,
+        "homeName": "NEC Nijmegen",
+        "awayId": 410,
+        "awayName": "GO Ahead Eagles"
+      },
+      "researchGapReasons": [],
+      "researchObservedAt": "2026-09-20T09:19:15.936Z",
+      "researchHistoryCounts": [
+        {
+          "teamId": 413,
+          "count": 6
+        },
+        {
+          "teamId": 410,
+          "count": 6
+        }
+      ]
+    }
+  ],
+  "finalizedAt": "2026-09-20T09:23:06.541Z",
+  "callBreakdown": {
+    "identityMetadata": 1,
+    "completedHistory": 9
+  },
+  "historyCollectionHash": "df9a10f170c2fe01eaf7ca30ec90866e078d43482666abbc46f1ca32eb223f5a",
+  "aliasRegistryHash": "8833aea9a5c9ce58644e76754c361032d6af52d50734e41f519db1e5d4ab8c22",
+  "skippedResearch": [
+    {
+      "targetId": "BETMAN-20260920-62",
+      "reason": "PREGAME_OBSERVATION_WINDOW_CLOSED"
+    },
+    {
+      "targetId": "BETMAN-20260920-63",
+      "reason": "PREGAME_OBSERVATION_WINDOW_CLOSED"
+    },
+    {
+      "targetId": "BETMAN-20260920-64",
+      "reason": "PREGAME_OBSERVATION_WINDOW_CLOSED"
+    }
+  ],
+  "research": {
+    "standardBefore": 2,
+    "basicBefore": 29,
+    "standardAfter": 17,
+    "basicAfter": 14,
+    "basicToStandard": 15,
+    "targetWithoutLine": 0,
+    "standardCoverageRate": 54.83870967741935
+  },
+  "engineChanged": false,
+  "weightsChanged": false,
+  "thresholdsChanged": false,
+  "featureSetChanged": false,
+  "oneOffHardcodeDefinition": "Target-specific provider-ID assignments: none; reusable competition-scoped alias review records are registry data."
+}
