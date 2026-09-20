@@ -1,3 +1,4 @@
+import {applyFootballDepth} from './load-football-research-depth';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync,readdirSync} from 'node:fs';
 import {join,resolve} from 'node:path';
@@ -10,7 +11,7 @@ import type {RichPreview} from '../football/official-canonical-v1/rich-preview';
 import {playerEvidenceFromContext} from '../football/official-canonical-v1/preview-player-context-v3';
 import {safeResearchPlayers} from './research-player-safety';
 const stable=(x:unknown):string=>JSON.stringify(x,(_k,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(k=>[k,v[k]])):v);
-export type ResearchDetail={line:ResearchLine;preview:RichPreview|null;players:any[]};
+export type ResearchDetail={line:ResearchLine;preview:RichPreview|null;players:any[];depth?:{teams:any[]|null;season:number|null;tables:any[];summary:string[];gaps:string[];recencyCheck:string}};
 export function loadResearchExplorer(batch:string,date:string,cwd=process.cwd()){
  assert(ownerRichPreviewEnabled(),'LOCAL_OWNER_ONLY');assert(batch,'EXPLICIT_BATCH_REQUIRED');
  const selected=selectProductionBatch(cwd,date,batch),lockRel=researchTargetScopeLockRel(date),bytes=readFileSync(join(selected.root,lockRel));
@@ -57,5 +58,6 @@ export function loadResearchExplorer(batch:string,date:string,cwd=process.cwd())
   for(const d of details)if(d.preview){d.players=d.preview.teams.map(team=>{const c=ctx.teams.find((x:any)=>x.teamId===team.id&&x.fixtureId===d.preview!.fixtureId);if(!c)return{teamId:team.id,name:team.name,roles:null};const candidates=playerEvidenceFromContext(c,registry,d.preview!.createdAt);return{teamId:team.id,name:team.name,roles:safeResearchPlayers(candidates),observedAt:c.playerReceipts.map((r:any)=>r.providerFetchedAt).sort().at(-1)};});}
  }
  }catch{for(const d of details){d.players=[];d.line.quality.push('PLAYER_EVIDENCE_UNAVAILABLE');}}
+ applyFootballDepth(details,cwd,selected.binding!.scopeSha256);
  return{batch,date,scopeHash:selected.binding!.scopeSha256,lines:details.map(d=>d.line),details,total:lock.targetCount};
 }
