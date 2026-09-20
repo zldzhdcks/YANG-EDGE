@@ -8,14 +8,15 @@ export type FixtureEvidence = {schemaVersion:'football-pregame-fixture-evidence-
 export async function collectFixtureEvidence(dateKst:string,leagueId:number,season:number,destination:string,transport:typeof fetch=fetch,allowCurrentDate=false){
   assert.match(dateKst,/^\d{4}-\d{2}-\d{2}$/);assert.equal(new Date(`${dateKst}T00:00:00Z`).toISOString().slice(0,10),dateKst);
   assert.ok([39,140,135,78].includes(leagueId));assert.ok(Number.isSafeInteger(season));
-  const collectedAt=new Date().toISOString();
+  const requestStartedAt=new Date().toISOString();
   // This collector deliberately cannot retrieve the sealed September 20 slate.
-  assert.ok(time(`${dateKst}T00:00:00+09:00`)+(allowCurrentDate?86400000:0)>time(collectedAt),'FUTURE_DATE_REQUIRED');
+  assert.ok(time(`${dateKst}T00:00:00+09:00`)+(allowCurrentDate?86400000:0)>time(requestStartedAt),'FUTURE_DATE_REQUIRED');
   const url=new URL('https://v3.football.api-sports.io/fixtures');
   url.search=new URLSearchParams({date:dateKst,league:String(leagueId),season:String(season),timezone:'Asia/Seoul',status:'NS'}).toString();
   const response=await transport(url,{headers:{'x-apisports-key':process.env.FOOTBALL_API_KEY??''},cache:'no-store',redirect:'error'});
   assert.ok(response.ok,'FIXTURE_PROVIDER_HTTP_ERROR');const raw=await response.json();
   const observedAt=new Date().toISOString();
+  const collectedAt=observedAt;
   assert.equal(Object.keys(raw.errors??{}).length,0,'FIXTURE_PROVIDER_ERROR');
   assert.ok(Array.isArray(raw.response));assert.ok((raw.paging?.total??1)===1,'INCOMPLETE_PROVIDER_PAGE');
   const fixtures:PregameIdentity[]=raw.response.map((r:any)=>{

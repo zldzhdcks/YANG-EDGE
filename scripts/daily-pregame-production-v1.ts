@@ -10,26 +10,32 @@ import {readEnvelope,envelope,sha,time} from '../src/lib/research/terminal-decis
 import {runLockedSealedForward} from './football-locked-sealed-forward-v1';
 import {runLockedMlbPrediction} from './mlb-locked-sealed-prediction-v1';
 import type {MlbCollectionBinding} from '../src/lib/mlb/prediction-v0/collection-adapter';
+import {selectProductionBatch} from '../src/lib/research/terminal-decision/batch-selection';
+import {validateBatchInputProof,type BatchInputProof} from '../src/lib/research/terminal-decision/batch-input-proof';
 
 type SoccerInput=Parameters<typeof runLockedSealedForward>[3];
 type MlbInput=Parameters<typeof runLockedMlbPrediction>[3];
 export type ProductionPlan={scopeSha256:string;targets:Record<string,{
+  inputProof?:BatchInputProof;
   soccer?:SoccerInput;
   soccerCollection?:{leagueId:number;season:number};
   mlbCollection?:MlbCollectionBinding;
   mlb?:MlbInput & {evidenceReview:{status:'VERIFIED';manifestHash:string;reviewedAt:string}};
 }>};
 
-export async function runDailyPregame(cwd:string,date:string,plan?:ProductionPlan){
+export async function runDailyPregame(cwd:string,date:string,plan?:ProductionPlan,batchId?:string){
+  const selection=selectProductionBatch(cwd,date,batchId);cwd=selection.root;
   const scope=loadCommittedProductionScope(cwd,date);if(plan){assert.equal(plan.scopeSha256,scope.hash);for(const id of Object.keys(plan.targets))assert.ok(scope.doc.targets.some(t=>t.targetId===id),'OUT_OF_SCOPE_PLAN');}
   const initial=readDecisionCoverage(cwd,date);assert.ok(['COVERAGE_COMPLETE','COVERAGE_INCOMPLETE'].includes(initial.status),'INVALID_EXISTING_EVIDENCE');
   const rows=[];
-  for(const t of scope.doc.targets){
+  const orderedTargets=[...scope.doc.targets].sort((a,b)=>Number(!!plan?.targets[b.targetId]?.soccer)-Number(!!plan?.targets[a.targetId]?.soccer));
+  for(const t of orderedTargets){
     const before=advancePregame(cwd,date,t.targetId,'PENDING');
     if(before.audit.plan.action!=='WAIT'){rows.push({...before.audit,blocker:null});continue;}
     const p=plan?.targets[t.targetId];let readiness='INPUT_WAITING',blocker='NO_APPROVED_INPUT_REFERENCES';let evidencePointer:string|null=null;
     try{
       if(t.sport==='SOCCER'&&p?.soccer){
+        if(selection.binding)validateBatchInputProof(cwd,selection.binding,t.targetId,t.scheduledStartTimeKst!,p.inputProof,p.soccer);
         const inputs={...p.soccer,fixtureEvidencePath:resolve(cwd,p.soccer.fixtureEvidencePath),historyPath:resolve(cwd,p.soccer.historyPath)};
         const r=runLockedSealedForward(cwd,date,t.targetId,inputs);readiness=r.readiness;blocker=r.readiness==='SEALED'?'':r.readiness;
         if(r.readiness==='SEALED'){
@@ -79,14 +85,14 @@ export async function runDailyPregame(cwd:string,date:string,plan?:ProductionPla
       }
     }catch(error){
       // Do not log provider errors/URLs (may contain secrets). Pending is explicit, not PASS.
-      readiness='PIPELINE_BLOCKED';blocker=error instanceof assert.AssertionError?'INPUT_CONTRACT_FAILED':'COLLECTION_OR_PIPELINE_FAILED';
+      readiness='PIPELINE_BLOCKED';blocker=error instanceof assert.AssertionError?(error.message.includes('PROVENANCE')?'INPUT_PROVENANCE_BLOCKED':'INPUT_CONTRACT_FAILED'):'COLLECTION_OR_PIPELINE_FAILED';
     }
     // The clock is read again after slow acquisition. Only a genuine expired window gets PASS.
     const after=advancePregame(cwd,date,t.targetId,'PENDING');
     rows.push({...after.audit,readiness,blocker,evidencePointer});
   }
   const coverage=readDecisionCoverage(cwd,date);
-  const audit={schemaVersion:'daily-pregame-operational-status-v1',dateKst:date,scopeSha256:scope.hash,checkedAt:new Date().toISOString(),terminalResearchArtifact:false,intermediateIncompleteAllowed:true,rows,coverage};
+  const audit={schemaVersion:'daily-pregame-operational-status-v1',dateKst:date,batchBinding:selection.binding,scopeSha256:scope.hash,checkedAt:new Date().toISOString(),terminalResearchArtifact:false,intermediateIncompleteAllowed:true,rows:rows.map(r=>({...r,batchId:selection.binding?.batchId??null,scopeId:selection.binding?.scopeId??null})),coverage};
   const dir=join(cwd,'data/audits/operational');mkdirSync(dir,{recursive:true});
   writeFileSync(join(dir,`${date}-daily-pregame-status.json`),JSON.stringify(audit,null,2)+'\n');return audit;
 }

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { execFileSync } from "node:child_process";
+import {assertDateSelection,committedBytes} from './batch-selection';
 import { admitResearchTargetScopeSource, assertExplicitDateKst, isResearchTargetScopeLockDocument, operatorBetmanDailySlateRel, researchTargetScopeLockRel, sortTargetsDeterministic } from "../daily-scope-lock";
 
 export const canonical = (v: unknown): string => JSON.stringify(v, function (_key, value) {
@@ -21,6 +21,7 @@ export function readEnvelope(file: string) {
 /** Read-only authority chain. Never creates or repairs human verification. */
 export function loadScope(cwd: string, dateKst: string) {
   assertExplicitDateKst(dateKst);
+  assertDateSelection(cwd,dateKst);
   const raw = readFileSync(join(cwd, researchTargetScopeLockRel(dateKst)), "utf8");
   const doc = JSON.parse(raw);
   assert.ok(isResearchTargetScopeLockDocument(doc), "INVALID_SCOPE_SCHEMA");
@@ -33,7 +34,7 @@ export function loadScope(cwd: string, dateKst: string) {
   assert.equal(doc.source.sha256, admitted.payload.sha256); assert.equal(doc.source.rel, admitted.payload.rel);
   // The existing admission contract calls this a committed source; enforce that here.
   // Local Git object read only: no fetch, index mutation or commit.
-  const committedSource = execFileSync("git", ["-c", `safe.directory=${cwd.replace(/\\/g, "/")}`, "show", `HEAD:${admitted.payload.rel}`], { cwd, stdio: ["ignore", "pipe", "pipe"] });
+  const committedSource = committedBytes(cwd,admitted.payload.rel);
   assert.equal(sha(committedSource), admitted.payload.sha256, "FROZEN_SOURCE_NOT_COMMITTED_AT_HEAD");
   assert.equal(canonical(doc.targets), canonical(sortTargetsDeterministic(admitted.payload.targets)));
   const freeze = JSON.parse(admitted.payload.rawText);

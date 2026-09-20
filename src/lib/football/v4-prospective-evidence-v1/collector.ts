@@ -1,3 +1,4 @@
+import {loadCommittedProductionScope} from '../../research/terminal-decision/production-authority';
 import {readFileSync} from 'node:fs';
 import {readFile} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
@@ -9,13 +10,7 @@ import {Registry} from './registry';
 import {get,put,exactEvidence} from './store';
 import {validateXI,validateInjuries,XI,Injury} from './validate';
 export type Bridge=Context&{verified:true;homeTeamRaw:string;awayTeamRaw:string;sourceEvidenceSha256:string};
-export function loadScope(root:string,date:string){requireProof(/^\d{4}-\d{2}-\d{2}$/.test(date),'DATE_REQUIRED');const read=(p:string)=>{const bytes=readFileSync(join(root,p));const committed=execFileSync('git',['-c','safe.directory='+root.replaceAll('\\','/'),'show','HEAD:'+p],{cwd:root});requireProof(bytes.toString().replaceAll('\r\n','\n')===committed.toString().replaceAll('\r\n','\n'),'UNCOMMITTED_SCOPE');return{bytes,doc:JSON.parse(bytes.toString())};};
- const lock=read(researchTargetScopeLockRel(date)),source=read(researchSlateSourceFreezeRel(date)),operator=read(operatorBetmanDailySlateRel(date));
- requireProof(isResearchTargetScopeLockDocument(lock.doc)&&isResearchSlateSourceFreezeDocument(source.doc),'SCOPE_SCHEMA');requireProof(lock.doc.dateKst===date&&source.doc.dateKst===date&&lock.doc.lockStatus==='LOCKED','SCOPE_DATE');requireProof(lock.doc.source.sha256===sha(source.bytes)&&source.doc.source.sha256===sha(operator.bytes),'SCOPE_HASH_CHAIN');
- requireProof(operator.doc.reviewStatus==='VERIFIED'&&operator.doc.scopeCompletenessStatus==='COMPLETE'&&id(operator.doc.reviewedAt),'HUMAN_GATE');requireProof(Array.isArray(operator.doc.games)&&operator.doc.games.every((g:any)=>g.reviewStatus==='VERIFIED'&&g.operatorHomeAwayStatus==='VERIFIED'),'GAME_HUMAN_GATE');
- requireProof(lock.doc.targetCount===lock.doc.targets.length&&new Set(lock.doc.targets.map(t=>t.targetId)).size===lock.doc.targetCount,'DENOMINATOR');
- return{scopeHash:sha(lock.bytes),targets:lock.doc.targets};
-}
+export function loadScope(root:string,date:string){ const scope=loadCommittedProductionScope(root,date);return {scopeHash:scope.hash,targets:scope.doc.targets}; }
 export type Scope=ReturnType<typeof loadScope>;
 export function bind(scope:Scope,b:Bridge,now:string){const t=scope.targets.find(t=>t.targetId===b.targetId);requireProof(t&&t.sport.toUpperCase()==='SOCCER','TARGET_NOT_LOCKED');requireProof(b.verified&&b.scopeIdentity===scope.scopeHash&&/^[a-f0-9]{64}$/.test(b.sourceEvidenceSha256),'BRIDGE_PROOF');requireProof(t.homeTeamRaw===b.homeTeamRaw&&t.awayTeamRaw===b.awayTeamRaw&&time(t.scheduledStartTimeKst!)===time(b.scheduledStart),'EXACT_BRIDGE');requireProof(!t.providerFixtureId||t.providerFixtureId===b.providerFixtureId,'FIXTURE_BRIDGE');requireProof([b.providerFixtureId,b.homeTeamId,b.awayTeamId,b.competitionProviderId,b.season].every(id)&&b.homeTeamId!==b.awayTeamId,'BRIDGE_IDS');requireProof(['39','140','135','78'].includes(b.competitionProviderId),'LEAGUE_SCOPE');requireProof(time(now)<time(b.predictionCutoff)&&time(b.predictionCutoff)<=time(b.scheduledStart)-60000,'FUTURE_CUTOFF');return b;}
 export const POLL_MINUTES=[60,40,30,20] as const;
