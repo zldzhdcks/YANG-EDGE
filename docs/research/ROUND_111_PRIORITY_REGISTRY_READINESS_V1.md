@@ -81,7 +81,7 @@ Batch terminal state remains 2 Predictions, 1 PASS and 58 PENDING across 61 targ
 
 ## Validation and boundaries
 
-Focused suite: 76/76. Full typecheck: zero errors. Local artifact audit confirms
+Focused tests: 77/77 (76-test combined suite plus one additional conflict regression). Full typecheck: zero errors. Local artifact audit confirms
 prior previews and predictions unchanged, append-only preview behavior, exact sealed
 values, roster hashes/IDs/timestamps, frozen model hash and poll budget. Committed
 CLI gate and local immutable-store probe are recorded separately after commit.
