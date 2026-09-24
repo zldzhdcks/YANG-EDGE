@@ -11,3 +11,12 @@ export function registryGate(scope:Scope,bridge:Bridge,registry:Registry,now:str
  }
  return {status:'READY',byTeam,polls:pollPlan(bridge),xiConfirmed:false,featuresAdmitted:0};
 }
+
+/** Full CLI gate: registry readiness alone never proves serialization isolation. */
+export async function collectionReadiness(scope:Scope,bridge:Bridge,registry:Registry,now:string){
+ const identity=registryGate(scope,bridge,registry,now);
+ const {provePregameIsolation}=await import('./isolation-proof');
+ const isolation=await provePregameIsolation();
+ requireProof(isolation.PREGAME_RESULT_FIELD_ISOLATION==='PASS'&&isolation.CANARY_MATCH_COUNT===0,'PREGAME_RESULT_FIELD_ISOLATION_REQUIRED');
+ return {...identity,...isolation};
+}
