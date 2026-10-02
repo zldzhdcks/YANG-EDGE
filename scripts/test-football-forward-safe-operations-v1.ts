@@ -12,8 +12,8 @@ const kickoff=Date.parse('2026-09-12T15:00:00.000Z'),before=kickoff-86400000,aft
 const temp=()=>mkdtempSync(join(tmpdir(),'safe-forward-'));
 const fixture=(id=100,fetched=before-1000):Fixture=>({fixtureId:id,leagueId:39,season:2026,kickoffUtc:new Date(kickoff).toISOString(),homeTeam:{id:1,name:'Home'},awayTeam:{id:2,name:'Away'},providerStatus:'NS',scheduleFetchedAt:new Date(fetched).toISOString()});
 const history=():Completed[]=>Array.from({length:40},(_,i)=>({providerFixtureId:1000+i,leagueId:39,homeTeamId:i<10?1:3,awayTeamId:i<10?4:2,kickoffUtc:new Date(before-(i+2)*86400000).toISOString(),fixtureStatus:'FT',fullTimeHomeGoals:2,fullTimeAwayGoals:1,providerFetchedAt:new Date(before-1000).toISOString(),sourceHash:sha('synthetic FT')}));
-const result=(id=100)=>({fixtureId:id,leagueId:39,fixtureStatus:'FT' as const,actualScore:{home:2,away:1},providerFetchedAt:new Date(after).toISOString(),sourceHash:sha('synthetic result')});
-const raw=(id=100,status='FT')=>({fixture:{id,date:new Date(kickoff).toISOString(),status:{short:status}},league:{id:39},score:{fulltime:{home:2,away:1}}});
+const result=(id=100)=>({fixtureId:id,leagueId:39,homeTeamId:1,awayTeamId:2,fixtureStatus:'FT' as const,actualScore:{home:2,away:1},providerFetchedAt:new Date(after).toISOString(),sourceHash:sha('synthetic result')});
+const raw=(id=100,status='FT')=>({fixture:{id,date:new Date(kickoff).toISOString(),status:{short:status}},league:{id:39},teams:{home:{id:1},away:{id:2}},score:{fulltime:{home:2,away:1}}});
 const pregameBytes=(root:string,id=100)=>['snapshot.json','input.json','seal-receipt.json'].map(n=>readFileSync(join(root,'MODEL_FORWARD','fixtures',String(id),n),'utf8'));
 const mockFetch=(status='FT'):typeof fetch=>async(url,init)=>{assert.equal(String(url),'https://v3.football.api-sports.io/fixtures?id=100');assert.equal(init?.redirect,'error');return new Response(JSON.stringify({errors:[],results:1,response:[raw(100,status)]}),{status:200});};
 
@@ -54,9 +54,9 @@ test('future and non-FT fixtures remain pending without grade',async()=>{
 });
 test('FT projection ignores market/predictions and non-FT score; identity mismatch fails closed',()=>{
   const r=raw();for(const key of ['odds','predictions','ownerShadow','externalShadow'])Object.defineProperty(r,key,{get(){throw Error('FORBIDDEN_READ');}});
-  assert.equal(projectFt(r,100,39,fixture().kickoffUtc,new Date(after).toISOString(),sha('a'))?.actualScore.home,2);
-  const live=raw(100,'2H');Object.defineProperty(live,'score',{get(){throw Error('SCORE_READ');}});assert.equal(projectFt(live,100,39,fixture().kickoffUtc,new Date(after).toISOString(),sha('a')),null);
-  assert.throws(()=>projectFt(raw(101),100,39,fixture().kickoffUtc,new Date(after).toISOString(),sha('a')));
+  assert.equal(projectFt(r,100,39,fixture().kickoffUtc,new Date(after).toISOString(),sha('a'),1,2)?.actualScore.home,2);
+  const live=raw(100,'2H');Object.defineProperty(live,'score',{get(){throw Error('SCORE_READ');}});assert.equal(projectFt(live,100,39,fixture().kickoffUtc,new Date(after).toISOString(),sha('a'),1,2),null);
+  assert.throws(()=>projectFt(raw(101),100,39,fixture().kickoffUtc,new Date(after).toISOString(),sha('a'),1,2));
 });
 test('grade preflight rejects each tampered seal and late receipt without creating grade',()=>{
   for(const name of ['snapshot.json','input.json','seal-receipt.json']){

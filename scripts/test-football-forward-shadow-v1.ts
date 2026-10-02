@@ -64,7 +64,7 @@ test('incomplete coverage never reports zero scheduled fixtures',()=>{
 });
 test('separate postgame grading cannot mutate pregame or overwrite grade',()=>{
   const dir=temp();freeze(dir,fixture(),()=>now,history());const file=join(dir,'MODEL_FORWARD','fixtures','100','snapshot.json'),before=readFileSync(file,'utf8');
-  const r={fixtureId:100,leagueId:39,fixtureStatus:'FT' as const,actualScore:{home:2,away:1},providerFetchedAt:new Date(T+7200000).toISOString(),sourceHash:sha('result')};
+  const r={fixtureId:100,leagueId:39,homeTeamId:1,awayTeamId:2,fixtureStatus:'FT' as const,actualScore:{home:2,away:1},providerFetchedAt:new Date(T+7200000).toISOString(),sourceHash:sha('result')};
   assert.throws(()=>grade(dir,r,()=>now),/NOT_OBSERVED_POSTGAME/);
   assert.equal(grade(dir,r,()=>T+7200001).payload.actualClass,'HOME');assert.equal(readFileSync(file,'utf8'),before);
   const gradeFile=join(dir,'MODEL_FORWARD','postgame','100.json'),gradeBytes=readFileSync(gradeFile,'utf8');

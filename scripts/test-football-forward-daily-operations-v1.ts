@@ -24,7 +24,7 @@ test('PASS postgame uses separate file, preserves all pregame bytes and actual o
   const files=['input.json','snapshot.json','seal-receipt.json'].map(n=>join(root,'MODEL_FORWARD','fixtures','777',n));
   const before=files.map(p=>readFileSync(p));
   const observed=new Date(kickoff+7200000).toISOString();
-  const result=grade(root,{fixtureId:777,leagueId:39,fixtureStatus:'FT',actualScore:{home:1,away:1},providerFetchedAt:observed,sourceHash:'a'.repeat(64)},()=>kickoff+7201000);
+  const result=grade(root,{fixtureId:777,leagueId:39,homeTeamId:1,awayTeamId:2,fixtureStatus:'FT',actualScore:{home:1,away:1},providerFetchedAt:observed,sourceHash:'a'.repeat(64)},()=>kickoff+7201000);
   assert.equal(result.payload.correct1X2,null);assert.equal(result.payload.predictionHash,seal.envelope!.sha256);
   assert.equal(result.payload.officialCompletionEvidence.providerFetchedAt,observed);
   files.forEach((p,i)=>assert.deepEqual(readFileSync(p),before[i]));
