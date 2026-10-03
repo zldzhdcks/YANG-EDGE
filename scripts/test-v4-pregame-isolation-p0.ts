@@ -71,3 +71,18 @@ test('starter/substitute role survives projection without provider child extensi
 test('unknown source rejects before synthetic fetch or filesystem claims',async()=>{const root=await mkdtemp(join(tmpdir(),'v4-p0-source-'));let calls=0;try{await assert.rejects(collect({...ctx,root,source:'RESULT' as SourceType,teamId:'10',pollAt:ctx.before,now:()=>ctx.before,rightsEvidenceHash:sha('rights'),requestBudget:1,fetchSource:async()=>{calls++;throw Error('MUST_NOT_FETCH');}}),/SOURCE_NOT_ALLOWED/);assert.equal(calls,0);assert.deepEqual(await readdir(root),[]);}finally{await rm(root,{recursive:true,force:true});}});
 
 test('bounded football scalars retain legitimate formation and reject unsafe IDs',()=>{const raw=contaminatedResponse('XI') as any[];raw[0].formation='6-3-1';raw[0].startXI[0].player.id='9999999999999999';const safe=projectPregame('XI',raw,ctx.bridge);assert(safe.sourceType==='XI');assert.equal(safe.teams[0].formation,'6-3-1');assert.equal(safe.teams[0].starters[0].playerId,'');raw[0].formation='7-8';const invalid=projectPregame('XI',raw,ctx.bridge);assert(invalid.sourceType==='XI');assert.equal(invalid.teams[0].formation,null);});
+
+test('v2 envelope remains readable byte-identically; v3 explicitly denies canonical/effective readiness',async()=>{
+ const {value}=await stored('XI',contaminatedResponse('XI'));
+ const payload=value.payload as Record<string,unknown>;
+ assert.equal(payload.identityScope,'PROVIDER_SCOPED');assert.equal(payload.canonicalMappingStatus,'UNRESOLVED');assert.equal(payload.effectiveMembershipStatus,'UNRESOLVED');
+ const old=clone(value);old.schemaVersion='football-v4-prospective-evidence-v2';old.collectorVersion='football-v4-pregame-isolation-v2';for(const k of ['identityContractVersion','identityScope','canonicalMappingStatus','effectiveMembershipStatus'])delete (old.payload as Record<string,unknown>)[k];
+ const bytes=Buffer.from(stable(old)),root=await mkdtemp(join(tmpdir(),'v4-v2-compat-'));try{await put(root,old.evidenceId,bytes);assert.deepEqual(await exactEvidence(root,old.evidenceId,sha(bytes)),old);assert.equal(readPregame(old,ctx.bridge).sourceType,'XI');assert((await get(root,old.evidenceId,sha(bytes))).equals(bytes));}finally{await rm(root,{recursive:true,force:true});}
+ const bad=clone(value);(bad.payload as Record<string,unknown>).canonicalMappingStatus='MATCHED';assert.throws(()=>serializePregame(bad),/IDENTITY_SEMANTICS/);
+});
+
+test('knowledge registered after response observation cannot validate an earlier XI',async()=>{
+ const futureRegistry=ctx.registry.map(r=>({...r,recordedAt:ctx.bridge.predictionCutoff}));
+ const root=await mkdtemp(join(tmpdir(),'v4-identity-asof-'));
+ try{const result=await collect({...ctx,registry:futureRegistry,root,source:'XI',teamId:'10',pollAt:ctx.before,now:()=>ctx.before,rightsEvidenceHash:sha('rights'),requestBudget:1,fetchSource:async()=>({raw:contaminatedResponse('XI'),observedAt:ctx.before,collectedAt:ctx.before,asOf:ctx.before,providerUpdatedAt:null})});const e=await exactEvidence(join(root,'pregame'),result.evidenceId,result.sha256!);assert.equal(e.validationStatus,'INCOMPLETE');assert.equal(e.featureAdmitted,false);}finally{await rm(root,{recursive:true,force:true});}
+});

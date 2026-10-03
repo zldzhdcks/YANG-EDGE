@@ -13,7 +13,5 @@ export function appendPlayer(r:Registry,row:PlayerRecord):Registry{
  for(const x of active(r,row.recordedAt).filter(x=>x.recordId!==row.supersedesId))if(x.provider===row.provider&&x.providerPlayerId===row.providerPlayerId&&x.competitionProviderId===row.competitionProviderId&&x.season===row.season){const end=x.validTo?time(x.validTo):Infinity,newEnd=row.validTo?time(row.validTo):Infinity;requireProof(Math.max(time(x.validFrom),time(row.validFrom))>=Math.min(end,newEnd),'OVERLAPPING_MEMBERSHIP');}
  return Object.freeze([...r,Object.freeze({...row})]);
 }
-export function resolvePlayer(r:Registry,q:{provider:string;playerId:string;teamId:string;competitionId:string;season:string;at:string;knownAt:string}):{status:'EXACT'|'UNRESOLVED'|'CONFLICT';canonicalPlayerId:string|null}{
- const matches=active(r,q.knownAt).filter(x=>x.provider===q.provider&&x.providerPlayerId===q.playerId&&x.teamProviderId===q.teamId&&x.competitionProviderId===q.competitionId&&x.season===q.season&&time(x.validFrom)<=time(q.at)&&(!x.validTo||time(q.at)<time(x.validTo)));
- if(matches.length>1||matches.some(x=>x.verificationStatus==='CONFLICT'))return{status:'CONFLICT',canonicalPlayerId:null};if(matches.length!==1||matches[0].verificationStatus!=='EXACT')return{status:'UNRESOLVED',canonicalPlayerId:null};return{status:'EXACT',canonicalPlayerId:matches[0].canonicalPlayerId};
-}
+/** @deprecated Legacy rows contain no canonical mapping or effective interval proof. */
+export function resolvePlayer(_r:Registry,_q:{provider:string;playerId:string;teamId:string;competitionId:string;season:string;at:string;knownAt:string}):{status:'UNRESOLVED';canonicalPlayerId:null}{return {status:'UNRESOLVED',canonicalPlayerId:null};}

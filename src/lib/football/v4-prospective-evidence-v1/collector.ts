@@ -6,7 +6,7 @@ import {join} from 'node:path';
 import {isResearchTargetScopeLockDocument,operatorBetmanDailySlateRel,researchSlateSourceFreezeRel,researchTargetScopeLockRel} from '../../research/daily-scope-lock/paths';
 import {isResearchSlateSourceFreezeDocument} from '../../research/slate-source-freeze';
 import {Context,Envelope,SourceType,evidenceId,id,requireProof,sha,stable,temporal,time} from './contracts';
-import {Registry} from './registry';
+import {type EvidenceRegistry as Registry} from './identity-membership-v2';
 import {get,put,exactEvidence} from './store';
 import {validateXI,validateInjuries} from './validate';
 import {PREGAME_SCHEMA,projectPregame,assertSafePregame,safeTimestamp,safePaging,serializePregame} from './projection';
@@ -35,9 +35,10 @@ export async function collect(input:{scope:Scope;bridge:Bridge;registry:Registry
   await put(join(input.root,'receipts'),receiptId,Buffer.from(stable({event,status:'TEMPORAL_REJECTED'})));return{status:'TEMPORAL_REJECTED',evidenceId:event};
  }
  // The validator receives the exact projected object (or its stored rows), never a broader response.
- const validation=pregame.sourceType==='XI'?validateXI(pregame,c,input.registry):pregame.sourceType==='INJURY'?validateInjuries(pregame.rows,c,input.registry):{status:'UNRESOLVED',reason:'CUMULATIVE_STATS_DATA_THROUGH_AND_REGISTRY_REVIEW_REQUIRED'};
+ const validationContext={...c,predictionCutoff:clocks.observedAt};
+ const validation=pregame.sourceType==='XI'?validateXI(pregame,validationContext,input.registry):pregame.sourceType==='INJURY'?validateInjuries(pregame.rows,validationContext,input.registry):{status:'UNRESOLVED',reason:'CUMULATIVE_STATS_DATA_THROUGH_AND_REGISTRY_REVIEW_REQUIRED'};
  const status=validation.status,sourceArtifactSha256=sha(stable(pregame));
- const envelope:Envelope={schemaVersion:PREGAME_SCHEMA,evidenceId:event,targetId:c.targetId,scopeIdentity:c.scopeIdentity,providerName:'api-football',providerFixtureId:c.providerFixtureId,competitionProviderId:c.competitionProviderId,teamProviderId:input.teamId,sourceType:input.source,...clocks as import('./contracts').Clocks,providerUpdatedAt:safeTimestamp(r.providerUpdatedAt),sourceArtifactSha256,collectorVersion:'football-v4-pregame-isolation-v2',identityStatus:(status==='VALID'||status==='CONFIRMED_COMPLETE')?'EXACT':'UNRESOLVED',temporalStatus:'SAFE',validationStatus:status,featureAdmitted:false,payload:{pregame,validation,rightsEvidenceHash:input.rightsEvidenceHash,registryHash:sha(stable(input.registry)),season:c.season,paging:safePaging(r.paging)}};
+ const envelope:Envelope={schemaVersion:PREGAME_SCHEMA,evidenceId:event,targetId:c.targetId,scopeIdentity:c.scopeIdentity,providerName:'api-football',providerFixtureId:c.providerFixtureId,competitionProviderId:c.competitionProviderId,teamProviderId:input.teamId,sourceType:input.source,...clocks as import('./contracts').Clocks,providerUpdatedAt:safeTimestamp(r.providerUpdatedAt),sourceArtifactSha256,collectorVersion:'football-v4-identity-membership-v3',identityStatus:(status==='VALID'||status==='CONFIRMED_COMPLETE')?'EXACT':'UNRESOLVED',temporalStatus:'SAFE',validationStatus:status,featureAdmitted:false,payload:{identityContractVersion:'football-v4-player-identity-membership-v2',identityScope:'PROVIDER_SCOPED',canonicalMappingStatus:'UNRESOLVED',effectiveMembershipStatus:'UNRESOLVED',pregame,validation,rightsEvidenceHash:input.rightsEvidenceHash,registryHash:sha(stable(input.registry)),season:c.season,paging:safePaging(r.paging)}};
  const saved=await put(store,event,serializePregame(envelope));requireProof(saved.status!=='CONFLICT','EVIDENCE_CONFLICT');await get(store,event,saved.sha256);
  await put(join(input.root,'receipts'),receiptId,Buffer.from(stable({event,status:'SEALED',sha256:saved.sha256})));
  const playerCount=pregame.sourceType==='XI'?pregame.teams.reduce((n,t)=>n+t.starters.length,0):null;

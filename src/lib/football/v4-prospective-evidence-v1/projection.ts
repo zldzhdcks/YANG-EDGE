@@ -2,7 +2,7 @@
 import {requireProof,sha,stable,time,type Context,type Envelope,type SourceType} from './contracts';
 import type {XI,Injury} from './validate';
 
-export const PREGAME_SCHEMA = 'football-v4-prospective-evidence-v2' as const;
+export const PREGAME_SCHEMA = 'football-v4-prospective-evidence-v3' as const;
 export type SafeXI = Omit<XI,'teams'> & {sourceType:'XI';teams:(XI['teams'][number]&{formation:string|null})[]};
 export type SafePregame = SafeXI | {sourceType:'INJURY';rows:Injury[]} | {sourceType:'PLAYER_STATS';status:'UNRESOLVED'};
 const object=(v:unknown):Record<string,unknown> => v!==null&&typeof v==='object'&&!Array.isArray(v)?v as Record<string,unknown>:{};
@@ -44,7 +44,7 @@ export function safePaging(value:unknown):{current:number;total:number}|null {co
 /** New envelopes use the projected-object hash. Legacy hashes remain over legacy bytes. */
 export function readPregame(e:Envelope,c:Pick<Context,'providerFixtureId'|'homeTeamId'>):SafePregame {
  const p=object(e.payload);
- if(e.schemaVersion===PREGAME_SCHEMA){
+ if(e.schemaVersion===PREGAME_SCHEMA||e.schemaVersion==='football-v4-prospective-evidence-v2'){
   assertIsolatedEnvelope(e);
   return p.pregame as SafePregame;
  }
@@ -56,14 +56,14 @@ export function readPregame(e:Envelope,c:Pick<Context,'providerFixtureId'|'homeT
 /** Reject extra fields on the complete serialized envelope, including diagnostics. */
 export function assertIsolatedEnvelope(e:Envelope):void {
  keys(e,['schemaVersion','evidenceId','targetId','scopeIdentity','providerName','providerFixtureId','competitionProviderId','teamProviderId','sourceType','observedAt','collectedAt','asOf','predictionCutoff','scheduledStart','providerUpdatedAt','sourceArtifactSha256','collectorVersion','identityStatus','temporalStatus','validationStatus','featureAdmitted','payload']);
- requireProof(e.schemaVersion===PREGAME_SCHEMA&&e.providerName==='api-football'&&e.collectorVersion==='football-v4-pregame-isolation-v2'&&e.featureAdmitted===false,'PREGAME_ENVELOPE_SCHEMA');
+ requireProof((e.schemaVersion===PREGAME_SCHEMA||e.schemaVersion==='football-v4-prospective-evidence-v2')&&e.providerName==='api-football'&&e.collectorVersion===(e.schemaVersion===PREGAME_SCHEMA?'football-v4-identity-membership-v3':'football-v4-pregame-isolation-v2')&&e.featureAdmitted===false,'PREGAME_ENVELOPE_SCHEMA');
  for(const field of ['evidenceId','scopeIdentity','sourceArtifactSha256'] as const)requireProof(typeof e[field]==='string'&&/^[a-f0-9]{64}$/.test(e[field]),'PREGAME_HASH_SCHEMA');
  for(const field of ['providerFixtureId','competitionProviderId','teamProviderId'] as const){numericId(e[field]);requireProof(e[field]!=='','PREGAME_ID_SCHEMA');}
  requireProof(typeof e.targetId==='string'&&e.targetId.length>0,'PREGAME_TARGET_SCHEMA');
  for(const field of ['observedAt','collectedAt','asOf','predictionCutoff','scheduledStart'] as const)requireProof(safeTimestamp(e[field])===e[field],'PREGAME_CLOCK_SCHEMA');
  requireProof(e.providerUpdatedAt===null||safeTimestamp(e.providerUpdatedAt)===e.providerUpdatedAt,'PREGAME_CLOCK_SCHEMA');
  requireProof(['EXACT','UNRESOLVED','CONFLICT'].includes(e.identityStatus)&&e.temporalStatus==='SAFE','PREGAME_STATE_SCHEMA');
- const p=object(e.payload);keys(p,['pregame','validation','rightsEvidenceHash','registryHash','season','paging']);assertSafePregame(p.pregame);
+ const p=object(e.payload);keys(p,['pregame','validation','rightsEvidenceHash','registryHash','season','paging',...(e.schemaVersion===PREGAME_SCHEMA?['identityContractVersion','identityScope','canonicalMappingStatus','effectiveMembershipStatus']:[])]);if(e.schemaVersion===PREGAME_SCHEMA)requireProof(p.identityContractVersion==='football-v4-player-identity-membership-v2'&&p.identityScope==='PROVIDER_SCOPED'&&p.canonicalMappingStatus==='UNRESOLVED'&&p.effectiveMembershipStatus==='UNRESOLVED','IDENTITY_SEMANTICS_REQUIRED');assertSafePregame(p.pregame);
  requireProof(p.pregame.sourceType===e.sourceType,'PREGAME_SOURCE_MISMATCH');
  for(const field of ['rightsEvidenceHash','registryHash'])requireProof(typeof p[field]==='string'&&/^[a-f0-9]{64}$/.test(p[field] as string),'PREGAME_HASH_SCHEMA');
  requireProof(typeof p.season==='string'&&/^\d{4}$/.test(p.season),'PREGAME_SEASON_SCHEMA');

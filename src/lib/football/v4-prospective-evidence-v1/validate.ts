@@ -1,9 +1,9 @@
 import {Context,id,stable} from './contracts';
-import {Registry,resolvePlayer} from './registry';
+import {type EvidenceRegistry as Registry,resolveProviderPlayerIdentity} from './identity-membership-v2';
 export type Player={playerId:string;teamId:string;position?:string};
 export type XI={fixtureId:string;teams:{teamId:string;side:'HOME'|'AWAY';starters:Player[];substitutes:Player[]}[]};
 export type Verdict={status:string;reasons:string[]};
-function exact(r:Registry,c:Context,p:Player){return resolvePlayer(r,{provider:'api-football',playerId:p.playerId,teamId:p.teamId,competitionId:c.competitionProviderId,season:c.season,at:c.scheduledStart,knownAt:c.predictionCutoff}).status==='EXACT';}
+function exact(r:Registry,c:Context,p:Player){return resolveProviderPlayerIdentity(r,{provider:'api-football',playerId:p.playerId,knownAt:c.predictionCutoff}).status==='EXACT';}
 export type XIStatus='UNKNOWN'|'INCOMPLETE'|'CONFIRMED_COMPLETE'|'INVALID';
 export function validateXI(x:XI,c:Context,r:Registry):Verdict & {status:XIStatus}{
  const invalid=(reason:string):Verdict & {status:XIStatus}=>({status:'INVALID',reasons:[reason]});
@@ -26,7 +26,7 @@ export function validateXI(x:XI,c:Context,r:Registry):Verdict & {status:XIStatus
    if(!id(p.playerId)){reasons.push('MISSING_PLAYER_ID');continue;}
    if(p.teamId!==t.teamId)reasons.push('PLAYER_TEAM_MISMATCH');
    if(all.has(p.playerId))reasons.push('DUPLICATE_PLAYER');all.add(p.playerId);
-   const identity=resolvePlayer(r,{provider:'api-football',playerId:p.playerId,teamId:t.teamId,competitionId:c.competitionProviderId,season:c.season,at:c.scheduledStart,knownAt:c.predictionCutoff});
+   const identity=resolveProviderPlayerIdentity(r,{provider:'api-football',playerId:p.playerId,knownAt:c.predictionCutoff});
    if(identity.status==='CONFLICT')reasons.push('PROVIDER_IDENTITY_CONFLICT');
    else if(identity.status!=='EXACT')unresolved=true;
   }
